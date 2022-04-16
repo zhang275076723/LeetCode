@@ -51,15 +51,7 @@ public class Problem021 {
 
         //设置头指针，方便合并
         ListNode head = new ListNode();
-        ListNode node;
-
-        //找到头结点
-        if (list1.val < list2.val) {
-            head.next = list1;
-        } else {
-            head.next = list2;
-        }
-        node = head;
+        ListNode node = head;
 
         //合并
         while (list1 != null && list2 != null) {
