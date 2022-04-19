@@ -68,7 +68,7 @@ public class Problem020 {
     }
 
     /**
-     * 答案的解，时间复杂度O(n)，空间复杂度O(n)
+     * 答案的解，遇到左括号，对应右括号入栈，时间复杂度O(n)，空间复杂度O(n)
      *
      * @param s
      * @return

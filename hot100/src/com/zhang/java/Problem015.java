@@ -84,6 +84,7 @@ public class Problem015 {
             return new ArrayList<>();
         }
 
+        //排序，便于查找和去重
         heapSort(nums);
         List<List<Integer>> result = new ArrayList<>();
 

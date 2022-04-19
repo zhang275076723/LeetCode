@@ -112,7 +112,7 @@ public class Problem022 {
     }
 
     /**
-     * dfs中每个节点
+     * bfs中每个节点
      */
     private static class Node {
         //当前左括号数量
