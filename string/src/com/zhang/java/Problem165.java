@@ -36,7 +36,7 @@ public class Problem165 {
     public static void main(String[] args) {
         Problem165 problem165 = new Problem165();
         String version1 = "1.01";
-        String version2 = "1.001.0.1";
+        String version2 = "1.01.22.1";
         System.out.println(problem165.compareVersion(version1, version2));
         System.out.println(problem165.compareVersion2(version1, version2));
     }
@@ -53,18 +53,17 @@ public class Problem165 {
         String[] split2 = version2.split("\\.");
 
         for (int i = 0; i < Math.max(split1.length, split2.length); i++) {
-            int value1;
-            int value2;
+            int value1 = 0;
+            int value2 = 0;
+
             if (i < split1.length) {
                 value1 = Integer.parseInt(split1[i]);
-            } else {
-                value1 = 0;
             }
+
             if (i < split2.length) {
                 value2 = Integer.parseInt(split2[i]);
-            } else {
-                value2 = 0;
             }
+
             if (value1 > value2) {
                 return 1;
             } else if (value1 < value2) {
