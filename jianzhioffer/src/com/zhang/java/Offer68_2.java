@@ -123,6 +123,7 @@ public class Offer68_2 {
             return;
         }
 
+        //if作用：当找到node时，不再进行遍历，能够加快运行速度
         if (path.get(path.size() - 1) != node) {
             getPath(root.left, node, path);
         }
