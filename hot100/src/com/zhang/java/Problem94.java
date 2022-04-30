@@ -95,7 +95,7 @@ public class Problem94 {
         List<String> list = new ArrayList<>(Arrays.asList(data));
         Queue<TreeNode> queue = new LinkedList<>();
         TreeNode root = new TreeNode(Integer.parseInt(list.remove(0)));
-        queue.add(root);
+        queue.offer(root);
 
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
@@ -104,7 +104,7 @@ public class Problem94 {
                 if (!"null".equals(leftNodeValue)) {
                     TreeNode leftNode = new TreeNode(Integer.parseInt(leftNodeValue));
                     node.left = leftNode;
-                    queue.add(leftNode);
+                    queue.offer(leftNode);
                 }
             }
             if (!list.isEmpty()) {
@@ -112,7 +112,7 @@ public class Problem94 {
                 if (!"null".equals(rightNodeValue)) {
                     TreeNode rightNode = new TreeNode(Integer.parseInt(rightNodeValue));
                     node.right = rightNode;
-                    queue.add(rightNode);
+                    queue.offer(rightNode);
                 }
             }
         }

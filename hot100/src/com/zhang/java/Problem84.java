@@ -84,7 +84,7 @@ public class Problem84 {
                 //矩形的宽
                 int width;
 
-                //栈中索引对应元素相等，则可以直接出栈
+                //栈顶索引对应元素与当前矩形的高相等，则可以直接出栈
                 while (!stack.isEmpty() && height == heights[stack.peek()]) {
                     stack.pop();
                 }
@@ -106,7 +106,7 @@ public class Problem84 {
             //矩形的宽
             int width;
 
-            //栈中索引对应元素相等，则可以直接出栈
+            //栈顶索引对应元素与当前矩形的高相等，则可以直接出栈
             while (!stack.isEmpty() && height == heights[stack.peek()]) {
                 stack.pop();
             }
