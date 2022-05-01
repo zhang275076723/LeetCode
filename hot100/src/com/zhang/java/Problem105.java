@@ -3,21 +3,32 @@ package com.zhang.java;
 import java.util.*;
 
 /**
- * @Date 2022/3/13 15:25
+ * @Date 2022/5/1 11:57
  * @Author zsy
- * @Description 输入某二叉树的前序遍历和中序遍历的结果，请构建该二叉树并返回其根节点
- * 假设输入的前序遍历和中序遍历的结果中都不含重复的数字
+ * @Description 给定两个整数数组 preorder 和 inorder ，
+ * 其中 preorder 是二叉树的先序遍历， inorder 是同一棵树的中序遍历，请构造二叉树并返回其根节点。
  * <p>
- * Input: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
- * Output: [3,9,20,null,null,15,7]
+ * 输入: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
+ * 输出: [3,9,20,null,null,15,7]
+ * <p>
+ * 输入: preorder = [-1], inorder = [-1]
+ * 输出: [-1]
+ * <p>
+ * 1 <= preorder.length <= 3000
+ * inorder.length == preorder.length
+ * -3000 <= preorder[i], inorder[i] <= 3000
+ * preorder 和 inorder 均 无重复 元素
+ * inorder 均出现在 preorder
+ * preorder 保证 为二叉树的前序遍历序列
+ * inorder 保证 为二叉树的中序遍历序列
  */
-public class Offer7 {
+public class Problem105 {
     public static void main(String[] args) {
-        Offer7 offer7 = new Offer7();
+        Problem105 problem105 = new Problem105();
         int[] preorder = {3, 9, 20, 15, 7};
         int[] inorder = {9, 3, 15, 20, 7};
-        TreeNode root = offer7.buildTree(preorder, inorder);
-        offer7.levelTraversal(root);
+        TreeNode root = problem105.buildTree(preorder, inorder);
+        problem105.levelTraversal(root);
     }
 
     /**
@@ -102,15 +113,22 @@ public class Offer7 {
         }
     }
 
-    public static class TreeNode {
+    public class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
 
-        TreeNode(int x) {
-            val = x;
+        TreeNode() {
+        }
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
         }
     }
 }
-
-

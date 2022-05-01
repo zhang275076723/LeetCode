@@ -95,7 +95,7 @@ public class Problem15 {
             }
 
             //i去重
-            if(i>0 && nums[i] == nums[i-1]){
+            if (i > 0 && nums[i] == nums[i - 1]) {
                 continue;
             }
 
@@ -124,7 +124,7 @@ public class Problem15 {
                 } else if (nums[i] + nums[left] + nums[right] < 0) {
                     //三数之和小于0
                     left++;
-                }else {
+                } else {
                     //三数之和大于0
                     right--;
                 }
