@@ -31,10 +31,7 @@ public class Problem98 {
         Problem98 problem98 = new Problem98();
 //        String[] data = {"5", "1", "4", "null", "null", "3", "6"};
         String[] data = {"5", "4", "6", "null", "null", "3", "7"};
-//        TreeNode root = problem98.buildTree(data);
-        TreeNode root = new TreeNode(1);
-        TreeNode node2 = new TreeNode(1);
-        root.left = node2;
+        TreeNode root = problem98.buildTree(data);
 
         System.out.println(problem98.isValidBST(root));
         System.out.println(problem98.isValidBST2(root));
@@ -98,6 +95,7 @@ public class Problem98 {
             return false;
         }
 
+        //当前节点
         if (root.val <= preNodeValue) {
             return false;
         }
