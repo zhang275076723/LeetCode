@@ -29,7 +29,7 @@ public class Problem94 {
     }
 
     /**
-     * 递归，时间复杂度O(n)，空间复杂度O(n)
+     * 递归中序遍历，时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
@@ -45,7 +45,7 @@ public class Problem94 {
     }
 
     /**
-     * 非递归，时间复杂度O(n)，空间复杂度O(n)
+     * 非递归中序遍历，时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
