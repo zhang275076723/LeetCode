@@ -84,6 +84,7 @@ public class Problem141 {
         while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
+            //快慢指针相遇，说明有环
             if (slow == fast) {
                 return true;
             }
