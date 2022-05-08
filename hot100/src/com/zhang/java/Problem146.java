@@ -167,10 +167,10 @@ public class Problem146 {
          * 双向链表节点
          */
         private static class LinkedListNode {
-            public LinkedListNode pre;
-            public LinkedListNode next;
             public int key;
             public int value;
+            public LinkedListNode pre;
+            public LinkedListNode next;
 
             public LinkedListNode() {
             }
