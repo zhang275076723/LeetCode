@@ -64,6 +64,7 @@ public class Problem21 {
             }
             node = node.next;
         }
+
         if (list1 == null) {
             node.next = list2;
         } else {
