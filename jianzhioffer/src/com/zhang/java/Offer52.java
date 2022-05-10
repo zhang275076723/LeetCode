@@ -116,6 +116,7 @@ public class Offer52 {
 
         ListNode nodeA = headA;
         ListNode nodeB = headB;
+
         while (nodeA != nodeB) {
             if (nodeA != null) {
                 nodeA = nodeA.next;
@@ -129,6 +130,7 @@ public class Offer52 {
                 nodeB = headA;
             }
         }
+
         return nodeA;
     }
 
@@ -164,7 +166,7 @@ public class Offer52 {
         return null;
     }
 
-    public static class ListNode {
+    private static class ListNode {
         int val;
         ListNode next;
 
