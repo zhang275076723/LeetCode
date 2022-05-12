@@ -20,8 +20,9 @@ import java.util.Stack;
  */
 public class Offer30 {
     public static void main(String[] args) {
-        MinStack minStack = new MinStack();
+//        MinStack minStack = new MinStack();
 //        MinStack2 minStack = new MinStack2();
+        MinStack3 minStack = new MinStack3();
         minStack.push(-2);
         minStack.push(0);
         minStack.push(-3);
@@ -32,21 +33,64 @@ public class Offer30 {
     }
 
     /**
-     * 使用链表，每个节点都存储当前节点到尾节点的最小值
+     * 使用两个栈，一个栈保存所有元素，另一个栈在栈顶保存当前栈的最小值元素
+     * 时间复杂度O(1)，空间复杂度O(n)
      */
-    public static class MinStack {
-        Node head;
+    private static class MinStack {
+        //保存所有元素的栈
+        private Stack<Integer> stack;
+
+        //栈顶保存当前栈的最小值元素的栈
+        private Stack<Integer> minStack;
 
         public MinStack() {
-            head = new Node(Integer.MAX_VALUE, Integer.MAX_VALUE, null);
+            stack = new Stack<>();
+            minStack = new Stack<>();
         }
 
-        public void push(int x) {
-            head = new Node(x, Math.min(x, head.min), head);
+        public void push(int val) {
+            stack.push(val);
+            if (minStack.isEmpty() || minStack.peek() >= val) {
+                minStack.push(val);
+            }
         }
 
         public void pop() {
-            head = head.next;
+            int x = stack.pop();
+            if (minStack.peek() >= x) {
+                minStack.pop();
+            }
+        }
+
+        public int top() {
+            return stack.peek();
+        }
+
+        public int min() {
+            return minStack.peek();
+        }
+    }
+
+    /**
+     * 使用链表，每个节点都存储当前节点的值和当前节点到尾节点的最小值
+     * 时间复杂度O(1)，空间复杂度O(n)
+     */
+    private static class MinStack2 {
+        //头结点
+        private Node head;
+
+        public MinStack2() {
+            head = new Node(Integer.MAX_VALUE, Integer.MAX_VALUE, null);
+        }
+
+        public void push(int val) {
+            head = new Node(val, Math.min(val, head.min), head);
+        }
+
+        public void pop() {
+            Node newHead = head.next;
+            head.next = null;
+            head = newHead;
         }
 
         public int top() {
@@ -56,56 +100,80 @@ public class Offer30 {
         public int min() {
             return head.min;
         }
+
+        private static class Node {
+            int val;
+            int min;
+            Node next;
+
+            Node(int val, int min, Node next) {
+                this.val = val;
+                this.min = min;
+                this.next = next;
+            }
+        }
     }
 
     /**
-     * 使用两个栈，一个栈保存所有元素，一个栈保存当前栈的最小值元素
+     * 只使用一个栈，不使用额外的栈存储当前栈的最小元素
+     * 时间复杂度O(1)，空间复杂度O(1)
      */
-    public static class MinStack2 {
-        //保存所有元素
-        Stack<Integer> stack1;
-        //保存当前栈的最小值元素
-        Stack<Integer> stack2;
+    private static class MinStack3 {
+        //保存当前元素和最小元素差值的栈
+        //因为int类型差值可能会溢出，所以使用long
+        private Stack<Long> stack;
 
-        public MinStack2() {
-            stack1 = new Stack<>();
-            stack2 = new Stack<>();
+        //当前最小元素
+        private int min;
+
+        public MinStack3() {
+            stack = new Stack<>();
         }
 
-        public void push(int x) {
-            stack1.push(x);
-            if (stack2.empty() || x <= stack2.peek()) {
-                stack2.push(x);
+        /**
+         * 入栈时，栈中保存当前元素和最小元素的差值
+         *
+         * @param val
+         */
+        public void push(int val) {
+            if (stack.isEmpty()) {
+                stack.push(0L);
+                min = val;
+            } else {
+                //如果val是最小的数，这里可能越界，所以用Long来保存
+                stack.push((long) val - min);
+                min = Math.min(min, val);
             }
         }
 
+        /**
+         * 1、如果差值diff>=0，则说明要出栈的值大于等于当前min，返回min+diff；
+         * 2、如果差值diff<0，则说明当前要出栈的值为min，返回min，更新min=min-diff
+         */
         public void pop() {
-            if (stack1.peek() > stack2.peek()) {
-                stack1.pop();
+            //元素和最小元素的差值
+            long diff = stack.pop();
+            if (diff >= 0) {
+//                return min + diff;
             } else {
-                stack1.pop();
-                stack2.pop();
+//                int result = min;
+                min = (int) (min - diff);
+//                return result;
             }
         }
 
         public int top() {
-            return stack1.peek();
+            //元素和最小元素的差值
+            long diff = stack.peek();
+            if (diff >= 0) {
+                return (int) (min + diff);
+            } else {
+                return min;
+            }
         }
 
         public int min() {
-            return stack2.peek();
-        }
-    }
-
-    public static class Node {
-        int val;
-        int min;
-        Node next;
-
-        Node(int val, int min, Node next) {
-            this.val = val;
-            this.min = min;
-            this.next = next;
+            return min;
         }
     }
 }
