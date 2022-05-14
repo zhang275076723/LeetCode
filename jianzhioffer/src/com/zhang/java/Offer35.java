@@ -77,7 +77,8 @@ public class Offer35 {
     }
 
     /**
-     * 节点拆分，时间复杂度O(n)，空间复杂的O(1) 注意：空间复杂度指额外的空间开销，新建的n个节点是结果，不算在空间复杂度中
+     * 节点拆分，时间复杂度O(n)，空间复杂的O(1)
+     * 注意：空间复杂度指额外的空间开销，新建的n个节点是结果，不算在空间复杂度中
      * 将链表中的节点拆分为两个相邻节点，设置next和random之后进行拆分，得到拷贝链表
      * 例如：A->B->C变为A->A'->B->B'->C->C'，再拆分获得A'->B'->C'
      *
@@ -126,7 +127,7 @@ public class Offer35 {
         return newHead;
     }
 
-    static class Node {
+    private static class Node {
         int val;
         Node next;
         Node random;

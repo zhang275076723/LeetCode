@@ -1,47 +1,53 @@
 package com.zhang.java;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
- * @Date 2022/5/13 9:06
+ * @Date 2022/5/14 9:58
  * @Author zsy
- * @Description 课程表 华为机试题 类比Problem210
- * 你这个学期必须选修 numCourses 门课程，记为 0 到 numCourses - 1 。
- * 在选修某些课程之前需要一些先修课程。
- * 先修课程按数组 prerequisites 给出，其中 prerequisites[i] = [ai, bi] ，
- * 表示如果要学习课程 ai 则 必须 先学习课程 bi 。
- * 例如，先修课程对 [0, 1] 表示：想要学习课程 0 ，你需要先完成课程 1 。
- * 请你判断是否可能完成所有课程的学习？如果可以，返回 true ；否则，返回 false 。
+ * @Description 课程表 II 类比Problem207
+ * 现在你总共有 numCourses 门课需要选，记为 0 到 numCourses - 1。
+ * 给你一个数组 prerequisites ，其中 prerequisites[i] = [ai, bi] ，表示在选修课程 ai 前 必须 先选修 bi 。
+ * 例如，想要学习课程 0 ，你需要先完成课程 1 ，我们用一个匹配来表示：[0,1] 。
+ * 返回你为了学完所有课程所安排的学习顺序。可能会有多个正确的顺序，你只要返回 任意一种 就可以了。
+ * 如果不可能完成所有课程，返回 一个空数组 。
  * <p>
  * 输入：numCourses = 2, prerequisites = [[1,0]]
- * 输出：true
- * 解释：总共有 2 门课程。学习课程 1 之前，你需要完成课程 0 。这是可能的。
+ * 输出：[0,1]
+ * 解释：总共有 2 门课程。要学习课程 1，你需要先完成课程 0。因此，正确的课程顺序为 [0,1] 。
  * <p>
- * 输入：numCourses = 2, prerequisites = [[1,0],[0,1]]
- * 输出：false
- * 解释：总共有 2 门课程。学习课程 1 之前，你需要先完成 课程 0 ；并且学习课程 0 之前，你还应先完成课程 1 。这是不可能的。
+ * 输入：numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]
+ * 输出：[0,2,1,3]
+ * 解释：总共有 4 门课程。要学习课程 3，你应该先完成课程 1 和课程 2。并且课程 1 和课程 2 都应该排在课程 0 之后。
+ * 因此，一个正确的课程顺序是 [0,1,2,3] 。另一个正确的排序是 [0,2,1,3] 。
  * <p>
- * 1 <= numCourses <= 105
- * 0 <= prerequisites.length <= 5000
+ * 输入：numCourses = 1, prerequisites = []
+ * 输出：[0]
+ * <p>
+ * 1 <= numCourses <= 2000
+ * 0 <= prerequisites.length <= numCourses * (numCourses - 1)
  * prerequisites[i].length == 2
  * 0 <= ai, bi < numCourses
- * prerequisites[i] 中的所有课程对 互不相同
+ * ai != bi
+ * 所有[ai, bi] 互不相同
  */
-public class Problem207 {
+public class Problem210 {
     /**
      * dfs中是否有环，是否可以完成所有课程
      */
     private boolean hasCircle = false;
 
+    /**
+     * dfs中拓扑排序数组下标索引
+     */
+    private int index;
+
     public static void main(String[] args) {
-        Problem207 problem207 = new Problem207();
+        Problem210 problem210 = new Problem210();
         int numCourses = 6;
         int[][] prerequisites = {{3, 0}, {3, 1}, {4, 1}, {4, 2}, {5, 3}, {5, 4}};
-        System.out.println(problem207.canFinish(numCourses, prerequisites));
-        System.out.println(problem207.canFinish2(numCourses, prerequisites));
+        System.out.println(Arrays.toString(problem210.findOrder(numCourses, prerequisites)));
+        System.out.println(Arrays.toString(problem210.findOrder2(numCourses, prerequisites)));
     }
 
     /**
@@ -54,11 +60,15 @@ public class Problem207 {
      * @param prerequisites
      * @return
      */
-    public boolean canFinish(int numCourses, int[][] prerequisites) {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
         //使用集合存放临界表，存放每门课程修完后可以修的课程
         List<List<Integer>> edges = new ArrayList<>();
         //节点对应课程的访问数组，0-未访问，1-正在访问，2-已访问
         int[] visited = new int[numCourses];
+        //拓扑排序数组
+        int[] result = new int[numCourses];
+        //因为dfs中拓扑排序数组下标索引相当于栈
+        index = numCourses - 1;
 
         for (int i = 0; i < numCourses; i++) {
             edges.add(new ArrayList<>());
@@ -70,20 +80,20 @@ public class Problem207 {
         for (int i = 0; i < numCourses; i++) {
             //有环，说明不满足当前课程要先上的课程，返回false
             if (hasCircle) {
-                return false;
+                return new int[0];
             }
 
             //当前节点未访问，从当前节点进行dfs
             if (visited[i] == 0) {
-                dfs(i, visited, edges);
+                dfs(i, visited, edges, result);
             }
         }
 
-        return !hasCircle;
+        return result;
     }
 
     /**
-     * bfs，判断图中是否有拓扑排序
+     * bfs，计算图的拓扑排序
      * 时间复杂度O(m+n)，空间复杂度O(m+n)，m为课程数，n为先修课程的要求数
      * 本质：找入度为0的节点，入度为0的节点在拓扑排序中一定排在前面
      * 拓扑排序：有向无环图所有顶点进行排序，使图中任意一对顶点u、v，边<u,v>在排序中u出现在v之前
@@ -92,7 +102,7 @@ public class Problem207 {
      * @param prerequisites
      * @return
      */
-    public boolean canFinish2(int numCourses, int[][] prerequisites) {
+    public int[] findOrder2(int numCourses, int[][] prerequisites) {
         //使用集合存放临界表，存放每门课程修完后可以修的课程
         List<List<Integer>> edges = new ArrayList<>();
         //节点的入度
@@ -108,8 +118,10 @@ public class Problem207 {
 
         //存放入度为0的队列
         Queue<Integer> queue = new LinkedList<>();
-        //能够访问到的入度为0的节点个数
-        int visited = 0;
+        //拓扑排序数组
+        int[] result = new int[numCourses];
+        //拓扑排序数组索引下标
+        int index = 0;
 
         for (int i = 0; i < numCourses; i++) {
             if (inDegree[i] == 0) {
@@ -119,7 +131,7 @@ public class Problem207 {
 
         while (!queue.isEmpty()) {
             int u = queue.poll();
-            visited++;
+            result[index++] = u;
 
             //u的邻接顶点v
             for (int v : edges.get(u)) {
@@ -132,23 +144,18 @@ public class Problem207 {
         }
 
         //能够访问所有节点，表示没有环
-        return visited == numCourses;
+        return index == numCourses ? result : new int[0];
     }
 
-    private void dfs(int u, int[] visited, List<List<Integer>> edges) {
+    private void dfs(int u, int[] visited, List<List<Integer>> edges, int[] result) {
         //当前节点正在访问
         visited[u] = 1;
 
         //u的邻接顶点v
         for (int v : edges.get(u)) {
-            //u的邻接顶点v未访问
             if (visited[v] == 0) {
-                dfs(v, visited, edges);
-                //有环，不满足当前课程要先上的课程，直接返回
-                if (hasCircle) {
-                    return;
-                }
-            } else if (visited[v] == 1) {//u的邻接顶点正在访问，说明有环，直接返回
+                dfs(v, visited, edges, result);
+            } else if (visited[v] == 1) {
                 hasCircle = true;
                 return;
             }
@@ -156,5 +163,7 @@ public class Problem207 {
 
         //当前节点已访问
         visited[u] = 2;
+        //当前节点u入栈
+        result[index--] = u;
     }
 }
