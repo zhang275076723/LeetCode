@@ -5,12 +5,15 @@ import java.util.Stack;
 /**
  * @Date 2022/4/29 9:26
  * @Author zsy
- * @Description 给定一个仅包含 0 和 1 、大小为 rows x cols 的二维二进制矩阵，找出只包含 1 的最大矩形，并返回其面积。
+ * @Description 柱状图中最大的矩形 类比84题、221题
+ * 给定一个仅包含 0 和 1 、大小为 rows x cols 的二维二进制矩阵，找出只包含 1 的最大矩形，并返回其面积。
  * <p>
- * 输入：matrix = [["1","0","1","0","0"],
+ * 输入：matrix = [
+ * ["1","0","1","0","0"],
  * ["1","0","1","1","1"],
  * ["1","1","1","1","1"],
- * ["1","0","0","1","0"]]
+ * ["1","0","0","1","0"]
+ * ]
  * 输出：6
  * <p>
  * 输入：matrix = []
@@ -33,25 +36,27 @@ import java.util.Stack;
 public class Problem85 {
     public static void main(String[] args) {
         Problem85 problem85 = new Problem85();
-        char[][] matrix = {{'1', '0', '1', '0', '0'},
+        char[][] matrix = {
+                {'1', '0', '1', '0', '0'},
                 {'1', '0', '1', '1', '1'},
                 {'1', '1', '1', '1', '1'},
-                {'1', '0', '0', '1', '0'}};
+                {'1', '0', '0', '1', '0'}
+        };
         System.out.println(problem85.maximalRectangle(matrix));
         System.out.println(problem85.maximalRectangle2(matrix));
     }
 
     /**
      * 动态规划，时间复杂度O((m^2)n)，空间复杂度O(mn)，m为matrix的行，n为matrix的列
-     * dp[i][j]：从matrix[i][j]开始往左连续1的个数
+     * dp[i][j]：从matrix[i][j]开始往左连续1的个数，即当前位置对应矩阵的最大长
      * 以matrix[i][j]为矩阵右下角，计算dp[i][j]到dp[i][0]对应矩阵面积
      * 例如：
-     * dp[2][4] = 3, dp[2][3] = 4, dp[2][2] = 1, dp[2][1] = 0, dp[2][0] = 2
-     * area[2][4] = 1*3 = 3
-     * area[2][3] = 2*min(3,4) = 6
+     * dp[4][2] = 3, dp[3][2] = 4, dp[2][2] = 1, dp[1][2] = 0, dp[0][2] = 2
+     * area[4][2] = 1*3 = 3
+     * area[3][2] = 2*min(3,4) = 6
      * area[2][2] = 3*min(3,1) = 3
-     * area[2][1] = 4*min(1,0) = 0
-     * area[2][0] = 5*min(0,2) = 0
+     * area[1][2] = 4*min(1,0) = 0
+     * area[0][2] = 5*min(0,2) = 0
      *
      * @param matrix
      * @return
