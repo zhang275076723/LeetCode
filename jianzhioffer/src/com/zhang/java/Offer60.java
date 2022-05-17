@@ -134,7 +134,7 @@ public class Offer60 {
      * @param t       掷第t+1个骰子
      * @param n       总骰子数
      * @param count   掷n个骰子点数之和的计数数组
-     * @param nPoints n个骰子点数数组
+     * @param nPoints n个骰子点数数组，nPoints[t] = i，表示第t个骰子的点数为i
      */
     public void backtrack(int t, int n, int[] count, int[] nPoints) {
         if (t == n) {
