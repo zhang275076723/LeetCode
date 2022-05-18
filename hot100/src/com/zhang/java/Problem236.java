@@ -3,41 +3,45 @@ package com.zhang.java;
 import java.util.*;
 
 /**
- * @Date 2022/4/10 10:23
+ * @Date 2022/5/18 8:50
  * @Author zsy
- * @Description 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
- * 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，
+ * @Description 二叉树的最近公共祖先
+ * 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
+ * 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个节点 p、q，最近公共祖先表示为一个节点 x，
  * 满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
  * <p>
- * 输入: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1
- * 输出: 3
- * 解释: 节点 5 和节点 1 的最近公共祖先是节点 3。
+ * 输入：root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1
+ * 输出：3
+ * 解释：节点 5 和节点 1 的最近公共祖先是节点 3 。
  * <p>
- * 输入: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4
- * 输出: 5
- * 解释: 节点 5 和节点 4 的最近公共祖先是节点 5。因为根据定义最近公共祖先节点可以为节点本身。
+ * 输入：root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4
+ * 输出：5
+ * 解释：节点 5 和节点 4 的最近公共祖先是节点 5 。因为根据定义最近公共祖先节点可以为节点本身。
  * <p>
- * 所有节点的值都是唯一的。
- * p、q 为不同节点且均存在于给定的二叉树中。
+ * 输入：root = [1,2], p = 1, q = 2
+ * 输出：1
+ * <p>
+ * 树中节点数目在范围 [2, 10^5] 内。
+ * -10^9 <= Node.val <= 10^9
+ * 所有 Node.val 互不相同 。
+ * p != q
+ * p 和 q 均存在于给定的二叉树中。
  */
-public class Offer68_2 {
+public class Problem236 {
     public static void main(String[] args) {
-        Offer68_2 offer68_2 = new Offer68_2();
+        Problem236 problem236 = new Problem236();
         String[] data = {"3", "5", "1", "6", "2", "0", "8", "null", "null", "7", "4"};
-        //root=3
-        TreeNode root = offer68_2.builderTree(data);
-        //p=5
-        TreeNode p = root.left.right.right;
-        //q=4
-        TreeNode q = root.right.left;
-//        TreeNode node = offer68_2.lowestCommonAncestor(root, p, q);
-        TreeNode node = offer68_2.lowestCommonAncestor2(root, p, q);
-        System.out.println(node.val);
+        TreeNode root = problem236.buildTree(data);
+        TreeNode p = root.left;
+        TreeNode q = root.right;
+//        TreeNode lowestCommonAncestor = problem236.lowestCommonAncestor(root, p, q);
+        TreeNode lowestCommonAncestor = problem236.lowestCommonAncestor2(root, p, q);
+        System.out.println(lowestCommonAncestor.val);
     }
 
     /**
-     * 自己的解，时间复杂度O(n)，平均空间复杂度O(logn)，最坏空间复杂度O(n)
-     * 遍历两遍，找到根节点到p和q的路径，路径最后一个相同的节点即为最近公共祖先
+     * 找根节点到p、q的路径，两个路径中最后一个相同的节点，即为最近公共祖先
+     * 时间复杂度O(n)，平均空间复杂度O(logn)，最坏空间复杂度O(n)
      *
      * @param root
      * @param p
@@ -54,21 +58,20 @@ public class Offer68_2 {
         getPath(root, p, pPath);
         getPath(root, q, qPath);
 
-        TreeNode node = null;
-        while (!pPath.isEmpty() && !qPath.isEmpty()) {
-            if (pPath.get(0) == qPath.get(0)) {
-                node = pPath.get(0);
-                pPath.remove(0);
-                qPath.remove(0);
+        int index = 0;
+        while (index < pPath.size() && index < qPath.size()) {
+            if (pPath.get(index) == qPath.get(index)) {
+                index++;
             } else {
                 break;
             }
         }
-        return node;
+        return pPath.get(index - 1);
     }
 
     /**
-     * 递归找，时间复杂度O(n)，空间复杂度O(n)
+     * 递归查找
+     * 时间复杂度O(n)，平均空间复杂度O(logn)，最坏空间复杂度O(n)
      *
      * @param root
      * @param p
@@ -80,7 +83,7 @@ public class Offer68_2 {
             return null;
         }
 
-        //p或q等于root，说明p或q最近公共祖先为root
+        //最近公共祖先为p或q
         if (root == p || root == q) {
             return root;
         }
@@ -112,9 +115,8 @@ public class Offer68_2 {
      *
      * @param root
      * @param node
-     * @param path
      */
-    public void getPath(TreeNode root, TreeNode node, List<TreeNode> path) {
+    private void getPath(TreeNode root, TreeNode node, List<TreeNode> path) {
         if (root == null) {
             return;
         }
@@ -136,7 +138,7 @@ public class Offer68_2 {
         }
     }
 
-    public TreeNode builderTree(String[] data) {
+    private TreeNode buildTree(String[] data) {
         if (data == null || data.length == 0) {
             return null;
         }
@@ -144,28 +146,32 @@ public class Offer68_2 {
         List<String> list = new ArrayList<>(Arrays.asList(data));
         Queue<TreeNode> queue = new LinkedList<>();
         TreeNode root = new TreeNode(Integer.parseInt(list.remove(0)));
-        queue.add(root);
+        queue.offer(root);
 
-        while (list.size() >= 2) {
-            TreeNode node = queue.remove();
-            String leftValue = list.remove(0);
-            String rightValue = list.remove(0);
-            if (!"null".equals(leftValue)) {
-                TreeNode leftNode = new TreeNode(Integer.parseInt(leftValue));
-                node.left = leftNode;
-                queue.add(leftNode);
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (!list.isEmpty()) {
+                String leftData = list.remove(0);
+                if (!"null".equals(leftData)) {
+                    TreeNode leftNode = new TreeNode(Integer.parseInt(leftData));
+                    node.left = leftNode;
+                    queue.add(leftNode);
+                }
             }
-            if (!"null".equals(rightValue)) {
-                TreeNode rightNode = new TreeNode(Integer.parseInt(rightValue));
-                node.right = rightNode;
-                queue.add(rightNode);
+            if (!list.isEmpty()) {
+                String rightData = list.remove(0);
+                if (!"null".equals(rightData)) {
+                    TreeNode rightNode = new TreeNode(Integer.parseInt(rightData));
+                    node.right = rightNode;
+                    queue.add(rightNode);
+                }
             }
         }
 
         return root;
     }
 
-    public static class TreeNode {
+    private static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
