@@ -1,6 +1,5 @@
 package com.zhang.java;
 
-import sun.plugin2.os.windows.Windows;
 
 /**
  * @Date 2022/3/31 17:17
@@ -12,7 +11,9 @@ import sun.plugin2.os.windows.Windows;
  * 输出: 5
  */
 public class Offer51 {
-    //用于归并排序计数逆序对
+    /**
+     * 用于归并排序计数逆序对
+     */
     private int count;
 
     public static void main(String[] args) {
