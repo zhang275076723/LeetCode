@@ -6,7 +6,8 @@ import java.util.LinkedList;
 /**
  * @Date 2022/4/19 19:00
  * @Author zsy
- * @Description 给你一个以字符串表示的非负整数 num 和一个整数 k ，
+ * @Description 移掉 K 位数字
+ * 给你一个以字符串表示的非负整数 num 和一个整数 k ，
  * 移除这个数中的 k 位数字，使得剩下的数字最小。请你以字符串形式返回这个最小的数字。
  * <p>
  * 输入：num = "1432219", k = 3
@@ -104,19 +105,15 @@ public class Problem402 {
             stack.offerLast(c);
         }
 
-        //栈中元素依次递增的情况，例如"34567"，如果没有删除k个元素，则要删除头k个元素
+        //栈中元素依次递增的情况，例如"34567"，如果k>0说明删除的元素个数小于原生的k个，则要删除栈顶剩下的k个元素
         while (k > 0) {
             stack.pollLast();
             k--;
         }
 
         //栈中元素有前导0的情况
-        while (!stack.isEmpty()) {
-            if (stack.peekFirst() == '0') {
-                stack.pollFirst();
-            } else {
-                break;
-            }
+        while (!stack.isEmpty() && stack.peekFirst() == '0') {
+            stack.pollFirst();
         }
 
         StringBuilder sb = new StringBuilder();
