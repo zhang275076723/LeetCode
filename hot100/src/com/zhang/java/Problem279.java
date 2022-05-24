@@ -28,7 +28,7 @@ public class Problem279 {
     /**
      * 动态规划
      * dp[i]：最少需要完全平方数的数量
-     * dp[i] = dp[i-j^2] + 1 (1 <= j <= i^1/2)
+     * dp[i] = min(dp[i-j^2] + 1) (1 <= j <= i^1/2)
      * 时间复杂度O(n*n^1/2)，空间复杂度O(n)
      *
      * @param n
