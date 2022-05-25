@@ -26,7 +26,7 @@ import java.util.Arrays;
  */
 public class Problem322 {
     /**
-     * 回溯+剪枝的金额最少硬币个数
+     * 回溯+剪枝金额使用的最少硬币数量
      */
     private int minCount = Integer.MAX_VALUE;
 
@@ -91,15 +91,17 @@ public class Problem322 {
 
     /**
      * @param coins  不同面额硬币数组
-     * @param amount 总金额
-     * @param index  coins[index]硬币金额
-     * @param count  当前所需硬币数量
+     * @param amount 当前所需的总金额
+     * @param index  硬币种类索引下标coins[index]
+     * @param count  当前使用的硬币数量
      */
     private void backtrack(int[] coins, int amount, int index, int count) {
+        //硬币种类已经遍历完，或者当前所需使用的硬币数量大于等于使用的最少硬币数量，则剪枝
         if (index < 0 || count + amount / coins[index] >= minCount) {
             return;
         }
 
+        //更新使用的最少硬币数量
         if (amount % coins[index] == 0) {
             minCount = Math.min(minCount, count + amount / coins[index]);
             return;

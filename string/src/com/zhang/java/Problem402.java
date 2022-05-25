@@ -6,7 +6,7 @@ import java.util.LinkedList;
 /**
  * @Date 2022/4/19 19:00
  * @Author zsy
- * @Description 移掉 K 位数字
+ * @Description 移掉 K 位数字 华为面试题
  * 给你一个以字符串表示的非负整数 num 和一个整数 k ，
  * 移除这个数中的 k 位数字，使得剩下的数字最小。请你以字符串形式返回这个最小的数字。
  * <p>
