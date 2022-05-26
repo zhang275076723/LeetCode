@@ -6,7 +6,8 @@ import java.util.Set;
 /**
  * @Date 2022/4/21 10:30
  * @Author zsy
- * @Description 给你一个未排序的整数数组 nums ，请你找出其中没有出现的最小的正整数。
+ * @Description 缺失的第一个正数 类比Problem287、Offer3
+ * 给你一个未排序的整数数组 nums ，请你找出其中没有出现的最小的正整数。
  * 请你实现时间复杂度为 O(n) 并且只使用常数级别额外空间的解决方案。
  * <p>
  * 输入：nums = [1,2,0]
@@ -59,7 +60,7 @@ public class Problem41 {
     }
 
     /**
-     * 原数组作为哈希表，时间复杂度O(n)，空间复杂度O(1)
+     * 原地哈希，原数组作为哈希表，将正整数i放在nums[i-1]，时间复杂度O(n)，空间复杂度O(1)
      * 遍历数组nums[i]和i+1是否相等，如果不等，则说明找到了出现的最小的正整数；
      * 如果数组遍历结束，则说明数组nums[i]和i+1都相等，返回nums.length+1
      * 例如：[(3), 4, (-1), 1]
@@ -77,6 +78,7 @@ public class Problem41 {
 
         for (int i = 0; i < nums.length; i++) {
             //将数组元素nums[i]放到nums[nums[i]-1]，数组下标nums[i]-1和数组元素nums[i]对应，例如元素3放到下标2
+            //只有nums[i]为正数，且不超过数组能够存放的范围时，才进行交换
             while (nums[i] > 0 && nums[i] <= nums.length && nums[i] != nums[nums[i] - 1]) {
                 //交换时，只能先保存nums[nums[i]-1]，如果保存nums[i]，对nums[i]的修改会导致无法找到nums[nums[i]-1]
                 int temp = nums[nums[i] - 1];

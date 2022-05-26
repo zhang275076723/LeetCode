@@ -35,7 +35,8 @@ public class Offer27 {
 
 
     /**
-     * 递归，自下而上交换，时间复杂度O(n)，空间复杂的O(n)
+     * 递归，自下而上交换
+     * 时间复杂度O(n)，平均空间复杂度O(logn)，最差空间复杂度O(n)
      *
      * @param root
      * @return
@@ -54,7 +55,8 @@ public class Offer27 {
     }
 
     /**
-     * 栈，自上而下交换，时间复杂度O(n)，空间复杂的O(n)
+     * 栈，自上而下交换
+     * 时间复杂度O(n)，平均空间复杂度O(logn)，最差空间复杂度O(n)
      *
      * @param root
      * @return
@@ -83,7 +85,8 @@ public class Offer27 {
     }
 
     /**
-     * 队列，自上而下交换，时间复杂度O(n)，空间复杂的O(n)
+     * 队列，自上而下交换
+     * 时间复杂度O(n)，平均空间复杂度O(logn)，最差空间复杂度O(n)
      *
      * @param root
      * @return
