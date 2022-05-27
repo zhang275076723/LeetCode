@@ -5,7 +5,8 @@ import java.util.*;
 /**
  * @Date 2022/5/2 9:42
  * @Author zsy
- * @Description 给你二叉树的根结点 root ，请你将它展开为一个单链表：
+ * @Description 二叉树展开为链表
+ * 给你二叉树的根结点 root ，请你将它展开为一个单链表：
  * 展开后的单链表应该同样使用 TreeNode ，其中 right 子指针指向链表中下一个结点，而左子指针始终为 null 。
  * 展开后的单链表应该与二叉树 先序遍历 顺序相同。
  * 你可以使用原地算法（O(1) 额外空间）展开这棵树吗？
@@ -57,7 +58,7 @@ public class Problem114 {
     }
 
     /**
-     * 找当前节点左子树的最右下节点，作为当前节点右子树的父节点
+     * 找当前节点左子树的最右下节点，作为当前节点右子树的父节点，再将当前节点的左子树作为当前节点的右子树
      * 时间复杂度O(n)，空间复杂度O(1)
      *     1                1        1            1            1
      *    / \              /          \            \            \
@@ -82,7 +83,7 @@ public class Problem114 {
         //当前节点左子树的最右下节点
         TreeNode mostRightNode;
         while (node != null) {
-            //找当前节点左子树的最右下节点，作为当前节点右子树的父节点
+            //找当前节点左子树的最右下节点，作为当前节点右子树的父节点，再将当前节点的左子树作为当前节点的右子树
             if (node.left != null) {
                 nextNode = node.left;
                 mostRightNode = nextNode;
