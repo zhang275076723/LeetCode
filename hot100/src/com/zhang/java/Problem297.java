@@ -1,6 +1,5 @@
 package com.zhang.java;
 
-import javax.swing.*;
 import java.util.*;
 
 /**
@@ -33,12 +32,12 @@ public class Problem297 {
         String[] data = {"1", "2", "3", "null", "null", "4", "5"};
         TreeNode root = problem297.buildTree(data);
 
-        //层序遍历
+        //层序遍历序列化和反序列化
         String serializeData = problem297.serialize(root);
         System.out.println(serializeData);
         TreeNode deserializeRoot = problem297.deserialize(serializeData);
 
-        //先序遍历
+        //先序遍历序列化和反序列化
         String serializeData2 = problem297.serialize2(root);
         System.out.println(serializeData2);
         TreeNode deserializeRoot2 = problem297.deserialize2(serializeData2);

@@ -3,7 +3,8 @@ package com.zhang.java;
 /**
  * @Date 2022/4/17 11:19
  * @Author zsy
- * @Description 给你一个只包含 '(' 和 ')' 的字符串，找出最长有效（格式正确且连续）括号子串的长度。
+ * @Description 最长有效括号 类比Problem20、Problem22、Problem301、Problem678
+ * 给你一个只包含 '(' 和 ')' 的字符串，找出最长有效（格式正确且连续）括号子串的长度。
  * <p>
  * 输入：s = "(()"
  * 输出：2
@@ -35,7 +36,8 @@ public class Problem32 {
      * 3、dp[i] = dp[i-1] + 2 + dp[i-dp[i-1]-2]  (s[i] == ')', s[i-1] == ')', s[i-dp[i-1]-1] == '(')
      * 4、dp[i] = 0                              (s[i] == ')', s[i-1] == ')', s[i-dp[i-1]-1] == ')')
      * 情况3、4：当s[i]为')'，s[i-1]为')'，找到以s[i-1]结尾的最长有效括号的第一个字符的前一个字符s[i-dp[i-1]-1]，
-     * 判断是否为'('，如果是，则s[i]和s[i-dp[i-1]-1]匹配，最长有效括号长度dp[i] = dp[i-dp[i-1]-2] + dp[i-1] + 2；
+     * 判断是否为'('，如果是，则s[i]和s[i-dp[i-1]-1]匹配，最长有效括号长度dp[i] = dp[i-1] + 2 + dp[i-dp[i-1]-2]，
+     * 其中dp[i-dp[i-1]-2]是与s[i]匹配的s[i-dp[i-1]-1]的前一个字符，所匹配的最长有效括号长度；
      * 如果s[i-dp[i-1]-1]不是')'，说明无法匹配，dp[i] = 0
      *
      * @param s
@@ -67,7 +69,7 @@ public class Problem32 {
                 } else {
                     //情况3
                     if (i - dp[i - 1] - 1 >= 0 && s.charAt(i - dp[i - 1] - 1) == '(') {
-                        if (i - dp[i - 1] - 2 >= 0) {
+                        if (i - dp[i - 1] - 2 > 0) {
                             dp[i] = dp[i - 1] + 2 + dp[i - dp[i - 1] - 2];
                         } else {
                             dp[i] = dp[i - 1] + 2;

@@ -5,7 +5,8 @@ import java.util.Stack;
 /**
  * @Date 2022/3/15 21:39
  * @Author zsy
- * @Description 给定一个只包含三种字符的字符串：（，）和 *，写一个函数来检验这个字符串是否为有效字符串。
+ * @Description 有效的括号字符串 类比Problem20、Problem22、Problem32、Problem301
+ * 给定一个只包含三种字符的字符串：（，）和 *，写一个函数来检验这个字符串是否为有效字符串。
  * 有效字符串具有如下规则：
  * 1.任何左括号 (必须有相应的右括号 )。
  * 2.任何右括号 )必须有相应的左括号 (。
@@ -33,12 +34,12 @@ public class Problem678 {
 
     /**
      * 动态规划，时间复杂度O(n^3)，空间复杂的O(n^2)
-     * dp[i][j] 表示字符串 s 从下标 i 到 j 的子串是否为有效的括号字符串，其中 0 ≤ i ≤ j < n
+     * dp[i][j] 字符串s的子串s[i]-s[j]是否为有效的括号字符串，其中 0 ≤ i ≤ j < n
      * 情况：
      * 1、当 s 长度为1时， * 才有效
-     * 2、当 s 长度为2时， () (* *) ** 才有效
-     * 3、1)当 s 长度大于2时，s[i]为 ( 或 * ，s[j]为 ) 或 * ，s[i+1][j-1] = true时，s[i][j]才有效
-     * 3、2)当 s 长度大于2时，i ≤ k < j，s[i][k-1]和s[k+1][j]都为true时，s[i][j]才有效
+     * 2、当 s 长度为2时， ()、 (* 、 *) 、 ** 才有效
+     * 3.1、当 s 长度大于2时，s[i]为 ( 或 * ，s[j]为 ) 或 * ，s[i+1][j-1] = true时，s[i][j]才有效
+     * 3.2、当 s 长度大于2时，i ≤ k < j，s[i][k]和s[k+1][j]都为true时，s[i][j]才有效
      *
      * @param s
      * @return dp[0][s.length() - 1]
@@ -63,16 +64,20 @@ public class Problem678 {
         }
 
         //情况3
+        //i：当前子串的长度-1，j：当前子串的结尾索引下标，k：当前子串的起始索引下标到结尾索引下标-1
         for (int i = 2; i < s.length(); i++) {
             for (int j = i; j < s.length(); j++) {
                 c1 = s.charAt(j - i);
                 c2 = s.charAt(j);
-                //情况3、1
-                if ((c1 == '(' || c1 == '*') && (c2 == ')' || c2 == '*') && dp[j - i + 1][j - 1]) {
+                //情况3.1
+                if ((c1 == '(' || c1 == '*') &&
+                        (c2 == ')' || c2 == '*') &&
+                        dp[j - i + 1][j - 1]) {
                     dp[j - i][j] = true;
                     continue;
                 }
-                //情况3、2
+
+                //情况3.2
                 for (int k = j - i; k < j; k++) {
                     if (dp[j - i][k] && dp[k + 1][j]) {
                         dp[j - i][j] = true;
@@ -87,15 +92,15 @@ public class Problem678 {
 
     /**
      * 使用符号栈，时间复杂度O(n)，空间复杂的O(n)
-     * 一个栈存放 ( ，一个栈存放 *
+     * 一个栈存放 ( ，一个栈存放 *，遇到 ) 先和 ( 匹配，再和 * 匹配
      *
      * @param s
      * @return
      */
     public boolean checkValidString2(String s) {
-        //存放 (
+        //存放 ( 的索引下标
         Stack<Integer> stack1 = new Stack<>();
-        //存放 *
+        //存放 * 的索引下标
         Stack<Integer> stack2 = new Stack<>();
 
         for (int i = 0; i < s.length(); i++) {
@@ -104,7 +109,7 @@ public class Problem678 {
                 //如果是 ( ，入栈stack1
                 stack1.push(i);
             } else if (c == '*') {
-                //如果是 * ，入栈stack1
+                //如果是 * ，入栈stack2
                 stack2.push(i);
             } else {
                 //如果是 ) ，先看stack1是否为空，如果为空，再看stack2是否为空，如果为空，返回false
@@ -124,8 +129,8 @@ public class Problem678 {
 
         //遍历完之后，看两个栈的情况
         //1、stack1和stack2都不为空，则需要用stack2中的 * 匹配stack1中的 ( ，必须保证 * 的索引大于 ( 的索引
-        //2、stack1为空，stack2不为空，返回true
-        //3、stack1不为空，stack2为空，返回false
+        //2、stack1为空，stack2不为空，说明 * 有剩余，返回true
+        //3、stack1不为空，stack2为空，说明还有未匹配的 ( ，返回false
         while (!stack1.empty() && !stack2.empty()) {
             int c1 = stack1.pop();
             int c2 = stack2.pop();

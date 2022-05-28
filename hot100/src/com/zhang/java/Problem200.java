@@ -1,7 +1,5 @@
 package com.zhang.java;
 
-import javafx.geometry.Pos;
-
 import java.util.LinkedList;
 import java.util.Queue;
 

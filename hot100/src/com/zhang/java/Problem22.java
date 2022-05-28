@@ -8,7 +8,8 @@ import java.util.Queue;
 /**
  * @Date 2022/4/16 8:31
  * @Author zsy
- * @Description 数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。
+ * @Description 括号生成 类比Problem20、Problem32、Problem301、Problem678
+ * 数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。
  * <p>
  * 输入：n = 3
  * 输出：["((()))","(()())","(())()","()(())","()()()"]
@@ -59,6 +60,7 @@ public class Problem22 {
         while (!queue.isEmpty()) {
             Node node = queue.poll();
 
+            //当前节点的左括号数量小于右括号数量，则不是有效括号
             if (node.left < node.right) {
                 continue;
             }
@@ -67,11 +69,11 @@ public class Problem22 {
                 continue;
             }
 
-            //当左括号数量小于n时，添加一个左括号节点
+            //当前节点左括号数量小于n时，添加一个左括号节点
             if (node.left < n) {
                 queue.add(new Node(node.left + 1, node.right, node.s + '('));
             }
-            //当右括号数量小于n时，添加一个右括号节点
+            //当前节点右括号数量小于n时，添加一个右括号节点
             if (node.right < n) {
                 queue.add(new Node(node.left, node.right + 1, node.s + ')'));
             }
