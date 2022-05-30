@@ -57,9 +57,10 @@ public class Problem322 {
         int[] dp = new int[amount + 1];
 
         for (int i = 1; i <= amount; i++) {
+            //初始化为Integer.MAX_VALUE表示当前无法用硬币组成总金额
             dp[i] = Integer.MAX_VALUE;
             for (int j = 0; j < coins.length; j++) {
-                //dp[i - coins[j]] != Integer.MAX_VALUE避免dp[i - coins[j]] + 1溢出
+                //dp[i - coins[j]] != Integer.MAX_VALUE，避免dp[i - coins[j]] + 1溢出
                 if (i - coins[j] >= 0 && dp[i - coins[j]] != Integer.MAX_VALUE) {
                     dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
                 }

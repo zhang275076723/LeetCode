@@ -25,7 +25,8 @@ import java.util.*;
 public class Problem301 {
     public static void main(String[] args) {
         Problem301 problem301 = new Problem301();
-        String s = "()())()";
+//        String s = "()())()";
+        String s = ")((())))))()(((l((((";
         System.out.println(problem301.removeInvalidParentheses(s));
         System.out.println(problem301.removeInvalidParentheses2(s));
     }
@@ -61,7 +62,7 @@ public class Problem301 {
             }
         }
 
-        backtrack(s, left, right, result, new HashSet<>());
+        backtrack(s, 0, left, right, result, new HashSet<>());
 
         return result;
     }
@@ -132,12 +133,13 @@ public class Problem301 {
 
     /**
      * @param str    当前字符串
+     * @param index  当前字符串的起始索引
      * @param left   要删除的左括号数量
      * @param right  要删除的右括号数量
-     * @param result 删除最小括号之后的结果集合
+     * @param result 删除最少无效括号之后的有效字符串结果集合
      * @param set    用于结果去重
      */
-    private void backtrack(String str, int left, int right, List<String> result, Set<String> set) {
+    private void backtrack(String str, int index, int left, int right, List<String> result, Set<String> set) {
         //如果要删除的左括号和右括号都为0，说明已经找到要删除的最少无效括号数量，直接返回
         if (left == 0 && right == 0) {
             //如果当前字符串是有效字符串，且不重复，才往结果集合中添加
@@ -148,22 +150,22 @@ public class Problem301 {
             return;
         }
 
-        for (int i = 0; i < str.length(); i++) {
+        for (int i = index; i < str.length(); i++) {
             //结果集合去重，本次的括号和上次的括号相同，说明本次删除括号的情况和上次删除括号的情况一样，剪枝，进行下次循环
-            if (i != 0 && str.charAt(i) == str.charAt(i - 1)) {
+            if (i != index && str.charAt(i) == str.charAt(i - 1)) {
                 continue;
             }
 
             // 删除一个左括号
             if (left > 0 && str.charAt(i) == '(') {
                 backtrack(str.substring(0, i) + str.substring(i + 1),
-                        left - 1, right, result, set);
+                        i, left - 1, right, result, set);
             }
 
             // 删除一个右括号
             if (right > 0 && str.charAt(i) == ')') {
                 backtrack(str.substring(0, i) + str.substring(i + 1),
-                        left, right - 1, result, set);
+                        i, left, right - 1, result, set);
             }
         }
     }
