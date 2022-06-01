@@ -7,7 +7,8 @@ import java.util.List;
 /**
  * @Date 2022/3/18 10:13
  * @Author zsy
- * @Description 输入数字 n，按顺序打印出从 1 到最大的 n 位十进制数。比如输入 3，则打印出 1、2、3 一直到最大的 3 位数 999。
+ * @Description 输入数字 n，按顺序打印出从 1 到最大的 n 位十进制数。
+ * 比如输入 3，则打印出 1、2、3 一直到最大的 3 位数 999。
  * <p>
  * 输入: n = 1
  * 输出: [1,2,3,4,5,6,7,8,9]
@@ -52,9 +53,9 @@ public class Offer17 {
     /**
      * 回溯法，全排列树，从最高位向低位拼接0~9，考虑首位0的情况
      *
-     * @param n 结果集合上限，最大的 n 位十进制数
-     * @param t 当前结果第t位
-     * @param list 结果集合
+     * @param n             结果集合上限，最大的 n 位十进制数
+     * @param t             当前结果第t位
+     * @param list          结果集合
      * @param stringBuilder 每个结果
      */
     public void backtrack(int n, int t, List<String> list, StringBuilder stringBuilder) {
