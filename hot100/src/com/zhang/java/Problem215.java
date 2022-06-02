@@ -1,11 +1,10 @@
 package com.zhang.java;
 
-import java.util.Random;
 
 /**
  * @Date 2022/5/15 8:30
  * @Author zsy
- * @Description 数组中的第K个最大元素
+ * @Description 数组中的第K个最大元素 类比Problem347
  * 给定整数数组 nums 和整数 k，请返回数组中第 k 个最大的元素。
  * 请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
  * <p>
@@ -115,7 +114,7 @@ public class Problem215 {
 
     /**
      * 快排划分变形
-     * 时间复杂度O(n)，空间复杂度O(logn)
+     * 平均时间复杂度O(n)，最坏时间复杂度O(n^2)，空间复杂度O(logn)
      *
      * @param nums  当前要排序数组
      * @param left  此次划分的左指针
