@@ -22,7 +22,7 @@ public class Problem977 {
     }
 
     /**
-     * 暴力破解，先平方，在排序
+     * 暴力，先平方，在排序
      * 时间复杂度T(n) = O(nlogn)，空间复杂度S(n) = O(n)
      *
      * @param nums
