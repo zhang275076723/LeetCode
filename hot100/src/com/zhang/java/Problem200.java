@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2022/5/12 9:22
  * @Author zsy
- * @Description 岛屿数量
+ * @Description 岛屿数量 类比Problem399(并查集)
  * 给你一个由 '1'（陆地）和 '0'（水）组成的的二维网格，请你计算网格中岛屿的数量。
  * 岛屿总是被水包围，并且每座岛屿只能由水平方向和/或竖直方向上相邻的陆地连接形成。
  * 此外，你可以假设该网格的四条边均被水包围。
@@ -47,7 +47,7 @@ public class Problem200 {
     }
 
     /**
-     * 深度优先遍历
+     * 深度优先遍历dfs
      * 访问为'1'的位置，并置为'2'，表示已经访问过，直至没有'1'的位置表示遍历结束
      * 时间复杂度O(mn)，空间复杂度O(mn)
      *
@@ -73,7 +73,7 @@ public class Problem200 {
     }
 
     /**
-     * 广度优先遍历
+     * 广度优先遍历bfs
      * 访问为'1'的位置，并置为'2'，表示已经访问过，将该位置加入队列，直至没有'1'的位置表示遍历结束
      * 时间复杂度O(mn)，空间复杂度O(min(m,n))
      *
@@ -139,8 +139,10 @@ public class Problem200 {
      * @param j
      */
     private void dfs(char[][] grid, int i, int j) {
-        if (i < 0 || i >= grid.length
-                || j < 0 || j >= grid[0].length
+        if (i < 0
+                || i >= grid.length
+                || j < 0
+                || j >= grid[0].length
                 || grid[i][j] != '1') {
             return;
         }
@@ -159,8 +161,10 @@ public class Problem200 {
 
         while (!queue.isEmpty()) {
             Pos pos = queue.poll();
-            if (pos.i >= 0 && pos.i < grid.length
-                    && pos.j >= 0 && pos.j < grid[0].length
+            if (pos.i >= 0
+                    && pos.i < grid.length
+                    && pos.j >= 0
+                    && pos.j < grid[0].length
                     && grid[pos.i][pos.j] == '1') {
                 //将当前位置置为'2'，表示已经访问过
                 grid[pos.i][pos.j] = '2';
@@ -189,11 +193,19 @@ public class Problem200 {
      * 并查集(不相交数据集)类
      */
     private static class UnionFind {
-        //并查集个数
+        /**
+         * 并查集个数
+         */
         int count;
-        //当前位置节点的秩(高度)
+
+        /**
+         * 当前位置节点的秩(高度)
+         */
         int[] rank;
-        //当前位置节点对应的父节点
+
+        /**
+         * 当前位置节点对应的父节点
+         */
         int[] parent;
 
         public UnionFind(char[][] grid) {
