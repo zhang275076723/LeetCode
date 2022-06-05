@@ -56,16 +56,8 @@ public class Problem406 {
             return null;
         }
 
-        //people第一维逆序排序，第二维正序排序
-        Arrays.sort(people, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] people1, int[] people2) {
-                if (people1[0] != people2[0]) {
-                    return people2[0] - people1[0];
-                }
-                return people1[1] - people2[1];
-            }
-        });
+        //people第一维降序排序，第二维升序排序
+        quickSort(people, 0, people.length - 1);
 
         int[][] result = new int[people.length][2];
 
@@ -107,7 +99,7 @@ public class Problem406 {
             return null;
         }
 
-        //people第一维正序排序，第二维逆序排序
+        //people第一维升序排序，第二维降序排序
         Arrays.sort(people, new Comparator<int[]>() {
             @Override
             public int compare(int[] people1, int[] people2) {
@@ -134,5 +126,41 @@ public class Problem406 {
         }
 
         return result;
+    }
+
+    /**
+     * 二维数组快排，第一维降序排序，第二维升序排序
+     *
+     * @param people
+     * @param left
+     * @param right
+     */
+    private void quickSort(int[][] people, int left, int right) {
+        if (left < right) {
+            int pivot = partition(people, left, right);
+            quickSort(people, left, pivot - 1);
+            quickSort(people, pivot + 1, right);
+        }
+    }
+
+    private int partition(int[][] people, int left, int right) {
+        int[] temp = people[left];
+
+        while (left < right) {
+            while (left < right && (people[right][0] < temp[0] ||
+                    (people[right][0] == temp[0] && people[right][1] >= temp[1]))) {
+                right--;
+            }
+            people[left] = people[right];
+
+            while (left < right && (people[left][0] > temp[0] ||
+                    (people[left][0] == temp[0] && people[left][1] <= temp[1]))) {
+                left++;
+            }
+            people[right] = people[left];
+        }
+
+        people[left] = temp;
+        return left;
     }
 }
