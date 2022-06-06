@@ -74,7 +74,7 @@ public class Knapsack {
         int[][] dp = new int[weights.length + 1][bagWeight + 1];
 
         for (int j = 1; j <= bagWeight; j++) {
-            //初始化为无法装满
+            //初始化Integer.MIN_VALUE，表示无法装满
             dp[0][j] = Integer.MIN_VALUE;
         }
 
