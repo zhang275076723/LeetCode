@@ -3,7 +3,8 @@ package com.zhang.java;
 /**
  * @Date 2022/4/23 11:12
  * @Author zsy
- * @Description 给定一个包含非负整数的 m x n 网格 grid ，
+ * @Description 最小路径和
+ * 给定一个包含非负整数的 m x n 网格 grid ，
  * 请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。
  * 说明：每次只能向下或者向右移动一步。
  * <p>
@@ -29,7 +30,7 @@ public class Problem64 {
 
     /**
      * 动态规划，时间复杂度O(mn)，空间复杂度O(mn)
-     * dp[i][j]：(1,1)到(i,j)路径数字总和最小的值
+     * dp[i][j]：grid[0][0]到grid[i-1][j-1]路径数字之和的最小值
      * dp[i][j] = min(dp[i][j-1], dp[i-1][j]) + grid[i-1][j-1]
      *
      * @param grid
@@ -62,7 +63,7 @@ public class Problem64 {
 
     /**
      * 动态规划优化，时间复杂度O(mn)，空间复杂度O(1)
-     * 每个位置的值只与它左边和上边的元素有关，直接使用原数组作为dp数组
+     * 每个位置的值只与它左边和上边的元素有关，直接使用原数组grid作为dp数组
      *
      * @param grid
      * @return

@@ -162,7 +162,7 @@ public class Knapsack {
     /**
      * 多重背包最大价值，不要求背包正好装满
      * 将每种物品的个数看成不同的物品，转换成01背包
-     * 使用二进制拆分，如果第i件物品有13个，13拆分为1+2+4+6，转换为4种不同的物品
+     * 使用二进制拆分，如果第i件物品有13个，13拆分为1+2+4+6，转换为4种不同的物品，变成01背包
      * dp[i][j]：前i件物品在容量为j的情况下的最大价值
      * dp[i][j] = dp[i-1][j]                                                             (listWeights.get(i-1) > j)
      * dp[i][j] = max(dp[i-1][j], dp[i-1][j-listWeights.get(i-1)] + listValues.get(i-1)) (listWeights.get(i-1) <= j)

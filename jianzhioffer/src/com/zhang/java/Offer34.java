@@ -1,7 +1,6 @@
 package com.zhang.java;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Date 2022/3/22 18:13
@@ -22,35 +21,26 @@ import java.util.List;
 public class Offer34 {
     public static void main(String[] args) {
         Offer34 offer34 = new Offer34();
-        TreeNode node1 = new TreeNode(5);
-        TreeNode node2 = new TreeNode(4);
-        TreeNode node3 = new TreeNode(8);
-        TreeNode node4 = new TreeNode(11);
-        TreeNode node5 = new TreeNode(13);
-        TreeNode node6 = new TreeNode(4);
-        TreeNode node7 = new TreeNode(7);
-        TreeNode node8 = new TreeNode(2);
-        TreeNode node9 = new TreeNode(5);
-        TreeNode node10 = new TreeNode(1);
-        node1.left = node2;
-        node1.right = node3;
-        node2.left = node4;
-        node3.left = node5;
-        node3.right = node6;
-        node4.left = node7;
-        node4.right = node8;
-        node6.left = node9;
-        node6.right = node10;
-        System.out.println(offer34.pathSum(node1, 22));
+        String[] data = {"5", "4", "8", "11", "null", "13", "4", "7", "2", "null", "null", "5", "1"};
+        TreeNode root = offer34.buildTree(data);
+        System.out.println(offer34.pathSum(root, 22));
     }
 
+    /**
+     * dfs
+     * 时间复杂度O(n^2)，空间复杂度O(n)
+     *
+     * @param root
+     * @param target
+     * @return
+     */
     public List<List<Integer>> pathSum(TreeNode root, int target) {
         if (root == null) {
             return new ArrayList<>();
         }
 
         List<List<Integer>> result = new ArrayList<>();
-        dfs(root, target, root.val, new ArrayList<>(), result);
+        dfs(root, target, 0, new ArrayList<>(), result);
         return result;
     }
 
@@ -64,8 +54,8 @@ public class Offer34 {
      * @param result 满足要求的所有路径
      */
     public void dfs(TreeNode root, int target, int curSum, List<Integer> path, List<List<Integer>> result) {
-        //满足条件，将path加入result集合中
-        if (root.left == null && root.right == null && curSum == target) {
+        //当前节点为叶节点，并且路径之和等于target，将path加入result集合中
+        if (root.left == null && root.right == null && curSum + root.val == target) {
             path.add(root.val);
             result.add(new ArrayList<>(path));
             path.remove(path.size() - 1);
@@ -74,12 +64,45 @@ public class Offer34 {
 
         path.add(root.val);
         if (root.left != null) {
-            dfs(root.left, target, curSum + root.left.val, path, result);
+            dfs(root.left, target, curSum + root.val, path, result);
         }
         if (root.right != null) {
-            dfs(root.right, target, curSum + root.right.val, path, result);
+            dfs(root.right, target, curSum + root.val, path, result);
         }
         path.remove(path.size() - 1);
+    }
+
+    private TreeNode buildTree(String[] data) {
+        if (data == null || data.length == 0) {
+            return null;
+        }
+
+        List<String> list = new ArrayList<>(Arrays.asList(data));
+        Queue<TreeNode> queue = new LinkedList<>();
+        TreeNode root = new TreeNode(Integer.parseInt(list.remove(0)));
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (!list.isEmpty()) {
+                String leftValue = list.remove(0);
+                if (!"null".equals(leftValue)) {
+                    TreeNode leftNode = new TreeNode(Integer.parseInt(leftValue));
+                    node.left = leftNode;
+                    queue.offer(leftNode);
+                }
+                if (!list.isEmpty()) {
+                    String rightValue = list.remove(0);
+                    if (!"null".equals(rightValue)) {
+                        TreeNode rightNode = new TreeNode(Integer.parseInt(rightValue));
+                        node.right = rightNode;
+                        queue.offer(rightNode);
+                    }
+                }
+            }
+        }
+
+        return root;
     }
 
     public static class TreeNode {
