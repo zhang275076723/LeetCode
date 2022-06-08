@@ -6,7 +6,8 @@ import java.util.Map;
 /**
  * @Date 2022/4/26 9:27
  * @Author zsy
- * @Description 给你一个字符串 s 、一个字符串 t 。返回 s 中涵盖 t 所有字符的最小子串。
+ * @Description 最小覆盖子串 类比Problem3、Problem438
+ * 给你一个字符串 s 、一个字符串 t 。返回 s 中涵盖 t 所有字符的最小子串。
  * 如果 s 中不存在涵盖 t 所有字符的子串，则返回空字符串 "" 。
  * <p>
  * 对于 t 中重复字符，我们寻找的子字符串中该字符数量必须不少于 t 中该字符数量。
@@ -35,9 +36,9 @@ public class Problem76 {
     }
 
     /**
-     * 滑动窗口，两个指针left和right分别指向满足要求的数组索引
+     * 滑动窗口，双指针，两个指针left和right分别指向满足要求的数组索引
      * 当left和right形成的窗口不能覆盖t时，right右移；当left和right形成的窗口覆盖t时，left左移
-     * 时间复杂度O(C*s.length())，空间复杂度O(C)，C为字符集大小
+     * 时间复杂度O(C*s.length())，空间复杂度O(C)，C为字符集大小，即|C|=26
      *
      * @param s
      * @param t
@@ -48,9 +49,9 @@ public class Problem76 {
             return "";
         }
 
-        //tMap中存放t中字符和对应的个数
+        //tMap中存放t中每个字符对应的个数
         Map<Character, Integer> tMap = new HashMap<>();
-        //sMap中存放s中字符和对应的个数
+        //sMap中存放s中每个字符对应的个数
         Map<Character, Integer> sMap = new HashMap<>();
         for (int i = 0; i < t.length(); i++) {
             tMap.put(t.charAt(i), tMap.getOrDefault(t.charAt(i), 0) + 1);
@@ -68,19 +69,20 @@ public class Problem76 {
             //右指针右移
             right++;
 
-            //如果tMap中是否包含右指针，则在sMap中添加
+            //如果tMap中包含右指针，则在sMap中添加
             if (right < s.length() && tMap.containsKey(s.charAt(right))) {
                 sMap.put(s.charAt(right), sMap.getOrDefault(s.charAt(right), 0) + 1);
             }
 
             //判断当前窗口是否覆盖t，左指针右移
             while (isCover(sMap, tMap) && left <= right) {
+                //更新窗口大小
                 if (right - left < minRight - minLeft) {
                     minLeft = left;
                     minRight = right;
                     size = minRight - minLeft + 1;
                 }
-                //如果sMap中包含左指针，则在sMap中减1
+                //如果sMap中包含左指针，左指针右移，需要在sMap中减1
                 if (sMap.containsKey(s.charAt(left))) {
                     sMap.put(s.charAt(left), sMap.get(s.charAt(left)) - 1);
                 }
@@ -94,7 +96,7 @@ public class Problem76 {
 
     private boolean isCover(Map<Character, Integer> sMap, Map<Character, Integer> tMap) {
         for (Map.Entry<Character, Integer> entry : tMap.entrySet()) {
-            //sMap中没有tMap中的key，或者sMap中有tMap中的key，但value小于tMap中的value
+            //sMap中没有tMap中的key，或者sMap中有tMap中的key，但value小于tMap中的value，则说明当前窗口不能覆盖t
             if (!sMap.containsKey(entry.getKey()) || sMap.get(entry.getKey()) < entry.getValue()) {
                 return false;
             }
