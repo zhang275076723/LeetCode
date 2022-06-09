@@ -7,7 +7,7 @@ import java.util.Set;
 /**
  * @Date 2022/3/13 10:27
  * @Author zsy
- * @Description 数组中重复的数字 类比Problem287、Offer3
+ * @Description 数组中重复的数字 类比Problem287、Problem448、Offer3
  * 在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。数组中某些数字是重复的，
  * 但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字
  * <p>

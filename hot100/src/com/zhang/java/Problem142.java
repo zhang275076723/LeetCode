@@ -103,7 +103,7 @@ public class Problem142 {
             slow = slow.next;
             //快慢指针相遇，说明有环
             if (fast == slow) {
-                //快指针重新指向链表头，两指针每次走1步，当快慢指针再次相遇时，慢指针指向链表中环的头结点
+                //快指针重新指向链表头，快慢指针每次走1步，当快慢指针再次相遇时，慢指针指向链表中环的头结点
                 fast = head;
                 while (fast != slow) {
                     fast = fast.next;

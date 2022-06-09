@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/4/12 8:59
  * @Author zsy
- * @Description 无重复字符的最长子串
+ * @Description 无重复字符的最长子串 类比Problem76、Problem438
  * 给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。
  * <p>
  * 输入: s = "abcabcbb"
@@ -35,11 +35,12 @@ public class Problem3 {
     }
 
     /**
-     * 动态规划，时间复杂度O(n^2)，空间复杂度O(n)
-     * dp[i]：以s[j]结尾的字符串s的最大子串长度
+     * 动态规划
+     * dp[i]：以s[j]结尾的字符串s的最长子串长度
      * j为s[i]之前相同字符的索引下标
      * dp[i] = dp[i-1] + 1 (i-j > dp[i-1])
-     * dp[i] = i-j (i-j <= dp[i-1])
+     * dp[i] = i-j         (i-j <= dp[i-1])
+     * 时间复杂度O(n^2)，空间复杂度O(n)
      *
      * @param s
      * @return
@@ -79,8 +80,9 @@ public class Problem3 {
     }
 
     /**
-     * 动态规划优化，时间复杂度O(n)，空间复杂度O(|Σ|)，|Σ|=128，ascii码
+     * 动态规划优化
      * 使用哈希表，在O(1)时间内找到和s[i]相同的，且在s[i]之前的s[j]
+     * 时间复杂度O(n)，空间复杂度O(|Σ|)，|Σ|=128，ascii码
      *
      * @param s
      * @return
@@ -112,8 +114,9 @@ public class Problem3 {
     }
 
     /**
-     * 滑动窗口，时间复杂度O(n)，空间复杂度O(|Σ|)，|Σ|=128，ascii码
+     * 滑动窗口，双指针
      * 使用哈希表，在O(1)时间内找到s[i]之前相同字符的索引下标
+     * 时间复杂度O(n)，空间复杂度O(|Σ|)，|Σ|=128，ascii码
      *
      * @param s
      * @return
