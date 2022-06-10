@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/5/24 8:42
  * @Author zsy
- * @Description 零钱兑换 腾讯面试题
+ * @Description 零钱兑换 腾讯面试题 类比Problem279、Problem416
  * 给你一个整数数组 coins ，表示不同面额的硬币；以及一个整数 amount ，表示总金额。
  * 计算并返回可以凑成总金额所需的 最少的硬币个数 。如果没有任何一种硬币组合能组成总金额，返回-1 。
  * 你可以认为每种硬币的数量是无限的。
@@ -39,7 +39,7 @@ public class Problem322 {
     }
 
     /**
-     * 动态规划
+     * 动态规划 完全背包
      * dp[i]：金额i所需的最少的硬币个数
      * dp[i] = min(dp[i - coins[j]] + 1) (j为硬币种类)
      * 时间复杂度O(coins.length*amount)，空间复杂度O(amount)
@@ -108,7 +108,7 @@ public class Problem322 {
             return;
         }
 
-        //coins[index]硬币取amount/coins[index到0个
+        //coins[index]硬币取amount/coins[index]个到0个
         for (int i = amount / coins[index]; i >= 0; i--) {
             backtrack(coins, amount - i * coins[index], index - 1, count + i);
         }
