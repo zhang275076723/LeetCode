@@ -57,8 +57,7 @@ public class Problem494 {
 
     /**
      * 动态规划，01背包
-     * 设选择负号的元素之和为negative，选择正号的元素之和为positive，所有元素之和为sum
-     * sum=pos+neg
+     * 设选择负号的元素之和为negative，选择正号的元素之和为positive，所有元素之和为sum，即sum=pos+neg
      * target=pos-neg=sum-2neg ===> neg=(sum-target)/2
      * dp[i][j]：前i个元素中选元素之和为j的方案数
      * dp[i][j] = dp[i-1][j]                        (nums[i-1]>j)

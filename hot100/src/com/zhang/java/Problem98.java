@@ -5,8 +5,8 @@ import java.util.*;
 /**
  * @Date 2022/4/30 11:39
  * @Author zsy
- * @Description 给你一个二叉树的根节点 root ，判断其是否是一个有效的二叉搜索树。
- * <p>
+ * @Description 验证二叉搜索树
+ * 给你一个二叉树的根节点 root ，判断其是否是一个有效的二叉搜索树。
  * 有效 二叉搜索树定义如下：
  * 节点的左子树只包含 小于 当前节点的数。
  * 节点的右子树只包含 大于 当前节点的数。
@@ -67,20 +67,22 @@ public class Problem98 {
         //中序遍历中当前节点的上一个节点值，使用long是因为节点值的范围在int，
         //且能取到最小的int，所以要使用long取到比最小的int更小的值作为初始值
         long preNodeValue = Long.MIN_VALUE;
+
         while (node != null || !stack.isEmpty()) {
-            if (node != null) {
+            while (node != null) {
                 stack.push(node);
                 node = node.left;
-            } else {
-                node = stack.pop();
-                //不满足二叉搜索树要求，直接返回false
-                if (node.val <= preNodeValue) {
-                    return false;
-                }
-                preNodeValue = node.val;
-                node = node.right;
             }
+
+            node = stack.pop();
+            //不满足二叉搜索树要求，直接返回false
+            if (node.val <= preNodeValue) {
+                return false;
+            }
+            preNodeValue = node.val;
+            node = node.right;
         }
+
         return true;
     }
 
@@ -108,6 +110,7 @@ public class Problem98 {
 
     /**
      * 建树
+     *
      * @param data
      * @return
      */

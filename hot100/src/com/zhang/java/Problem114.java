@@ -71,6 +71,7 @@ public class Problem114 {
      *                          6            6        5                5
      *                                                 \                \
      *                                                  6                6
+     *
      * @param root
      */
     public void flatten2(TreeNode root) {
@@ -127,14 +128,14 @@ public class Problem114 {
         Stack<TreeNode> stack = new Stack<>();
         TreeNode node = root;
         while (node != null || !stack.isEmpty()) {
-            if (node != null) {
+            while (node != null) {
                 list.add(node);
                 stack.push(node);
                 node = node.left;
-            } else {
-                node = stack.pop();
-                node = node.right;
             }
+
+            node = stack.pop();
+            node = node.right;
         }
     }
 
