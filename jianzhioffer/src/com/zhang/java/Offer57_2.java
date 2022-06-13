@@ -7,7 +7,8 @@ import java.util.List;
 /**
  * @Date 2022/4/4 16:36
  * @Author zsy
- * @Description 输入一个正整数 target ，输出所有和为 target 的连续正整数序列（至少含有两个数）。
+ * @Description 和为s的连续正数序列 类比Problem209、Problem560
+ * 输入一个正整数 target ，输出所有和为 target 的连续正整数序列（至少含有两个数）。
  * 序列内的数字由小到大排列，不同序列按照首个数字从小到大排列。
  * 1 <= target <= 10^5
  * <p>
@@ -95,7 +96,8 @@ public class Offer57_2 {
     }
 
     /**
-     * 滑动窗口，双指针，时间复杂度O(n)，空间复杂度O(1)
+     * 滑动窗口，双指针
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param target
      * @return
@@ -108,7 +110,7 @@ public class Offer57_2 {
         List<int[]> list = new ArrayList<>();
         int left = 1;
         int right = 1;
-        int sum = 1;
+        int sum = left;
 
         while (right <= target / 2 + 1) {
             while (sum < target) {

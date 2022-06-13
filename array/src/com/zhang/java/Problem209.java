@@ -5,7 +5,8 @@ import java.util.Arrays;
 /**
  * @Date 2021/11/25 10:05
  * @Author zsy
- * @Description 给定一个含有n个正整数的数组和一个正整数target
+ * @Description 长度最小的子数组 类比Problem560、Offer57_2
+ * 给定一个含有n个正整数的数组和一个正整数target
  * 找出该数组中满足其和 ≥ target的长度最小的连续子数组，并返回其长度。如果不存在符合条件的子数组，返回0
  * 注意：涉及连续子数组问题，一：考虑前缀和；二：考虑滑动窗口
  * <p>
@@ -18,11 +19,16 @@ import java.util.Arrays;
  * <p>
  * 输入：target = 11, nums = [1,1,1,1,1,1,1,1]
  * 输出：0
+ * <p>
+ * 1 <= target <= 10^9
+ * 1 <= nums.length <= 10^5
+ * 1 <= nums[i] <= 10^5
  */
 public class Problem209 {
     public static void main(String[] args) {
         Problem209 p = new Problem209();
         int[] nums = {2, 3, 1, 2, 4, 3};
+        System.out.println(p.minSubArrayLen(7, nums));
         System.out.println(p.minSubArrayLen2(7, nums));
         System.out.println(p.minSubArrayLen3(7, nums));
     }
@@ -37,9 +43,9 @@ public class Problem209 {
      */
     public int minSubArrayLen(int target, int[] nums) {
         int length = Integer.MAX_VALUE;
-        int sum;
+
         for (int i = 0; i < nums.length; i++) {
-            sum = 0;
+            int sum = 0;
             for (int j = i; j < nums.length; j++) {
                 sum += nums[j];
                 if (sum >= target) {
@@ -48,11 +54,12 @@ public class Problem209 {
                 }
             }
         }
+
         return length == Integer.MAX_VALUE ? 0 : length;
     }
 
     /**
-     * 前缀和 + 二分查找
+     * 前缀和 + 二分查找，前缀和在数组中元素存在负数的情况仍有效，但滑动窗口在数组中存在负数的时候失效
      * 时间复杂度T(n) = O(nlogn)，空间复杂度S(n) = O(n)
      *
      * @param target
@@ -63,11 +70,13 @@ public class Problem209 {
         //前缀和数组，preSum[i]：表示前i个元素nums[0..i-1]的和
         int[] preSum = new int[nums.length + 1];
         preSum[0] = 0;
+
         for (int i = 1; i < preSum.length; i++) {
             preSum[i] = preSum[i - 1] + nums[i - 1];
         }
 
         int length = Integer.MAX_VALUE;
+
         for (int i = 0; i < nums.length; i++) {
             int tempSum = preSum[i] + target;
             //二分查找，找到返回下标索引，没找到返回(-(该值在数组中应该插入的位置索引+1))
@@ -76,6 +85,7 @@ public class Problem209 {
             if (index < 0) {
                 index = -index - 1;
             }
+            //更新length
             if (index <= nums.length) {
                 length = Integer.min(length, index - i);
             }
@@ -85,7 +95,7 @@ public class Problem209 {
     }
 
     /**
-     * 滑动窗口，也是双指针法
+     * 滑动窗口，也是双指针法，因为数组中元素都是正数，所以可以使用滑动窗口
      * 时间复杂度T(n) = O(n)，空间复杂度S(n) = O(1)
      *
      * @param target
@@ -99,12 +109,13 @@ public class Problem209 {
         int sum = 0;
 
         while (right < nums.length) {
-            sum += nums[right];
+            sum = sum + nums[right];
             while (sum >= target) {
                 if (right - left + 1 < length) {
                     length = right - left + 1;
                 }
-                sum -= nums[left++];
+                sum = sum - nums[left];
+                left++;
             }
             right++;
         }
