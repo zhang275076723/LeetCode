@@ -3,7 +3,8 @@ package com.zhang.java;
 /**
  * @Date 2022/3/19 19:44
  * @Author zsy
- * @Description 输入两棵二叉树A和B，判断B是不是A的子结构。(约定空树不是任意一个树的子结构)
+ * @Description 树的子结构
+ * 输入两棵二叉树A和B，判断B是不是A的子结构。(约定空树不是任意一个树的子结构)
  * B是A的子结构，即A中有出现和B相同的结构和节点值。
  * <p>
  * 输入：A = [1,2,3], B = [3,1]
@@ -43,12 +44,13 @@ public class Offer26 {
             return false;
         }
 
-        //如果以A、B为起点，B为根节点的树是A为根节点的树的子结构，或树B是A的左子树的子结构，或树B是A的右子树的子结构，则返回ture
+        //如果以A、B为起点，B为根节点的树是A为根节点的树的子结构，
+        //或者树B是A的左子树的子结构，或者树B是A的右子树的子结构，则返回ture
         return contain(A, B) || isSubStructure(A.left, B) || isSubStructure(A.right, B);
     }
 
     /**
-     * 以A、B为起点判断B为根节点的树是否是A为根节点的树的子结构
+     * 判断B为根节点的树是否是A为根节点的树的子结构
      *
      * @param A
      * @param B
@@ -59,12 +61,13 @@ public class Offer26 {
         if (B == null) {
             return true;
         }
-        //如果A为空，说明B树中还有节点没有匹配；如果A的值不等于B的值，说明B树不是A树的子结构
+
+        //如果A为空，说明B树中还有节点没有匹配；或者如果A的值不等于B的值，说明B树不是A树的子结构
         if (A == null || A.val != B.val) {
             return false;
         }
 
-        //递归判断B的左子树是否是A的左子树的子结构，B的右子树是否是A的右子树的子结构
+        //递归判断B的左子树是否是A的左子树的子结构，并且B的右子树是否是A的右子树的子结构
         return contain(A.left, B.left) && contain(A.right, B.right);
     }
 

@@ -5,7 +5,8 @@ import java.util.*;
 /**
  * @Date 2022/3/23 21:07
  * @Author zsy
- * @Description 从上到下打印出二叉树的每个节点，同一层的节点按照从左到右的顺序打印。
+ * @Description 上到下打印二叉树 类比Problem102、Offer32_2、Offer32_3
+ * 从上到下打印出二叉树的每个节点，同一层的节点按照从左到右的顺序打印。
  * <p>
  * 输入: [3,9,20,null,null,15,7]
  * 返回：[3,9,20,15,7]
@@ -33,8 +34,8 @@ public class Offer32 {
 
         Queue<TreeNode> queue = new LinkedList<>();
         List<Integer> list = new ArrayList<>();
-
         queue.offer(root);
+
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
             list.add(node.val);

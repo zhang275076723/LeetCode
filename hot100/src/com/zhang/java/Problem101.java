@@ -5,7 +5,8 @@ import java.util.*;
 /**
  * @Date 2022/5/1 9:58
  * @Author zsy
- * @Description 给你一个二叉树的根节点 root ， 检查它是否轴对称。
+ * @Description 对称二叉树 类比Offer28
+ * 给你一个二叉树的根节点 root ， 检查它是否轴对称。
  * <p>
  * 输入：root = [1,2,2,3,4,4,3]
  * 输出：true

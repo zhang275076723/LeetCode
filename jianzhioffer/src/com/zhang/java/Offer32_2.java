@@ -8,7 +8,8 @@ import java.util.Queue;
 /**
  * @Date 2022/3/21 16:41
  * @Author zsy
- * @Description 从上到下按层打印二叉树，同一层的节点按从左到右的顺序打印，每一层打印到一行。
+ * @Description 上到下打印二叉树 II 类比Problem102、Offer32、Offer32_3
+ * 从上到下按层打印二叉树，同一层的节点按从左到右的顺序打印，每一层打印到一行。
  * <p>
  * 给定二叉树: [3, 9, 20, null, null, 15, 7]
  * 返回其层次遍历结果：[[3], [9,20], [15,7]]
@@ -43,8 +44,8 @@ public class Offer32_2 {
 
         List<List<Integer>> result = new ArrayList<>();
         Queue<TreeNode> queue = new LinkedList<>();
-
         queue.add(root);
+
         while (!queue.isEmpty()) {
             List<Integer> list = new ArrayList<>();
             int size = queue.size();
@@ -81,8 +82,8 @@ public class Offer32_2 {
         List<List<Integer>> result = new ArrayList<>();
         Queue<TreeNode> queue1 = new LinkedList<>();
         Queue<TreeNode> queue2 = new LinkedList<>();
-
         queue1.add(root);
+
         while (!queue1.isEmpty() || !queue2.isEmpty()) {
             List<Integer> list = new ArrayList<>();
             if (!queue1.isEmpty()) {
@@ -108,6 +109,7 @@ public class Offer32_2 {
                     }
                 }
             }
+
             result.add(list);
         }
 
@@ -126,7 +128,9 @@ public class Offer32_2 {
         }
 
         List<List<Integer>> result = new ArrayList<>();
+
         recursion(root, 0, result);
+
         return result;
     }
 

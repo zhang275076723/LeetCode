@@ -5,7 +5,8 @@ import java.util.*;
 /**
  * @Date 2022/3/15 11:58
  * @Author zsy
- * @Description 给你二叉树的根节点 root ，返回其节点值的锯齿形层序遍历 。
+ * @Description 二叉树的锯齿形层序遍历 类比Problem102、Offer32_3
+ * 给你二叉树的根节点 root ，返回其节点值的锯齿形层序遍历 。
  * （即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。
  * <p>
  * 输入：root = [3,9,20,null,null,15,7]
@@ -32,7 +33,7 @@ public class Problem103 {
         List<List<Integer>> list = problem103.zigzagLevelOrder(node1);
         System.out.println(list);
         List<List<Integer>> list2 = problem103.zigzagLevelOrder2(node1);
-        System.out.println(list);
+        System.out.println(list2);
     }
 
     /**
@@ -51,6 +52,7 @@ public class Problem103 {
         //用于每行元素的正序或逆序
         boolean reverse = false;
         queue.add(root);
+
         while (!queue.isEmpty()) {
             int size = queue.size();
             List<Integer> list = new ArrayList<>();
@@ -90,8 +92,8 @@ public class Problem103 {
         Queue<TreeNode> queue1 = new LinkedList<>();
         //从右到左
         Queue<TreeNode> queue2 = new LinkedList<>();
-
         queue1.add(root);
+
         while (!queue1.isEmpty() || !queue2.isEmpty()) {
             LinkedList<Integer> list = new LinkedList<>();
             if (!queue1.isEmpty()) {

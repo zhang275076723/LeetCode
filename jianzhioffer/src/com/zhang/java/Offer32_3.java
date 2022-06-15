@@ -5,7 +5,8 @@ import java.util.*;
 /**
  * @Date 2022/3/21 17:34
  * @Author zsy
- * @Description 请实现一个函数按照之字形顺序打印二叉树，
+ * @Description 从上到下打印二叉树 III 类比Problem103、Offer32、Offer32_2
+ * 请实现一个函数按照之字形顺序打印二叉树，
  * 即第一行按照从左到右的顺序打印，第二层按照从右到左的顺序打印，第三行再按照从左到右的顺序打印，其他行以此类推。
  * <p>
  * 给定二叉树: [3, 9, 20, null, null, 15, 7]
@@ -41,8 +42,8 @@ public class Offer32_3 {
 
         List<List<Integer>> result = new ArrayList<>();
         Queue<TreeNode> queue = new LinkedList<>();
-
         queue.add(root);
+
         while (!queue.isEmpty()) {
             LinkedList<Integer> list = new LinkedList<>();
             int size = queue.size();
@@ -88,8 +89,8 @@ public class Offer32_3 {
         Queue<TreeNode> queue1 = new LinkedList<>();
         //从右到左
         Queue<TreeNode> queue2 = new LinkedList<>();
-
         queue1.add(root);
+
         while (!queue1.isEmpty() || !queue2.isEmpty()) {
             LinkedList<Integer> list = new LinkedList<>();
             if (!queue1.isEmpty()) {
