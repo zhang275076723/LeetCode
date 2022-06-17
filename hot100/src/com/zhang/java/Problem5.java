@@ -3,7 +3,8 @@ package com.zhang.java;
 /**
  * @Date 2022/4/13 9:32
  * @Author zsy
- * @Description 给你一个字符串 s，找到 s 中最长的回文子串。
+ * @Description 最长回文子串 类比Problem647
+ * 给你一个字符串 s，找到 s 中最长的回文子串。
  * <p>
  * 输入：s = "babad"
  * 输出："bab"
@@ -18,14 +19,15 @@ package com.zhang.java;
 public class Problem5 {
     public static void main(String[] args) {
         Problem5 problem5 = new Problem5();
-        String s = "cbbd";
+        String s = "babad";
         System.out.println(problem5.longestPalindrome(s));
         System.out.println(problem5.longestPalindrome2(s));
         System.out.println(problem5.longestPalindrome3(s));
     }
 
     /**
-     * 暴力，时间复杂度O(n^3)，空间复杂度O(1)
+     * 暴力
+     * 时间复杂度O(n^3)，空间复杂度O(1)
      *
      * @param s
      * @return
@@ -65,10 +67,10 @@ public class Problem5 {
     }
 
     /**
-     * 双指针，中心扩散，时间复杂度O(n^2)，空间复杂度O(1)
-     * 先往左寻找与当期位置相同的字符，直到遇到不相等为止。
-     * 再往右寻找与当期位置相同的字符，直到遇到不相等为止。
-     * 最后左右双向扩散，直到左和右不相等
+     * 双指针，中心扩散
+     * 以一个字符作为中心向两边扩散，找最长回文串
+     * 以两个字符作为中心向两边扩散，找最长回文串
+     * 时间复杂度O(n^2)，空间复杂度O(1)
      *
      * @param s
      * @return
@@ -81,42 +83,41 @@ public class Problem5 {
             return s;
         }
 
-        int start = 0;
-        int maxLen = 1;
-        int left;
-        int right;
+        int left = 0;
+        int right = 0;
         for (int i = 0; i < s.length(); i++) {
-            left = i;
-            right = i;
+            //一个字符作为中心向两边扩散
+            int[] arr1 = centerExtend(s, i, i);
+            //两个字符作为中心向两边扩散
+            int[] arr2 = arr1;
 
-            //往左找到第一个与s[i]不相等的字符
-            while (left - 1 >= 0 && s.charAt(left - 1) == s.charAt(i)) {
-                left--;
-            }
-            //往右找到第一个与s[i]不相等的字符
-            while (right + 1 < s.length() && s.charAt(right + 1) == s.charAt(i)) {
-                right++;
-            }
-            //两边比较是否相等
-            while (left - 1 >= 0 && right + 1 < s.length() && s.charAt(left - 1) == s.charAt(right + 1)) {
-                left--;
-                right++;
+            if (i + 1 < s.length() && s.charAt(i) == s.charAt(i + 1)) {
+                arr2 = centerExtend(s, i, i + 1);
             }
 
-            if (right - left + 1 > maxLen) {
-                maxLen = right - left + 1;
-                start = left;
+            int[] curArr;
+
+            if (arr1[1] - arr1[0] > arr2[1] - arr2[0]) {
+                curArr = arr1;
+            } else {
+                curArr = arr2;
+            }
+
+            if (curArr[1] - curArr[0] > right - left) {
+                left = curArr[0];
+                right = curArr[1];
             }
         }
 
-        return s.substring(start, start + maxLen);
+        return s.substring(left, right + 1);
     }
 
     /**
-     * 动态规划，时间复杂度O(n^2)，空间复杂度O(n)
+     * 动态规划
      * dp[i][j]：s[i]到s[j]是否是回文串
      * dp[i][j] = false (s[i] != s[j])
      * dp[i][j] = true (s[i] == s[j] && dp[i+1][j-1] == true)
+     * 时间复杂度O(n^2)，空间复杂度O(n^2)
      *
      * @param s
      * @return
@@ -129,28 +130,48 @@ public class Problem5 {
             return s;
         }
 
-        int start = 0;
-        int maxLen = 1;
         boolean[][] dp = new boolean[s.length()][s.length()];
 
         for (int i = 0; i < s.length(); i++) {
             dp[i][i] = true;
         }
         for (int i = 1; i < s.length(); i++) {
+            //用于s[i]-s[i+1]的情况
             dp[i][i - 1] = true;
         }
+
+        int left = 0;
+        int right = 0;
+
         for (int i = 1; i < s.length(); i++) {
             for (int j = 0; j < s.length() - i; j++) {
                 if (s.charAt(j) == s.charAt(j + i) && dp[j + 1][j + i - 1]) {
                     dp[j][j + i] = true;
-                    if (i + 1 > maxLen) {
-                        maxLen = i + 1;
-                        start = j;
+                    if (i + 1 > right - left + 1) {
+                        left = j;
+                        right = j + i;
                     }
                 }
             }
         }
 
-        return s.substring(start, start + maxLen);
+        return s.substring(left, right + 1);
+    }
+
+    /**
+     * 中心扩散
+     *
+     * @param s     原字符串
+     * @param left  扩散起始的左指针
+     * @param right 扩散起始的右指针
+     * @return 当前最长回文串的左右指针数组
+     */
+    private int[] centerExtend(String s, int left, int right) {
+        while (left > 0 && right + 1 < s.length() && s.charAt(left - 1) == s.charAt(right + 1)) {
+            left--;
+            right++;
+        }
+
+        return new int[]{left, right};
     }
 }

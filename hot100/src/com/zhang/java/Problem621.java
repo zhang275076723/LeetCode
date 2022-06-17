@@ -157,7 +157,7 @@ public class Problem621 {
         //如果最多任务A、B执行次数为3，n = 2，则最少时间安排为ABxABxAB
         int time = (maxExecute - 1) * (n + 1) + maxCount;
 
-        //如果time小于task.length，例如['A','A','B','B']，n = 0，则取数组的长度
+        //如果time小于task.length，例如['A','A','B','C']，n = 0，则取数组的长度为最少执行时间
         return Math.max(time, tasks.length);
     }
 }
