@@ -58,6 +58,7 @@ public class Problem142 {
         }
 
         Set<ListNode> set = new HashSet<>();
+
         while (head != null) {
             if (set.contains(head)) {
                 return head;
@@ -65,6 +66,7 @@ public class Problem142 {
             set.add(head);
             head = head.next;
         }
+
         return null;
     }
 
@@ -98,9 +100,11 @@ public class Problem142 {
 
         ListNode fast = head;
         ListNode slow = head;
+
         while (fast != null && fast.next != null) {
             fast = fast.next.next;
             slow = slow.next;
+
             //快慢指针相遇，说明有环
             if (fast == slow) {
                 //快指针重新指向链表头，快慢指针每次走1步，当快慢指针再次相遇时，慢指针指向链表中环的头结点
@@ -112,6 +116,7 @@ public class Problem142 {
                 return slow;
             }
         }
+
         return null;
     }
 
