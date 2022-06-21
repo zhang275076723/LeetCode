@@ -4,7 +4,7 @@ package com.zhang.zhang;
 /**
  * @Date 2022/4/20 17:24
  * @Author zsy
- * @Description 字节面试题 重排链表
+ * @Description 重排链表 字节面试题
  * 给定一个单链表 L 的头节点 head ，单链表 L 表示为：L0 → L1 → … → Ln - 1 → Ln
  * 请将其重新排列后变为：L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
  * 不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
@@ -44,11 +44,11 @@ public class Problem143 {
         //快慢指针找中间位置
         ListNode slow = head;
         ListNode fast = head;
+
         while (fast.next != null && fast.next.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
-
 
         //后半边链表反转
         ListNode head2 = reverseList(slow.next);
@@ -61,6 +61,7 @@ public class Problem143 {
         ListNode node2 = head2;
         ListNode nextNode1;
         ListNode nextNode2;
+        
         while (node1 != null && node2 != null) {
             nextNode1 = node1.next;
             nextNode2 = node2.next;
@@ -117,12 +118,16 @@ public class Problem143 {
             return null;
         }
 
+        //不能使用Arrays.asList(data)，因为需要传入引用类型才能转换为list，
+        //如果传入基本数据类型，则会将数组对象作为引用放入list中
         ListNode head = new ListNode(data[0]);
         ListNode node = head;
+
         for (int i = 1; i < data.length; i++) {
             node.next = new ListNode(data[i]);
             node = node.next;
         }
+
         return head;
     }
 
