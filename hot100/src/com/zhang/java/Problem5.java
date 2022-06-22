@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/13 9:32
  * @Author zsy
- * @Description 最长回文子串 类比Problem647
+ * @Description 最长回文子串 类比Problem131、Problem647
  * 给你一个字符串 s，找到 s 中最长的回文子串。
  * <p>
  * 输入：s = "babad"

@@ -3,7 +3,8 @@ package com.zhang.java;
 /**
  * @Date 2022/4/12 11:15
  * @Author zsy
- * @Description 给定两个大小分别为 m 和 n 的正序（从小到大）数组 nums1 和 nums2。
+ * @Description 寻找两个正序数组的中位数
+ * 给定两个大小分别为 m 和 n 的正序（从小到大）数组 nums1 和 nums2。
  * 请你找出并返回这两个正序数组的 中位数 。
  * 算法的时间复杂度应该为 O(log (m+n)) 。
  * <p>
@@ -32,8 +33,9 @@ public class Problem4 {
     }
 
     /**
-     * 暴力，时间复杂度O(m+n)，空间复杂度O(1)
+     * 暴力
      * 两个指针分别指向nums1和nums2，找到两个数组的中位数
+     * 时间复杂度O(m+n)，空间复杂度O(1)
      *
      * @param nums1
      * @param nums2
@@ -81,11 +83,11 @@ public class Problem4 {
     }
 
     /**
-     * 有序就要往二分查找考虑
-     * 二分查找变形，时间复杂度O(log(m+n))，空间复杂度O(1)
+     * 二分查找变形，有序就要往二分查找考虑
      * 求第k小的数，比较nums1中第k/2个元素和nums2中第k/2个元素，
      * 把较小的值和它之前的元素去掉，因为这些数不可能是第k小的数，
      * 然后再求删除后的两个数组第(k-删除的元素个数)小的数，直至找到第k小的数
+     * 时间复杂度O(log(m+n))，空间复杂度O(1)
      *
      * @param nums1
      * @param nums2
