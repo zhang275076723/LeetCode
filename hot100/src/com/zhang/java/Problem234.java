@@ -26,9 +26,9 @@ public class Problem234 {
     }
 
     /**
-     * 快慢指针找到中间节点的同时，翻转前半部分链表，得到的两个链表进行比较，判断是否是回文链表
-     * 时间复杂度O(n)，空间复杂度O(1)
+     * 快慢指针找到中间节点，并翻转前半部分链表，得到的两个链表进行比较，判断是否是回文链表
      * 在并发环境下，函数运行时需要锁定其他线程或进程对链表的访问，因为在函数执行过程中链表会被修改
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param head
      * @return
@@ -43,7 +43,7 @@ public class Problem234 {
         ListNode pre = null;
         ListNode cur = slow;
 
-        //找中间节点的同时，翻转前半部分链表
+        //找中间节点，并翻转前半部分链表
         while (fast.next != null && fast.next.next != null) {
             slow = slow.next;
             fast = fast.next.next;

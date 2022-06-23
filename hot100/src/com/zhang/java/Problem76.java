@@ -65,6 +65,7 @@ public class Problem76 {
         int minRight = Integer.MAX_VALUE;
         //窗口大小
         int size = 0;
+
         while (right < s.length()) {
             //右指针右移
             right++;
