@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/6/19 9:30
  * @Author zsy
- * @Description 字符串相加 类比Problem66、Problem369
+ * @Description 字符串相加 类比Problem43
  * 给定两个字符串形式的非负整数 num1 和num2 ，计算它们的和并同样以字符串形式返回。
  * 你不能使用任何內建的用于处理大整数的库（比如 BigInteger）， 也不能直接将输入的字符串转换为整数形式。
  * <p>
@@ -31,7 +31,7 @@ public class Problem415 {
     /**
      * 双指针
      * 从低位向高位相加和进行
-     * 时间复杂度O(max(m,n))，空间复杂度O(1)
+     * 时间复杂度O(max(m,n))，空间复杂度O(max(m,n))
      *
      * @param num1
      * @param num2
@@ -73,8 +73,6 @@ public class Problem415 {
         }
 
         //因为是尾添加，所以需要反转
-        sb.reverse();
-
-        return sb.toString();
+        return sb.reverse().toString();
     }
 }
