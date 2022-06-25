@@ -4,13 +4,20 @@ package com.zhang.java;
 /**
  * @Date 2021/11/27 19:31
  * @Author zsy
- * @Description 给你一个正整数n，生成一个包含1到n^2所有元素，且元素按顺时针顺序螺旋排列的n x n正方形矩阵matrix
+ * @Description 螺旋矩阵 II 类比Problem54
+ * 给你一个正整数n，生成一个包含1到n^2所有元素，且元素按顺时针顺序螺旋排列的n x n正方形矩阵matrix
  * <p>
  * 输入：n = 3
- * 输出：[[1,2,3],[8,9,4],[7,6,5]]
+ * 输出：[
+ * [1,2,3],
+ * [8,9,4],
+ * [7,6,5]
+ * ]
  * <p>
  * 输入：n = 1
  * 输出：[[1]]
+ * <p>
+ * 1 <= n <= 20
  */
 public class Problem59 {
     public static void main(String[] args) {
@@ -26,7 +33,7 @@ public class Problem59 {
 
     /**
      * 先左到右，再上到下，接着右到左，最后下到上
-     * 时间复杂度T(n) = O(n^2)，空间复杂度S(n) = O(n^2)
+     * 时间复杂度T(n) = O(n^2)，空间复杂度S(n) = O(1)
      *
      * @param n
      * @return

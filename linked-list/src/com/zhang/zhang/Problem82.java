@@ -42,7 +42,7 @@ public class Problem82 {
             return head;
         }
 
-        //设置头结点，便于操作
+        //设置头结点，使原先头结点成为普通节点，避免特殊情况的考虑
         ListNode hair = new ListNode(0);
         hair.next = head;
 
