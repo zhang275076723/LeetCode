@@ -85,12 +85,13 @@ public class Problem5 {
 
         int left = 0;
         int right = 0;
+
         for (int i = 0; i < s.length(); i++) {
             //一个字符作为中心向两边扩散
             int[] arr1 = centerExtend(s, i, i);
+
             //两个字符作为中心向两边扩散
             int[] arr2 = arr1;
-
             if (i + 1 < s.length() && s.charAt(i) == s.charAt(i + 1)) {
                 arr2 = centerExtend(s, i, i + 1);
             }

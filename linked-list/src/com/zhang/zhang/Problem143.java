@@ -51,7 +51,7 @@ public class Problem143 {
         }
 
         //后半边链表反转
-        ListNode head2 = reverseList(slow.next);
+        ListNode head2 = reverse(slow.next);
 
         //前半边链表的尾结点指向null
         slow.next = null;
@@ -78,7 +78,7 @@ public class Problem143 {
      * @param head
      * @return
      */
-    private ListNode reverseList(ListNode head) {
+    private ListNode reverse(ListNode head) {
         if (head == null || head.next == null) {
             return head;
         }
@@ -102,12 +102,12 @@ public class Problem143 {
      * @param head
      * @return
      */
-    private ListNode reverseList2(ListNode head) {
+    private ListNode reverse2(ListNode head) {
         if (head == null || head.next == null) {
             return head;
         }
 
-        ListNode node = reverseList2(head.next);
+        ListNode node = reverse2(head.next);
         head.next.next = head;
         head.next = null;
         return node;

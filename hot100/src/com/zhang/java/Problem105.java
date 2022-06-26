@@ -5,7 +5,8 @@ import java.util.*;
 /**
  * @Date 2022/5/1 11:57
  * @Author zsy
- * @Description 给定两个整数数组 preorder 和 inorder ，
+ * @Description 从前序与中序遍历序列构造二叉树
+ * 给定两个整数数组 preorder 和 inorder ，
  * 其中 preorder 是二叉树的先序遍历， inorder 是同一棵树的中序遍历，请构造二叉树并返回其根节点。
  * <p>
  * 输入: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
@@ -113,7 +114,7 @@ public class Problem105 {
         }
     }
 
-    public class TreeNode {
+    public static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;

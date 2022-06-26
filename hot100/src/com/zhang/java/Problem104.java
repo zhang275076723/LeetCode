@@ -5,7 +5,8 @@ import java.util.*;
 /**
  * @Date 2022/5/1 11:29
  * @Author zsy
- * @Description 给定一个二叉树，找出其最大深度。
+ * @Description 二叉树的最大深度
+ * 给定一个二叉树，找出其最大深度。
  * 二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
  * 说明: 叶子节点是指没有子节点的节点。
  * <p>
@@ -22,7 +23,8 @@ public class Problem104 {
     }
 
     /**
-     * 递归，深度优先求树的深度，时间复杂度O(n)，空间复杂度O(n)
+     * 递归，深度优先求树的深度
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
@@ -34,11 +36,13 @@ public class Problem104 {
 
         int leftDepth = maxDepth(root.left);
         int rightDepth = maxDepth(root.right);
+
         return Math.max(leftDepth, rightDepth) + 1;
     }
 
     /**
-     * 非递归，深度优先求树的深度，时间复杂度O(n)，空间复杂度O(n)
+     * 非递归，深度优先求树的深度
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
@@ -67,7 +71,8 @@ public class Problem104 {
     }
 
     /**
-     * 非递归，层次遍历求树的深度，时间复杂度O(n)，空间复杂度O(n)
+     * 非递归，层次遍历求树的深度
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
@@ -83,6 +88,7 @@ public class Problem104 {
 
         while (!queue.isEmpty()) {
             int size = queue.size();
+
             for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
                 if (node.left != null) {
@@ -92,6 +98,7 @@ public class Problem104 {
                     queue.add(node.right);
                 }
             }
+
             depth++;
         }
 

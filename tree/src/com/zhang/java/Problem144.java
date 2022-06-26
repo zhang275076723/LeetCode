@@ -3,13 +3,13 @@ package com.zhang.java;
 import java.util.*;
 
 /**
- * @Date 2022/4/29 15:57
+ * @Date 2022/6/26 8:15
  * @Author zsy
- * @Description 二叉树的中序遍历 类比Problem144、Problem145
- * 给定一个二叉树的根节点 root ，返回 它的 中序 遍历 。
+ * @Description 二叉树的前序遍历 类比Problem94、Problem145
+ * 给你二叉树的根节点 root ，返回它节点值的 前序 遍历。
  * <p>
  * 输入：root = [1,null,2,3]
- * 输出：[1,3,2]
+ * 输出：[1,2,3]
  * <p>
  * 输入：root = []
  * 输出：[]
@@ -17,83 +17,86 @@ import java.util.*;
  * 输入：root = [1]
  * 输出：[1]
  * <p>
+ * 输入：root = [1,2]
+ * 输出：[1,2]
+ * <p>
+ * 输入：root = [1,null,2]
+ * 输出：[1,2]
+ * <p>
  * 树中节点数目在范围 [0, 100] 内
  * -100 <= Node.val <= 100
  */
-public class Problem94 {
+public class Problem144 {
     public static void main(String[] args) {
-        Problem94 problem94 = new Problem94();
+        Problem144 problem144 = new Problem144();
         String[] data = {"1", "null", "2", "3"};
-        TreeNode root = problem94.buildTree(data);
-        System.out.println(problem94.inorderTraversal(root));
-        System.out.println(problem94.inorderTraversal2(root));
+        TreeNode root = problem144.buildTree(data);
+        System.out.println(problem144.preorderTraversal(root));
+        System.out.println(problem144.preorderTraversal2(root));
     }
 
     /**
-     * 递归中序遍历
+     * 递归先序遍历
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
      */
-    public List<Integer> inorderTraversal(TreeNode root) {
+    public List<Integer> preorderTraversal(TreeNode root) {
         if (root == null) {
             return new ArrayList<>();
         }
 
-        List<Integer> result = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
 
-        inorder(root, result);
+        preOrder(root, list);
 
-        return result;
+        return list;
     }
 
     /**
-     * 非递归中序遍历
+     * 非递归先序遍历
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
      */
-    public List<Integer> inorderTraversal2(TreeNode root) {
+    public List<Integer> preorderTraversal2(TreeNode root) {
         if (root == null) {
             return new ArrayList<>();
         }
 
-        List<Integer> result = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
         Deque<TreeNode> stack = new LinkedList<>();
-        TreeNode node = root;
+        stack.offerLast(root);
 
-        while (!stack.isEmpty() || node != null) {
-            while (node != null) {
-                stack.offerLast(node);
-                node = node.left;
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pollLast();
+            list.add(node.val);
+
+            //先将右子树节点压入栈中，再压入左子树节点
+            if (node.right != null) {
+                stack.offerLast(node.right);
             }
-
-            node = stack.pollLast();
-            result.add(node.val);
-            node = node.right;
+            if (node.left != null) {
+                stack.offerLast(node.left);
+            }
         }
 
-        return result;
+        return list;
     }
 
-    private void inorder(TreeNode root, List<Integer> result) {
+    private void preOrder(TreeNode root, List<Integer> list) {
         if (root == null) {
             return;
         }
 
-        inorder(root.left, result);
-        result.add(root.val);
-        inorder(root.right, result);
+        list.add(root.val);
+
+        preOrder(root.left, list);
+        preOrder(root.right, list);
     }
 
-    /**
-     * 建树
-     *
-     * @param data
-     * @return
-     */
     private TreeNode buildTree(String[] data) {
         if (data == null || data.length == 0) {
             return null;
@@ -107,17 +110,17 @@ public class Problem94 {
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
             if (!list.isEmpty()) {
-                String leftNodeValue = list.remove(0);
-                if (!"null".equals(leftNodeValue)) {
-                    TreeNode leftNode = new TreeNode(Integer.parseInt(leftNodeValue));
+                String leftValue = list.remove(0);
+                if (!"null".equals(leftValue)) {
+                    TreeNode leftNode = new TreeNode(Integer.parseInt(leftValue));
                     node.left = leftNode;
                     queue.offer(leftNode);
                 }
             }
             if (!list.isEmpty()) {
-                String rightNodeValue = list.remove(0);
-                if (!"null".equals(rightNodeValue)) {
-                    TreeNode rightNode = new TreeNode(Integer.parseInt(rightNodeValue));
+                String rightValue = list.remove(0);
+                if (!"null".equals(rightValue)) {
+                    TreeNode rightNode = new TreeNode(Integer.parseInt(rightValue));
                     node.right = rightNode;
                     queue.offer(rightNode);
                 }

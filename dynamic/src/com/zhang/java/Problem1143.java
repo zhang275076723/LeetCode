@@ -1,7 +1,9 @@
+package com.zhang.java;
+
 /**
  * @Date 2021/12/6 21:56
  * @Author zsy
- * @Description
+ * @Description 最长公共子序列
  */
 public class Problem1143 {
     public static void main(String[] args) {

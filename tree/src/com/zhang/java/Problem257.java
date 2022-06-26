@@ -1,9 +1,6 @@
 package com.zhang.java;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * @Date 2022/3/20 17:46
@@ -20,60 +17,59 @@ import java.util.Queue;
 public class Problem257 {
     public static void main(String[] args) {
         Problem257 problem257 = new Problem257();
-        TreeNode node1 = new TreeNode(1);
-        TreeNode node2 = new TreeNode(2);
-        TreeNode node3 = new TreeNode(3);
-        TreeNode node4 = new TreeNode(5);
-        node1.left = node2;
-        node1.right = node3;
-        node2.right = node4;
-        System.out.println(problem257.binaryTreePaths(node1));
-        System.out.println(problem257.binaryTreePaths2(node1));
+        String[] data = {"37", "-34", "-48", "null", "-100", "-100", "48",
+                "null", "null", "null", "null", "-54", "null", "-71", "-22", "null", "null", "null", "8"};
+        TreeNode root = problem257.buildTree(data);
+        System.out.println(problem257.binaryTreePaths(root));
+        System.out.println(problem257.binaryTreePaths2(root));
     }
 
     /**
-     * 回溯法，时间复杂度O(n^2)，空间复杂度O(n^2)
+     * 回溯，dfs
+     * 时间复杂度O(n^2)，空间复杂度O(n) (每个节点访问一次，每次需要O(n)复制到结果集合中)
      *
      * @param root
      * @return
      */
     public List<String> binaryTreePaths(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+
         List<String> result = new ArrayList<>();
-        dfs(root, result, new StringBuilder());
+
+        backtrack(root, result, new StringBuilder());
+
         return result;
     }
 
     /**
-     * 队列，一个队列存放节点，一个队列存放路径，时间复杂度O(n^2)，空间复杂度O(n^2)
+     * bfs
+     * 时间复杂度O(n)，空间复杂度O(n^2)
      *
      * @param root
      * @return
      */
     public List<String> binaryTreePaths2(TreeNode root) {
-        List<String> result = new ArrayList<>();
         if (root == null) {
-            return result;
+            return new ArrayList<>();
         }
 
-        Queue<TreeNode> nodeQueue = new LinkedList<>();
-        Queue<StringBuilder> pathQueue = new LinkedList<>();
-        nodeQueue.add(root);
-        pathQueue.add(new StringBuilder(Integer.toString(root.val)));
+        List<String> result = new ArrayList<>();
+        Queue<Pos> queue = new LinkedList<>();
+        queue.offer(new Pos(root, root.val + ""));
 
-        while (!nodeQueue.isEmpty()) {
-            TreeNode node = nodeQueue.remove();
-            StringBuilder path = pathQueue.remove();
+        while (!queue.isEmpty()) {
+            Pos pos = queue.poll();
 
-            if (node.left == null && node.right == null) {
-                result.add(path.toString());
+            if (pos.node.left == null && pos.node.right == null) {
+                result.add(pos.path);
             } else {
-                if (node.left != null) {
-                    nodeQueue.add(node.left);
-                    pathQueue.add(new StringBuilder(path).append("->").append(node.left.val));
+                if (pos.node.left != null) {
+                    queue.offer(new Pos(pos.node.left, pos.path + "->" + pos.node.left.val));
                 }
-                if (node.right != null) {
-                    nodeQueue.add(node.right);
-                    pathQueue.add(new StringBuilder(path).append("->").append(node.right.val));
+                if (pos.node.right != null) {
+                    queue.offer(new Pos(pos.node.right, pos.path + "->" + pos.node.right.val));
                 }
             }
         }
@@ -81,24 +77,76 @@ public class Problem257 {
         return result;
     }
 
-    public void dfs(TreeNode root, List<String> result, StringBuilder path) {
-        if (root == null) {
+    private void backtrack(TreeNode root, List<String> result, StringBuilder path) {
+        if (root.left == null && root.right == null) {
+            //因为节点的值可能不止一位，所以需要记录原始长度，用于回溯删除
+            int start = path.length();
+            path.append(root.val);
+            result.add(path.toString());
+            path.delete(start, path.length());
             return;
         }
 
         //记录当前长度，用于回溯删除
         int start = path.length();
 
-        path.append(root.val);
-        if (root.left == null && root.right == null) {
-            result.add(path.toString());
-        }
-        path.append("->");
+        path.append(root.val).append("->");
 
-        dfs(root.left, result, path);
-        dfs(root.right, result, path);
+        if (root.left != null) {
+            backtrack(root.left, result, path);
+        }
+
+        if (root.right != null) {
+            backtrack(root.right, result, path);
+        }
 
         path.delete(start, path.length());
+    }
+
+    private TreeNode buildTree(String[] data) {
+        if (data == null || data.length == 0) {
+            return null;
+        }
+
+        List<String> list = new ArrayList<>(Arrays.asList(data));
+        Queue<TreeNode> queue = new LinkedList<>();
+        TreeNode root = new TreeNode(Integer.parseInt(list.remove(0)));
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (!list.isEmpty()) {
+                String leftValue = list.remove(0);
+                if (!"null".equals(leftValue)) {
+                    TreeNode leftNode = new TreeNode(Integer.parseInt(leftValue));
+                    node.left = leftNode;
+                    queue.offer(leftNode);
+                }
+            }
+            if (!list.isEmpty()) {
+                String rightValue = list.remove(0);
+                if (!"null".equals(rightValue)) {
+                    TreeNode rightNode = new TreeNode(Integer.parseInt(rightValue));
+                    node.right = rightNode;
+                    queue.offer(rightNode);
+                }
+            }
+        }
+
+        return root;
+    }
+
+    /**
+     * bfs节点
+     */
+    private static class Pos {
+        TreeNode node;
+        String path;
+
+        Pos(TreeNode node, String path) {
+            this.node = node;
+            this.path = path;
+        }
     }
 
     public static class TreeNode {
