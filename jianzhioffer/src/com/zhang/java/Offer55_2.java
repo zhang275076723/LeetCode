@@ -5,7 +5,8 @@ import java.util.*;
 /**
  * @Date 2022/4/3 10:43
  * @Author zsy
- * @Description 输入一棵二叉树的根节点，判断该树是不是平衡二叉树。
+ * @Description 平衡二叉树 同Problem110
+ * 输入一棵二叉树的根节点，判断该树是不是平衡二叉树。
  * 如果某二叉树中任意节点的左右子树的深度相差不超过1，那么它就是一棵平衡二叉树。
  * <p>
  * 给定二叉树 [3,9,20,null,null,15,7]，返回 true 。
@@ -23,13 +24,15 @@ public class Offer55_2 {
     }
 
     /**
-     * 递归，深度优先判断是否是平衡二叉树，时间复杂度O(n)，空间复杂度O(n)
+     * 递归，深度优先判断是否是平衡二叉树
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
      */
     public boolean isBalanced(TreeNode root) {
         nodeDepth(root);
+
         return isBalanced;
     }
 
@@ -48,6 +51,7 @@ public class Offer55_2 {
         if (Math.abs(leftNodeDepth - rightNodeDepth) > 1) {
             isBalanced = false;
         }
+
         return Math.max(leftNodeDepth, rightNodeDepth) + 1;
     }
 

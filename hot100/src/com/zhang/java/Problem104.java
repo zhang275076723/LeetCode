@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/1 11:29
  * @Author zsy
- * @Description 二叉树的最大深度
+ * @Description 二叉树的最大深度 同Offer55
  * 给定一个二叉树，找出其最大深度。
  * 二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
  * 说明: 叶子节点是指没有子节点的节点。
@@ -23,7 +23,7 @@ public class Problem104 {
     }
 
     /**
-     * 递归，深度优先求树的深度
+     * 递归dfs
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -41,7 +41,7 @@ public class Problem104 {
     }
 
     /**
-     * 非递归，深度优先求树的深度
+     * 非递归dfs
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -53,17 +53,18 @@ public class Problem104 {
         }
 
         int depth = 0;
-        Stack<Pair> stack = new Stack<>();
-        stack.push(new Pair(root, 1));
+        Deque<Pos> stack = new LinkedList<>();
+        stack.push(new Pos(root, 1));
 
         while (!stack.isEmpty()) {
-            Pair pair = stack.pop();
-            depth = Math.max(depth, pair.depth);
-            if (pair.node.left != null) {
-                stack.push(new Pair(pair.node.left, pair.depth + 1));
+            Pos pos = stack.pop();
+            depth = Math.max(depth, pos.depth);
+
+            if (pos.node.left != null) {
+                stack.push(new Pos(pos.node.left, pos.depth + 1));
             }
-            if (pair.node.right != null) {
-                stack.push(new Pair(pair.node.right, pair.depth + 1));
+            if (pos.node.right != null) {
+                stack.push(new Pos(pos.node.right, pos.depth + 1));
             }
         }
 
@@ -71,7 +72,7 @@ public class Problem104 {
     }
 
     /**
-     * 非递归，层次遍历求树的深度
+     * bfs
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -89,14 +90,15 @@ public class Problem104 {
         while (!queue.isEmpty()) {
             int size = queue.size();
 
-            for (int i = 0; i < size; i++) {
+            while (size > 0) {
                 TreeNode node = queue.poll();
                 if (node.left != null) {
                     queue.offer(node.left);
                 }
                 if (node.right != null) {
-                    queue.add(node.right);
+                    queue.offer(node.right);
                 }
+                size--;
             }
 
             depth++;
@@ -138,7 +140,20 @@ public class Problem104 {
         return root;
     }
 
-    public class TreeNode {
+    /**
+     * 非递归dfs节点
+     */
+    private static class Pos {
+        TreeNode node;
+        int depth;
+
+        Pos(TreeNode node, int depth) {
+            this.node = node;
+            this.depth = depth;
+        }
+    }
+
+    public static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
@@ -154,19 +169,6 @@ public class Problem104 {
             this.val = val;
             this.left = left;
             this.right = right;
-        }
-    }
-
-    /**
-     * 用于非递归，深度优先求树的深度
-     */
-    public class Pair {
-        TreeNode node;
-        int depth;
-
-        Pair(TreeNode node, int depth) {
-            this.node = node;
-            this.depth = depth;
         }
     }
 }
