@@ -5,7 +5,8 @@ import java.util.*;
 /**
  * @Date 2022/3/20 17:46
  * @Author zsy
- * @Description 给你一个二叉树的根节点 root ，按任意顺序，返回所有从根节点到叶子节点的路径。
+ * @Description 二叉树的所有路径 类比Problem112、Problem113、Problem437
+ * 给你一个二叉树的根节点 root ，按任意顺序，返回所有从根节点到叶子节点的路径。
  * 叶子节点是指没有子节点的节点。
  * <p>
  * 输入：root = [1,2,3,null,5]
@@ -25,7 +26,7 @@ public class Problem257 {
     }
 
     /**
-     * 回溯，dfs
+     * dfs
      * 时间复杂度O(n^2)，空间复杂度O(n) (每个节点访问一次，每次需要O(n)复制到结果集合中)
      *
      * @param root
@@ -38,7 +39,7 @@ public class Problem257 {
 
         List<String> result = new ArrayList<>();
 
-        backtrack(root, result, new StringBuilder());
+        dfs(root, result, new StringBuilder());
 
         return result;
     }
@@ -77,11 +78,12 @@ public class Problem257 {
         return result;
     }
 
-    private void backtrack(TreeNode root, List<String> result, StringBuilder path) {
+    private void dfs(TreeNode root, List<String> result, StringBuilder path) {
         if (root.left == null && root.right == null) {
             //因为节点的值可能不止一位，所以需要记录原始长度，用于回溯删除
             int start = path.length();
             path.append(root.val);
+            //当前路径复制到结果集合需要O(n)
             result.add(path.toString());
             path.delete(start, path.length());
             return;
@@ -93,11 +95,11 @@ public class Problem257 {
         path.append(root.val).append("->");
 
         if (root.left != null) {
-            backtrack(root.left, result, path);
+            dfs(root.left, result, path);
         }
 
         if (root.right != null) {
-            backtrack(root.right, result, path);
+            dfs(root.right, result, path);
         }
 
         path.delete(start, path.length());

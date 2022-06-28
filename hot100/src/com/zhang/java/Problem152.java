@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/9 12:21
  * @Author zsy
- * @Description 乘积最大子数组
+ * @Description 乘积最大子数组 类比Problem53、Problem416
  * 给你一个整数数组 nums ，请你找出数组中乘积最大的非空连续子数组（该子数组中至少包含一个数字），
  * 并返回该子数组所对应的乘积。
  * 测试用例的答案是一个 32-位 整数。
@@ -31,13 +31,13 @@ public class Problem152 {
     }
 
     /**
-     * 动态规划，注意和最大子段和的区别
-     * 时间复杂度O(n)，空间复杂度O(n)
-     * dpMax[i]：以nums[i]结尾的子数组的最大乘积
-     * dpMin[i]：以nums[i]结尾的子数组的最小乘积
+     * 动态规划
+     * dpMax[i]：以nums[i]结尾的最大乘积子数组
+     * dpMin[i]：以nums[i]结尾的最小乘积子数组
      * dpMax[i] = max(dpMax[i-1]*nums[i], dpMin[i-1]*nums[i], nums[i])
      * dpMin[i] = min(dpMax[i-1]*nums[i], dpMin[i-1]*nums[i], nums[i])
      * max = max(max, dpMax[i])
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param nums
      * @return
@@ -54,8 +54,11 @@ public class Problem152 {
         int max = nums[0];
 
         for (int i = 1; i < nums.length; i++) {
-            dpMax[i] = Math.max(nums[i], Math.max(dpMax[i - 1] * nums[i], dpMin[i - 1] * nums[i]));
-            dpMin[i] = Math.min(nums[i], Math.min(dpMax[i - 1] * nums[i], dpMin[i - 1] * nums[i]));
+            dpMax[i] = Math.max(nums[i],
+                    Math.max(dpMax[i - 1] * nums[i], dpMin[i - 1] * nums[i]));
+            dpMin[i] = Math.min(nums[i],
+                    Math.min(dpMax[i - 1] * nums[i], dpMin[i - 1] * nums[i]));
+
             max = Math.max(max, dpMax[i]);
         }
 
@@ -64,9 +67,9 @@ public class Problem152 {
 
     /**
      * 动态规划优化，使用滚动数组
-     * 时间复杂度O(n)，空间复杂度O(1)
      * dpMax = max(上次循环的dpMax*nums[i], 上次循环的dpMin*nums[i], nums[i])
      * dpMin = min(上次循环的dpMax*nums[i], 上次循环的dpMin*nums[i], nums[i])
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
      * @return
@@ -81,12 +84,16 @@ public class Problem152 {
         int max = nums[0];
 
         for (int i = 1; i < nums.length; i++) {
-            //上次循环的dpMax
+            //上次循环的dpMax，如果直接使用dpMax，则会修改本次要使用的dpMax
             int tempDpMax = dpMax;
-            //上次循环的dpMin
+            //上次循环的dpMin，如果直接使用dpMin，则会修改本次要使用的dpMin
             int tempDpMin = dpMin;
-            dpMax = Math.max(nums[i], Math.max(tempDpMax * nums[i], tempDpMin * nums[i]));
-            dpMin = Math.min(nums[i], Math.min(tempDpMax * nums[i], tempDpMin * nums[i]));
+
+            dpMax = Math.max(nums[i],
+                    Math.max(tempDpMax * nums[i], tempDpMin * nums[i]));
+            dpMin = Math.min(nums[i],
+                    Math.min(tempDpMax * nums[i], tempDpMin * nums[i]));
+
             max = Math.max(max, dpMax);
         }
 
@@ -94,9 +101,10 @@ public class Problem152 {
     }
 
     /**
-     * 两次遍历，时间复杂度O(n)，空间复杂度O(1)
+     * 两次遍历
      * 第一次从左往右遍历，进行相乘，如果相乘结果是0，就赋值为1，每次相乘都和最大值进行比较
      * 第二次从右往左遍历，进行相乘，如果相乘结果是0，就赋值为1，每次相乘都和最大值进行比较
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
      * @return
@@ -108,6 +116,7 @@ public class Problem152 {
 
         int max = Integer.MIN_VALUE;
         int tempMax = 1;
+
         for (int i = 0; i < nums.length; i++) {
             tempMax = tempMax * nums[i];
             if (tempMax == 0) {
@@ -117,6 +126,7 @@ public class Problem152 {
         }
 
         tempMax = 1;
+
         for (int i = nums.length - 1; i >= 0; i--) {
             tempMax = tempMax * nums[i];
             if (tempMax == 0) {

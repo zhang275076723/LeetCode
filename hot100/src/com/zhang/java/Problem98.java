@@ -91,20 +91,21 @@ public class Problem98 {
             return true;
         }
 
-        //遍历左子树
+        //遍历左子树，左子树节点的值都应小于当前节点的值
         boolean leftFlag = inorder(root.left);
         if (!leftFlag) {
             return false;
         }
 
-        //当前节点
+        //当前节点的值应大于当前节点之前节点的值
         if (root.val <= preNodeValue) {
             return false;
         }
         preNodeValue = root.val;
 
-        //遍历右子树
+        //遍历右子树，右子树节点的值都应大于当前节点的值
         boolean rightFlag = inorder(root.right);
+
         return rightFlag;
     }
 
