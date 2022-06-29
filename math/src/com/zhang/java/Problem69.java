@@ -101,7 +101,7 @@ public class Problem69 {
         double x1;
 
         while (true) {
-            x1 = x0 * 0.5 + C / (x0 * 2);
+            x1 = 0.5 * x0 + C / (2 * x0);
 
             //两者之差小于10^(-7)，则认为找到了零点
             if (Math.abs(x1 - x0) < 1e-7) {
