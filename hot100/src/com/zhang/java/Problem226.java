@@ -71,7 +71,7 @@ public class Problem226 {
         TreeNode rightNode = root.right;
         root.left = rightNode;
         root.right = leftNode;
-        //此时已经交换左右节点，所以递归当前的左节点(root.left/rightNode)
+        //此时已经交换左右节点，所以递归当前的左节点(root.left/rightNode)，不能写成invertTree2(root.right)
         invertTree2(rightNode);
 
         return root;
@@ -114,6 +114,7 @@ public class Problem226 {
 
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
+
             TreeNode leftNode = node.left;
             TreeNode rightNode = node.right;
             node.left = rightNode;

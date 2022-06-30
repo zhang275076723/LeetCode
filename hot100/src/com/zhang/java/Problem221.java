@@ -42,10 +42,10 @@ public class Problem221 {
 
     /**
      * 动态规划
-     * 时间复杂度O(mn)，空间复杂度O(mn)，m为matrix的行，n为matrix的列
      * dp[i][j]：以matrix[i][j]为右下角构成的最大正方形的边长
      * dp[i][j] = 1 + min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]) (matrix[i][j] == 1)
      * dp[i][j] = 0                                             (matrix[i][j] == 0)
+     * 时间复杂度O(mn)，空间复杂度O(mn) (m为matrix的行，n为matrix的列)
      *
      * @param matrix
      * @return
