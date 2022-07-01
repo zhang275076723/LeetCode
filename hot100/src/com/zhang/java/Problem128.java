@@ -30,7 +30,7 @@ public class Problem128 {
 
     /**
      * 哈希表，每次判断nums[i]的前一个元素nums[i]-1是否在哈希表中：
-     * 1、如果在，则可以到nums[i]-1时再进行判断，进行下次判断nums[i+1]
+     * 1、如果在，则可以到nums[i]-1时再进行判断
      * 2、如果不在，则循环判断nums[i]+1是否在哈希表中，并更新最大长度
      * 时间复杂度O(n)，空间复杂度O(n)
      *
@@ -48,6 +48,7 @@ public class Problem128 {
         }
 
         int maxLen = 0;
+
         for (int i = 0; i < nums.length; i++) {
             int tempLen = 0;
 
@@ -79,19 +80,23 @@ public class Problem128 {
         }
 
         quickSort(nums, 0, nums.length - 1);
+
         int maxLen = 1;
         int tempLen = 1;
-        for (int i = 1; i < nums.length; i++) {
-            if (nums[i - 1] == nums[i]) {
+
+        for (int i = 0; i < nums.length - 1; i++) {
+            //两数相等的情况
+            if (nums[i] == nums[i + 1]) {
                 continue;
             }
-            if (nums[i - 1] + 1 == nums[i]) {
+            if (nums[i] + 1 == nums[i + 1]) {
                 tempLen++;
                 maxLen = Math.max(maxLen, tempLen);
             } else {
                 tempLen = 1;
             }
         }
+
         return maxLen;
     }
 

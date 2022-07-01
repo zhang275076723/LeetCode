@@ -5,7 +5,8 @@ import java.util.Arrays;
 /**
  * @Date 2022/4/18 12:31
  * @Author zsy
- * @Description 给定一个按照升序排列的整数数组 nums，和一个目标值 target。
+ * @Description 在排序数组中查找元素的第一个和最后一个位置
+ * 给定一个按照升序排列的整数数组 nums，和一个目标值 target。
  * 找出给定目标值在数组中的开始位置和结束位置。
  * 如果数组中不存在目标值 target，返回 [-1, -1]。
  * <p>
@@ -33,7 +34,8 @@ public class Problem34 {
 
     /**
      * 看到有序数组，就要想到二分查找
-     * 二分查找变形，时间复杂度O(logn)，空间复杂度O(1)
+     * 二分查找变形
+     * 时间复杂度O(logn)，空间复杂度O(1)
      *
      * @param nums
      * @param target
