@@ -81,10 +81,12 @@ public class Problem209 {
             int tempSum = preSum[i] + target;
             //二分查找，找到返回下标索引，没找到返回(-(该值在数组中应该插入的位置索引+1))
             int index = Arrays.binarySearch(preSum, tempSum);
+
             //不在数组中，返回值为负数
             if (index < 0) {
                 index = -index - 1;
             }
+
             //更新length
             if (index <= nums.length) {
                 length = Integer.min(length, index - i);
@@ -95,7 +97,7 @@ public class Problem209 {
     }
 
     /**
-     * 滑动窗口，也是双指针法，因为数组中元素都是正数，所以可以使用滑动窗口
+     * 滑动窗口，也是双指针法，因为数组中元素都是正数，所以可以使用滑动窗口，如果存在负数，则只能使用前缀和
      * 时间复杂度T(n) = O(n)，空间复杂度S(n) = O(1)
      *
      * @param target

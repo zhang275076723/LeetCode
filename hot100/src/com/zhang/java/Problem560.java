@@ -1,6 +1,5 @@
 package com.zhang.java;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,7 +56,7 @@ public class Problem560 {
     }
 
     /**
-     * 前缀和，不能使用滑动窗口时考虑前缀和
+     * 前缀和，当存在负数时，只能使用前缀和，不能使用滑动窗口
      * 涉及连续子数组问题，一：考虑前缀和；二：考虑滑动窗口
      * pre[i]：nums[0]-nums[i]元素之和
      * 和为k的子数组nums[i]-nums[j]：pre[j] - pre[i-1] == k

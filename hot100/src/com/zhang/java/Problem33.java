@@ -3,7 +3,8 @@ package com.zhang.java;
 /**
  * @Date 2022/4/18 8:21
  * @Author zsy
- * @Description 整数数组 nums 按升序排列，数组中的值 互不相同 。
+ * @Description 搜索旋转排序数组 类比Problem34、Problem153、Problem162
+ * 整数数组 nums 按升序排列，数组中的值 互不相同 。
  * 在传递给函数之前，nums 在预先未知的某个下标 k（0 <= k < nums.length）上进行了 旋转，
  * 使数组变为 [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]（下标 从 0 开始 计数）。
  * 例如， [0,1,2,4,5,6,7] 在下标 3 处经旋转后可能变为 [4,5,6,7,0,1,2] 。
@@ -34,8 +35,8 @@ public class Problem33 {
     }
 
     /**
-     * 看到有序数组，就要想到二分查找
-     * 二分查找变形，时间复杂度O(logn)，空间复杂度O(1)
+     * 二分查找变形，看到有序数组，就要想到二分查找
+     * 时间复杂度O(logn)，空间复杂度O(1)
      *
      * @param nums
      * @param target
@@ -49,17 +50,21 @@ public class Problem33 {
         int left = 0;
         int right = nums.length - 1;
         int mid;
+
         while (left <= right) {
             mid = left + ((right - left) >> 1);
+
             if (nums[mid] == target) {
                 return mid;
-            } else if (nums[mid] < nums[right]) { //右边有序
+            } else if (nums[mid] < nums[right]) {
+                //右边有序
                 if (nums[mid] < target && target <= nums[right]) {
                     left = mid + 1;
                 } else {
                     right = mid - 1;
                 }
-            } else { //左边有序
+            } else {
+                //左边有序
                 if (nums[left] <= target && target < nums[mid]) {
                     right = mid - 1;
                 } else {
@@ -67,6 +72,7 @@ public class Problem33 {
                 }
             }
         }
+
         return -1;
     }
 }

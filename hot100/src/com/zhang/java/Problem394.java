@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2022/6/3 9:47
  * @Author zsy
- * @Description 字符串解码 类比Problem150、Problem224 字节面试题、4399笔试题
+ * @Description 字符串解码 字节面试题、4399笔试题 类比Problem150、Problem224
  * 给定一个经过编码的字符串，返回它解码后的字符串。
  * 编码规则为: k[encoded_string]，表示其中方括号内部的 encoded_string 正好重复 k 次。注意 k 保证为正整数。
  * 你可以认为输入字符串总是有效的；输入字符串中没有额外的空格，且输入的方括号总是符合格式要求的。
@@ -37,10 +37,10 @@ public class Problem394 {
 
     /**
      * 两个栈，数字栈保存重复的次数，子母串栈保存英文字母
-     * 1、如果遇到数字，则保存连续的数字
-     * 2、如果遇到'['，则将当前数字入数字栈，当前字母串入子母串栈
-     * 3、如果遇到']'，则字母串栈出栈，数字栈出栈，当前字母串栈出栈的字母串拼接该数字栈出栈次数的当前字符串
-     * 4、如果遇到字母，则保存字母串
+     * 1、如果遇到数字，则保存连续数字
+     * 2、如果遇到'['，则将当前数字入数字栈，当前字母串入字符串栈
+     * 3、如果遇到']'，则字符串栈出栈，数字栈出栈，当前字符串栈出栈的字符串拼接该数字栈出栈的次数，拼接到结果字符串之后
+     * 4、如果遇到字母，则拼接字符串
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param s
@@ -59,19 +59,23 @@ public class Problem394 {
 
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
+
             if (c >= '0' && c <= '9') {
                 num = num * 10 + (c - '0');
             } else if (c == '[') {
                 numStack.push(num);
                 strStack.push(sb.toString());
+
                 num = 0;
                 sb = new StringBuilder();
             } else if (c == ']') {
                 StringBuilder sbTemp = new StringBuilder(strStack.pop());
                 int curNum = numStack.pop();
+
                 for (int j = 0; j < curNum; j++) {
                     sbTemp.append(sb);
                 }
+
                 sb = sbTemp;
             } else {
                 sb.append(c);

@@ -32,7 +32,7 @@ public class Problem300 {
     /**
      * 动态规划
      * dp[i]：以nums[i]结尾的最长递增子序列
-     * dp[i] = max(dp[i], dp[j]+1) (0 <= j <= i-1，且nums[j] < nums[i])
+     * dp[i] = max(dp[i], dp[j] + 1) (0 <= j <= i-1，且nums[j] < nums[i])
      * 时间复杂度O(n^2)，空间复杂度O(n)
      *
      * @param nums
@@ -44,6 +44,7 @@ public class Problem300 {
         }
 
         int[] dp = new int[nums.length];
+
         for (int i = 0; i < nums.length; i++) {
             //赋以nums[i]结尾的最长递增子序列长度为1
             dp[i] = 1;
@@ -98,9 +99,11 @@ public class Problem300 {
             if (nums[i] > result[maxLen - 1]) {
                 result[maxLen] = nums[i];
                 maxLen++;
-            } else { //当前元素替换严格递增数组中的元素
+            } else {
+                //当前元素替换严格递增数组中的元素
                 int left = 0;
                 int right = maxLen - 1;
+
                 while (left <= right) {
                     int mid = left + ((right - left) >> 1);
                     if (nums[i] > result[mid]) {
@@ -109,6 +112,7 @@ public class Problem300 {
                         right = mid - 1;
                     }
                 }
+
                 result[left] = nums[i];
             }
         }
