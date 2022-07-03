@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/13 8:48
  * @Author zsy
- * @Description 反转链表 类比Problem92
+ * @Description 反转链表 类比Problem24、Problem92
  * 给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。
  * <p>
  * 输入：head = [1,2,3,4,5]
@@ -69,8 +69,10 @@ public class Problem206 {
         }
 
         ListNode node = reverseList2(head.next);
+
         head.next.next = head;
         head.next = null;
+
         return node;
     }
 
@@ -79,6 +81,8 @@ public class Problem206 {
             return null;
         }
 
+        //不能使用Arrays.asList(data)，因为需要传入引用类型才能转换为list，
+        //如果传入基本数据类型，则会将数组对象作为引用放入list中
         ListNode head = new ListNode(data[0]);
         ListNode node = head;
 
