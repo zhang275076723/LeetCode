@@ -67,6 +67,7 @@ public class Problem93 {
             for (String str : list) {
                 sb.append(str).append('.');
             }
+            //删除最后一个'.'
             sb.delete(sb.length() - 1, sb.length());
 
             result.add(sb.toString());
@@ -92,14 +93,15 @@ public class Problem93 {
             }
 
             list.add(num + "");
+
             backtrack(i + 1, list, s, result);
+
             list.remove(list.size() - 1);
         }
     }
 
     /**
-     * 返回当前ip段数字，即在0-255之间，且没有前导0
-     * 如果不合法，返回-1
+     * 返回当前ip段数字，即在0-255之间，且没有前导0；如果不合法，返回-1
      *
      * @param s     字符串数字
      * @param start 起始索引
