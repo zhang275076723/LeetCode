@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2022/6/3 9:47
  * @Author zsy
- * @Description 字符串解码 字节面试题、4399笔试题 类比Problem150、Problem224
+ * @Description 字符串解码 字节面试题、4399笔试题 类比Problem150、Problem224、Problem227
  * 给定一个经过编码的字符串，返回它解码后的字符串。
  * 编码规则为: k[encoded_string]，表示其中方括号内部的 encoded_string 正好重复 k 次。注意 k 保证为正整数。
  * 你可以认为输入字符串总是有效的；输入字符串中没有额外的空格，且输入的方括号总是符合格式要求的。
@@ -36,7 +36,7 @@ public class Problem394 {
     }
 
     /**
-     * 两个栈，数字栈保存重复的次数，子母串栈保存英文字母
+     * 两个栈，数字栈保存重复的次数，字母串栈保存英文字母
      * 1、如果遇到数字，则保存连续数字
      * 2、如果遇到'['，则将当前数字入数字栈，当前字母串入字符串栈
      * 3、如果遇到']'，则字符串栈出栈，数字栈出栈，当前字符串栈出栈的字符串拼接该数字栈出栈的次数，拼接到结果字符串之后
@@ -51,9 +51,12 @@ public class Problem394 {
             return s;
         }
 
-        StringBuilder sb = new StringBuilder();
+        //数字栈
         Stack<Integer> numStack = new Stack<>();
+        //字母串栈
         Stack<String> strStack = new Stack<>();
+        //结果字符串
+        StringBuilder sb = new StringBuilder();
         //当前字符串重复的次数
         int num = 0;
 
@@ -69,14 +72,14 @@ public class Problem394 {
                 num = 0;
                 sb = new StringBuilder();
             } else if (c == ']') {
-                StringBuilder sbTemp = new StringBuilder(strStack.pop());
+                StringBuilder tempSb = new StringBuilder(strStack.pop());
                 int curNum = numStack.pop();
 
                 for (int j = 0; j < curNum; j++) {
-                    sbTemp.append(sb);
+                    tempSb.append(sb);
                 }
 
-                sb = sbTemp;
+                sb = tempSb;
             } else {
                 sb.append(c);
             }

@@ -159,6 +159,7 @@ public class Problem297 {
             return null;
         }
 
+        //去除末尾的','
         data = data.substring(0, data.length() - 1);
         String[] values = data.split(",");
         //不能写成List<String> list = Arrays.asList(values);
@@ -171,13 +172,16 @@ public class Problem297 {
 
     private TreeNode deserialize2(List<String> list) {
         String value = list.remove(0);
+
         if ("null".equals(value)) {
             return null;
         }
 
         TreeNode node = new TreeNode(Integer.parseInt(value));
+
         node.left = deserialize2(list);
         node.right = deserialize2(list);
+
         return node;
     }
 

@@ -46,6 +46,7 @@ public class Problem209 {
 
         for (int i = 0; i < nums.length; i++) {
             int sum = 0;
+
             for (int j = i; j < nums.length; j++) {
                 sum += nums[j];
                 if (sum >= target) {
@@ -112,6 +113,7 @@ public class Problem209 {
 
         while (right < nums.length) {
             sum = sum + nums[right];
+
             while (sum >= target) {
                 if (right - left + 1 < length) {
                     length = right - left + 1;
@@ -119,6 +121,7 @@ public class Problem209 {
                 sum = sum - nums[left];
                 left++;
             }
+
             right++;
         }
 
