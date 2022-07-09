@@ -75,6 +75,7 @@ public class Problem253 {
 
     private int partition(int[][] intervals, int left, int right) {
         int[] temp = intervals[left];
+
         while (left < right) {
             while (left < right && intervals[right][0] >= temp[0]) {
                 right--;
@@ -85,7 +86,9 @@ public class Problem253 {
             }
             intervals[right] = intervals[left];
         }
+
         intervals[left] = temp;
+
         return left;
     }
 }

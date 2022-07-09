@@ -1,13 +1,11 @@
 package com.zhang.java;
 
-import com.sun.org.apache.regexp.internal.RE;
-
-import java.util.*;
 
 /**
- * @Date 2022/3/27 10:22
+ * @Date 2022/3/27 10:22 类比Problem179
  * @Author zsy
- * @Description 输入一个非负整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。
+ * @Description
+ * 输入一个非负整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。
  * 拼接起来的数字可能会有前导 0，最后结果不需要去掉前导 0
  * <p>
  * 输入: [10,2]
@@ -67,6 +65,7 @@ public class Offer45 {
 
     public int partition(String[] strings, int left, int right) {
         String temp = strings[left];
+
         while (left < right) {
             while (left < right && (strings[right] + temp).compareTo(temp + strings[right]) >= 0) {
                 right--;
@@ -77,7 +76,9 @@ public class Offer45 {
             }
             strings[right] = strings[left];
         }
+
         strings[left] = temp;
+
         return left;
     }
 }
