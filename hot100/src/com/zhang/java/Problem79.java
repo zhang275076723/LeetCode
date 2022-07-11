@@ -3,18 +3,31 @@ package com.zhang.java;
 /**
  * @Date 2022/4/27 9:17
  * @Author zsy
- * @Description 给定一个 m x n 二维字符网格 board 和一个字符串单词 word 。
+ * @Description 单词搜索
+ * 给定一个 m x n 二维字符网格 board 和一个字符串单词 word 。
  * 如果 word 存在于网格中，返回 true ；否则，返回 false 。
  * 单词必须按照字母顺序，通过相邻的单元格内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。
  * 同一个单元格内的字母不允许被重复使用。
  * <p>
- * 输入：board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCCED"
+ * 输入：board = [
+ * ["A","B","C","E"],
+ * ["S","F","C","S"],
+ * ["A","D","E","E"]
+ * ], word = "ABCCED"
  * 输出：true
  * <p>
- * 输入：board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "SEE"
+ * 输入：board = [
+ * ["A","B","C","E"],
+ * ["S","F","C","S"],
+ * ["A","D","E","E"]
+ * ], word = "SEE"
  * 输出：true
  * <p>
- * 输入：board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCB"
+ * 输入：board = [
+ * ["A","B","C","E"],
+ * ["S","F","C","S"],
+ * ["A","D","E","E"]
+ * ], word = "ABCB"
  * 输出：false
  * <p>
  * m == board.length
@@ -26,7 +39,11 @@ package com.zhang.java;
 public class Problem79 {
     public static void main(String[] args) {
         Problem79 problem79 = new Problem79();
-        char[][] board = new char[][]{{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}};
+        char[][] board = new char[][]{
+                {'A', 'B', 'C', 'E'},
+                {'S', 'F', 'C', 'S'},
+                {'A', 'D', 'E', 'E'}
+        };
         String word = "ABCCED";
         System.out.println(problem79.exist(board, word));
     }
@@ -51,14 +68,16 @@ public class Problem79 {
         }
 
         boolean[][] visited = new boolean[board.length][board[0].length];
+
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                //看哪个起始位置，满足要求
+                //从每一个位置开始遍历，判断哪一个位置满足要求
                 if (backtrack(i, j, visited, board, word, 0)) {
                     return true;
                 }
             }
         }
+
         return false;
     }
 
@@ -68,7 +87,7 @@ public class Problem79 {
      * @param visited   访问数组
      * @param board     网格
      * @param word      单词，判断网格中是否有满足要求的单词
-     * @param wordIndex 当前单词索引位置
+     * @param wordIndex 当前单词索引下标
      * @return
      */
     private boolean backtrack(int i, int j, boolean[][] visited, char[][] board,
@@ -85,11 +104,14 @@ public class Problem79 {
         }
 
         visited[i][j] = true;
+
         boolean flag = backtrack(i, j - 1, visited, board, word, wordIndex + 1) ||
                 backtrack(i - 1, j, visited, board, word, wordIndex + 1) ||
                 backtrack(i, j + 1, visited, board, word, wordIndex + 1) ||
                 backtrack(i + 1, j, visited, board, word, wordIndex + 1);
+
         visited[i][j] = false;
+
         return flag;
     }
 }

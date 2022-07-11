@@ -30,7 +30,7 @@ public class Problem145 {
     }
 
     /**
-     * 非递归后序遍历
+     * 递归后序遍历
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -49,8 +49,8 @@ public class Problem145 {
     }
 
     /**
-     * 递归后序遍历
-     * 将前序遍历中左右，转为中右左，反转左右中即为后序遍历结果
+     * 非递归后序遍历
+     * 将前序遍历(根左右)，转为根右左，反转为左右根，即为后序遍历结果
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -61,6 +61,7 @@ public class Problem145 {
             return new ArrayList<>();
         }
 
+        //可以首尾添加
         LinkedList<Integer> list = new LinkedList<>();
         Deque<TreeNode> stack = new LinkedList<>();
         stack.offerLast(root);
@@ -69,7 +70,7 @@ public class Problem145 {
             TreeNode node = stack.pollLast();
             list.offerFirst(node.val);
 
-            //先将左子树节点压入栈中，再压入右子树节点
+            //先将左子树节点压入栈中，再将右子树节点压入栈中
             if (node.left != null) {
                 stack.offerLast(node.left);
             }

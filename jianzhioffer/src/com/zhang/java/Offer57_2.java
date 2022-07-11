@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @Date 2022/4/4 16:36
  * @Author zsy
- * @Description 和为s的连续正数序列 类比Problem209、Problem560
+ * @Description 和为s的连续正数序列 类比Problem209、Problem437、Problem560
  * 输入一个正整数 target ，输出所有和为 target 的连续正整数序列（至少含有两个数）。
  * 序列内的数字由小到大排列，不同序列按照首个数字从小到大排列。
  * 1 <= target <= 10^5
@@ -38,6 +38,7 @@ public class Offer57_2 {
         }
 
         List<int[]> list = new ArrayList<>();
+
         for (int i = 1; i <= target / 2; i++) {
             int sum = i;
             for (int j = i + 1; j <= target / 2 + 1; j++) {
@@ -75,13 +76,15 @@ public class Offer57_2 {
         for (int i = 1; i <= target / 2; i++) {
             //避免溢出
             long delta = 1 + 4 * ((long) i * i - i + 2L * target);
+
             //如果delta小于等于0，说明j不存在
             if (delta <= 0) {
                 continue;
             }
 
             int sqrtDelta = (int) Math.sqrt(delta);
-            //如果delta开放为整数，说明j存在
+
+            //如果delta开方为整数，说明j存在
             if ((long) sqrtDelta * sqrtDelta == delta) {
                 int j = (-1 + sqrtDelta) / 2;
                 int[] temp = new int[j - i + 1];
@@ -117,6 +120,7 @@ public class Offer57_2 {
                 right++;
                 sum = sum + right;
             }
+
             if (sum == target) {
                 int[] temp = new int[right - left + 1];
                 for (int i = 0; i < temp.length; i++) {
@@ -124,6 +128,7 @@ public class Offer57_2 {
                 }
                 list.add(temp);
             }
+
             sum = sum - left;
             left++;
         }
@@ -134,6 +139,7 @@ public class Offer57_2 {
 //            result[i] = list.get(i);
 //        }
 //        return result;
+
         return list.toArray(new int[list.size()][]);
     }
 }

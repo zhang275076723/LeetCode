@@ -39,9 +39,10 @@ public class Problem139 {
     }
 
     /**
-     * 动态规划，时间复杂度O(n^2)，空间复杂度O(n)
-     * dp[i]：字符串s中前i个字符是否可以拆成wordDict中的单词
-     * dp[i] = dp[j] && (s[j]-s[i]是否是wordDict中的单词) (0<=j<i)
+     * 动态规划
+     * dp[i]：s[0]-s[i-1]是否可以拆成wordDict中的单词
+     * dp[i] = dp[j] && (s[j]-s[i-1]是否是wordDict中的单词) (0 <= j < i)
+     * 时间复杂度O(n^2)，空间复杂度O(n)
      *
      * @param s
      * @param wordDict
@@ -59,7 +60,7 @@ public class Problem139 {
 
         for (int i = 1; i <= s.length(); i++) {
             for (int j = 0; j < i; j++) {
-                //s中前j个字符可以拆分为wordDict中的单词，并且s[j]-s[i]是wordDict中的单词，
+                //s[0]-s[j-1]可以拆分为wordDict中的单词，并且s[j]-s[i-1]是wordDict中的单词，
                 //则说明s中前i个字符可以拆分为wordDict中的单词
                 if (dp[j] && wordDictSet.contains(s.substring(j, i))) {
                     dp[i] = true;
@@ -72,9 +73,10 @@ public class Problem139 {
     }
 
     /**
-     * 动态规划优化，时间复杂度O(n^2)，空间复杂度O(n)
+     * 动态规划优化
      * dp[i]只需要从wordDict中最长的单词开始往后遍历即可，
      * 因为从超过wordDict中最长的单词卡死遍历，无法形成wordDict中的单词，即无法拆分
+     * 时间复杂度O(n^2)，空间复杂度O(n)
      *
      * @param s
      * @param wordDict
@@ -100,7 +102,7 @@ public class Problem139 {
         for (int i = 1; i <= s.length(); i++) {
             //从wordDict中最长的单词开始往后遍历，因为再往前不可能匹配到wordDict中的单词
             for (int j = Math.max(0, i - maxWordLen); j < i; j++) {
-                //s中前j个字符可以拆分为wordDict中的单词，并且s[j]-s[i]是wordDict中的单词，
+                //s[0]-s[j-1]可以拆分为wordDict中的单词，并且s[j]-s[i-1]是wordDict中的单词，
                 //则说明s中前i个字符可以拆分为wordDict中的单词
                 if (dp[j] && wordDictSet.contains(s.substring(j, i))) {
                     dp[i] = true;

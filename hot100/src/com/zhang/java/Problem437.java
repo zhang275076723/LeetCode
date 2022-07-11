@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/7 8:19
  * @Author zsy
- * @Description 路径总和 III 类比Problem112、Problem113、Problem257
+ * @Description 路径总和 III 类比Problem112、Problem113、Problem257、Problem560
  * 给定一个二叉树的根节点 root ，和一个整数 targetSum ，求该二叉树里节点值之和等于 targetSum 的 路径 的数目。
  * 路径 不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。
  * <p>
@@ -60,7 +60,9 @@ public class Problem437 {
     }
 
     /**
-     * 路径前缀和，遍历每个节点，在哈希表中查找前缀和为targetSum-curSum的节点个数
+     * 路径前缀和
+     * 遍历每个节点，在哈希表中查找前缀和为targetSum-curSum的节点个数
+     * 因为节点存在负数，所以不能使用滑动窗口
      * 哈希表：key，根节点到当前节点路径上，除当前节点之外，所有节点的前缀和；value，满足路径前缀和的个数
      * 时间复杂度O(n)，空间复杂度O(n)
      *
@@ -118,8 +120,9 @@ public class Problem437 {
         curSum = curSum + root.val;
 
         //路径和为curSum-targetSum的数量，即为路径和为targetSum的数量
-        int curCount = map.getOrDefault(curSum - targetSum, 0);
-        count2 = count2 + curCount;
+        if (map.containsKey(curSum - targetSum)) {
+            count2 = count2 + map.get(curSum - targetSum);
+        }
 
         //根节点到当前节点的路径和放入哈希表中
         map.put(curSum, map.getOrDefault(curSum, 0) + 1);
@@ -127,7 +130,7 @@ public class Problem437 {
         dfs2(root.left, targetSum, curSum, map);
         dfs2(root.right, targetSum, curSum, map);
 
-        //根节点到当前节点的路径和从哈希表中删除
+        //根节点到当前节点的路径和从哈希表中删除，因为当前分叉已经遍历结束，要遍历另一分叉，所以当前分叉的前缀和已经不适用
         map.put(curSum, map.get(curSum) - 1);
     }
 

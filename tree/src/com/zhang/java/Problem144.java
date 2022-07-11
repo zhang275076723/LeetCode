@@ -74,7 +74,7 @@ public class Problem144 {
             TreeNode node = stack.pollLast();
             list.add(node.val);
 
-            //先将右子树节点压入栈中，再压入左子树节点
+            //先将右子树节点压入栈中，再将左子树节点压入栈中
             if (node.right != null) {
                 stack.offerLast(node.right);
             }

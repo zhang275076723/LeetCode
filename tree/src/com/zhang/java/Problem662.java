@@ -76,7 +76,7 @@ public class Problem662 {
         }
 
         Queue<TreeNode> queue = new LinkedList<>();
-        //存放节点在树中的索引下标
+        //存放每层节点在树中的索引下标
         List<Integer> list = new ArrayList<>();
         queue.offer(root);
         list.add(0);
@@ -115,7 +115,8 @@ public class Problem662 {
     }
 
     /**
-     * dfs，记录每层的开始索引，将每层节点分别减去每层的开始索引，得到最大宽度
+     * dfs
+     * 记录每层的开始索引，将每层节点分别减去每层的开始索引，得到最大宽度
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -133,7 +134,7 @@ public class Problem662 {
 
     /**
      * @param root  当前节点
-     * @param list  每层最左边节点的索引下标
+     * @param list  存放每层最左边节点的索引下标
      * @param level 当前层数
      * @param index 当前节点的索引下标
      */

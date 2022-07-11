@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/6/13 11:38
  * @Author zsy
- * @Description 和为 K 的子数组 类比Offer57_2、problem209
+ * @Description 和为 K 的子数组 类比Offer57_2、problem209、Problem437
  * 给你一个整数数组 nums 和一个整数 k ，请你统计并返回 该数组中和为 k 的子数组的个数 。
  * 注意：子数组中的元素在原数组中必须连续
  * <p>
@@ -69,14 +69,14 @@ public class Problem560 {
     public int subarraySum2(int[] nums, int k) {
         int count = 0;
         int pre = 0;
-        //map中key为前缀和，value为前缀和的次数
+        //map中key为前缀和，value为前缀和出现的次数
         Map<Integer, Integer> map = new HashMap<>();
         //将(0,1)放入map，保证第一个元素开头的子数组之和满足为k的情况
         map.put(0, 1);
 
         for (int i = 0; i < nums.length; i++) {
             pre = pre + nums[i];
-            //map中存在key为pre - k的元素，说明有满足子数组之和为k的情况
+            //map中存在key为pre - k的前缀和，说明有满足子数组之和为k的情况
             if (map.containsKey(pre - k)) {
                 count = count + map.get(pre - k);
             }
