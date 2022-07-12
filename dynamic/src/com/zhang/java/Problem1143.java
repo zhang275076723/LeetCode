@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/6/29 11:56
  * @Author zsy
- * @Description 最长公共子序列 Google面试题 类比problem718(注意子序列和子数组转移方程的区别)
+ * @Description 最长公共子序列 Google面试题 类比Problem300、problem718(注意子序列和子数组转移方程的区别)
  * 给定两个字符串 text1 和 text2，返回这两个字符串的最长 公共子序列 的长度。
  * 如果不存在 公共子序列 ，返回 0 。
  * 一个字符串的 子序列 是指这样一个新的字符串：

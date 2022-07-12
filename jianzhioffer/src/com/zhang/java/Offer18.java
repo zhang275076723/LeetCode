@@ -3,7 +3,8 @@ package com.zhang.java;
 /**
  * @Date 2022/3/18 15:17
  * @Author zsy
- * @Description 给定单向链表的头指针和一个要删除的节点的值，定义一个函数删除该节点。
+ * @Description 删除链表的节点
+ * 给定单向链表的头指针和一个要删除的节点的值，定义一个函数删除该节点。
  * 返回删除后的链表的头节点。链表中节点的值互不相同
  * <p>
  * 输入: head = [4,5,1,9], val = 5
@@ -26,6 +27,8 @@ public class Offer18 {
         node3.next = node4;
         node4.next = null;
         ListNode head = offer18.deleteNode(node1, 5);
+//        ListNode head = offer18.deleteNode2(node1, 5);
+//        ListNode head = offer18.deleteNode3(node1, node2);
         while (head != null) {
             System.out.println(head.val);
             head = head.next;
@@ -34,6 +37,7 @@ public class Offer18 {
 
     /**
      * 非递归删除某一节点
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param head
      * @param val
@@ -64,6 +68,7 @@ public class Offer18 {
 
     /**
      * 递归删除某一节点
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param head
      * @param val
@@ -78,6 +83,39 @@ public class Offer18 {
         }
 
         head.next = deleteNode2(head.next, val);
+        return head;
+    }
+
+    /**
+     * 将要删除的节点的下一个节点赋值给当前节点，删除下一个节点
+     * 时间复杂度O(1)，空间复杂度O(1) (要删除的节点不是最后一个节点)
+     * 时间复杂度O(n)，空间复杂度O(1) (要删除的节点是最后一个节点)
+     *
+     * @param head
+     * @param node
+     * @return
+     */
+    public ListNode deleteNode3(ListNode head, ListNode node) {
+        if (head == null || node == null) {
+            return head;
+        }
+        if (head == node) {
+            return head.next;
+        }
+
+        //要删除的节点是最后一个节点，则必须遍历，时间复杂度O(n)
+        if (node.next == null) {
+            ListNode preNode = head;
+            while (preNode.next != node) {
+                preNode = preNode.next;
+            }
+            preNode.next = null;
+        } else {
+            ListNode nextNode = node.next;
+            node.val = nextNode.val;
+            node.next = nextNode.next;
+        }
+
         return head;
     }
 

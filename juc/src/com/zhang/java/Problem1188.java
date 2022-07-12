@@ -1,7 +1,6 @@
 package com.zhang.java;
 
 import java.util.LinkedList;
-import java.util.Queue;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -66,7 +65,6 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Problem1188 {
     public static void main(String[] args) {
-        Problem1188 problem1188 = new Problem1188();
         BoundedBlockingQueue blockingQueue = new BoundedBlockingQueue(3);
 
         new Thread(() -> {
@@ -119,7 +117,7 @@ public class Problem1188 {
         private LinkedList<Integer> queue;
 
         /**
-         * 队列当前大小，不能使用queue.size()，因为queue非线程安全
+         * 队列当前大小，不能使用queue.size()，因为LinkedList的queue非线程安全
          */
         private int size;
 
@@ -130,8 +128,8 @@ public class Problem1188 {
         private Condition consumer;
 
         public BoundedBlockingQueue(int capacity) {
-            queue = new LinkedList<>();
             this.capacity = capacity;
+            queue = new LinkedList<>();
             size = 0;
             lock = new ReentrantLock();
             producer = lock.newCondition();
@@ -144,7 +142,7 @@ public class Problem1188 {
                 while (size == capacity) {
                     producer.await();
                 }
-                queue.addFirst(element);
+                queue.addLast(element);
                 size++;
                 System.out.println(Thread.currentThread().getName() + ":生产" + element);
                 consumer.signal();
@@ -162,7 +160,7 @@ public class Problem1188 {
                 while (size == 0) {
                     consumer.await();
                 }
-                element = queue.removeLast();
+                element = queue.removeFirst();
                 size--;
                 System.out.println(Thread.currentThread().getName() + ":消费" + element);
                 producer.signal();

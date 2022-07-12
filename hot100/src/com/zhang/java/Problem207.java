@@ -141,14 +141,16 @@ public class Problem207 {
 
         //u的邻接顶点v
         for (int v : edges.get(u)) {
+            //有环，不是拓扑排序，不满足当前课程要先上的课程，直接返回
+            if (hasCircle) {
+                return;
+            }
+
             //u的邻接顶点v未访问
             if (visited[v] == 0) {
                 dfs(v, visited, edges);
-                //有环，不满足当前课程要先上的课程，直接返回
-                if (hasCircle) {
-                    return;
-                }
-            } else if (visited[v] == 1) {//u的邻接顶点正在访问，说明有环，直接返回
+            } else if (visited[v] == 1) {
+                //u的邻接顶点正在访问，说明有环，直接返回
                 hasCircle = true;
                 return;
             }

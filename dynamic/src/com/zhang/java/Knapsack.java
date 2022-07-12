@@ -200,7 +200,8 @@ public class Knapsack {
                 if (listWeights.get(i - 1) > j) {
                     dp[i][j] = dp[i - 1][j];
                 } else {
-                    dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - listWeights.get(i - 1)] + listValues.get(i - 1));
+                    dp[i][j] = Math.max(dp[i - 1][j],
+                            dp[i - 1][j - listWeights.get(i - 1)] + listValues.get(i - 1));
                 }
             }
         }

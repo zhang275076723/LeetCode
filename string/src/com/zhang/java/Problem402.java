@@ -36,18 +36,19 @@ public class Problem402 {
     }
 
     /**
-     * 暴力，时间复杂度O(n^2)，空间复杂度O(n)
+     * 暴力
      * 删除k个元素，即保留n-k个元素
      * 第一个元素：从num[0]-num[n-(n-k-1)-1]选出最小的元素num[i]，作为第一个元素
      * 第二个元素：从num[i+1]-num[n-(n-k-2)-1]选出最小的元素num[j]，作为第二个元素
      * ...
      * 直至n-k个元素都选出来，即为最小的元素
-     * <p>
      * 例如：num = 1432219, k = 2
-     * 第一个元素：从1432中选出最小元素num[0]，1
-     * 第二个元素：从4322中选出最小元素num[3]，2
-     * 第三个元素：从21中选出最小元素num[5]，1
-     * 第四个元素：从9中选出最小元素num[6]，9
+     * 第一个元素：从143中选出最小元素num[0]，1
+     * 第二个元素：从432中选出最小元素num[3]，2
+     * 第三个元素：从2中选出最小元素num[4]，2
+     * 第四个元素：从1中选出最小元素num[5]，1
+     * 第五个元素：从9中选出最小元素num[6]，9
+     * 时间复杂度O(n^2)，空间复杂度O(n)
      *
      * @param num
      * @param k
@@ -61,6 +62,7 @@ public class Problem402 {
         StringBuilder sb = new StringBuilder();
         //要找的第一个元素的起始索引
         int l = 0;
+
         for (int i = 0; i < num.length() - k; i++) {
             int minIndex = l;
             //找当前元素的最小值
@@ -82,8 +84,9 @@ public class Problem402 {
     }
 
     /**
-     * 单调栈，时间复杂度O(n)，空间复杂度O(n)
+     * 单调栈
      * 栈中元素单调递增，移除k个不满足栈要求的元素，加上之后的元素，构成最小数字
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param num
      * @param k
@@ -95,6 +98,7 @@ public class Problem402 {
         }
 
         Deque<Character> stack = new LinkedList<>();
+
         for (int i = 0; i < num.length(); i++) {
             char c = num.charAt(i);
             //栈顶元素值大于当前元素值，且栈不为空，且k大于0，
@@ -105,7 +109,7 @@ public class Problem402 {
             stack.offerLast(c);
         }
 
-        //栈中元素依次递增的情况，例如"34567"，如果k>0说明删除的元素个数小于原生的k个，则要删除栈顶剩下的k个元素
+        //栈中元素依次递增的情况，例如"34567"，如果k>0说明删除的元素个数小于原生的k个，则还要删除栈顶剩下的k个元素
         while (k > 0) {
             stack.pollLast();
             k--;
@@ -117,6 +121,7 @@ public class Problem402 {
         }
 
         StringBuilder sb = new StringBuilder();
+
         while (!stack.isEmpty()) {
             sb.append(stack.pollFirst());
         }
