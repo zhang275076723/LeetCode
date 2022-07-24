@@ -6,7 +6,8 @@ import java.util.Stack;
 /**
  * @Date 2022/3/20 16:41
  * @Author zsy
- * @Description 定义栈的数据结构，请在该类型中实现一个能够得到栈的最小元素的 min 函数在该栈中，
+ * @Description 包含min函数的栈 类比Problem232、Offer9、Offer59_2 同Problem155
+ * 定义栈的数据结构，请在该类型中实现一个能够得到栈的最小元素的 min 函数在该栈中，
  * 调用 min、push 及 pop 的时间复杂度都是 O(1)。
  * <p>
  * MinStack minStack = new MinStack();
@@ -33,14 +34,14 @@ public class Offer30 {
     }
 
     /**
-     * 使用两个栈，一个栈保存所有元素，另一个栈在栈顶保存当前栈的最小值元素
-     * 时间复杂度O(1)，空间复杂度O(n)
+     * 使用两个栈，一个栈保存所有元素，另一个栈在栈顶保存当前栈的最小值元素，作为单调递减栈
+     * 均摊时间复杂度O(1)，空间复杂度O(n)
      */
     private static class MinStack {
         //保存所有元素的栈
         private Stack<Integer> stack;
 
-        //栈顶保存当前栈的最小值元素的栈
+        //栈顶保存当前栈的最小值元素的栈，单调递减栈
         private Stack<Integer> minStack;
 
         public MinStack() {
@@ -50,6 +51,8 @@ public class Offer30 {
 
         public void push(int val) {
             stack.push(val);
+
+            //等于号，考虑连续入栈两个相同的最小元素
             if (minStack.isEmpty() || minStack.peek() >= val) {
                 minStack.push(val);
             }
@@ -57,7 +60,8 @@ public class Offer30 {
 
         public void pop() {
             int x = stack.pop();
-            if (minStack.peek() >= x) {
+
+            if (minStack.peek() == x) {
                 minStack.pop();
             }
         }
@@ -73,6 +77,7 @@ public class Offer30 {
 
     /**
      * 使用链表，每个节点都存储当前节点的值和当前节点到尾节点的最小值
+     * 头插法，每次将新节点放在链表头
      * 时间复杂度O(1)，空间复杂度O(n)
      */
     private static class MinStack2 {

@@ -14,6 +14,9 @@ package com.zhang.java;
  * 输入: head = [4,5,1,9], val = 1
  * 输出: [4,5,9]
  * 解释: 给定你链表中值为1的第三个节点，那么在调用了你的函数之后，该链表应变为 4 -> 5 -> 9.
+ * <p>
+ * 题目保证链表中节点的值互不相同
+ * 若使用 C 或 C++ 语言，你不需要 free 或 delete 被删除的节点
  */
 public class Offer18 {
     public static void main(String[] args) {
@@ -83,6 +86,7 @@ public class Offer18 {
         }
 
         head.next = deleteNode2(head.next, val);
+
         return head;
     }
 

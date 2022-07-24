@@ -27,7 +27,7 @@ public class Problem461 {
 
     /**
      * x^y，使用&1计算结果二进制中1的个数
-     * 时间复杂度O(logC)，空间复杂度O(1)，C为元素取值范围，logC=log2^31=31
+     * 时间复杂度O(logC)，空间复杂度O(1) (C为元素取值范围，logC=log2^31=31)
      *
      * @param x
      * @param y
@@ -48,8 +48,8 @@ public class Problem461 {
     }
 
     /**
-     * x&(x-1)，将x二进制表示中的最右边的1置0
-     * 时间复杂度O(logC)，空间复杂度O(1)，C为元素取值范围，logC=log2^31=31
+     * x&(x-1)，将x表示的二进制中最低位的 1 置 0
+     * 时间复杂度O(logC)，空间复杂度O(1) (C为元素取值范围，logC=log2^31=31)
      *
      * @param x
      * @param y

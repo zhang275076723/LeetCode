@@ -3,7 +3,8 @@ package com.zhang.java;
 /**
  * @Date 2022/4/9 10:44
  * @Author zsy
- * @Description 写一个函数 StrToInt，实现把字符串转换成整数这个功能。
+ * @Description 把字符串转换成整数 同Problem8
+ * 写一个函数 StrToInt，实现把字符串转换成整数这个功能。
  * 不能使用 atoi 或者其他类似的库函数。
  * 首先，该函数会根据需要丢弃无用的开头空格字符，直到寻找到第一个非空格的字符为止。
  * 当我们寻找到的第一个非空字符为正或者负号时，则将该符号与之后面尽可能多的连续数字组合起来，
@@ -14,10 +15,6 @@ package com.zhang.java;
  * 注意：假如该字符串中的第一个非空格字符不是一个有效整数字符、字符串为空或字符串仅包含空白字符时，
  * 则你的函数不需要进行转换。
  * 在任何情况下，若函数不能进行有效的转换时，请返回 0。
- * <p>
- * 说明：
- * 假设我们的环境只能存储 32 位大小的有符号整数，那么其数值范围为[−2^31, 2^31 − 1]。
- * 如果数值超过这个范围，请返回 INT_MAX (2^31 − 1) 或INT_MIN (−2^31) 。
  * <p>
  * 输入: "42"
  * 输出: 42
@@ -38,83 +35,88 @@ package com.zhang.java;
  * 输入: "-91283472332"
  * 输出: -2147483648
  * 解释: 数字 "-91283472332" 超过 32 位有符号整数范围。因此返回 INT_MIN (−2^31) 。
+ * <p>
+ * 说明：
+ * 假设我们的环境只能存储 32 位大小的有符号整数，那么其数值范围为[−2^31, 2^31 − 1]。
+ * 如果数值超过这个范围，请返回 INT_MAX (2^31 − 1) 或INT_MIN (−2^31) 。
  */
 public class Offer67 {
     public static void main(String[] args) {
         Offer67 offer67 = new Offer67();
-        String str = "  -4193 with words ";
+        String str = "    +0004193 with words";
         System.out.println(offer67.strToInt(str));
     }
 
     /**
+     * 模拟
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param str
      * @return
      */
     public int strToInt(String str) {
-        //字符串为空，或长度为0时，返回0
-        if ("".equals(str) || str.length() == 0) {
+        if (str == null || str.length() == 0) {
             return 0;
         }
 
-        //去除前后的空格 trim()
-        int start = 0;
-        int end = str.length() - 1;
-        while (start <= end && str.charAt(start) == ' ') {
-            start++;
+        int index = 0;
+
+        //去除前导空格
+        while (index < str.length() && str.charAt(index) == ' ') {
+            index++;
         }
-        while (start <= end && str.charAt(end) == ' ') {
-            end--;
-        }
-        //只包含空白字符
-        if (start > end) {
+
+        //都是空格的情况
+        if (index == str.length()) {
             return 0;
         }
 
-        char c = str.charAt(start);
-        //不以数字或+-开头
-        if ((c < '0' || c > '9') && c != '+' && c != '-') {
+        //符号，1-正，-1-负
+        int sign = 1;
+
+        if (str.charAt(index) == '+') {
+            index++;
+        } else if (str.charAt(index) == '-') {
+            sign = -1;
+            index++;
+        } else if (str.charAt(index) < '0' || str.charAt(index) > '9') {
+            //当前索引元素不是+、-、数字，即为字母，则直接返回0
             return 0;
+        }
+
+        //已经到末尾，或者当前位不是数字
+        if (index == str.length() || str.charAt(index) < '0' || str.charAt(index) > '9') {
+            return 0;
+        }
+
+        //去除前导0
+        while (index < str.length() && str.charAt(index) == '0') {
+            index++;
         }
 
         int result = 0;
-        //正负号标志
-        boolean isNegative = false;
-        //当前遍历索引
-        int index = start;
-        //溢出判断 overflow = 2147483647 / 10 = 214748364
-        int overflow = Integer.MAX_VALUE / 10;
 
-        //如果第一位是符号的处理
-        if (c == '+') {
-            index++;
-        } else if (c == '-') {
-            isNegative = true;
-            index++;
-        }
+        while (index < str.length() && str.charAt(index) >= '0' && str.charAt(index) <= '9') {
+            int num = str.charAt(index) - '0';
 
-        //找到数字的结尾索引
-        while (index <= end) {
-            c = str.charAt(index);
-            if (c < '0' || c > '9') {
-                break;
+            //上溢出
+            if (result > Integer.MAX_VALUE / 10 ||
+                    (result == Integer.MAX_VALUE / 10 && num > Integer.MAX_VALUE % 10)) {
+                return Integer.MAX_VALUE;
             }
 
-            //溢出判断 max = 2147483647  min = -2147483648  overflow = 214748364
-            if (result > overflow || (result == overflow && c > '7')){
-                return isNegative ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+            //下溢出
+            if (result < Integer.MIN_VALUE / 10 ||
+                    (result == Integer.MIN_VALUE / 10 && num > -(Integer.MIN_VALUE % 10))) {
+                return Integer.MIN_VALUE;
             }
 
-            result = 10 * result + c - '0';
+            result = result * 10 + num * sign;
+
             index++;
         }
 
-        //正负号处理
-        if(isNegative){
-            result = -result;
-        }
-
+        //不能写成return sign == 1 ? result : -result，因为int类型的最大值和最小值不一样，需要每次累加都判断是否溢出
         return result;
     }
 }

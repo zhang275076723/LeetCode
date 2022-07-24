@@ -71,6 +71,7 @@ public class Problem287 {
 
         for (int i = 0; i < nums.length; i++) {
             while (nums[i] != nums[nums[i] - 1]) {
+                //交换时，只能用temp保存nums[nums[i]-1]，如果先保存nums[i]，对nums[i]的修改会导致无法找到nums[nums[i]-1]
                 int temp = nums[nums[i] - 1];
                 nums[nums[i] - 1] = nums[i];
                 nums[i] = temp;
@@ -85,9 +86,10 @@ public class Problem287 {
     }
 
     /**
-     * 二分查找变形，不是对原数组进行二分查找，而是对1,2,3,...,n-1，这n-1个数构成的升序数组进行查找
-     * count[i]：表示数组中小于等于i的元素个数
-     * 如果count[i]小于等于i，说明重复的元素在升序数组的右边；否则，说明重复的元素在升序数组的左边
+     * 二分查找变形
+     * 不是对原数组进行二分查找，而是对1,2,3,...,n-1，这n-1个数构成的升序数组进行二分查找
+     * count[i]：原数组中小于等于i的元素个数
+     * 如果count[i]大于等于i，说明重复的元素在升序数组当前基准i的左边或就是i；否则，说明重复的元素在升序数组当前基准i的右边
      * 时间复杂度O(nlogn)，空间复杂度O(1)
      *
      * @param nums
@@ -118,10 +120,11 @@ public class Problem287 {
                 }
             }
 
-            //重复的元素在升序数组的右边
+            //重复的元素在升序数组基准的右边
             if (count <= mid) {
                 left = mid + 1;
-            } else { //重复的元素在升序数组的左边
+            } else {
+                //重复的元素在升序数组基准的左边，或就是基准
                 right = mid - 1;
                 result = mid;
             }
@@ -146,12 +149,15 @@ public class Problem287 {
         int slow = nums[0];
         int fast = nums[nums[0]];
 
+        //快慢指针未相遇之前，慢指针每次走1步，快指针每次走2步
         while (slow != fast) {
             slow = nums[slow];
             fast = nums[nums[fast]];
         }
 
+        //其中一个指针指向链表头，快慢指针各走1步，直至两指针相遇，共同指向有环的第一个节点
         slow = 0;
+
         while (slow != fast) {
             slow = nums[slow];
             fast = nums[fast];

@@ -45,7 +45,8 @@ public class Problem141 {
     }
 
     /**
-     * 哈希表，将节点放入哈希表中，判断当前节点是否在哈希表中
+     * 哈希表
+     * 将节点放入哈希表中，判断当前节点是否在哈希表中
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param head
@@ -57,6 +58,7 @@ public class Problem141 {
         }
 
         Set<ListNode> set = new HashSet<>();
+
         while (head != null) {
             if (set.contains(head)) {
                 return true;
@@ -64,11 +66,13 @@ public class Problem141 {
             set.add(head);
             head = head.next;
         }
+
         return false;
     }
 
     /**
-     * 双指针，快指针一次移动2步，慢指针一次移动1步，如果两指针相遇则说明有环
+     * 双指针
+     * 快指针一次移动2步，慢指针一次移动1步，如果两指针相遇则说明有环
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param head

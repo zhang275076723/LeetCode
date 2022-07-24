@@ -81,6 +81,7 @@ public class Problem112 {
             if (pos.node.left == null && pos.node.right == null && pos.pathSum == targetSum) {
                 return true;
             }
+
             if (pos.node.left != null) {
                 queue.offer(new Pos(pos.node.left, pos.pathSum + pos.node.left.val));
             }

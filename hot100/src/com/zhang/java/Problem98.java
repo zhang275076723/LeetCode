@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/4/30 11:39
  * @Author zsy
- * @Description 验证二叉搜索树
+ * @Description 验证二叉搜索树 类比Problem94、Problem96、Offer68、Offer68_2
  * 给你一个二叉树的根节点 root ，判断其是否是一个有效的二叉搜索树。
  * 有效 二叉搜索树定义如下：
  * 节点的左子树只包含 小于 当前节点的数。
@@ -38,7 +38,8 @@ public class Problem98 {
     }
 
     /**
-     * 递归中序遍历，时间复杂度O(n)，空间复杂度O(n)
+     * 递归中序遍历
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
@@ -52,7 +53,8 @@ public class Problem98 {
     }
 
     /**
-     * 非递归中序遍历，时间复杂度O(n)，空间复杂度O(n)
+     * 非递归中序遍历
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
@@ -75,11 +77,14 @@ public class Problem98 {
             }
 
             node = stack.pop();
+
             //不满足二叉搜索树要求，直接返回false
             if (node.val <= preNodeValue) {
                 return false;
             }
+
             preNodeValue = node.val;
+
             node = node.right;
         }
 
@@ -101,6 +106,7 @@ public class Problem98 {
         if (root.val <= preNodeValue) {
             return false;
         }
+
         preNodeValue = root.val;
 
         //遍历右子树，右子树节点的值都应大于当前节点的值

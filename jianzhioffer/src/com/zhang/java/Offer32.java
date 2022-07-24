@@ -14,31 +14,32 @@ import java.util.*;
 public class Offer32 {
     public static void main(String[] args) {
         Offer32 offer32 = new Offer32();
-        TreeNode node1 = new TreeNode(3);
-        TreeNode node2 = new TreeNode(9);
-        TreeNode node3 = new TreeNode(20);
-        TreeNode node4 = new TreeNode(15);
-        TreeNode node5 = new TreeNode(7);
-        node1.left = node2;
-        node1.right = node3;
-        node3.left = node4;
-        node3.right = node5;
-        int[] result = offer32.levelOrder(node1);
+        String[] data = {"3", "9", "20", "null", "null", "15", "7"};
+        TreeNode root = offer32.buildTree(data);
+        int[] result = offer32.levelOrder(root);
         System.out.println(Arrays.toString(result));
     }
 
+    /**
+     * 层序遍历
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param root
+     * @return
+     */
     public int[] levelOrder(TreeNode root) {
         if (root == null) {
             return new int[0];
         }
 
-        Queue<TreeNode> queue = new LinkedList<>();
         List<Integer> list = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
 
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
             list.add(node.val);
+
             if (node.left != null) {
                 queue.offer(node.left);
             }
@@ -48,12 +49,46 @@ public class Offer32 {
         }
 
         int[] result = new int[list.size()];
+
         for (int i = 0; i < result.length; i++) {
             result[i] = list.get(i);
         }
+
         return result;
     }
 
+    private TreeNode buildTree(String[] data) {
+        if (data == null || data.length == 0) {
+            return null;
+        }
+
+        List<String> list = new ArrayList<>(Arrays.asList(data));
+        Queue<TreeNode> queue = new LinkedList<>();
+        TreeNode root = new TreeNode(Integer.parseInt(list.remove(0)));
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (!list.isEmpty()) {
+                String leftValue = list.remove(0);
+                if (!"null".equals(leftValue)) {
+                    TreeNode leftNode = new TreeNode(Integer.parseInt(leftValue));
+                    node.left = leftNode;
+                    queue.offer(leftNode);
+                }
+            }
+            if (!list.isEmpty()) {
+                String rightValue = list.remove(0);
+                if (!"null".equals(rightValue)) {
+                    TreeNode rightNode = new TreeNode(Integer.parseInt(rightValue));
+                    node.right = rightNode;
+                    queue.offer(rightNode);
+                }
+            }
+        }
+
+        return root;
+    }
 
     public static class TreeNode {
         int val;

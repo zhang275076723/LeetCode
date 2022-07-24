@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2022/5/10 9:33
  * @Author zsy
- * @Description 最小栈
+ * @Description 最小栈 类比Problem232、Offer9、Offer59_2 同Offer30
  * 设计一个支持 push ，pop ，top 操作，并能在常数时间内检索到最小元素的栈。
  * 实现 MinStack 类:
  * MinStack() 初始化堆栈对象。
@@ -48,14 +48,14 @@ public class Problem155 {
     }
 
     /**
-     * 使用两个栈，一个栈保存所有元素，另一个栈在栈顶保存当前栈的最小值元素
-     * 时间复杂度O(1)，空间复杂度O(n)
+     * 两个栈，一个栈保存所有元素，另一个栈在栈顶保存当前栈的最小值元素，作为单调递减栈
+     * 均摊时间复杂度O(1)，空间复杂度O(n)
      */
     private static class MinStack {
         //保存所有元素的栈
         private Stack<Integer> stack;
 
-        //栈顶保存当前栈的最小值元素的栈
+        //栈顶保存当前栈的最小值元素的栈，单调递减栈
         private Stack<Integer> minStack;
 
         public MinStack() {
@@ -65,6 +65,8 @@ public class Problem155 {
 
         public void push(int val) {
             stack.push(val);
+
+            //等于号，考虑连续入栈两个相同的最小元素
             if (minStack.isEmpty() || minStack.peek() >= val) {
                 minStack.push(val);
             }
@@ -72,7 +74,8 @@ public class Problem155 {
 
         public void pop() {
             int x = stack.pop();
-            if (minStack.peek() >= x) {
+
+            if (minStack.peek() == x) {
                 minStack.pop();
             }
         }
@@ -88,6 +91,7 @@ public class Problem155 {
 
     /**
      * 使用链表，每个节点都存储当前节点的值和当前节点到尾节点的最小值
+     * 头插法，每次将新节点放在链表头
      * 时间复杂度O(1)，空间复杂度O(n)
      */
     private static class MinStack2 {

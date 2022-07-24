@@ -3,7 +3,8 @@ package com.zhang.java;
 /**
  * @Date 2022/4/7 16:21
  * @Author zsy
- * @Description 从若干副扑克牌中随机抽 5 张牌，判断是不是一个顺子，即这5张牌是不是连续的。
+ * @Description 扑克牌中的顺子
+ * 从若干副扑克牌中随机抽 5 张牌，判断是不是一个顺子，即这5张牌是不是连续的。
  * 2～10为数字本身，A为1，J为11，Q为12，K为13，而大、小王为 0 ，可以看成任意数字。A 不能视为 14。
  * 数组长度为 5
  * 数组的数取值为 [0, 13]
@@ -13,6 +14,9 @@ package com.zhang.java;
  * <p>
  * 输入: [0,0,1,2,5]
  * 输出: True
+ * <p>
+ * 数组长度为 5
+ * 数组的数取值为 [0, 13] .
  */
 public class Offer61 {
     public static void main(String[] args) {
@@ -22,9 +26,10 @@ public class Offer61 {
     }
 
     /**
-     * 除了大小王之外，没有重复的牌；除了大小王之外，最大牌和最小牌之差小于5，即可构成顺子
-     * 时间复杂度O(nlogn)，空间复杂度O(n)
-     * 因为使用的排序算法是归并排序
+     * 模拟
+     * 先按小到倒排序，遍历数组，统计大小王个数，
+     * 除了大小王之外，有重复的牌，则不能构成顺子；除了大小王之外，最大牌和最小牌之差小于5，则能构成顺子
+     * 时间复杂度O(nlogn)，空间复杂度O(n) (因为使用的排序算法是归并排序)
      *
      * @param nums
      * @return
@@ -89,6 +94,7 @@ public class Offer61 {
             i++;
             tempArrIndex++;
         }
+
         while (j <= right) {
             tempArr[tempArrIndex] = nums[j];
             j++;

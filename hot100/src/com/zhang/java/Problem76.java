@@ -53,6 +53,7 @@ public class Problem76 {
         Map<Character, Integer> tMap = new HashMap<>();
         //sMap中存放s中每个字符对应的个数
         Map<Character, Integer> sMap = new HashMap<>();
+
         for (int i = 0; i < t.length(); i++) {
             tMap.put(t.charAt(i), tMap.getOrDefault(t.charAt(i), 0) + 1);
         }
@@ -83,10 +84,12 @@ public class Problem76 {
                     minRight = right;
                     size = minRight - minLeft + 1;
                 }
+
                 //如果sMap中包含左指针，左指针右移，需要在sMap中减1
                 if (sMap.containsKey(s.charAt(left))) {
                     sMap.put(s.charAt(left), sMap.get(s.charAt(left)) - 1);
                 }
+
                 //左指针右移
                 left++;
             }
@@ -95,6 +98,14 @@ public class Problem76 {
         return size == 0 ? "" : s.substring(minLeft, minRight + 1);
     }
 
+    /**
+     * 判断sMap是否能够覆盖tMap
+     * 时间复杂度O(C)，空间复杂度O(1)，C为字符集大小，即|C|=26
+     *
+     * @param sMap
+     * @param tMap
+     * @return
+     */
     private boolean isCover(Map<Character, Integer> sMap, Map<Character, Integer> tMap) {
         for (Map.Entry<Character, Integer> entry : tMap.entrySet()) {
             //sMap中没有tMap中的key，或者sMap中有tMap中的key，但value小于tMap中的value，则说明当前窗口不能覆盖t
@@ -102,6 +113,7 @@ public class Problem76 {
                 return false;
             }
         }
+
         return true;
     }
 }

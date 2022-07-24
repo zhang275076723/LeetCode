@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/4/19 10:25
  * @Author zsy
- * @Description 组合总和 II 类比Problem39
+ * @Description 组合总和 II 类比Problem39、Offer38
  * 给定一个候选人编号的集合 candidates 和一个目标数 target ，
  * 找出 candidates中所有可以使数字和为 target 的组合。
  * candidates 中的每个数字在每个组合中只能使用 一次 。
@@ -32,6 +32,7 @@ public class Problem40 {
 
     /**
      * 回溯+剪枝，难点在于如何去重
+     * 时间复杂度O(n*2^n)，空间复杂度O(n) (共有2^n种组合，每个组合需要O(n)复制到结果集合中)
      *
      * @param candidates
      * @param target
@@ -42,13 +43,17 @@ public class Problem40 {
             return new ArrayList<>();
         }
 
-        //将元素排序，便于剪枝
+        //将元素从小到大排序，便于剪枝去重
         mergeSort(candidates, 0, candidates.length - 1, new int[candidates.length]);
+
         List<List<Integer>> result = new ArrayList<>();
+
         //使用访问数组
         backtrack(candidates, target, 0, new boolean[candidates.length], result, new ArrayList<>());
+
         //不使用访问数组
 //        backtrack(candidates, target, 0, result, new ArrayList<>());
+
         return result;
     }
 
@@ -79,15 +84,19 @@ public class Problem40 {
 //            if (i > t && candidates[i] == candidates[i - 1]) {
 //                continue;
 //            }
-            //或者使用visited访问数组，在i > 0 && candidates[i] == candidates[i - 1] && !visited[i-1]的情况下，进行下次循环
-            if (i > t && candidates[i] == candidates[i - 1] && !visited[i - 1]) {
+
+            //或者使用visited访问数组，在i > 0 && candidates[i] == candidates[i - 1] && !visited[i-1]的情况下，
+            //当前字符和前一个字符相同，并且前一个字符没有被访问，说明本次和上次情况相同，直接进行下次循环
+            if (i > 0 && candidates[i] == candidates[i - 1] && !visited[i - 1]) {
                 continue;
             }
 
             list.add(candidates[i]);
             visited[i] = true;
-            //和39题区别，这里是i+1，而39题是i
+
+            //和39题区别，这里是i+1，因为元素只能使用一次，而39题是i
             backtrack(candidates, target - candidates[i], i + 1, visited, result, list);
+
             visited[i] = false;
             list.remove(list.size() - 1);
         }
@@ -106,32 +115,32 @@ public class Problem40 {
     private void merge(int[] nums, int left, int mid, int right, int[] tempArr) {
         int i = left;
         int j = mid + 1;
-        int tempArrIndex = left;
+        int index = left;
 
         while (i <= mid && j <= right) {
             if (nums[i] < nums[j]) {
-                tempArr[tempArrIndex] = nums[i];
+                tempArr[index] = nums[i];
                 i++;
             } else {
-                tempArr[tempArrIndex] = nums[j];
+                tempArr[index] = nums[j];
                 j++;
             }
-            tempArrIndex++;
+            index++;
         }
 
         while (i <= mid) {
-            tempArr[tempArrIndex] = nums[i];
+            tempArr[index] = nums[i];
             i++;
-            tempArrIndex++;
+            index++;
         }
         while (j <= right) {
-            tempArr[tempArrIndex] = nums[j];
+            tempArr[index] = nums[j];
             j++;
-            tempArrIndex++;
+            index++;
         }
 
-        for (int k = left; k <= right; k++) {
-            nums[k] = tempArr[k];
+        for (index =  left; index <= right; index++) {
+            nums[index] = tempArr[index];
         }
     }
 }

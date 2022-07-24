@@ -31,7 +31,8 @@ public class Problem41 {
     }
 
     /**
-     * 哈希表，时间复杂度O(n)，空间复杂度O(n)
+     * 哈希表
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param nums
      * @return
@@ -42,6 +43,7 @@ public class Problem41 {
         }
 
         Set<Integer> set = new HashSet<>(nums.length);
+
         //将大于0的元素，放入map中
         for (int num : nums) {
             if (num > 0) {
@@ -60,13 +62,14 @@ public class Problem41 {
     }
 
     /**
-     * 原地哈希，原数组作为哈希表，将正整数i放在nums[i-1]，时间复杂度O(n)，空间复杂度O(1)
+     * 原地哈希，原数组作为哈希表，将正整数i放在nums[i-1]
      * 遍历数组nums[i]和i+1是否相等，如果不等，则说明找到了出现的最小的正整数；
      * 如果数组遍历结束，则说明数组nums[i]和i+1都相等，返回nums.length+1
      * 例如：[(3), 4, (-1), 1]
      * 第一次交换：[-1, (4), 3, (1)]
      * 第二次交换：[(-1), (1), 3, 4]
      * 第三次交换：[1, (-1), 3, 4]，找到没有出现的最小的正整数
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
      * @return

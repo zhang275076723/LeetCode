@@ -5,38 +5,28 @@ import java.util.*;
 /**
  * @Date 2022/3/20 10:45
  * @Author zsy
- * @Description 二叉树的镜像
+ * @Description 二叉树的镜像 同Problem226
  * 请完成一个函数，输入一个二叉树，该函数输出它的镜像
  * <p>
  * 输入：root = [4,2,7,1,3,6,9]
  * 输出：[4,7,2,9,6,3,1]
+ * <p>
+ * 0 <= 节点个数 <= 1000
  */
 public class Offer27 {
     public static void main(String[] args) {
         Offer27 offer27 = new Offer27();
-        TreeNode node1 = new TreeNode(4);
-        TreeNode node2 = new TreeNode(2);
-        TreeNode node3 = new TreeNode(7);
-        TreeNode node4 = new TreeNode(1);
-        TreeNode node5 = new TreeNode(3);
-        TreeNode node6 = new TreeNode(6);
-        TreeNode node7 = new TreeNode(9);
-        node1.left = node2;
-        node1.right = node3;
-        node2.left = node4;
-        node2.right = node5;
-        node3.left = node6;
-        node3.right = node7;
-        offer27.traversal(node1);
-//        TreeNode node = offer27.mirrorTree(node1);
-//        TreeNode node = offer27.mirrorTree2(node1);
-        TreeNode node = offer27.mirrorTree3(node1);
-        offer27.traversal(node1);
+        String[] data = {"4", "2", "7", "1", "3", "6", "9"};
+        TreeNode root = offer27.buildTree(data);
+//        TreeNode root = offer27.mirrorTree(data);
+//        TreeNode root = offer27.mirrorTree2(data);
+        root = offer27.mirrorTree3(root);
+        offer27.traversal(root);
     }
 
 
     /**
-     * 递归，自下而上交换
+     * dfs，前序遍历，自下而上交换
      * 时间复杂度O(n)，平均空间复杂度O(logn)，最差空间复杂度O(n)
      *
      * @param root
@@ -47,10 +37,10 @@ public class Offer27 {
             return null;
         }
 
-        TreeNode leftNode = mirrorTree(root.left);
-        TreeNode rightNode = mirrorTree(root.right);
-        root.left = rightNode;
-        root.right = leftNode;
+        TreeNode leftNode = root.left;
+        TreeNode rightNode = root.right;
+        root.left = mirrorTree(rightNode);
+        root.right = mirrorTree(leftNode);
 
         return root;
     }
@@ -87,7 +77,7 @@ public class Offer27 {
     }
 
     /**
-     * 队列，自上而下交换
+     * dfs，层序遍历，自上而下交换
      * 时间复杂度O(n)，平均空间复杂度O(logn)，最差空间复杂度O(n)
      *
      * @param root
@@ -99,18 +89,52 @@ public class Offer27 {
         }
 
         Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
+        queue.offer(root);
 
         while (!queue.isEmpty()) {
-            TreeNode node = queue.remove();
+            TreeNode node = queue.poll();
             TreeNode tempNode = node.left;
             node.left = node.right;
             node.right = tempNode;
+
             if (node.left != null) {
                 queue.add(node.left);
             }
             if (node.right != null) {
                 queue.add(node.right);
+            }
+        }
+
+        return root;
+    }
+
+    private TreeNode buildTree(String[] data) {
+        if (data == null || data.length == 0) {
+            return null;
+        }
+
+        List<String> list = new ArrayList<>(Arrays.asList(data));
+        Queue<TreeNode> queue = new LinkedList<>();
+        TreeNode root = new TreeNode(Integer.parseInt(list.remove(0)));
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (!list.isEmpty()) {
+                String leftValue = list.remove(0);
+                if (!"null".equals(leftValue)) {
+                    TreeNode leftNode = new TreeNode(Integer.parseInt(leftValue));
+                    node.left = leftNode;
+                    queue.offer(leftNode);
+                }
+            }
+            if (!list.isEmpty()) {
+                String rightValue = list.remove(0);
+                if (!"null".equals(rightValue)) {
+                    TreeNode rightNode = new TreeNode(Integer.parseInt(rightValue));
+                    node.right = rightNode;
+                    queue.offer(rightNode);
+                }
             }
         }
 

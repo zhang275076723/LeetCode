@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/6/23 16:28
  * @Author zsy
- * @Description 字符串转换整数 (atoi)
+ * @Description 字符串转换整数 (atoi) 同Offer67
  * 请你来实现一个 myAtoi(string s) 函数，使其能将字符串转换成一个 32 位有符号整数（类似 C/C++ 中的 atoi 函数）。
  * 函数 myAtoi(string s) 的算法如下：
  * 1、读入字符串并丢弃无用的前导空格
@@ -58,7 +58,7 @@ public class Problem8 {
     }
 
     /**
-     * 手动模拟
+     * 模拟
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param s
@@ -85,12 +85,17 @@ public class Problem8 {
         int sign = 1;
 
         if (s.charAt(index) == '+') {
-            sign = 1;
             index++;
         } else if (s.charAt(index) == '-') {
             sign = -1;
             index++;
         } else if (s.charAt(index) < '0' || s.charAt(index) > '9') {
+            //当前索引元素不是+、-、数字，即为字母，则直接返回0
+            return 0;
+        }
+
+        //已经到末尾，或者当前位不是数字
+        if (index == s.length() || s.charAt(index) < '0' || s.charAt(index) > '9') {
             return 0;
         }
 
@@ -104,11 +109,13 @@ public class Problem8 {
         while (index < s.length() && s.charAt(index) >= '0' && s.charAt(index) <= '9') {
             int num = s.charAt(index) - '0';
 
-            //判断是否溢出
+            //上溢出
             if (result > Integer.MAX_VALUE / 10 ||
                     (result == Integer.MAX_VALUE / 10 && num > Integer.MAX_VALUE % 10)) {
                 return Integer.MAX_VALUE;
             }
+
+            //下溢出
             if (result < Integer.MIN_VALUE / 10 ||
                     (result == Integer.MIN_VALUE / 10 && num > -(Integer.MIN_VALUE % 10))) {
                 return Integer.MIN_VALUE;
@@ -119,6 +126,7 @@ public class Problem8 {
             index++;
         }
 
+        //不能写成return sign == 1 ? result : -result，因为int类型的最大值和最小值不一样，需要每次累加都判断是否溢出
         return result;
     }
 }

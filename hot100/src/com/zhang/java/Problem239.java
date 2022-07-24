@@ -49,7 +49,7 @@ public class Problem239 {
      * @return
      */
     public int[] maxSlidingWindow(int[] nums, int k) {
-        if (nums == null || k > nums.length || nums.length == 0) {
+        if (nums == null || nums.length == 0 || k > nums.length) {
             return new int[0];
         }
 
@@ -58,11 +58,13 @@ public class Problem239 {
 
         for (int i = 0; i < result.length; i++) {
             tempMax = Integer.MIN_VALUE;
+
             for (int j = i; j < i + k; j++) {
                 if (nums[j] > tempMax) {
                     tempMax = nums[j];
                 }
             }
+
             result[i] = tempMax;
         }
 
@@ -71,14 +73,14 @@ public class Problem239 {
 
     /**
      * 优先队列，每个节点存放当前元素和索引下标
-     * 时间复杂度O(nlogn)，空间复杂度O(n)
+     * 时间复杂度O(nlogn)，空间复杂度O(n) (最差情况下，数组单调递增，没有元素从优先队列中移除，往优先队列中添加元素为O(logn))
      *
      * @param nums
      * @param k
      * @return
      */
     public int[] maxSlidingWindow2(int[] nums, int k) {
-        if (nums == null || k > nums.length || nums.length == 0) {
+        if (nums == null || nums.length == 0 || k > nums.length) {
             return new int[0];
         }
 
@@ -126,7 +128,7 @@ public class Problem239 {
      * @return
      */
     public int[] maxSlidingWindow3(int[] nums, int k) {
-        if (nums == null || k > nums.length || nums.length == 0) {
+        if (nums == null || nums.length == 0 || k > nums.length) {
             return new int[0];
         }
 

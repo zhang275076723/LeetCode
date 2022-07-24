@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/16 8:46
  * @Author zsy
- * @Description 翻转二叉树
+ * @Description 翻转二叉树 同Offer27
  * 给你一棵二叉树的根节点 root ，翻转这棵二叉树，并返回其根节点。
  * <p>
  * 输入：root = [4,2,7,1,3,6,9]
@@ -28,14 +28,12 @@ public class Problem226 {
         problem226.traversal(root);
         System.out.println();
 //        root = problem226.invertTree(root);
-//        root = problem226.invertTree2(root);
-//        root = problem226.invertTree3(root);
-        root = problem226.invertTree4(root);
+        root = problem226.invertTree2(root);
         problem226.traversal(root);
     }
 
     /**
-     * 先序遍历
+     * dfs，前序遍历
      * 时间复杂度O(n)，平均空间复杂度O(logn)，最差空间复杂度O(n)
      *
      * @param root
@@ -55,56 +53,13 @@ public class Problem226 {
     }
 
     /**
-     * 中序遍历
-     * 平均空间复杂度O(logn)，最差空间复杂度O(n)
+     * dfs，层序遍历
+     * 时间复杂度O(n)，平均空间复杂度O(logn)，最差空间复杂度O(n)
      *
      * @param root
      * @return
      */
     public TreeNode invertTree2(TreeNode root) {
-        if (root == null) {
-            return null;
-        }
-
-        invertTree2(root.left);
-        TreeNode leftNode = root.left;
-        TreeNode rightNode = root.right;
-        root.left = rightNode;
-        root.right = leftNode;
-        //此时已经交换左右节点，所以递归当前的左节点(root.left/rightNode)，不能写成invertTree2(root.right)
-        invertTree2(rightNode);
-
-        return root;
-    }
-
-    /**
-     * 后序遍历
-     * 平均空间复杂度O(logn)，最差空间复杂度O(n)
-     *
-     * @param root
-     * @return
-     */
-    public TreeNode invertTree3(TreeNode root) {
-        if (root == null) {
-            return null;
-        }
-
-        TreeNode leftNode = invertTree3(root.left);
-        TreeNode rightNode = invertTree3(root.right);
-        root.left = rightNode;
-        root.right = leftNode;
-
-        return root;
-    }
-
-    /**
-     * 层序遍历
-     * 平均空间复杂度O(logn)，最差空间复杂度O(n)
-     *
-     * @param root
-     * @return
-     */
-    public TreeNode invertTree4(TreeNode root) {
         if (root == null) {
             return null;
         }
@@ -144,6 +99,7 @@ public class Problem226 {
 
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
+
             if (index < data.length) {
                 TreeNode leftNode = new TreeNode(data[index++]);
                 node.left = leftNode;

@@ -60,11 +60,11 @@ public class Problem104 {
             Pos pos = stack.pop();
             depth = Math.max(depth, pos.depth);
 
-            if (pos.node.left != null) {
-                stack.push(new Pos(pos.node.left, pos.depth + 1));
-            }
             if (pos.node.right != null) {
                 stack.push(new Pos(pos.node.right, pos.depth + 1));
+            }
+            if (pos.node.left != null) {
+                stack.push(new Pos(pos.node.left, pos.depth + 1));
             }
         }
 

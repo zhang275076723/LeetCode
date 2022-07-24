@@ -19,6 +19,8 @@ package com.zhang.java;
  * 输出：31
  * 解释：输入的二进制串 11111111111111111111111111111101 中，共有 31 位为 '1'。
  * 在 Java 中，编译器使用 二进制补码 记法来表示有符号整数。因此，在 示例 3 中，输入表示有符号整数 -3
+ * <p>
+ * 输入必须是长度为 32 的 二进制串 。
  */
 public class Offer15 {
     public static void main(String[] args) {
@@ -29,7 +31,7 @@ public class Offer15 {
 
     /**
      * n & 2^i，如果结果不为0，说明n的第i位为1
-     * 时间复杂度O(k)，空间复杂的O(1) k为int类型长度，即32
+     * 时间复杂度O(k)，空间复杂的O(1) (k为int类型长度，即32)
      *
      * @param n
      * @return
@@ -47,19 +49,21 @@ public class Offer15 {
     }
 
     /**
-     * n & (n−1)，将n的二进制位中的最低位的 1 变为 0
-     * 时间复杂度O(k)，空间复杂的O(1) k为n的二进制中1的个数
+     * n & (n−1)，将n表示的二进制位中的最低位的 1 变为 0
+     * 时间复杂度O(k)，空间复杂的O(1) (k为n的二进制中1的个数)
      *
      * @param n
      * @return
      */
     public int hammingWeight2(int n) {
         int result = 0;
+
         while (n != 0) {
             //将n的最低位1变为0
             n = n & (n - 1);
             result++;
         }
+
         return result;
     }
 }

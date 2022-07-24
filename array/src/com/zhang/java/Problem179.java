@@ -28,7 +28,7 @@ public class Problem179 {
 
     /**
      * 按照数字组合由大到小排序，最后拼接得到结果
-     * 时间复杂度O(nlognlogm)，空间复杂度O(logn) (m：数组中每个数的最大长度，|m|<=32)
+     * 时间复杂度O(nlognlogm)，空间复杂度O(logn) (m：数组中每个数的最大长度，|m|<=32，compareTo时间复杂度O(logm))
      *
      * @param nums
      * @return

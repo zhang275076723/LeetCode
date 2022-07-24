@@ -3,7 +3,8 @@ package com.zhang.java;
 /**
  * @Date 2022/3/18 16:37
  * @Author zsy
- * @Description 请实现一个函数用来判断字符串是否表示数值（包括整数和小数）
+ * @Description 表示数值的字符串
+ * 请实现一个函数用来判断字符串是否表示数值（包括整数和小数）
  * 字符串 s 仅含英文字母（大写和小写），数字（0-9），加号 '+' ，减号 '-' ，空格 ' ' 或者点 '.'
  * <p>
  * 数值（按顺序）可以分成以下几个部分：
@@ -28,6 +29,9 @@ package com.zhang.java;
  * <p>
  * 部分非数值列举：返回false
  * ["12e", "1a3.14", "1.2.3", "+-5", "12e+5.4"]
+ * <p>
+ * 1 <= s.length <= 20
+ * s 仅含英文字母（大写和小写），数字（0-9），加号 '+' ，减号 '-' ，空格 ' ' 或者点 '.' 。
  */
 public class Offer20 {
     public static void main(String[] args) {
@@ -39,6 +43,7 @@ public class Offer20 {
      * '.'正确出现的情况：在e和E之前，且只能出现一次
      * 'e'/'E'正确出现的情况：e和E之前有数字，之后有整数，且只能出现一次
      * '+'/'-'正确出现的情况：在开头或e和E的后一位
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param s
      * @return
@@ -50,22 +55,25 @@ public class Offer20 {
 
         //去掉首尾空格
         s = s.trim();
+
         boolean numFlag = false;
         boolean dotFlag = false;
         boolean eFlag = false;
 
         for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
+            char c = s.charAt(i);
+
+            if (c >= '0' && c <= '9') {
                 numFlag = true;
-            } else if (s.charAt(i) == '.' && !dotFlag && !eFlag) {
+            } else if (c == '.' && !dotFlag && !eFlag) {
                 //如果为'.'，则需要之前没有'.'，且'.'在e和E之前
                 dotFlag = true;
-            } else if ((s.charAt(i) == 'e' || s.charAt(i) == 'E') && !eFlag && numFlag) {
+            } else if ((c == 'e' || c == 'E') && !eFlag && numFlag) {
                 //如果为'e'/'E'，则需要之前没出现过'e'/'E'，且之前有数字
                 eFlag = true;
                 //出现'e'/'E'之后，将numFlag置位false，因为后面需要判断是否是整数
                 numFlag = false;
-            } else if ((s.charAt(i) == '+' || s.charAt(i) == '-') &&
+            } else if ((c == '+' || c == '-') &&
                     (i == 0 || s.charAt(i - 1) == 'e' || s.charAt(i - 1) == 'E')) {
                 //如果为'+'/'-'，则要么出现在第一位，要么在'e'/'E'的后一位
             } else {

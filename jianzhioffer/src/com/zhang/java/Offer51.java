@@ -10,10 +10,12 @@ package com.zhang.java;
  * <p>
  * 输入: [7,5,6,4]
  * 输出: 5
+ * <p>
+ * 0 <= 数组长度 <= 50000
  */
 public class Offer51 {
     /**
-     * 用于归并排序计数逆序对
+     * 用于归并排序统计逆序对
      */
     private int count;
 
@@ -25,7 +27,8 @@ public class Offer51 {
     }
 
     /**
-     * 暴力，时间复杂度O(n^2)，空间复杂度O(1)
+     * 暴力
+     * 时间复杂度O(n^2)，空间复杂度O(1)
      *
      * @param nums
      * @return
@@ -36,6 +39,7 @@ public class Offer51 {
         }
 
         int result = 0;
+
         for (int i = 0; i < nums.length - 1; i++) {
             for (int j = i + 1; j < nums.length; j++) {
                 if (nums[i] > nums[j]) {
@@ -43,13 +47,15 @@ public class Offer51 {
                 }
             }
         }
+
         return result;
     }
 
     /**
-     * 归并排序，时间复杂度O(nlogn)，空间复杂度O(n)
+     * 归并排序
      * 在合并时，如果左边数组的当前元素大于右边数组的当前元素，
-     * 说明左边数组当前元素到末尾元素都大于右边数组当前元素，即形成了逆序对
+     * 说明左边数组的所有元素都大于右边数组当前元素，即形成了逆序对
+     * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
      * @param nums
      * @return
@@ -60,12 +66,13 @@ public class Offer51 {
         }
 
         mergeSort(nums, 0, nums.length - 1, new int[nums.length]);
+
         return count;
     }
 
     public void mergeSort(int[] nums, int left, int right, int[] tempArr) {
         if (left < right) {
-            int mid = (left + right) / 2;
+            int mid = left + ((right - left) >> 1);
             mergeSort(nums, left, mid, tempArr);
             mergeSort(nums, mid + 1, right, tempArr);
             merge(nums, left, mid, right, tempArr);
@@ -84,9 +91,10 @@ public class Offer51 {
             } else {
                 tempArr[tempArrIndex] = nums[j];
                 j++;
-                //左边数组当前元素到末尾元素都大于右边数组当前元素，都构成了逆序对
+                //左边数组的所有元素都大于右边数组当前元素，都构成了逆序对
                 count = count + mid - i + 1;
             }
+
             tempArrIndex++;
         }
 

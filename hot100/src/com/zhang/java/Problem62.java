@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/23 10:01
  * @Author zsy
- * @Description 不同路径
+ * @Description 不同路径 类比Offer13
  * 一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。
  * 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。
  * 问总共有多少条不同的路径？
@@ -134,10 +134,12 @@ public class Problem62 {
     public int uniquePaths4(int m, int n) {
         //有可能溢出，所以使用long，最后再转换成int
         long result = 1;
+
         for (int i = 1; i <= m - 1; i++) {
             //先乘再除，保证每次运算都是整数
             result = result * (n - 1 + i) / i;
         }
+
         return (int) result;
     }
 

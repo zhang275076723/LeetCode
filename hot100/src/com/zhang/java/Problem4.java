@@ -83,7 +83,7 @@ public class Problem4 {
     }
 
     /**
-     * 二分查找变形，有序就要往二分查找考虑
+     * 二分查找变形，看到有序数组，就要想到二分查找
      * 求第k小的数，比较nums1中第k/2个元素和nums2中第k/2个元素，
      * 把较小的值和它之前的元素去掉，因为这些数不可能是第k小的数，
      * 然后再求删除后的两个数组第(k-删除的元素个数)小的数，直至找到第k小的数
@@ -109,6 +109,7 @@ public class Problem4 {
         int n = nums2.length;
         //第k小元素
         int k = (m + n) / 2 + 1;
+
         if ((m + n) % 2 == 1) {
             return findMinK(nums1, nums2, k);
         } else {
@@ -117,13 +118,13 @@ public class Problem4 {
     }
 
     public int findMinK(int[] nums1, int[] nums2, int k) {
-        //nums1数组的起始索引指针
+        //当前指向nums1的起始下标索引
         int i = 0;
-        //nums2数组的起始索引指针
+        //当前指向nums2的起始下标索引
         int j = 0;
-        //nums1数组的起始索引指针i的下一个位置索引指针
+        //i的下一个下标索引
         int nextI;
-        //nums2数组的起始索引指针j的下一个位置索引指针
+        //j的下一个下标索引
         int nextJ;
         //第k/2小元素
         int halfK;

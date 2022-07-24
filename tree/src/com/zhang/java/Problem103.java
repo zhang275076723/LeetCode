@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/3/15 11:58
  * @Author zsy
- * @Description 二叉树的锯齿形层序遍历 类比Problem102、Offer32_3
+ * @Description 二叉树的锯齿形层序遍历 类比Problem102、Offer32、Offer32_2 同Offer32_3
  * 给你二叉树的根节点 root ，返回其节点值的锯齿形层序遍历 。
  * （即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。
  * <p>
@@ -17,27 +17,23 @@ import java.util.*;
  * <p>
  * 输入：root = []
  * 输出：[]
+ * <p>
+ * 树中节点数目在范围 [0, 2000] 内
+ * -100 <= Node.val <= 100
  */
 public class Problem103 {
     public static void main(String[] args) {
         Problem103 problem103 = new Problem103();
-        TreeNode node1 = new TreeNode(3);
-        TreeNode node2 = new TreeNode(9);
-        TreeNode node3 = new TreeNode(20);
-        TreeNode node4 = new TreeNode(15);
-        TreeNode node5 = new TreeNode(7);
-        node1.left = node2;
-        node1.right = node3;
-        node3.left = node4;
-        node3.right = node5;
-        List<List<Integer>> list = problem103.zigzagLevelOrder(node1);
-        System.out.println(list);
-        List<List<Integer>> list2 = problem103.zigzagLevelOrder2(node1);
-        System.out.println(list2);
+        String[] data = {"3", "9", "20", "null", "null", "15", "7"};
+        TreeNode root = problem103.buildTree(data);
+        System.out.println(problem103.zigzagLevelOrder(root));
+        System.out.println(problem103.zigzagLevelOrder2(root));
     }
 
     /**
-     * 使用一个队列存放元素 + 反转标志
+     * 使用size统计树每行元素的个数
+     * 存储标志确定存储正序或反序
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
@@ -49,35 +45,43 @@ public class Problem103 {
 
         List<List<Integer>> result = new ArrayList<>();
         Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
         //用于每行元素的正序或逆序
-        boolean reverse = false;
-        queue.add(root);
+        boolean reverseFlag = false;
 
         while (!queue.isEmpty()) {
+            LinkedList<Integer> list = new LinkedList<>();
             int size = queue.size();
-            List<Integer> list = new ArrayList<>();
+
             while (size > 0) {
-                TreeNode node = queue.remove();
+                TreeNode node = queue.poll();
                 size--;
-                list.add(node.val);
+
+                if (reverseFlag) {
+                    list.offerFirst(node.val);
+                } else {
+                    list.offerLast(node.val);
+                }
+
                 if (node.left != null) {
-                    queue.add(node.left);
+                    queue.offer(node.left);
                 }
                 if (node.right != null) {
-                    queue.add(node.right);
+                    queue.offer(node.right);
                 }
             }
-            if (reverse) {
-                Collections.reverse(list);
-            }
-            reverse = !reverse;
+
+            reverseFlag = !reverseFlag;
+
             result.add(list);
         }
+
         return result;
     }
 
     /**
-     * 使用两个队列存放元素 + LinkedList
+     * 使用两个LinkedList队列
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
@@ -92,39 +96,76 @@ public class Problem103 {
         Queue<TreeNode> queue1 = new LinkedList<>();
         //从右到左
         Queue<TreeNode> queue2 = new LinkedList<>();
-        queue1.add(root);
+        queue1.offer(root);
 
         while (!queue1.isEmpty() || !queue2.isEmpty()) {
             LinkedList<Integer> list = new LinkedList<>();
+
             if (!queue1.isEmpty()) {
                 while (!queue1.isEmpty()) {
-                    TreeNode node = queue1.remove();
+                    TreeNode node = queue1.poll();
                     //queue1从左到右
-                    list.addLast(node.val);
+                    list.offerLast(node.val);
+
                     if (node.left != null) {
-                        queue2.add(node.left);
+                        queue2.offer(node.left);
                     }
                     if (node.right != null) {
-                        queue2.add(node.right);
+                        queue2.offer(node.right);
                     }
                 }
             } else {
                 while (!queue2.isEmpty()) {
-                    TreeNode node = queue2.remove();
+                    TreeNode node = queue2.poll();
                     //queue2从右到左
-                    list.addFirst(node.val);
+                    list.offerFirst(node.val);
+
                     if (node.left != null) {
-                        queue1.add(node.left);
+                        queue1.offer(node.left);
                     }
                     if (node.right != null) {
-                        queue1.add(node.right);
+                        queue1.offer(node.right);
                     }
                 }
             }
 
             result.add(list);
         }
+
         return result;
+    }
+
+    private TreeNode buildTree(String[] data) {
+        if (data == null || data.length == 0) {
+            return null;
+        }
+
+        List<String> list = new ArrayList<>(Arrays.asList(data));
+        Queue<TreeNode> queue = new LinkedList<>();
+        TreeNode root = new TreeNode(Integer.parseInt(list.remove(0)));
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (!list.isEmpty()) {
+                String leftValue = list.remove(0);
+                if (!"null".equals(leftValue)) {
+                    TreeNode leftNode = new TreeNode(Integer.parseInt(leftValue));
+                    node.left = leftNode;
+                    queue.offer(leftNode);
+                }
+            }
+            if (!list.isEmpty()) {
+                String rightValue = list.remove(0);
+                if (!"null".equals(rightValue)) {
+                    TreeNode rightNode = new TreeNode(Integer.parseInt(rightValue));
+                    node.right = rightNode;
+                    queue.offer(rightNode);
+                }
+            }
+        }
+
+        return root;
     }
 
     public static class TreeNode {

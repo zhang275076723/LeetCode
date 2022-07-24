@@ -119,20 +119,20 @@ public class Problem152 {
 
         for (int i = 0; i < nums.length; i++) {
             tempMax = tempMax * nums[i];
-            if (tempMax == 0) {
-                tempMax = nums[i];
-            }
             max = Math.max(max, tempMax);
+            if (tempMax == 0) {
+                tempMax = 1;
+            }
         }
 
         tempMax = 1;
 
         for (int i = nums.length - 1; i >= 0; i--) {
             tempMax = tempMax * nums[i];
-            if (tempMax == 0) {
-                tempMax = nums[i];
-            }
             max = Math.max(max, tempMax);
+            if (tempMax == 0) {
+                tempMax = 1;
+            }
         }
 
         return max;

@@ -6,7 +6,8 @@ import java.util.Random;
 /**
  * @Date 2022/3/25 9:04
  * @Author zsy
- * @Description 输入整数数组 arr ，找出其中最小的 k 个数。
+ * @Description 最小的k个数
+ * 输入整数数组 arr ，找出其中最小的 k 个数。
  * 例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。
  * 0 <= k <= arr.length <= 10000
  * 0 <= arr[i] <= 10000
@@ -16,18 +17,23 @@ import java.util.Random;
  * <p>
  * 输入：arr = [0,1,2,1], k = 1
  * 输出：[0]
+ * <p>
+ * 0 <= k <= arr.length <= 10000
+ * 0 <= arr[i] <= 10000
  */
 public class Offer40 {
     public static void main(String[] args) {
         Offer40 offer40 = new Offer40();
-        int[] arr = {4, 5, 1, 6, 2, 7, 3, 8};
+//        int[] arr = {4, 5, 1, 6, 2, 7, 3, 8};
+        int[] arr = {0, 0, 1, 2, 4, 2, 2, 3, 1, 4};
 //        System.out.println(Arrays.toString(offer40.getLeastNumbers(arr, 4)));
-//        System.out.println(Arrays.toString(offer40.getLeastNumbers2(arr, 4)));
-        System.out.println(Arrays.toString(offer40.getLeastNumbers3(arr, 4)));
+        System.out.println(Arrays.toString(offer40.getLeastNumbers2(arr, 8)));
+//        System.out.println(Arrays.toString(offer40.getLeastNumbers3(arr, 4)));
     }
 
     /**
-     * 使用归并排序，时间复杂度O(nlogn)，空间复杂度O(n)
+     * 排序，再取前k小元素
+     * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
      * @param arr
      * @param k
@@ -39,11 +45,15 @@ public class Offer40 {
         }
 
         mergeSort(arr, 0, arr.length - 1, new int[arr.length]);
+
+//        heapSort(arr);
+
         return Arrays.copyOfRange(arr, 0, k);
     }
 
     /**
-     * 快排划分思想，左边都小于划分值，右边都大于划分值，即一次划分可以确定数组第k小元素的值
+     * 快排划分思想
+     * 左边都小于划分值，右边都大于划分值，即一次划分可以确定数组第k小元素的值
      * 期望时间复杂度O(n)，期望空间复杂度O(logn)
      * 最坏时间复杂度O(n^2)，最坏空间复杂度O(n)
      *
@@ -57,14 +67,14 @@ public class Offer40 {
         }
 
         randomizedSelectK(arr, 0, arr.length - 1, k);
+
         return Arrays.copyOfRange(arr, 0, k);
     }
 
     /**
-     * 使用大小为k的大根堆，时间复杂度O(nlogk)，空间复杂度O(k)
-     * 如果当前元素大于堆顶元素，说明不是前k小元素，遍历下一个元素；
-     * 如果当前元素小于堆顶元素，则使用当前元素替换堆顶元素，再整堆，保持大根堆，
-     * 遍历结束，输出堆中元素，即为前k小元素
+     * 大根堆
+     * 如果当前元素小于堆顶元素，说明堆顶元素不是前k小元素，使用当前元素替换堆顶元素，再整堆，保持大根堆性质
+     * 时间复杂度O(nlogk)，空间复杂度O(k)
      *
      * @param arr
      * @param k
@@ -76,20 +86,23 @@ public class Offer40 {
         }
 
         int[] result = new int[k];
+
         for (int i = 0; i < k; i++) {
             result[i] = arr[i];
         }
+
         //建立大小为k的大根堆
         for (int i = result.length / 2 - 1; i >= 0; i--) {
             heapify(result, i, result.length);
         }
 
         for (int i = k; i < arr.length; i++) {
-            //当前元素大于堆顶元素，交换
+            //当前元素小于堆顶元素，说明堆顶元素不是前k小元素
             if (arr[i] < result[0]) {
                 int temp = arr[i];
                 arr[i] = result[0];
                 result[0] = temp;
+
                 heapify(result, 0, result.length);
             }
         }
@@ -97,32 +110,30 @@ public class Offer40 {
         return result;
     }
 
-    public void randomizedSelectK(int[] arr, int left, int right, int k) {
-        if (left > right) {
-            return;
+    private void randomizedSelectK(int[] arr, int left, int right, int k) {
+        int pivot = randomizedPartition(arr, left, right);
+
+        //基准在前k小元素之后
+        if (pivot > k - 1) {
+            randomizedSelectK(arr, left, pivot - 1, k);
+        } else if (pivot < k - 1) {
+            //基准在前k小元素之前
+            randomizedSelectK(arr, pivot + 1, right, k);
         }
 
-        int partition = randomizedPartition(arr, left, right);
-        //找到第k个，直接返回
-        if (partition == k - 1) {
-            return;
-        } else if (partition > k - 1) {
-            //左边找第k个
-            randomizedSelectK(arr, left, partition - 1, k);
-        } else {
-            //右边找第k个
-            randomizedSelectK(arr, partition + 1, right, k);
-        }
+        //pivot == k - 1，基准刚好在前k小元素，直接返回
     }
 
-    public int randomizedPartition(int[] arr, int left, int right) {
+    private int randomizedPartition(int[] arr, int left, int right) {
         //随机化
-        int randomIndex = new Random().nextInt(right - left + 1) + left;
+        int index = new Random().nextInt(right - left + 1) + left;
+//        int index = (int) (Math.random() * (right - left + 1) + left);
         int value = arr[left];
-        arr[left] = arr[randomIndex];
-        arr[randomIndex] = value;
+        arr[left] = arr[index];
+        arr[index] = value;
 
         int temp = arr[left];
+
         while (left < right) {
             while (left < right && arr[right] >= temp) {
                 right--;
@@ -133,16 +144,19 @@ public class Offer40 {
             }
             arr[right] = arr[left];
         }
+
         arr[left] = temp;
+
         return left;
     }
 
     /**
-     * 堆排序，时间复杂度O(nlogn)，空间复杂度O(1)
+     * 堆排序
+     * 时间复杂度O(nlogn)，空间复杂度O(1)
      *
      * @param arr
      */
-    public void heapSort(int[] arr) {
+    private void heapSort(int[] arr) {
         //建堆
         for (int i = arr.length / 2 - 1; i >= 0; i--) {
             heapify(arr, i, arr.length);
@@ -152,26 +166,28 @@ public class Offer40 {
             int temp = arr[i];
             arr[i] = arr[0];
             arr[0] = temp;
+
             heapify(arr, 0, i);
         }
     }
 
     /**
-     * 大根堆递归调整，时间复杂度O(logn)
+     * 大根堆递归调整
+     * 时间复杂度O(logn)
      *
      * @param arr
      * @param index
      * @param heapSize
      */
-    public void heapify(int[] arr, int index, int heapSize) {
+    private void heapify(int[] arr, int index, int heapSize) {
         int leftIndex = 2 * index + 1;
         int rightIndex = 2 * index + 2;
         int maxIndex = index;
 
-        if (leftIndex < heapSize && arr[index] < arr[leftIndex]) {
+        if (leftIndex < heapSize && arr[maxIndex] < arr[leftIndex]) {
             maxIndex = leftIndex;
         }
-        if (rightIndex < heapSize && arr[rightIndex] > arr[maxIndex]) {
+        if (rightIndex < heapSize && arr[maxIndex] > arr[rightIndex]) {
             maxIndex = rightIndex;
         }
 
@@ -186,14 +202,15 @@ public class Offer40 {
     }
 
     /**
-     * 归并排序，时间复杂度O(nlogn)，空间复杂度O(n)
+     * 归并排序
+     * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
      * @param arr
      * @param left
      * @param right
      * @param tempArr
      */
-    public void mergeSort(int[] arr, int left, int right, int[] tempArr) {
+    private void mergeSort(int[] arr, int left, int right, int[] tempArr) {
         if (left < right) {
             int mid = (left + right) / 2;
             mergeSort(arr, left, mid, tempArr);
@@ -202,7 +219,7 @@ public class Offer40 {
         }
     }
 
-    public void merge(int[] arr, int left, int mid, int right, int[] tempArr) {
+    private void merge(int[] arr, int left, int mid, int right, int[] tempArr) {
         int i = left;
         int j = mid + 1;
         //tempArr索引
@@ -230,11 +247,8 @@ public class Offer40 {
             index++;
         }
 
-        index = left;
-        while (left <= right) {
-            arr[left] = tempArr[index];
-            left++;
-            index++;
+        for (index = left; index <= right; index++) {
+            arr[index] = tempArr[index];
         }
     }
 

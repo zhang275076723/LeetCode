@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/18 8:50
  * @Author zsy
- * @Description 二叉树的最近公共祖先
+ * @Description 二叉树的最近公共祖先 同Offer68_2 类比Offer68、Problem98
  * 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
  * 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个节点 p、q，最近公共祖先表示为一个节点 x，
  * 满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
@@ -40,7 +40,7 @@ public class Problem236 {
     }
 
     /**
-     * 找根节点到p、q的路径，两个路径中最后一个相同的节点，即为最近公共祖先
+     * 找到根节点到p和q的路径，遍历两个路径，路径最后一个相同的节点即为最近公共祖先
      * 时间复杂度O(n)，平均空间复杂度O(logn)，最坏空间复杂度O(n)
      *
      * @param root
@@ -59,6 +59,7 @@ public class Problem236 {
         getPath(root, q, qPath);
 
         int index = 0;
+
         while (index < pPath.size() && index < qPath.size()) {
             if (pPath.get(index) == qPath.get(index)) {
                 index++;
@@ -66,6 +67,7 @@ public class Problem236 {
                 break;
             }
         }
+
         return pPath.get(index - 1);
     }
 
@@ -97,20 +99,23 @@ public class Problem236 {
         if (left != null && right != null) {
             return root;
         }
+
         //p和q都在左子树，说明最近公共祖先为left
         if (left != null) {
             return left;
         }
+
         //p和q都在右子树，说明最近公共祖先为right
         if (right != null) {
             return right;
         }
+
         //p和q既不在左子树这里，也不在右子树这里
         return null;
     }
 
     /**
-     * 先序遍历，得到根节点到当前节点的路径
+     * 前序遍历，得到根节点到当前节点的路径
      * 时间复杂度O(n)，平均空间复杂度O(logn)，最坏空间复杂度O(n)
      *
      * @param root
@@ -126,13 +131,15 @@ public class Problem236 {
             return;
         }
 
-        //if作用：当找到node时，不再进行遍历，能够加快运行速度，相当于剪枝
+        //if作用：当找到node时，不再进行遍历，相当于剪枝，能够加快运行速度
         if (path.get(path.size() - 1) != node) {
             getPath(root.left, node, path);
         }
+
         if (path.get(path.size() - 1) != node) {
             getPath(root.right, node, path);
         }
+
         if (path.get(path.size() - 1) != node) {
             path.remove(path.size() - 1);
         }
@@ -151,19 +158,19 @@ public class Problem236 {
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
             if (!list.isEmpty()) {
-                String leftData = list.remove(0);
-                if (!"null".equals(leftData)) {
-                    TreeNode leftNode = new TreeNode(Integer.parseInt(leftData));
+                String leftValue = list.remove(0);
+                if (!"null".equals(leftValue)) {
+                    TreeNode leftNode = new TreeNode(Integer.parseInt(leftValue));
                     node.left = leftNode;
-                    queue.add(leftNode);
+                    queue.offer(leftNode);
                 }
             }
             if (!list.isEmpty()) {
-                String rightData = list.remove(0);
-                if (!"null".equals(rightData)) {
-                    TreeNode rightNode = new TreeNode(Integer.parseInt(rightData));
+                String rightValue = list.remove(0);
+                if (!"null".equals(rightValue)) {
+                    TreeNode rightNode = new TreeNode(Integer.parseInt(rightValue));
                     node.right = rightNode;
-                    queue.add(rightNode);
+                    queue.offer(rightNode);
                 }
             }
         }

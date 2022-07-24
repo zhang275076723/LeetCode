@@ -18,6 +18,9 @@ import java.util.*;
  * <p>
  * 输入：root = []
  * 输出：true
+ * <p>
+ * 树中的节点数在范围 [0, 5000] 内
+ * -10^4 <= Node.val <= 10^4
  */
 public class Problem110 {
     /**
@@ -33,6 +36,8 @@ public class Problem110 {
     }
 
     /**
+     * dfs
+     * 判断每一个节点的左右子树高度之差是否大于1
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -48,12 +53,6 @@ public class Problem110 {
         return isBalanced;
     }
 
-    /**
-     * 获取当前节点的高度
-     *
-     * @param root
-     * @return
-     */
     private int nodeDepth(TreeNode root) {
         if (root == null) {
             return 0;

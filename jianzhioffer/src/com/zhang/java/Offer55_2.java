@@ -12,6 +12,8 @@ import java.util.*;
  * 给定二叉树 [3,9,20,null,null,15,7]，返回 true 。
  * <p>
  * 给定二叉树 [1,2,2,3,3,null,null,4,4]，返回 false 。
+ * <p>
+ * 0 <= 树的结点个数 <= 10000
  */
 public class Offer55_2 {
     private boolean isBalanced = true;
@@ -24,13 +26,18 @@ public class Offer55_2 {
     }
 
     /**
-     * 递归，深度优先判断是否是平衡二叉树
+     * dfs
+     * 判断每一个节点的左右子树高度之差是否大于1
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
      */
     public boolean isBalanced(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+
         nodeDepth(root);
 
         return isBalanced;
@@ -48,6 +55,7 @@ public class Offer55_2 {
 
         int leftNodeDepth = nodeDepth(root.left);
         int rightNodeDepth = nodeDepth(root.right);
+
         if (Math.abs(leftNodeDepth - rightNodeDepth) > 1) {
             isBalanced = false;
         }
@@ -55,40 +63,34 @@ public class Offer55_2 {
         return Math.max(leftNodeDepth, rightNodeDepth) + 1;
     }
 
-    /**
-     * 层次遍历建树
-     *
-     * @param data
-     * @return
-     */
-    public TreeNode buildTree(String[] data) {
+    private TreeNode buildTree(String[] data) {
+        if (data == null || data.length == 0) {
+            return null;
+        }
+
         List<String> list = new ArrayList<>(Arrays.asList(data));
         Queue<TreeNode> queue = new LinkedList<>();
         TreeNode root = new TreeNode(Integer.parseInt(list.remove(0)));
-        queue.add(root);
+        queue.offer(root);
 
-        while (list.size() >= 2) {
-            TreeNode node = queue.remove();
-            String leftValue = list.remove(0);
-            String rightValue = list.remove(0);
-            if (!"null".equals(leftValue)) {
-                TreeNode leftNode = new TreeNode(Integer.parseInt(leftValue));
-                node.left = leftNode;
-                queue.add(leftNode);
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (!list.isEmpty()) {
+                String leftValue = list.remove(0);
+                if (!"null".equals(leftValue)) {
+                    TreeNode leftNode = new TreeNode(Integer.parseInt(leftValue));
+                    node.left = leftNode;
+                    queue.offer(leftNode);
+                }
             }
-            if (!"null".equals(rightValue)) {
-                TreeNode rightNode = new TreeNode(Integer.parseInt(rightValue));
-                node.right = rightNode;
-                queue.add(rightNode);
+            if (!list.isEmpty()) {
+                String rightValue = list.remove(0);
+                if (!"null".equals(rightValue)) {
+                    TreeNode rightNode = new TreeNode(Integer.parseInt(rightValue));
+                    node.right = rightNode;
+                    queue.offer(rightNode);
+                }
             }
-        }
-
-        //list集合只剩一个元素的处理
-        if (list.size() == 1 && !"null".equals(list.get(0))) {
-            TreeNode node = queue.remove();
-            String leftValue = list.remove(0);
-            TreeNode leftNode = new TreeNode(Integer.parseInt(leftValue));
-            node.left = leftNode;
         }
 
         return root;

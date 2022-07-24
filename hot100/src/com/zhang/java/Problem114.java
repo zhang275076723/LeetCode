@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/2 9:42
  * @Author zsy
- * @Description 二叉树展开为链表
+ * @Description 二叉树展开为链表 类比Offer36
  * 给你二叉树的根结点 root ，请你将它展开为一个单链表：
  * 展开后的单链表应该同样使用 TreeNode ，其中 right 子指针指向链表中下一个结点，而左子指针始终为 null 。
  * 展开后的单链表应该与二叉树 先序遍历 顺序相同。
@@ -33,7 +33,7 @@ public class Problem114 {
     }
 
     /**
-     * 先序遍历树，将节点放在集合中，再按照顺序连接节点
+     * 前序遍历树，将节点放在集合中，再按照顺序连接节点
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -44,11 +44,13 @@ public class Problem114 {
         }
 
         List<TreeNode> list = new ArrayList<>();
+
 //        preorder(root, list);
         preorder2(root, list);
 
         TreeNode node = list.remove(0);
         TreeNode nextNode;
+
         while (!list.isEmpty()) {
             nextNode = list.remove(0);
             node.left = null;
@@ -59,23 +61,23 @@ public class Problem114 {
 
     /**
      * 找当前节点左子树的最右下节点，作为当前节点右子树的父节点，再将当前节点的左子树作为当前节点的右子树
+     * <     1                1        1            1            1
+     * <    / \              /          \            \            \
+     * <   2   5     =>     2     =>     2     =>     2     =>     2
+     * <  / \   \          / \          / \          /              \
+     * < 3   4   6        3   4        3   4        3                3
+     * <                       \            \        \                \
+     * <                        5            5        4                4
+     * <                         \            \        \                \
+     * <                          6            6        5                5
+     * <                                                 \                \
+     * <                                                  6                6
      * 时间复杂度O(n)，空间复杂度O(1)
-     *     1                1        1            1            1
-     *    / \              /          \            \            \
-     *   2   5     =>     2     =>     2     =>     2     =>     2
-     *  / \   \          / \          / \          /              \
-     * 3   4   6        3   4        3   4        3                3
-     *                       \            \        \                \
-     *                        5            5        4                4
-     *                         \            \        \                \
-     *                          6            6        5                5
-     *                                                 \                \
-     *                                                  6                6
      *
      * @param root
      */
     public void flatten2(TreeNode root) {
-        if (root == null){
+        if (root == null) {
             return;
         }
 
@@ -83,24 +85,28 @@ public class Problem114 {
         TreeNode nextNode;
         //当前节点左子树的最右下节点
         TreeNode mostRightNode;
+
         while (node != null) {
             //找当前节点左子树的最右下节点，作为当前节点右子树的父节点，再将当前节点的左子树作为当前节点的右子树
             if (node.left != null) {
                 nextNode = node.left;
                 mostRightNode = nextNode;
+
                 while (mostRightNode.right != null) {
                     mostRightNode = mostRightNode.right;
                 }
+
                 mostRightNode.right = node.right;
                 node.left = null;
                 node.right = nextNode;
             }
+
             node = node.right;
         }
     }
 
     /**
-     * 递归先序遍历
+     * 递归前序遍历
      *
      * @param root
      * @param list
@@ -109,13 +115,14 @@ public class Problem114 {
         if (root == null) {
             return;
         }
+
         list.add(root);
         preorder(root.left, list);
         preorder(root.right, list);
     }
 
     /**
-     * 非递归先序遍历
+     * 非递归前序遍历
      *
      * @param root
      * @param list
@@ -125,17 +132,33 @@ public class Problem114 {
             return;
         }
 
-        Stack<TreeNode> stack = new Stack<>();
-        TreeNode node = root;
-        while (node != null || !stack.isEmpty()) {
-            while (node != null) {
-                list.add(node);
-                stack.push(node);
-                node = node.left;
-            }
+//        Stack<TreeNode> stack = new Stack<>();
+//        TreeNode node = root;
+//
+//        while (node != null || !stack.isEmpty()) {
+//            while (node != null) {
+//                list.add(node);
+//                stack.push(node);
+//                node = node.left;
+//            }
+//
+//            node = stack.pop();
+//            node = node.right;
+//        }
 
-            node = stack.pop();
-            node = node.right;
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            list.add(node);
+
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+            if (node.left != null) {
+                stack.push(node.left);
+            }
         }
     }
 

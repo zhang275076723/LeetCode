@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/26 9:16
  * @Author zsy
- * @Description 二叉树的后序遍历 类比Problem94、Problem144
+ * @Description 二叉树的后序遍历 类比Problem94、Problem144、Offer33
  * 给你一棵二叉树的根节点 root ，返回其节点值的 后序遍历 。
  * <p>
  * 输入：root = [1,null,2,3]

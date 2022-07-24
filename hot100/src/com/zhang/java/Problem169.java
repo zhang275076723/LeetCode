@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * @Date 2022/5/11 9:29
  * @Author zsy
- * @Description 多数元素
+ * @Description 多数元素 同Offer39
  * 给定一个大小为 n 的数组nums ，返回其中的多数元素。
  * 多数元素是指在数组中出现次数 大于⌊n/2⌋的元素。
  * 你可以假设数组是非空的，并且给定的数组总是存在多数元素。
@@ -70,6 +70,7 @@ public class Problem169 {
         while (true) {
             int index = new Random().nextInt(nums.length);
             int count = 0;
+
             for (int num : nums) {
                 if (nums[index] == num) {
                     count++;
@@ -94,11 +95,13 @@ public class Problem169 {
         }
 
         quickSort(nums, 0, nums.length - 1);
+
         return nums[nums.length / 2];
     }
 
     /**
-     * 摩尔投票，取两个数，不同则抵消，占半数以上的数字必然留到最后
+     * 摩尔投票，我愿称之为同归于尽法
+     * 取两个数，不同则抵消，占半数以上的数字必然留到最后
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums

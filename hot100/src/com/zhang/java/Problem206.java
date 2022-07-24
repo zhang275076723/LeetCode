@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/13 8:48
  * @Author zsy
- * @Description 反转链表 类比Problem24、Problem92
+ * @Description 反转链表 类比Problem21、Problem24、Problem92 同Offer24
  * 给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。
  * <p>
  * 输入：head = [1,2,3,4,5]
@@ -43,16 +43,19 @@ public class Problem206 {
             return head;
         }
 
+        ListNode pre = null;
         ListNode node = head;
-        ListNode nextNode = node.next;
-        ListNode preNode = null;
-        while (nextNode != null) {
-            node.next = preNode;
-            preNode = node;
-            node = nextNode;
-            nextNode = nextNode.next;
+        ListNode next = node.next;
+
+        while (next != null) {
+            node.next = pre;
+            pre = node;
+            node = next;
+            next = next.next;
         }
-        node.next = preNode;
+
+        node.next = pre;
+
         return node;
     }
 

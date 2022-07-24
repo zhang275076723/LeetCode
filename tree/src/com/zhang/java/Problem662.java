@@ -57,7 +57,8 @@ public class Problem662 {
 
     public static void main(String[] args) {
         Problem662 problem662 = new Problem662();
-        String[] data = {"1", "3", "2", "5", "null", "null", "9", "6", "null", "null", "null", "null", "null", "null", "7"};
+        String[] data = {"1", "3", "2", "5", "null", "null", "9", "6",
+                "null", "null", "null", "null", "null", "null", "7"};
         TreeNode root = problem662.buildTree(data);
         System.out.println(problem662.widthOfBinaryTree(root));
         System.out.println(problem662.widthOfBinaryTree2(root));

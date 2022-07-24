@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/23 11:45
  * @Author zsy
- * @Description 爬楼梯
+ * @Description 爬楼梯 同Offer10_2
  * 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
  * 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
  * <p>
@@ -99,8 +99,8 @@ public class Problem70 {
 
     /**
      * 矩阵快速幂
-     * [ f(n) ]    =   [1 1] ^ (n-2)       [f(2)]
-     * [f(n-1)]        [1 0]          *    [f(1)]
+     * [ f(n) ]         [1 1] ^ (n-2)       [f(2)]
+     * [f(n-1)]    =    [1 0]          *    [f(1)]
      * 时间复杂度O(logn)，空间复杂的O(1）
      *
      * @param n
@@ -112,8 +112,11 @@ public class Problem70 {
         }
 
         int[][] result = {{1, 1}, {1, 0}};
+
         result = quickPow(result, n - 2);
+
         result = multiply(result, new int[][]{{2,0}, {1,0}});
+
         return result[0][0];
     }
 
@@ -121,28 +124,37 @@ public class Problem70 {
         if (memory[n] == 0) {
             memory[n] = dfs(n - 1, memory) + dfs(n - 2, memory);
         }
+
         return memory[n];
     }
 
     private int[][] quickPow(int[][] a, int n) {
         int[][] result = {{1, 0}, {0, 1}};
+
         while (n > 0) {
             if ((n & 1) == 1) {
                 result = multiply(result, a);
             }
+
             a = multiply(a, a);
             n = n >> 1;
         }
+
         return result;
     }
 
     private int[][] multiply(int[][] a, int[][] b) {
-        int[][] result = new int[2][2];
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 2; j++) {
-                result[i][j] = a[i][0] * b[0][j] + a[i][1] * b[1][j];
+        int[][] result = new int[a.length][b[0].length];
+
+        for (int i = 0; i < result.length; i++) {
+            for (int j = 0; j < result[0].length; j++) {
+                for (int k = 0; k < a[0].length; k++) {
+                    //使用long，避免int相乘溢出
+                    result[i][j] = (int) (result[i][j] + (long) a[i][k] * b[k][j]);
+                }
             }
         }
+
         return result;
     }
 }

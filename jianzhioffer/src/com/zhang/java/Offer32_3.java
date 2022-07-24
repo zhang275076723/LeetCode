@@ -5,32 +5,29 @@ import java.util.*;
 /**
  * @Date 2022/3/21 17:34
  * @Author zsy
- * @Description 从上到下打印二叉树 III 类比Problem103、Offer32、Offer32_2
+ * @Description 从上到下打印二叉树 III 类比Problem102、Offer32、Offer32_2 同Problem103
  * 请实现一个函数按照之字形顺序打印二叉树，
  * 即第一行按照从左到右的顺序打印，第二层按照从右到左的顺序打印，第三行再按照从左到右的顺序打印，其他行以此类推。
  * <p>
  * 给定二叉树: [3, 9, 20, null, null, 15, 7]
  * 返回其层次遍历结果：[[3], [20,9], [15,7]]
+ * <p>
+ * 节点总数 <= 1000
  */
 public class Offer32_3 {
     public static void main(String[] args) {
         Offer32_3 offer32_3 = new Offer32_3();
-        TreeNode node1 = new TreeNode(3);
-        TreeNode node2 = new TreeNode(9);
-        TreeNode node3 = new TreeNode(20);
-        TreeNode node4 = new TreeNode(15);
-        TreeNode node5 = new TreeNode(7);
-        node1.left = node2;
-        node1.right = node3;
-        node3.left = node4;
-        node3.right = node5;
-        System.out.println(offer32_3.levelOrder(node1));
-        System.out.println(offer32_3.levelOrder2(node1));
-        System.out.println(offer32_3.levelOrder3(node1));
+        String[] data = {"3", "9", "20", "null", "null", "15", "7"};
+        TreeNode root = offer32_3.buildTree(data);
+        System.out.println(offer32_3.levelOrder(root));
+        System.out.println(offer32_3.levelOrder2(root));
+        System.out.println(offer32_3.levelOrder3(root));
     }
 
     /**
-     * 使用一个队列 + 记录队列长度的变量 + LinkedList
+     * 使用size统计树每行元素的个数
+     * 通过size奇偶确定存储正序或反序
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
@@ -42,28 +39,28 @@ public class Offer32_3 {
 
         List<List<Integer>> result = new ArrayList<>();
         Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
+        queue.offer(root);
 
         while (!queue.isEmpty()) {
             LinkedList<Integer> list = new LinkedList<>();
             int size = queue.size();
 
             while (size > 0) {
-                TreeNode node = queue.remove();
+                TreeNode node = queue.poll();
                 size--;
 
                 //判断每行的插入顺序
                 if (result.size() % 2 == 0) {
-                    list.addLast(node.val);
+                    list.offerLast(node.val);
                 } else {
-                    list.addFirst(node.val);
+                    list.offerFirst(node.val);
                 }
 
                 if (node.left != null) {
-                    queue.add(node.left);
+                    queue.offer(node.left);
                 }
                 if (node.right != null) {
-                    queue.add(node.right);
+                    queue.offer(node.right);
                 }
             }
 
@@ -74,7 +71,8 @@ public class Offer32_3 {
     }
 
     /**
-     * 两个队列 + LinkedList
+     * 使用两个LinkedList队列
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
@@ -89,32 +87,35 @@ public class Offer32_3 {
         Queue<TreeNode> queue1 = new LinkedList<>();
         //从右到左
         Queue<TreeNode> queue2 = new LinkedList<>();
-        queue1.add(root);
+        queue1.offer(root);
 
         while (!queue1.isEmpty() || !queue2.isEmpty()) {
             LinkedList<Integer> list = new LinkedList<>();
+
             if (!queue1.isEmpty()) {
                 while (!queue1.isEmpty()) {
-                    TreeNode node = queue1.remove();
+                    TreeNode node = queue1.poll();
                     //queue1从左到右
-                    list.addLast(node.val);
+                    list.offerLast(node.val);
+
                     if (node.left != null) {
-                        queue2.add(node.left);
+                        queue2.offer(node.left);
                     }
                     if (node.right != null) {
-                        queue2.add(node.right);
+                        queue2.offer(node.right);
                     }
                 }
             } else {
                 while (!queue2.isEmpty()) {
-                    TreeNode node = queue2.remove();
+                    TreeNode node = queue2.poll();
                     //queue2从右到左
-                    list.addFirst(node.val);
+                    list.offerFirst(node.val);
+
                     if (node.left != null) {
-                        queue1.add(node.left);
+                        queue1.offer(node.left);
                     }
                     if (node.right != null) {
-                        queue1.add(node.right);
+                        queue1.offer(node.right);
                     }
                 }
             }
@@ -126,7 +127,8 @@ public class Offer32_3 {
     }
 
     /**
-     * 递归
+     * dfs
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
@@ -137,7 +139,9 @@ public class Offer32_3 {
         }
 
         List<List<Integer>> result = new ArrayList<>();
-        recursion(root, 0, result);
+
+        dfs(root, 0, result);
+
         return result;
     }
 
@@ -146,7 +150,7 @@ public class Offer32_3 {
      * @param level  树的层数
      * @param result 结果集合
      */
-    public void recursion(TreeNode root, int level, List<List<Integer>> result) {
+    public void dfs(TreeNode root, int level, List<List<Integer>> result) {
         if (root == null) {
             return;
         }
@@ -156,6 +160,7 @@ public class Offer32_3 {
         }
 
         List<Integer> list = result.get(level);
+
         //如果是偶数层，则尾插
         if (level % 2 == 0) {
             list.add(root.val);
@@ -163,8 +168,42 @@ public class Offer32_3 {
             //如果是奇数层，则头插
             list.add(0, root.val);
         }
-        recursion(root.left, level + 1, result);
-        recursion(root.right, level + 1, result);
+
+        dfs(root.left, level + 1, result);
+        dfs(root.right, level + 1, result);
+    }
+
+    private TreeNode buildTree(String[] data) {
+        if (data == null || data.length == 0) {
+            return null;
+        }
+
+        List<String> list = new ArrayList<>(Arrays.asList(data));
+        Queue<TreeNode> queue = new LinkedList<>();
+        TreeNode root = new TreeNode(Integer.parseInt(list.remove(0)));
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (!list.isEmpty()) {
+                String leftValue = list.remove(0);
+                if (!"null".equals(leftValue)) {
+                    TreeNode leftNode = new TreeNode(Integer.parseInt(leftValue));
+                    node.left = leftNode;
+                    queue.offer(leftNode);
+                }
+            }
+            if (!list.isEmpty()) {
+                String rightValue = list.remove(0);
+                if (!"null".equals(rightValue)) {
+                    TreeNode rightNode = new TreeNode(Integer.parseInt(rightValue));
+                    node.right = rightNode;
+                    queue.offer(rightNode);
+                }
+            }
+        }
+
+        return root;
     }
 
     public static class TreeNode {

@@ -53,6 +53,7 @@ public class Problem437 {
         }
 
         dfs(root, targetSum, 0);
+
         pathSum(root.left, targetSum);
         pathSum(root.right, targetSum);
 
@@ -61,6 +62,7 @@ public class Problem437 {
 
     /**
      * 路径前缀和
+     * 看到连续子数组，想到滑动窗口和前缀和(适合有负数的情况)
      * 遍历每个节点，在哈希表中查找前缀和为targetSum-curSum的节点个数
      * 因为节点存在负数，所以不能使用滑动窗口
      * 哈希表：key，根节点到当前节点路径上，除当前节点之外，所有节点的前缀和；value，满足路径前缀和的个数
@@ -76,7 +78,8 @@ public class Problem437 {
         }
 
         Map<Integer, Integer> map = new HashMap<>();
-        //用于只有一个节点满足要求的情况
+
+        //用于只有一个节点，即根节点值满足为targetSum的情况
         map.put(0, 1);
 
         dfs2(root, targetSum, 0, map);
@@ -108,30 +111,30 @@ public class Problem437 {
     /**
      * @param root      当前根节点
      * @param targetSum 要求的路径之和
-     * @param curSum    当前路径之和
+     * @param preSum    当前路径之和
      * @param map       根节点到当前节点路径上，除当前节点之外，所有节点的前缀和哈希表
      */
-    private void dfs2(TreeNode root, int targetSum, int curSum, Map<Integer, Integer> map) {
+    private void dfs2(TreeNode root, int targetSum, int preSum, Map<Integer, Integer> map) {
         if (root == null) {
             return;
         }
 
         //根节点到当前节点的路径和
-        curSum = curSum + root.val;
+        preSum = preSum + root.val;
 
         //路径和为curSum-targetSum的数量，即为路径和为targetSum的数量
-        if (map.containsKey(curSum - targetSum)) {
-            count2 = count2 + map.get(curSum - targetSum);
+        if (map.containsKey(preSum - targetSum)) {
+            count2 = count2 + map.get(preSum - targetSum);
         }
 
         //根节点到当前节点的路径和放入哈希表中
-        map.put(curSum, map.getOrDefault(curSum, 0) + 1);
+        map.put(preSum, map.getOrDefault(preSum, 0) + 1);
 
-        dfs2(root.left, targetSum, curSum, map);
-        dfs2(root.right, targetSum, curSum, map);
+        dfs2(root.left, targetSum, preSum, map);
+        dfs2(root.right, targetSum, preSum, map);
 
         //根节点到当前节点的路径和从哈希表中删除，因为当前分叉已经遍历结束，要遍历另一分叉，所以当前分叉的前缀和已经不适用
-        map.put(curSum, map.get(curSum) - 1);
+        map.put(preSum, map.get(preSum) - 1);
     }
 
     private TreeNode buildTree(String[] data) {

@@ -3,8 +3,11 @@ package com.zhang.java;
 /**
  * @Date 2022/3/13 11:26
  * @Author zsy
- * @Description 在一个 n * m 的二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。
+ * @Description 二维数组中的查找 同Problem240
+ * 在一个 n * m 的二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。
  * 请完成一个高效的函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数
+ * <p>
+ * 现有矩阵 matrix 如下：
  * [
  * [1,   4,  7, 11, 15],
  * [2,   5,  8, 12, 19],
@@ -14,6 +17,9 @@ package com.zhang.java;
  * ]
  * 给定 target = 5，返回 true。
  * 给定 target = 20，返回 false。
+ * <p>
+ * 0 <= n <= 1000
+ * 0 <= m <= 1000
  */
 public class Offer4 {
     public static void main(String[] args) {
@@ -29,8 +35,9 @@ public class Offer4 {
     }
 
     /**
+     * 类比二分查找树
      * 从右上角开始比较，比它大就往下数一行，比它小就往左数一列
-     * 相当于二分查找树
+     * 时间复杂度O(m+n)，空间复杂度O(1)
      *
      * @param matrix
      * @param target
@@ -41,17 +48,21 @@ public class Offer4 {
             return false;
         }
 
-        int row = 0;
-        int column = matrix[0].length - 1;
-        while (row < matrix.length && column >= 0) {
-            if (matrix[row][column] == target) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int i = 0;
+        int j = n - 1;
+
+        while (i < m && j >= 0) {
+            if (matrix[i][j] == target) {
                 return true;
-            } else if (matrix[row][column] > target) {
-                column--;
+            } else if (matrix[i][j] > target) {
+                j--;
             } else {
-                row++;
+                i++;
             }
         }
+
         return false;
     }
 }

@@ -92,12 +92,12 @@ public class Problem958 {
             return true;
         }
 
+        Queue<Pos> queue = new LinkedList<>();
+        queue.offer(new Pos(root, 1));
         //树中最后一个节点的索引
         int lastIndex = 1;
         //树中节点的个数
         int size = 0;
-        Queue<Pos> queue = new LinkedList<>();
-        queue.offer(new Pos(root, 1));
 
         while (!queue.isEmpty()) {
             Pos pos = queue.poll();
@@ -156,29 +156,20 @@ public class Problem958 {
 
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
-
             if (!list.isEmpty()) {
                 String leftValue = list.remove(0);
-                if (node != null) {
-                    if (!"null".equals(leftValue)) {
-                        TreeNode leftNode = new TreeNode(Integer.parseInt(leftValue));
-                        node.left = leftNode;
-                        queue.offer(leftNode);
-                    } else {
-                        queue.offer(null);
-                    }
+                if (!"null".equals(leftValue)) {
+                    TreeNode leftNode = new TreeNode(Integer.parseInt(leftValue));
+                    node.left = leftNode;
+                    queue.offer(leftNode);
                 }
             }
             if (!list.isEmpty()) {
                 String rightValue = list.remove(0);
-                if (node != null) {
-                    if (!"null".equals(rightValue)) {
-                        TreeNode rightNode = new TreeNode(Integer.parseInt(rightValue));
-                        node.right = rightNode;
-                        queue.offer(rightNode);
-                    } else {
-                        queue.offer(null);
-                    }
+                if (!"null".equals(rightValue)) {
+                    TreeNode rightNode = new TreeNode(Integer.parseInt(rightValue));
+                    node.right = rightNode;
+                    queue.offer(rightNode);
                 }
             }
         }

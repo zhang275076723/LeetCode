@@ -36,7 +36,7 @@ public class Problem144 {
     }
 
     /**
-     * 递归先序遍历
+     * 递归前序遍历
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -55,7 +55,7 @@ public class Problem144 {
     }
 
     /**
-     * 非递归先序遍历
+     * 非递归前序遍历
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root

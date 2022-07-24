@@ -14,6 +14,9 @@ import java.util.*;
  * <p>
  * 输入：root = [1]
  * 输出：["1"]
+ * <p>
+ * 树中节点的数目在范围 [1, 100] 内
+ * -100 <= Node.val <= 100
  */
 public class Problem257 {
     public static void main(String[] args) {

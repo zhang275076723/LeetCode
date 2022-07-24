@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/5/10 10:41
  * @Author zsy
- * @Description 相交链表
+ * @Description 相交链表 同Offer52
  * 给你两个单链表的头节点 headA 和 headB ，请你找出并返回两个单链表相交的起始节点。
  * 如果两个链表不存在相交节点，返回 null 。
  * 注意，函数返回结果后，链表必须 保持其原始结构 。
@@ -54,15 +54,18 @@ public class Problem160 {
         ListNode node3 = new ListNode(4);
         ListNode node4 = new ListNode(5);
         ListNode node5 = new ListNode(6);
+        ListNode node6 = new ListNode(1);
         headA.next = node1;
         node1.next = node2;
         node2.next = node3;
         node3.next = node4;
         headB.next = node5;
-        node5.next = node1;
+        node5.next = node6;
+        node6.next = node2;
 //        ListNode node = problem160.getIntersectionNode(headA, headB);
 //        ListNode node = problem160.getIntersectionNode2(headA, headB);
         ListNode node = problem160.getIntersectionNode3(headA, headB);
+
         while (node != null) {
             System.out.println(node.val);
             node = node.next;
@@ -93,6 +96,7 @@ public class Problem160 {
             if (set.contains(headB)) {
                 return headB;
             }
+
             headB = headB.next;
         }
 
@@ -100,7 +104,8 @@ public class Problem160 {
     }
 
     /**
-     * 双指针，遍历链表找到两个链表的长度，长链表指针往后移动x步，保证两链表长度相同，再次遍历，判断是否相交
+     * 双指针
+     * 遍历两个链表得到链表的长度，长链表指针往后移动两个链表之差步，保证两链表长度相同，再次遍历，判断是否相交
      * 时间复杂度O(m+n)，空间复杂度O(1)
      *
      * @param headA
@@ -116,38 +121,45 @@ public class Problem160 {
         int lenB = 0;
         ListNode nodeA = headA;
         ListNode nodeB = headB;
+
         while (nodeA != null && nodeB != null) {
             lenA++;
             lenB++;
             nodeA = nodeA.next;
             nodeB = nodeB.next;
         }
+
         while (nodeA != null) {
             lenA++;
             nodeA = nodeA.next;
         }
+
         while (nodeB != null) {
             lenB++;
             nodeB = nodeB.next;
         }
 
-        //长链表往后移动lenB-lenA步，保证两链表长度相同
+        nodeA = headA;
+        nodeB = headB;
+
+        //长链表指针往后移动链表之差步，让两个链表起始位置对齐
         if (lenA < lenB) {
             for (int i = 0; i < lenB - lenA; i++) {
-                headB = headB.next;
+                nodeB = nodeB.next;
             }
         } else {
             for (int i = 0; i < lenA - lenB; i++) {
-                headA = headA.next;
+                nodeA = nodeA.next;
             }
         }
 
-        while (headA != null) {
-            if (headA == headB) {
-                return headA;
+        while (nodeA != null) {
+            if (nodeA == nodeB) {
+                return nodeA;
             }
-            headA = headA.next;
-            headB = headB.next;
+
+            nodeA = nodeA.next;
+            nodeB = nodeB.next;
         }
 
         return null;
@@ -155,7 +167,8 @@ public class Problem160 {
 
     /**
      * 答案的双指针
-     * 链表A先遍历A，再遍历B，链表B先遍历B，再遍历A，如果在遍历过程中两个指针节点相等，则返回当前指针，即为相交节点
+     * 指针A先遍历A，再遍历B；指针B先遍历B，再遍历A
+     * 如果在遍历过程中两个指针节点相等，则返回当前指针，即为相交节点
      * 时间复杂度O(m+n)，空间复杂度O(1)
      *
      * @param headA

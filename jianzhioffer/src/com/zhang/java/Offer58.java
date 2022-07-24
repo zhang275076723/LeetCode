@@ -1,11 +1,11 @@
 package com.zhang.java;
 
-import java.util.Arrays;
 
 /**
  * @Date 2022/4/5 9:12
  * @Author zsy
- * @Description 输入一个英文句子，翻转句子中单词的顺序，但单词内字符的顺序不变。
+ * @Description 翻转单词顺序 类比Offer58_2 同Problem151
+ * 输入一个英文句子，翻转句子中单词的顺序，但单词内字符的顺序不变。
  * 为简单起见，标点符号和普通字母一样处理。
  * 例如输入字符串"I am a student. "，则输出"student. a am I"。
  * 无空格字符构成一个单词。
@@ -22,6 +22,14 @@ import java.util.Arrays;
  * 输入: "a good   example"
  * 输出: "example good a"
  * 解释: 如果两个单词间有多余的空格，将反转后单词间的空格减少到只含一个。
+ * <p>
+ * 无空格字符构成一个单词。
+ * 输入字符串可以在前面或者后面包含多余的空格，但是反转后的字符不能包括。
+ * 如果两个单词间有多余的空格，将反转后单词间的空格减少到只含一个。
+ * <p>
+ * 来源：力扣（LeetCode）
+ * 链接：https://leetcode.cn/problems/fan-zhuan-dan-ci-shun-xu-lcof
+ * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Offer58 {
     public static void main(String[] args) {
@@ -32,7 +40,8 @@ public class Offer58 {
     }
 
     /**
-     * 分割+反向遍历，时间复杂度O(n)，空间复杂度O(n)
+     * 分割+反向遍历
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param s
      * @return
@@ -40,37 +49,42 @@ public class Offer58 {
     public String reverseWords(String s) {
         StringBuilder sb = new StringBuilder();
         String[] split = s.trim().split(" ");
+
         for (int i = split.length - 1; i >= 0; i--) {
             if (!"".equals(split[i])) {
                 sb.append(split[i]).append(" ");
             }
         }
+
         //去除末尾空格
         return sb.toString().trim();
     }
 
     /**
-     * 双指针，时间复杂度O(n)，空间复杂度O(n)
+     * 双指针
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param s
      * @return
      */
     public String reverseWords2(String s) {
-        StringBuilder sb = new StringBuilder();
         s = s.trim();
         int left = s.length() - 1;
         int right = s.length() - 1;
+        StringBuilder sb = new StringBuilder();
 
         while (left >= 0) {
-            //找到一个单词
             while (left >= 0 && s.charAt(left) != ' ') {
                 left--;
             }
-            sb.append(s, left + 1, right + 1).append(" ");
-            //除去单词之间空格
+
+            sb.append(s, left + 1, right + 1).append(' ');
+
+            //跳过空格
             while (left >= 0 && s.charAt(left) == ' ') {
                 left--;
             }
+
             right = left;
         }
 

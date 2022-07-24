@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/4/19 8:45
  * @Author zsy
- * @Description 组合总和 类比Problem40
+ * @Description 组合总和 类比Problem40、Offer38
  * 给你一个 无重复元素 的整数数组 candidates 和一个目标整数 target ，
  * 找出 candidates 中可以使数字和为目标数 target 的 所有 不同组合 ，并以列表形式返回。
  * 你可以按 任意顺序 返回这些组合。
@@ -51,20 +51,22 @@ public class Problem39 {
             return new ArrayList<>();
         }
 
-        //将元素排序，便于剪枝
+        //将元素从小到大排序，便于剪枝
         quickSort(candidates, 0, candidates.length - 1);
+
         List<List<Integer>> result = new ArrayList<>();
+
         backtrack(candidates, target, 0, result, new ArrayList<>());
+
         return result;
     }
 
     /**
-     *
      * @param candidates 目标数组
-     * @param target 要求元素之和
-     * @param t 目标数组的当前元素索引
-     * @param result 结果集合
-     * @param list 每个满足元素之和为target的结果
+     * @param target     要求元素之和
+     * @param t          目标数组的当前元素索引
+     * @param result     结果集合
+     * @param list       每个满足元素之和为target的结果
      */
     public void backtrack(int[] candidates, int target, int t, List<List<Integer>> result, List<Integer> list) {
         if (target == 0) {
@@ -79,8 +81,10 @@ public class Problem39 {
             }
 
             list.add(candidates[i]);
-            //和40题区别，这里是i，而40题是i+1
+
+            //和40题区别，这里是i，因为每个元素可以使用多次，而40题是i+1
             backtrack(candidates, target - candidates[i], i, result, list);
+
             list.remove(list.size() - 1);
         }
     }

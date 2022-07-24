@@ -6,7 +6,8 @@ import java.util.Map;
 /**
  * @Date 2022/4/4 11:45
  * @Author zsy
- * @Description 在一个数组 nums 中除一个数字只出现一次之外，其他数字都出现了三次。
+ * @Description 类比Problem136、Offer56
+ * 在一个数组 nums 中除一个数字只出现一次之外，其他数字都出现了三次。
  * 请找出那个只出现一次的数字。
  * 1 <= nums[i] < 2^31
  * <p>
@@ -15,6 +16,9 @@ import java.util.Map;
  * <p>
  * 输入：nums = [9,1,7,9,7,9,7]
  * 输出：1
+ * <p>
+ * 1 <= nums.length <= 10000
+ * 1 <= nums[i] < 2^31
  */
 public class Offer56_2 {
     public static void main(String[] args) {
@@ -25,7 +29,8 @@ public class Offer56_2 {
     }
 
     /**
-     * 哈希表，时间复杂度O(n)，空间复杂度O(n)
+     * 哈希表
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param nums
      * @return
@@ -34,8 +39,7 @@ public class Offer56_2 {
         Map<Integer, Integer> map = new HashMap<>();
 
         for (int num : nums) {
-            Integer count = map.getOrDefault(num, 0);
-            map.put(num, ++count);
+            map.put(num, map.getOrDefault(num, 0) + 1);
         }
 
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
@@ -48,17 +52,18 @@ public class Offer56_2 {
     }
 
     /**
-     * 位运算，时间复杂度O(n)，空间复杂度O(1)
+     * 位运算，不需要额外的空间，就要想到位运算
      * 把数组中元素的每一位都相加，
      * 如果能被3整除，说明这一位对于只出现一次的数来说为0；
      * 否则，说明这一位对于只出现一次的数来说为1
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
      * @return
      */
     public int singleNumber2(int[] nums) {
         int result = 0;
-        //某一位之和
+        //二进制的某一位之和
         int bit = 0;
 
         //因为元素都在1到2^31-1之前，所以只需要遍历31位
@@ -67,11 +72,12 @@ public class Offer56_2 {
             for (int num : nums) {
                 bit = bit + ((num >> i) & 1);
             }
+
             //如果某一位之和不能够被3整除，说明对于只出现一次的数来说为1
             if (bit % 3 != 0) {
-                result = result + ((bit % 3) << i);
+                result = result + (1 << i);
             }
-            //对某一位之和重新赋值
+
             bit = 0;
         }
 

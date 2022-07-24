@@ -31,12 +31,13 @@ public class Problem617 {
         TreeNode root1 = problem617.buildTree(data1);
         TreeNode root2 = problem617.buildTree(data2);
 //        TreeNode root = problem617.mergeTrees(root1, root2);
-        TreeNode root = problem617.mergeTrees2(root1, root2);
+//        TreeNode root = problem617.mergeTrees2(root1, root2);
+        TreeNode root = problem617.mergeTrees3(root1, root2);
         problem617.traversal(root);
     }
 
     /**
-     * 先序遍历，修改了原二叉树
+     * dfs，前序遍历，修改了原二叉树
      * 时间复杂度O(min(m,n))，空间复杂度O(min(m,n)) (m,n分别为二叉树的节点个数)
      *
      * @param root1
@@ -63,7 +64,7 @@ public class Problem617 {
     }
 
     /**
-     * 先序遍历，不修改原二叉树
+     * dfs，前序遍历，不修改原二叉树
      * 时间复杂度O(min(m,n))，空间复杂度O(min(m,n)) (m,n分别为二叉树的节点个数)
      *
      * @param root1
@@ -83,8 +84,73 @@ public class Problem617 {
 
         TreeNode root = new TreeNode(root1.val + root2.val);
 
-        root.left = mergeTrees(root1.left, root2.left);
-        root.right = mergeTrees(root1.right, root2.right);
+        root.left = mergeTrees2(root1.left, root2.left);
+        root.right = mergeTrees2(root1.right, root2.right);
+
+        return root;
+    }
+
+    /**
+     * bfs，层序遍历
+     * 时间复杂度O(min(m,n))，空间复杂度O(min(m,n))
+     *
+     * @param root1
+     * @param root2
+     * @return
+     */
+    public TreeNode mergeTrees3(TreeNode root1, TreeNode root2) {
+        if (root1 == null) {
+            return root2;
+        }
+        if (root2 == null) {
+            return root1;
+        }
+
+        //存放合并之后的节点
+        Queue<TreeNode> queue = new LinkedList<>();
+        //存放root1节点
+        Queue<TreeNode> queue1 = new LinkedList<>();
+        //存放root2节点
+        Queue<TreeNode> queue2 = new LinkedList<>();
+
+        TreeNode root = new TreeNode(root1.val + root2.val);
+        queue.offer(root);
+        queue1.offer(root1);
+        queue2.offer(root2);
+
+        while (!queue1.isEmpty() && !queue2.isEmpty()) {
+            TreeNode node = queue.poll();
+            TreeNode node1 = queue1.poll();
+            TreeNode node2 = queue2.poll();
+
+            if (node1.left != null || node2.left != null){
+                if (node1.left != null && node2.left != null) {
+                    TreeNode leftNode = new TreeNode(node1.left.val + node2.left.val);
+                    node.left = leftNode;
+                    queue.offer(leftNode);
+                    queue1.offer(node1.left);
+                    queue2.offer(node2.left);
+                } else if (node1.left == null) {
+                    node.left = node2.left;
+                } else {
+                    node.left = node1.left;
+                }
+            }
+
+            if (node1.right != null || node2.right != null){
+                if (node1.right != null && node2.right != null) {
+                    TreeNode rightNode = new TreeNode(node1.right.val + node2.right.val);
+                    node.right = rightNode;
+                    queue.offer(rightNode);
+                    queue1.offer(node1.right);
+                    queue2.offer(node2.right);
+                } else if (node1.right == null) {
+                    node.right = node2.right;
+                } else {
+                    node.right = node1.right;
+                }
+            }
+        }
 
         return root;
     }

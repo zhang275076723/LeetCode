@@ -3,7 +3,7 @@ package com.zhang.zhang;
 /**
  * @Date 2022/6/25 9:31
  * @Author zsy
- * @Description 反转链表 II 类比Problem24、Problem206 百度面试题
+ * @Description 反转链表 II 类比Problem21、Problem24、Problem206 百度面试题
  * 给你单链表的头指针 head 和两个整数 left 和 right ，其中 left <= right 。
  * 请你反转从位置 left 到位置 right 的链表节点，返回 反转后的链表 。
  * <p>
@@ -77,7 +77,7 @@ public class Problem92 {
     }
 
     /**
-     * 一次遍历，头插法
+     * 头插法，一次遍历
      * 将要反转部分的每一个节点采用头插法，插入到反转部分的第一个节点位置
      * 例如：1->2->3->4->5->6 left=2, right=5
      * 1->2->(3)->4->5->6

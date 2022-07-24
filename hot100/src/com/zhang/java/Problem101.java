@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/1 9:58
  * @Author zsy
- * @Description 对称二叉树 类比Offer28
+ * @Description 对称二叉树 同Offer28
  * 给你一个二叉树的根节点 root ， 检查它是否轴对称。
  * <p>
  * 输入：root = [1,2,2,3,4,4,3]
@@ -27,7 +27,8 @@ public class Problem101 {
     }
 
     /**
-     * 递归，时间复杂度O(n)，空间复杂度O(n)
+     * dfs
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
@@ -37,12 +38,13 @@ public class Problem101 {
             return true;
         }
 
-        return compare(root.left, root.right);
+        return dfs(root.left, root.right);
     }
 
     /**
-     * 非递归，时间复杂度O(n)，空间复杂度O(n)
+     * bfs
      * 使用队列，判断每一层是否对称
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
@@ -55,39 +57,48 @@ public class Problem101 {
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root.left);
         queue.offer(root.right);
+
         while (!queue.isEmpty()) {
-            TreeNode node1 = queue.poll();
-            TreeNode node2 = queue.poll();
+            TreeNode leftNode = queue.poll();
+            TreeNode rightNode = queue.poll();
+
             //当前节点左右子树都为空，则对称，继续下次循环
-            if (node1 == null && node2 == null) {
+            if (leftNode == null && rightNode == null) {
                 continue;
             }
+
             //当前节点只有一个子树为空或左右节点值不一样，则不对称，返回false
-            if (node1 == null || node2 == null || node1.val != node2.val) {
+            if (leftNode == null || rightNode == null || leftNode.val != rightNode.val) {
                 return false;
             }
+
             //按照对称的顺序添加子节点
-            queue.add(node1.left);
-            queue.add(node2.right);
-            queue.add(node1.right);
-            queue.add(node2.left);
+            queue.add(leftNode.left);
+            queue.add(rightNode.right);
+            queue.add(leftNode.right);
+            queue.add(rightNode.left);
         }
 
         return true;
     }
 
-    private boolean compare(TreeNode node1, TreeNode node2) {
+    private boolean dfs(TreeNode node1, TreeNode node2) {
         //当前节点左右子树都为空，则对称，返回true
         if (node1 == null && node2 == null) {
             return true;
         }
-        //当前节点只有一个子树为空或左右节点值不一样，则不对称，返回false
-        if (node1 == null || node2 == null || node1.val != node2.val) {
+
+        //当前节点只有一个子树为空，则不对称，返回false
+        if (node1 == null || node2 == null) {
             return false;
         }
-        //递归判断当前节点的左子树的左子树和当前节点的右子树的右子树是否对称，
-        //当前节点的左子树的右子树和当前节点的右子树的左子树是否对称
-        return compare(node1.left, node2.right) && compare(node1.right, node2.left);
+
+        if (node1.val == node2.val) {
+            //递归判断当前节点的左子树的左子树和当前节点的右子树的右子树是否对称
+            return dfs(node1.left, node2.right) && dfs(node1.right, node2.left);
+        }
+
+        return false;
     }
 
     private TreeNode buildTree(String[] data) {

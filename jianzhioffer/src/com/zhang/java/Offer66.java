@@ -5,7 +5,8 @@ import java.util.Arrays;
 /**
  * @Date 2022/4/9 10:05
  * @Author zsy
- * @Description 给定一个数组 A[0,1,…,n-1]，请构建一个数组 B[0,1,…,n-1]，
+ * @Description 构建乘积数组
+ * 给定一个数组 A[0,1,…,n-1]，请构建一个数组 B[0,1,…,n-1]，
  * 其中 B[i] 的值是数组 A 中除了下标 i 以外的元素的积, 即 B[i]=A[0]×A[1]×…×A[i-1]×A[i+1]×…×A[n-1]。
  * 不能使用除法。
  * <p>
@@ -24,9 +25,10 @@ public class Offer66 {
     }
 
     /**
-     * 动态规划，时间复杂度O(n)，空间复杂的O(n）
-     * left[i]：索引left之前的所有元素乘积
-     * right[i]：索引right之后的所有元素乘积
+     * 动态规划
+     * left[i]：a[0]-a[left-1]所有元素乘积
+     * right[i]：a[left+1]-a[a.length-1]所有元素乘积
+     * 时间复杂度O(n)，空间复杂的O(n)
      *
      * @param a
      * @return
@@ -50,6 +52,7 @@ public class Offer66 {
         }
 
         int[] result = new int[a.length];
+
         for (int i = 0; i < result.length; i++) {
             result[i] = left[i] * right[i];
         }
@@ -58,8 +61,9 @@ public class Offer66 {
     }
 
     /**
-     * 动态规划优化，时间复杂度O(n)，空间复杂的O(1）
+     * 动态规划优化，使用滚动数组
      * result结果数组作为left数组，与right相乘，获得最终结果
+     * 时间复杂度O(n)，空间复杂的O(1)
      *
      * @param a
      * @return
@@ -77,6 +81,7 @@ public class Offer66 {
         }
 
         int right = a[a.length - 1];
+
         for (int i = result.length - 2; i >= 0; i--) {
             result[i] = result[i] * right;
             right = right * a[i];

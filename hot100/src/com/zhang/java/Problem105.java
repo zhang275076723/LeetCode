@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/1 11:57
  * @Author zsy
- * @Description 从前序与中序遍历序列构造二叉树
+ * @Description 从前序与中序遍历序列构造二叉树 同Offer7、Offer33
  * 给定两个整数数组 preorder 和 inorder ，
  * 其中 preorder 是二叉树的先序遍历， inorder 是同一棵树的中序遍历，请构造二叉树并返回其根节点。
  * <p>
@@ -33,30 +33,31 @@ public class Problem105 {
     }
 
     /**
-     * 时间复杂度O(n)，空间复杂度O(n)，哈希表需要O(n)的空间
      * 1、通过【前序遍历列表】确定【根节点 (root)】和【中序遍历列表】中的【根节点索引 (inorderRootIndex)】
      * 2、将【前序遍历列表】的节点分割成【左节点的前序遍历列表】和【右节点的前序遍历列表】
      * 2、将【中序遍历列表】的节点分割成【左节点的中序遍历列表】和【右节点的中序遍历列表】
      * 3、递归寻找【左分支节点】中的【根节点】和 【右分支节点】中的【根节点】
+     * 时间复杂度O(n)，空间复杂度O(n) (哈希表需要O(n)的空间)
      *
      * @param preorder
      * @param inorder
      * @return
      */
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        int len = preorder.length;
-        if (len == 0) {
+        if (preorder.length == 0) {
             return null;
         }
 
-        //使用hash在O(1)时间，定位中序遍历数组中根节点的索引
+        int length = preorder.length;
+        //key：节点值，value：节点在中序遍历数组的索引下标，在O(1)时间，定位中序遍历数组中根节点的索引
         Map<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < len; i++) {
+
+        for (int i = 0; i < length; i++) {
             map.put(inorder[i], i);
         }
 
         return buildTree(preorder, inorder, map,
-                0, len - 1, 0, len - 1);
+                0, length - 1, 0, length - 1);
     }
 
     /**
@@ -80,6 +81,7 @@ public class Problem105 {
 
         int rootValue = preorder[preorderLeft];
         TreeNode root = new TreeNode(rootValue);
+
         //中序遍历根节点索引
         int inorderRootIndex = map.get(rootValue);
         //左子树数组长度
@@ -102,6 +104,7 @@ public class Problem105 {
 
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
+
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
             System.out.println(node.val);

@@ -6,14 +6,24 @@ import java.util.Stack;
 /**
  * @Date 2022/3/21 18:57
  * @Author zsy
- * @Description 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历结果。
+ * @Description 二叉搜索树的后序遍历序列 类比Offer7、Problem105、Problem145
+ * 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历结果。
  * 如果是则返回 true，否则返回 false。假设输入的数组的任意两个数字都互不相同。
+ * <p>
+ * 参考以下这颗二叉搜索树：
+ * <      5
+ * <     / \
+ * <    2   6
+ * <   / \
+ * <  1   3
  * <p>
  * 输入: [1,6,3,2,5]
  * 输出: false
  * <p>
  * 输入: [1,3,2,6,5]
  * 输出: true
+ * <p>
+ * 数组长度 <= 1000
  */
 public class Offer33 {
     public static void main(String[] args) {
@@ -24,11 +34,63 @@ public class Offer33 {
         System.out.println(offer33.verifyPostorder2(postorder));
     }
 
+    /**
+     * 递归判断后序遍历数组是否是二叉搜索树
+     * 后序遍历：左右根
+     * 找到根节点，为后序遍历数组的最后一个元素，从左往右遍历数组找到第一个比根节点值大的元素到倒数第二个元素为根的右子树，
+     * 右子树节点值都要比根节点值大，再递归判断左子树和右子树是否是后序遍历二叉搜索树
+     * 时间复杂度O(n^2)，空间复杂度O(n)
+     *
+     * @param postorder
+     * @return
+     */
     public boolean verifyPostorder(int[] postorder) {
-        if (postorder == null || postorder.length < 2) {
+        if (postorder == null || postorder.length <= 1) {
             return true;
         }
-        return recursion(postorder, 0, postorder.length - 1);
+
+        return dfs(postorder, 0, postorder.length - 1);
+    }
+
+    /**
+     * 单调栈，不理解
+     * 后序遍历：左右根， 逆序后序遍历：根右左
+     * 单调递增栈存储当前节点的父节点，逆序遍历后序遍历数组，
+     * 1、stack.peek() < postorder[i]，则postorder[i]是stack.peek()的右子节点，postorder[i]入栈
+     * 判断postorder[i]是否小于parent，如果不小于，则不是后序遍历，返回false
+     * 2、stack.peek() < postorder[i]，则postorder[i]是栈中某个节点的左子节点，栈中元素出栈，赋值给当前parent，
+     * 判断postorder[i]是否小于parent，如果不小于，则不是后序遍历，返回false
+     *
+     * @param postorder
+     * @return
+     */
+    public boolean verifyPostorder2(int[] postorder) {
+        if (postorder == null || postorder.length <= 1) {
+            return true;
+        }
+
+        //单调递增栈
+        Stack<Integer> stack = new Stack<>();
+        int parent = Integer.MAX_VALUE;
+
+        for (int i = postorder.length - 1; i >= 0; i--) {
+            int value = postorder[i];
+
+            //栈顶元素 > value 时，value是栈中最小元素的左子节点
+            while (!stack.empty() && stack.peek() > value) {
+                parent = stack.pop();
+            }
+
+            //value是左子树的值，如果大于parent，则不是二叉搜索树
+            if (value > parent) {
+                return false;
+            }
+
+            //栈顶元素 < value，value是栈顶元素的右子节点，value入栈
+            stack.push(value);
+        }
+
+        return true;
     }
 
     /**
@@ -36,59 +98,31 @@ public class Offer33 {
      * @param left      当前数组起始索引
      * @param right     当前数组末尾索引
      */
-    public boolean recursion(int[] postorder, int left, int right) {
+    public boolean dfs(int[] postorder, int left, int right) {
         if (left >= right) {
             return true;
         }
 
         //当前根节点
         int rootVal = postorder[right];
-        //中序遍历中当前根节点右子树数组的起始索引
+        //第一个比根节点值大的元素索引
         int rightIndex = left;
 
+        //找到第一个比根节点值大的元素索引
         while (postorder[rightIndex] < rootVal) {
             rightIndex++;
         }
 
+        //根节点右边所有值都要比根节点值要大
         for (int i = rightIndex; i < right; i++) {
             if (postorder[i] < rootVal) {
                 return false;
             }
         }
 
-        return recursion(postorder, left, rightIndex - 1) &&
-                recursion(postorder, rightIndex, right - 1);
-    }
-
-    /**
-     * 单调栈（未理解）
-     * 后序遍历的逆序是：根，右子树，左子树
-     * arr[i] < arr[i+1]，则arr[i+1]是arr[i]的右子节点
-     * arr[i] > arr[i+1]，则arr[i+1]是arr[0]到arr[i]中某个节点的左子节点，并且这个值是arr[0]到arr[i]中的最小值
-     *
-     * @param postorder
-     * @return
-     */
-    public boolean verifyPostorder2(int[] postorder) {
-        //单调递增栈
-        Stack<Integer> stack = new Stack<>();
-        int parent = Integer.MAX_VALUE;
-
-        for (int i = postorder.length - 1; i >= 0; i--) {
-            int val = postorder[i];
-            //栈顶元素 > val 时，val是栈中最小元素的左子节点
-            while (!stack.empty() && stack.peek() > val) {
-                parent = stack.pop();
-            }
-            //val是左子树的值，如果大于parent，则不是二叉搜索树
-            if (val > parent) {
-                return false;
-            }
-            //栈顶元素 < val，val是栈顶元素的右子节点，val入栈
-            stack.push(val);
-        }
-
-        return true;
+        //递归判断左子树和右子树是否是后序遍历二叉搜索树
+        return dfs(postorder, left, rightIndex - 1) &&
+                dfs(postorder, rightIndex, right - 1);
     }
 
 }

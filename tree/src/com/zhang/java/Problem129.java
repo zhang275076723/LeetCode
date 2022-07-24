@@ -44,7 +44,7 @@ public class Problem129 {
     }
 
     /**
-     * dfs，先序遍历
+     * dfs，前序遍历
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root

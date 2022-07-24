@@ -34,8 +34,8 @@ public class Problem209 {
     }
 
     /**
-     * 暴力破解
-     * 时间复杂度T(n) = O(n^2)，空间复杂度S(n) = O(1)
+     * 暴力
+     * 时间复杂度O(n^2)，空间复杂度O(1)
      *
      * @param target
      * @param nums
@@ -49,6 +49,7 @@ public class Problem209 {
 
             for (int j = i; j < nums.length; j++) {
                 sum += nums[j];
+
                 if (sum >= target) {
                     length = Integer.min(length, j - i + 1);
                     break;
@@ -61,7 +62,8 @@ public class Problem209 {
 
     /**
      * 前缀和 + 二分查找，前缀和在数组中元素存在负数的情况仍有效，但滑动窗口在数组中存在负数的时候失效
-     * 时间复杂度T(n) = O(nlogn)，空间复杂度S(n) = O(n)
+     * 看到连续子数组，想到滑动窗口和前缀和(适合有负数的情况)
+     * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
      * @param target
      * @param nums
@@ -98,8 +100,10 @@ public class Problem209 {
     }
 
     /**
-     * 滑动窗口，也是双指针法，因为数组中元素都是正数，所以可以使用滑动窗口，如果存在负数，则只能使用前缀和
-     * 时间复杂度T(n) = O(n)，空间复杂度S(n) = O(1)
+     * 滑动窗口，双指针
+     * 看到连续子数组，想到滑动窗口和前缀和(适合有负数的情况)
+     * 因为数组中元素都是正数，所以可以使用滑动窗口，如果存在负数，则只能使用前缀和
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param target
      * @param nums
@@ -115,9 +119,11 @@ public class Problem209 {
             sum = sum + nums[right];
 
             while (sum >= target) {
+                //更新满足要求的最小子数组长度
                 if (right - left + 1 < length) {
                     length = right - left + 1;
                 }
+
                 sum = sum - nums[left];
                 left++;
             }

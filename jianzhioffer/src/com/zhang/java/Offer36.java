@@ -1,12 +1,11 @@
 package com.zhang.java;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Date 2022/3/23 10:03
  * @Author zsy
- * @Description 二叉搜索树与双向链表
+ * @Description 二叉搜索树与双向链表 类比Problem114
  * 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的循环双向链表。
  * 要求不能创建任何新的节点，只能调整树中节点指针的指向。
  * 我们希望将这个二叉搜索树转化为双向循环链表。链表中的每个节点都有一个前驱和后继指针。
@@ -29,18 +28,10 @@ public class Offer36 {
 
     public static void main(String[] args) {
         Offer36 offer36 = new Offer36();
-        Node node1 = new Node(4);
-        Node node2 = new Node(2);
-        Node node3 = new Node(5);
-        Node node4 = new Node(1);
-        Node node5 = new Node(3);
-        node1.left = node2;
-        node1.right = node3;
-        node2.left = node4;
-        node2.right = node5;
-
-//        Node head = offer36.treeToDoublyList(node1);
-        Node head = offer36.treeToDoublyList2(node1);
+        String[] data = {"4", "2", "5", "1", "3"};
+        Node root = offer36.buildTree(data);
+//        Node head = offer36.treeToDoublyList(root);
+        Node head = offer36.treeToDoublyList2(root);
 
         if (head == null) {
             return;
@@ -57,7 +48,7 @@ public class Offer36 {
     }
 
     /**
-     * 中序遍历，将节点保存在集合中，再重新赋值左右指针，构建双向链表
+     * 中序遍历将节点保存在集合中，再重新赋值左右指针，构建双向链表
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -69,13 +60,14 @@ public class Offer36 {
         }
 
         List<Node> nodeList = new ArrayList<>();
+
         inorder(root, nodeList);
 
         Node node;
         Node preNode;
         Node nextNode;
 
-        //从中序遍历集合调整左右指针，构建双向链表
+        //从中序遍历得到的集合中调整左右指针，构建双向链表
         for (int i = 0; i < nodeList.size(); i++) {
             node = nodeList.get(i);
 
@@ -101,7 +93,8 @@ public class Offer36 {
     }
 
     /**
-     * 递归，中序遍历，使用两个指针preNode和head，构建双向链表
+     * 递归
+     * 中序遍历，使用两个指针pre和head，pre指向当前节点的前驱节点，head指向头节点
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -146,10 +139,44 @@ public class Offer36 {
             pre.right = root;
             root.left = pre;
         }
+
         //更新pre
         pre = root;
 
         inorder2(root.right);
+    }
+
+    private Node buildTree(String[] data) {
+        if (data == null || data.length == 0) {
+            return null;
+        }
+
+        List<String> list = new ArrayList<>(Arrays.asList(data));
+        Queue<Node> queue = new LinkedList<>();
+        Node root = new Node(Integer.parseInt(list.remove(0)));
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            Node node = queue.poll();
+            if (!list.isEmpty()) {
+                String leftNodeValue = list.remove(0);
+                if (!"null".equals(leftNodeValue)) {
+                    Node leftNode = new Node(Integer.parseInt(leftNodeValue));
+                    node.left = leftNode;
+                    queue.offer(leftNode);
+                }
+            }
+            if (!list.isEmpty()) {
+                String rightNodeValue = list.remove(0);
+                if (!"null".equals(rightNodeValue)) {
+                    Node rightNode = new Node(Integer.parseInt(rightNodeValue));
+                    node.right = rightNode;
+                    queue.offer(rightNode);
+                }
+            }
+        }
+
+        return root;
     }
 
     static class Node {

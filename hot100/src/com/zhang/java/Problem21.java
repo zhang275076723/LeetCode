@@ -3,7 +3,8 @@ package com.zhang.java;
 /**
  * @Date 2022/4/15 12:22
  * @Author zsy
- * @Description 将两个升序链表合并为一个新的 升序 链表并返回。
+ * @Description 合并两个有序链表 同Offer25 类比Problem24、Problem92、Problem206
+ * 将两个升序链表合并为一个新的 升序 链表并返回。
  * 新链表是通过拼接给定的两个链表的所有节点组成的。
  * <p>
  * 输入：l1 = [1,2,4], l2 = [1,3,4]
@@ -35,7 +36,8 @@ public class Problem21 {
     }
 
     /**
-     * 非递归合并两个有序链表，时间复杂度O(m+n)，空间复杂度O(1)
+     * 非递归合并两个有序链表
+     * 时间复杂度O(m+n)，空间复杂度O(1)
      *
      * @param list1
      * @param list2
@@ -75,7 +77,8 @@ public class Problem21 {
     }
 
     /**
-     * 递归合并两个有序链表，时间复杂度O(m+n)，空间复杂度O(m+n)
+     * 递归合并两个有序链表
+     * 时间复杂度O(m+n)，空间复杂度O(m+n)
      *
      * @param list1
      * @param list2
@@ -98,17 +101,19 @@ public class Problem21 {
         }
     }
 
-    public ListNode buildList(int[] nums) {
+    private ListNode buildList(int[] nums) {
         if (nums == null || nums.length == 0) {
             return null;
         }
 
         ListNode head = new ListNode(nums[0]);
         ListNode node = head;
+
         for (int i = 1; i < nums.length; i++) {
             node.next = new ListNode(nums[i]);
             node = node.next;
         }
+
         return head;
     }
 

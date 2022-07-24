@@ -3,7 +3,8 @@ package com.zhang.java;
 /**
  * @Date 2022/4/30 9:26
  * @Author zsy
- * @Description 给你一个整数 n ，求恰由 n 个节点组成且节点值从 1 到 n 互不相同的 二叉搜索树 有多少种？
+ * @Description 不同的二叉搜索树 类比Problem98
+ * 给你一个整数 n ，求恰由 n 个节点组成且节点值从 1 到 n 互不相同的 二叉搜索树 有多少种？
  * 返回满足题意的二叉搜索树的种数。
  * <p>
  * 输入：n = 3
@@ -43,6 +44,7 @@ public class Problem96 {
                 dp[i] = dp[i] + dp[j] * dp[i - 1 - j];
             }
         }
+
         return dp[n];
     }
 
@@ -57,11 +59,14 @@ public class Problem96 {
     public int numTrees2(int n) {
         //使用long，避免乘法时溢出
         long result = 1;
+
         for (int i = 0; i < n; i++) {
             //除以i+1，则能保证整除；如果除以n-i，则不能保证整除
             result = result * (2L * n - i) / (i + 1);
         }
+
         result = result / (n + 1);
+
         return (int) result;
     }
 }

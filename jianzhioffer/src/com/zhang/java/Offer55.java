@@ -5,11 +5,13 @@ import java.util.*;
 /**
  * @Date 2022/4/3 9:56
  * @Author zsy
- * @Description 二叉树的深度 同Problem104
+ * @Description 二叉树的深度 类比Offer55_2 同Problem104
  * 输入一棵二叉树的根节点，求该树的深度。
  * 从根节点到叶节点依次经过的节点（含根、叶节点）形成树的一条路径，最长路径的长度为树的深度。
  * <p>
  * 给定二叉树 [3,9,20,null,null,15,7]，返回它的最大深度 3 。
+ * <p>
+ * 节点总数 <= 10000
  */
 public class Offer55 {
     public static void main(String[] args) {
@@ -22,7 +24,8 @@ public class Offer55 {
     }
 
     /**
-     * 递归，深度优先求树的深度，时间复杂度O(n)，空间复杂度O(n)
+     * 递归dfs
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
@@ -34,11 +37,13 @@ public class Offer55 {
 
         int leftDepth = maxDepth(root.left);
         int rightDepth = maxDepth(root.right);
+
         return Math.max(leftDepth, rightDepth) + 1;
     }
 
     /**
-     * 非递归，深度优先求树的深度，时间复杂度O(n)，空间复杂度O(n)
+     * 非递归dfs
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
@@ -48,18 +53,19 @@ public class Offer55 {
             return 0;
         }
 
-        Stack<Pair> stack = new Stack<>();
-        stack.push(new Pair(root, 1));
+        Stack<Pos> stack = new Stack<>();
+        stack.push(new Pos(root, 1));
         int depth = 0;
 
         while (!stack.isEmpty()) {
-            Pair pair = stack.pop();
-            depth = Math.max(pair.depth, depth);
-            if (pair.node.left != null) {
-                stack.push(new Pair(pair.node.left, pair.depth + 1));
+            Pos pos = stack.pop();
+            depth = Math.max(pos.depth, depth);
+
+            if (pos.node.right != null) {
+                stack.push(new Pos(pos.node.right, pos.depth + 1));
             }
-            if (pair.node.right != null) {
-                stack.push(new Pair(pair.node.right, pair.depth + 1));
+            if (pos.node.left != null) {
+                stack.push(new Pos(pos.node.left, pos.depth + 1));
             }
         }
 
@@ -67,7 +73,8 @@ public class Offer55 {
     }
 
     /**
-     * 非递归，层次遍历求树的深度，时间复杂度O(n)，空间复杂度O(n)
+     * bfs
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
@@ -78,60 +85,56 @@ public class Offer55 {
         }
 
         Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
+        queue.offer(root);
         int depth = 0;
 
         while (!queue.isEmpty()) {
             int size = queue.size();
+
             for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
                 if (node.left != null) {
-                    queue.add(node.left);
+                    queue.offer(node.left);
                 }
                 if (node.right != null) {
-                    queue.add(node.right);
+                    queue.offer(node.right);
                 }
             }
+
             depth++;
         }
 
         return depth;
     }
 
-    /**
-     * 层次遍历建树
-     *
-     * @param data
-     * @return
-     */
-    public TreeNode buildTree(String[] data) {
+    private TreeNode buildTree(String[] data) {
+        if (data == null || data.length == 0) {
+            return null;
+        }
+
         List<String> list = new ArrayList<>(Arrays.asList(data));
         Queue<TreeNode> queue = new LinkedList<>();
         TreeNode root = new TreeNode(Integer.parseInt(list.remove(0)));
-        queue.add(root);
+        queue.offer(root);
 
-        while (list.size() >= 2) {
-            TreeNode node = queue.remove();
-            String leftValue = list.remove(0);
-            String rightValue = list.remove(0);
-            if (!"null".equals(leftValue)) {
-                TreeNode leftNode = new TreeNode(Integer.parseInt(leftValue));
-                node.left = leftNode;
-                queue.add(leftNode);
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (!list.isEmpty()) {
+                String leftNodeValue = list.remove(0);
+                if (!"null".equals(leftNodeValue)) {
+                    TreeNode leftNode = new TreeNode(Integer.parseInt(leftNodeValue));
+                    node.left = leftNode;
+                    queue.offer(leftNode);
+                }
             }
-            if (!"null".equals(rightValue)) {
-                TreeNode rightNode = new TreeNode(Integer.parseInt(rightValue));
-                node.right = rightNode;
-                queue.add(rightNode);
+            if (!list.isEmpty()) {
+                String rightNodeValue = list.remove(0);
+                if (!"null".equals(rightNodeValue)) {
+                    TreeNode rightNode = new TreeNode(Integer.parseInt(rightNodeValue));
+                    node.right = rightNode;
+                    queue.offer(rightNode);
+                }
             }
-        }
-
-        //list集合只剩一个元素的处理
-        if (list.size() == 1 && !"null".equals(list.get(0))) {
-            TreeNode node = queue.remove();
-            String leftValue = list.remove(0);
-            TreeNode leftNode = new TreeNode(Integer.parseInt(leftValue));
-            node.left = leftNode;
         }
 
         return root;
@@ -148,13 +151,13 @@ public class Offer55 {
     }
 
     /**
-     * 用于非递归，深度优先求树的深度
+     * 用于非递归，dfs
      */
-    public static class Pair {
+    public static class Pos {
         TreeNode node;
         int depth;
 
-        Pair(TreeNode node, int depth) {
+        Pos(TreeNode node, int depth) {
             this.node = node;
             this.depth = depth;
         }

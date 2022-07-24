@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/7/5 21:18
  * @Author zsy
- * @Description 买卖股票的最佳时机 II 类比Problem121、Problem309
+ * @Description 买卖股票的最佳时机 II 类比Problem121、Problem309、Offer63
  * 给你一个整数数组 prices ，其中 prices[i] 表示某支股票第 i 天的价格。
  * 在每一天，你可以决定是否购买和/或出售股票。你在任何时候 最多 只能持有 一股 股票。
  * 你也可以先购买，然后在 同一天 出售。
@@ -25,7 +25,7 @@ package com.zhang.java;
  * 解释：在这种情况下, 交易无法获得正利润，所以不参与交易可以获得最大利润，最大利润为 0 。
  * <p>
  * 1 <= prices.length <= 3 * 10^4
- * 0 <= prices[i] <= 1^04
+ * 0 <= prices[i] <= 10^4
  */
 public class Problem122 {
     public static void main(String[] args) {
@@ -38,12 +38,12 @@ public class Problem122 {
 
     /**
      * 动态规划
-     * dp[i]：到第i+1天的最大利润
-     * dp[i][0]：到第i+1天，持有一只股票的最大利润
-     * dp[i][1]：到第i+1天，不持有股票的最大利润
+     * dp[i]：到price[i]那天的最大利润
+     * dp[i][0]：到price[i]那天，持有一只股票的最大利润
+     * dp[i][1]：到price[i]那天，不持有股票的最大利润
      * dp[i][0] = max(dp[i-1][0], dp[i-1][1] - prices[i])
      * dp[i][1] = max(dp[i-1][1], dp[i-1][0] + prices[i])
-     * dp[i] = dp[i][1] (因为第i+1天持有一只股票的最大利润小于第i+1天不持有股票的最大利润)
+     * dp[i] = dp[i][1] (因为到price[i]那天持有一只股票的最大利润小于到price[i]那天不持有股票的最大利润)
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param prices
@@ -67,8 +67,8 @@ public class Problem122 {
 
     /**
      * 动态规划优化，滚动数组
-     * dp0：到第i+1天，持有一只股票的最大利润
-     * dp1：到第i+1天，不持有股票的最大利润
+     * dp0：到price[i]那天，持有一只股票的最大利润
+     * dp1：到price[i]那天，不持有股票的最大利润
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param prices

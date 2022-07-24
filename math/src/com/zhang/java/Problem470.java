@@ -19,7 +19,7 @@ package com.zhang.java;
  * 输入: 3
  * 输出: [3,8,10]
  * <p>
- * 1 <= n <= 105
+ * 1 <= n <= 10^5
  * <p>
  * rand7()调用次数的 期望值 是多少 ?
  * 你能否尽量少调用 rand7() ?
@@ -51,7 +51,7 @@ public class Problem470 {
     /**
      * 用rand7()得到等概率的[1,49]，舍弃[41,49]，将[1,40]等概率映射到[0-9]，再加一得到等概率[1,10]
      * 时间复杂度O(1)，空间复杂度O(1)
-     *
+     * <p>
      * 总结：
      * 1、rand10生成rand7，则用rand10生成的数如果在1-7之间则直接返回，如果不在，则重新生成rand10
      * 2、rand7生成rand10，则用(rand7-1)*7+rand7扩展等概率范围到[1-49]，找等概率的数，并舍弃一部分数
@@ -80,7 +80,7 @@ public class Problem470 {
      * @return
      */
     public int rand10_3() {
-        while (true){
+        while (true) {
             //生成等概率的[1,49]
             int random = (rand7() - 1) * 7 + rand7();
 

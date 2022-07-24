@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/27 9:52
  * @Author zsy
- * @Description 二叉树的序列化与反序列化 类比Offer37
+ * @Description 二叉树的序列化与反序列化 同Offer37
  * 序列化是将一个数据结构或者对象转换为连续的比特位的操作，进而可以将转换后的数据存储在一个文件或者内存中，
  * 同时也可以通过网络传输到另一个计算机环境，采取相反方式重构得到原数据。
  * 请设计一个算法来实现二叉树的序列化与反序列化。这里不限定你的序列 / 反序列化算法执行逻辑，
@@ -37,7 +37,7 @@ public class Problem297 {
         System.out.println(serializeData);
         TreeNode deserializeRoot = problem297.deserialize(serializeData);
 
-        //先序遍历序列化和反序列化
+        //前序遍历序列化和反序列化
         String serializeData2 = problem297.serialize2(root);
         System.out.println(serializeData2);
         TreeNode deserializeRoot2 = problem297.deserialize2(serializeData2);
@@ -120,7 +120,7 @@ public class Problem297 {
     }
 
     /**
-     * 先序遍历序列化二叉树
+     * 前序遍历序列化二叉树
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -148,7 +148,7 @@ public class Problem297 {
     }
 
     /**
-     * 先序遍历反序列化二叉树
+     * 前序遍历反序列化二叉树
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param data

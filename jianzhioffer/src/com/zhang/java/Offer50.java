@@ -6,13 +6,17 @@ import java.util.Map;
 /**
  * @Date 2022/3/30 10:41
  * @Author zsy
- * @Description 在字符串 s 中找出第一个只出现一次的字符。如果没有，返回一个单空格。 s 只包含小写字母。
+ * @Description 第一个只出现一次的字符
+ * 在字符串 s 中找出第一个只出现一次的字符。
+ * 如果没有，返回一个单空格。 s 只包含小写字母。
  * <p>
  * 输入：s = "abaccdeff"
  * 输出：'b'
  * <p>
  * 输入：s = ""
  * 输出：' '
+ * <p>
+ * 0 <= s 的长度 <= 50000
  */
 public class Offer50 {
     public static void main(String[] args) {
@@ -23,7 +27,8 @@ public class Offer50 {
     }
 
     /**
-     * 计数数组，时间复杂度O(n)，空间复杂度O(Σ)，Σ为字符a-z，共26个字符
+     * 计数数组
+     * 时间复杂度O(n)，空间复杂度O(Σ)，Σ为字符a-z，共26个字符
      *
      * @param s
      * @return
@@ -46,7 +51,8 @@ public class Offer50 {
     }
 
     /**
-     * 哈希表，时间复杂度O(n)，空间复杂度O(Σ)，Σ为字符a-z，共26个字符
+     * 哈希表
+     * 时间复杂度O(n)，空间复杂度O(Σ)，Σ为字符a-z，共26个字符
      *
      * @param s
      * @return
@@ -68,7 +74,8 @@ public class Offer50 {
     }
 
     /**
-     * 哈希表优化，在查找第一个只出现一次的字符时，不遍历字符串，而遍历哈希表，在字符串很长的情况下可以提升性能
+     * 哈希表优化
+     * 在查找第一个只出现一次的字符时，不遍历字符串，而遍历哈希表，在字符串很长的情况下可以提升性能
      * 时间复杂度O(n)，空间复杂度O(Σ)，Σ为字符a-z，共26个字符
      *
      * @param s
@@ -87,16 +94,15 @@ public class Offer50 {
             }
         }
 
-        int resultIndex = s.length();
+        int index = s.length();
+
+        //从后往前遍历，找到第一个出现一次的索引下标
         for (Map.Entry<Character, Integer> entry : map.entrySet()) {
-            if (entry.getValue() != -1 && entry.getValue() < resultIndex) {
-                resultIndex = entry.getValue();
+            if (entry.getValue() != -1 && entry.getValue() < index) {
+                index = entry.getValue();
             }
         }
 
-        if (resultIndex == s.length()) {
-            return ' ';
-        }
-        return s.charAt(resultIndex);
+        return index == s.length() ? ' ' : s.charAt(index);
     }
 }

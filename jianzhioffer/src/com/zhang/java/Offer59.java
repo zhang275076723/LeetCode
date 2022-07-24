@@ -21,6 +21,8 @@ import java.util.*;
  * 1  3  -1 [-3  5  3] 6  7        5
  * 1  3  -1  -3 [5  3  6] 7        6
  * 1  3  -1  -3  5 [3  6  7]       7
+ * <p>
+ * 你可以假设 k 总是有效的，在输入数组不为空的情况下，1 ≤ k ≤ 输入数组的大小。
  */
 public class Offer59 {
     public static void main(String[] args) {
@@ -32,7 +34,8 @@ public class Offer59 {
     }
 
     /**
-     * 暴力，时间复杂度O(nk)，空间复杂度O(1)
+     * 暴力
+     * 时间复杂度O(nk)，空间复杂度O(1)
      *
      * @param nums
      * @param k
@@ -48,11 +51,13 @@ public class Offer59 {
 
         for (int i = 0; i < result.length; i++) {
             tempMax = Integer.MIN_VALUE;
+
             for (int j = i; j < i + k; j++) {
                 if (nums[j] > tempMax) {
                     tempMax = nums[j];
                 }
             }
+
             result[i] = tempMax;
         }
 
@@ -60,7 +65,8 @@ public class Offer59 {
     }
 
     /**
-     * 优先队列，大根堆，堆顶存放的就是当前滑动窗口的最大值，时间复杂度O(nlogn)，空间复杂度O(n)
+     * 优先队列，大根堆，堆顶存放的就是当前滑动窗口的最大值
+     * 时间复杂度O(nlogn)，空间复杂度O(n) (最差情况下，数组单调递增，没有元素从优先队列中移除，往优先队列中添加元素为O(logn))
      *
      * @param nums
      * @param k
@@ -71,13 +77,13 @@ public class Offer59 {
             return new int[0];
         }
 
-        int[] result = new int[nums.length - k + 1];
         //优先队列存放二元组(num, index)
         Queue<int[]> queue = new PriorityQueue<>((pair1, pair2) -> {
             //如果num值不相等，按num值从大到小排序
             if (pair1[0] != pair2[0]) {
                 return pair2[0] - pair1[0];
             }
+
             //如果num值相等，按索引从大到小排序
             return pair2[1] - pair1[1];
         });
@@ -85,15 +91,19 @@ public class Offer59 {
         for (int i = 0; i < k; i++) {
             queue.offer(new int[]{nums[i], i});
         }
+
+        int[] result = new int[nums.length - k + 1];
         //当前堆顶元素为滑动窗口最大值
         result[0] = queue.peek()[0];
 
         for (int i = k; i < nums.length; i++) {
             queue.offer(new int[]{nums[i], i});
-            //如果堆顶元素不在滑动窗口中，移除
+
+            //当前优先队列最大值，不在滑动窗口的范围内
             while (queue.peek()[1] <= i - k) {
                 queue.poll();
             }
+
             //当前堆顶元素为滑动窗口最大值
             result[i - k + 1] = queue.peek()[0];
         }
@@ -114,7 +124,6 @@ public class Offer59 {
             return new int[0];
         }
 
-        int[] result = new int[nums.length - k + 1];
         //单调队列
         Deque<Integer> queue = new LinkedList<>();
 
@@ -123,8 +132,11 @@ public class Offer59 {
             while (!queue.isEmpty() && nums[i] > nums[queue.peekLast()]) {
                 queue.pollLast();
             }
+
             queue.offerLast(i);
         }
+
+        int[] result = new int[nums.length - k + 1];
         result[0] = nums[queue.peekFirst()];
 
         for (int i = k; i < nums.length; i++) {
@@ -132,10 +144,13 @@ public class Offer59 {
             if (queue.peekFirst() <= i - k) {
                 queue.pollFirst();
             }
+
             while (!queue.isEmpty() && nums[i] > nums[queue.peekLast()]) {
                 queue.pollLast();
             }
+
             queue.offerLast(i);
+
             result[i - k + 1] = nums[queue.peekFirst()];
         }
 

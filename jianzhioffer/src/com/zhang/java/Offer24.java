@@ -3,7 +3,8 @@ package com.zhang.java;
 /**
  * @Date 2022/3/19 10:43
  * @Author zsy
- * @Description 定义一个函数，输入一个链表的头节点，反转该链表并输出反转后链表的头节点
+ * @Description 反转链表 同Problem206 类比Offer25
+ * 定义一个函数，输入一个链表的头节点，反转该链表并输出反转后链表的头节点
  * <p>
  * 输入: 1->2->3->4->5->NULL
  * 输出: 5->4->3->2->1->NULL
@@ -11,26 +12,19 @@ package com.zhang.java;
 public class Offer24 {
     public static void main(String[] args) {
         Offer24 offer24 = new Offer24();
-        ListNode node1 = new ListNode(1);
-        ListNode node2 = new ListNode(2);
-        ListNode node3 = new ListNode(3);
-        ListNode node4 = new ListNode(4);
-        ListNode node5 = new ListNode(5);
-        node1.next = node2;
-        node2.next = node3;
-        node3.next = node4;
-        node4.next = node5;
-        node5.next = null;
-//        ListNode node = offer24.reverseList(node1);
-        ListNode node = offer24.reverseList2(node1);
-        while (node != null) {
-            System.out.println(node.val);
-            node = node.next;
+        int[] data = {1, 2, 3, 4, 5};
+        ListNode head = offer24.buildLinkedList(data);
+//      head = offer24.reverseList(head);
+        head = offer24.reverseList2(head);
+        while (head != null) {
+            System.out.println(head.val);
+            head = head.next;
         }
     }
 
     /**
      * 非递归反转链表
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param head
      * @return
@@ -40,21 +34,25 @@ public class Offer24 {
             return head;
         }
 
-        ListNode preNode = null;
+        ListNode pre = null;
         ListNode node = head;
-        ListNode nextNode = node.next;
-        while (nextNode != null) {
-            node.next = preNode;
-            preNode = node;
-            node = nextNode;
-            nextNode = nextNode.next;
+        ListNode next = node.next;
+
+        while (next != null) {
+            node.next = pre;
+            pre = node;
+            node = next;
+            next = next.next;
         }
-        node.next = preNode;
+
+        node.next = pre;
+
         return node;
     }
 
     /**
      * 递归反转链表
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param head
      * @return
@@ -65,9 +63,29 @@ public class Offer24 {
         }
 
         ListNode node = reverseList2(head.next);
+
         head.next.next = head;
         head.next = null;
+
         return node;
+    }
+
+    private ListNode buildLinkedList(int[] data) {
+        if (data == null || data.length == 0) {
+            return null;
+        }
+
+        //不能使用Arrays.asList(data)，因为需要传入引用类型才能转换为list，
+        //如果传入基本数据类型，则会将数组对象作为引用放入list中
+        ListNode head = new ListNode(data[0]);
+        ListNode node = head;
+
+        for (int i = 1; i < data.length; i++) {
+            node.next = new ListNode(data[i]);
+            node = node.next;
+        }
+
+        return head;
     }
 
     public static class ListNode {

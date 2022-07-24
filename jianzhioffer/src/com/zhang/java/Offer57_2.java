@@ -1,13 +1,11 @@
 package com.zhang.java;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Date 2022/4/4 16:36
  * @Author zsy
- * @Description 和为s的连续正数序列 类比Problem209、Problem437、Problem560
+ * @Description 和为s的连续正数序列 类比Problem209、Problem437、Problem560、Offer57
  * 输入一个正整数 target ，输出所有和为 target 的连续正整数序列（至少含有两个数）。
  * 序列内的数字由小到大排列，不同序列按照首个数字从小到大排列。
  * 1 <= target <= 10^5
@@ -17,6 +15,8 @@ import java.util.List;
  * <p>
  * 输入：target = 15
  * 输出：[[1,2,3,4,5],[4,5,6],[7,8]]
+ * <p>
+ * 1 <= target <= 10^5
  */
 public class Offer57_2 {
     public static void main(String[] args) {
@@ -24,10 +24,12 @@ public class Offer57_2 {
         System.out.println(Arrays.deepToString(offer57_2.findContinuousSequence(15)));
         System.out.println(Arrays.deepToString(offer57_2.findContinuousSequence2(15)));
         System.out.println(Arrays.deepToString(offer57_2.findContinuousSequence3(15)));
+        System.out.println(Arrays.deepToString(offer57_2.findContinuousSequence4(15)));
     }
 
     /**
-     * 暴力，时间复杂度O(n^(3/2))，空间复杂度O(1)
+     * 暴力
+     * 时间复杂度O(n^(3/2))，空间复杂度O(1)
      *
      * @param target
      * @return
@@ -41,8 +43,10 @@ public class Offer57_2 {
 
         for (int i = 1; i <= target / 2; i++) {
             int sum = i;
+
             for (int j = i + 1; j <= target / 2 + 1; j++) {
                 sum = sum + j;
+
                 if (sum == target) {
                     int[] temp = new int[j - i + 1];
                     for (int k = 0; k < temp.length; k++) {
@@ -60,8 +64,9 @@ public class Offer57_2 {
     }
 
     /**
-     * 暴力优化，时间复杂度O(n)，空间复杂度O(1)
-     * (i + j)(j - i + 1) / 2 = target，由一元二次方程求根公式得，j = ....
+     * 暴力优化
+     * 如果i到j满足和为target，根据(i+j)(j-i+1)/2=target，得到j
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param target
      * @return
@@ -88,9 +93,11 @@ public class Offer57_2 {
             if ((long) sqrtDelta * sqrtDelta == delta) {
                 int j = (-1 + sqrtDelta) / 2;
                 int[] temp = new int[j - i + 1];
+
                 for (int k = 0; k < temp.length; k++) {
                     temp[k] = i + k;
                 }
+
                 list.add(temp);
             }
         }
@@ -100,6 +107,7 @@ public class Offer57_2 {
 
     /**
      * 滑动窗口，双指针
+     * 看到连续子数组，想到滑动窗口和前缀和(适合有负数的情况)
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param target
@@ -123,13 +131,16 @@ public class Offer57_2 {
 
             if (sum == target) {
                 int[] temp = new int[right - left + 1];
+
                 for (int i = 0; i < temp.length; i++) {
                     temp[i] = left + i;
                 }
+
                 list.add(temp);
             }
 
             sum = sum - left;
+
             left++;
         }
 
@@ -139,6 +150,47 @@ public class Offer57_2 {
 //            result[i] = list.get(i);
 //        }
 //        return result;
+
+        return list.toArray(new int[list.size()][]);
+    }
+
+    /**
+     * 前缀和
+     * 看到连续子数组，想到滑动窗口和前缀和(适合有负数的情况)
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param target
+     * @return
+     */
+    public int[][] findContinuousSequence4(int target) {
+        if (target == 1) {
+            return null;
+        }
+
+        //key：当前前缀和的值，value：当前前缀和的最后一个元素值
+        Map<Integer, Integer> map = new HashMap<>();
+        //用于1到k相加满足和为target的情况
+        map.put(0, 0);
+
+        List<int[]> list = new ArrayList<>();
+        int pre = 0;
+
+        for (int i = 1; i <= target / 2 + 1; i++) {
+            pre = pre + i;
+
+            //map中存在key为pre - target的前缀和，说明有满足子数组之和为target的情况
+            if (map.containsKey(pre - target)) {
+                int[] temp = new int[i - map.get(pre - target)];
+
+                for (int j = 0; j < temp.length; j++) {
+                    temp[j] = map.get(pre - target) + j + 1;
+                }
+
+                list.add(temp);
+            }
+
+            map.put(pre, i);
+        }
 
         return list.toArray(new int[list.size()][]);
     }
