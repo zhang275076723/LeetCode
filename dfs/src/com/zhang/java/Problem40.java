@@ -87,7 +87,7 @@ public class Problem40 {
 
             //或者使用visited访问数组，在i > 0 && candidates[i] == candidates[i - 1] && !visited[i-1]的情况下，
             //当前字符和前一个字符相同，并且前一个字符没有被访问，说明本次和上次情况相同，直接进行下次循环
-            if (i > 0 && candidates[i] == candidates[i - 1] && !visited[i - 1]) {
+            if (i > 0 && !visited[i - 1] && candidates[i] == candidates[i - 1]) {
                 continue;
             }
 
@@ -139,7 +139,7 @@ public class Problem40 {
             index++;
         }
 
-        for (index =  left; index <= right; index++) {
+        for (index = left; index <= right; index++) {
             nums[index] = tempArr[index];
         }
     }

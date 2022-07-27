@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/5/19 19:08
  * @Author zsy
- * @Description 加一 类比Problem369
+ * @Description 加一 类比Problem2、Problem369
  * 给定一个由 整数 组成的 非空 数组所表示的非负整数，在该数的基础上加一。
  * 最高位数字存放在数组的首位， 数组中每个元素只存储单个数字。
  * 你可以假设除了整数 0 之外，这个整数不会以零开头。
@@ -32,6 +32,7 @@ public class Problem66 {
     }
 
     /**
+     * 模拟
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param digits
@@ -43,26 +44,30 @@ public class Problem66 {
         }
 
         digits[digits.length - 1]++;
+
         int index = digits.length - 1;
-        while (digits[index] > 9) {
+
+        while (digits[index] == 10) {
             //当前位置0
             digits[index] = 0;
             index--;
+
             if (index < 0) {
                 break;
             }
+
             //高位进1
             digits[index]++;
         }
 
-        //加一之后还是n位
-        if (index != -1) {
-            return digits;
+        //加一之后变成n+1位
+        if (index == -1) {
+            int[] result = new int[digits.length + 1];
+            result[0] = 1;
+            return result;
         }
 
-        //加一之后变成n+1位
-        int[] result = new int[digits.length + 1];
-        result[0] = 1;
-        return result;
+        //加一之后还是n位
+        return digits;
     }
 }

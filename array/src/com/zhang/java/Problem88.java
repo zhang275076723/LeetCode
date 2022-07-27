@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/6/19 9:00
  * @Author zsy
- * @Description 合并两个有序数组 贝壳面试题
+ * @Description 合并两个有序数组 类比Problem977、DifferentSquareCount 贝壳面试题
  * 给你两个按 非递减顺序 排列的整数数组 nums1 和 nums2，另有两个整数 m 和 n ，分别表示 nums1 和 nums2 中的元素数目。
  * 请你 合并 nums2 到 nums1 中，使合并后的数组同样按 非递减顺序 排列。
  * 注意：最终，合并后数组不应由函数返回，而是存储在数组 nums1 中。
@@ -47,7 +47,7 @@ public class Problem88 {
     }
 
     /**
-     * 双指针
+     * 暴力
      * 将两个数组中元素放到新数组中，再重新放回nums1
      * 时间复杂度O(m+n)，空间复杂度O(m+n)
      *
@@ -89,6 +89,7 @@ public class Problem88 {
             left1++;
             index++;
         }
+
         while (left2 < n) {
             result[index] = nums2[left2];
             left2++;
@@ -101,8 +102,8 @@ public class Problem88 {
     }
 
     /**
-     * 逆向双指针
-     * 从后往前遍历，选择最大的元素放到num1尾部
+     * 双指针
+     * 两个指针分别指向数组末尾，选择最大的元素放到num1尾部
      * 时间复杂度O(m+n)，空间复杂度O(1)
      *
      * @param nums1
@@ -115,6 +116,7 @@ public class Problem88 {
             for (int i = 0; i < n; i++) {
                 nums1[i] = nums2[i];
             }
+
             return;
         }
 
@@ -134,6 +136,7 @@ public class Problem88 {
                 nums1[index] = nums2[right2];
                 right2--;
             }
+
             index--;
         }
 

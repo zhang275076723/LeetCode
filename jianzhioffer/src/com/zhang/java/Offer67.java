@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/9 10:44
  * @Author zsy
- * @Description 把字符串转换成整数 同Problem8
+ * @Description 把字符串转换成整数 类比Problem7 同Problem8
  * 写一个函数 StrToInt，实现把字符串转换成整数这个功能。
  * 不能使用 atoi 或者其他类似的库函数。
  * 首先，该函数会根据需要丢弃无用的开头空格字符，直到寻找到第一个非空格的字符为止。

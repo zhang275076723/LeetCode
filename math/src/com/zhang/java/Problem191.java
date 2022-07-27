@@ -1,75 +1,78 @@
 package com.zhang.java;
 
 /**
- * @Date 2022/3/17 17:37
+ * @Date 2022/7/27 9:10
  * @Author zsy
- * @Description 二进制中1的个数 类比Problem190、Problem338、Problem461 同Problem191
+ * @Description 位1的个数 同Offer15 类比Problem7、Problem190、Problem338、Problem461
  * 编写一个函数，输入是一个无符号整数（以二进制串的形式），
- * 返回其二进制表达式中数字位数为 '1' 的个数（也被称为 汉明重量).）。
+ * 返回其二进制表达式中数字位数为 '1' 的个数（也被称为汉明重量）。
+ * 请注意，在某些语言（如 Java）中，没有无符号整数类型。
+ * 在这种情况下，输入和输出都将被指定为有符号整数类型，并且不应影响您的实现，
+ * 因为无论整数是有符号的还是无符号的，其内部的二进制表示形式都是相同的。
+ * 在 Java 中，编译器使用二进制补码记法来表示有符号整数。
+ * 因此，在上面的 示例 3 中，输入表示有符号整数 -3。
  * <p>
- * 输入：n = 11 (控制台输入 00000000000000000000000000001011)
+ * 输入：00000000000000000000000000001011
  * 输出：3
  * 解释：输入的二进制串 00000000000000000000000000001011 中，共有三位为 '1'。
  * <p>
- * 输入：n = 11 (控制台输入 00000000000000000000000000001011)
- * 输出：3
- * 解释：输入的二进制串 00000000000000000000000000001011 中，共有三位为 '1'。
+ * 输入：00000000000000000000000010000000
+ * 输出：1
+ * 解释：输入的二进制串 00000000000000000000000010000000 中，共有一位为 '1'。
  * <p>
- * 输入：n = 4294967293 (控制台输入 11111111111111111111111111111101，部分语言中 n = -3）
+ * 输入：11111111111111111111111111111101
  * 输出：31
  * 解释：输入的二进制串 11111111111111111111111111111101 中，共有 31 位为 '1'。
- * 在 Java 中，编译器使用 二进制补码 记法来表示有符号整数。因此，在 示例 3 中，输入表示有符号整数 -3
  * <p>
  * 输入必须是长度为 32 的 二进制串 。
  */
-public class Offer15 {
+public class Problem191 {
     public static void main(String[] args) {
-        Offer15 offer15 = new Offer15();
-        System.out.println(offer15.hammingWeight(-3));
-        System.out.println(offer15.hammingWeight2(-3));
-        System.out.println(offer15.hammingWeight3(-3));
+        Problem191 problem191 = new Problem191();
+        System.out.println(problem191.hammingWeight(-3));
+        System.out.println(problem191.hammingWeight2(-3));
+        System.out.println(problem191.hammingWeight3(-3));
     }
 
     /**
      * 模拟
-     * n & 2^i，如果结果不为0，说明n的第i位为1
-     * 时间复杂度O(k)，空间复杂的O(1) (k为int类型长度，即32)
+     * 时间复杂度O(|C|)，空间复杂度O(1) (|C|=32，因为int二进制为32位)
      *
      * @param n
      * @return
      */
     public int hammingWeight(int n) {
-        int result = 0;
+        int count = 0;
 
         while (n != 0) {
-            result = result + (n & 1);
+            count = count + (n & 1);
 
             //有可能n为负数，所以要使用无符号右移
             n = n >>> 1;
         }
 
-        return result;
+        return count;
     }
 
     /**
      * 模拟
-     * n & (n−1)，将n表示的二进制位中的最低位的 1 变为 0
-     * 时间复杂度O(k)，空间复杂的O(1) (k为n的二进制中1的个数)
+     * n & (n-1)：将二进制表示n的最后一位1置0
+     * 时间复杂度O(|C|)，空间复杂度O(1) (|C|=32，因为int二进制为32位)
      *
      * @param n
      * @return
      */
     public int hammingWeight2(int n) {
-        int result = 0;
+        int count = 0;
 
         while (n != 0) {
-            //将n的最低位1变为0
+            //将二进制表示n的最后一位1置0
             n = n & (n - 1);
 
-            result++;
+            count++;
         }
 
-        return result;
+        return count;
     }
 
     /**
