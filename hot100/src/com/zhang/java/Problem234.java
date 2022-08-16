@@ -4,7 +4,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/17 11:20
  * @Author zsy
- * @Description 回文链表
+ * @Description 回文链表 类比Problem5、Problem131、Problem674
  * 给你一个单链表的头节点 head ，请你判断该链表是否为回文链表。
  * 如果是，返回 true ；否则，返回 false 。
  * <p>
@@ -53,7 +53,7 @@ public class Problem234 {
             cur = slow;
         }
 
-        //前半部分链表处理
+        //前半部分链表处理，断开链表
         if (fast.next == null) {
             slow = slow.next;
         } else {
@@ -67,6 +67,7 @@ public class Problem234 {
             if (pre.val != slow.val) {
                 return false;
             }
+
             pre = pre.next;
             slow = slow.next;
         }

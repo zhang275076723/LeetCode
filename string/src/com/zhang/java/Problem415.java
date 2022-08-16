@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/6/19 9:30
  * @Author zsy
- * @Description 字符串相加 类比Problem43
+ * @Description 字符串相加 类比Problem2、Problem43
  * 给定两个字符串形式的非负整数 num1 和num2 ，计算它们的和并同样以字符串形式返回。
  * 你不能使用任何內建的用于处理大整数的库（比如 BigInteger）， 也不能直接将输入的字符串转换为整数形式。
  * <p>
@@ -68,7 +68,7 @@ public class Problem415 {
         }
 
         //如果最高位进位为1，则需要添加最高位为1
-        if (carry == 1) {
+        if (carry != 0) {
             sb.append(1);
         }
 

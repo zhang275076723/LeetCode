@@ -39,7 +39,7 @@ public class Offer60 {
         double[] result = new double[5 * n + 1];
         //掷n个骰子点数之和的情况个数
         int[] count = new int[5 * n + 1];
-        //每次每个骰子所掷出的点数
+        //每次掷n个骰子掷出的点数
         int[] nPoints = new int[n];
         //掷n个骰子的情况总数
         int total = (int) Math.pow(6, n);
@@ -68,8 +68,6 @@ public class Offer60 {
     public double[] dicesProbability2(int n) {
         //掷i个骰子点数之和为j的数量
         int[][] dp = new int[n + 1][6 * n + 1];
-        //掷n个骰子的总样本数量
-        int total = (int) Math.pow(6, n);
 
         //dp初始化
         for (int i = 1; i <= 6; i++) {
@@ -77,7 +75,7 @@ public class Offer60 {
         }
 
         for (int i = 2; i <= n; i++) {
-            for (int j = i; j <= 6 * n; j++) {
+            for (int j = i; j <= 6 * i; j++) {
                 for (int k = 1; k <= 6; k++) {
                     //掷i-1个骰子能掷出点数之和为j-k
                     if (j - k >= i - 1) {
@@ -87,10 +85,12 @@ public class Offer60 {
             }
         }
 
+        //掷n个骰子的总样本数量
+        int total = (int) Math.pow(6, n);
         double[] result = new double[5 * n + 1];
 
         for (int i = 0; i < result.length; i++) {
-            result[i] = (double) dp[n][i + n] / total;
+            result[i] = (double) dp[n][n + i] / total;
         }
 
         return result;
@@ -104,11 +104,8 @@ public class Offer60 {
      * @return
      */
     public double[] dicesProbability3(int n) {
-        double[] result = new double[5 * n + 1];
         //掷i个骰子点数之和为j的数量
         int[] dp = new int[6 * n + 1];
-        //掷n个骰子的总样本数量
-        int total = (int) Math.pow(6, n);
 
         for (int i = 1; i <= 6; i++) {
             dp[i] = 1;
@@ -116,7 +113,7 @@ public class Offer60 {
 
         for (int i = 2; i <= n; i++) {
             //使用滚动数组，必须从后往前遍历
-            for (int j = 6 * n; j >= i; j--) {
+            for (int j = 6 * i; j >= i; j--) {
                 //将掷前i-1个骰子点数之和为j的数量置为0，否则会受上次的影响
                 dp[j] = 0;
 
@@ -128,6 +125,10 @@ public class Offer60 {
                 }
             }
         }
+
+        //掷n个骰子的总样本数量
+        int total = (int) Math.pow(6, n);
+        double[] result = new double[5 * n + 1];
 
         for (int i = 0; i < result.length; i++) {
             result[i] = (double) dp[i + n] / total;
@@ -158,6 +159,7 @@ public class Offer60 {
 
         for (int i = 1; i <= 6; i++) {
             nPoints[t] = i;
+
             backtrack(t + 1, n, count, nPoints);
         }
     }

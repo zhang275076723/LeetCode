@@ -92,6 +92,7 @@ public class Offer39 {
                 if (num == result) {
                     count++;
                 }
+
                 if (count > nums.length / 2) {
                     return result;
                 }
@@ -127,10 +128,13 @@ public class Offer39 {
             while (left < right && nums[right] >= temp) {
                 right--;
             }
+
             nums[left] = nums[right];
+
             while (left < right && nums[left] <= temp) {
                 left++;
             }
+
             nums[right] = nums[left];
         }
 

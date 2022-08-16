@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/3/24 12:09
  * @Author zsy
- * @Description 字符串的排列 类比Problem39、Problem40
+ * @Description 字符串的排列 类比Problem39、Problem40、Problem301
  * 输入一个字符串，打印出该字符串中字符的所有排列。
  * 你可以以任意顺序返回这个字符串数组，但里面不能有重复元素。
  * <p>
@@ -71,7 +71,7 @@ public class Offer38 {
             }
 
             //去重，当前字符和前一个字符相同，并且前一个字符没有被访问，说明本次和上次情况相同，直接进行下次循环
-            if (i > 0 && c[i] == c[i - 1] && !visited[i - 1]) {
+            if (i > 0 && !visited[i - 1] && c[i] == c[i - 1]) {
                 continue;
             }
 

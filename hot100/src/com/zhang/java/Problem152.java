@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/9 12:21
  * @Author zsy
- * @Description 乘积最大子数组 类比Problem53、Problem416
+ * @Description 乘积最大子数组 类比Problem53、Problem238、Problem416
  * 给你一个整数数组 nums ，请你找出数组中乘积最大的非空连续子数组（该子数组中至少包含一个数字），
  * 并返回该子数组所对应的乘积。
  * 测试用例的答案是一个 32-位 整数。
@@ -120,6 +120,7 @@ public class Problem152 {
         for (int i = 0; i < nums.length; i++) {
             tempMax = tempMax * nums[i];
             max = Math.max(max, tempMax);
+
             if (tempMax == 0) {
                 tempMax = 1;
             }
@@ -130,6 +131,7 @@ public class Problem152 {
         for (int i = nums.length - 1; i >= 0; i--) {
             tempMax = tempMax * nums[i];
             max = Math.max(max, tempMax);
+
             if (tempMax == 0) {
                 tempMax = 1;
             }

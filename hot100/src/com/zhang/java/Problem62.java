@@ -39,7 +39,7 @@ public class Problem62 {
 
     /**
      * 动态规划
-     * dp[i][j]：从(1,1)到(i,j)的不同路径数量
+     * dp[i][j]：从(0,0)到(i,j)的不同路径数量
      * dp[i][j] = dp[i-1][j] + dp[i][j-1]
      * 时间复杂度O(mn)，空间复杂度O(mn)
      *
@@ -52,22 +52,22 @@ public class Problem62 {
             return 1;
         }
 
-        int[][] dp = new int[m + 1][n + 1];
+        int[][] dp = new int[m][n];
 
-        for (int i = 1; i <= m; i++) {
-            dp[i][1] = 1;
+        for (int i = 0; i < m; i++) {
+            dp[i][0] = 1;
         }
-        for (int j = 1; j <= n; j++) {
-            dp[1][j] = 1;
+        for (int j = 0; j < n; j++) {
+            dp[0][j] = 1;
         }
 
-        for (int i = 2; i <= m; i++) {
-            for (int j = 2; j <= n; j++) {
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
                 dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
             }
         }
 
-        return dp[m][n];
+        return dp[m - 1][n - 1];
     }
 
     /**
@@ -83,19 +83,19 @@ public class Problem62 {
             return 1;
         }
 
-        int[] dp = new int[n + 1];
+        int[] dp = new int[n];
 
-        for (int i = 1; i <= n; i++) {
+        for (int i = 0; i < n; i++) {
             dp[i] = 1;
         }
 
-        for (int i = 2; i <= m; i++) {
-            for (int j = 2; j <= n; j++) {
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
                 dp[j] = dp[j - 1] + dp[j];
             }
         }
 
-        return dp[n];
+        return dp[n - 1];
     }
 
     /**
@@ -111,16 +111,16 @@ public class Problem62 {
         }
 
         //保存从(1,1)到(m,n)的不同路径数量
-        int[][] memory = new int[m + 1][n + 1];
+        int[][] memory = new int[m][n];
 
-        for (int i = 1; i <= m; i++) {
-            memory[i][1] = 1;
+        for (int i = 0; i < m; i++) {
+            memory[i][0] = 1;
         }
-        for (int j = 1; j <= n; j++) {
-            memory[1][j] = 1;
+        for (int j = 0; j < n; j++) {
+            memory[0][j] = 1;
         }
 
-        return dfs(m, n, memory);
+        return dfs(m - 1, n - 1, memory);
     }
 
     /**

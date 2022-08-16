@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/4/17 10:51
  * @Author zsy
- * @Description 下一个排列
+ * @Description 下一个排列 字节面试题
  * 整数数组的一个 排列 就是将其所有成员以序列或线性顺序排列。
  * 例如，arr = [1,2,3] ，以下这些都可以视作 arr 的排列：[1,2,3]、[1,3,2]、[3,1,2]、[2,3,1] 。
  * 整数数组的 下一个排列 是指其整数的下一个字典序更大的排列。
@@ -40,7 +40,7 @@ public class Problem31 {
 
     /**
      * 从后往前找到最长的逆序nums[i]-nums[nums.length-1]，按升序排序，
-     * num[i-1]和nums[i]-nums[nums.length-1]中第一个比num[i-1]大的元素交换
+     * num[i-1]和nums[i]-nums[nums.length-1]中第一个比num[i-1]大的元素交换，得到下一个排列
      * 时间复杂度O(n)，空间复杂度O(1)
      */
     public void nextPermutation(int[] nums) {
@@ -48,26 +48,28 @@ public class Problem31 {
             return;
         }
 
-        //逆序数组之前的一个元素
-        int i;
         //逆序
         int j = nums.length - 1;
 
+        //必须是大于等于，不能是大于，需要包含两者相同的情况
         while (j > 0 && nums[j - 1] >= nums[j]) {
             j--;
         }
 
-        //当前数组为逆序，返回升序数组
+        //当前数组为逆序，直接反转数组
         if (j == 0) {
             reverse(nums, 0, nums.length - 1);
             return;
         }
 
-        i = j - 1;
+        //翻转逆序数组，使之成为正序
         reverse(nums, j, nums.length - 1);
+        //逆序数组之前的一个元素
+        int i = j - 1;
+
+        //找第一个比nums[i]大的元素交换
         for (int k = j; k < nums.length; k++) {
-            //交换第一个比nums[i]大的元素
-            if (nums[i] < nums[k]) {
+            if (nums[k] > nums[i]) {
                 swap(nums, i, k);
                 return;
             }

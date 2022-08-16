@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/4/19 10:25
  * @Author zsy
- * @Description 组合总和 II 类比Problem39、Offer38
+ * @Description 组合总和 II 类比Problem39、Problem46、Problem47、Problem301、Offer38
  * 给定一个候选人编号的集合 candidates 和一个目标数 target ，
  * 找出 candidates中所有可以使数字和为 target 的组合。
  * candidates 中的每个数字在每个组合中只能使用 一次 。
@@ -27,7 +27,7 @@ public class Problem40 {
         Problem40 problem40 = new Problem40();
         int[] candidates = {10, 1, 2, 7, 6, 1, 5};
         int target = 8;
-        System.out.println(problem40.combinationSum2(candidates, target));
+        System.out.println(problem40.combinationSum(candidates, target));
     }
 
     /**
@@ -38,7 +38,7 @@ public class Problem40 {
      * @param target
      * @return
      */
-    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
         if (candidates == null || candidates.length == 0) {
             return new ArrayList<>();
         }
@@ -106,6 +106,7 @@ public class Problem40 {
         if (left < right) {
             //注意 >> 的运算优先级比 + 低，所以要添加括号
             int mid = left + ((right - left) >> 1);
+
             mergeSort(nums, left, mid, tempArr);
             mergeSort(nums, mid + 1, right, tempArr);
             merge(nums, left, mid, right, tempArr);
@@ -125,6 +126,7 @@ public class Problem40 {
                 tempArr[index] = nums[j];
                 j++;
             }
+
             index++;
         }
 
@@ -133,6 +135,7 @@ public class Problem40 {
             i++;
             index++;
         }
+
         while (j <= right) {
             tempArr[index] = nums[j];
             j++;

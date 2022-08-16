@@ -26,9 +26,9 @@ public class Offer40 {
         Offer40 offer40 = new Offer40();
 //        int[] arr = {4, 5, 1, 6, 2, 7, 3, 8};
         int[] arr = {0, 0, 1, 2, 4, 2, 2, 3, 1, 4};
-//        System.out.println(Arrays.toString(offer40.getLeastNumbers(arr, 4)));
+        System.out.println(Arrays.toString(offer40.getLeastNumbers(arr, 8)));
         System.out.println(Arrays.toString(offer40.getLeastNumbers2(arr, 8)));
-//        System.out.println(Arrays.toString(offer40.getLeastNumbers3(arr, 4)));
+        System.out.println(Arrays.toString(offer40.getLeastNumbers3(arr, 8)));
     }
 
     /**
@@ -99,11 +99,9 @@ public class Offer40 {
         for (int i = k; i < arr.length; i++) {
             //当前元素小于堆顶元素，说明堆顶元素不是前k小元素
             if (arr[i] < result[0]) {
-                int temp = arr[i];
-                arr[i] = result[0];
-                result[0] = temp;
+                result[0] = arr[i];
 
-                heapify(result, 0, result.length);
+                heapify(result, 0, k);
             }
         }
 
@@ -114,14 +112,14 @@ public class Offer40 {
         int pivot = randomizedPartition(arr, left, right);
 
         //基准在前k小元素之后
-        if (pivot > k - 1) {
+        if (pivot + 1 > k) {
             randomizedSelectK(arr, left, pivot - 1, k);
-        } else if (pivot < k - 1) {
+        } else if (pivot + 1 < k) {
             //基准在前k小元素之前
             randomizedSelectK(arr, pivot + 1, right, k);
         }
 
-        //pivot == k - 1，基准刚好在前k小元素，直接返回
+        //pivot + 1== k，基准刚好在前k小元素，直接返回
     }
 
     private int randomizedPartition(int[] arr, int left, int right) {
@@ -139,6 +137,7 @@ public class Offer40 {
                 right--;
             }
             arr[left] = arr[right];
+
             while (left < right && arr[left] <= temp) {
                 left++;
             }
@@ -162,6 +161,7 @@ public class Offer40 {
             heapify(arr, i, arr.length);
         }
 
+        //当前元素和堆顶元素交换，整堆
         for (int i = arr.length - 1; i > 0; i--) {
             int temp = arr[i];
             arr[i] = arr[0];
@@ -173,25 +173,26 @@ public class Offer40 {
 
     /**
      * 大根堆递归调整
-     * 时间复杂度O(logn)
+     * 时间复杂度O(logn)，空间复杂度O(logn)
      *
      * @param arr
      * @param index
      * @param heapSize
      */
     private void heapify(int[] arr, int index, int heapSize) {
+        int maxIndex = index;
         int leftIndex = 2 * index + 1;
         int rightIndex = 2 * index + 2;
-        int maxIndex = index;
 
-        if (leftIndex < heapSize && arr[maxIndex] < arr[leftIndex]) {
+        if (leftIndex < heapSize && arr[leftIndex] > arr[maxIndex]) {
             maxIndex = leftIndex;
         }
-        if (rightIndex < heapSize && arr[maxIndex] > arr[rightIndex]) {
+
+        if (rightIndex < heapSize && arr[rightIndex] > arr[maxIndex]) {
             maxIndex = rightIndex;
         }
 
-        if (index != maxIndex) {
+        if (maxIndex != index) {
             int temp = arr[index];
             arr[index] = arr[maxIndex];
             arr[maxIndex] = temp;

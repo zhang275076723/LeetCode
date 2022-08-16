@@ -68,7 +68,8 @@ public class Offer56 {
     public int[] singleNumbers2(int[] nums) {
         int result = 0;
 
-        //数组元素全部异或，得到不同的两数的异或值
+        //数组元素全部
+        // 异或，得到不同的两数的异或值
         for (int num : nums) {
             result = result ^ num;
         }

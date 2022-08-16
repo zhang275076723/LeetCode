@@ -2,12 +2,13 @@ package com.zhang.java;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * @Date 2022/4/22 15:22
  * @Author zsy
- * @Description 合并区间 类比252、253题
+ * @Description 合并区间 类比Problem179、Problem252、Problem253、Problem406、Offer45
  * 以数组 intervals 表示若干个区间的集合，其中单个区间为 intervals[i] = [starti, endi] 。
  * 请你合并所有重叠的区间，并返回 一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间。
  * <p>
@@ -26,13 +27,13 @@ import java.util.List;
 public class Problem56 {
     public static void main(String[] args) {
         Problem56 problem56 = new Problem56();
-//        int[][] intervals = {{1, 3}, {2, 6}, {8, 10}, {15, 18}};
-        int[][] intervals = {{1,4}, {1, 4}};
+        int[][] intervals = {{1, 3}, {2, 6}, {8, 10}, {15, 18}};
         System.out.println(Arrays.deepToString(problem56.merge(intervals)));
     }
 
     /**
-     * 按照interval[i][0]排序，然后再合并，时间复杂度O(nlogn)，空间复杂度O(logn)
+     * 先按照interval[i][0]由小到大排序，然后再合并相交区间
+     * 时间复杂度O(nlogn)，空间复杂度O(logn)
      *
      * @param intervals
      * @return
@@ -46,20 +47,24 @@ public class Problem56 {
         }
 
         quickSort(intervals, 0, intervals.length - 1);
+
         List<int[]> list = new ArrayList<>();
 
-        //排序后，找重叠的区间，进行合并
         int i = 0;
+
+        //排序后，找相交区间，进行合并
         while (i < intervals.length) {
             //当前区间左端点
             int left = intervals[i][0];
             //当前区间右端点
             int right = intervals[i][1];
-            //找重叠区间
-            while (i < intervals.length - 1 && intervals[i + 1][0] <= right) {
+
+            //找相交区间，更新右端点
+            while (i + 1 < intervals.length && intervals[i + 1][0] <= right) {
                 right = Math.max(right, intervals[i + 1][1]);
                 i++;
             }
+
             list.add(new int[]{left, right});
             i++;
         }
@@ -84,17 +89,21 @@ public class Problem56 {
 
     private int partition(int[][] intervals, int left, int right) {
         int[] temp = intervals[left];
+
         while (left < right) {
             while (left < right && intervals[right][0] >= temp[0]) {
                 right--;
             }
             intervals[left] = intervals[right];
+
             while (left < right && intervals[left][0] <= temp[0]) {
                 left++;
             }
             intervals[right] = intervals[left];
         }
+
         intervals[left] = temp;
+
         return left;
     }
 }

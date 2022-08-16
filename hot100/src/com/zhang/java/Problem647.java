@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/6/17 9:06
  * @Author zsy
- * @Description 回文子串 类比Problem5、Problem131
+ * @Description 回文子串 类比Problem5、Problem131、Problem234
  * 给你一个字符串 s ，请你统计并返回这个字符串中 回文子串 的数目。
  * 回文字符串 是正着读和倒过来读一样的字符串。
  * 子字符串 是字符串中的由连续字符组成的一个序列。
@@ -40,6 +40,7 @@ public class Problem647 {
         if (s == null || s.length() == 0) {
             return 0;
         }
+
         if (s.length() == 1) {
             return 1;
         }
@@ -58,6 +59,7 @@ public class Problem647 {
                         isPalindrome = false;
                         break;
                     }
+
                     left++;
                     right--;
                 }
@@ -84,6 +86,7 @@ public class Problem647 {
         if (s == null || s.length() == 0) {
             return 0;
         }
+
         if (s.length() == 1) {
             return 1;
         }
@@ -93,8 +96,9 @@ public class Problem647 {
         for (int i = 0; i < s.length(); i++) {
             //一个字符作为中心向两边扩散
             count = count + centerExtend(s, i, i);
+
+            //两个字符作为中心向两边扩散
             if (i + 1 < s.length() && s.charAt(i) == s.charAt(i + 1)) {
-                //两个字符作为中心向两边扩散
                 count = count + centerExtend(s, i, i + 1);
             }
         }
@@ -116,6 +120,7 @@ public class Problem647 {
         if (s == null || s.length() == 0) {
             return 0;
         }
+
         if (s.length() == 1) {
             return 1;
         }
@@ -127,6 +132,7 @@ public class Problem647 {
             dp[i][i] = true;
             count++;
         }
+
         for (int i = 1; i < s.length(); i++) {
             //用于s[i]-s[i+1]的情况
             dp[i][i - 1] = true;

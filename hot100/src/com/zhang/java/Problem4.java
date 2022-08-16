@@ -43,22 +43,28 @@ public class Problem4 {
      */
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         if (nums1.length == 0) {
-            return nums2.length % 2 == 1 ?
-                    nums2[nums2.length / 2] :
-                    (nums2[nums2.length / 2 - 1] + nums2[nums2.length / 2]) / 2.0;
+            if (nums2.length % 2 == 1) {
+                return nums2[nums2.length / 2];
+            } else {
+                return (nums2[nums2.length / 2 - 1] + nums2[nums2.length / 2]) / 2.0;
+            }
         }
+
         if (nums2.length == 0) {
-            return nums1.length % 2 == 1 ?
-                    nums1[nums1.length / 2] :
-                    (nums1[nums1.length / 2 - 1] + nums1[nums1.length / 2]) / 2.0;
+            if (nums1.length % 2 == 1) {
+                return nums1[nums1.length / 2];
+            } else {
+                return (nums1[nums1.length / 2 - 1] + nums1[nums1.length / 2]) / 2.0;
+            }
         }
 
         //nums1指针
         int i = 0;
         //nums2指针
         int j = 0;
-        //中位数的两个值
+        //中位数的前一个数
         int num1 = Integer.MIN_VALUE;
+        //中位数的后一个数
         int num2 = Integer.MIN_VALUE;
         int m = nums1.length;
         int n = nums2.length;
@@ -66,7 +72,8 @@ public class Problem4 {
         //找到中位数的两个值
         for (int k = 0; k <= (m + n) / 2; k++) {
             num1 = num2;
-            if (j >= n || (i < m && nums1[i] < nums2[j])) {
+
+            if ((i < m && nums1[i] < nums2[j]) || j >= n) {
                 num2 = nums1[i];
                 i++;
             } else {
@@ -84,8 +91,8 @@ public class Problem4 {
 
     /**
      * 二分查找变形，看到有序数组，就要想到二分查找
-     * 求第k小的数，比较nums1中第k/2个元素和nums2中第k/2个元素，
-     * 把较小的值和它之前的元素去掉，因为这些数不可能是第k小的数，
+     * 求第k小的数，则比较nums1中第k/2个元素和nums2中第k/2个元素，
+     * 把较小的值和它之前的元素去掉，即去掉了较小的k/2个元素，因为这些数不可能是第k小的数，
      * 然后再求删除后的两个数组第(k-删除的元素个数)小的数，直至找到第k小的数
      * 时间复杂度O(log(m+n))，空间复杂度O(1)
      *
@@ -95,14 +102,19 @@ public class Problem4 {
      */
     public double findMedianSortedArrays2(int[] nums1, int[] nums2) {
         if (nums1.length == 0) {
-            return nums2.length % 2 == 1 ?
-                    nums2[nums2.length / 2] :
-                    (nums2[nums2.length / 2 - 1] + nums2[nums2.length / 2]) / 2.0;
+            if (nums2.length % 2 == 1) {
+                return nums2[nums2.length / 2];
+            } else {
+                return (nums2[nums2.length / 2 - 1] + nums2[nums2.length / 2]) / 2.0;
+            }
         }
+
         if (nums2.length == 0) {
-            return nums1.length % 2 == 1 ?
-                    nums1[nums1.length / 2] :
-                    (nums1[nums1.length / 2 - 1] + nums1[nums1.length / 2]) / 2.0;
+            if (nums1.length % 2 == 1) {
+                return nums1[nums1.length / 2];
+            } else {
+                return (nums1[nums1.length / 2 - 1] + nums1[nums1.length / 2]) / 2.0;
+            }
         }
 
         int m = nums1.length;
@@ -117,7 +129,7 @@ public class Problem4 {
         }
     }
 
-    public int findMinK(int[] nums1, int[] nums2, int k) {
+    private int findMinK(int[] nums1, int[] nums2, int k) {
         //当前指向nums1的起始下标索引
         int i = 0;
         //当前指向nums2的起始下标索引

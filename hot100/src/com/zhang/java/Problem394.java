@@ -31,16 +31,16 @@ import java.util.Stack;
 public class Problem394 {
     public static void main(String[] args) {
         Problem394 problem394 = new Problem394();
-        String s = "3[a]2[bc]";
+        String s = "3[a2[c]]";
         System.out.println(problem394.decodeString(s));
     }
 
     /**
-     * 两个栈，数字栈保存重复的次数，字母串栈保存英文字母
+     * 双栈，数字栈保存重复的次数，字母串栈保存英文字母
      * 1、如果遇到数字，则保存连续数字
-     * 2、如果遇到'['，则将当前数字入数字栈，当前字母串入字符串栈
-     * 3、如果遇到']'，则字符串栈出栈，数字栈出栈，当前字符串栈出栈的字符串拼接该数字栈出栈的次数，拼接到结果字符串之后
-     * 4、如果遇到字母，则拼接字符串
+     * 2、如果遇到字母，则拼接字符串
+     * 3、如果遇到'['，则将当前数字入数字栈，当前字母串入字符串栈
+     * 4、如果遇到']'，则字符串栈出栈，数字栈出栈，当前字符串栈出栈的字符串拼接该数字栈出栈的次数，拼接到结果字符串之后
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param s
@@ -63,15 +63,18 @@ public class Problem394 {
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
 
+            //数字
             if (c >= '0' && c <= '9') {
                 num = num * 10 + (c - '0');
             } else if (c == '[') {
+                //左括号，当前数字和字符串入栈
                 numStack.push(num);
                 strStack.push(sb.toString());
 
                 num = 0;
                 sb = new StringBuilder();
             } else if (c == ']') {
+                //右括号，出栈要重复的次数和重复字符串之前保存的字符串，拼接到当前字符串之后
                 StringBuilder tempSb = new StringBuilder(strStack.pop());
                 int curNum = numStack.pop();
 
@@ -81,6 +84,7 @@ public class Problem394 {
 
                 sb = tempSb;
             } else {
+                //字母
                 sb.append(c);
             }
         }

@@ -33,7 +33,7 @@ public class Problem70 {
 
     /**
      * 动态规划
-     * dp[i]：爬n阶台阶的不同方法数量
+     * dp[i]：从第1阶爬到第n阶台阶的不同方法数
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param n
@@ -47,9 +47,11 @@ public class Problem70 {
         int[] dp = new int[n + 1];
         dp[1] = 1;
         dp[2] = 2;
+
         for (int i = 3; i <= n; i++) {
             dp[i] = dp[i - 1] + dp[i - 2];
         }
+
         return dp[n];
     }
 
@@ -66,18 +68,17 @@ public class Problem70 {
             return n;
         }
 
-        //前2阶台阶
-        int p;
-        //前1阶台阶
+        int p = 1;
         int q = 1;
-        //当前台阶
-        int r = 2;
-        for (int i = 3; i <= n; i++) {
+        int result = 1;
+
+        for (int i = 2; i <= n; i++) {
+            result = p + q;
             p = q;
-            q = r;
-            r = p + q;
+            q = result;
         }
-        return r;
+
+        return result;
     }
 
     /**
@@ -91,10 +92,12 @@ public class Problem70 {
             return n;
         }
 
-        int[] memory = new int[n + 1];
-        memory[1] = 1;
-        memory[2] = 2;
-        return dfs(n, memory);
+        int[] dp = new int[n + 1];
+
+        dp[1] = 1;
+        dp[2] = 2;
+
+        return dfs(n, dp);
     }
 
     /**
@@ -115,17 +118,17 @@ public class Problem70 {
 
         result = quickPow(result, n - 2);
 
-        result = multiply(result, new int[][]{{2,0}, {1,0}});
+        result = multiply(result, new int[][]{{2}, {1}});
 
         return result[0][0];
     }
 
-    private int dfs(int n, int[] memory) {
-        if (memory[n] == 0) {
-            memory[n] = dfs(n - 1, memory) + dfs(n - 2, memory);
+    private int dfs(int n, int[] dp) {
+        if (dp[n] == 0) {
+            dp[n] = dfs(n - 1, dp) + dfs(n - 2, dp);
         }
 
-        return memory[n];
+        return dp[n];
     }
 
     private int[][] quickPow(int[][] a, int n) {

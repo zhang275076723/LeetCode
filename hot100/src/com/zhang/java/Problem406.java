@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @Date 2022/6/5 9:38
  * @Author zsy
- * @Description 根据身高重建队列 中国人寿笔试题
+ * @Description 根据身高重建队列 中国人寿笔试题 类比Problem56、Problem179、Problem252、Problem253、Offer45
  * 假设有打乱顺序的一群人站成一个队列，数组 people 表示队列中一些人的属性（不一定按顺序）。
  * 每个 people[i] = [hi, ki] 表示第 i 个人的身高为 hi ，前面 正好 有 ki 个身高大于或等于 hi 的人。
  * 请你重新构造并返回输入数组 people 所表示的队列。
@@ -65,12 +65,15 @@ public class Problem406 {
             //放在数组尾部
             if (people[i][1] >= i) {
                 result[i] = people[i];
-            } else { //放在数组索引people[i][1]的位置
+            } else {
+                //people[i]要放在结果数组的索引下标
                 int index = people[i][1];
+
                 //当前索引位置到末尾的元素后移一位
                 for (int j = i; j > index; j--) {
                     result[j] = result[j - 1];
                 }
+
                 result[index] = people[i];
             }
         }
@@ -106,6 +109,7 @@ public class Problem406 {
                 if (people1[0] != people2[0]) {
                     return people1[0] - people2[0];
                 }
+
                 return people2[1] - people1[1];
             }
         });

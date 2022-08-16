@@ -21,17 +21,24 @@ package com.zhang.java;
  * 0 <= grid[i][j] <= 100
  */
 public class Problem64 {
+    /**
+     * 回溯使用的最小路径和
+     */
+    private int minSum = Integer.MAX_VALUE;
+
     public static void main(String[] args) {
         Problem64 problem64 = new Problem64();
         int[][] grid = {{1, 3, 1}, {1, 5, 1}, {4, 2, 1}};
         System.out.println(problem64.minPathSum(grid));
-        System.out.println(problem64.minPathSum2(grid));
+//        System.out.println(problem64.minPathSum2(grid));
+        System.out.println(problem64.minPathSum3(grid));
     }
 
     /**
-     * 动态规划，时间复杂度O(mn)，空间复杂度O(mn)
-     * dp[i][j]：grid[0][0]到grid[i-1][j-1]路径数字之和的最小值
-     * dp[i][j] = min(dp[i][j-1], dp[i-1][j]) + grid[i-1][j-1]
+     * 动态规划
+     * dp[i][j]：grid[0][0]到grid[i][j]的最小路径和
+     * dp[i][j] = min(dp[i][j-1], dp[i-1][j]) + grid[i][j]
+     * 时间复杂度O(mn)，空间复杂度O(mn)
      *
      * @param grid
      * @return
@@ -39,31 +46,31 @@ public class Problem64 {
     public int minPathSum(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
-        int[][] dp = new int[m + 1][n + 1];
+        int[][] dp = new int[m][n];
 
-        for (int i = 1; i <= m; i++) {
-            dp[i][1] = dp[i - 1][1] + grid[i - 1][0];
-        }
-        for (int j = 1; j <= n; j++) {
-            dp[1][j] = dp[1][j - 1] + grid[0][j - 1];
+        dp[0][0] = grid[0][0];
+
+        for (int i = 1; i < m; i++) {
+            dp[i][0] = dp[i - 1][0] + grid[i][0];
         }
 
-        for (int i = 2; i <= m; i++) {
-            for (int j = 2; j <= n; j++) {
-                if (dp[i][j - 1] < dp[i - 1][j]) {
-                    dp[i][j] = dp[i][j - 1] + grid[i - 1][j - 1];
-                } else {
-                    dp[i][j] = dp[i - 1][j] + grid[i - 1][j - 1];
-                }
+        for (int j = 1; j < n; j++) {
+            dp[0][j] = dp[0][j - 1] + grid[0][j];
+        }
+
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];
             }
         }
 
-        return dp[m][n];
+        return dp[m - 1][n - 1];
     }
 
     /**
-     * 动态规划优化，时间复杂度O(mn)，空间复杂度O(1)
+     * 动态规划优化，使用原数组作为dp数组
      * 每个位置的值只与它左边和上边的元素有关，直接使用原数组grid作为dp数组
+     * 时间复杂度O(mn)，空间复杂度O(1)
      *
      * @param grid
      * @return
@@ -86,5 +93,35 @@ public class Problem64 {
         }
 
         return grid[m - 1][n - 1];
+    }
+
+    /**
+     * 回溯+剪枝
+     * 时间复杂度O((m+n)*C(m+n-2,m-1))，空间复杂度O(m+n)
+     *
+     * @param grid
+     * @return
+     */
+    public int minPathSum3(int[][] grid) {
+        backtrack(grid, 0, 0, 0);
+
+        return minSum;
+    }
+
+    private void backtrack(int[][] grid, int i, int j, int sum) {
+        //超过数组范围，剪枝
+        if (i >= grid.length || j >= grid[0].length) {
+            return;
+        }
+
+        sum = sum + grid[i][j];
+
+        if (i == grid.length - 1 && j == grid[0].length - 1) {
+            minSum = Math.min(minSum, sum);
+            return;
+        }
+
+        backtrack(grid, i + 1, j, sum);
+        backtrack(grid, i, j + 1, sum);
     }
 }

@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/4/9 10:05
  * @Author zsy
- * @Description 构建乘积数组
+ * @Description 构建乘积数组 类比Problem11、Problem42、Problem152 同Problem238
  * 给定一个数组 A[0,1,…,n-1]，请构建一个数组 B[0,1,…,n-1]，
  * 其中 B[i] 的值是数组 A 中除了下标 i 以外的元素的积, 即 B[i]=A[0]×A[1]×…×A[i-1]×A[i+1]×…×A[n-1]。
  * 不能使用除法。

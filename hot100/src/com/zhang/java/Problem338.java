@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/6/1 9:41
  * @Author zsy
- * @Description 比特位计数
+ * @Description 比特位计数 类比Problem190、Problem191、Problem461、Offer15
  * 给你一个整数 n ，对于 0 <= i <= n 中的每个 i ，计算其二进制表示中 1 的个数 ，
  * 返回一个长度为 n + 1 的数组 ans 作为答案。
  * <p>
@@ -46,6 +46,7 @@ public class Problem338 {
      */
     public int[] countBits(int n) {
         int[] result = new int[n + 1];
+
         for (int i = 1; i <= n; i++) {
             if (i % 2 == 1) {
                 result[i] = result[i / 2] + 1;
@@ -53,6 +54,7 @@ public class Problem338 {
                 result[i] = result[i / 2];
             }
         }
+
         return result;
     }
 }

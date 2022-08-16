@@ -36,7 +36,7 @@ public class Problem76 {
     }
 
     /**
-     * 滑动窗口，双指针，两个指针left和right分别指向满足要求的数组索引
+     * 滑动窗口，双指针
      * 当left和right形成的窗口不能覆盖t时，right右移；当left和right形成的窗口覆盖t时，left左移
      * 时间复杂度O(C*s.length())，空间复杂度O(C)，C为字符集大小，即|C|=26
      *
@@ -49,10 +49,10 @@ public class Problem76 {
             return "";
         }
 
-        //tMap中存放t中每个字符对应的个数
-        Map<Character, Integer> tMap = new HashMap<>();
         //sMap中存放s中每个字符对应的个数
         Map<Character, Integer> sMap = new HashMap<>();
+        //tMap中存放t中每个字符对应的个数
+        Map<Character, Integer> tMap = new HashMap<>();
 
         for (int i = 0; i < t.length(); i++) {
             tMap.put(t.charAt(i), tMap.getOrDefault(t.charAt(i), 0) + 1);
@@ -60,7 +60,7 @@ public class Problem76 {
 
         //滑动窗口指针
         int left = 0;
-        int right = -1;
+        int right = 0;
         //最小窗口指针
         int minLeft = 0;
         int minRight = Integer.MAX_VALUE;
@@ -68,16 +68,13 @@ public class Problem76 {
         int size = 0;
 
         while (right < s.length()) {
-            //右指针右移
-            right++;
+            char c = s.charAt(right);
 
-            //如果tMap中包含右指针，则在sMap中添加
-            if (right < s.length() && tMap.containsKey(s.charAt(right))) {
-                sMap.put(s.charAt(right), sMap.getOrDefault(s.charAt(right), 0) + 1);
-            }
+            //sMap中添加右指针元素
+            sMap.put(c, sMap.getOrDefault(c, 0) + 1);
 
             //判断当前窗口是否覆盖t，左指针右移
-            while (isCover(sMap, tMap) && left <= right) {
+            while (isCover(sMap, tMap)) {
                 //更新窗口大小
                 if (right - left < minRight - minLeft) {
                     minLeft = left;
@@ -85,14 +82,15 @@ public class Problem76 {
                     size = minRight - minLeft + 1;
                 }
 
-                //如果sMap中包含左指针，左指针右移，需要在sMap中减1
-                if (sMap.containsKey(s.charAt(left))) {
-                    sMap.put(s.charAt(left), sMap.get(s.charAt(left)) - 1);
-                }
+                //sMap中删除左指针元素
+                sMap.put(s.charAt(left), sMap.get(s.charAt(left)) - 1);
 
                 //左指针右移
                 left++;
             }
+
+            //右指针右移
+            right++;
         }
 
         return size == 0 ? "" : s.substring(minLeft, minRight + 1);
@@ -109,6 +107,7 @@ public class Problem76 {
     private boolean isCover(Map<Character, Integer> sMap, Map<Character, Integer> tMap) {
         for (Map.Entry<Character, Integer> entry : tMap.entrySet()) {
             //sMap中没有tMap中的key，或者sMap中有tMap中的key，但value小于tMap中的value，则说明当前窗口不能覆盖t
+            //如果Integer要比较是否相等，不能用==，而必须用equals，因为==比较的是地址是否相同
             if (!sMap.containsKey(entry.getKey()) || sMap.get(entry.getKey()) < entry.getValue()) {
                 return false;
             }

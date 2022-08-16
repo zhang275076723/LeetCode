@@ -68,12 +68,16 @@ public class Problem145 {
 
         while (!stack.isEmpty()) {
             TreeNode node = stack.pollLast();
-            list.offerFirst(node.val);
 
-            //先将左子树节点压入栈中，再将右子树节点压入栈中
+            //结果集合首添加
+            list.addFirst(node.val);
+
+            //先将左子树节点压入栈中
             if (node.left != null) {
                 stack.offerLast(node.left);
             }
+
+            //再将右子树节点压入栈中
             if (node.right != null) {
                 stack.offerLast(node.right);
             }

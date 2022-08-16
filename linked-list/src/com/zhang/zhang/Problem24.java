@@ -3,7 +3,7 @@ package com.zhang.zhang;
 /**
  * @Date 2022/7/3 8:51
  * @Author zsy
- * @Description 两两交换链表中的节点 类比Problem21、Problem92、Problem206
+ * @Description 两两交换链表中的节点 类比Problem21、Problem23、Problem92、Problem206
  * 给你一个链表，两两交换其中相邻的节点，并返回交换后链表的头节点。
  * 你必须在不修改节点内部的值的情况下完成本题（即，只能进行节点交换）。
  * <p>
@@ -44,6 +44,7 @@ public class Problem24 {
             return head;
         }
 
+        //设置头结点，方便处理
         ListNode hair = new ListNode();
         hair.next = head;
 
@@ -75,7 +76,10 @@ public class Problem24 {
             return head;
         }
 
+        //head节点的下一个节点
         ListNode next = head.next;
+
+        //head和next节点反转
         head.next = swapPairs2(next.next);
         next.next = head;
 

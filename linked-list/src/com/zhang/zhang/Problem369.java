@@ -47,7 +47,7 @@ public class Problem369 {
 
             if (node.next != null) {
                 node.next.val++;
-            }else {
+            } else {
                 //添加尾结点
                 node.next = new ListNode(1);
             }

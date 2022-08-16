@@ -23,7 +23,7 @@ package com.zhang.java;
 public class Problem19 {
     public static void main(String[] args) {
         Problem19 problem19 = new Problem19();
-        String data = "1,2,3,4,5";
+        int[] data = {1, 2, 3, 4, 5};
         ListNode head = problem19.buildList(data);
         ListNode node = problem19.removeNthFromEnd(head, 5);
         while (node != null) {
@@ -41,46 +41,64 @@ public class Problem19 {
      * @return
      */
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        if (head == null) {
+        if (head == null || head.next == null) {
             return null;
         }
 
-        ListNode fast = head;
-        ListNode slow = head;
-        ListNode preNode = null;
+        //设置头结点，把第一个节点作为普通节点，方便处理
+        ListNode hair = new ListNode(0, head);
+
+        ListNode fast = hair;
+        ListNode slow = hair;
 
         for (int i = 0; i < n; i++) {
             fast = fast.next;
         }
 
-        while (fast != null) {
-            preNode = slow;
-            slow = slow.next;
+        while (fast.next != null) {
             fast = fast.next;
+            slow = slow.next;
         }
 
-        //删除头结点
-        if (preNode == null) {
-            return head.next;
-        }
+        slow.next = slow.next.next;
 
-        //删除其他节点
-        preNode.next = slow.next;
-        return head;
+        return hair.next;
+
+//        ListNode fast = head;
+//        ListNode slow = head;
+//        ListNode preNode = null;
+//
+//        for (int i = 0; i < n; i++) {
+//            fast = fast.next;
+//        }
+//
+//        while (fast != null) {
+//            preNode = slow;
+//            slow = slow.next;
+//            fast = fast.next;
+//        }
+//
+//        //删除头结点
+//        if (preNode == null) {
+//            return head.next;
+//        }
+//
+//        //删除其他节点
+//        preNode.next = slow.next;
+//        return head;
     }
 
-    public ListNode buildList(String data) {
-        if (data == null || data.length() == 0) {
+    public ListNode buildList(int[] data) {
+        if (data == null || data.length == 0) {
             return null;
         }
 
-        String[] split = data.split(",");
-        ListNode head = new ListNode(Integer.parseInt(split[0]));
-        ListNode tempNode = head;
+        ListNode head = new ListNode(data[0]);
+        ListNode node = head;
 
-        for (int i = 1; i < split.length; i++) {
-            tempNode.next = new ListNode(Integer.parseInt(split[i]));
-            tempNode = tempNode.next;
+        for (int i = 1; i < data.length; i++) {
+            node.next = new ListNode(data[i]);
+            node = node.next;
         }
 
         return head;

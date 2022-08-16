@@ -1,5 +1,6 @@
 package com.zhang.java;
 
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,7 +28,8 @@ public class Problem22 {
     }
 
     /**
-     * 回溯+剪枝，时间复杂度O(4^n/(n)^(1/2))(第n个卡特兰)，空间复杂度O(n)
+     * 回溯+剪枝
+     * 时间复杂度O(4^n/(n)^(1/2))(第n个卡特兰)，空间复杂度O(n)
      *
      * @param n
      * @return
@@ -38,12 +40,15 @@ public class Problem22 {
         }
 
         List<String> result = new ArrayList<>();
+
         backtrack(0, 0, n, new StringBuilder(), result);
+
         return result;
     }
 
     /**
-     * bfs实现
+     * bfs
+     * 时间复杂度O(4^n/(n)^(1/2))(第n个卡特兰)，空间复杂度O(n)
      *
      * @param n
      * @return
@@ -54,28 +59,30 @@ public class Problem22 {
         }
 
         List<String> result = new ArrayList<>();
-        Queue<Node> queue = new LinkedList<>();
-        queue.offer(new Node(0, 0, ""));
+        Queue<Pos> queue = new LinkedList<>();
+        queue.offer(new Pos(0, 0, ""));
 
         while (!queue.isEmpty()) {
-            Node node = queue.poll();
+            Pos pos = queue.poll();
 
             //当前节点的左括号数量小于右括号数量，则不是有效括号
-            if (node.left < node.right) {
+            if (pos.left < pos.right) {
                 continue;
             }
-            if (node.left == n && node.right == n) {
-                result.add(node.s);
+
+            if (pos.left == n && pos.right == n) {
+                result.add(pos.str);
                 continue;
             }
 
             //当前节点左括号数量小于n时，添加一个左括号节点
-            if (node.left < n) {
-                queue.add(new Node(node.left + 1, node.right, node.s + '('));
+            if (pos.left < n) {
+                queue.add(new Pos(pos.left + 1, pos.right, pos.str + '('));
             }
+
             //当前节点右括号数量小于n时，添加一个右括号节点
-            if (node.right < n) {
-                queue.add(new Node(node.left, node.right + 1, node.s + ')'));
+            if (pos.right < n) {
+                queue.add(new Pos(pos.left, pos.right + 1, pos.str + ')'));
             }
         }
 
@@ -87,7 +94,7 @@ public class Problem22 {
      * @param right  当前右括号数量
      * @param n      所需的括号对数
      * @param sb     一个合法的括号组合
-     * @param result 返回结果集合
+     * @param result 结果集合
      */
     public void backtrack(int left, int right, int n, StringBuilder sb, List<String> result) {
         //当右括号数量和左括号数量都为n时，说明括号完全匹配
@@ -96,7 +103,7 @@ public class Problem22 {
             return;
         }
 
-        //当前右括号数量大于左括号数量，则不合法，剪枝
+        //当前左括号数量小于右括号数量，则不是合法的括号组合，剪枝
         if (left < right) {
             return;
         }
@@ -106,6 +113,7 @@ public class Problem22 {
             backtrack(left + 1, right, n, sb, result);
             sb.delete(sb.length() - 1, sb.length());
         }
+
         if (right < n) {
             sb.append(')');
             backtrack(left, right + 1, n, sb, result);
@@ -114,20 +122,20 @@ public class Problem22 {
     }
 
     /**
-     * bfs中每个节点
+     * bfs每个节点
      */
-    private static class Node {
+    private static class Pos {
         //当前左括号数量
         int left;
         //当前右括号数量
         int right;
         //当前节点中的括号
-        String s;
+        String str;
 
-        public Node(int left, int right, String s) {
+        public Pos(int left, int right, String str) {
             this.left = left;
             this.right = right;
-            this.s = s;
+            this.str = str;
         }
     }
 }

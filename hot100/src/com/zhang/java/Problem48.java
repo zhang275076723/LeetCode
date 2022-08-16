@@ -47,7 +47,8 @@ public class Problem48 {
 
     /**
      * 每四个元素是一组，由外到内按照一圈一圈调整每一组的四个元素，不管怎么旋转，只是调整了这四个元素的位置
-     * 四个元素：matrix[start][start + j]、matrix[start + j][end]、matrix[end][end - j]、matrix[end - j][start]
+     * 最边上每组四个元素：matrix[start][start]、matrix[start][end]、matrix[end][end]、matrix[end][start]
+     * 要调整每组四个元素：matrix[start][start + j]、matrix[start + j][end]、matrix[end][end - j]、matrix[end - j][start]
      * 时间复杂度O(n^2)，空间复杂度O(1)
      *
      * @param matrix
@@ -57,12 +58,13 @@ public class Problem48 {
             return;
         }
 
-        //共几轮，由外到内按照一圈一圈调整每一组的四个元素
+        //由外到内一圈一圈调整几轮，每组的四个元素
         for (int i = 0; i < matrix.length / 2; i++) {
-            //矩阵的起始索引
+            //每组要调整的四个元素的起始元素
             int start = i;
-            //矩阵的结束索引
+            //每组要调整的四个元素的末尾元素
             int end = matrix.length - i - 1;
+
             //每轮需要调整的每四个元素的组数
             for (int j = 0; j < end - start; j++) {
                 //调整这四个元素的位置
@@ -72,14 +74,6 @@ public class Problem48 {
                 matrix[end][end - j] = matrix[start + j][end];
                 matrix[start + j][end] = temp;
             }
-//            for (int j = i; j < matrix.length - i - 1; j++) {
-//                //调整这四个元素的位置
-//                int temp = matrix[i][j];
-//                matrix[i][j] = matrix[matrix.length - j - 1][i];
-//                matrix[matrix.length - j - 1][i] = matrix[matrix.length - i - 1][matrix.length - j - 1];
-//                matrix[matrix.length - i - 1][matrix.length - j - 1] = matrix[j][matrix.length - i - 1];
-//                matrix[j][matrix.length - i - 1] = temp;
-//            }
         }
     }
 }

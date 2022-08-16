@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/14 8:30
  * @Author zsy
- * @Description 正则表达式匹配 同Offer19
+ * @Description 正则表达式匹配 类比Problem678 同Offer19
  * 给你一个字符串 s 和一个字符规律 p，请你来实现一个支持 '.' 和 '*' 的正则表达式匹配。
  * '.' 匹配任意单个字符
  * '*' 匹配零个或多个前面的那一个元素
@@ -44,7 +44,7 @@ public class Problem10 {
      * 动态规划
      * dp[i][j]：主串s[0]-s[i-1]和模式串p[0]-p[j-1]是否匹配
      * dp[i][j] = dp[i-1][j-1]               (s[i-1] == p[j-1]，p[j-1]为普通字符；或者p[j-1] = '.')
-     * dp[i][j] = dp[i][j-2]                 (s[i-1] != p[j-2]，p[j-1] == '*'，则说明p[j-2]取0个)
+     * dp[i][j] = dp[i][j-2]                 (s[i-1] != p[j-2]，p[j-1] == '*'，p[j-2] != '.'，则说明p[j-2]取0个)
      * dp[i][j] = dp[i][j - 2] || dp[i-1][j] (s[i-1] == p[j-2]，p[j-1] == '*'，则说明p[j-2]取0个或多个，只要有一种情况满足即可)
      * 时间复杂度O(mn)，空间复杂度O(mn)
      *
@@ -58,6 +58,7 @@ public class Problem10 {
 
         //dp[i][j]：s[0]-s[i-1]和p[0]-p[j-1]是否匹配
         boolean[][] dp = new boolean[m + 1][n + 1];
+
         //空串和空串匹配
         dp[0][0] = true;
 

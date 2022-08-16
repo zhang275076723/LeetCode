@@ -22,9 +22,10 @@ import java.util.Map;
  * 输入：nums = [3,3], target = 6
  * 输出：[0,1]
  * <p>
- * 2 <= nums.length <= 104
- * -109 <= nums[i] <= 109
- * -109 <= target <= 109
+ * 2 <= nums.length <= 10^4
+ * -10^9 <= nums[i] <= 10^9
+ * -10^9 <= target <= 10^9
+ * 只会存在一个有效答案
  */
 public class Problem1 {
     public static void main(String[] args) {
@@ -35,14 +36,15 @@ public class Problem1 {
     }
 
     /**
-     * 哈希表，时间复杂度O(n)，空间复杂度O(n)
+     * 哈希表
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param nums
      * @param target
      * @return
      */
     public int[] twoSum(int[] nums, int target) {
-        if (nums == null ||nums.length < 2) {
+        if (nums == null || nums.length < 2) {
             return new int[0];
         }
 
@@ -50,14 +52,12 @@ public class Problem1 {
         Map<Integer, Integer> map = new HashMap<>();
 
         for (int i = 0; i < nums.length; i++) {
-            Integer index = map.getOrDefault(target - nums[i], -1);
+            int index = map.getOrDefault(target - nums[i], -1);
+
             if (index == -1) {
                 map.put(nums[i], i);
             } else {
-                int[] result = new int[2];
-                result[0] = i;
-                result[1] = index;
-                return result;
+                return new int[]{i, index};
             }
         }
 

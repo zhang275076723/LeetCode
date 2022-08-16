@@ -23,9 +23,8 @@ package com.zhang.java;
 public class Problem53 {
     public static void main(String[] args) {
         Problem53 problem53 = new Problem53();
-//        int[] nums = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
-        int[] nums = {-84, -87, -78, -16, -94, -36, -87, -93, -50, -22, -63, -28, -91, -60, -64, -27, -41, -27, -73, -37, -12, -69, -68, -30, -83, -31, -63, -24, -68, -36, -30, -3, -23, -59, -70, -68, -94, -57, -12, -43, -30, -74, -22, -20, -85, -38, -99, -25, -16, -71, -14, -27, -92, -81, -57, -74, -63, -71, -97, -82, -6, -26, -85, -28, -37, -6, -47, -30, -14, -58, -25, -96, -83, -46, -15, -68, -35, -65, -44, -51, -88, -9, -77, -79, -89, -85, -4, -52, -55, -100, -33, -61, -77, -69, -40, -13, -27, -87, -95, -40};
-//        System.out.println(problem53.maxSubArray(nums));
+        int[] nums = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+        System.out.println(problem53.maxSubArray(nums));
         System.out.println(problem53.maxSubArray2(nums));
         System.out.println(problem53.maxSubArray3(nums));
         System.out.println(problem53.maxSubArray4(nums));
@@ -58,24 +57,26 @@ public class Problem53 {
 
     /**
      * 动态规划
-     * dp[i]：以nums[i-1]结尾的子数组的最大和
-     * dp[i] = nums[i-1]           (dp[i-1] <= 0)
-     * dp[i] = dp[i-1] + nums[i-1] (dp[i-1] > 0)
+     * dp[i]：以nums[i]结尾的连续子数组的最大和
+     * dp[i] = nums[i]           (dp[i-1] <= 0)
+     * dp[i] = dp[i-1] + nums[i] (dp[i-1] > 0)
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param nums
      * @return
      */
     public int maxSubArray2(int[] nums) {
-        int[] dp = new int[nums.length + 1];
-        int max = Integer.MIN_VALUE;
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0];
+        int max = dp[0];
 
-        for (int i = 1; i < dp.length; i++) {
+        for (int i = 1; i < nums.length; i++) {
             if (dp[i - 1] <= 0) {
-                dp[i] = nums[i - 1];
+                dp[i] = nums[i];
             } else {
-                dp[i] = dp[i - 1] + nums[i - 1];
+                dp[i] = dp[i - 1] + nums[i];
             }
+
             max = Math.max(max, dp[i]);
         }
 
@@ -99,6 +100,7 @@ public class Problem53 {
             } else {
                 dp = dp + nums[i];
             }
+
             max = Math.max(max, dp);
         }
 

@@ -40,21 +40,29 @@ public class Offer12 {
 
     /**
      * 回溯+剪枝
+     * 时间复杂度O(mn*4^l)，空间复杂度O(mn) (m = board.length, n = board[0].length, l = word.length())
      *
      * @param board
      * @param word
      * @return
      */
     public boolean exist(char[][] board, String word) {
-        if (board == null || board.length == 0 || board[0].length == 0) {
+        if (board.length * board[0].length < word.length()) {
             return false;
         }
 
+        boolean flag = false;
         boolean[][] visited = new boolean[board.length][board[0].length];
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                if (backtrack(board, word, visited, i, j, 0)) {
+                //第一个字母相同才进行遍历
+                if (board[i][j] == word.charAt(0)) {
+                    flag = dfs(0, i, j, board, word, visited);
+                }
+
+                //已经找到，则直接返回true
+                if (flag) {
                     return true;
                 }
             }
@@ -63,32 +71,27 @@ public class Offer12 {
         return false;
     }
 
-    /**
-     * @param board     网格
-     * @param word      单词
-     * @param visited   网格访问数组
-     * @param i         网格行
-     * @param j         网格列
-     * @param wordIndex 单词开始索引
-     * @return
-     */
-    public boolean backtrack(char[][] board, String word, boolean[][] visited, int i, int j, int wordIndex) {
-        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length ||
-                visited[i][j] || word.charAt(wordIndex) != board[i][j]) {
+    private boolean dfs(int t, int i, int j, char[][] board, String word, boolean[][] visited) {
+        //不满足要求，直接剪枝，返回false
+        if (i < 0 || i >= board.length ||
+                j < 0 || j >= board[0].length ||
+                visited[i][j] ||
+                word.charAt(t) != board[i][j]) {
             return false;
         }
 
-        if (wordIndex == word.length() - 1) {
+        //已经遍历到最后一个字母，返回true
+        if (t == word.length() - 1) {
             return true;
         }
 
         visited[i][j] = true;
 
-        //从当前顶点，上下左右查找
-        boolean flag = backtrack(board, word, visited, i - 1, j, wordIndex + 1) ||
-                backtrack(board, word, visited, i + 1, j, wordIndex + 1) ||
-                backtrack(board, word, visited, i, j - 1, wordIndex + 1) ||
-                backtrack(board, word, visited, i, j + 1, wordIndex + 1);
+        //从当前位置往上下左右遍历
+        boolean flag = dfs(t + 1, i, j - 1, board, word, visited) ||
+                dfs(t + 1, i, j + 1, board, word, visited) ||
+                dfs(t + 1, i - 1, j, board, word, visited) ||
+                dfs(t + 1, i + 1, j, board, word, visited);
 
         visited[i][j] = false;
 

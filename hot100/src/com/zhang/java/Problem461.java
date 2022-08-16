@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/6/10 9:46
  * @Author zsy
- * @Description 汉明距离 类比Offer15
+ * @Description 汉明距离 类比Problem190、Problem191、Problem338、Offer15
  * 两个整数之间的 汉明距离 指的是这两个数字对应二进制位不同的位置的数目。
  * 给你两个整数 x 和 y，计算并返回它们之间的汉明距离。
  * <p>
@@ -40,6 +40,7 @@ public class Problem461 {
         while (z != 0) {
             //+的优先级高于&，所以需要添加括号
             result = result + (z & 1);
+
             //如果存在负数，则需要使用无符号右移
             z = z >> 1;
         }
@@ -61,6 +62,7 @@ public class Problem461 {
 
         while (z != 0) {
             z = z & (z - 1);
+
             result++;
         }
 

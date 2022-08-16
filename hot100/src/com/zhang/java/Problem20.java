@@ -34,11 +34,12 @@ public class Problem20 {
         Problem20 problem20 = new Problem20();
         String s = "{[]}";
         System.out.println(problem20.isValid(s));
-        System.out.println(problem20.isValid2(s));
     }
 
     /**
-     * 自己的解，使用栈存放括号，时间复杂度O(n)，空间复杂度O(n)
+     * 栈
+     * 遇到左括号，入栈；遇到右括号，和栈顶元素比较，如果匹配，栈顶元素出栈，如果不匹配，返回false
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param s
      * @return
@@ -52,6 +53,7 @@ public class Problem20 {
 
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
+
             if (stack.isEmpty() || c == '(' || c == '[' || c == '{') {
                 stack.push(c);
             } else if (c == ')' && stack.peek() == '(') {
@@ -68,32 +70,4 @@ public class Problem20 {
         return stack.isEmpty();
     }
 
-    /**
-     * 答案的解，遇到左括号，对应右括号入栈，时间复杂度O(n)，空间复杂度O(n)
-     *
-     * @param s
-     * @return
-     */
-    public boolean isValid2(String s) {
-        if (s == null || s.length() == 0) {
-            return true;
-        }
-
-        Stack<Character> stack = new Stack<>();
-
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (c == '(') {
-                stack.push(')');
-            } else if (c == '[') {
-                stack.push(']');
-            } else if (c == '{') {
-                stack.push('}');
-            } else if (stack.isEmpty() || c != stack.pop()) {
-                return false;
-            }
-        }
-
-        return stack.isEmpty();
-    }
 }

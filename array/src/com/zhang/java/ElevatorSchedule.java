@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/7 11:29
  * @Author zsy
- * @Description 字节面试题 电梯调度
+ * @Description 电梯调度 字节面试题
  * 有一个特殊的电梯，只能从1楼载人，然后运输至某一楼（记为第N层）。
  * 现有若干乘客，每个乘客有一个自己想去的楼层，以数组表示：下标为乘客的id，数组中的内容为乘客想去的楼层。
  * 乘客在第N层下电梯后，需要爬楼梯到自己所去的楼层。
@@ -22,7 +22,8 @@ public class ElevatorSchedule {
     }
 
     /**
-     * 暴力，遍历每个楼层，找出电梯所停的楼层，使所有人达到想到楼层要爬楼梯的总数
+     * 暴力
+     * 遍历每个楼层，找出电梯所停的楼层，使所有人达到想到楼层要爬楼梯的总数
      * 时间复杂度O(n^2)，空间复杂度O(1)
      *
      * @param person
@@ -47,6 +48,7 @@ public class ElevatorSchedule {
         int bestFloor = minFloor;
         //电梯停下后乘客达到要去楼层所爬的楼层之和
         int minSum = Integer.MAX_VALUE;
+
         for (int i = minFloor; i <= maxFloor; i++) {
             int tempSum = 0;
             for (int j = 0; j < person.length; j++) {
@@ -57,15 +59,17 @@ public class ElevatorSchedule {
                 bestFloor = i;
             }
         }
+
         return bestFloor;
     }
 
     /**
-     * 动态规划，时间复杂度O(n)，空间复杂度O(n)
+     * 动态规划
      * 假设电梯停在i楼，有n1个乘客要去i楼以下，n2个乘客在i楼，n3个乘客要去i楼以上，此时总共需要爬Y层
      * 当电梯停在i+1楼时，要到i楼和i楼以下的乘客需要多爬1层，总共需要多爬n1+n2层；
      * 要到i+1楼和i+1楼以上的乘客可以少爬1层，总共可以少爬n3层。
      * 此时总共需要爬Y+n1+n2-n3层，取两者最小值，就知道电梯停在i楼和i+1楼的最佳位置
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param person
      * @return
@@ -103,20 +107,21 @@ public class ElevatorSchedule {
         int n3 = 0;
 
         //电梯停在minFloor楼，乘客需要爬的楼层总数之和
-        for (int i = minFloor + 1; i <= maxFloor; i++) {
-            minSum = minSum + floor[i - minFloor] * (i - minFloor);
-            n3 = n3 + floor[i - minFloor];
+        for (int i = 1; i < floor.length; i++) {
+            minSum = minSum + floor[i] * (i + minFloor);
+            n3 = n3 + floor[i];
         }
 
-        for (int i = minFloor + 1; i <= maxFloor; i++) {
+        for (int i = 1; i < floor.length; i++) {
             //i+1楼比i楼，乘客需要爬的楼层总数之和较少，进行更新
             if (n1 + n2 < n3) {
                 minSum = minSum + n1 + n2 - n3;
-                n1 = n1 + n2;
-                n2 = floor[i];
-                n3 = n3 - n2;
-                bestFloor = i;
+                bestFloor = i + minFloor;
             }
+
+            n1 = n1 + n2;
+            n2 = floor[i];
+            n3 = n3 - n2;
         }
 
         return bestFloor;

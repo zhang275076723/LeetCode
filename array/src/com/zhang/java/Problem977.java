@@ -61,11 +61,13 @@ public class Problem977 {
         int index = nums.length - 1;
 
         while (i <= j) {
-            if (nums[i] * nums[i] < nums[j] * nums[j]) {
-                result[index--] = nums[j] * nums[j];
+            if (Math.abs(nums[i]) < Math.abs(nums[j])) {
+                result[index] = nums[j] * nums[j];
+                index--;
                 j--;
             } else {
-                result[index--] = nums[i] * nums[i];
+                result[index] = nums[i] * nums[i];
+                index--;
                 i++;
             }
         }

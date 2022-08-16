@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2022/5/22 9:02
  * @Author zsy
- * @Description 会议室 II 类比56、252题
+ * @Description 会议室 II 类比Problem56、Problem179、Problem252、Problem406、Offer45
  * 给定一个会议时间安排的数组，
  * 每个会议时间都会包括开始和结束的时间 [[s1,e1],[s2,e2],…] (si < ei)，
  * 为避免会议冲突，同时要考虑充分利用会议室资源，请你计算至少需要多少间会议室，才能满足这些会议安排。
@@ -29,8 +29,9 @@ public class Problem253 {
     }
 
     /**
-     * 按照interval[i][0]由小到大排序
-     * 如果当前会议的开始时间>=小根堆堆顶的会议结束时间，则说明可以共享会议室，堆顶元素出堆，当前元素入堆；
+     * 优先队列
+     * 先按照interval[i][0]由小到大排序，依次将元素的结束时间放入小根堆，保证从第一个区间的结束时间和第二个区间的开始时间间隔最小，
+     * 如果当前元素的开始时间 >= 小根堆堆顶元素的结束时间，则说明可以共享会议室，堆顶元素出堆，当前元素入堆；
      * 否则，则说明不能共享会议室，当前元素入堆
      * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
@@ -47,11 +48,13 @@ public class Problem253 {
         //优先队列，小根堆，存放会议的结束时间
         PriorityQueue<Integer> priorityQueue = new PriorityQueue<>((o1, o2) -> o1 - o2);
         priorityQueue.offer(intervals[0][1]);
+
         for (int i = 1; i < intervals.length; ++i) {
             //如果当前会议的开始时间>=小根堆堆顶的会议结束时间，说明可以共享会议室，堆顶元素出堆，当前元素入堆
             if (intervals[i][0] >= priorityQueue.peek()) {
                 priorityQueue.poll();
             }
+
             priorityQueue.offer(intervals[i][1]);
         }
 
@@ -81,6 +84,7 @@ public class Problem253 {
                 right--;
             }
             intervals[left] = intervals[right];
+
             while (left < right && intervals[left][0] <= temp[0]) {
                 left++;
             }

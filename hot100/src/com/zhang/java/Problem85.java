@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2022/4/29 9:26
  * @Author zsy
- * @Description 柱状图中最大的矩形 类比84题、221题
+ * @Description 柱状图中最大的矩形 类比Problem84、Problem221
  * 给定一个仅包含 0 和 1 、大小为 rows x cols 的二维二进制矩阵，找出只包含 1 的最大矩形，并返回其面积。
  * <p>
  * 输入：matrix = [
@@ -47,16 +47,19 @@ public class Problem85 {
     }
 
     /**
-     * 动态规划，时间复杂度O((m^2)n)，空间复杂度O(mn)，m为matrix的行，n为matrix的列
-     * dp[i][j]：从matrix[i][j]开始往左连续1的个数，即当前位置对应矩阵的最大长
-     * 以matrix[i][j]为矩阵右下角，计算dp[i][j]到dp[i][0]对应矩阵面积
+     * 动态规划
+     * dp[i][j]：matrix[i][j]左边连续1的个数
+     * 以matrix[i][j]为矩阵右下角，min(dp[i][j])为长，i-k+1为宽，计算dp[i][j]到dp[0][j]对应矩阵面积
+     * <p>
      * 例如：
-     * dp[4][2] = 3, dp[3][2] = 4, dp[2][2] = 1, dp[1][2] = 0, dp[0][2] = 2
-     * area[4][2] = 1*3 = 3
-     * area[3][2] = 2*min(3,4) = 6
-     * area[2][2] = 3*min(3,1) = 3
-     * area[1][2] = 4*min(1,0) = 0
-     * area[0][2] = 5*min(0,2) = 0
+     * dp[4][4] = 3, dp[3][4] = 4, dp[2][4] = 1, dp[1][4] = 0, dp[0][4] = 2
+     * area[4][4] = 1*3 = 3
+     * area[3][4] = 2*min(3,4) = 6
+     * area[2][4] = 3*min(3,1) = 3
+     * area[1][4] = 4*min(1,0) = 0
+     * area[0][4] = 5*min(0,2) = 0
+     * <p>
+     * 时间复杂度O((m^2)n)，空间复杂度O(mn) (m为matrix的行，n为matrix的列)
      *
      * @param matrix
      * @return
@@ -73,33 +76,39 @@ public class Problem85 {
         //初始化dp
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (j > 0 && matrix[i][j] == '1') {
-                    dp[i][j] = dp[i][j - 1] + 1;
-                } else if (j == 0 && matrix[i][j] == '1') {
+                if (matrix[i][j] == '1' && j == 0) {
                     dp[i][j] = 1;
+                } else if (matrix[i][j] == '1' && j > 0) {
+                    dp[i][j] = dp[i][j - 1] + 1;
                 }
             }
         }
 
-        int maxArea = 0;
-        int length;
-        int width;
+        int max = 0;
+        //矩阵的长
+        int l;
+        //矩阵的宽
+        int w;
+
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                length = dp[i][j];
+                l = dp[i][j];
+
                 for (int k = i; k >= 0; k--) {
-                    length = Math.min(length, dp[k][j]);
-                    width = i - k + 1;
-                    maxArea = Math.max(maxArea, length * width);
+                    l = Math.min(l, dp[k][j]);
+                    w = i - k + 1;
+                    max = Math.max(max, l * w);
                 }
             }
         }
-        return maxArea;
+
+        return max;
     }
 
     /**
-     * 单调递增栈，时间复杂度O(mn)，空间复杂度O(n)，m为matrix的行，n为matrix的列
-     * 借助84题思想，每一行到最上面一行形成柱子的高度，从中找出柱子形成的最大矩形面积
+     * 单调栈
+     * Problem84思想，每一行到最上面一行形成柱子的高度，从中找出柱子形成的最大矩形面积
+     * 时间复杂度O(mn)，空间复杂度O(n) (m为matrix的行，n为matrix的列)
      *
      * @param matrix
      * @return
@@ -109,28 +118,28 @@ public class Problem85 {
             return 0;
         }
 
-        int maxArea = 0;
-        int m = matrix.length;
-        int n = matrix[0].length;
+        int max = 0;
         //记录每行到最上面一行形成柱子的高度
-        int[] heights = new int[n];
+        int[] heights = new int[matrix[0].length];
 
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
                 if (matrix[i][j] == '1') {
                     heights[j] = heights[j] + 1;
                 } else {
                     heights[j] = 0;
                 }
             }
-            maxArea = Math.max(maxArea, largestRectangleArea(heights));
+
+            max = Math.max(max, largestRectangleArea(heights));
         }
 
-        return maxArea;
+        return max;
     }
 
     /**
-     * 84题单调递增栈，求圆柱形成的最大矩形面积
+     * 单调栈
+     * 计算最大矩形面积
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param heights
@@ -141,50 +150,56 @@ public class Problem85 {
             return 0;
         }
 
-        int maxArea = 0;
+        int max = 0;
+        //单调递增栈，存放元素下标索引
         Stack<Integer> stack = new Stack<>();
+
         for (int i = 0; i < heights.length; i++) {
-            //不满足要求，则栈顶元素出栈
+            //不满足单调递增栈，则栈顶元素出栈
             while (!stack.isEmpty() && heights[i] < heights[stack.peek()]) {
                 //矩形的高
-                int height = heights[stack.pop()];
+                int h = heights[stack.pop()];
                 //矩形的宽
-                int width;
+                int w;
 
-                //栈顶索引对应元素与当前矩形的高相等，则可以直接出栈
-                while (!stack.isEmpty() && height == heights[stack.peek()]) {
+                //栈顶索引对应元素与矩形的高相等，则直接出栈
+                while (!stack.isEmpty() && h == heights[stack.peek()]) {
                     stack.pop();
                 }
 
                 if (stack.isEmpty()) {
-                    width = i;
+                    w = i;
                 } else {
-                    width = i - stack.peek() - 1;
+                    w = i - stack.peek() - 1;
                 }
-                maxArea = Math.max(maxArea, height * width);
+
+                max = Math.max(max, h * w);
             }
+
             stack.push(i);
         }
 
+        //栈不为空，说明栈中索引对应元素递增，需要分别计算对应面积
         while (!stack.isEmpty()) {
             //矩形的高
-            int height = heights[stack.pop()];
+            int h = heights[stack.pop()];
             //矩形的宽
-            int width;
+            int w;
 
             //栈顶索引对应元素与当前矩形的高相等，则可以直接出栈
-            while (!stack.isEmpty() && height == heights[stack.peek()]) {
+            while (!stack.isEmpty() && h == heights[stack.peek()]) {
                 stack.pop();
             }
 
             if (stack.isEmpty()) {
-                width = heights.length;
+                w = heights.length;
             } else {
-                width = heights.length - stack.peek() - 1;
+                w = heights.length - stack.peek() - 1;
             }
-            maxArea = Math.max(maxArea, height * width);
+
+            max = Math.max(max, h * w);
         }
 
-        return maxArea;
+        return max;
     }
 }

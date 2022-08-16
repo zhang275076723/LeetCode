@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/4/19 8:45
  * @Author zsy
- * @Description 组合总和 类比Problem40、Offer38
+ * @Description 组合总和 类比Problem40、Problem46、Problem47、Offer38
  * 给你一个 无重复元素 的整数数组 candidates 和一个目标整数 target ，
  * 找出 candidates 中可以使数字和为目标数 target 的 所有 不同组合 ，并以列表形式返回。
  * 你可以按 任意顺序 返回这些组合。
@@ -99,16 +99,19 @@ public class Problem39 {
 
     private int partition(int[] nums, int left, int right) {
         int temp = nums[left];
+
         while (left < right) {
             while (left < right && nums[right] >= temp) {
                 right--;
             }
             nums[left] = nums[right];
+
             while (left < right && nums[left] <= temp) {
                 left++;
             }
             nums[right] = nums[left];
         }
+
         nums[left] = temp;
         return left;
     }

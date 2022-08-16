@@ -1,9 +1,12 @@
 package com.zhang.java;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 /**
  * @Date 2022/5/22 9:19
  * @Author zsy
- * @Description 会议室 类比56、253题
+ * @Description 会议室 类比Problem56、Problem179、Problem253、Problem406、Offer45
  * 给定一个会议时间安排的数组 intervals ，
  * 每个会议时间都会包括开始和结束的时间 intervals[i] = [starti, endi] ，
  * 请你判断一个人是否能够参加这里面的全部会议。
@@ -45,13 +48,16 @@ public class Problem252 {
         mergeSort(intervals, 0, intervals.length - 1, new int[intervals.length][2]);
 
         int end = intervals[0][1];
+
         for (int i = 1; i < intervals.length; i++) {
-            //当前会议开始时间小于end，说明两个会议有重叠
+            //当前会议开始时间小于end，说明两个会议时间相交
             if (intervals[i][0] < end) {
                 return false;
             }
-            end = Math.max(end, intervals[i][1]);
+
+            end = intervals[i][1];
         }
+
         return true;
     }
 
@@ -85,6 +91,7 @@ public class Problem252 {
                 tempArr[index] = intervals[j];
                 j++;
             }
+
             index++;
         }
 
@@ -93,6 +100,7 @@ public class Problem252 {
             i++;
             index++;
         }
+
         while (j <= right) {
             tempArr[index] = intervals[j];
             j++;

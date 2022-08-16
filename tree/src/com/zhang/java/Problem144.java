@@ -33,6 +33,7 @@ public class Problem144 {
         TreeNode root = problem144.buildTree(data);
         System.out.println(problem144.preorderTraversal(root));
         System.out.println(problem144.preorderTraversal2(root));
+        System.out.println(problem144.preorderTraversal3(root));
     }
 
     /**
@@ -81,6 +82,36 @@ public class Problem144 {
             if (node.left != null) {
                 stack.offerLast(node.left);
             }
+        }
+
+        return list;
+    }
+
+    /**
+     * 非递归前序遍历
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param root
+     * @return
+     */
+    public List<Integer> preorderTraversal3(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+
+        List<Integer> list = new ArrayList<>();
+        Deque<TreeNode> stack = new LinkedList<>();
+        TreeNode node = root;
+
+        while (!stack.isEmpty() || node != null) {
+            while (node != null) {
+                list.add(node.val);
+                stack.push(node);
+                node = node.left;
+            }
+
+            node = stack.pop();
+            node = node.right;
         }
 
         return list;

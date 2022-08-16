@@ -5,7 +5,8 @@ import java.util.*;
 /**
  * @Date 2022/4/14 15:17
  * @Author zsy
- * @Description 给你一个包含 n 个整数的数组 nums，
+ * @Description 三数之和
+ * 给你一个包含 n 个整数的数组 nums，
  * 判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？请你找出所有和为 0 且不重复的三元组。
  * 注意：答案中不可以包含重复的三元组。
  * <p>
@@ -30,7 +31,8 @@ public class Problem15 {
     }
 
     /**
-     * 暴力，时间复杂度O(n^3)，空间复杂度O(n^3)
+     * 暴力
+     * 时间复杂度O(n^3)，空间复杂度O(n^3)
      *
      * @param nums
      * @return
@@ -50,6 +52,7 @@ public class Problem15 {
                     if (nums[i] + nums[j] + nums[k] == 0) {
                         //去重
                         int size = set.size();
+
                         Set<Integer> set1 = new HashSet<>();
                         set1.add(nums[i]);
                         set1.add(nums[j]);
@@ -73,8 +76,9 @@ public class Problem15 {
     }
 
     /**
-     * 双指针，时间复杂度O(n^2)，空间复杂度O(1)
-     * 先排序，确定第一个元素，左右指针分别指向剩下的两个元素
+     * 双指针
+     * 先排序，确定第一个元素，左右指针分别指向剩下的两个元素,
+     * 时间复杂度O(n^2)，空间复杂度O(logn)
      *
      * @param nums
      * @return
@@ -86,6 +90,7 @@ public class Problem15 {
 
         //排序，便于查找和去重
         heapSort(nums);
+
         List<List<Integer>> result = new ArrayList<>();
 
         for (int i = 0; i < nums.length - 2; i++) {
@@ -101,19 +106,23 @@ public class Problem15 {
 
             int left = i + 1;
             int right = nums.length - 1;
+
             while (left < right) {
                 //三数之和等于0
                 if (nums[i] + nums[left] + nums[right] == 0) {
                     ArrayList<Integer> list = new ArrayList<>();
+
                     list.add(nums[i]);
                     list.add(nums[left]);
                     list.add(nums[right]);
+
                     result.add(list);
 
                     //left去重
                     while (left < right && nums[left + 1] == nums[left]) {
                         left++;
                     }
+
                     //right去重
                     while (left < right && nums[right - 1] == nums[right]) {
                         right--;
@@ -135,7 +144,8 @@ public class Problem15 {
     }
 
     /**
-     * 大根堆堆排序，时间复杂度O(nlogn)，空间复杂度O(1)
+     * 大根堆堆排序
+     * 时间复杂度O(nlogn)，空间复杂度O(logn)
      *
      * @param nums
      */
@@ -155,7 +165,8 @@ public class Problem15 {
     }
 
     /**
-     * 大根堆整堆，时间复杂度O(logn)，空间复杂度O(1)
+     * 大根堆整堆
+     * 时间复杂度O(logn)，空间复杂度O(logn)
      *
      * @param nums
      * @param index
@@ -168,6 +179,7 @@ public class Problem15 {
         if (heapSize > 2 * index + 1 && nums[2 * index + 1] > nums[maxIndex]) {
             maxIndex = 2 * index + 1;
         }
+
         //比较右子节点
         if (heapSize > 2 * index + 2 && nums[2 * index + 2] > nums[maxIndex]) {
             maxIndex = 2 * index + 2;

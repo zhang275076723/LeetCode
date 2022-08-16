@@ -70,9 +70,6 @@ public class Problem43 {
                 i--;
             }
 
-            //i重新指向num1末尾元素
-            i = num1.length() - 1;
-
             //如果最高位进位不为0，则需要添加最高位的进位
             if (carry != 0) {
                 sb.append(carry);
@@ -81,6 +78,8 @@ public class Problem43 {
             //num1和num2[j]相乘的结果进行累加，因为sb是尾添加，所以需要反转
             result = addString(result, sb.reverse().toString());
 
+            //i重新指向num1末尾元素
+            i = num1.length() - 1;
             j--;
         }
 
@@ -91,12 +90,13 @@ public class Problem43 {
      * 手动乘法模拟优化
      * num1和num2乘积最大长度为m+n，num1每一位分别于num2每一位相乘，分别放到结果数组中
      * 例如：num1=123，num2=45，结果数组长度为5
-     * num1的3与num2的5相乘为15，结果数组为  [0,0,0,1,5]
-     * num1的2与num2的5相乘为10，结果数组为  [0,0,1,1,5]
-     * num1的1与num2的5相乘为5，结果数组为   [0,0,6,1,5]
-     * num1的3与num2的4相乘为12，结果数组为  [0,0,7,3,5]
-     * num1的2与num2的4相乘为8，结果数组为   [0,1,5,3,5]
-     * num1的1与num2的4相乘为4，结果数组为   [0,5,5,3,5]
+     * num1的3与num2的5相乘为15，结果数组为  [0,0,0,0,15]
+     * num1的2与num2的5相乘为10，结果数组为  [0,0,0,10,15]
+     * num1的1与num2的5相乘为5，结果数组为   [0,0,5,10,15]
+     * num1的3与num2的4相乘为12，结果数组为  [0,0,5,22,15]
+     * num1的2与num2的4相乘为8，结果数组为   [0,0,13,22,15]
+     * num1的1与num2的4相乘为4，结果数组为   [0,4,13,22,15]
+     * 进位处理之后，结果数组为              [0,5,5,3,5]
      * 时间复杂度O(mn)，空间复杂度O(m+n) (m=num1.length, n=num2.length) (num1和num2乘积最大长度为m+n)
      *
      * @param num1
@@ -112,6 +112,7 @@ public class Problem43 {
             return "0";
         }
 
+        //相乘结果的最大长度为m+n
         int[] result = new int[num1.length() + num2.length()];
 
         for (int j = num2.length() - 1; j >= 0; j--) {
@@ -121,10 +122,8 @@ public class Problem43 {
             for (int i = num1.length() - 1; i >= 0; i--) {
                 //num2[i]的值
                 int n1 = num1.charAt(i) - '0';
-                //num2[j]与num1[i]乘积
-                int temp = n1 * n2 + result[j + i + 1];
-                //当前位
-                result[j + i + 1] = temp;
+                //当前位结果值
+                result[j + i + 1] = n1 * n2 + result[j + i + 1];
             }
         }
 
@@ -140,6 +139,7 @@ public class Problem43 {
 
         StringBuilder sb = new StringBuilder();
 
+        //结果数组最高位不为0处理
         if (result[0] != 0) {
             sb.append(result[0]);
         }
@@ -190,7 +190,7 @@ public class Problem43 {
         }
 
         //如果最高位进位为1，则需要添加最高位为1
-        if (carry == 1) {
+        if (carry != 0) {
             sb.append(1);
         }
 

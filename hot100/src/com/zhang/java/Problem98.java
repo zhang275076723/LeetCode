@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/4/30 11:39
  * @Author zsy
- * @Description 验证二叉搜索树 类比Problem94、Problem96、Offer68、Offer68_2
+ * @Description 验证二叉搜索树 类比Problem96、Problem99、Offer33、Offer36、Offer68、Offer68_2
  * 给你一个二叉树的根节点 root ，判断其是否是一个有效的二叉搜索树。
  * 有效 二叉搜索树定义如下：
  * 节点的左子树只包含 小于 当前节点的数。
@@ -23,9 +23,11 @@ import java.util.*;
  * -2^31 <= Node.val <= 2^31 - 1
  */
 public class Problem98 {
-    //中序遍历中当前节点的上一个节点值，使用long是因为节点值的范围在int，
-    //且能取到最小的int，所以要使用long取到比最小的int更小的值作为初始值
-    private long preNodeValue = Long.MIN_VALUE;
+    /**
+     * 中序遍历中当前节点的上一个节点值，使用long是因为节点值的范围在int，
+     * 且能取到int类型的最小值，所以要使用long取到比最小的int更小的值作为初始值
+     */
+    private long preVal = Long.MIN_VALUE;
 
     public static void main(String[] args) {
         Problem98 problem98 = new Problem98();
@@ -68,9 +70,9 @@ public class Problem98 {
         TreeNode node = root;
         //中序遍历中当前节点的上一个节点值，使用long是因为节点值的范围在int，
         //且能取到最小的int，所以要使用long取到比最小的int更小的值作为初始值
-        long preNodeValue = Long.MIN_VALUE;
+        long preVal = Long.MIN_VALUE;
 
-        while (node != null || !stack.isEmpty()) {
+        while (!stack.isEmpty() || node != null) {
             while (node != null) {
                 stack.push(node);
                 node = node.left;
@@ -78,12 +80,12 @@ public class Problem98 {
 
             node = stack.pop();
 
-            //不满足二叉搜索树要求，直接返回false
-            if (node.val <= preNodeValue) {
+            //当前节点的值应小于当前节点之前节点的值，不是二叉搜索树，返回false
+            if (node.val < preVal) {
                 return false;
             }
 
-            preNodeValue = node.val;
+            preVal = node.val;
 
             node = node.right;
         }
@@ -96,23 +98,22 @@ public class Problem98 {
             return true;
         }
 
-        //遍历左子树，左子树节点的值都应小于当前节点的值
+        //判断左子树是否是二插搜索树
         boolean leftFlag = inorder(root.left);
+
         if (!leftFlag) {
             return false;
         }
 
-        //当前节点的值应大于当前节点之前节点的值
-        if (root.val <= preNodeValue) {
+        //当前节点的值应小于当前节点之前节点的值，不是二叉搜索树，返回false
+        if (root.val < preVal) {
             return false;
         }
 
-        preNodeValue = root.val;
+        preVal = root.val;
 
-        //遍历右子树，右子树节点的值都应大于当前节点的值
-        boolean rightFlag = inorder(root.right);
-
-        return rightFlag;
+        //判断右子树是否是二插搜索树
+        return inorder(root.right);
     }
 
     /**

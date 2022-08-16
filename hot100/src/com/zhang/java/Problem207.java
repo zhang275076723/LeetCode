@@ -47,116 +47,139 @@ public class Problem207 {
     /**
      * dfs，判断图中是否有拓扑排序
      * 本质：找出度为0的节点，出度为0的节点在拓扑排序中一定排在后面
-     * 时间复杂度O(m+n)，空间复杂度O(m+n)，m为课程数，n为先修课程的要求数
      * 拓扑排序：有向无环图所有顶点进行排序，使图中任意一对顶点u、v，边<u,v>在排序中u出现在v之前
+     * 时间复杂度O(m+n)，空间复杂度O(m^2) (m为课程数，n为先修课程的要求数，如果使用集合替代临界矩阵，空间复杂度O(m+n))
      *
      * @param numCourses
      * @param prerequisites
      * @return
      */
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        //使用集合存放临界表，存放每门课程修完后可以修的课程
-        List<List<Integer>> edges = new ArrayList<>();
-        //节点对应课程的访问数组，0-未访问，1-正在访问，2-已访问
+        //邻接矩阵，可以使用list集合替代二维数组
+        int[][] edges = new int[numCourses][numCourses];
+        //访问数组，0-未访问，1-正在访问，2-已访问
         int[] visited = new int[numCourses];
 
-        for (int i = 0; i < numCourses; i++) {
-            edges.add(new ArrayList<>());
-        }
         for (int i = 0; i < prerequisites.length; i++) {
-            edges.get(prerequisites[i][1]).add(prerequisites[i][0]);
+            edges[prerequisites[i][1]][prerequisites[i][0]] = 1;
         }
 
         for (int i = 0; i < numCourses; i++) {
-            //有环，说明不满足当前课程要先上的课程，返回false
-            if (hasCircle) {
-                return false;
-            }
-
-            //当前节点未访问，从当前节点进行dfs
+            //从未访问的顶点开始dfs
             if (visited[i] == 0) {
-                dfs(i, visited, edges);
+                dfs(i, edges, visited);
+
+                if (hasCircle) {
+                    return false;
+                }
             }
         }
 
-        return !hasCircle;
+        return true;
     }
 
     /**
      * bfs，判断图中是否有拓扑排序
-     * 时间复杂度O(m+n)，空间复杂度O(m+n)，m为课程数，n为先修课程的要求数
      * 本质：找入度为0的节点，入度为0的节点在拓扑排序中一定排在前面
      * 拓扑排序：有向无环图所有顶点进行排序，使图中任意一对顶点u、v，边<u,v>在排序中u出现在v之前
+     * 时间复杂度O(m+n)，空间复杂度O(m^2) (m为课程数，n为先修课程的要求数，如果使用集合替代临界矩阵，空间复杂度O(m+n))
      *
      * @param numCourses
      * @param prerequisites
      * @return
      */
     public boolean canFinish2(int numCourses, int[][] prerequisites) {
-        //使用集合存放临界表，存放每门课程修完后可以修的课程
-        List<List<Integer>> edges = new ArrayList<>();
-        //节点的入度
+        //邻接矩阵，可以使用list集合替代二维数组
+        int[][] edges = new int[numCourses][numCourses];
+        //入度数组
         int[] inDegree = new int[numCourses];
 
-        for (int i = 0; i < numCourses; i++) {
-            edges.add(new ArrayList<>());
-        }
         for (int i = 0; i < prerequisites.length; i++) {
-            edges.get(prerequisites[i][1]).add(prerequisites[i][0]);
+            edges[prerequisites[i][1]][prerequisites[i][0]] = 1;
             inDegree[prerequisites[i][0]]++;
         }
 
         //存放入度为0的队列
         Queue<Integer> queue = new LinkedList<>();
-        //能够访问到的入度为0的节点个数
-        int visited = 0;
+        //统计能够访问到的入度为0顶点个数
+        int count = 0;
 
         for (int i = 0; i < numCourses; i++) {
             if (inDegree[i] == 0) {
                 queue.offer(i);
+                count++;
             }
         }
 
         while (!queue.isEmpty()) {
             int u = queue.poll();
-            visited++;
+            //获得u的临界顶点v
+            int v = getNextAdjacent(u, 0, edges);
 
-            //u的邻接顶点v
-            for (int v : edges.get(u)) {
-                //v的入度减1
+            //遍历u的邻接顶点v
+            while (v != -1) {
+                //v入度减1
                 inDegree[v]--;
+
+                //如果顶点v入度为0，则入队
                 if (inDegree[v] == 0) {
                     queue.offer(v);
+                    count++;
                 }
+
+                v = getNextAdjacent(u, v + 1, edges);
             }
         }
 
-        //能够访问所有节点，表示没有环
-        return visited == numCourses;
+        //判断是否能够访问到所有的顶点
+        return count == numCourses;
     }
 
-    private void dfs(int u, int[] visited, List<List<Integer>> edges) {
-        //当前节点正在访问
+    private void dfs(int u, int[][] edges, int[] visited) {
+        //当前顶点u正在访问
         visited[u] = 1;
 
         //u的邻接顶点v
-        for (int v : edges.get(u)) {
-            //有环，不是拓扑排序，不满足当前课程要先上的课程，直接返回
+        int v = getNextAdjacent(u, 0, edges);
+
+        //遍历u的邻接顶点v
+        while (v != -1) {
             if (hasCircle) {
                 return;
             }
 
-            //u的邻接顶点v未访问
+            //邻接顶点v没有访问
             if (visited[v] == 0) {
-                dfs(v, visited, edges);
+                dfs(v, edges, visited);
             } else if (visited[v] == 1) {
-                //u的邻接顶点正在访问，说明有环，直接返回
+                //邻接顶点v正在访问，说明有环，不存在拓扑排序
                 hasCircle = true;
                 return;
             }
+
+            v = getNextAdjacent(u, v + 1, edges);
         }
 
-        //当前节点已访问
+        //当前顶点u已经访问
         visited[u] = 2;
+    }
+
+    /**
+     * 从start索引开始，获取u的下一个邻接顶点v
+     *
+     * @param u
+     * @param start
+     * @param edges
+     * @return
+     */
+    private int getNextAdjacent(int u, int start, int[][] edges) {
+        for (int i = start; i < edges[0].length; i++) {
+            if (edges[u][i] == 1) {
+                return i;
+            }
+        }
+
+        //没有邻接顶点，返回-1
+        return -1;
     }
 }

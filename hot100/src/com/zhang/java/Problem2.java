@@ -3,7 +3,8 @@ package com.zhang.java;
 /**
  * @Date 2022/4/11 8:02
  * @Author zsy
- * @Description 给你两个 非空 的链表，表示两个非负的整数。
+ * @Description 两数相加 类比Problem66、Problem369、Problem415
+ * 给你两个 非空 的链表，表示两个非负的整数。
  * 它们每位数字都是按照 逆序 的方式存储的，并且每个节点只能存储 一位 数字。
  * 请你将两个数相加，并以相同形式返回一个表示和的链表。
  * 你可以假设除了数字 0 之外，这两个数都不会以 0 开头。
@@ -25,29 +26,16 @@ package com.zhang.java;
 public class Problem2 {
     public static void main(String[] args) {
         Problem2 problem2 = new Problem2();
-        ListNode l1 = new ListNode(9);
-        ListNode l2 = new ListNode(9);
-        l1.next = new ListNode(9);
-        l1.next.next = new ListNode(9);
-        l1.next.next.next = new ListNode(9);
-        l1.next.next.next.next = new ListNode(9);
-        l1.next.next.next.next.next = new ListNode(9);
-        l1.next.next.next.next.next.next = new ListNode(9);
-        l2.next = new ListNode(9);
-        l2.next.next = new ListNode(9);
-        l2.next.next.next = new ListNode(9);
+        int[] data1 = {2, 4, 3};
+        int[] data2 = {5, 6, 4};
+        ListNode l1 = problem2.buildList(data1);
+        ListNode l2 = problem2.buildList(data2);
         ListNode node = problem2.addTwoNumbers(l1, l2);
-        int result = 0;
-        int factor = 1;
-        while (node != null) {
-            result = result + node.val * factor;
-            node = node.next;
-            factor = factor * 10;
-        }
-        System.out.println(result);
     }
 
     /**
+     * 模拟
+     * 模拟过程类似归并排序
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param l1
@@ -55,64 +43,81 @@ public class Problem2 {
      * @return
      */
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        //找到较长的链表作为主链表
-        ListNode head;
-        ListNode head1 = l1;
-        ListNode head2 = l2;
-        while (head1 != null && head2 != null) {
-            head1 = head1.next;
-            head2 = head2.next;
-        }
-        if (head1 != null) {
-            head = l1;
-        } else {
-            head = l2;
-        }
-
-        //当前位的进位
+        //设置头结点，方便处理
+        ListNode head = new ListNode();
+        ListNode node = head;
+        //进位
         int carry = 0;
-        head1 = l1;
-        head2 = l2;
-        ListNode headNode = head;
-        ListNode headPreNode = null;
+        //当前位之和
+        int sum = 0;
 
-        //两个链表公共长度部分相加
-        while (head1 != null && head2 != null) {
-            //当前位的值
-            int temp = head1.val + head2.val + carry;
-            if (temp >= 10) {
-                headNode.val = temp - 10;
+        while (l1 != null && l2 != null) {
+            sum = l1.val + l2.val + carry;
+
+            if (sum >= 10) {
+                sum = sum - 10;
                 carry = 1;
             } else {
-                headNode.val = temp;
                 carry = 0;
             }
 
-            headPreNode = headNode;
-            headNode = headNode.next;
-            head1 = head1.next;
-            head2 = head2.next;
+            node.next = new ListNode(sum);
+            node = node.next;
+            l1 = l1.next;
+            l2 = l2.next;
         }
 
-        //较长链表处理
-        while (carry == 1 && headNode != null) {
-            //当前位的值
-            int temp = headNode.val + carry;
-            if (temp >= 10) {
-                headNode.val = temp - 10;
+        while (l1 != null) {
+            sum = l1.val + carry;
+
+            if (sum >= 10) {
+                sum = sum - 10;
+                carry = 1;
             } else {
-                headNode.val = temp;
                 carry = 0;
-                break;
             }
 
-            headPreNode = headNode;
-            headNode = headNode.next;
+            node.next = new ListNode(sum);
+            node = node.next;
+            l1 = l1.next;
+        }
+
+        while (l2 != null) {
+            sum = l2.val + carry;
+
+            if (sum >= 10) {
+                sum = sum - 10;
+                carry = 1;
+            } else {
+                carry = 0;
+            }
+
+            node.next = new ListNode(sum);
+            node = node.next;
+            l2 = l2.next;
         }
 
         //最后一位进位处理
         if (carry == 1) {
-            headPreNode.next = new ListNode(carry);
+            node.next = new ListNode(1);
+        }
+
+        return head.next;
+    }
+
+    private ListNode buildList(int[] data) {
+        if (data == null || data.length == 0) {
+            return null;
+        }
+
+        //不能使用Arrays.asList(data)，因为需要传入引用类型的data才能转换为list，
+        //如果传入基本数据类型，则会将数组对象作为引用放入list中
+        ListNode head = new ListNode(data[0]);
+        ListNode node = head;
+
+        for (int i = 1; i < data.length; i++) {
+            node.next = new ListNode(data[i]);
+            node = node.next;
         }
 
         return head;

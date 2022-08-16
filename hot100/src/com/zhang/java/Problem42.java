@@ -5,7 +5,8 @@ import java.util.Stack;
 /**
  * @Date 2022/3/30 16:24
  * @Author zsy
- * @Description 给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
+ * @Description 接雨水 类比Problem11、Problem84、Problem238、Problem402、Problem739、Offer66 字节面试题
+ * 给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
  * <p>
  * 输入：height = [0,1,0,2,1,0,1,3,2,1,2,1]
  * 输出：6
@@ -13,6 +14,10 @@ import java.util.Stack;
  * <p>
  * 输入：height = [4,2,0,3,2,5]
  * 输出：9
+ * <p>
+ * n == height.length
+ * 1 <= n <= 2 * 10^4
+ * 0 <= height[i] <= 10^5
  */
 public class Problem42 {
     public static void main(String[] args) {
@@ -25,8 +30,9 @@ public class Problem42 {
     }
 
     /**
-     * 暴力，按列求雨水，时间复杂度O(n^2)，空间复杂度O(1)
+     * 暴力，按列求雨水
      * 找到height[i]左边的最大值和右边的最大值，两边最大值中的较小值减去height[i]，即为height[i]所能接的雨水
+     * 时间复杂度O(n^2)，空间复杂度O(1)
      *
      * @param height
      * @return
@@ -35,28 +41,31 @@ public class Problem42 {
         int result = 0;
 
         for (int i = 0; i < height.length; i++) {
-            int leftMaxHeight = 0;
-            int rightMaxHeight = 0;
+            int leftMax = 0;
+            int rightMax = 0;
 
-            for (int j = i; j >= 0; j--) {
-                leftMaxHeight = Math.max(leftMaxHeight, height[j]);
+            for (int j = 0; j <= i; j++) {
+                leftMax = Math.max(leftMax, height[j]);
             }
-            for (int j = i; j < height.length; j++) {
-                rightMaxHeight = Math.max(rightMaxHeight, height[j]);
+
+            for (int j = height.length - 1; j >= i; j--) {
+                rightMax = Math.max(rightMax, height[j]);
             }
-            result = result + Math.min(leftMaxHeight, rightMaxHeight) - height[i];
+
+            result = result + Math.min(leftMax, rightMax) - height[i];
         }
 
         return result;
     }
 
     /**
-     * 动态规划，按列求雨水，时间复杂度O(n)，空间复杂度O(n)
+     * 动态规划，按列求雨水
      * 暴力每个位置都需要遍历一遍才能够找到最大和最小值，而动态规划在O(1)就能找到最大最小值
-     * leftMax[i]：索引下标i左边的最大值
-     * rightMax[i]：索引下标i右边的最大值
-     * leftMax[i] = max(leftMax[i-1], height[i])
-     * rightMax[i] = max(rightMax[i+1], height[i])
+     * leftMax[i]：索引下标i及其左边的最大值
+     * rightMax[i]：索引下标i及其右边的最大值
+     * leftMax[i] = max(height[i], leftMax[i-1])
+     * rightMax[i] = max(height[i], rightMax[i+1])
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param height
      * @return
@@ -72,6 +81,7 @@ public class Problem42 {
         for (int i = 1; i < leftMax.length; i++) {
             leftMax[i] = Math.max(leftMax[i - 1], height[i]);
         }
+
         for (int i = rightMax.length - 2; i >= 0; i--) {
             rightMax[i] = Math.max(rightMax[i + 1], height[i]);
         }
@@ -84,7 +94,8 @@ public class Problem42 {
     }
 
     /**
-     * 双指针，按列求雨水，时间复杂度O(n)，空间复杂度O(1)
+     * 双指针，按列求雨水
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param height
      * @return
@@ -101,14 +112,14 @@ public class Problem42 {
         int rightMax = 0;
 
         while (left < right) {
-            leftMax = Math.max(height[left], leftMax);
-            rightMax = Math.max(height[right], rightMax);
+            leftMax = Math.max(leftMax, height[left]);
+            rightMax = Math.max(rightMax, height[right]);
 
             if (height[left] < height[right]) {
-                result = result + leftMax - height[left];
+                result = result + Math.min(leftMax, rightMax) - height[left];
                 left++;
             } else {
-                result = result + rightMax - height[right];
+                result = result + Math.min(leftMax, rightMax) - height[right];
                 right--;
             }
         }
@@ -117,7 +128,8 @@ public class Problem42 {
     }
 
     /**
-     * 单调栈，按行求雨水，时间复杂度O(n)，空间复杂度O(n)
+     * 单调栈，按行求雨水
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param height
      * @return
@@ -130,7 +142,7 @@ public class Problem42 {
         for (int i = 0; i < height.length; i++) {
             //当栈不为空，且当前高度大于栈顶索引对应高度时，即可接到雨水
             while (!stack.isEmpty() && height[i] > height[stack.peek()]) {
-                int stackTopIndex = stack.pop();
+                int index = stack.pop();
 
                 //如果当前栈为空，说明没有左边界，接不到雨水，直接跳出循环
                 if (stack.isEmpty()) {
@@ -138,11 +150,13 @@ public class Problem42 {
                 }
 
                 //所接雨水宽度
-                int curWidth = i - stack.peek() - 1;
+                int w = i - stack.peek() - 1;
                 //所接雨水高度
-                int curHeight = Math.min(height[i], height[stack.peek()]) - height[stackTopIndex];
-                result = result + curHeight * curWidth;
+                int h = Math.min(height[stack.peek()], height[i]) - height[index];
+
+                result = result + h * w;
             }
+
             stack.push(i);
         }
 

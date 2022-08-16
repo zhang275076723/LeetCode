@@ -50,29 +50,29 @@ public class Problem79 {
 
     /**
      * 回溯+剪枝
-     * 时间复杂度O(mn*3^l)，空间复杂度O(mn)，使用额外的访问数组visited，栈深度min(mn, l)
-     * m = board.length
-     * n = board[0].length
-     * l = word.length()
+     * 时间复杂度O(mn*4^l)，空间复杂度O(mn) (m = board.length, n = board[0].length, l = word.length())
      *
      * @param board
      * @param word
      * @return
      */
     public boolean exist(char[][] board, String word) {
-        if (board == null || board.length == 0 || board[0].length == 0) {
-            return false;
-        }
         if (board.length * board[0].length < word.length()) {
             return false;
         }
 
+        boolean flag = false;
         boolean[][] visited = new boolean[board.length][board[0].length];
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                //从每一个位置开始遍历，判断哪一个位置满足要求
-                if (backtrack(i, j, visited, board, word, 0)) {
+                //第一个字母相同才进行遍历
+                if (board[i][j] == word.charAt(0)) {
+                    flag = dfs(0, i, j, board, word, visited);
+                }
+
+                //已经找到，则直接返回true
+                if (flag) {
                     return true;
                 }
             }
@@ -81,34 +81,27 @@ public class Problem79 {
         return false;
     }
 
-    /**
-     * @param i         当前位置行
-     * @param j         当前位置列
-     * @param visited   访问数组
-     * @param board     网格
-     * @param word      单词，判断网格中是否有满足要求的单词
-     * @param wordIndex 当前单词索引下标
-     * @return
-     */
-    private boolean backtrack(int i, int j, boolean[][] visited, char[][] board,
-                              String word, int wordIndex) {
-        //不满足要求的情况，直接剪枝
-        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length ||
-                visited[i][j] || board[i][j] != word.charAt(wordIndex)) {
+    private boolean dfs(int t, int i, int j, char[][] board, String word, boolean[][] visited) {
+        //不满足要求，直接剪枝，返回false
+        if (i < 0 || i >= board.length ||
+                j < 0 || j >= board[0].length ||
+                visited[i][j] ||
+                word.charAt(t) != board[i][j]) {
             return false;
         }
 
-        //wordIndex是word的最后一个位置，且相等，返回true
-        if (wordIndex == word.length() - 1) {
+        //已经遍历到最后一个字母，返回true
+        if (t == word.length() - 1) {
             return true;
         }
 
         visited[i][j] = true;
 
-        boolean flag = backtrack(i, j - 1, visited, board, word, wordIndex + 1) ||
-                backtrack(i - 1, j, visited, board, word, wordIndex + 1) ||
-                backtrack(i, j + 1, visited, board, word, wordIndex + 1) ||
-                backtrack(i + 1, j, visited, board, word, wordIndex + 1);
+        //从当前位置往上下左右遍历
+        boolean flag = dfs(t + 1, i, j - 1, board, word, visited) ||
+                dfs(t + 1, i, j + 1, board, word, visited) ||
+                dfs(t + 1, i - 1, j, board, word, visited) ||
+                dfs(t + 1, i + 1, j, board, word, visited);
 
         visited[i][j] = false;
 

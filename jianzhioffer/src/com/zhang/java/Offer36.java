@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/3/23 10:03
  * @Author zsy
- * @Description 二叉搜索树与双向链表 类比Problem114
+ * @Description 二叉搜索树与双向链表 类比Problem94、Problem96、Problem98、Problem99、Problem114
  * 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的循环双向链表。
  * 要求不能创建任何新的节点，只能调整树中节点指针的指向。
  * 我们希望将这个二叉搜索树转化为双向循环链表。链表中的每个节点都有一个前驱和后继指针。

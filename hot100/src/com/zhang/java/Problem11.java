@@ -3,7 +3,8 @@ package com.zhang.java;
 /**
  * @Date 2022/4/14 14:45
  * @Author zsy
- * @Description 给定一个长度为 n 的整数数组 height 。
+ * @Description 盛最多水的容器 类比Problem42、Problem84、Problem238、Offer66
+ * 给定一个长度为 n 的整数数组 height 。
  * 有 n 条垂线，第 i 条线的两个端点是 (i, 0) 和 (i, height[i]) 。
  * 找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。
  * 返回容器可以储存的最大水量。
@@ -29,27 +30,30 @@ public class Problem11 {
     }
 
     /**
-     * 暴力，时间复杂度O(n^2)，空间复杂度O(1)
+     * 暴力
      * 容纳的水 = 两端的最小值 * 宽度
+     * 时间复杂度O(n^2)，空间复杂度O(1)
      *
      * @param height
      * @return
      */
     public int maxArea(int[] height) {
         int max = 0;
+
         for (int i = 0; i < height.length - 1; i++) {
             for (int j = i + 1; j < height.length; j++) {
-                //
                 max = Math.max(max, (j - i) * Math.min(height[i], height[j]));
             }
         }
+
         return max;
     }
 
     /**
-     * 双指针，时间复杂度O(n)，空间复杂度O(1)
+     * 双指针
      * 容纳的水 = 两端的最小值 * 宽度
      * 每次移动高度较低的指针
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param height
      * @return

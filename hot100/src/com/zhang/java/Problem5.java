@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/13 9:32
  * @Author zsy
- * @Description 最长回文子串 类比Problem131、Problem647
+ * @Description 最长回文子串 类比Problem131、Problem234、Problem647
  * 给你一个字符串 s，找到 s 中最长的回文子串。
  * <p>
  * 输入：s = "babad"
@@ -36,29 +36,34 @@ public class Problem5 {
         if (s == null || s.length() == 0) {
             return "";
         }
+
         if (s.length() == 1) {
             return s;
         }
 
         int start = 0;
         int maxLen = 1;
+
         for (int i = 0; i < s.length(); i++) {
-            for (int j = 0; j <= i; j++) {
+            for (int j = i; j < s.length(); j++) {
                 //判断以left起始right结尾的字符串是否是回文串
-                int left = j;
-                int right = i;
+                int left = i;
+                int right = j;
                 boolean isPalindrome = true;
+
                 while (left <= right) {
                     if (s.charAt(left) != s.charAt(right)) {
                         isPalindrome = false;
                         break;
                     }
+
                     left++;
                     right--;
                 }
-                if (isPalindrome && i - j + 1 > maxLen) {
-                    start = j;
-                    maxLen = i - j + 1;
+
+                if (isPalindrome && j - i + 1 > maxLen) {
+                    start = i;
+                    maxLen = j - i + 1;
                 }
             }
         }
@@ -79,6 +84,7 @@ public class Problem5 {
         if (s == null || s.length() == 0) {
             return "";
         }
+
         if (s.length() == 1) {
             return s;
         }
@@ -92,21 +98,21 @@ public class Problem5 {
 
             //两个字符作为中心向两边扩散
             int[] arr2 = arr1;
+
             if (i + 1 < s.length() && s.charAt(i) == s.charAt(i + 1)) {
                 arr2 = centerExtend(s, i, i + 1);
             }
 
-            int[] curArr;
-
             if (arr1[1] - arr1[0] > arr2[1] - arr2[0]) {
-                curArr = arr1;
+                if (arr1[1] - arr1[0] > right - left) {
+                    right = arr1[1];
+                    left = arr1[0];
+                }
             } else {
-                curArr = arr2;
-            }
-
-            if (curArr[1] - curArr[0] > right - left) {
-                left = curArr[0];
-                right = curArr[1];
+                if (arr2[1] - arr2[0] > right - left) {
+                    right = arr2[1];
+                    left = arr2[0];
+                }
             }
         }
 
@@ -117,7 +123,7 @@ public class Problem5 {
      * 动态规划
      * dp[i][j]：s[i]到s[j]是否是回文串
      * dp[i][j] = false (s[i] != s[j])
-     * dp[i][j] = true (s[i] == s[j] && dp[i+1][j-1] == true)
+     * dp[i][j] = true  (s[i] == s[j] && dp[i+1][j-1] == true)
      * 时间复杂度O(n^2)，空间复杂度O(n^2)
      *
      * @param s
@@ -127,6 +133,7 @@ public class Problem5 {
         if (s == null || s.length() == 0) {
             return "";
         }
+
         if (s.length() == 1) {
             return s;
         }
@@ -136,6 +143,7 @@ public class Problem5 {
         for (int i = 0; i < s.length(); i++) {
             dp[i][i] = true;
         }
+
         for (int i = 1; i < s.length(); i++) {
             //用于s[i]-s[i+1]的情况
             dp[i][i - 1] = true;
@@ -148,6 +156,7 @@ public class Problem5 {
             for (int j = 0; j < s.length() - i; j++) {
                 if (s.charAt(j) == s.charAt(j + i) && dp[j + 1][j + i - 1]) {
                     dp[j][j + i] = true;
+
                     if (i + 1 > right - left + 1) {
                         left = j;
                         right = j + i;
@@ -168,7 +177,7 @@ public class Problem5 {
      * @return 当前最长回文串的左右指针数组
      */
     private int[] centerExtend(String s, int left, int right) {
-        while (left > 0 && right + 1 < s.length() && s.charAt(left - 1) == s.charAt(right + 1)) {
+        while (left - 1 >= 0 && right + 1< s.length() && s.charAt(left - 1) == s.charAt(right + 1)) {
             left--;
             right++;
         }

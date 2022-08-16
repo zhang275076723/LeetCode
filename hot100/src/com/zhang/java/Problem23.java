@@ -5,7 +5,8 @@ import java.util.PriorityQueue;
 /**
  * @Date 2022/4/16 10:12
  * @Author zsy
- * @Description 给你一个链表数组，每个链表都已经按升序排列。
+ * @Description 合并K个升序链表 类比Problem21
+ * 给你一个链表数组，每个链表都已经按升序排列。
  * 请你将所有链表合并到一个升序链表中，返回合并后的链表。
  * <p>
  * 输入：lists = [[1,4,5],[1,3,4],[2,6]]
@@ -47,8 +48,9 @@ public class Problem23 {
     }
 
     /**
-     * 暴力合并，循环合并2个链表，直至K个链表合并为一个链表
-     * 时间复杂度O((k^2)*n)，空间复杂度O(1)(k为链表个数，n为每个链表最长长度)
+     * 暴力
+     * 循环合并2个链表，直至K个链表合并为一个链表
+     * 时间复杂度O((k^2)*n)，空间复杂度O(1) (k为链表个数，n为每个链表最长长度)
      *
      * @param lists
      * @return
@@ -59,15 +61,17 @@ public class Problem23 {
         }
 
         ListNode node = null;
+
         for (ListNode list : lists) {
             node = mergeTwoLists(node, list);
         }
+
         return node;
     }
 
     /**
      * 分治合并
-     * 时间复杂度O((Σi=1 i=∞)(k/2^i)(2^i)*n) = O(kn*logk)，空间复杂度O(logk)(k为链表个数，n为每个链表最长长度)
+     * 时间复杂度O((Σi=1 i=logk)(k/2^i)(2^i)*n) = O(kn*logk)，空间复杂度O(logk) (k为链表个数，n为每个链表最长长度)
      *
      * @param lists
      * @return
@@ -94,7 +98,8 @@ public class Problem23 {
 
     /**
      * 优先队列
-     * 时间复杂度O(kn*logk)，空间复杂度O(k)(k为链表个数，n为每个链表最长长度)
+     * 时间复杂度O(kn*logk)，空间复杂度O(k)
+     * (k为链表个数，n为每个链表最长长度，一共nk个节点，每个节点插入和删除需要O(logk))
      *
      * @param lists
      * @return
@@ -105,12 +110,12 @@ public class Problem23 {
         }
 
         //优先队列，小根堆
-        PriorityQueue<ListNode> priorityQueue = new PriorityQueue<>((o1, o2) -> o1.val - o2.val);
+        PriorityQueue<ListNode> priorityQueue = new PriorityQueue<>((node1, node2) -> node1.val - node2.val);
+
         for (ListNode list : lists) {
-            if (list == null) {
-                continue;
+            if (list != null) {
+                priorityQueue.offer(list);
             }
-            priorityQueue.offer(list);
         }
 
         //设置头指针，方便合并
@@ -121,10 +126,11 @@ public class Problem23 {
             ListNode nextNode = priorityQueue.poll();
             node.next = nextNode;
             node = node.next;
+            nextNode = nextNode.next;
 
             //如果当前节点的下一个节点不为空，则加入到优先队列中
-            if (nextNode.next != null) {
-                priorityQueue.offer(nextNode.next);
+            if (nextNode != null) {
+                priorityQueue.offer(nextNode);
             }
         }
 
@@ -143,6 +149,7 @@ public class Problem23 {
         if (list1 == null) {
             return list2;
         }
+
         if (list2 == null) {
             return list1;
         }
@@ -177,6 +184,7 @@ public class Problem23 {
         }
 
         ListNode[] lists = new ListNode[data.length];
+
         for (int i = 0; i < data.length; i++) {
             if (data[i].length == 0) {
                 lists[i] = null;
@@ -184,12 +192,15 @@ public class Problem23 {
 
             ListNode head = new ListNode(data[i][0]);
             ListNode node = head;
+
             for (int j = 1; j < data[i].length; j++) {
                 node.next = new ListNode(data[i][j]);
                 node = node.next;
             }
+
             lists[i] = head;
         }
+
         return lists;
     }
 

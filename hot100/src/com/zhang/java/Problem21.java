@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/15 12:22
  * @Author zsy
- * @Description 合并两个有序链表 同Offer25 类比Problem24、Problem92、Problem206
+ * @Description 合并两个有序链表 类比Problem23、Problem24、Problem92、Problem206 同Offer25
  * 将两个升序链表合并为一个新的 升序 链表并返回。
  * 新链表是通过拼接给定的两个链表的所有节点组成的。
  * <p>
@@ -47,6 +47,7 @@ public class Problem21 {
         if (list1 == null) {
             return list2;
         }
+
         if (list2 == null) {
             return list1;
         }
@@ -64,6 +65,7 @@ public class Problem21 {
                 node.next = list2;
                 list2 = list2.next;
             }
+
             node = node.next;
         }
 
@@ -88,6 +90,7 @@ public class Problem21 {
         if (list1 == null) {
             return list2;
         }
+
         if (list2 == null) {
             return list1;
         }

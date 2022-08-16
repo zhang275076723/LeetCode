@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/4/26 10:39
  * @Author zsy
- * @Description 子集
+ * @Description 子集 类比Problem17
  * 给你一个整数数组 nums ，数组中的元素 互不相同 。返回该数组所有可能的子集（幂集）。
  * 解集 不能 包含重复的子集。你可以按 任意顺序 返回解集。
  * <p>
@@ -30,7 +30,7 @@ public class Problem78 {
 
     /**
      * 回溯
-     * 时间复杂度O(n*2^n)，空间复杂度O(n)，一共2^n种状态，每一种状态添加到集合中需要O(n)
+     * 时间复杂度O(n*2^n)，空间复杂度O(n) (一共2^n种状态，每一种状态添加到集合中需要O(n))
      *
      * @param nums
      * @return
@@ -48,7 +48,7 @@ public class Problem78 {
     }
 
     /**
-     * 每遍历到一个元素，就把结果集合中每个list添加该元素，再重新添加回集合
+     * 每遍历到一个元素，就将原结果集合中每个list添加该元素，重新添加回结果集合
      * 时间复杂度O(n*2^n)，空间复杂度O(1)，一共2^n种状态，获取结果集合每个list需要O(n)
      *
      * @param nums
@@ -65,6 +65,7 @@ public class Problem78 {
         for (int i = 0; i < nums.length; i++) {
             //因为result的大小size会变化，所以不能在里面的for循环中写成j < result.size()，会造成死循环
             int size = result.size();
+
             for (int j = 0; j < size; j++) {
                 //结果集合每个list
                 List<Integer> list = new ArrayList<>(result.get(j));
@@ -79,12 +80,17 @@ public class Problem78 {
     }
 
     private void backtrack(int t, int[] nums, List<Integer> list, List<List<Integer>> result) {
-        for (int i = t; i < nums.length; i++) {
-            list.add(nums[i]);
-            backtrack(i + 1, nums, list, result);
-            list.remove(list.size() - 1);
+        if (t == nums.length) {
+            result.add(new ArrayList<>(list));
+            return;
         }
 
-        result.add(new ArrayList<>(list));
+        //不添加当前元素的回溯
+        backtrack(t + 1, nums, list, result);
+
+        //添加当前元素的回溯
+        list.add(nums[t]);
+        backtrack(t + 1, nums, list, result);
+        list.remove(list.size() - 1);
     }
 }

@@ -3,7 +3,8 @@ package com.zhang.java;
 /**
  * @Date 2022/4/22 8:37
  * @Author zsy
- * @Description 给定一个非负整数数组 nums ，你最初位于数组的 第一个下标 。
+ * @Description 跳跃游戏
+ * 给定一个非负整数数组 nums ，你最初位于数组的 第一个下标 。
  * 数组中的每个元素代表你在该位置可以跳跃的最大长度。
  * 判断你是否能够到达最后一个下标。
  * <p>
@@ -21,21 +22,22 @@ package com.zhang.java;
 public class Problem55 {
     public static void main(String[] args) {
         Problem55 problem55 = new Problem55();
-        int[] nums = {1, 0, 1, 0};
+        int[] nums = {2, 3, 1, 1, 4};
         System.out.println(problem55.canJump(nums));
         System.out.println(problem55.canJump2(nums));
     }
 
     /**
-     * 动态规划，时间复杂度O(n^2)，空间复杂度O(n)
+     * 动态规划
      * dp[i]：nums[i]到是否能够到达结尾
-     * dp[i] = dp[i+j] (0<=j<=nums[i]) (从nums[i]到nums[i+nums[i]]只要有一个能到达结尾就是true)
+     * dp[i] = dp[i+j] (1 <= j <= nums[i]) (从nums[i]到nums[i+nums[i]]只要有一个能到达结尾就是true)
+     * 时间复杂度O(n^2)，空间复杂度O(n)
      *
      * @param nums
      * @return
      */
     public boolean canJump(int[] nums) {
-        if (nums.length == 1){
+        if (nums.length == 1) {
             return true;
         }
 
@@ -43,7 +45,7 @@ public class Problem55 {
         dp[nums.length - 1] = true;
 
         for (int i = nums.length - 2; i >= 0; i--) {
-            for (int j = 0; j <= nums[i]; j++) {
+            for (int j = 1; j <= nums[i]; j++) {
                 if (dp[i + j]) {
                     dp[i] = true;
                     break;
@@ -55,34 +57,39 @@ public class Problem55 {
     }
 
     /**
-     * 贪心，每次找当前位置的最远可达位置，时间复杂度O(n)，空间复杂度O(1)
-     * 如果当前位置 大于 最远可到达的位置，即当前位置不可达，返回false
+     * 贪心
+     * 每次找当前位置可跳到的最远位置
+     * 如果当前位置 > 最远可到达的位置，即当前位置不可达，返回false
      * 如果当前位置的最远可到达位置 大于 最远可到达的位置，则更新最远可到达的位置
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
      * @return
      */
     public boolean canJump2(int[] nums) {
-        if (nums.length == 1){
+        if (nums.length == 1) {
             return true;
         }
 
-        //最远可到达的位置
-        int maxDistance = 0;
+        //第一个元素最远可跳的距离
+        int maxJump = 0;
+
         for (int i = 0; i < nums.length; i++) {
-            //当前位置 大于 最远可到达的位置，即当前位置不可达，返回false
-            if (i > maxDistance) {
+            //即当前位置不可达，返回false
+            if (i > maxJump) {
                 return false;
             }
-            //当前位置可达，且当前位置的最远可到达位置 大于 最远可到达的位置，则更新最远可到达的位置
-            if (nums[i] + i > maxDistance) {
-                maxDistance = nums[i] + i;
-            }
-            //最远可到达的位置 大于等于 结尾位置，返回true
-            if (maxDistance >= nums.length - 1) {
+
+            //更新最远可跳距离
+            maxJump = Math.max(maxJump, i + nums[i]);
+
+            //最远可跳距离能过跳到最后一个元素，则返回true
+            if (maxJump >= nums.length - 1) {
                 return true;
             }
         }
+
         return true;
     }
+
 }

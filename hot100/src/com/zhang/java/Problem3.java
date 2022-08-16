@@ -76,7 +76,7 @@ public class Problem3 {
     }
 
     /**
-     * 动态规划优化
+     * 动态规划优化，使用滚动数组
      * 使用哈希表，在O(1)时间内找到s[i]之前相同字符的索引下标
      * 时间复杂度O(n)，空间复杂度O(|Σ|)，|Σ|=128，ascii码
      *
@@ -133,13 +133,13 @@ public class Problem3 {
             char c = s.charAt(right);
 
             //左指针右移
-            if (map.containsKey(c) && left <= map.get(c)) {
+            if (map.containsKey(c) && map.get(c) >= left) {
                 left = map.get(c) + 1;
             }
 
             map.put(c, right);
+            max = Math.max(max, right - left + 1);
             right++;
-            max = Math.max(max, right - left);
         }
 
         return max;

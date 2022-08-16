@@ -6,7 +6,7 @@ import java.util.Stack;
 /**
  * @Date 2022/3/21 18:57
  * @Author zsy
- * @Description 二叉搜索树的后序遍历序列 类比Offer7、Problem105、Problem145
+ * @Description 二叉搜索树的后序遍历序列 类比Problem98、Problem105、Problem145、Offer7
  * 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历结果。
  * 如果是则返回 true，否则返回 false。假设输入的数组的任意两个数字都互不相同。
  * <p>
@@ -53,7 +53,7 @@ public class Offer33 {
     }
 
     /**
-     * 单调栈，不理解
+     * 单调栈 (不理解)
      * 后序遍历：左右根， 逆序后序遍历：根右左
      * 单调递增栈存储当前节点的父节点，逆序遍历后序遍历数组，
      * 1、stack.peek() < postorder[i]，则postorder[i]是stack.peek()的右子节点，postorder[i]入栈
@@ -103,26 +103,23 @@ public class Offer33 {
             return true;
         }
 
-        //当前根节点
-        int rootVal = postorder[right];
-        //第一个比根节点值大的元素索引
-        int rightIndex = left;
+        //postorder数组中第一个比根节点值大的元素索引，该节点为右子树中的某一个节点
+        int index = left;
 
         //找到第一个比根节点值大的元素索引
-        while (postorder[rightIndex] < rootVal) {
-            rightIndex++;
+        while (postorder[index] < postorder[right]) {
+            index++;
         }
 
         //根节点右边所有值都要比根节点值要大
-        for (int i = rightIndex; i < right; i++) {
-            if (postorder[i] < rootVal) {
+        for (int i = index + 1; i < right; i++) {
+            if (postorder[i] < postorder[right]) {
                 return false;
             }
         }
 
         //递归判断左子树和右子树是否是后序遍历二叉搜索树
-        return dfs(postorder, left, rightIndex - 1) &&
-                dfs(postorder, rightIndex, right - 1);
+        return dfs(postorder, left, index - 1) && dfs(postorder, index, right - 1);
     }
 
 }

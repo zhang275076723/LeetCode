@@ -75,9 +75,7 @@ public class Problem14 {
         int minLength = strs[0].length();
 
         for (int i = 1; i < strs.length; i++) {
-            if (minLength > strs[i].length()) {
-                minLength = strs[i].length();
-            }
+            minLength = Math.min(minLength, strs[i].length());
         }
 
         while (index < minLength) {
@@ -111,7 +109,7 @@ public class Problem14 {
             return strs[0];
         }
 
-        Tire root = new Tire();
+        Trie root = new Trie();
 
         for (int i = 0; i < strs.length; i++) {
             root.insert(strs[i]);
@@ -149,18 +147,18 @@ public class Problem14 {
     /**
      * 前缀树
      */
-    private static class Tire {
+    private static class Trie {
         /**
          * 当前前缀树节点的子节点
          */
-        private Map<Character, Tire> children;
+        private Map<Character, Trie> children;
 
         /**
          * 当前前缀树节点是否是尾节点，即从根到当前节点是否是一个字符串
          */
         private boolean isEnd;
 
-        public Tire() {
+        public Trie() {
             this.children = new HashMap<>();
             this.isEnd = false;
         }
@@ -172,13 +170,14 @@ public class Problem14 {
          * @param str
          */
         public void insert(String str) {
-            Tire node = this;
+            Trie node = this;
             char[] c = str.toCharArray();
 
             for (int i = 0; i < c.length; i++) {
                 if (node.children.get(c[i]) == null) {
-                    node.children.put(c[i], new Tire());
+                    node.children.put(c[i], new Trie());
                 }
+
                 node = node.children.get(c[i]);
             }
 

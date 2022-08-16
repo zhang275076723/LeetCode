@@ -31,11 +31,12 @@ public class Problem438 {
         String s = "cbaebabacd";
         String p = "abc";
         System.out.println(problem438.findAnagrams(s, p));
+        System.out.println(problem438.findAnagrams2(s, p));
     }
 
     /**
      * 滑动窗口，双指针
-     * 时间复杂度O(s.length*C)，空间复杂度O(C)，C为字符集大小，即|C|=26
+     * 时间复杂度O(s.length*|C|)，空间复杂度O(|C|)，C为字符集大小，即|C|=26
      *
      * @param s
      * @param p
@@ -71,6 +72,7 @@ public class Problem438 {
 
                 //将左指针所指字符从sArr删除
                 sArr[s.charAt(left) - 'a']--;
+
                 left++;
             }
 
@@ -78,5 +80,59 @@ public class Problem438 {
         }
 
         return result;
+    }
+
+    /**
+     * 滑动窗口，双指针
+     * 同findAnagrams()，这里存储字符使用的是hashMap，而不是数组
+     * 时间复杂度O(s.length*|C|)，空间复杂度O(|C|)，C为字符集大小，即|C|=26
+     *
+     * @param s
+     * @param p
+     * @return
+     */
+    public List<Integer> findAnagrams2(String s, String p) {
+        if (s.length() < p.length()) {
+            return new ArrayList<>();
+        }
+
+        List<Integer> list = new ArrayList<>();
+        int left = 0;
+        int right = 0;
+        Map<Character, Integer> sMap = new HashMap<>();
+        Map<Character, Integer> pMap = new HashMap<>();
+
+        for (char c : p.toCharArray()) {
+            pMap.put(c, pMap.getOrDefault(c, 0) + 1);
+        }
+
+        while (right < s.length()) {
+            char c = s.charAt(right);
+            sMap.put(c, sMap.getOrDefault(c, 0) + 1);
+
+            if (right - left + 1 == p.length()) {
+                if (isCover(sMap, pMap)) {
+                    list.add(left);
+                }
+
+                sMap.put(s.charAt(left), sMap.get(s.charAt(left)) - 1);
+                left++;
+            }
+
+            right++;
+        }
+
+        return list;
+    }
+
+    private boolean isCover(Map<Character, Integer> sMap, Map<Character, Integer> pMap) {
+        for (Map.Entry<Character, Integer> entry : pMap.entrySet()) {
+            //注意Integer比较要使用equals，如果范围在[-128,127]之内能比较正确，其他范围比较失败
+            if (!sMap.containsKey(entry.getKey()) || !sMap.get(entry.getKey()).equals(entry.getValue())) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
