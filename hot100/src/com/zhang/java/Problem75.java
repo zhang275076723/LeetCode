@@ -97,7 +97,7 @@ public class Problem75 {
                 i++;
                 k++;
             } else if (nums[k] == 2) {
-                //当前元素为2时，指向当前元素的指针k不移动
+                //当前元素为2时，交换之后，指针k不后移
                 swap(nums, k, j);
                 j--;
             } else {

@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * @Date 2022/3/25 9:04
  * @Author zsy
- * @Description 最小的k个数
+ * @Description 最小的k个数 类比Problem215、Problem347
  * 输入整数数组 arr ，找出其中最小的 k 个数。
  * 例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。
  * 0 <= k <= arr.length <= 10000
@@ -52,7 +52,7 @@ public class Offer40 {
     }
 
     /**
-     * 快排划分思想
+     * 快排划分变形
      * 左边都小于划分值，右边都大于划分值，即一次划分可以确定数组第k小元素的值
      * 期望时间复杂度O(n)，期望空间复杂度O(logn)
      * 最坏时间复杂度O(n^2)，最坏空间复杂度O(n)
@@ -66,7 +66,7 @@ public class Offer40 {
             return new int[0];
         }
 
-        randomizedSelectK(arr, 0, arr.length - 1, k);
+        findSmallestK(arr, k);
 
         return Arrays.copyOfRange(arr, 0, k);
     }
@@ -97,10 +97,9 @@ public class Offer40 {
         }
 
         for (int i = k; i < arr.length; i++) {
-            //当前元素小于堆顶元素，说明堆顶元素不是前k小元素
+            //当前元素小于大堆顶元素，说明堆顶元素不是前k小元素，替换堆顶元素，再进行整堆
             if (arr[i] < result[0]) {
                 result[0] = arr[i];
-
                 heapify(result, 0, k);
             }
         }
@@ -108,24 +107,28 @@ public class Offer40 {
         return result;
     }
 
-    private void randomizedSelectK(int[] arr, int left, int right, int k) {
+    private void findSmallestK(int[] arr, int k) {
+        int left = 0;
+        int right = arr.length - 1;
         int pivot = randomizedPartition(arr, left, right);
 
-        //基准在前k小元素之后
-        if (pivot + 1 > k) {
-            randomizedSelectK(arr, left, pivot - 1, k);
-        } else if (pivot + 1 < k) {
+        while (pivot + 1 != k) {
             //基准在前k小元素之前
-            randomizedSelectK(arr, pivot + 1, right, k);
+            if (pivot + 1 < k) {
+                left = pivot + 1;
+                pivot = randomizedPartition(arr, left, right);
+                //基准在前k小元素之后
+            } else if (pivot + 1 > k) {
+                right = pivot - 1;
+                pivot = randomizedPartition(arr, left, right);
+            }
         }
-
-        //pivot + 1== k，基准刚好在前k小元素，直接返回
     }
 
     private int randomizedPartition(int[] arr, int left, int right) {
-        //随机化
+        //随机化，避免性能倒退为O(n^2)
         int index = new Random().nextInt(right - left + 1) + left;
-//        int index = (int) (Math.random() * (right - left + 1) + left);
+//        int index = (int) (Math.random() * (right - left + 1)) + left;
         int value = arr[left];
         arr[left] = arr[index];
         arr[index] = value;

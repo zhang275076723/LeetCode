@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/2 10:09
  * @Author zsy
- * @Description 前 K 个高频元素 华为机试题、腾讯机试题 类比Problem215
+ * @Description 前 K 个高频元素 华为机试题、腾讯机试题 类比Problem215、Offer40
  * 给你一个整数数组 nums 和一个整数 k ，请你返回其中出现频率前 k 高的元素。你可以按 任意顺序 返回答案。
  * <p>
  * 输入: nums = [1,1,1,2,2,3], k = 2
@@ -46,6 +46,7 @@ public class Problem347 {
         }
 
         Map<Integer, Integer> map = new HashMap<>();
+
         for (int num : nums) {
             map.put(num, map.getOrDefault(num, 0) + 1);
         }
@@ -62,6 +63,7 @@ public class Problem347 {
             if (priorityQueue.size() < k) {
                 priorityQueue.offer(new int[]{entry.getKey(), entry.getValue()});
             } else {
+                //当前元素的频率大于小根堆堆顶元素频率，堆顶元素出队，当前元素入队
                 if (priorityQueue.peek()[1] < entry.getValue()) {
                     priorityQueue.poll();
                     priorityQueue.offer(new int[]{entry.getKey(), entry.getValue()});
@@ -70,9 +72,11 @@ public class Problem347 {
         }
 
         int[] result = new int[k];
+
         for (int i = 0; i < k; i++) {
             result[i] = priorityQueue.poll()[0];
         }
+
         return result;
     }
 
@@ -90,6 +94,7 @@ public class Problem347 {
         }
 
         Map<Integer, Integer> map = new HashMap<>();
+
         for (int num : nums) {
             map.put(num, map.getOrDefault(num, 0) + 1);
         }
@@ -98,17 +103,20 @@ public class Problem347 {
         int index = 0;
         //小根堆数组，arr[i][0]：当前元素，arr[i][1]：出现次数
         int[][] arr = new int[k][2];
+
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
             if (index < k) {
                 arr[index] = new int[]{entry.getKey(), entry.getValue()};
                 index++;
-                //建堆
+
+                //建立大小为k的小根堆
                 if (index == k) {
                     for (int i = k / 2 - 1; i >= 0; i--) {
                         heapify(arr, i, k);
                     }
                 }
             } else {
+                //当前元素频率大于小根堆堆顶元素频率，替换堆顶元素，再进行整堆
                 if (arr[0][1] < entry.getValue()) {
                     arr[0] = new int[]{entry.getKey(), entry.getValue()};
                     heapify(arr, 0, k);
@@ -117,9 +125,11 @@ public class Problem347 {
         }
 
         int[] result = new int[k];
+
         for (int i = 0; i < k; i++) {
             result[i] = arr[i][0];
         }
+
         return result;
     }
 
@@ -140,6 +150,7 @@ public class Problem347 {
         }
 
         Map<Integer, Integer> map = new HashMap<>();
+
         for (int num : nums) {
             map.put(num, map.getOrDefault(num, 0) + 1);
         }
@@ -153,12 +164,14 @@ public class Problem347 {
             index++;
         }
 
-        int pivot = partition(arr, 0, arr.length - 1, arr.length - k);
+        findMostFrequentK(arr, k);
 
         int[] result = new int[k];
+
         for (int i = 0; i < k; i++) {
-            result[i] = arr[pivot + i][0];
+            result[i] = arr[arr.length - k + i][0];
         }
+
         return result;
     }
 
@@ -171,9 +184,9 @@ public class Problem347 {
      * @param heapSize
      */
     private void heapify(int[][] arr, int index, int heapSize) {
+        int minIndex = index;
         int leftIndex = 2 * index + 1;
         int rightIndex = 2 * index + 2;
-        int minIndex = index;
 
         if (leftIndex < heapSize && arr[leftIndex][1] < arr[minIndex][1]) {
             minIndex = leftIndex;
@@ -190,6 +203,24 @@ public class Problem347 {
         }
     }
 
+    private void findMostFrequentK(int[][] arr, int k) {
+        int left = 0;
+        int right = arr.length - 1;
+        int pivot = partition(arr, left, right);
+
+        while (pivot != arr.length - k) {
+            //基准在前k大频率之前
+            if (pivot < arr.length - k) {
+                left = pivot + 1;
+                pivot = partition(arr, left, right);
+            } else if (pivot > arr.length - k) {
+                //基准在前k大频率之后
+                right = pivot - 1;
+                pivot = partition(arr, left, right);
+            }
+        }
+    }
+
     /**
      * 快排划分变形
      * 平均时间复杂度O(n)，最坏时间复杂度O(n^2)，最好空间复杂度O(logn)，最坏空间复杂度O(n)
@@ -197,38 +228,31 @@ public class Problem347 {
      * @param arr   当前排序数组
      * @param left  本次划分的左基准
      * @param right 本次划分的右基准
-     * @param index 第k大元素的下标索引
      * @return
      */
-    private int partition(int[][] arr, int left, int right, int index) {
+    private int partition(int[][] arr, int left, int right) {
         //随机取一个元素作为划分基准，避免性能倒退为O(n^2)
-        int randomIndex = (int) Math.random() * (right - left + 1) + left;
-        int[] temp = arr[randomIndex];
+        int randomIndex = (int) (Math.random() * (right - left + 1)) + left;
+        int[] value = arr[randomIndex];
         arr[randomIndex] = arr[left];
-        arr[left] = temp;
+        arr[left] = value;
 
-        //用于递归
-        int l = left;
-        int r = right;
+        int[] temp = arr[left];
 
         while (left < right) {
             while (left < right && arr[right][1] >= temp[1]) {
                 right--;
             }
             arr[left] = arr[right];
+
             while (left < right && arr[left][1] <= temp[1]) {
                 left++;
             }
             arr[right] = arr[left];
         }
+
         arr[left] = temp;
 
-        if (left == index) {
-            return left;
-        } else if (left < index) {
-            return partition(arr, left + 1, r, index);
-        } else {
-            return partition(arr, l, left - 1, index);
-        }
+        return left;
     }
 }

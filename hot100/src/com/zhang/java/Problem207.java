@@ -55,7 +55,7 @@ public class Problem207 {
      * @return
      */
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        //邻接矩阵，可以使用list集合替代二维数组
+        //邻接矩阵，可以使用list集合替代邻接矩阵
         int[][] edges = new int[numCourses][numCourses];
         //访问数组，0-未访问，1-正在访问，2-已访问
         int[] visited = new int[numCourses];
@@ -89,7 +89,7 @@ public class Problem207 {
      * @return
      */
     public boolean canFinish2(int numCourses, int[][] prerequisites) {
-        //邻接矩阵，可以使用list集合替代二维数组
+        //邻接矩阵，可以使用list集合替代邻接矩阵
         int[][] edges = new int[numCourses][numCourses];
         //入度数组
         int[] inDegree = new int[numCourses];

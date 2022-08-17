@@ -4,7 +4,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/15 8:30
  * @Author zsy
- * @Description 数组中的第K个最大元素 类比Problem347
+ * @Description 数组中的第K个最大元素 类比Problem347、Offer40 字节面试题
  * 给定整数数组 nums 和整数 k，请返回数组中第 k 个最大的元素。
  * 请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
  * <p>
@@ -22,7 +22,7 @@ public class Problem215 {
         Problem215 problem215 = new Problem215();
         int[] nums = {3, 2, 3, 1, 2, 4, 5, 5, 6};
         int k = 4;
-        System.out.println(problem215.findKthLargest(nums, k));
+//        System.out.println(problem215.findKthLargest(nums, k));
         System.out.println(problem215.findKthLargest2(nums, k));
     }
 
@@ -40,12 +40,13 @@ public class Problem215 {
         }
 
         heapSort(nums);
-        int index = nums.length - k;
-        return nums[index];
+
+        return nums[nums.length - k];
     }
 
     /**
-     * 快排划分变形，快排的每次划分都能确定一个元素所在的位置，通过该位置和index比较，判断是否是第k大元素
+     * 快排划分变形
+     * 快排的每次划分都能确定一个元素所在的位置，通过该位置和index比较，判断是否是第k大元素
      * 时间复杂度O(n)，空间复杂度O(logn)
      *
      * @param nums
@@ -57,9 +58,9 @@ public class Problem215 {
             return Integer.MIN_VALUE;
         }
 
-        int index = nums.length - k;
-        int pivot = partition(nums, 0, nums.length - 1, index);
-        return nums[pivot];
+        findLargestK(nums, k);
+
+        return nums[nums.length - k];
     }
 
     /**
@@ -74,7 +75,7 @@ public class Problem215 {
             heapify(nums, i, nums.length);
         }
 
-        //最后一个元素与堆顶元素交换，并整堆
+        //最后一个元素与堆顶元素交换，再整堆
         for (int i = nums.length - 1; i > 0; i--) {
             int temp = nums[0];
             nums[0] = nums[i];
@@ -92,15 +93,15 @@ public class Problem215 {
      * @param heapSize
      */
     private void heapify(int[] nums, int i, int heapSize) {
-        int leftChild = i * 2 + 1;
-        int rightChild = i * 2 + 2;
         int maxIndex = i;
+        int leftIndex = i * 2 + 1;
+        int rightIndex = i * 2 + 2;
 
-        if (leftChild < heapSize && nums[leftChild] > nums[maxIndex]) {
-            maxIndex = leftChild;
+        if (leftIndex < heapSize && nums[leftIndex] > nums[maxIndex]) {
+            maxIndex = leftIndex;
         }
-        if (rightChild < heapSize && nums[rightChild] > nums[maxIndex]) {
-            maxIndex = rightChild;
+        if (rightIndex < heapSize && nums[rightIndex] > nums[maxIndex]) {
+            maxIndex = rightIndex;
         }
 
         //继续向下整堆
@@ -112,6 +113,24 @@ public class Problem215 {
         }
     }
 
+    private void findLargestK(int[] nums, int k) {
+        int left = 0;
+        int right = nums.length - 1;
+        int pivot = partition(nums, left, right);
+
+        while (pivot != nums.length - k) {
+            //基准在前k大之前
+            if (pivot < nums.length - k) {
+                left = pivot + 1;
+                pivot = partition(nums, left, right);
+            } else if (pivot > nums.length - k) {
+                //基准在前k大之后
+                right = pivot - 1;
+                pivot = partition(nums, left, right);
+            }
+        }
+    }
+
     /**
      * 快排划分变形
      * 平均时间复杂度O(n)，最坏时间复杂度O(n^2)，空间复杂度O(logn)
@@ -119,38 +138,31 @@ public class Problem215 {
      * @param nums  当前要排序数组
      * @param left  此次划分的左指针
      * @param right 此次划分的右指针
-     * @param index 第k大元素的下标索引
      * @return
      */
-    private int partition(int[] nums, int left, int right, int index) {
+    private int partition(int[] nums, int left, int right) {
         //随机取一个元素作为划分基准，避免性能倒退为O(n^2)
-        int randomIndex = (int) (Math.random() * (right - left + 1)) + left;
-        int temp = nums[randomIndex];
-        nums[randomIndex] = nums[left];
-        nums[left] = temp;
+        int index = (int) (Math.random() * (right - left + 1)) + left;
+        int value = nums[index];
+        nums[index] = nums[left];
+        nums[left] = value;
 
-        //用于递归
-        int l = left;
-        int r = right;
+        int temp = nums[left];
 
         while (left < right) {
             while (left < right && nums[right] >= temp) {
                 right--;
             }
             nums[left] = nums[right];
+
             while (left < right && nums[left] <= temp) {
                 left++;
             }
             nums[right] = nums[left];
         }
+
         nums[left] = temp;
 
-        if (left == index) {
-            return left;
-        } else if (left < index) {
-            return partition(nums, left + 1, r, index);
-        } else {
-            return partition(nums, l, left - 1, index);
-        }
+        return left;
     }
 }

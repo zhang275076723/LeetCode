@@ -5,7 +5,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2022/4/16 10:12
  * @Author zsy
- * @Description 合并K个升序链表 类比Problem21
+ * @Description 合并K个升序链表 类比Problem21、Problem378
  * 给你一个链表数组，每个链表都已经按升序排列。
  * 请你将所有链表合并到一个升序链表中，返回合并后的链表。
  * <p>
@@ -90,6 +90,7 @@ public class Problem23 {
             int mid = left + ((right - left) >> 1);
             ListNode list1 = mergeKLists2(lists, left, mid);
             ListNode list2 = mergeKLists2(lists, mid + 1, right);
+
             return mergeTwoLists(list1, list2);
         }
 
@@ -97,7 +98,7 @@ public class Problem23 {
     }
 
     /**
-     * 优先队列
+     * 小根堆
      * 时间复杂度O(kn*logk)，空间复杂度O(k)
      * (k为链表个数，n为每个链表最长长度，一共nk个节点，每个节点插入和删除需要O(logk))
      *
@@ -110,7 +111,7 @@ public class Problem23 {
         }
 
         //优先队列，小根堆
-        PriorityQueue<ListNode> priorityQueue = new PriorityQueue<>((node1, node2) -> node1.val - node2.val);
+        PriorityQueue<ListNode> priorityQueue = new PriorityQueue<>((list1, list2) -> list1.val - list2.val);
 
         for (ListNode list : lists) {
             if (list != null) {

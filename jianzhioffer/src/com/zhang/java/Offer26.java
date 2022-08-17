@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/3/19 19:44
  * @Author zsy
- * @Description 树的子结构
+ * @Description 树的子结构 字节面试题
  * 输入两棵二叉树A和B，判断B是不是A的子结构。(约定空树不是任意一个树的子结构)
  * B是A的子结构，即A中有出现和B相同的结构和节点值。
  * <p>
@@ -41,8 +41,7 @@ public class Offer26 {
             return false;
         }
 
-        //如果以A、B为起点，B为根节点的树是A为根节点的树的子结构，
-        //或者树B是A的左子树的子结构，或者树B是A的右子树的子结构，则返回ture
+        //判断B树是否是A树的子结构，或者B树是否是A树左子树的子结构，或者树是否是A树右子树的子结构
         return contain(A, B) || isSubStructure(A.left, B) || isSubStructure(A.right, B);
     }
 
@@ -54,17 +53,27 @@ public class Offer26 {
      * @return
      */
     public boolean contain(TreeNode A, TreeNode B) {
-        //如果B为空，说明B树之前的节点都包含在A树中
+        //A树为空，B树为空，则说明B树是A树的子结构
+        if (A == null && B == null) {
+            return true;
+        }
+
+        //A树为空，B树不为空，则说明B树不是A树的子结构
+        if (A == null) {
+            return false;
+        }
+
+        //A树不为空，B树为空，则说明B树是A树的子结构
         if (B == null) {
             return true;
         }
 
-        //如果A为空，说明B树中还有节点没有匹配；或者如果A的值不等于B的值，说明B树不是A树的子结构
-        if (A == null || A.val != B.val) {
+        //A节点值和B节点值不相同，则说明B树不是A树的子结构
+        if (A.val != B.val) {
             return false;
         }
 
-        //递归判断B的左子树是否是A的左子树的子结构，并且B的右子树是否是A的右子树的子结构
+        //判断B树的左子树是否是A树的左子树的子结构，并且判断B树的右子树是否是A树的右子树的子结构
         return contain(A.left, B.left) && contain(A.right, B.right);
     }
 

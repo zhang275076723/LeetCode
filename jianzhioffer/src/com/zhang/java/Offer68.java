@@ -122,11 +122,9 @@ public class Offer68 {
                 node = node.right;
             } else {
                 //p和q在根节点的两边，返回根节点
-                break;
+                return node;
             }
         }
-
-        return node;
     }
 
     /**

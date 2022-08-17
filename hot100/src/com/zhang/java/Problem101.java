@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/1 9:58
  * @Author zsy
- * @Description 对称二叉树 同Offer28
+ * @Description 对称二叉树 类比Problem226、Offer27 同Offer28
  * 给你一个二叉树的根节点 root ， 检查它是否轴对称。
  * <p>
  * 输入：root = [1,2,2,3,4,4,3]
@@ -28,7 +28,7 @@ public class Problem101 {
 
     /**
      * dfs
-     * 时间复杂度O(n)，空间复杂度O(n)
+     * 时间复杂度O(n)，平均空间复杂度O(logn)，最坏空间复杂度O(n)
      *
      * @param root
      * @return
@@ -38,13 +38,13 @@ public class Problem101 {
             return true;
         }
 
-        return dfs(root.left, root.right);
+        return symmetric(root.left, root.right);
     }
 
     /**
      * bfs
      * 使用队列，判断每一层是否对称
-     * 时间复杂度O(n)，空间复杂度O(n)
+     * 时间复杂度O(n)，平均空间复杂度O(logn)，最坏空间复杂度O(n)
      *
      * @param root
      * @return
@@ -82,23 +82,19 @@ public class Problem101 {
         return true;
     }
 
-    private boolean dfs(TreeNode node1, TreeNode node2) {
+    private boolean symmetric(TreeNode node1, TreeNode node2) {
         //当前节点左右子树都为空，则对称，返回true
         if (node1 == null && node2 == null) {
             return true;
         }
 
-        //当前节点只有一个子树为空，则不对称，返回false
-        if (node1 == null || node2 == null) {
+        //当前节点只有一个子树为空，或节点值不相同，则不对称，返回false
+        if (node1 == null || node2 == null || node1.val != node2.val) {
             return false;
         }
 
-        if (node1.val == node2.val) {
-            //递归判断当前节点的左子树的左子树和当前节点的右子树的右子树是否对称
-            return dfs(node1.left, node2.right) && dfs(node1.right, node2.left);
-        }
-
-        return false;
+        //递归判断当前节点的左子树的左子树和当前节点的右子树的右子树是否对称
+        return symmetric(node1.left, node2.right) && symmetric(node1.right, node2.left);
     }
 
     private TreeNode buildTree(String[] data) {

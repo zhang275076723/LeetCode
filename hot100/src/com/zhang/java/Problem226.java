@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/16 8:46
  * @Author zsy
- * @Description 翻转二叉树 同Offer27
+ * @Description 翻转二叉树 类比Problem101、Offer28 同Offer27
  * 给你一棵二叉树的根节点 root ，翻转这棵二叉树，并返回其根节点。
  * <p>
  * 输入：root = [4,2,7,1,3,6,9]
@@ -33,8 +33,9 @@ public class Problem226 {
     }
 
     /**
-     * dfs，前序遍历
-     * 时间复杂度O(n)，平均空间复杂度O(logn)，最差空间复杂度O(n)
+     * dfs
+     * dfs遍历所有节点，交换当前节点的左右子节点
+     * 时间复杂度O(n)，平均空间复杂度O(logn)，最坏空间复杂度O(n)
      *
      * @param root
      * @return
@@ -44,17 +45,19 @@ public class Problem226 {
             return null;
         }
 
-        TreeNode leftNode = root.left;
-        TreeNode rightNode = root.right;
-        root.left = invertTree(rightNode);
-        root.right = invertTree(leftNode);
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+
+        invertTree(root.left);
+        invertTree(root.right);
 
         return root;
     }
 
     /**
      * dfs，层序遍历
-     * 时间复杂度O(n)，平均空间复杂度O(logn)，最差空间复杂度O(n)
+     * 时间复杂度O(n)，平均空间复杂度O(logn)，最坏空间复杂度O(n)
      *
      * @param root
      * @return
@@ -70,14 +73,14 @@ public class Problem226 {
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
 
-            TreeNode leftNode = node.left;
-            TreeNode rightNode = node.right;
-            node.left = rightNode;
-            node.right = leftNode;
+            TreeNode temp = node.left;
+            node.left = node.right;
+            node.right = temp;
 
             if (node.left != null) {
                 queue.offer(node.left);
             }
+
             if (node.right != null) {
                 queue.offer(node.right);
             }

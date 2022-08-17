@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/8/6 11:22
  * @Author zsy
- * @Description 搜索二维矩阵 类比Problem240、Offer4
+ * @Description 搜索二维矩阵 类比Problem240、Problem378、Offer4
  * 编写一个高效的算法来判断 m x n 矩阵中，是否存在一个目标值。
  * 该矩阵具有如下特性：
  * 每行中的整数从左到右按升序排列。

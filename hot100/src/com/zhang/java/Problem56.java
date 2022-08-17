@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @Date 2022/4/22 15:22
  * @Author zsy
- * @Description 合并区间 类比Problem179、Problem252、Problem253、Problem406、Offer45
+ * @Description 合并区间 类比Problem179、Problem252、Problem253、Problem406、Offer45 字节面试题
  * 以数组 intervals 表示若干个区间的集合，其中单个区间为 intervals[i] = [starti, endi] 。
  * 请你合并所有重叠的区间，并返回 一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间。
  * <p>
