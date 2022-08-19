@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/3/21 17:34
  * @Author zsy
- * @Description 从上到下打印二叉树 III 类比Problem102、Offer32、Offer32_2 同Problem103
+ * @Description 从上到下打印二叉树 III 类比Problem102、Problem107、Offer32、Offer32_2 同Problem103
  * 请实现一个函数按照之字形顺序打印二叉树，
  * 即第一行按照从左到右的顺序打印，第二层按照从右到左的顺序打印，第三行再按照从左到右的顺序打印，其他行以此类推。
  * <p>
@@ -26,7 +26,7 @@ public class Offer32_3 {
 
     /**
      * 使用size统计树每行元素的个数
-     * 通过size奇偶确定存储正序或反序
+     * 存储标志确定存储正序或反序
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -40,6 +40,8 @@ public class Offer32_3 {
         List<List<Integer>> result = new ArrayList<>();
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
+        //反转标志，1-正序，-1-逆序
+        int flag = 1;
 
         while (!queue.isEmpty()) {
             LinkedList<Integer> list = new LinkedList<>();
@@ -49,11 +51,10 @@ public class Offer32_3 {
                 TreeNode node = queue.poll();
                 size--;
 
-                //判断每行的插入顺序
-                if (result.size() % 2 == 0) {
-                    list.offerLast(node.val);
+                if (flag == 1) {
+                    list.addLast(node.val);
                 } else {
-                    list.offerFirst(node.val);
+                    list.addFirst(node.val);
                 }
 
                 if (node.left != null) {
@@ -64,6 +65,7 @@ public class Offer32_3 {
                 }
             }
 
+            flag = -flag;
             result.add(list);
         }
 
@@ -83,9 +85,9 @@ public class Offer32_3 {
         }
 
         List<List<Integer>> result = new ArrayList<>();
-        //从左到右
+        //从左到右，尾添加
         Queue<TreeNode> queue1 = new LinkedList<>();
-        //从右到左
+        //从右到左，首添加
         Queue<TreeNode> queue2 = new LinkedList<>();
         queue1.offer(root);
 
@@ -95,8 +97,8 @@ public class Offer32_3 {
             if (!queue1.isEmpty()) {
                 while (!queue1.isEmpty()) {
                     TreeNode node = queue1.poll();
-                    //queue1从左到右
-                    list.offerLast(node.val);
+                    //queue1从左到右，尾添加
+                    list.addLast(node.val);
 
                     if (node.left != null) {
                         queue2.offer(node.left);
@@ -108,8 +110,8 @@ public class Offer32_3 {
             } else {
                 while (!queue2.isEmpty()) {
                     TreeNode node = queue2.poll();
-                    //queue2从右到左
-                    list.offerFirst(node.val);
+                    //queue2从右到左，首添加
+                    list.addFirst(node.val);
 
                     if (node.left != null) {
                         queue1.offer(node.left);
@@ -156,17 +158,17 @@ public class Offer32_3 {
         }
 
         if (result.size() <= level) {
-            result.add(new ArrayList<>());
+            result.add(new LinkedList<>());
         }
 
-        List<Integer> list = result.get(level);
+        LinkedList<Integer> list = (LinkedList<Integer>) result.get(level);
 
-        //如果是偶数层，则尾插
+        //如果是偶数层，则尾添加
         if (level % 2 == 0) {
-            list.add(root.val);
+            list.addLast(root.val);
         } else {
-            //如果是奇数层，则头插
-            list.add(0, root.val);
+            //如果是奇数层，则首添加
+            list.addFirst(root.val);
         }
 
         dfs(root.left, level + 1, result);

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/3/15 11:58
  * @Author zsy
- * @Description 二叉树的锯齿形层序遍历 类比Problem102、Offer32、Offer32_2 同Offer32_3
+ * @Description 二叉树的锯齿形层序遍历 类比Problem102、Problem107、Offer32、Offer32_2 同Offer32_3
  * 给你二叉树的根节点 root ，返回其节点值的锯齿形层序遍历 。
  * （即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。
  * <p>
@@ -28,10 +28,11 @@ public class Problem103 {
         TreeNode root = problem103.buildTree(data);
         System.out.println(problem103.zigzagLevelOrder(root));
         System.out.println(problem103.zigzagLevelOrder2(root));
+        System.out.println(problem103.zigzagLevelOrder3(root));
     }
 
     /**
-     * 使用size统计树每行元素的个数
+     * bfs，使用size统计树每行元素的个数
      * 存储标志确定存储正序或反序
      * 时间复杂度O(n)，空间复杂度O(n)
      *
@@ -46,8 +47,8 @@ public class Problem103 {
         List<List<Integer>> result = new ArrayList<>();
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
-        //用于每行元素的正序或逆序
-        boolean reverseFlag = false;
+        //反转标志，1-正序，-1-逆序
+        int flag = 1;
 
         while (!queue.isEmpty()) {
             LinkedList<Integer> list = new LinkedList<>();
@@ -57,10 +58,10 @@ public class Problem103 {
                 TreeNode node = queue.poll();
                 size--;
 
-                if (reverseFlag) {
-                    list.offerFirst(node.val);
+                if (flag == 1) {
+                    list.addLast(node.val);
                 } else {
-                    list.offerLast(node.val);
+                    list.addFirst(node.val);
                 }
 
                 if (node.left != null) {
@@ -71,8 +72,7 @@ public class Problem103 {
                 }
             }
 
-            reverseFlag = !reverseFlag;
-
+            flag = -flag;
             result.add(list);
         }
 
@@ -80,7 +80,7 @@ public class Problem103 {
     }
 
     /**
-     * 使用两个LinkedList队列
+     * bfs，使用两个LinkedList队列
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -92,9 +92,9 @@ public class Problem103 {
         }
 
         List<List<Integer>> result = new ArrayList<>();
-        //从左到右
+        //从左到右，尾添加
         Queue<TreeNode> queue1 = new LinkedList<>();
-        //从右到左
+        //从右到左，首添加
         Queue<TreeNode> queue2 = new LinkedList<>();
         queue1.offer(root);
 
@@ -104,8 +104,8 @@ public class Problem103 {
             if (!queue1.isEmpty()) {
                 while (!queue1.isEmpty()) {
                     TreeNode node = queue1.poll();
-                    //queue1从左到右
-                    list.offerLast(node.val);
+                    //queue1从左到右，尾添加
+                    list.addLast(node.val);
 
                     if (node.left != null) {
                         queue2.offer(node.left);
@@ -117,8 +117,8 @@ public class Problem103 {
             } else {
                 while (!queue2.isEmpty()) {
                     TreeNode node = queue2.poll();
-                    //queue2从右到左
-                    list.offerFirst(node.val);
+                    //queue2从右到左，首添加
+                    list.addFirst(node.val);
 
                     if (node.left != null) {
                         queue1.offer(node.left);
@@ -133,6 +133,49 @@ public class Problem103 {
         }
 
         return result;
+    }
+
+    /**
+     * dfs
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param root
+     * @return
+     */
+    public List<List<Integer>> zigzagLevelOrder3(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+
+        List<List<Integer>> result = new ArrayList<>();
+
+        dfs(root, 0, result);
+
+        return result;
+    }
+
+    private void dfs(TreeNode root, int level, List<List<Integer>> result) {
+        if (root == null) {
+            return;
+        }
+
+        //每行第一次访问，添加list集合
+        if (result.size() <= level) {
+            result.add(new LinkedList<>());
+        }
+
+        LinkedList<Integer> list = (LinkedList<Integer>) result.get(level);
+
+        //如果是偶数层，则尾添加
+        if (level % 2 == 0) {
+            list.addLast(root.val);
+        } else {
+            //如果是奇数层，则首添加
+            list.addFirst(root.val);
+        }
+
+        dfs(root.left, level + 1, result);
+        dfs(root.right, level + 1, result);
     }
 
     private TreeNode buildTree(String[] data) {

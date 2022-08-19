@@ -94,14 +94,14 @@ public class Problem8 {
             return 0;
         }
 
-        //已经到末尾，或者当前位不是数字
-        if (index == s.length() || s.charAt(index) < '0' || s.charAt(index) > '9') {
-            return 0;
-        }
-
         //去除前导0
         while (index < s.length() && s.charAt(index) == '0') {
             index++;
+        }
+
+        //已经到末尾，或者当前位不是数字
+        if (index == s.length() || s.charAt(index) < '0' || s.charAt(index) > '9') {
+            return 0;
         }
 
         int result = 0;
@@ -110,14 +110,14 @@ public class Problem8 {
             int num = s.charAt(index) - '0';
 
             //上溢出
-            if (result > Integer.MAX_VALUE / 10 ||
-                    (result == Integer.MAX_VALUE / 10 && num > Integer.MAX_VALUE % 10)) {
+            if (sign == 1 && result > Integer.MAX_VALUE / 10 ||
+                    (result == Integer.MAX_VALUE / 10 && num >= Integer.MAX_VALUE % 10)) {
                 return Integer.MAX_VALUE;
             }
 
             //下溢出
-            if (result < Integer.MIN_VALUE / 10 ||
-                    (result == Integer.MIN_VALUE / 10 && num > -(Integer.MIN_VALUE % 10))) {
+            if (sign == -1 && result < Integer.MIN_VALUE / 10 ||
+                    (result == Integer.MIN_VALUE / 10 && num >= -(Integer.MIN_VALUE % 10))) {
                 return Integer.MIN_VALUE;
             }
 

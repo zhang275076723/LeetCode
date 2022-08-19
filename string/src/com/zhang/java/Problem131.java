@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/6/23 8:39
  * @Author zsy
- * @Description 分割回文串 类比Problem5、Problem234、Problem647
+ * @Description 分割回文串 类比Problem5、Problem234、Problem329、Problem647
  * 给你一个字符串 s，请你将 s 分割成一些子串，使每个子串都是 回文串 。
  * 返回 s 所有可能的分割方案。
  * 回文串 是正着读和反着读都一样的字符串。
@@ -32,7 +32,7 @@ public class Problem131 {
      * dp[i][j]：s[i]-s[j]是否是回文串
      * dp[i][j] = false (s[i] != s[j])
      * dp[i][j] = true  (s[i] == s[j] && dp[i+1][j-1] == true)
-     * 时间复杂度O(n*2^n)，空间复杂度O(n^2) (最坏有2^(n-1)中可能，每种可能O(n)放入结果集合，栈深度O(n)，dp数组O(n^2))
+     * 时间复杂度O(n*2^n)，空间复杂度O(n^2) (最坏有2^(n-1)种可能，每种可能需要O(n)放入结果集合，栈深度O(n)，dp数组O(n^2))
      *
      * @param s
      * @return
@@ -72,7 +72,6 @@ public class Problem131 {
         if (t == s.length()) {
             //不能写为result.add(list)，因为传入的是引用，当list修改之后，result中的结果也会修改
             result.add(new ArrayList<>(list));
-
             return;
         }
 

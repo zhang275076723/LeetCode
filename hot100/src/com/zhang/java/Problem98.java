@@ -34,7 +34,6 @@ public class Problem98 {
 //        String[] data = {"5", "1", "4", "null", "null", "3", "6"};
         String[] data = {"5", "4", "6", "null", "null", "3", "7"};
         TreeNode root = problem98.buildTree(data);
-
         System.out.println(problem98.isValidBST(root));
         System.out.println(problem98.isValidBST2(root));
     }
@@ -86,7 +85,6 @@ public class Problem98 {
             }
 
             preVal = node.val;
-
             node = node.right;
         }
 

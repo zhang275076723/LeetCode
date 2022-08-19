@@ -5,8 +5,8 @@ import java.util.*;
 /**
  * @Date 2022/6/15 10:05
  * @Author zsy
- * @Description 二叉树的层序遍历 类比Problem103、Offer32、Offer32_3 同Offer32_2
- * 给你二叉树的根节点 root ，返回其节点值的 层序遍历 。（即逐层地，从左到右访问所有节点）。
+ * @Description 二叉树的层序遍历 类比Problem103、Problem107、Offer32、Offer32_3 同Offer32_2
+ * 给你二叉树的根节点 root ，返回其节点值的 层序遍历。（即逐层地，从左到右访问所有节点）。
  * 输入：root = [3,9,20,null,null,15,7]
  * 输出：[[3],[9,20],[15,7]]
  * <p>
@@ -24,13 +24,13 @@ public class Problem102 {
         Problem102 problem102 = new Problem102();
         String[] data = {"3", "9", "20", "null", "null", "15", "7"};
         TreeNode root = problem102.buildTree(data);
-//        List<List<Integer>> list = problem102.levelOrder(root);
-        List<List<Integer>> list = problem102.levelOrder2(root);
-        System.out.println(list);
+        System.out.println(problem102.levelOrder(root));
+        System.out.println(problem102.levelOrder2(root));
+        System.out.println(problem102.levelOrder3(root));
     }
 
     /**
-     * 使用size统计树每行元素的个数
+     * bfs，使用size统计树每行元素的个数
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -69,7 +69,7 @@ public class Problem102 {
     }
 
     /**
-     * 使用两个队列
+     * bfs，使用两个队列
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -118,6 +118,42 @@ public class Problem102 {
         }
 
         return result;
+    }
+
+    /**
+     * dfs
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param root
+     * @return
+     */
+    public List<List<Integer>> levelOrder3(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+
+        List<List<Integer>> result = new ArrayList<>();
+
+        dfs(root, 0, result);
+
+        return result;
+    }
+
+    private void dfs(TreeNode root, int level, List<List<Integer>> result) {
+        if (root == null) {
+            return;
+        }
+
+        //每行第一次访问，添加list集合
+        if (result.size() <= level) {
+            result.add(new ArrayList<>());
+        }
+
+        List<Integer> list = result.get(level);
+        list.add(root.val);
+
+        dfs(root.left, level + 1, result);
+        dfs(root.right, level + 1, result);
     }
 
     private TreeNode buildTree(String[] data) {

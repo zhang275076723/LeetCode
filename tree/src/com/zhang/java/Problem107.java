@@ -3,71 +3,81 @@ package com.zhang.java;
 import java.util.*;
 
 /**
- * @Date 2022/3/21 16:41
+ * @Date 2022/8/19 9:25
  * @Author zsy
- * @Description 上到下打印二叉树 II 类比Problem103、Problem107、Offer32、Offer32_3 同Problem102
- * 从上到下按层打印二叉树，同一层的节点按从左到右的顺序打印，每一层打印到一行。
+ * @Description 二叉树的层序遍历 II 类比Problem102、Problem103、Offer32、Offer32_3、Offer32_2
+ * 给你二叉树的根节点 root ，返回其节点值 自底向上的层序遍历 。
+ * （即按从叶子节点所在层到根节点所在的层，逐层从左向右遍历）
  * <p>
- * 给定二叉树: [3, 9, 20, null, null, 15, 7]
- * 返回其层次遍历结果：[[3], [9,20], [15,7]]
+ * 输入：root = [3,9,20,null,null,15,7]
+ * 输出：[[15,7],[9,20],[3]]
+ * <p>
+ * 输入：root = [1]
+ * 输出：[[1]]
+ * <p>
+ * 输入：root = []
+ * 输出：[]
+ * <p>
+ * 树中节点数目在范围 [0, 2000] 内
+ * -1000 <= Node.val <= 1000
  */
-public class Offer32_2 {
+public class Problem107 {
     public static void main(String[] args) {
-        Offer32_2 offer32_2 = new Offer32_2();
+        Problem107 problem107 = new Problem107();
         String[] data = {"3", "9", "20", "null", "null", "15", "7"};
-        TreeNode root = offer32_2.buildTree(data);
-        System.out.println(offer32_2.levelOrder(root));
-        System.out.println(offer32_2.levelOrder2(root));
-        System.out.println(offer32_2.levelOrder3(root));
+        TreeNode root = problem107.buildTree(data);
+        System.out.println(problem107.levelOrderBottom(root));
+        System.out.println(problem107.levelOrderBottom2(root));
+        System.out.println(problem107.levelOrderBottom3(root));
     }
 
     /**
-     * 使用size记录数每行元素的个数
-     *  时间复杂度O(n)，空间复杂度O(n)
+     * bfs，使用size统计树每行元素的个数
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
      */
-    public List<List<Integer>> levelOrder(TreeNode root) {
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
         if (root == null) {
             return new ArrayList<>();
         }
 
         List<List<Integer>> result = new ArrayList<>();
         Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
+        queue.offer(root);
 
         while (!queue.isEmpty()) {
             List<Integer> list = new ArrayList<>();
             int size = queue.size();
 
             while (size > 0) {
-                TreeNode node = queue.remove();
+                TreeNode node = queue.poll();
                 size--;
                 list.add(node.val);
 
                 if (node.left != null) {
-                    queue.add(node.left);
+                    queue.offer(node.left);
                 }
                 if (node.right != null) {
-                    queue.add(node.right);
+                    queue.offer(node.right);
                 }
             }
 
-            result.add(list);
+            result.add(0, list);
         }
 
         return result;
     }
 
     /**
-     * 使用两个队列
+     * bfs，使用两个队列
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
      */
-    public List<List<Integer>> levelOrder2(TreeNode root) {
+    public List<List<Integer>> levelOrderBottom2(TreeNode root) {
         if (root == null) {
             return new ArrayList<>();
         }
@@ -75,38 +85,38 @@ public class Offer32_2 {
         List<List<Integer>> result = new ArrayList<>();
         Queue<TreeNode> queue1 = new LinkedList<>();
         Queue<TreeNode> queue2 = new LinkedList<>();
-        queue1.add(root);
+        queue1.offer(root);
 
         while (!queue1.isEmpty() || !queue2.isEmpty()) {
             List<Integer> list = new ArrayList<>();
 
             if (!queue1.isEmpty()) {
                 while (!queue1.isEmpty()) {
-                    TreeNode node = queue1.remove();
+                    TreeNode node = queue1.poll();
                     list.add(node.val);
 
                     if (node.left != null) {
-                        queue2.add(node.left);
+                        queue2.offer(node.left);
                     }
                     if (node.right != null) {
-                        queue2.add(node.right);
+                        queue2.offer(node.right);
                     }
                 }
             } else {
                 while (!queue2.isEmpty()) {
-                    TreeNode node = queue2.remove();
+                    TreeNode node = queue2.poll();
                     list.add(node.val);
 
                     if (node.left != null) {
-                        queue1.add(node.left);
+                        queue1.offer(node.left);
                     }
                     if (node.right != null) {
-                        queue1.add(node.right);
+                        queue1.offer(node.right);
                     }
                 }
             }
 
-            result.add(list);
+            result.add(0, list);
         }
 
         return result;
@@ -119,37 +129,34 @@ public class Offer32_2 {
      * @param root
      * @return
      */
-    public List<List<Integer>> levelOrder3(TreeNode root) {
+    public List<List<Integer>> levelOrderBottom3(TreeNode root) {
         if (root == null) {
             return new ArrayList<>();
         }
 
         List<List<Integer>> result = new ArrayList<>();
 
-        backtrack(root, 0, result);
+        dfs(root, 0, result);
 
         return result;
     }
 
-    /**
-     * @param root   当前根节点
-     * @param level  当前树的层数
-     * @param result 结果集合
-     */
-    public void backtrack(TreeNode root, int level, List<List<Integer>> result) {
+    private void dfs(TreeNode root, int level, List<List<Integer>> result) {
         if (root == null) {
             return;
         }
 
+        //每行第一次访问，添加list集合，需要头添加
         if (result.size() <= level) {
-            result.add(new ArrayList<>());
+            result.add(0, new ArrayList<>());
         }
 
-        List<Integer> list = result.get(level);
+        //每次获取result中的第result.size() - level - 1个list
+        List<Integer> list = result.get(result.size() - level - 1);
         list.add(root.val);
 
-        backtrack(root.left, level + 1, result);
-        backtrack(root.right, level + 1, result);
+        dfs(root.left, level + 1, result);
+        dfs(root.right, level + 1, result);
     }
 
     private TreeNode buildTree(String[] data) {
@@ -190,8 +197,17 @@ public class Offer32_2 {
         TreeNode left;
         TreeNode right;
 
-        TreeNode(int x) {
-            val = x;
+        TreeNode() {
+        }
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
         }
     }
 }

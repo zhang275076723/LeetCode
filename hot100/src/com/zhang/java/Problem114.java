@@ -33,7 +33,7 @@ public class Problem114 {
     }
 
     /**
-     * 前序遍历树，将节点放在集合中，再按照顺序连接节点
+     * 前序遍历，将节点放在集合中，再按照顺序连接节点
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -214,7 +214,7 @@ public class Problem114 {
         }
     }
 
-    public class TreeNode {
+    public static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/1 11:57
  * @Author zsy
- * @Description 从前序与中序遍历序列构造二叉树 同Offer7、Offer33
+ * @Description 从前序与中序遍历序列构造二叉树 类比Problem106、Offer33 同Offer7
  * 给定两个整数数组 preorder 和 inorder ，
  * 其中 preorder 是二叉树的先序遍历， inorder 是同一棵树的中序遍历，请构造二叉树并返回其根节点。
  * <p>
@@ -33,11 +33,12 @@ public class Problem105 {
     }
 
     /**
+     * 分治
      * 1、通过【前序遍历列表】确定【根节点 (root)】和【中序遍历列表】中的【根节点索引 (inorderRootIndex)】
      * 2、将【前序遍历列表】的节点分割成【左节点的前序遍历列表】和【右节点的前序遍历列表】
      * 2、将【中序遍历列表】的节点分割成【左节点的中序遍历列表】和【右节点的中序遍历列表】
      * 3、递归寻找【左分支节点】中的【根节点】和 【右分支节点】中的【根节点】
-     * 时间复杂度O(n)，空间复杂度O(n) (哈希表需要O(n)的空间)
+     * 时间复杂度O(n)，空间复杂度O(n) (哈希表需要O(n)的空间，栈的深度平均为O(logn)，最差为O(n))
      *
      * @param preorder
      * @param inorder
@@ -48,16 +49,15 @@ public class Problem105 {
             return null;
         }
 
-        int length = preorder.length;
         //key：节点值，value：节点在中序遍历数组的索引下标，在O(1)时间，定位中序遍历数组中根节点的索引
         Map<Integer, Integer> map = new HashMap<>();
 
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < inorder.length; i++) {
             map.put(inorder[i], i);
         }
 
         return buildTree(preorder, inorder, map,
-                0, length - 1, 0, length - 1);
+                0, preorder.length - 1, 0, inorder.length - 1);
     }
 
     /**
@@ -72,26 +72,24 @@ public class Problem105 {
      */
     private TreeNode buildTree(int[] preorder, int[] inorder, Map<Integer, Integer> map,
                                int preorderLeft, int preorderRight, int inorderLeft, int inorderRight) {
-        //当前数组的长度
-        int len1 = preorderRight - preorderLeft + 1;
-        int len2 = inorderRight - inorderLeft + 1;
-        if (len1 <= 0 || len2 <= 0) {
+        if (preorderLeft>preorderRight){
             return null;
         }
 
-        int rootValue = preorder[preorderLeft];
-        TreeNode root = new TreeNode(rootValue);
+        //前序遍历数组中根节点索引
+        int preorderRootIndex = preorderLeft;
+        //中序遍历数组中根节点索引
+        int inorderRootIndex = map.get(preorder[preorderRootIndex]);
+        //左子树长度
+        int length = inorderRootIndex - inorderLeft;
 
-        //中序遍历根节点索引
-        int inorderRootIndex = map.get(rootValue);
-        //左子树数组长度
-        int leftLen = inorderRootIndex - inorderLeft;
+        TreeNode root = new TreeNode(preorder[preorderRootIndex]);
 
         root.left = buildTree(preorder, inorder, map,
-                preorderLeft + 1, preorderLeft + leftLen,
+                preorderLeft + 1, preorderLeft + length,
                 inorderLeft, inorderRootIndex - 1);
         root.right = buildTree(preorder, inorder, map,
-                preorderLeft + leftLen + 1, preorderRight,
+                preorderLeft + length + 1, preorderRight,
                 inorderRootIndex + 1, inorderRight);
 
         return root;
@@ -108,6 +106,7 @@ public class Problem105 {
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
             System.out.println(node.val);
+
             if (node.left != null) {
                 queue.offer(node.left);
             }
