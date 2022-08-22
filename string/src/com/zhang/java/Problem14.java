@@ -170,15 +170,15 @@ public class Problem14 {
          * @param str
          */
         public void insert(String str) {
+            //得到根节点
             Trie node = this;
-            char[] c = str.toCharArray();
 
-            for (int i = 0; i < c.length; i++) {
-                if (node.children.get(c[i]) == null) {
-                    node.children.put(c[i], new Trie());
+            for (char c : str.toCharArray()) {
+                if (node.children.get(c) == null) {
+                    node.children.put(c, new Trie());
                 }
 
-                node = node.children.get(c[i]);
+                node = node.children.get(c);
             }
 
             node.isEnd = true;

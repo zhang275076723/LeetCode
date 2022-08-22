@@ -16,16 +16,6 @@ import java.util.*;
  * 还需要返回链表中的第一个节点的指针。
  */
 public class Offer36 {
-    /**
-     * treeToDoublyList2中，当前节点的前驱节点
-     */
-    private Node pre;
-
-    /**
-     * treeToDoublyList2中，双向链表的头结点
-     */
-    private Node head;
-
     public static void main(String[] args) {
         Offer36 offer36 = new Offer36();
         String[] data = {"4", "2", "5", "1", "3"};
@@ -48,7 +38,7 @@ public class Offer36 {
     }
 
     /**
-     * 中序遍历将节点保存在集合中，再重新赋值左右指针，构建双向链表
+     * 中序遍历，将节点保存在集合中，再按照中序遍历顺序重新赋值左右指针，构建双向链表
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -59,41 +49,29 @@ public class Offer36 {
             return null;
         }
 
-        List<Node> nodeList = new ArrayList<>();
+        List<Node> list = new ArrayList<>();
 
-        inorder(root, nodeList);
+        inorder(root, list);
 
+        Node head = list.remove(0);
+        Node pre = head;
         Node node;
-        Node preNode;
-        Node nextNode;
 
-        //从中序遍历得到的集合中调整左右指针，构建双向链表
-        for (int i = 0; i < nodeList.size(); i++) {
-            node = nodeList.get(i);
-
-            //第一个节点的前驱是最后一个节点
-            if (i == 0) {
-                preNode = nodeList.get(nodeList.size() - 1);
-            } else {
-                preNode = nodeList.get(i - 1);
-            }
-
-            //最后一个节点的后继是第一个节点
-            if (i == nodeList.size() - 1) {
-                nextNode = nodeList.get(0);
-            } else {
-                nextNode = nodeList.get(i + 1);
-            }
-
-            node.left = preNode;
-            node.right = nextNode;
+        while (!list.isEmpty()) {
+            node = list.remove(0);
+            pre.right = node;
+            node.left = pre;
+            pre = node;
         }
 
-        return nodeList.get(0);
+        //连接首尾节点
+        pre.right = head;
+        head.left = pre;
+
+        return head;
     }
 
     /**
-     * 递归
      * 中序遍历，使用两个指针pre和head，pre指向当前节点的前驱节点，head指向头节点
      * 时间复杂度O(n)，空间复杂度O(n)
      *
@@ -105,45 +83,61 @@ public class Offer36 {
             return null;
         }
 
-        inorder2(root);
+        Stack<Node> stack = new Stack<>();
+        //头结点
+        Node head = null;
+        //当前节点的前驱节点
+        Node pre = null;
+        Node node = root;
 
-        //连接首尾指针，构成双向链表
-        head.left = pre;
+        while (!stack.isEmpty() || node != null) {
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+
+            node = stack.pop();
+
+            //pre为空，则当前节点是头结点
+            if (pre == null) {
+                head = node;
+            } else {
+                //pre不为空，建立当前节点和前驱节点的双链表关系
+                pre.right = node;
+                node.left = pre;
+            }
+
+            //更新前驱节点
+            pre = node;
+            //更新当前节点
+            node = node.right;
+        }
+
+        //连接首尾节点
         pre.right = head;
+        head.left = pre;
 
         return head;
     }
 
-    public void inorder(Node root, List<Node> nodeList) {
+    private void inorder(Node root, List<Node> list) {
         if (root == null) {
             return;
         }
 
-        inorder(root.left, nodeList);
-        nodeList.add(root);
-        inorder(root.right, nodeList);
-    }
+        Stack<Node> stack = new Stack<>();
+        Node node = root;
 
-    public void inorder2(Node root) {
-        if (root == null) {
-            return;
+        while (!stack.isEmpty() || node != null) {
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+
+            node = stack.pop();
+            list.add(node);
+            node = node.right;
         }
-
-        inorder2(root.left);
-
-        //pre为空，则说明是第一个节点，即头结点
-        if (pre == null) {
-            head = root;
-        } else {
-            //pre不为空，则说明是中间的节点，pre保存当前节点的上一个节点
-            pre.right = root;
-            root.left = pre;
-        }
-
-        //更新pre
-        pre = root;
-
-        inorder2(root.right);
     }
 
     private Node buildTree(String[] data) {

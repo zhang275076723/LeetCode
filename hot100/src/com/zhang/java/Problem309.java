@@ -29,14 +29,13 @@ public class Problem309 {
 
     /**
      * 动态规划
-     * dp[i]：到price[i]那天的最大利润
-     * dp[i][0]：到price[i]那天，持有一只股票的最大利润
-     * dp[i][1]：到price[i]那天，不持有股票，且处于冷冻期的最大利润
-     * dp[i][2]：到price[i]那天，不持有股票，且不处于冷冻期的最大利润
-     * dp[i][0] = max(dp[i-1][0], dp[i-1][2] - prices[i])
-     * dp[i][1] = dp[i-1][0] + prices[i]
-     * dp[i][2] = max(dp[i-1][1], dp[i-1][2])
-     * dp[i] = max(dp[i][0], dp[i][1], dp[i][2])
+     * dp1[i]：到price[i]那天，持有一只股票的最大利润
+     * dp2[i]：到price[i]那天，不持有股票，且处于冷冻期的最大利润
+     * dp3[i]：到price[i]那天，不持有股票，且不处于冷冻期的最大利润
+     * dp1[i] = max(dp1[i-1], dp3[i-1] - prices[i])
+     * dp2[i] = dp1[i-1] + prices[i]
+     * dp3[i] = max(dp2[i-1], dp3[i-1])
+     * 最大利润 = max(dp1[prices.length-1], dp2[prices.length-1], dp3[prices.length-1])
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param prices
@@ -47,17 +46,20 @@ public class Problem309 {
             return 0;
         }
 
-        int[][] dp = new int[prices.length][3];
-        dp[0][0] = -prices[0];
+        int[] dp1 = new int[prices.length];
+        int[] dp2 = new int[prices.length];
+        int[] dp3 = new int[prices.length];
+
+        dp1[0] = -prices[0];
 
         for (int i = 1; i < prices.length; i++) {
-            dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][2] - prices[i]);
-            dp[i][1] = dp[i - 1][0] + prices[i];
-            dp[i][2] = Math.max(dp[i - 1][1], dp[i - 1][2]);
+            dp1[i] = Math.max(dp1[i - 1], dp3[i - 1] - prices[i]);
+            dp2[i] = dp1[i - 1] + prices[i];
+            dp3[i] = Math.max(dp2[i - 1], dp3[i - 1]);
         }
 
-        return Math.max(dp[prices.length - 1][0],
-                Math.max(dp[prices.length - 1][1], dp[prices.length - 1][2]));
+        return Math.max(dp1[prices.length - 1],
+                Math.max(dp2[prices.length - 1], dp3[prices.length - 1]));
     }
 
     /**
@@ -72,21 +74,21 @@ public class Problem309 {
             return 0;
         }
 
-        int dp0 = -prices[0];
-        int dp1 = 0;
+        int dp1 = -prices[0];
         int dp2 = 0;
+        int dp3 = 0;
 
         for (int i = 1; i < prices.length; i++) {
             //因为上一次的状态会在本次中变化，所以要使用临时变量
-            int temp0 = dp0;
             int temp1 = dp1;
             int temp2 = dp2;
+            int temp3 = dp3;
 
-            dp0 = Math.max(temp0, temp2 - prices[i]);
-            dp1 = temp0 + prices[i];
-            dp2 = Math.max(temp1, temp2);
+            dp1 = Math.max(temp1, temp3 - prices[i]);
+            dp2 = temp1 + prices[i];
+            dp3 = Math.max(temp2, temp3);
         }
 
-        return Math.max(dp0, Math.max(dp1, dp2));
+        return Math.max(dp1, Math.max(dp2, dp3));
     }
 }

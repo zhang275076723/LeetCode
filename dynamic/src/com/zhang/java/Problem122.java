@@ -38,12 +38,11 @@ public class Problem122 {
 
     /**
      * 动态规划
-     * dp[i]：到price[i]那天的最大利润
-     * dp[i][0]：到price[i]那天，持有一只股票的最大利润
-     * dp[i][1]：到price[i]那天，不持有股票的最大利润
-     * dp[i][0] = max(dp[i-1][0], dp[i-1][1] - prices[i])
-     * dp[i][1] = max(dp[i-1][1], dp[i-1][0] + prices[i])
-     * dp[i] = dp[i][1] (因为到price[i]那天持有一只股票的最大利润小于到price[i]那天不持有股票的最大利润)
+     * dp1[i]：到price[i]那天，持有一只股票的最大利润
+     * dp2[i]：到price[i]那天，不持有股票的最大利润
+     * dp1[i] = max(dp1[i-1], dp2[i-1] - prices[i])
+     * dp2[i] = max(dp2[i-1], dp1[i-1] + prices[i])
+     * 最大利润 = max(dp1[prices.length-1], dp2[prices.length-1])
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param prices
@@ -54,21 +53,23 @@ public class Problem122 {
             return 0;
         }
 
-        int[][] dp = new int[prices.length][2];
-        dp[0][0] = -prices[0];
+        int[] dp1 = new int[prices.length];
+        int[] dp2 = new int[prices.length];
+
+        dp1[0] = -prices[0];
 
         for (int i = 1; i < prices.length; i++) {
-            dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] - prices[i]);
-            dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + prices[i]);
+            dp1[i] = Math.max(dp1[i - 1], dp2[i - 1] - prices[i]);
+            dp2[i] = Math.max(dp2[i - 1], dp1[i - 1] + prices[i]);
         }
 
-        return dp[prices.length - 1][1];
+        return Math.max(dp1[prices.length - 1], dp2[prices.length - 1]);
     }
 
     /**
      * 动态规划优化，滚动数组
-     * dp0：到price[i]那天，持有一只股票的最大利润
-     * dp1：到price[i]那天，不持有股票的最大利润
+     * dp1：到price[i]那天，持有一只股票的最大利润
+     * dp2：到price[i]那天，不持有股票的最大利润
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param prices
@@ -79,19 +80,19 @@ public class Problem122 {
             return 0;
         }
 
-        int dp0 = -prices[0];
-        int dp1 = 0;
+        int dp1 = -prices[0];
+        int dp2 = 0;
 
         for (int i = 1; i < prices.length; i++) {
             //因为上一次的状态会在本次中变化，所以要使用临时变量
-            int temp0 = dp0;
             int temp1 = dp1;
+            int temp2 = dp2;
 
-            dp0 = Math.max(temp0, temp1 - prices[i]);
-            dp1 = Math.max(temp1, temp0 + prices[i]);
+            dp1 = Math.max(temp1, temp2 - prices[i]);
+            dp2 = Math.max(temp2, temp1 + prices[i]);
         }
 
-        return dp1;
+        return Math.max(dp1, dp2);
     }
 
     /**

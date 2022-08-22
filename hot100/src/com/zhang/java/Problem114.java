@@ -33,7 +33,7 @@ public class Problem114 {
     }
 
     /**
-     * 前序遍历，将节点放在集合中，再按照顺序连接节点
+     * 前序遍历，将节点放在集合中，再按照先序遍历顺序连接节点为链表
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -45,8 +45,8 @@ public class Problem114 {
 
         List<TreeNode> list = new ArrayList<>();
 
-//        preorder(root, list);
-        preorder2(root, list);
+        preorder(root, list);
+//        preorder2(root, list);
 
         TreeNode node = list.remove(0);
         TreeNode nextNode;
@@ -60,7 +60,7 @@ public class Problem114 {
     }
 
     /**
-     * 找当前节点左子树的最右下节点，作为当前节点右子树的父节点，再将当前节点的左子树作为当前节点的右子树
+     * 找当前节点左子树的最右下节点，将当前节点的右子树作为最右下节点的右子树，再将当前节点的左子树作为当前节点的右子树
      * <     1                1        1            1            1
      * <    / \              /          \            \            \
      * <   2   5     =>     2     =>     2     =>     2     =>     2
@@ -82,23 +82,19 @@ public class Problem114 {
         }
 
         TreeNode node = root;
-        TreeNode nextNode;
-        //当前节点左子树的最右下节点
-        TreeNode mostRightNode;
 
         while (node != null) {
-            //找当前节点左子树的最右下节点，作为当前节点右子树的父节点，再将当前节点的左子树作为当前节点的右子树
-            if (node.left != null) {
-                nextNode = node.left;
-                mostRightNode = nextNode;
+            if (node.left != null){
+                //当前节点左子树的最右下节点
+                TreeNode mostRightNode = node.left;
 
                 while (mostRightNode.right != null) {
                     mostRightNode = mostRightNode.right;
                 }
 
                 mostRightNode.right = node.right;
+                node.right = node.left;
                 node.left = null;
-                node.right = nextNode;
             }
 
             node = node.right;
@@ -106,7 +102,7 @@ public class Problem114 {
     }
 
     /**
-     * 递归前序遍历
+     * 非递归前序遍历
      *
      * @param root
      * @param list
@@ -116,9 +112,19 @@ public class Problem114 {
             return;
         }
 
-        list.add(root);
-        preorder(root.left, list);
-        preorder(root.right, list);
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode node = root;
+
+        while (!stack.isEmpty() || node != null) {
+            while (node != null) {
+                list.add(node);
+                stack.push(node);
+                node = node.left;
+            }
+
+            node = stack.pop();
+            node = node.right;
+        }
     }
 
     /**
@@ -131,20 +137,6 @@ public class Problem114 {
         if (root == null) {
             return;
         }
-
-//        Stack<TreeNode> stack = new Stack<>();
-//        TreeNode node = root;
-//
-//        while (node != null || !stack.isEmpty()) {
-//            while (node != null) {
-//                list.add(node);
-//                stack.push(node);
-//                node = node.left;
-//            }
-//
-//            node = stack.pop();
-//            node = node.right;
-//        }
 
         Stack<TreeNode> stack = new Stack<>();
         stack.push(root);

@@ -55,7 +55,7 @@ public class Problem394 {
         Stack<Integer> numStack = new Stack<>();
         //字母串栈
         Stack<String> strStack = new Stack<>();
-        //结果字符串
+        //当前字符串
         StringBuilder sb = new StringBuilder();
         //当前字符串重复的次数
         int num = 0;

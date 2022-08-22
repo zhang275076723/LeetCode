@@ -67,7 +67,7 @@ public class Problem155 {
             stack.push(val);
 
             //等于号，考虑连续入栈两个相同的最小元素
-            if (minStack.isEmpty() || minStack.peek() >= val) {
+            if (minStack.isEmpty() || val <= minStack.peek()) {
                 minStack.push(val);
             }
         }
@@ -103,13 +103,14 @@ public class Problem155 {
         }
 
         public void push(int val) {
-            head = new Node(val, Math.min(val, head.min), head);
+            Node node = new Node(val, Math.min(val, head.min), head);
+            head = node;
         }
 
         public void pop() {
-            Node newHead = head.next;
+            Node node = head.next;
             head.next = null;
-            head = newHead;
+            head = node;
         }
 
         public int top() {

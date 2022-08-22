@@ -5,17 +5,17 @@ import java.util.*;
 /**
  * @Date 2022/6/12 9:43
  * @Author zsy
- * @Description 二叉树的直径 类比Problem124
+ * @Description 二叉树的直径 类比Problem104、Problem110、Problem124
  * 给定一棵二叉树，你需要计算它的直径长度。一棵二叉树的直径长度是任意两个结点路径长度中的最大值。
  * 这条路径可能穿过也可能不穿过根结点。
  * <p>
  * 给定二叉树
- * 1
- * / \
- * 2   3
- * / \
- * 4   5
- * 返回 3, 它的长度是路径 [4,2,1,3] 或1者 [5,2,1,3]。
+ * <        1
+ * <      / \
+ * <     2   3
+ * <    / \
+ * <   4   5
+ * 返回 3, 它的长度是路径 [4,2,1,3] 或者 [5,2,1,3]。
  * <p>
  * 注意：两结点之间的路径长度是以它们之间边的数目表示。
  */
@@ -33,6 +33,7 @@ public class Problem543 {
     }
 
     /**
+     * dfs
      * 计算每个节点的直径长度，找出最大直径长度
      * 时间复杂度O(n)，空间复杂度O(n)
      *
@@ -53,15 +54,13 @@ public class Problem543 {
         if (root == null) {
             return 0;
         }
-        if (root.left == null && root.right == null) {
-            return 1;
-        }
 
         //当前节点左子树的路径长度
         int leftMax = dfs(root.left);
         //当前节点右子树的路径长度
         int rightMax = dfs(root.right);
-        //更新二叉树的路径长度
+
+        //更新二叉树的直径长度
         max = Math.max(max, leftMax + rightMax);
 
         //返回当前节点对父节点的路径长度

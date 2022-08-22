@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * @Date 2022/4/4 9:09
  * @Author zsy
- * @Description 数组中数字出现的次数 类比Problem136、Offer56_2
+ * @Description 数组中数字出现的次数 类比Problem136、Offer56_2、Offer65
  * 一个整型数组 nums 里除两个数字之外，其他数字都出现了两次。
  * 请写程序找出这两个只出现一次的数字。
  * 要求时间复杂度是O(n)，空间复杂度是O(1)。
@@ -46,7 +46,7 @@ public class Offer56 {
         int index = 0;
 
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            if (entry.getValue() == 1) {
+            if (entry.getValue() == 0) {
                 result[index] = entry.getKey();
                 index++;
             }
@@ -68,8 +68,7 @@ public class Offer56 {
     public int[] singleNumbers2(int[] nums) {
         int result = 0;
 
-        //数组元素全部
-        // 异或，得到不同的两数的异或值
+        //数组元素全部异或，得到不同的两数的异或值
         for (int num : nums) {
             result = result ^ num;
         }
@@ -77,7 +76,7 @@ public class Offer56 {
         //不同两个数二进制某位不同的位置
         int bit = 1;
 
-        //从右往左，找到异或值result不为0的位置，说明不同的两个数在该位置值不同，依据这个可以将两数分到不同的组
+        //从右往左，找到和result相与不为0的位置，说明不同的两个数在该位置值不同，依据这个位置将两数分到不同的组
         while ((result & bit) == 0) {
             bit = bit << 1;
         }
@@ -87,7 +86,7 @@ public class Offer56 {
         int result2 = 0;
 
         for (int num : nums) {
-            //根据bit与num与的值，将数组中元素分为两组
+            //根据bit与num相与的值，将数组中元素分为两组
             if ((num & bit) == 0) {
                 result1 = result1 ^ num;
             } else {

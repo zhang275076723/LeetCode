@@ -29,52 +29,13 @@ public class Problem128 {
     }
 
     /**
-     * 哈希表，每次判断nums[i]的前一个元素nums[i]-1是否在哈希表中：
-     * 1、如果在，则可以到nums[i]-1时再进行判断
-     * 2、如果不在，则循环判断nums[i]+1是否在哈希表中，并更新最大长度
-     * 时间复杂度O(n)，空间复杂度O(n)
-     *
-     * @param nums
-     * @return
-     */
-    public int longestConsecutive(int[] nums) {
-        if (nums.length <= 1) {
-            return nums.length;
-        }
-
-        Set<Integer> set = new HashSet<>();
-        for (int num : nums) {
-            set.add(num);
-        }
-
-        int maxLen = 0;
-
-        for (int i = 0; i < nums.length; i++) {
-            int tempLen = 0;
-
-            //nums[i]的前一个元素nums[i]-1不在哈希表中
-            if (!set.contains(nums[i] - 1)) {
-                tempLen++;
-                int tempNum = nums[i];
-                while (set.contains(tempNum + 1)) {
-                    tempLen++;
-                    tempNum++;
-                }
-                maxLen = Math.max(maxLen, tempLen);
-            }
-        }
-
-        return maxLen;
-    }
-
-    /**
      * 排序+计数
      * 时间复杂度O(nlogn)，空间复杂度O(logn)
      *
      * @param nums
      * @return
      */
-    public int longestConsecutive2(int[] nums) {
+    public int longestConsecutive(int[] nums) {
         if (nums.length <= 1) {
             return nums.length;
         }
@@ -89,11 +50,54 @@ public class Problem128 {
             if (nums[i] == nums[i + 1]) {
                 continue;
             }
+
             if (nums[i] + 1 == nums[i + 1]) {
                 tempLen++;
                 maxLen = Math.max(maxLen, tempLen);
             } else {
                 tempLen = 1;
+            }
+        }
+
+        return maxLen;
+    }
+
+
+    /**
+     * 哈希表
+     * 每次判断nums[i]的前一个元素nums[i]-1是否在哈希表中：
+     * 1、如果在，则可以到nums[i]-1时再进行判断
+     * 2、如果不在，则循环判断nums[i]+1是否在哈希表中，并更新最大长度
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param nums
+     * @return
+     */
+    public int longestConsecutive2(int[] nums) {
+        if (nums.length <= 1) {
+            return nums.length;
+        }
+
+        Set<Integer> set = new HashSet<>();
+
+        for (int num : nums) {
+            set.add(num);
+        }
+
+        int maxLen = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            //nums[i]的前一个元素nums[i]-1不在哈希表中，则说明nums[i]为连续元素的第一个元素，查找最长的连续序列长度
+            if (!set.contains(nums[i] - 1)) {
+                int tempLen = 1;
+                int tempNum = nums[i];
+
+                while (set.contains(tempNum + 1)) {
+                    tempLen++;
+                    tempNum++;
+                }
+
+                maxLen = Math.max(maxLen, tempLen);
             }
         }
 
@@ -110,17 +114,21 @@ public class Problem128 {
 
     private int partition(int[] nums, int left, int right) {
         int temp = nums[left];
+
         while (left < right) {
             while (left < right && nums[right] >= temp) {
                 right--;
             }
             nums[left] = nums[right];
+
             while (left < right && nums[left] <= temp) {
                 left++;
             }
             nums[right] = nums[left];
         }
+
         nums[left] = temp;
+
         return left;
     }
 }

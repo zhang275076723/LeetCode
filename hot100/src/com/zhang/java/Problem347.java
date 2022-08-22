@@ -191,6 +191,7 @@ public class Problem347 {
         if (leftIndex < heapSize && arr[leftIndex][1] < arr[minIndex][1]) {
             minIndex = leftIndex;
         }
+
         if (rightIndex < heapSize && arr[rightIndex][1] < arr[minIndex][1]) {
             minIndex = rightIndex;
         }
@@ -199,6 +200,7 @@ public class Problem347 {
             int[] temp = arr[index];
             arr[index] = arr[minIndex];
             arr[minIndex] = temp;
+
             heapify(arr, minIndex, heapSize);
         }
     }

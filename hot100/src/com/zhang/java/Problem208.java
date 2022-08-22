@@ -1,5 +1,8 @@
 package com.zhang.java;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @Date 2022/5/14 8:48
  * @Author zsy
@@ -71,15 +74,15 @@ public class Problem208 {
          * @param word
          */
         public void insert(String word) {
-            //当前节点为根节点
+            //得到根节点
             Trie node = this;
-            char[] c = word.toCharArray();
 
-            for (int i = 0; i < c.length; i++) {
-                if (node.children[c[i] - 'a'] == null) {
-                    node.children[c[i] - 'a'] = new Trie();
+            for (char c : word.toCharArray()) {
+                if (node.children[c - 'a'] == null) {
+                    node.children[c - 'a'] = new Trie();
                 }
-                node = node.children[c[i] - 'a'];
+
+                node = node.children[c - 'a'];
             }
 
             //最后一个节点作为尾节点
@@ -97,17 +100,16 @@ public class Problem208 {
                 return false;
             }
 
-            //当前节点为根节点
+            //得到根节点
             Trie node = this;
-            char[] c = word.toCharArray();
 
-            for (int i = 0; i < c.length; i++) {
+            for (char c : word.toCharArray()) {
                 //前缀树遍历到结尾，但字符串还没有遍历到结尾，例如：字符串"app"，前缀树"ap"
-                if (node.children[c[i] - 'a'] == null) {
+                if (node.children[c - 'a'] == null) {
                     return false;
                 }
 
-                node = node.children[c[i] - 'a'];
+                node = node.children[c - 'a'];
             }
 
             //字符串匹配前缀树或者匹配前缀树的前半部分，通过node.isEnd判断是否匹配，例如：字符串"ap"，前缀树"app"
@@ -125,17 +127,16 @@ public class Problem208 {
                 return false;
             }
 
-            //当前节点为根节点
+            //得到根节点
             Trie node = this;
-            char[] c = prefix.toCharArray();
 
-            for (int i = 0; i < c.length; i++) {
+            for (char c : prefix.toCharArray()) {
                 //前缀树遍历到结尾，但字符串还没有遍历到结尾，例如：字符串"app"，前缀树"ap"
-                if (node.children[c[i] - 'a'] == null) {
+                if (node.children[c - 'a'] == null) {
                     return false;
                 }
 
-                node = node.children[c[i] - 'a'];
+                node = node.children[c - 'a'];
             }
 
             //字符串匹配前缀树或者匹配前缀树的前半部分，例如：字符串"ap"，前缀树"app"

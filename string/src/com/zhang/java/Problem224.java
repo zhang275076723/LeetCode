@@ -76,20 +76,20 @@ public class Problem224 {
 
             //数字
             if (c >= '0' && c <= '9') {
-                int temp = c - '0';
+                int num = c - '0';
                 while (i < s.length() - 1 && s.charAt(i + 1) >= '0' && s.charAt(i + 1) <= '9') {
-                    temp = temp * 10 + s.charAt(i + 1) - '0';
+                    num = num * 10 + s.charAt(i + 1) - '0';
                     i++;
                 }
-                numStack.offerLast(temp);
+                numStack.offerLast(num);
             } else if (c == '(') {
                 //左括号
                 opsStack.offerLast(c);
             } else if (c == ')') {
                 //右括号
                 while (!opsStack.isEmpty() && opsStack.peekLast() != '(') {
-                    int temp = operation(numStack, opsStack);
-                    numStack.offerLast(temp);
+                    int num = operation(numStack, opsStack);
+                    numStack.offerLast(num);
                 }
                 //左括号出栈
                 opsStack.pollLast();
@@ -101,8 +101,8 @@ public class Problem224 {
                 } else {
                     //操作符，将栈顶操作符优先级大于等于当前操作符优先级的符号出栈，数字栈出栈，进行运算，再将结果入数字栈
                     while (!opsStack.isEmpty() && getPriority(opsStack.peekLast()) >= getPriority(c)) {
-                        int temp = operation(numStack, opsStack);
-                        numStack.offerLast(temp);
+                        int num = operation(numStack, opsStack);
+                        numStack.offerLast(num);
                     }
                     //当前操作符入栈
                     opsStack.offerLast(c);
@@ -112,8 +112,8 @@ public class Problem224 {
 
         //操作符栈非空，运算符栈中剩余符号出栈运算
         while (!opsStack.isEmpty()) {
-            int temp = operation(numStack, opsStack);
-            numStack.offerLast(temp);
+            int num = operation(numStack, opsStack);
+            numStack.offerLast(num);
         }
 
         return numStack.pollLast();
@@ -214,19 +214,16 @@ public class Problem224 {
         int num2 = numStack.pollLast();
         int num1 = numStack.pollLast();
         char c = opsStack.pollLast();
-        int result;
 
         if (c == '+') {
-            result = num1 + num2;
+            return num1 + num2;
         } else if (c == '-') {
-            result = num1 - num2;
+            return num1 - num2;
         } else if (c == '*') {
-            result = num1 * num2;
+            return num1 * num2;
         } else {
-            result = num1 / num2;
+            return num1 / num2;
         }
-
-        return result;
     }
 
     /**

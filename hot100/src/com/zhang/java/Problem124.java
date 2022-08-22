@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/3 9:03
  * @Author zsy
- * @Description 二叉树中的最大路径和 类比Problem543
+ * @Description 二叉树中的最大路径和 类比Problem104、Problem110、Problem543
  * 路径 被定义为一条从树中任意节点出发，沿父节点-子节点连接，达到任意节点的序列。
  * 同一个节点在一条路径序列中 至多出现一次 。该路径 至少包含一个 节点，且不一定经过根节点。
  * 路径和 是路径中各节点值的总和。
@@ -36,6 +36,7 @@ public class Problem124 {
     }
 
     /**
+     * dfs
      * 计算每一个节点的最大贡献，即为最大路径节点值之和
      * 时间复杂度O(n)，空间复杂度O(n)
      *
@@ -57,10 +58,11 @@ public class Problem124 {
             return 0;
         }
 
-        //当前节点左子树的贡献，如果是负数，则贡献为0，表示不选左子树路径
+        //当前节点左子树的最大路径长度，如果是负数，则为0，表示不选左子树路径
         int leftMax = Math.max(0, dfs(root.left));
-        //当前节点右子树的贡献，如果是负数，则贡献为0，表示不选右子树路径
+        //当前节点右子树的最大路径长度，如果是负数，则为0，表示不选右子树路径
         int rightMax = Math.max(0, dfs(root.right));
+
         //更新最大路径节点值之和
         max = Math.max(max, root.val + leftMax + rightMax);
 

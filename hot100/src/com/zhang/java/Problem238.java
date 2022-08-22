@@ -83,10 +83,10 @@ public class Problem238 {
             result[i] = result[i - 1] * nums[i - 1];
         }
 
-        int right = 1;
+        int right = nums[nums.length - 1];
 
         //右前缀乘积
-        for (int i = nums.length - 1; i >= 0; i--) {
+        for (int i = nums.length - 2; i >= 0; i--) {
             result[i] = result[i] * right;
             right = right * nums[i];
         }
