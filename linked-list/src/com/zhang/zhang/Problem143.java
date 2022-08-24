@@ -31,7 +31,7 @@ public class Problem143 {
     }
 
     /**
-     * 先使用双指针找到中间位置，反转后半边链表，最后前半边链表和后半边链表合并
+     * 快慢指针找到中间位置，反转后半部分链表，合并前半边链表和后半边链表
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param head
@@ -50,23 +50,24 @@ public class Problem143 {
             fast = fast.next.next;
         }
 
-        //后半边链表反转
-        ListNode head2 = reverse(slow.next);
-
-        //前半边链表的尾结点指向null
+        ListNode head2 = slow.next;
+        //断开链表，分为两个链表
         slow.next = null;
+
+        //后半边链表反转
+        head2 = reverse(head2);
 
         //前半边链表和后半边链表合并
         ListNode node1 = head;
         ListNode node2 = head2;
         ListNode nextNode1;
         ListNode nextNode2;
-        
+
         while (node1 != null && node2 != null) {
             nextNode1 = node1.next;
             nextNode2 = node2.next;
-            node2.next = nextNode1;
             node1.next = node2;
+            node2.next = nextNode1;
             node1 = nextNode1;
             node2 = nextNode2;
         }

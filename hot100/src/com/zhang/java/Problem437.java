@@ -40,7 +40,7 @@ public class Problem437 {
     }
 
     /**
-     * 双重递归，遍历每个节点，对每个节点进行dfs，因为节点有负数，所以dfs不能剪枝
+     * 双重递归，遍历每个节点，每个节点作为根节点进行dfs，因为节点有负数，所以dfs不能剪枝
      * 时间复杂度O(n^2)，空间复杂度O(n)
      *
      * @param root
@@ -65,7 +65,6 @@ public class Problem437 {
      * 看到连续子数组，想到滑动窗口和前缀和(适合有负数的情况)
      * 遍历每个节点，在哈希表中查找前缀和为targetSum-curSum的节点个数
      * 因为节点存在负数，所以不能使用滑动窗口
-     * 哈希表：key，根节点到当前节点路径上，除当前节点之外，所有节点的前缀和；value，满足路径前缀和的个数
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -77,8 +76,8 @@ public class Problem437 {
             return 0;
         }
 
+        //前缀和哈希表：key，根节点到当前节点路径前缀和；value，满足路径前缀和key的个数
         Map<Integer, Integer> map = new HashMap<>();
-
         //用于只有一个节点，即根节点值满足为targetSum的情况
         map.put(0, 1);
 
@@ -119,21 +118,21 @@ public class Problem437 {
             return;
         }
 
-        //根节点到当前节点的路径和
+        //更新前缀和，根节点到当前节点的路径和
         preSum = preSum + root.val;
 
-        //路径和为curSum-targetSum的数量，即为路径和为targetSum的数量
+        //从前缀和哈希表中找路径和为curSum-targetSum的数量，即为路径和为targetSum的数量
         if (map.containsKey(preSum - targetSum)) {
             count2 = count2 + map.get(preSum - targetSum);
         }
 
-        //根节点到当前节点的路径和放入哈希表中
+        //当前前缀和放入前缀和哈希表中
         map.put(preSum, map.getOrDefault(preSum, 0) + 1);
 
         dfs2(root.left, targetSum, preSum, map);
         dfs2(root.right, targetSum, preSum, map);
 
-        //根节点到当前节点的路径和从哈希表中删除，因为当前分叉已经遍历结束，要遍历另一分叉，所以当前分叉的前缀和已经不适用
+        //当前前缀和从哈希表中删除，因为当前分叉已经遍历结束，要遍历另一分叉，所以当前分叉的前缀和已经不适用
         map.put(preSum, map.get(preSum) - 1);
     }
 

@@ -58,13 +58,15 @@ public class Problem141 {
         }
 
         Set<ListNode> set = new HashSet<>();
+        ListNode node = head;
 
-        while (head != null) {
-            if (set.contains(head)) {
+        while (node != null) {
+            if (set.contains(node)) {
                 return true;
             }
-            set.add(head);
-            head = head.next;
+
+            set.add(node);
+            node = node.next;
         }
 
         return false;
@@ -85,14 +87,17 @@ public class Problem141 {
 
         ListNode slow = head;
         ListNode fast = head;
+
         while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
+
             //快慢指针相遇，说明有环
             if (slow == fast) {
                 return true;
             }
         }
+
         return false;
     }
 

@@ -59,13 +59,15 @@ public class Problem142 {
         }
 
         Set<ListNode> set = new HashSet<>();
+        ListNode node = head;
 
-        while (head != null) {
-            if (set.contains(head)) {
-                return head;
+        while (node != null) {
+            if (set.contains(node)) {
+                return node;
             }
-            set.add(head);
-            head = head.next;
+
+            set.add(node);
+            node = node.next;
         }
 
         return null;
@@ -73,12 +75,13 @@ public class Problem142 {
 
     /**
      * 双指针
-     * 快指针一次移动2步，慢指针一次移动1步，如果两指针相遇则说明有环
+     * 快指针一次移动2步，慢指针一次移动1步，如果两指针相遇则说明有环，
+     * 当相遇时，其中一个指针重新指向链表头，快慢指针一次移动1步，当再次相遇时，即为链表环的第一个节点
      * 时间复杂度O(n)，空间复杂度O(1)
      * <p>
-     * 3 -> 2 -> 0 -> -4
-     * |    ^         |
-     * |   丨--------丨
+     * < 3 -> 2 -> 0 -> -4
+     * <      ^         |
+     * <     丨--------丨
      * a：链表头到链表环的第一个节点的个数(不包含环的第一个节点)
      * b：链表环的节点个数
      * f：快指针走的步数
@@ -100,22 +103,24 @@ public class Problem142 {
             return null;
         }
 
-        ListNode fast = head;
         ListNode slow = head;
+        ListNode fast = head;
 
         while (fast != null && fast.next != null) {
-            fast = fast.next.next;
             slow = slow.next;
+            fast = fast.next.next;
 
             //快慢指针相遇，说明有环
-            if (fast == slow) {
+            if (slow == fast) {
                 //快指针重新指向链表头，快慢指针每次走1步，当快慢指针再次相遇时，慢指针指向链表中环的头结点
                 fast = head;
-                while (fast != slow) {
-                    fast = fast.next;
+
+                while (slow != fast) {
                     slow = slow.next;
+                    fast = fast.next;
                 }
-                return slow;
+
+                return fast;
             }
         }
 

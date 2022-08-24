@@ -30,7 +30,8 @@ public class Problem257 {
 
     /**
      * dfs
-     * 时间复杂度O(n^2)，空间复杂度O(n) (每个节点访问一次，每次需要O(n)复制到结果集合中)
+     * 时间复杂度O(n^2)，空间复杂度O(n^2)
+     * (每个节点访问一次，每次需要O(n)复制到结果集合中，最坏递归栈深度O(n)，每层需要O(n)存储路径)
      *
      * @param root
      * @return
@@ -49,7 +50,8 @@ public class Problem257 {
 
     /**
      * bfs
-     * 时间复杂度O(n)，空间复杂度O(n^2)
+     * 时间复杂度O(n^2)，空间复杂度O(n^2)
+     * (每个节点访问一次，每次需要O(n)复制到结果集合中，最坏队列长度O(n)，队列中每个节点需要O(n)存储路径)
      *
      * @param root
      * @return
@@ -85,10 +87,12 @@ public class Problem257 {
         if (root.left == null && root.right == null) {
             //因为节点的值可能不止一位，所以需要记录原始长度，用于回溯删除
             int start = path.length();
+
             path.append(root.val);
             //当前路径复制到结果集合需要O(n)
             result.add(path.toString());
             path.delete(start, path.length());
+
             return;
         }
 

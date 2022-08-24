@@ -5,27 +5,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Date 2022/4/4 9:09
+ * @Date 2022/8/24 9:30
  * @Author zsy
- * @Description 数组中数字出现的次数 类比Problem136、Problem137、Offer56_2、Offer65 同Problem260
- * 一个整型数组 nums 里除两个数字之外，其他数字都出现了两次。
- * 请写程序找出这两个只出现一次的数字。
- * 要求时间复杂度是O(n)，空间复杂度是O(1)。
+ * @Description 只出现一次的数字 III 类比Problem136、Problem137、Offer56、Offer65 同Offer56
+ * 给定一个整数数组 nums，其中恰好有两个元素只出现一次，其余所有元素均出现两次。
+ * 找出只出现一次的那两个元素。你可以按 任意顺序 返回答案。
  * <p>
- * 输入：nums = [4,1,4,6]
- * 输出：[1,6] 或 [6,1]
+ * 输入：nums = [1,2,1,3,2,5]
+ * 输出：[3,5]
+ * 解释：[5, 3] 也是有效的答案。
  * <p>
- * 输入：nums = [1,2,10,4,1,4,3,3]
- * 输出：[2,10] 或 [10,2]
+ * 输入：nums = [-1,0]
+ * 输出：[-1,0]
  * <p>
- * 2 <= nums.length <= 10000
+ * 输入：nums = [0,1]
+ * 输出：[1,0]
+ * <p>
+ * 2 <= nums.length <= 3 * 10^4
+ * -2^31 <= nums[i] <= 2^31 - 1
+ * 除两个只出现一次的整数外，nums 中的其他数字都出现两次
  */
-public class Offer56 {
+public class Problem260 {
     public static void main(String[] args) {
-        Offer56 offer56 = new Offer56();
-        int[] nums = {1, 2, 10, 4, 1, 4, 3, 3};
-        System.out.println(Arrays.toString(offer56.singleNumbers(nums)));
-        System.out.println(Arrays.toString(offer56.singleNumbers2(nums)));
+        Problem260 problem260 = new Problem260();
+        int[] nums = {1, 2, 1, 3, 2, 5};
+        System.out.println(Arrays.toString(problem260.singleNumber(nums)));
+        System.out.println(Arrays.toString(problem260.singleNumber2(nums)));
     }
 
     /**
@@ -35,18 +40,18 @@ public class Offer56 {
      * @param nums
      * @return
      */
-    public int[] singleNumbers(int[] nums) {
+    public int[] singleNumber(int[] nums) {
         Map<Integer, Integer> map = new HashMap<>();
 
-        for (int i = 0; i < nums.length; i++) {
-            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
         }
 
         int[] result = new int[2];
         int index = 0;
 
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            if (entry.getValue() == 0) {
+            if (entry.getValue() == 1) {
                 result[index] = entry.getKey();
                 index++;
             }
@@ -56,18 +61,15 @@ public class Offer56 {
     }
 
     /**
-     * 位运算，不需要额外的空间，就要想到位运算
-     * a ^ 0 = a
-     * a ^ a = 0
-     * a ^ b = c  ==>  a ^ b ^ b = c ^ b  ==>  b ^ c = a
+     * 位运算
+     * 不使用额外的空间，就要想到位运算
      * 所有元素异或，得到不同的两个数异或结果，找出异或结果二进制不同的一位，根据这一位将数组中元素分为两部分，
      * 根据当前不同的二进制位，将数组分为两部分，分别异或，得到不同的两个数
-     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
      * @return
      */
-    public int[] singleNumbers2(int[] nums) {
+    public int[] singleNumber2(int[] nums) {
         //所有元素异或结果，即不同的两个数异或结果
         int result = 0;
 

@@ -125,10 +125,10 @@ public class Problem138 {
 
         node = head;
         Node newHead = node.next;
+        Node newNode = newHead;
 
         //断开原链表，得到新节点链表
-        while (node != null) {
-            Node newNode = node.next;
+        while (newNode != null) {
             node.next = node.next.next;
 
             if (newNode.next != null) {
@@ -136,6 +136,7 @@ public class Problem138 {
             }
 
             node = node.next;
+            newNode = newNode.next;
         }
 
         return newHead;

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/4 9:58
  * @Author zsy
- * @Description 单词拆分
+ * @Description 单词拆分 类比Problem72、Problem140
  * 给你一个字符串 s 和一个字符串列表 wordDict 作为字典。
  * 请你判断是否可以利用字典中出现的单词拼接出 s 。
  * 注意：不要求字典中出现的单词全部都使用，并且字典中的单词可以重复使用。
@@ -29,6 +29,11 @@ import java.util.*;
  * wordDict 中的所有字符串 互不相同
  */
 public class Problem139 {
+    /**
+     * 回溯中是否能由字典中单词拼出s
+     */
+    private boolean canBreak = false;
+
     public static void main(String[] args) {
         Problem139 problem139 = new Problem139();
         String s = "catsandog";
@@ -41,7 +46,7 @@ public class Problem139 {
     /**
      * 动态规划
      * dp[i]：s[0]-s[i-1]是否可以拆成wordDict中的单词
-     * dp[i] = dp[j] && (s[j]-s[i-1]是否是wordDict中的单词) (0 <= j < i)
+     * dp[i] = true (dp[j] && (s[j]-s[i-1]是否是wordDict中的单词)) (0 <= j < i)
      * 时间复杂度O(n^2)，空间复杂度O(n)
      *
      * @param s
@@ -53,15 +58,15 @@ public class Problem139 {
             return false;
         }
 
+        //从set中查询元素O(1)，比从list中查询元素O(n)速度快
+        Set<String> wordDictSet = new HashSet<>(wordDict);
         boolean[] dp = new boolean[s.length() + 1];
         dp[0] = true;
-        //从set中查询元素O(1)，比从list中查询元素速度快O(n)
-        Set<String> wordDictSet = new HashSet<>(wordDict);
 
         for (int i = 1; i <= s.length(); i++) {
             for (int j = 0; j < i; j++) {
-                //s[0]-s[j-1]可以拆分为wordDict中的单词，并且s[j]-s[i-1]是wordDict中的单词，
-                //则说明s中前i个字符可以拆分为wordDict中的单词
+                //s[0]-s[j-1]可以拆分为wordDict中的单词，s[j]-s[i-1]是wordDict中的单词，
+                //则说明字符串s中前i个字符可以拆分为wordDict中的单词
                 if (dp[j] && wordDictSet.contains(s.substring(j, i))) {
                     dp[i] = true;
                     break;
@@ -74,8 +79,8 @@ public class Problem139 {
 
     /**
      * 动态规划优化
-     * dp[i]只需要从wordDict中最长的单词开始往后遍历即可，
-     * 因为从超过wordDict中最长的单词卡死遍历，无法形成wordDict中的单词，即无法拆分
+     * i从wordDict中最短的单词开始遍历，因为小于最短单词长度，不是wordDict中的单词
+     * j从i-wordDict中最长的单词开始遍历，因为再往前s[j]-s[i-1]不是wordDict中的单词
      * 时间复杂度O(n^2)，空间复杂度O(n)
      *
      * @param s
@@ -87,23 +92,27 @@ public class Problem139 {
             return false;
         }
 
-        boolean[] dp = new boolean[s.length() + 1];
-        dp[0] = true;
         //从set中查询元素O(1)，比从list中查询元素速度快O(n)
         Set<String> wordDictSet = new HashSet<>();
         //wordDict中的最长单词长度
-        int maxWordLen = 0;
+        int maxWordLen = wordDict.get(0).length();
+        //wordDict中的最短单词长度
+        int minWordLen = wordDict.get(0).length();
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[0] = true;
 
         for (String word : wordDict) {
             wordDictSet.add(word);
             maxWordLen = Math.max(maxWordLen, word.length());
+            minWordLen = Math.min(minWordLen, word.length());
         }
 
-        for (int i = 1; i <= s.length(); i++) {
-            //从wordDict中最长的单词开始往后遍历，因为再往前不可能匹配到wordDict中的单词
+        //从最短单词开始遍历
+        for (int i = minWordLen; i <= s.length(); i++) {
+            //从wordDict中最长的单词开始遍历，因为再往前s[j]-s[i-1]不是wordDict中的单词
             for (int j = Math.max(0, i - maxWordLen); j < i; j++) {
-                //s[0]-s[j-1]可以拆分为wordDict中的单词，并且s[j]-s[i-1]是wordDict中的单词，
-                //则说明s中前i个字符可以拆分为wordDict中的单词
+                //s[0]-s[j-1]可以拆分为wordDict中的单词，s[j]-s[i-1]是wordDict中的单词，
+                //则说明字符串s中前i个字符可以拆分为wordDict中的单词
                 if (dp[j] && wordDictSet.contains(s.substring(j, i))) {
                     dp[i] = true;
                     break;

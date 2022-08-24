@@ -140,23 +140,21 @@ public class Offer57_2 {
             }
 
             sum = sum - left;
-
             left++;
         }
 
-        //这样写导致list集合变成额外的空间消耗，空间复杂度会增大
-//        int[][] result = new int[list.size()][];
-//        for (int i = 0; i < list.size(); i++) {
-//            result[i] = list.get(i);
-//        }
-//        return result;
+        int[][] result = new int[list.size()][];
 
-        return list.toArray(new int[list.size()][]);
+        for (int i = 0; i < list.size(); i++) {
+            result[i] = list.get(i);
+        }
+
+        return result;
     }
 
     /**
      * 前缀和
-     * 看到连续子数组，想到滑动窗口和前缀和(适合有负数的情况)
+     * 看到连续子数组，想到滑动窗口和前缀和(滑动窗口只适合没有负数的情况)
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param target
