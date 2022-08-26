@@ -63,7 +63,7 @@ public class Problem146 {
 
     /**
      * 哈希表+双向链表
-     * 当缓存容量满的时候，优先淘汰最近很少使用的数据，即链表尾节点
+     * 当缓存容量满的时候，优先淘汰最近最少使用的数据，即链表尾节点
      * 1、新数据直接插入到链表头
      * 2、缓存数据被命中，则将数据放到链表头
      * 3、缓存已满，则移除链表尾数据
@@ -75,90 +75,89 @@ public class Problem146 {
         //当前缓存容量
         private int curSize;
 
-        //key为缓存关键字，value为数据节点
-        private Map<Integer, LinkedListNode> cache;
+        //缓存map，在O(1)找到当前缓存节点，key：缓存关键字，value：数据节点
+        private Map<Integer, Node> cache;
 
         //链表头节点，设置链表头尾空节点，在添加节点和删除节点时，不需要进行非空判断
-        private LinkedListNode head;
+        private Node head;
 
         //链表尾节点
-        private LinkedListNode tail;
+        private Node tail;
 
         public LRUCache(int capacity) {
             this.capacity = capacity;
             curSize = 0;
-            //包括头尾空节点
+            //缓存map，在O(1)找到当前节点
             cache = new HashMap<>(capacity);
-            head = new LinkedListNode();
-            tail = new LinkedListNode();
+            //设置头尾节点，方便头插和尾移除
+            head = new Node();
+            tail = new Node();
             head.next = tail;
             tail.pre = head;
         }
 
         /**
-         * 如果key不在哈希表中，直接返回-1
-         * 如果key在哈希表中，返回该节点的value，并将该节点放到链表的头
+         * 1、如果key不在缓存map中，直接返回-1
+         * 2、如果key在缓存map中，将该节点放到链表的头，并返回该节点的value
          *
          * @param key
          * @return
          */
         public int get(int key) {
-            LinkedListNode node = cache.get(key);
+            Node node = cache.get(key);
 
-            //不在缓存中
+            //不在缓存map中
             if (node == null) {
                 return -1;
             }
 
-            //在缓存中
-            //当前节点放到链表的头
-            node.pre.next = node.next;
-            node.next.pre = node.pre;
-            node.pre = head;
-            node.next = head.next;
-            head.next.pre = node;
-            head.next = node;
+            //当前节点放到链表的头，作为最新访问
+            remove(node);
+            addFirst(node);
+
             return node.value;
         }
 
         /**
-         * 如果key不在哈希表中且链表未满，则创建节点放到缓存中，并将该节点放到链表的头
-         * 如果key不在哈希表中且链表已满，则创建节点放到缓存中，并将该节点放到链表的头，删除链表和缓存中的尾节点
-         * 如果key在哈希表中，修改该节点的value，并将该节点放到链表的头
+         * 1、如果key不在哈希表中且链表未满，创建节点放到缓存map和链表的头
+         * 2、如果key不在哈希表中且链表已满，删除缓存map和链表中的尾节点，创建节点放到缓存map和链表的头
+         * 3、如果key在缓存map中，修改该节点的value，并将该节点放到链表的头
          *
          * @param key
          * @param value
          */
         public void put(int key, int value) {
-            LinkedListNode node = cache.get(key);
+            Node node = cache.get(key);
 
-            //在缓存中
+            //在缓存map中
             if (node != null) {
                 //更新该节点的value
                 node.value = value;
-                //当前节点放到链表的头
-                node.pre.next = node.next;
-                node.next.pre = node.pre;
-                node.pre = head;
-                node.next = head.next;
-                head.next.pre = node;
-                head.next = node;
-            } else { //不在缓存中
-                node = new LinkedListNode(key, value);
-                //当前节点放到缓存中
-                cache.put(key, node);
-                curSize++;
-                //当前节点放到链表的头
-                node.pre = head;
-                node.next = head.next;
-                head.next.pre = node;
-                head.next = node;
-                //如果当前缓存容量超过缓存容量，删除链表和缓存中的尾节点
-                if (curSize > capacity) {
+
+                //当前节点放到链表的头，作为最新访问
+                remove(node);
+                addFirst(node);
+            } else {
+                //不在缓存map中
+                node = new Node(key, value);
+
+                //当前容量已满
+                if (curSize == capacity) {
                     cache.remove(tail.pre.key);
-                    tail.pre.pre.next = tail;
-                    tail.pre = tail.pre.pre;
-                    curSize--;
+
+                    //移除末尾节点，当前节点放到链表的头
+                    remove(tail.pre);
+                    addFirst(node);
+
+                    cache.put(key, node);
+                } else {
+                    //容量未满
+
+                    //当前节点放到链表的头，作为最新访问
+                    addFirst(node);
+
+                    curSize++;
+                    cache.put(key, node);
                 }
             }
         }
@@ -166,19 +165,31 @@ public class Problem146 {
         /**
          * 双向链表节点
          */
-        private static class LinkedListNode {
+        private static class Node {
             public int key;
             public int value;
-            public LinkedListNode pre;
-            public LinkedListNode next;
+            public Node pre;
+            public Node next;
 
-            public LinkedListNode() {
+            public Node() {
             }
 
-            public LinkedListNode(int key, int value) {
+            public Node(int key, int value) {
                 this.key = key;
                 this.value = value;
             }
+        }
+
+        private void addFirst(Node node) {
+            node.pre = head;
+            node.next = head.next;
+            head.next.pre = node;
+            head.next = node;
+        }
+
+        private void remove(Node node) {
+            node.pre.next = node.next;
+            node.next.pre = node.pre;
         }
     }
 }

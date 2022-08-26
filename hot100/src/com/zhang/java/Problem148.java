@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/9 9:20
  * @Author zsy
- * @Description 排序链表
+ * @Description 排序链表 类比Problem23、Problem143、Problem147
  * 给你链表的头结点 head ，请将其按 升序 排列并返回 排序后的链表 。
  * <p>
  * 输入：head = [4,2,1,3]
@@ -52,8 +52,8 @@ public class Problem148 {
 
     /**
      * 非递归归并排序，自底向上
-     * 时间复杂度O(nlogn)，空间复杂度O(1)
      * 每次合并1、2、4、8...个节点，直至链表完全有序
+     * 时间复杂度O(nlogn)，空间复杂度O(1)
      *
      * @param head
      * @return
@@ -131,21 +131,20 @@ public class Problem148 {
         //快慢指针找中间节点
         ListNode fast = head;
         ListNode slow = head;
-        ListNode preSlow = null;
 
-        while (fast != null && fast.next != null) {
+        while (fast.next != null && fast.next.next != null) {
             fast = fast.next.next;
-            preSlow = slow;
             slow = slow.next;
         }
 
         //断开链表，分为两个链表
-        preSlow.next = null;
+        ListNode tempNode = slow.next;
+        slow.next = null;
 
         //前半部分链表归并排序
         ListNode head1 = mergeSort(head);
         //后半部分链表归并排序
-        ListNode head2 = mergeSort(slow);
+        ListNode head2 = mergeSort(tempNode);
 
         //合并链表
         return merge(head1, head2);
@@ -160,7 +159,7 @@ public class Problem148 {
      */
     private ListNode merge(ListNode head1, ListNode head2) {
         //设置链表头结点，方便操作
-        ListNode head = new ListNode(0);
+        ListNode head = new ListNode();
         ListNode node = head;
 
         while (head1 != null && head2 != null) {

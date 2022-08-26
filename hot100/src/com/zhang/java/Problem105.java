@@ -72,7 +72,7 @@ public class Problem105 {
      */
     private TreeNode buildTree(int[] preorder, int[] inorder, Map<Integer, Integer> map,
                                int preorderLeft, int preorderRight, int inorderLeft, int inorderRight) {
-        if (preorderLeft>preorderRight){
+        if (preorderLeft > preorderRight) {
             return null;
         }
 

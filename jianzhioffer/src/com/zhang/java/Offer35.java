@@ -76,8 +76,9 @@ public class Offer35 {
 
         //设置每个新节点的next和random
         while (node != null) {
-            map.get(node).next = map.get(node.next);
-            map.get(node).random = map.get(node.random);
+            Node tempNode = map.get(node);
+            tempNode.next = map.get(node.next);
+            tempNode.random = map.get(node.random);
             node = node.next;
         }
 
@@ -121,21 +122,20 @@ public class Offer35 {
             node = node.next.next;
         }
 
-        Node newHead = head.next;
         node = head;
+        Node newHead = head.next;
+        Node newNode = newHead;
 
         //将链表拆分为两个链表，得到拷贝链表
-        while (node != null) {
-            Node newNode = node.next;
+        while (newNode != null) {
+            node.next = node.next.next;
 
-            if (node.next.next != null) {
-                node.next = node.next.next;
+            if (newNode.next != null) {
                 newNode.next = newNode.next.next;
-            } else {
-                node.next = null;
             }
 
             node = node.next;
+            newNode = newNode.next;
         }
 
         return newHead;

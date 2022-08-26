@@ -28,9 +28,9 @@ public class Problem416 {
 
     /**
      * 动态规划 01背包
-     * dp[i][j]：num[0]-nums[i]中是否存在和为j的方案
-     * dp[i][j] = dp[i-1][j]                         (nums[i] >= j)
-     * dp[i][j] = dp[i-1][j] || dp[i-1][j-nums[i]]   (nums[i] < j)
+     * dp[i][j]：num[0]-nums[i-1]中是否存在和为j的方案
+     * dp[i][j] = dp[i-1][j]                         (nums[i-1] >= j)
+     * dp[i][j] = dp[i-1][j] || dp[i-1][j-nums[i]]   (nums[i-1] < j)
      * 时间复杂度O(nums.length*(sum/2))，空间复杂度O(nums.length*(sum/2))
      *
      * @param nums
@@ -51,33 +51,30 @@ public class Problem416 {
             return false;
         }
 
-        boolean[][] dp = new boolean[nums.length][sum / 2 + 1];
+        boolean[][] dp = new boolean[nums.length + 1][sum / 2 + 1];
 
-        for (int i = 0; i < nums.length; i++) {
+        for (int i = 0; i <= nums.length; i++) {
             dp[i][0] = true;
         }
-        if (nums[0] <= sum / 2) {
-            dp[0][nums[0]] = true;
-        }
 
-        for (int i = 1; i < nums.length; i++) {
+        for (int i = 1; i <= nums.length; i++) {
             for (int j = 1; j <= sum / 2; j++) {
-                if (nums[i] >= j) {
+                if (nums[i - 1] > j) {
                     dp[i][j] = dp[i - 1][j];
                 } else {
-                    dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i]];
+                    dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]];
                 }
             }
         }
 
-        return dp[nums.length - 1][sum / 2];
+        return dp[nums.length][sum / 2];
     }
 
     /**
      * 动态规划优化，使用滚动数组
-     * dp[j]：nums[0]-nums[i]中是否存在和为j的方案
-     * dp[j] = dp[j]                  (nums[i] >= j)
-     * dp[j] = dp[j] || [j-nums[i]]   (nums[i] < j)
+     * dp[j]：nums[0]-nums[i-1]中是否存在和为j的方案
+     * dp[j] = dp[j]                  (nums[i-1] >= j)
+     * dp[j] = dp[j] || [j-nums[i]]   (nums[i-1] < j)
      * 时间复杂度O(nums.length*(sum/2))，空间复杂度O(sum/2)
      *
      * @param nums
@@ -101,16 +98,13 @@ public class Problem416 {
         boolean[] dp = new boolean[sum / 2 + 1];
 
         dp[0] = true;
-        if (nums[0] <= sum / 2) {
-            dp[nums[0]] = true;
-        }
 
-        for (int i = 1; i < nums.length; i++) {
+        for (int i = 1; i <= nums.length; i++) {
             //使用滚动数组需要从后往前遍历，因为当前元素会使用到前面的元素，
             //如果前面的元素修改之后，会导致后面的元素无法正确计算
-            for (int j = sum / 2; j >= 0; j--) {
-                if (nums[i] < j) {
-                    dp[j] = dp[j] || dp[j - nums[i]];
+            for (int j = sum / 2; j >= 1; j--) {
+                if (nums[i - 1] <= j) {
+                    dp[j] = dp[j] || dp[j - nums[i - 1]];
                 }
             }
         }

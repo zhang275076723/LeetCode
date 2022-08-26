@@ -5,7 +5,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2022/4/16 10:12
  * @Author zsy
- * @Description 合并K个升序链表 类比Problem21、Problem378
+ * @Description 合并K个升序链表 类比Problem21、Problem148、Problem378
  * 给你一个链表数组，每个链表都已经按升序排列。
  * 请你将所有链表合并到一个升序链表中，返回合并后的链表。
  * <p>
@@ -88,9 +88,9 @@ public class Problem23 {
         if (left < right) {
             // >> 优先级小于 + ，所以需要在使用 >> 的时候添加括号
             int mid = left + ((right - left) >> 1);
+
             ListNode list1 = mergeKLists2(lists, left, mid);
             ListNode list2 = mergeKLists2(lists, mid + 1, right);
-
             return mergeTwoLists(list1, list2);
         }
 

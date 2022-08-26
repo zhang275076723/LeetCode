@@ -99,7 +99,7 @@ public class Problem15 {
                 break;
             }
 
-            //i去重
+            //nums[i]去重
             if (i > 0 && nums[i] == nums[i - 1]) {
                 continue;
             }
@@ -111,20 +111,18 @@ public class Problem15 {
                 //三数之和等于0
                 if (nums[i] + nums[left] + nums[right] == 0) {
                     ArrayList<Integer> list = new ArrayList<>();
-
                     list.add(nums[i]);
                     list.add(nums[left]);
                     list.add(nums[right]);
-
                     result.add(list);
 
                     //left去重
-                    while (left < right && nums[left + 1] == nums[left]) {
+                    while (left < right && nums[left] == nums[left + 1]) {
                         left++;
                     }
 
                     //right去重
-                    while (left < right && nums[right - 1] == nums[right]) {
+                    while (left < right && nums[right] == nums[right - 1]) {
                         right--;
                     }
 
