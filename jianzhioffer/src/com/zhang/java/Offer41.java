@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/3/25 19:30
  * @Author zsy
- * @Description 数据流中的中位数
+ * @Description 数据流中的中位数 类比Problem155、Problem232、Offer9、Offer30、Offer59_2
  * 如何得到一个数据流中的中位数？
  * 如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。
  * 如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。
@@ -54,7 +54,7 @@ public class Offer41 {
 
         public MedianFinder() {
             maxHeap = new PriorityQueue<>((o1, o2) -> o2 - o1);
-            minHeap = new PriorityQueue<>();
+            minHeap = new PriorityQueue<>((o1, o2) -> o1 - o2);
         }
 
         /**
@@ -76,6 +76,7 @@ public class Offer41 {
 
         /**
          * 时间复杂度O(1)，空间复杂度O(1)
+         *
          * @return
          */
         public double findMedian() {

@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * @Date 2022/4/6 11:17
  * @Author zsy
- * @Description 队列的最大值 类比Problem155、Problem232、Offer9、Offer30
+ * @Description 队列的最大值 类比Problem155、Problem232、Offer9、Offer30、Offer41
  * 请定义一个队列并实现函数 max_value 得到队列里的最大值，
  * 要求函数 max_value、push_back 和 pop_front 的均摊时间复杂度都是O(1)。
  * 若队列为空，pop_front 和 max_value 需要返回 -1
@@ -36,15 +36,16 @@ public class Offer59_2 {
     }
 
     /**
-     * 使用两个队列，一个队列存放元素，另一个队列在队首存放当前队列的最大值元素，作为单调递减栈
+     * 使用两个队列
+     * 一个队列存放元素，另一个队列在队首存放当前队列的最大值元素，作为单调递减栈
      * 均摊时间复杂度O(1)，空间复杂度O(n)
      */
     public static class MaxQueue {
         //存放元素的队列
-        private Queue<Integer> queue;
+        private final Queue<Integer> queue;
 
         //存放当前队列的最大值元素，作为单调递减栈
-        private Deque<Integer> maxQueue;
+        private final Deque<Integer> maxQueue;
 
         public MaxQueue() {
             queue = new LinkedList<>();
@@ -52,7 +53,11 @@ public class Offer59_2 {
         }
 
         public int max_value() {
-            return maxQueue.isEmpty() ? -1 : maxQueue.peekFirst();
+            if (maxQueue.isEmpty()) {
+                return -1;
+            }
+
+            return maxQueue.peekFirst();
         }
 
         public void push_back(int value) {
@@ -67,17 +72,17 @@ public class Offer59_2 {
         }
 
         public int pop_front() {
-            if (!queue.isEmpty()) {
-                int value = queue.poll();
-
-                if (value == maxQueue.peekFirst()) {
-                    maxQueue.pollFirst();
-                }
-
-                return value;
+            if (queue.isEmpty()) {
+                return -1;
             }
 
-            return -1;
+            int value = queue.poll();
+
+            if (value == maxQueue.peekFirst()) {
+                maxQueue.pollFirst();
+            }
+
+            return value;
         }
     }
 }

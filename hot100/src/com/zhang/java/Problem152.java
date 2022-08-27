@@ -85,14 +85,14 @@ public class Problem152 {
 
         for (int i = 1; i < nums.length; i++) {
             //上次循环的dpMax，如果直接使用dpMax，则会修改本次要使用的dpMax
-            int tempDpMax = dpMax;
+            int tempMax = dpMax;
             //上次循环的dpMin，如果直接使用dpMin，则会修改本次要使用的dpMin
-            int tempDpMin = dpMin;
+            int tempMin = dpMin;
 
             dpMax = Math.max(nums[i],
-                    Math.max(tempDpMax * nums[i], tempDpMin * nums[i]));
+                    Math.max(tempMax * nums[i], tempMin * nums[i]));
             dpMin = Math.min(nums[i],
-                    Math.min(tempDpMax * nums[i], tempDpMin * nums[i]));
+                    Math.min(tempMax * nums[i], tempMin * nums[i]));
 
             max = Math.max(max, dpMax);
         }

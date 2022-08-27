@@ -47,9 +47,9 @@ public class Problem232 {
     }
 
     private static class MyQueue {
-        private Stack<Integer> stack1;
+        private final Stack<Integer> stack1;
 
-        private Stack<Integer> stack2;
+        private final Stack<Integer> stack2;
 
         public MyQueue() {
             stack1 = new Stack<>();

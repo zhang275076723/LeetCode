@@ -1,23 +1,26 @@
 package com.zhang.java;
 
 /**
- * @Date 2022/3/30 9:41
+ * @Date 2022/8/27 11:37
  * @Author zsy
- * @Description 丑数 类比Problem75 同Problem264
- * 我们把只包含质因子 2、3 和 5 的数称作丑数（Ugly Number）。
- * 求按从小到大的顺序的第 n 个丑数。
+ * @Description 丑数 II 类比Problem75 同Offer49
+ * 给你一个整数 n ，请你找出并返回第 n 个 丑数 。
+ * 丑数 就是只包含质因数 2、3 和/或 5 的正整数。
  * <p>
- * 输入: n = 10
- * 输出: 12
- * 解释: 1, 2, 3, 4, 5, 6, 8, 9, 10, 12 是前 10 个丑数。
+ * 输入：n = 10
+ * 输出：12
+ * 解释：[1, 2, 3, 4, 5, 6, 8, 9, 10, 12] 是由前 10 个丑数组成的序列。
  * <p>
- * 1 是丑数。
- * n 不超过1690。
+ * 输入：n = 1
+ * 输出：1
+ * 解释：1 通常被视为丑数。
+ * <p>
+ * 1 <= n <= 1690
  */
-public class Offer49 {
+public class Problem264 {
     public static void main(String[] args) {
-        Offer49 offer49 = new Offer49();
-        System.out.println(offer49.nthUglyNumber(10));
+        Problem264 problem264 = new Problem264();
+        System.out.println(problem264.nthUglyNumber(11));
     }
 
     /**
@@ -49,23 +52,21 @@ public class Offer49 {
         int k = 0;
 
         for (int l = 1; l < n; l++) {
-            //三者最小值即为当前丑数
-            int curUgly = Math.min(ugly[i] * 2, Math.min(ugly[j] * 3, ugly[k] * 5));
-            ugly[l] = curUgly;
+            ugly[l] = Math.min(ugly[i] * 2, Math.min(ugly[j] * 3, ugly[k] * 5));
 
-            //指针后移
-            if (curUgly == ugly[i] * 2) {
+            if (ugly[i] * 2 == ugly[l]) {
                 i++;
             }
 
-            if (curUgly == ugly[j] * 3) {
+            if (ugly[j] * 3 == ugly[l]) {
                 j++;
             }
 
-            if (curUgly == ugly[k] * 5) {
+            if (ugly[k] * 5 == ugly[l]) {
                 k++;
             }
         }
+
 
         return ugly[n - 1];
     }

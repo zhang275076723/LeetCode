@@ -6,7 +6,7 @@ import java.util.Stack;
 /**
  * @Date 2022/3/20 16:41
  * @Author zsy
- * @Description 包含min函数的栈 类比Problem232、Offer9、Offer59_2 同Problem155
+ * @Description 包含min函数的栈 类比Problem232、Offer9、Offer41、Offer59_2 同Problem155
  * 定义栈的数据结构，请在该类型中实现一个能够得到栈的最小元素的 min 函数在该栈中，
  * 调用 min、push 及 pop 的时间复杂度都是 O(1)。
  * <p>
@@ -53,7 +53,7 @@ public class Offer30 {
             stack.push(val);
 
             //等于号，考虑连续入栈两个相同的最小元素
-            if (minStack.isEmpty() || minStack.peek() >= val) {
+            if (minStack.isEmpty() || val <= minStack.peek()) {
                 minStack.push(val);
             }
         }
@@ -88,8 +88,8 @@ public class Offer30 {
             head = new Node(Integer.MAX_VALUE, Integer.MAX_VALUE, null);
         }
 
-        public void push(int val) {
-            head = new Node(val, Math.min(val, head.min), head);
+        public void push(int value) {
+            head = new Node(value, Math.min(value, head.min), head);
         }
 
         public void pop() {
@@ -99,7 +99,7 @@ public class Offer30 {
         }
 
         public int top() {
-            return head.val;
+            return head.value;
         }
 
         public int min() {
@@ -107,12 +107,12 @@ public class Offer30 {
         }
 
         private static class Node {
-            int val;
+            int value;
             int min;
             Node next;
 
-            Node(int val, int min, Node next) {
-                this.val = val;
+            Node(int value, int min, Node next) {
+                this.value = value;
                 this.min = min;
                 this.next = next;
             }

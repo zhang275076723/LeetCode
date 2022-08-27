@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2022/5/10 9:33
  * @Author zsy
- * @Description 最小栈 类比Problem232、Offer9、Offer59_2 同Offer30
+ * @Description 最小栈 类比Problem232、Offer9、Offer41、Offer59_2 同Offer30
  * 设计一个支持 push ，pop ，top 操作，并能在常数时间内检索到最小元素的栈。
  * 实现 MinStack 类:
  * MinStack() 初始化堆栈对象。
@@ -48,15 +48,16 @@ public class Problem155 {
     }
 
     /**
-     * 两个栈，一个栈保存所有元素，另一个栈在栈顶保存当前栈的最小值元素，作为单调递减栈
+     * 两个栈
+     * 一个栈保存所有元素，另一个栈在栈顶保存当前栈的最小值元素，作为单调递减栈
      * 均摊时间复杂度O(1)，空间复杂度O(n)
      */
     private static class MinStack {
         //保存所有元素的栈
-        private Stack<Integer> stack;
+        private final Stack<Integer> stack;
 
         //栈顶保存当前栈的最小值元素的栈，单调递减栈
-        private Stack<Integer> minStack;
+        private final Stack<Integer> minStack;
 
         public MinStack() {
             stack = new Stack<>();
@@ -102,8 +103,8 @@ public class Problem155 {
             head = new Node(Integer.MAX_VALUE, Integer.MAX_VALUE, null);
         }
 
-        public void push(int val) {
-            Node node = new Node(val, Math.min(val, head.min), head);
+        public void push(int value) {
+            Node node = new Node(value, Math.min(value, head.min), head);
             head = node;
         }
 
@@ -114,7 +115,7 @@ public class Problem155 {
         }
 
         public int top() {
-            return head.val;
+            return head.value;
         }
 
         public int getMin() {
@@ -122,12 +123,12 @@ public class Problem155 {
         }
 
         private static class Node {
-            int val;
+            int value;
             int min;
             Node next;
 
-            Node(int val, int min, Node next) {
-                this.val = val;
+            Node(int value, int min, Node next) {
+                this.value = value;
                 this.min = min;
                 this.next = next;
             }
