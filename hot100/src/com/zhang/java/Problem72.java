@@ -35,6 +35,7 @@ public class Problem72 {
         String word1 = "intention";
         String word2 = "execution";
         System.out.println(problem72.minDistance(word1, word2));
+
     }
 
     /**
@@ -86,7 +87,8 @@ public class Problem72 {
                     dp[i][j] = dp[i - 1][j - 1];
                 } else {
                     //取3种情况的最小值+1,，即为所需的最少操作数
-                    dp[i][j] = Math.min(dp[i - 1][j - 1], Math.min(dp[i - 1][j], dp[i][j - 1])) + 1;
+                    dp[i][j] = Math.min(dp[i - 1][j - 1],
+                            Math.min(dp[i - 1][j], dp[i][j - 1])) + 1;
                 }
             }
         }

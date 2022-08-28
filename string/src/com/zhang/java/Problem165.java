@@ -32,6 +32,11 @@ package com.zhang.java;
  * 输入：version1 = "0.1", version2 = "1.1"
  * 输出：-1
  * 解释：version1 中下标为 0 的修订号是 "0"，version2 中下标为 0 的修订号是 "1" 。0 < 1，所以 version1 < version2
+ * <p>
+ * 1 <= version1.length, version2.length <= 500
+ * version1 和 version2 仅包含数字和 '.'
+ * version1 和 version2 都是 有效版本号
+ * version1 和 version2 的所有修订号都可以存储在 32 位整数 中
  */
 public class Problem165 {
     public static void main(String[] args) {
@@ -43,13 +48,15 @@ public class Problem165 {
     }
 
     /**
-     * 字符串分割，时间复杂度为O(max(m,n))，空间复杂的为O(m+n)
+     * 字符串分割
+     * 时间复杂度为O(max(m,n))，空间复杂的为O(m+n)
      *
      * @param version1
      * @param version2
      * @return
      */
     public int compareVersion(String version1, String version2) {
+        //如果按照'|'、'.'分割，需要添加转义，"\\|"、"\\."
         String[] split1 = version1.split("\\.");
         String[] split2 = version2.split("\\.");
 
@@ -71,11 +78,14 @@ public class Problem165 {
                 return -1;
             }
         }
+
         return 0;
     }
 
     /**
-     * 双指针，在分割版本号的同时解析出修订号进行比较，时间复杂度为O(max(m,n))，空间复杂的为O(1)
+     * 双指针
+     * 在分割版本号的同时解析出修订号进行比较
+     * 时间复杂度为O(max(m,n))，空间复杂的为O(1)
      *
      * @param version1
      * @param version2
@@ -93,6 +103,7 @@ public class Problem165 {
                 value1 = value1 * 10 + version1.charAt(i) - '0';
                 i++;
             }
+
             //跳过'.'
             i++;
 
@@ -100,6 +111,7 @@ public class Problem165 {
                 value2 = value2 * 10 + version2.charAt(j) - '0';
                 j++;
             }
+
             //跳过'.'
             j++;
 

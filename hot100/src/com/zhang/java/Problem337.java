@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/30 15:53
  * @Author zsy
- * @Description 打家劫舍 III 类比Problem198、Probelm213
+ * @Description 打家劫舍 III 类比Problem198、Problem213、Problem543
  * 小偷又发现了一个新的可行窃的地区。这个地区只有一个入口，我们称之为 root 。
  * 除了 root 之外，每栋房子有且只有一个“父“房子与之相连。
  * 一番侦察之后，聪明的小偷意识到“这个地方的所有房屋的排列类似于一棵二叉树”。
@@ -37,21 +37,21 @@ public class Problem337 {
      * 选根节点(不能选根节点的左右子节点) 和 不选根节点(可选可不选根节点的左右子节点)，两种情况的最大值
      * result[0]：不选根节点的最大值
      * result[1]；选节点的最大值
-     * 时间复杂度O(n)，空间复杂度O(n)，相当于一次后序遍历
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
      */
     public int rob(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
         int[] result = dfs(root);
+
         return Math.max(result[0], result[1]);
     }
 
-    /**
-     * 后序遍历找根节点最大值
-     *
-     * @return
-     */
     private int[] dfs(TreeNode root) {
         if (root == null) {
             return new int[2];
@@ -62,14 +62,12 @@ public class Problem337 {
         //以根节点右节点为根的最大值
         int[] rightMax = dfs(root.right);
 
-        int[] result = new int[2];
-
         //不选根节点的最大值
-        result[0] = Math.max(leftMax[0], leftMax[1]) + Math.max(rightMax[0], rightMax[1]);
+        int notSelected = Math.max(leftMax[0], leftMax[1]) + Math.max(rightMax[0], rightMax[1]);
         //选根节点的最大值
-        result[1] = root.val + leftMax[0] + rightMax[0];
+        int selected = root.val + leftMax[0] + rightMax[0];
 
-        return result;
+        return new int[]{notSelected, selected};
     }
 
     private TreeNode buildTree(String[] data) {

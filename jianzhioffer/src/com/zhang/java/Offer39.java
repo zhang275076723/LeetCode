@@ -84,17 +84,16 @@ public class Offer39 {
      */
     public int majorityElement3(int[] nums) {
         while (true) {
-            int randomIndex = (int) (Math.random() * nums.length);
-            int result = nums[randomIndex];
+            int index = (int) (Math.random() * nums.length);
             int count = 0;
 
             for (int num : nums) {
-                if (num == result) {
+                if (num == nums[index]) {
                     count++;
                 }
 
                 if (count > nums.length / 2) {
-                    return result;
+                    return nums[index];
                 }
             }
         }

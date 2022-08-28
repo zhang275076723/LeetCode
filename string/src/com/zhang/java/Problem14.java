@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/7/1 9:24
  * @Author zsy
- * @Description 最长公共前缀 类比Problem208
+ * @Description 最长公共前缀 类比Problem208、Problem212
  * 编写一个函数来查找字符串数组中的最长公共前缀。
  * 如果不存在公共前缀，返回空字符串 ""。
  * <p>
@@ -109,18 +109,19 @@ public class Problem14 {
             return strs[0];
         }
 
-        Trie root = new Trie();
+        Trie trie = new Trie();
 
         for (int i = 0; i < strs.length; i++) {
-            root.insert(strs[i]);
+            trie.insert(strs[i]);
         }
 
         int index = 0;
+        Trie.TrieNode node = trie.root;
 
         //找前缀树中第一个分叉之前的所有元素，即为最长公共前缀
         //当前节点必须不是尾节点，保证空串""也能够找到最长公共前缀
-        while (root.children.size() == 1 && !root.isEnd) {
-            root = root.children.get(strs[0].charAt(index));
+        while (node.children.size() == 1 && !node.isEnd) {
+            node = node.children.get(strs[0].charAt(index));
             index++;
         }
 
@@ -149,18 +150,12 @@ public class Problem14 {
      */
     private static class Trie {
         /**
-         * 当前前缀树节点的子节点
+         * 前缀树根节点
          */
-        private Map<Character, Trie> children;
-
-        /**
-         * 当前前缀树节点是否是尾节点，即从根到当前节点是否是一个字符串
-         */
-        private boolean isEnd;
+        private final TrieNode root;
 
         public Trie() {
-            this.children = new HashMap<>();
-            this.isEnd = false;
+            root = new TrieNode();
         }
 
         /**
@@ -171,17 +166,37 @@ public class Problem14 {
          */
         public void insert(String str) {
             //得到根节点
-            Trie node = this;
+            TrieNode node = root;
 
             for (char c : str.toCharArray()) {
                 if (node.children.get(c) == null) {
-                    node.children.put(c, new Trie());
+                    node.children.put(c, new TrieNode());
                 }
 
                 node = node.children.get(c);
             }
 
             node.isEnd = true;
+        }
+
+        /**
+         * 前缀树节点
+         */
+        private static class TrieNode {
+            /**
+             * 当前前缀树节点的子节点
+             */
+            private final Map<Character, TrieNode> children;
+
+            /**
+             * 当前前缀树节点是否是尾节点，即从根到当前节点是否是一个字符串
+             */
+            private boolean isEnd;
+
+            TrieNode() {
+                this.children = new HashMap<>();
+                this.isEnd = false;
+            }
         }
     }
 }

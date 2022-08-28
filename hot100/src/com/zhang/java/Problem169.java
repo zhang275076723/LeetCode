@@ -45,6 +45,7 @@ public class Problem169 {
         }
 
         Map<Integer, Integer> map = new HashMap<>();
+
         for (int num : nums) {
             map.put(num, map.getOrDefault(num, 0) + 1);
             if (map.get(num) > nums.length / 2) {
@@ -72,9 +73,10 @@ public class Problem169 {
             int count = 0;
 
             for (int num : nums) {
-                if (nums[index] == num) {
+                if (num == nums[index]) {
                     count++;
                 }
+
                 if (count > nums.length / 2) {
                     return num;
                 }
@@ -141,7 +143,7 @@ public class Problem169 {
     /**
      * 快排划分的另一种形式
      *
-     * @param num
+     * @param nums
      * @param left
      * @param right
      * @return

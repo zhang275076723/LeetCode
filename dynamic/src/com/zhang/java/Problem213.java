@@ -33,9 +33,9 @@ public class Problem213 {
     /**
      * 动态规划
      * 相当于把原数组分成两个数组，一个是从[0,n-2]，另一个是从[1,n-1]，
-     * 如果遍历第一个房屋，则最后一个房屋不能遍历，即[0,n-2]；如果遍最后个房屋，则第一个房屋不能遍历，即[1,n-1]
-     * dp[i]：以nums[i]结尾的房屋偷窃的最高金额
-     * dp[i] = max(dp[i-1], dp[i-2] + nums[i])
+     * 即如果偷窃第一个房屋，则最后一个房屋不能偷窃，；如果偷窃最后一个房屋，则第一个房屋不能偷窃
+     * dp[i]：偷窃到第i个房屋偷窃到的最高金额
+     * dp[i] = max(dp[i-1], dp[i-2] + nums[i-1])
      * 时间复杂度O(n)，空间复杂度O(n)/空间复杂度O(1)
      *
      * @param nums
@@ -50,15 +50,13 @@ public class Problem213 {
             return nums[0];
         }
 
-        if (nums.length == 2) {
-            return Math.max(nums[0], nums[1]);
-        }
+        int max1 = robInRange(nums, 0, nums.length - 2);
+        int max2 = robInRange(nums, 1, nums.length - 1);
 
-//        return Math.max(robInRange(nums, 0, nums.length - 2),
-//                robInRange(nums, 1, nums.length - 1));
+        return Math.max(max1, max2);
 
-        return Math.max(robInRange2(nums, 0, nums.length - 2),
-                robInRange2(nums, 1, nums.length - 1));
+//        return Math.max(robInRange2(nums, 0, nums.length - 2),
+//                robInRange2(nums, 1, nums.length - 1));
     }
 
     /**
@@ -70,18 +68,15 @@ public class Problem213 {
      * @return
      */
     private int robInRange(int[] nums, int start, int end) {
-        int[] dp = new int[end - start + 1];
-        dp[0] = nums[start];
+        int[] dp = new int[end - start + 2];
+        dp[0] = 0;
+        dp[1] = nums[start];
 
         for (int i = start + 1; i <= end; i++) {
-            if (i - start >= 2) {
-                dp[i - start] = Math.max(dp[i - start - 1], dp[i - start - 2] + nums[i]);
-            } else {
-                dp[i - start] = Math.max(dp[i - start - 1], nums[i]);
-            }
+            dp[i - start + 1] = Math.max(dp[i - start], dp[i - start - 1] + nums[i]);
         }
 
-        return dp[end - start];
+        return dp[end - start + 1];
     }
 
     /**
@@ -101,7 +96,7 @@ public class Problem213 {
 
         for (int i = start + 1; i <= end; i++) {
             int temp = q;
-            q = Math.max(q, p+nums[i]);
+            q = Math.max(q, p + nums[i]);
             p = temp;
         }
 

@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2022/5/12 9:22
  * @Author zsy
- * @Description 岛屿数量 类比Problem399(并查集) 字节面试题
+ * @Description 岛屿数量 类比Problem79、Problem212、Problem399(并查集)、Offer12 字节面试题
  * 给你一个由 '1'（陆地）和 '0'（水）组成的的二维网格，请你计算网格中岛屿的数量。
  * 岛屿总是被水包围，并且每座岛屿只能由水平方向和/或竖直方向上相邻的陆地连接形成。
  * 此外，你可以假设该网格的四条边均被水包围。
@@ -48,7 +48,7 @@ public class Problem200 {
 
     /**
      * 深度优先遍历dfs
-     * 访问为'1'的位置，并置为'2'，表示已经访问过，直至没有'1'的位置表示遍历结束
+     * 原数组作为访问数组，访问当前为'1'的位置，并置为'2'，表示当前位置已访问，直至没有'1'的位置表示遍历结束
      * 时间复杂度O(mn)，空间复杂度O(mn)
      *
      * @param grid
@@ -60,21 +60,23 @@ public class Problem200 {
         }
 
         int landNum = 0;
+
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 //只有当前位置是'1'时，才进行遍历
                 if (grid[i][j] == '1') {
+                    dfs(i, j, grid);
                     landNum++;
-                    dfs(grid, i, j);
                 }
             }
         }
+
         return landNum;
     }
 
     /**
      * 广度优先遍历bfs
-     * 访问为'1'的位置，并置为'2'，表示已经访问过，将该位置加入队列，直至没有'1'的位置表示遍历结束
+     * 原数组作为访问数组，访问当前为'1'的位置，并置为'2'，表示当前位置已访问，将该位置加入队列，直至没有'1'的位置表示遍历结束
      * 时间复杂度O(mn)，空间复杂度O(min(m,n))
      *
      * @param grid
@@ -86,15 +88,17 @@ public class Problem200 {
         }
 
         int landNum = 0;
+
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 //只有当前位置是'1'时，才进行遍历
                 if (grid[i][j] == '1') {
+                    bfs(i, j, grid);
                     landNum++;
-                    bfs(grid, i, j);
                 }
             }
         }
+
         return landNum;
     }
 
@@ -134,45 +138,43 @@ public class Problem200 {
     /**
      * 将遍历过的位置置为'2'，表示已经访问过
      *
-     * @param grid
      * @param i
      * @param j
+     * @param grid
      */
-    private void dfs(char[][] grid, int i, int j) {
-        if (i < 0
-                || i >= grid.length
-                || j < 0
-                || j >= grid[0].length
-                || grid[i][j] != '1') {
+    private void dfs(int i, int j, char[][] grid) {
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] != '1') {
             return;
         }
 
         //将当前位置置为'2'，表示已经访问过
         grid[i][j] = '2';
-        dfs(grid, i - 1, j);
-        dfs(grid, i + 1, j);
-        dfs(grid, i, j - 1);
-        dfs(grid, i, j + 1);
+
+        //往上下左右找
+        dfs(i - 1, j, grid);
+        dfs(i + 1, j, grid);
+        dfs(i, j - 1, grid);
+        dfs(i, j + 1, grid);
     }
 
-    private void bfs(char[][] grid, int i, int j) {
+    private void bfs(int i, int j, char[][] grid) {
         Queue<Pos> queue = new LinkedList<>();
         queue.offer(new Pos(i, j));
 
         while (!queue.isEmpty()) {
             Pos pos = queue.poll();
-            if (pos.i >= 0
-                    && pos.i < grid.length
-                    && pos.j >= 0
-                    && pos.j < grid[0].length
-                    && grid[pos.i][pos.j] == '1') {
-                //将当前位置置为'2'，表示已经访问过
-                grid[pos.i][pos.j] = '2';
-                queue.offer(new Pos(pos.i - 1, pos.j));
-                queue.offer(new Pos(pos.i + 1, pos.j));
-                queue.offer(new Pos(pos.i, pos.j - 1));
-                queue.offer(new Pos(pos.i, pos.j + 1));
+
+            if (pos.i < 0 || pos.i >= grid.length || pos.j < 0 || pos.j >= grid[0].length || grid[pos.i][pos.j] != '1') {
+                continue;
             }
+
+            //将当前位置置为'2'，表示已经访问过
+            grid[pos.i][pos.j] = '2';
+
+            queue.offer(new Pos(pos.i - 1, pos.j));
+            queue.offer(new Pos(pos.i + 1, pos.j));
+            queue.offer(new Pos(pos.i, pos.j - 1));
+            queue.offer(new Pos(pos.i, pos.j + 1));
         }
     }
 
@@ -222,6 +224,7 @@ public class Problem200 {
                         //当前位置节点的父节点是它本身
                         parent[i * column + j] = i * column + j;
                     }
+
                     //当前位置节点的秩为0
                     rank[i * column + j] = 0;
                 }
@@ -247,7 +250,8 @@ public class Problem200 {
                     parent[rootJ] = rootI;
                     rank[rootI]++;
                 }
-                //并查集个数减少一个
+
+                //合并之后，并查集个数减少一个
                 count--;
             }
         }
@@ -263,6 +267,7 @@ public class Problem200 {
             if (parent[i] != i) {
                 parent[i] = find(parent[i]);
             }
+
             return parent[i];
         }
     }

@@ -61,7 +61,8 @@ public class Offer52 {
     }
 
     /**
-     * 哈希表，时间复杂度O(m+n)，空间复杂度O(m)
+     * 哈希表
+     * 时间复杂度O(m+n)，空间复杂度O(m)
      *
      * @param headA
      * @param headB
@@ -75,16 +76,16 @@ public class Offer52 {
         Set<ListNode> set = new HashSet<>();
         ListNode node = headA;
 
+        //A链表中节点放入哈希表
         while (node != null) {
-            //把A链表中节点放入哈希表
             set.add(node);
             node = node.next;
         }
 
         node = headB;
 
+        //B链表中找哈希表中存在的节点，即为相交节点
         while (node != null) {
-            //如果B链表中节点与哈希表中节点相同，则表明有公共节点
             if (set.contains(node)) {
                 return node;
             }

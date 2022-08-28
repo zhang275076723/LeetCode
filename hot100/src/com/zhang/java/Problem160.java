@@ -86,18 +86,23 @@ public class Problem160 {
         }
 
         Set<ListNode> set = new HashSet<>();
+        ListNode node = headA;
 
-        while (headA != null) {
-            set.add(headA);
-            headA = headA.next;
+        //A链表中节点放入哈希表
+        while (node != null) {
+            set.add(node);
+            node = node.next;
         }
 
-        while (headB != null) {
-            if (set.contains(headB)) {
-                return headB;
+        node = headB;
+
+        //B链表中找哈希表中存在的节点，即为相交节点
+        while (node != null) {
+            if (set.contains(node)) {
+                return node;
             }
 
-            headB = headB.next;
+            node = node.next;
         }
 
         return null;

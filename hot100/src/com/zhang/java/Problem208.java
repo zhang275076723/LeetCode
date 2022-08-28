@@ -1,12 +1,10 @@
 package com.zhang.java;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @Date 2022/5/14 8:48
  * @Author zsy
- * @Description 实现 Trie (前缀树) 腾讯、字节面试题 类比Problem14
+ * @Description 实现 Trie (前缀树) 腾讯、字节面试题 类比Problem14、Problem212
  * Trie（发音类似 "try"）或者说 前缀树 是一种树形数据结构，用于高效地存储和检索字符串数据集中的键。
  * 这一数据结构有相当多的应用情景，例如自动补完和拼写检查。
  * 请你实现 Trie 类：
@@ -53,19 +51,12 @@ public class Problem208 {
      */
     private static class Trie {
         /**
-         * 当前前缀树节点的子节点
+         * 前缀树根节点
          */
-        private final Trie[] children;
-
-        /**
-         * 当前前缀树节点是否是结尾
-         */
-        private boolean isEnd;
+        private final TrieNode root;
 
         public Trie() {
-            //一共就26个小写英文字母
-            children = new Trie[26];
-            isEnd = false;
+            root = new TrieNode();
         }
 
         /**
@@ -75,11 +66,11 @@ public class Problem208 {
          */
         public void insert(String word) {
             //得到根节点
-            Trie node = this;
+            TrieNode node = root;
 
             for (char c : word.toCharArray()) {
                 if (node.children[c - 'a'] == null) {
-                    node.children[c - 'a'] = new Trie();
+                    node.children[c - 'a'] = new TrieNode();
                 }
 
                 node = node.children[c - 'a'];
@@ -101,7 +92,7 @@ public class Problem208 {
             }
 
             //得到根节点
-            Trie node = this;
+            TrieNode node = root;
 
             for (char c : word.toCharArray()) {
                 //前缀树遍历到结尾，但字符串还没有遍历到结尾，例如：字符串"app"，前缀树"ap"
@@ -128,7 +119,7 @@ public class Problem208 {
             }
 
             //得到根节点
-            Trie node = this;
+            TrieNode node = root;
 
             for (char c : prefix.toCharArray()) {
                 //前缀树遍历到结尾，但字符串还没有遍历到结尾，例如：字符串"app"，前缀树"ap"
@@ -141,6 +132,24 @@ public class Problem208 {
 
             //字符串匹配前缀树或者匹配前缀树的前半部分，例如：字符串"ap"，前缀树"app"
             return true;
+        }
+
+        private static class TrieNode {
+            /**
+             * 当前前缀树节点的子节点
+             */
+            private final TrieNode[] children;
+
+            /**
+             * 当前前缀树节点是否是一个单词的结尾
+             */
+            private boolean isEnd;
+
+            TrieNode() {
+                //一共就26个小写英文字母
+                children = new TrieNode[26];
+                isEnd = false;
+            }
         }
     }
 }
