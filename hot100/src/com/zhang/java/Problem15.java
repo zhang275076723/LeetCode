@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/4/14 15:17
  * @Author zsy
- * @Description 三数之和
+ * @Description 三数之和 类比Problem1、Problem16、Problem18、Problem454
  * 给你一个包含 n 个整数的数组 nums，
  * 判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？请你找出所有和为 0 且不重复的三元组。
  * 注意：答案中不可以包含重复的三元组。
@@ -25,7 +25,8 @@ import java.util.*;
 public class Problem15 {
     public static void main(String[] args) {
         Problem15 problem15 = new Problem15();
-        int[] nums = {-1, 0, 1, 2, -1, -4};
+//        int[] nums = {-1, 0, 1, 2, -1, -4};
+        int[] nums = {0, 0, 0, 0};
         System.out.println(problem15.threeSum(nums));
         System.out.println(problem15.threeSum2(nums));
     }
@@ -77,7 +78,7 @@ public class Problem15 {
 
     /**
      * 双指针
-     * 先排序，确定第一个元素，左右指针分别指向剩下的两个元素,
+     * 先排序，确定第一个元素，左右指针分别指向剩下的两个元素
      * 时间复杂度O(n^2)，空间复杂度O(logn)
      *
      * @param nums
@@ -94,14 +95,14 @@ public class Problem15 {
         List<List<Integer>> result = new ArrayList<>();
 
         for (int i = 0; i < nums.length - 2; i++) {
-            //第一个元素大于0，说明后面两个元素之和肯定大于0，三者之和大于0，直接跳出循环
+            //当前元素大于0，和之后两个元素相加，三者之和肯定大于0，直接跳出循环
             if (nums[i] > 0) {
                 break;
             }
 
             //nums[i]去重
-            if (i > 0 && nums[i] == nums[i - 1]) {
-                continue;
+            while (i > 0 && i < nums.length - 2 && nums[i] == nums[i - 1]) {
+                i++;
             }
 
             int left = i + 1;
@@ -116,12 +117,12 @@ public class Problem15 {
                     list.add(nums[right]);
                     result.add(list);
 
-                    //left去重
+                    //nums[left]去重
                     while (left < right && nums[left] == nums[left + 1]) {
                         left++;
                     }
 
-                    //right去重
+                    //nums[right]去重
                     while (left < right && nums[right] == nums[right - 1]) {
                         right--;
                     }
@@ -170,22 +171,22 @@ public class Problem15 {
      * @param index
      * @param heapSize
      */
-    public void heapify(int[] nums, int index, int heapSize) {
-        int maxIndex = index;
+    public void heapify(int[] nums, int i, int heapSize) {
+        int maxIndex = i;
 
         //比较左子节点
-        if (heapSize > 2 * index + 1 && nums[2 * index + 1] > nums[maxIndex]) {
-            maxIndex = 2 * index + 1;
+        if (2 * i + 1 < heapSize && nums[2 * i + 1] > nums[maxIndex]) {
+            maxIndex = 2 * i + 1;
         }
 
         //比较右子节点
-        if (heapSize > 2 * index + 2 && nums[2 * index + 2] > nums[maxIndex]) {
-            maxIndex = 2 * index + 2;
+        if (2 * i + 2 < heapSize && nums[2 * i + 2] > nums[maxIndex]) {
+            maxIndex = 2 * i + 2;
         }
 
-        if (maxIndex != index) {
-            int temp = nums[index];
-            nums[index] = nums[maxIndex];
+        if (maxIndex != i) {
+            int temp = nums[i];
+            nums[i] = nums[maxIndex];
             nums[maxIndex] = temp;
 
             //继续向下整堆

@@ -120,13 +120,17 @@ public class Problem402 {
             stack.pollFirst();
         }
 
+        if (stack.isEmpty()) {
+            return "0";
+        }
+
         StringBuilder sb = new StringBuilder();
 
         while (!stack.isEmpty()) {
             sb.append(stack.pollFirst());
         }
 
-        return sb.length() == 0 ? "0" : sb.toString();
+        return sb.toString();
     }
 
 }

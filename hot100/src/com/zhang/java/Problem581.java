@@ -52,6 +52,7 @@ public class Problem581 {
         while (left <= right && nums[left] == newNums[left]) {
             left++;
         }
+
         while (left <= right && nums[right] == newNums[right]) {
             right--;
         }
@@ -60,7 +61,8 @@ public class Problem581 {
     }
 
     /**
-     * 将数组分为三部分，左边部分和右边部分都是升序，中间部分的最小值大于左边部分的最大值，最大值小于右边部分的最小值
+     * 将数组分为三部分，左边部分和右边部分都是升序，
+     * 中间部分的最小值大于左边部分的最大值，中间部分的最大值小于右边部分的最小值
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -71,22 +73,28 @@ public class Problem581 {
             return 0;
         }
 
-        int max = Integer.MIN_VALUE;
-        int min = Integer.MAX_VALUE;
         int left = -1;
         int right = -1;
+        //遍历到当前位置的最大值
+        int max = Integer.MIN_VALUE;
+        //遍历到当前位置的最小值
+        int min = Integer.MAX_VALUE;
 
         for (int i = 0; i < nums.length; i++) {
-            //从左往右遍历，找中间部分的右边界
+            //从左往右遍历，找中间部分的右边界，nums[i]比当前max小，说明存在无序子数组，更新right
             if (nums[i] < max) {
                 right = i;
             }
+
+            //更新当前最大值
             max = Math.max(max, nums[i]);
 
-            //从右往左遍历，找中间部分的左边界
+            //从右往左遍历，找中间部分的左边界，num[nums.length-i-1]比当前min小，说明存在无序子数组，更新left
             if (nums[nums.length - i - 1] > min) {
                 left = nums.length - i - 1;
             }
+
+            //更新当前最小值
             min = Math.min(min, nums[nums.length - i - 1]);
         }
 
@@ -94,14 +102,17 @@ public class Problem581 {
     }
 
     private void heapSort(int[] nums) {
+        //建堆
         for (int i = nums.length / 2 - 1; i >= 0; i--) {
             heapify(nums, i, nums.length);
         }
 
+        //与堆顶元素交换，整堆
         for (int i = nums.length - 1; i > 0; i--) {
             int temp = nums[i];
             nums[i] = nums[0];
             nums[0] = temp;
+
             heapify(nums, 0, i);
         }
     }
@@ -122,6 +133,7 @@ public class Problem581 {
             int temp = nums[i];
             nums[i] = nums[max];
             nums[max] = temp;
+
             heapify(nums, max, heapSize);
         }
     }
@@ -138,31 +150,31 @@ public class Problem581 {
     private void merge(int[] nums, int left, int mid, int right, int[] tempArr) {
         int i = left;
         int j = mid + 1;
-        int index = i;
+        int k = left;
 
         while (i <= mid && j <= right) {
             if (nums[i] < nums[j]) {
-                tempArr[index] = nums[i];
+                tempArr[k] = nums[i];
                 i++;
             } else {
-                tempArr[index] = nums[j];
+                tempArr[k] = nums[j];
                 j++;
             }
-            index++;
+            k++;
         }
 
         while (i <= mid) {
-            tempArr[index] = nums[i];
+            tempArr[k] = nums[i];
             i++;
-            index++;
+            k++;
         }
         while (j <= right) {
-            tempArr[index] = nums[j];
+            tempArr[k] = nums[j];
             j++;
-            index++;
+            k++;
         }
 
-        for (int k = left; k <= right; k++) {
+        for (k = left; k <= right; k++) {
             nums[k] = tempArr[k];
         }
     }
