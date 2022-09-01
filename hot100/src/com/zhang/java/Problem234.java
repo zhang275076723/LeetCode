@@ -4,7 +4,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/17 11:20
  * @Author zsy
- * @Description 回文链表 类比Problem5、Problem131、Problem674
+ * @Description 回文链表 类比Problem5、Problem9、Problem143、Problem131、Problem674
  * 给你一个单链表的头节点 head ，请你判断该链表是否为回文链表。
  * 如果是，返回 true ；否则，返回 false 。
  * <p>
@@ -26,7 +26,7 @@ public class Problem234 {
     }
 
     /**
-     * 快慢指针找到中间节点，并翻转前半部分链表，得到的两个链表进行比较，判断是否是回文链表
+     * 快慢指针找到中间节点，断开链表并翻转前半部分链表，判断两个链表是否相等，即是否是回文链表
      * 在并发环境下，函数运行时需要锁定其他线程或进程对链表的访问，因为在函数执行过程中链表会被修改
      * 时间复杂度O(n)，空间复杂度O(1)
      *
@@ -41,38 +41,60 @@ public class Problem234 {
         ListNode slow = head;
         ListNode fast = head;
         ListNode pre = null;
-        ListNode cur = slow;
 
-        //找中间节点，并翻转前半部分链表
+        //快慢指针找到中间节点
         while (fast.next != null && fast.next.next != null) {
+            pre = slow;
             slow = slow.next;
             fast = fast.next.next;
-            //反转链表
-            cur.next = pre;
-            pre = cur;
-            cur = slow;
         }
 
-        //前半部分链表处理，断开链表
+        //得到的两个链表头结点
+        ListNode node1;
+        ListNode node2 = slow.next;
+
+        //断开链表，根据fast决定前半部分链表是否包括slow所指向的节点
         if (fast.next == null) {
-            slow = slow.next;
+            pre.next = null;
         } else {
-            slow = slow.next;
-            cur.next = pre;
-            pre = cur;
+            slow.next = null;
         }
 
-        //两链表进行比较，判断是否是回文链表
-        while (pre != null && slow != null) {
-            if (pre.val != slow.val) {
+        //反转前半部分链表
+        node1 = reverse(head);
+
+        //两链表比较，判断是否是回文链表
+        while (node1 != null && node2 != null) {
+            if (node1.val != node2.val) {
                 return false;
             }
 
-            pre = pre.next;
-            slow = slow.next;
+            node1 = node1.next;
+            node2 = node2.next;
         }
 
         return true;
+    }
+
+    private ListNode reverse(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode pre = null;
+        ListNode node = head;
+        ListNode next = node.next;
+
+        while (next != null) {
+            node.next = pre;
+            pre = node;
+            node = next;
+            next = next.next;
+        }
+
+        node.next = pre;
+
+        return node;
     }
 
     private ListNode buildList(int[] data) {

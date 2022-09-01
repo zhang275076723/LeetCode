@@ -35,7 +35,6 @@ public class Problem72 {
         String word1 = "intention";
         String word2 = "execution";
         System.out.println(problem72.minDistance(word1, word2));
-
     }
 
     /**

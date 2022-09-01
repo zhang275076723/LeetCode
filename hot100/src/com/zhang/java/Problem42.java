@@ -31,7 +31,7 @@ public class Problem42 {
 
     /**
      * 暴力，按列求雨水
-     * 找到height[i]左边的最大值和右边的最大值，两边最大值中的较小值减去height[i]，即为height[i]所能接的雨水
+     * 找到height[i]左边的最大值和右边的最大值，两边最大值中的较小值减去height[i]，即为当前位置i所能接的雨水
      * 时间复杂度O(n^2)，空间复杂度O(1)
      *
      * @param height

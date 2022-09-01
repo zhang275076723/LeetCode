@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/4/10 10:23
  * @Author zsy
- * @Description 二叉树的最近公共祖先 同Problem236 类比Offer68、Problem98
+ * @Description 二叉树的最近公共祖先 类比Problem235、Offer68 同Problem236
  * 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
  * 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，
  * 满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
@@ -37,7 +37,7 @@ public class Offer68_2 {
     }
 
     /**
-     * 找到根节点到p和q的路径，遍历两个路径，路径最后一个相同的节点即为最近公共祖先
+     * 得到root到p和root到q节点的路径，最后一个相同的节点即为最近公共祖先
      * 时间复杂度O(n)，平均空间复杂度O(logn)，最坏空间复杂度O(n)
      *
      * @param root
@@ -57,12 +57,8 @@ public class Offer68_2 {
 
         int index = 0;
 
-        while (index < pPath.size() && index < qPath.size()) {
-            if (pPath.get(index) == qPath.get(index)) {
-                index++;
-            } else {
-                break;
-            }
+        while (index < pPath.size() && index < qPath.size() && pPath.get(index) == qPath.get(index)) {
+            index++;
         }
 
         return pPath.get(index - 1);
@@ -117,7 +113,6 @@ public class Offer68_2 {
      *
      * @param root
      * @param node
-     * @param path
      */
     private void getPath(TreeNode root, TreeNode node, List<TreeNode> path) {
         if (root == null) {
@@ -130,15 +125,17 @@ public class Offer68_2 {
             return;
         }
 
-        //if作用：当找到node时，不再进行遍历，相当于剪枝，能够加快运行速度
+        //只有在路径中最后一个节点不是node的情况下才继续寻找，已经找到，直接返回，相当于剪枝
         if (path.get(path.size() - 1) != node) {
             getPath(root.left, node, path);
         }
 
+        //只有在路径中最后一个节点不是node的情况下才继续寻找，已经找到，直接返回，相当于剪枝
         if (path.get(path.size() - 1) != node) {
             getPath(root.right, node, path);
         }
 
+        //只有在路径中最后一个节点不是node的情况下才继续寻找，已经找到，直接返回，相当于剪枝
         if (path.get(path.size() - 1) != node) {
             path.remove(path.size() - 1);
         }

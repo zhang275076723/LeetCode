@@ -148,15 +148,18 @@ public class Problem207 {
                 return;
             }
 
-            //邻接顶点v没有访问
-            if (visited[v] == 0) {
-                dfs(v, edges, visited);
-            } else if (visited[v] == 1) {
-                //邻接顶点v正在访问，说明有环，不存在拓扑排序
+            //邻接顶点v正在访问，说明有环，不存在拓扑排序
+            if (visited[v] == 1) {
                 hasCircle = true;
                 return;
             }
 
+            //邻接顶点v没有访问
+            if (visited[v] == 0) {
+                dfs(v, edges, visited);
+            }
+
+            //得到u的下一个临界顶点v
             v = getNextAdjacent(u, v + 1, edges);
         }
 

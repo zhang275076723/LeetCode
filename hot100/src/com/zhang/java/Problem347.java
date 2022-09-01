@@ -164,7 +164,21 @@ public class Problem347 {
             index++;
         }
 
-        findMostFrequentK(arr, k);
+        int left = 0;
+        int right = arr.length - 1;
+        int pivot = partition(arr, left, right);
+
+        while (pivot != arr.length - k) {
+            //基准pivot在前k大频率之前
+            if (pivot < arr.length - k) {
+                left = pivot + 1;
+                pivot = partition(arr, left, right);
+            } else if (pivot > arr.length - k) {
+                //基准pivot在前k大频率之后
+                right = pivot - 1;
+                pivot = partition(arr, left, right);
+            }
+        }
 
         int[] result = new int[k];
 
@@ -205,24 +219,6 @@ public class Problem347 {
         }
     }
 
-    private void findMostFrequentK(int[][] arr, int k) {
-        int left = 0;
-        int right = arr.length - 1;
-        int pivot = partition(arr, left, right);
-
-        while (pivot != arr.length - k) {
-            //基准在前k大频率之前
-            if (pivot < arr.length - k) {
-                left = pivot + 1;
-                pivot = partition(arr, left, right);
-            } else if (pivot > arr.length - k) {
-                //基准在前k大频率之后
-                right = pivot - 1;
-                pivot = partition(arr, left, right);
-            }
-        }
-    }
-
     /**
      * 快排划分变形
      * 平均时间复杂度O(n)，最坏时间复杂度O(n^2)，最好空间复杂度O(logn)，最坏空间复杂度O(n)
@@ -235,6 +231,7 @@ public class Problem347 {
     private int partition(int[][] arr, int left, int right) {
         //随机取一个元素作为划分基准，避免性能倒退为O(n^2)
         int randomIndex = (int) (Math.random() * (right - left + 1)) + left;
+
         int[] value = arr[randomIndex];
         arr[randomIndex] = arr[left];
         arr[left] = value;

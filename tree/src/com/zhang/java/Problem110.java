@@ -58,19 +58,19 @@ public class Problem110 {
             return 0;
         }
 
-        //当前节点子树已经不是平衡二叉树，直接剪枝返回
+        //当前已经不是平衡二叉树，直接返回，相当于剪枝
         if (!isBalanced) {
             return -1;
         }
 
-        int leftHeight = nodeDepth(root.left);
-        int rightHeight = nodeDepth(root.right);
+        int leftDepth = nodeDepth(root.left);
+        int rightDepth = nodeDepth(root.right);
 
-        if (Math.abs(leftHeight - rightHeight) > 1) {
+        if (Math.abs(leftDepth - rightDepth) > 1) {
             isBalanced = false;
         }
 
-        return Math.max(leftHeight, rightHeight) + 1;
+        return Math.max(leftDepth, rightDepth) + 1;
     }
 
     private TreeNode buildTree(String[] data) {

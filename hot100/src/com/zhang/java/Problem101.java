@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/1 9:58
  * @Author zsy
- * @Description 对称二叉树 类比Problem226、Offer27 同Offer28
+ * @Description 对称二叉树 类比Problem100、Problem226、Offer26、Offer27 同Offer28
  * 给你一个二叉树的根节点 root ， 检查它是否轴对称。
  * <p>
  * 输入：root = [1,2,2,3,4,4,3]
@@ -59,24 +59,24 @@ public class Problem101 {
         queue.offer(root.right);
 
         while (!queue.isEmpty()) {
-            TreeNode leftNode = queue.poll();
-            TreeNode rightNode = queue.poll();
+            TreeNode node1 = queue.poll();
+            TreeNode node2 = queue.poll();
 
             //当前节点左右子树都为空，则对称，继续下次循环
-            if (leftNode == null && rightNode == null) {
+            if (node1 == null && node2 == null) {
                 continue;
             }
 
             //当前节点只有一个子树为空或左右节点值不一样，则不对称，返回false
-            if (leftNode == null || rightNode == null || leftNode.val != rightNode.val) {
+            if (node1 == null || node2 == null || node1.val != node2.val) {
                 return false;
             }
 
             //按照对称的顺序添加子节点
-            queue.add(leftNode.left);
-            queue.add(rightNode.right);
-            queue.add(leftNode.right);
-            queue.add(rightNode.left);
+            queue.add(node1.left);
+            queue.add(node2.right);
+            queue.add(node1.right);
+            queue.add(node2.left);
         }
 
         return true;

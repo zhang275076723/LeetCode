@@ -48,7 +48,7 @@ public class Problem31 {
             return;
         }
 
-        //逆序
+        //逆序的第一个下标索引
         int j = nums.length - 1;
 
         //必须是大于等于，不能是大于，需要包含两者相同的情况
@@ -56,7 +56,7 @@ public class Problem31 {
             j--;
         }
 
-        //当前数组为逆序，直接反转数组
+        //整个数组为逆序，直接反转数组
         if (j == 0) {
             reverse(nums, 0, nums.length - 1);
             return;

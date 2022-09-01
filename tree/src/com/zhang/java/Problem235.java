@@ -3,13 +3,12 @@ package com.zhang.java;
 import java.util.*;
 
 /**
- * @Date 2022/4/10 8:48
+ * @Date 2022/9/1 11:38
  * @Author zsy
- * @Description 二叉搜索树的最近公共祖先 类比Problem236、Offer68_2 同Problem235
+ * @Description 二叉搜索树的最近公共祖先 类比Problem236、Offer68_2 同Offer68
  * 给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。
- * 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，
- * 满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
- * <p>
+ * 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，
+ * 最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
  * 输入: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8
  * 输出: 6
  * 解释: 节点 2 和节点 8 的最近公共祖先是 6。
@@ -21,20 +20,16 @@ import java.util.*;
  * 所有节点的值都是唯一的。
  * p、q 为不同节点且均存在于给定的二叉搜索树中。
  */
-public class Offer68 {
+public class Problem235 {
     public static void main(String[] args) {
-        Offer68 offer68 = new Offer68();
+        Problem235 problem235 = new Problem235();
         String[] data = {"6", "2", "8", "0", "4", "7", "9", "null", "null", "3", "5"};
-        //root=6
-        TreeNode root = offer68.buildTree(data);
-        //p=2
+        TreeNode root = problem235.buildTree(data);
         TreeNode p = root.left;
-        //q=4
         TreeNode q = root.left.right;
-//        TreeNode node = offer68.lowestCommonAncestor(root, p, q);
-//        TreeNode node = offer68.lowestCommonAncestor2(root, p, q);
-        TreeNode node = offer68.lowestCommonAncestor3(root, p, q);
-        System.out.println(node.val);
+//        TreeNode commonNode = problem235.lowestCommonAncestor(root, p, q);
+//        TreeNode commonNode = problem235.lowestCommonAncestor2(root, p, q);
+        TreeNode commonNode = problem235.lowestCommonAncestor3(root, p, q);
     }
 
     /**
@@ -144,7 +139,7 @@ public class Offer68 {
         return path;
     }
 
-    public TreeNode buildTree(String[] data) {
+    private TreeNode buildTree(String[] data) {
         if (data == null || data.length == 0) {
             return null;
         }

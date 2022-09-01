@@ -98,14 +98,15 @@ public class Problem139 {
         int maxWordLen = wordDict.get(0).length();
         //wordDict中的最短单词长度
         int minWordLen = wordDict.get(0).length();
-        boolean[] dp = new boolean[s.length() + 1];
-        dp[0] = true;
 
         for (String word : wordDict) {
             wordDictSet.add(word);
             maxWordLen = Math.max(maxWordLen, word.length());
             minWordLen = Math.min(minWordLen, word.length());
         }
+
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[0] = true;
 
         //从最短单词开始遍历
         for (int i = minWordLen; i <= s.length(); i++) {

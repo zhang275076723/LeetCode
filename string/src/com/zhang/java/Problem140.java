@@ -75,14 +75,15 @@ public class Problem140 {
         int maxWordLen = wordDict.get(0).length();
         //wordDict中的最短单词长度
         int minWordLen = wordDict.get(0).length();
-        boolean[] dp = new boolean[s.length() + 1];
-        dp[0] = true;
 
         for (String str : wordDict) {
             wordDictSet.add(str);
             maxWordLen = Math.max(maxWordLen, str.length());
             minWordLen = Math.min(minWordLen, str.length());
         }
+
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[0] = true;
 
         //从最短单词开始遍历
         for (int i = minWordLen; i <= s.length(); i++) {
@@ -139,6 +140,7 @@ public class Problem140 {
 
             //s[0]-s[i-1]可以拆分为wordDict中的单词，并且str是wordDict中的单词
             if (dp[i] && wordDictSet.contains(str)) {
+                //因为是从后往前遍历，所以尾添加
                 deque.offerFirst(str);
                 backtrack2(t - str.length(), deque, s, dp, wordDictSet, result);
                 deque.removeFirst();

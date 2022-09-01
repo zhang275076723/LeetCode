@@ -4,7 +4,7 @@ package com.zhang.zhang;
 /**
  * @Date 2022/4/20 17:24
  * @Author zsy
- * @Description 重排链表 字节面试题 类比Problem147、Problem148
+ * @Description 重排链表 字节面试题 类比Problem92、Problem147、Problem148、Problem206、Problem234
  * 给定一个单链表 L 的头节点 head ，单链表 L 表示为：L0 → L1 → … → Ln - 1 → Ln
  * 请将其重新排列后变为：L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
  * 不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
@@ -84,16 +84,19 @@ public class Problem143 {
             return head;
         }
 
+        ListNode pre = null;
         ListNode node = head;
-        ListNode preNode = null;
-        ListNode nextNode = node.next;
-        while (nextNode != null) {
-            node.next = preNode;
-            preNode = node;
-            node = nextNode;
-            nextNode = nextNode.next;
+        ListNode next = node.next;
+
+        while (next != null) {
+            node.next = pre;
+            pre = node;
+            node = next;
+            next = next.next;
         }
-        node.next = preNode;
+
+        node.next = pre;
+
         return node;
     }
 
@@ -109,8 +112,10 @@ public class Problem143 {
         }
 
         ListNode node = reverse2(head.next);
+
         head.next.next = head;
         head.next = null;
+
         return node;
     }
 

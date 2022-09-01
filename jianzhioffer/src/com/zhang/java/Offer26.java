@@ -5,8 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/3/19 19:44
  * @Author zsy
- * @Description 树的
- * 子结构 字节面试题
+ * @Description 树的子结构 字节面试题 类比Problem100、Problem101、Problem226、Offer27、Offer28
  * 输入两棵二叉树A和B，判断B是不是A的子结构。(约定空树不是任意一个树的子结构)
  * B是A的子结构，即A中有出现和B相同的结构和节点值。
  * <p>

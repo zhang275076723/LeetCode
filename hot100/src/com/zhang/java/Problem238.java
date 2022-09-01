@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/5/19 15:38
  * @Author zsy
- * @Description 除自身以外数组的乘积 类比Problem11、Problem42、Problem152 同Offer66
+ * @Description 除自身以外数组的乘积 类比Problem152 同Offer66
  * 给你一个整数数组 nums，返回 数组 answer ，其中 answer[i] 等于 nums 中除 nums[i] 之外其余各元素的乘积 。
  * 题目数据 保证 数组 nums之中任意元素的全部前缀元素和后缀的乘积都在 32 位 整数范围内。
  * 请不要使用除法，且在 O(n) 时间复杂度内完成此题。
@@ -24,10 +24,8 @@ public class Problem238 {
     public static void main(String[] args) {
         Problem238 problem238 = new Problem238();
         int[] nums = {1, 2, 3, 4};
-        int[] result = problem238.productExceptSelf(nums);
-        int[] result2 = problem238.productExceptSelf2(nums);
-        System.out.println(Arrays.toString(result));
-        System.out.println(Arrays.toString(result2));
+        System.out.println(Arrays.toString(problem238.productExceptSelf(nums)));
+        System.out.println(Arrays.toString(problem238.productExceptSelf2(nums)));
     }
 
     /**
@@ -39,7 +37,7 @@ public class Problem238 {
      * @return
      */
     public int[] productExceptSelf(int[] nums) {
-        if (nums == null || nums.length == 0 || nums.length == 1) {
+        if (nums == null || nums.length < 2) {
             return nums;
         }
 
@@ -71,7 +69,7 @@ public class Problem238 {
      * @return
      */
     public int[] productExceptSelf2(int[] nums) {
-        if (nums == null || nums.length == 0 || nums.length == 1) {
+        if (nums == null || nums.length < 2) {
             return nums;
         }
 
@@ -83,10 +81,10 @@ public class Problem238 {
             result[i] = result[i - 1] * nums[i - 1];
         }
 
-        int right = nums[nums.length - 1];
+        int right = 1;
 
         //右前缀乘积
-        for (int i = nums.length - 2; i >= 0; i--) {
+        for (int i = nums.length - 1; i >= 0; i--) {
             result[i] = result[i] * right;
             right = right * nums[i];
         }

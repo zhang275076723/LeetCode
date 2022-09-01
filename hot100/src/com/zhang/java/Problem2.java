@@ -49,7 +49,7 @@ public class Problem2 {
         //进位
         int carry = 0;
         //当前位之和
-        int sum = 0;
+        int sum;
 
         while (l1 != null && l2 != null) {
             sum = l1.val + l2.val + carry;

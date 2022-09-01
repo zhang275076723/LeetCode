@@ -115,19 +115,19 @@ public class Problem43 {
         //相乘结果的最大长度为m+n
         int[] result = new int[num1.length() + num2.length()];
 
-        for (int j = num2.length() - 1; j >= 0; j--) {
-            //num2[j]的值
-            int n2 = num2.charAt(j) - '0';
+        for (int i = num1.length() - 1; i >= 0; i--) {
+            //num1[i]的值
+            int n1 = num1.charAt(i) - '0';
 
-            for (int i = num1.length() - 1; i >= 0; i--) {
-                //num2[i]的值
-                int n1 = num1.charAt(i) - '0';
+            for (int j = num2.length() - 1; j >= 0; j--) {
+                //num2[j]的值
+                int n2 = num2.charAt(j) - '0';
                 //当前位结果值
-                result[j + i + 1] = n1 * n2 + result[j + i + 1];
+                result[i + j + 1] = result[i + j + 1] + n1 * n2;
             }
         }
 
-        //有可能存在当前位进位还有进位的情况，即结果数组中每个元素有可能大于9
+        //从后往前进位处理
         for (int i = result.length - 1; i > 0; i--) {
             if (result[i] > 9) {
                 //进位
@@ -159,33 +159,35 @@ public class Problem43 {
      * @param num2
      * @return
      */
-    private String addString(String num1, String num2) {
+    public String addString(String num1, String num2) {
         StringBuilder sb = new StringBuilder();
 
         int i = num1.length() - 1;
         int j = num2.length() - 1;
+        //当前位的进位
         int carry = 0;
+        //当前位之和
+        int sum;
 
         while (i >= 0 && j >= 0) {
-            int cur = (num1.charAt(i) - '0') + (num2.charAt(j) - '0') + carry;
-            sb.append(cur % 10);
-            carry = cur / 10;
-
+            sum = (num1.charAt(i) - '0') + (num2.charAt(j) - '0') + carry;
+            carry = sum / 10;
+            sb.append(sum % 10);
             i--;
             j--;
         }
 
         while (i >= 0) {
-            int cur = num1.charAt(i) - '0' + carry;
-            sb.append(cur % 10);
-            carry = cur / 10;
+            sum = (num1.charAt(i) - '0') + carry;
+            carry = sum / 10;
+            sb.append(sum % 10);
             i--;
         }
 
         while (j >= 0) {
-            int cur = num2.charAt(j) - '0' + carry;
-            sb.append(cur % 10);
-            carry = cur / 10;
+            sum = (num2.charAt(j) - '0') + carry;
+            carry = sum / 10;
+            sb.append(sum % 10);
             j--;
         }
 

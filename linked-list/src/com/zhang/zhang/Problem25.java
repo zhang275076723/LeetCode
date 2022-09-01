@@ -4,7 +4,7 @@ package com.zhang.zhang;
 /**
  * @Date 2022/4/18 14:39
  * @Author zsy
- * @Description K 个一组翻转链表
+ * @Description K 个一组翻转链表 类比Problem21、Problem23、Problem24、Problem92、Problem206
  * 给你一个链表，每 k 个节点一组进行翻转，请你返回翻转后的链表。
  * k 是一个正整数，它的值小于或等于链表的长度。
  * 如果节点总数不是 k 的整数倍，那么请将最后剩余的节点保持原有顺序。
@@ -43,7 +43,7 @@ public class Problem25 {
     }
 
     /**
-     * k个一组进行反转
+     * 模拟，找到每次要反转的k个节点，断开链表，反转，再重新连接回原链表
      * 需要额外的指针保存子链表的第一个节点、最后一个节点、子链表第一个节点的前一个节点、子链表最后一个节点的后一个节点
      * 时间复杂度O(n)，空间复杂度O(1)
      *
@@ -57,52 +57,67 @@ public class Problem25 {
         }
 
         //使用头结点，方便返回
-        ListNode hair = new ListNode(0, head);
+        ListNode hair = new ListNode();
+        hair.next = head;
+        //遍历的当前节点
+        ListNode node = head;
         //要反转子链表第一个节点的前一个节点
-        ListNode preNode = hair;
+        ListNode pre = hair;
         //要反转子链表的最后一个节点的后一个节点
-        ListNode nextNode = hair;
+        ListNode next;
         //要反转子链表第一个节点
-        ListNode firstNode = preNode.next;
+        ListNode first = pre.next;
         //要反转子链表的最后一个节点
-        ListNode lastNode = hair;
+        ListNode last = hair;
 
-        while (head != null) {
+        while (node != null) {
             //k个一组进行反转
             for (int i = 0; i < k; i++) {
-                lastNode = lastNode.next;
-                //最后一组不够k个，则不能进行反转，直接返回
-                if (lastNode == null) {
+                last = last.next;
+
+                //最后一组不够k个，不能进行反转，直接返回
+                if (last == null) {
                     return hair.next;
                 }
             }
-            nextNode = lastNode.next;
 
-            //子链表反转
-            //当前节点的下一个节点
-            ListNode next = head.next;
-            //保存next的下一个节点
-            ListNode tempNode;
-            while (next != lastNode) {
-                tempNode = next.next;
-                next.next = head;
-                head = next;
-                next = tempNode;
-            }
-            next.next = head;
-            head = nextNode;
+            //更新next节点
+            next = last.next;
 
-            //子链表链接
-            preNode.next = lastNode;
-            firstNode.next = nextNode;
+            //子链表断开、反转、连接
+            last.next = null;
+            pre.next = reverse(first);
+            first.next = next;
 
             //更新指针
-            preNode = firstNode;
-            firstNode = preNode.next;
-            lastNode = preNode;
+            node = next;
+            pre = first;
+            first = pre.next;
+            last = pre;
         }
 
         return hair.next;
+    }
+
+    private ListNode reverse(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode pre = null;
+        ListNode node = head;
+        ListNode next = node.next;
+
+        while (next != null) {
+            node.next = pre;
+            pre = node;
+            node = next;
+            next = next.next;
+        }
+
+        node.next = pre;
+
+        return node;
     }
 
     private ListNode buildLinkedList(int[] data) {

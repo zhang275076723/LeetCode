@@ -14,7 +14,7 @@ package com.zhang.zhang;
 public class Problem369 {
     public static void main(String[] args) {
         Problem369 problem369 = new Problem369();
-//        int[] data = {1, 2, 3};
+//        int[] data = {1, 9, 9};
         int[] data = {9, 9, 9};
         ListNode head = problem369.buildList(data);
         head = problem369.plusOne(head);
@@ -39,17 +39,19 @@ public class Problem369 {
         head = reverse(head);
 
         ListNode node = head;
+        //当前位进位
+        int carry = 0;
         node.val++;
 
-        while (node.val == 10) {
-            //当前位置为0
-            node.val = 0;
+        while (node.val > 9) {
+            carry = node.val / 10;
+            node.val = node.val % 10;
 
             if (node.next != null) {
-                node.next.val++;
+                node.next.val = node.next.val + carry;
             } else {
-                //添加尾结点
-                node.next = new ListNode(1);
+                //最高位进位，添加新节点
+                node.next = new ListNode(carry);
             }
 
             node = node.next;

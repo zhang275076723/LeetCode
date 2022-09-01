@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/4/30 11:39
  * @Author zsy
- * @Description 验证二叉搜索树 类比Problem96、Problem99、Offer33、Offer36、Offer68、Offer68_2
+ * @Description 验证二叉搜索树 类比Problem95、Problem96、Problem99、Problem230、Offer33、Offer36、Offer68、Offer68_2
  * 给你一个二叉树的根节点 root ，判断其是否是一个有效的二叉搜索树。
  * 有效 二叉搜索树定义如下：
  * 节点的左子树只包含 小于 当前节点的数。
@@ -24,10 +24,9 @@ import java.util.*;
  */
 public class Problem98 {
     /**
-     * 中序遍历中当前节点的上一个节点值，使用long是因为节点值的范围在int，
-     * 且能取到int类型的最小值，所以要使用long取到比最小的int更小的值作为初始值
+     * 中序遍历中当前节点的前驱节点
      */
-    private long preVal = Long.MIN_VALUE;
+    private TreeNode pre = null;
 
     public static void main(String[] args) {
         Problem98 problem98 = new Problem98();
@@ -67,9 +66,7 @@ public class Problem98 {
 
         Stack<TreeNode> stack = new Stack<>();
         TreeNode node = root;
-        //中序遍历中当前节点的上一个节点值，使用long是因为节点值的范围在int，
-        //且能取到最小的int，所以要使用long取到比最小的int更小的值作为初始值
-        long preVal = Long.MIN_VALUE;
+        TreeNode pre = null;
 
         while (!stack.isEmpty() || node != null) {
             while (node != null) {
@@ -79,12 +76,12 @@ public class Problem98 {
 
             node = stack.pop();
 
-            //当前节点的值应小于当前节点之前节点的值，不是二叉搜索树，返回false
-            if (node.val < preVal) {
+            //当前节点前驱节点的值大于等于当前节点的值，则不是二叉搜索树，返回false
+            if (pre != null && pre.val >= node.val) {
                 return false;
             }
 
-            preVal = node.val;
+            pre = node;
             node = node.right;
         }
 
@@ -99,16 +96,18 @@ public class Problem98 {
         //判断左子树是否是二插搜索树
         boolean leftFlag = inorder(root.left);
 
+        //如果不是二叉搜索树，直接返回，相当于剪枝
         if (!leftFlag) {
             return false;
         }
 
-        //当前节点的值应小于当前节点之前节点的值，不是二叉搜索树，返回false
-        if (root.val < preVal) {
+        //当前节点前驱节点的值大于等于当前节点的值，则不是二叉搜索树，返回false
+        if (pre != null && pre.val >= root.val) {
             return false;
         }
 
-        preVal = root.val;
+        //更新前驱节点
+        pre = root;
 
         //判断右子树是否是二插搜索树
         return inorder(root.right);

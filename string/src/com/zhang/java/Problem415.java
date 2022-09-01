@@ -44,26 +44,28 @@ public class Problem415 {
         int j = num2.length() - 1;
         //当前位的进位
         int carry = 0;
+        //当前位之和
+        int sum;
 
         while (i >= 0 && j >= 0) {
-            int cur = (num1.charAt(i) - '0') + (num2.charAt(j) - '0') + carry;
-            carry = cur / 10;
-            sb.append(cur % 10);
+            sum = (num1.charAt(i) - '0') + (num2.charAt(j) - '0') + carry;
+            carry = sum / 10;
+            sb.append(sum % 10);
             i--;
             j--;
         }
 
         while (i >= 0) {
-            int cur = (num1.charAt(i) - '0') + carry;
-            carry = cur / 10;
-            sb.append(cur % 10);
+            sum = (num1.charAt(i) - '0') + carry;
+            carry = sum / 10;
+            sb.append(sum % 10);
             i--;
         }
 
         while (j >= 0) {
-            int cur = (num2.charAt(j) - '0') + carry;
-            carry = cur / 10;
-            sb.append(cur % 10);
+            sum  = (num2.charAt(j) - '0') + carry;
+            carry = sum / 10;
+            sb.append(sum % 10);
             j--;
         }
 

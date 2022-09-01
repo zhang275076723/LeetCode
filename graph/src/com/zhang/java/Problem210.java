@@ -128,13 +128,13 @@ public class Problem210 {
         for (int i = 0; i < numCourses; i++) {
             if (inDegree[i] == 0) {
                 queue.offer(i);
+                result[index] = i;
+                index++;
             }
         }
 
         while (!queue.isEmpty()) {
             int u = queue.poll();
-            result[index] = u;
-            index++;
 
             //遍历u的邻接顶点v
             for (int v : edges.get(u)) {
@@ -143,6 +143,8 @@ public class Problem210 {
                 //入度为0的顶点入队
                 if (inDegree[v] == 0) {
                     queue.offer(v);
+                    result[index] = u;
+                    index++;
                 }
             }
         }
@@ -157,11 +159,19 @@ public class Problem210 {
 
         //u的邻接顶点v
         for (int v : edges.get(u)) {
-            if (visited[v] == 0) {
-                dfs(v, result, edges, visited);
-            } else if (visited[v] == 1) {
+            if (hasCircle) {
+                return;
+            }
+
+            //邻接顶点v正在访问，说明有环，不存在拓扑排序
+            if (visited[v] == 1) {
                 hasCircle = true;
                 return;
+            }
+
+            //邻接顶点v没有访问
+            if (visited[v] == 0) {
+                dfs(v, result, edges, visited);
             }
         }
 

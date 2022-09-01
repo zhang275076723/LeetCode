@@ -66,7 +66,21 @@ public class Offer40 {
             return new int[0];
         }
 
-        findSmallestK(arr, k);
+        int left = 0;
+        int right = arr.length - 1;
+        int pivot = randomizedPartition(arr, left, right);
+
+        while (pivot + 1 != k) {
+            //基准pivot在前k小元素之前
+            if (pivot + 1 < k) {
+                left = pivot + 1;
+                pivot = randomizedPartition(arr, left, right);
+                //基准pivot在前k小元素之后
+            } else if (pivot + 1 > k) {
+                right = pivot - 1;
+                pivot = randomizedPartition(arr, left, right);
+            }
+        }
 
         return Arrays.copyOfRange(arr, 0, k);
     }
@@ -107,28 +121,11 @@ public class Offer40 {
         return result;
     }
 
-    private void findSmallestK(int[] arr, int k) {
-        int left = 0;
-        int right = arr.length - 1;
-        int pivot = randomizedPartition(arr, left, right);
-
-        while (pivot + 1 != k) {
-            //基准在前k小元素之前
-            if (pivot + 1 < k) {
-                left = pivot + 1;
-                pivot = randomizedPartition(arr, left, right);
-                //基准在前k小元素之后
-            } else if (pivot + 1 > k) {
-                right = pivot - 1;
-                pivot = randomizedPartition(arr, left, right);
-            }
-        }
-    }
-
     private int randomizedPartition(int[] arr, int left, int right) {
         //随机化，避免性能倒退为O(n^2)
         int index = new Random().nextInt(right - left + 1) + left;
 //        int index = (int) (Math.random() * (right - left + 1)) + left;
+
         int value = arr[left];
         arr[left] = arr[index];
         arr[index] = value;

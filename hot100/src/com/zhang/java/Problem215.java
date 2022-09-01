@@ -47,7 +47,7 @@ public class Problem215 {
     /**
      * 快排划分变形
      * 快排的每次划分都能确定一个元素所在的位置，通过该位置和index比较，判断是否是第k大元素
-     * 时间复杂度O(n)，空间复杂度O(logn)
+     * 期望时间复杂度O(n)，空间复杂度O(logn)
      *
      * @param nums
      * @param k
@@ -58,9 +58,23 @@ public class Problem215 {
             return Integer.MIN_VALUE;
         }
 
-        findLargestK(nums, k);
+        int left = 0;
+        int right = nums.length - 1;
+        int pivot = partition(nums, left, right);
 
-        return nums[nums.length - k];
+        while (pivot != nums.length - k) {
+            //基准pivot在前k大之前
+            if (pivot < nums.length - k) {
+                left = pivot + 1;
+                pivot = partition(nums, left, right);
+            } else if (pivot > nums.length - k) {
+                //基准pivot在前k大之后
+                right = pivot - 1;
+                pivot = partition(nums, left, right);
+            }
+        }
+
+        return nums[pivot];
     }
 
     /**
@@ -113,24 +127,6 @@ public class Problem215 {
         }
     }
 
-    private void findLargestK(int[] nums, int k) {
-        int left = 0;
-        int right = nums.length - 1;
-        int pivot = partition(nums, left, right);
-
-        while (pivot != nums.length - k) {
-            //基准在前k大之前
-            if (pivot < nums.length - k) {
-                left = pivot + 1;
-                pivot = partition(nums, left, right);
-            } else if (pivot > nums.length - k) {
-                //基准在前k大之后
-                right = pivot - 1;
-                pivot = partition(nums, left, right);
-            }
-        }
-    }
-
     /**
      * 快排划分变形
      * 平均时间复杂度O(n)，最坏时间复杂度O(n^2)，空间复杂度O(logn)
@@ -143,6 +139,7 @@ public class Problem215 {
     private int partition(int[] nums, int left, int right) {
         //随机取一个元素作为划分基准，避免性能倒退为O(n^2)
         int index = (int) (Math.random() * (right - left + 1)) + left;
+
         int value = nums[index];
         nums[index] = nums[left];
         nums[left] = value;

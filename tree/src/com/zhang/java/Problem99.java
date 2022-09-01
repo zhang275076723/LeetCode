@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/8/16 10:16
  * @Author zsy
- * @Description 恢复二叉搜索树 类比Problem96、Problem98、Offer36
+ * @Description 恢复二叉搜索树 类比Problem95、Problem96、Problem98、Problem230、Offer33、Offer36
  * 给你二叉搜索树的根节点 root ，该树中的 恰好 两个节点的值被错误地交换。
  * 请在不改变其结构的情况下，恢复这棵树 。
  * <p>
@@ -22,7 +22,7 @@ import java.util.*;
  */
 public class Problem99 {
     /**
-     * 中序遍历中当前节点的前一个节点的值
+     * 中序遍历中当前节点的前一个节点
      */
     private TreeNode pre = null;
 
@@ -92,12 +92,8 @@ public class Problem99 {
 
             node = stack.pop();
 
-            //中序遍历第一个节点处理
-            if (pre == null) {
-                pre = node;
-            }
-
-            if (node.val < pre.val) {
+            //当前节点前驱节点的值大于等于当前节点的值，则当前的两个节点需要调整
+            if (pre != null && pre.val >= node.val) {
                 if (node1 == null) {
                     node1 = pre;
                 }
@@ -122,12 +118,8 @@ public class Problem99 {
 
         inorder(root.left);
 
-        //中序遍历第一个节点处理
-        if (pre == null) {
-            pre = root;
-        }
-
-        if (root.val < pre.val) {
+        //当前节点前驱节点的值大于等于当前节点的值，则当前的两个节点需要调整
+        if (pre != null && pre.val >= root.val) {
             if (node1 == null) {
                 node1 = pre;
             }

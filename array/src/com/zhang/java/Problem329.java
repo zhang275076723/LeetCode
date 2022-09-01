@@ -34,7 +34,7 @@ public class Problem329 {
     /**
      * 回溯+剪枝+动态规划预处理matrix
      * dp[i][j]：以matrix[i][j]开头的最长递增路径长度
-     * dp[i][j] = max(dp[i-1][j],dp[i+1][j],dp[i][j-1],dp[i][j+1]) (dp[i][j] < dp[i-1][j],dp[i+1][j],dp[i][j-1],dp[i][j+1])
+     * dp[i][j] = max(dp[i-1][j],dp[i+1][j],dp[i][j-1],dp[i][j+1]) + 1 (dp[i][j] < dp[i-1][j],dp[i+1][j],dp[i][j-1],dp[i][j+1])
      * 时间复杂度O(mn)，空间复杂度O(mn)
      *
      * @param matrix

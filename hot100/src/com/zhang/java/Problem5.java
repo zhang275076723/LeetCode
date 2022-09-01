@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/13 9:32
  * @Author zsy
- * @Description 最长回文子串 类比Problem131、Problem234、Problem647
+ * @Description 最长回文子串 类比Problem9、Problem131、Problem234、Problem647
  * 给你一个字符串 s，找到 s 中最长的回文子串。
  * <p>
  * 输入：s = "babad"
@@ -72,54 +72,6 @@ public class Problem5 {
     }
 
     /**
-     * 双指针，中心扩散
-     * 以一个字符作为中心向两边扩散，找最长回文串
-     * 以两个字符作为中心向两边扩散，找最长回文串
-     * 时间复杂度O(n^2)，空间复杂度O(1)
-     *
-     * @param s
-     * @return
-     */
-    public String longestPalindrome2(String s) {
-        if (s == null || s.length() == 0) {
-            return "";
-        }
-
-        if (s.length() == 1) {
-            return s;
-        }
-
-        int left = 0;
-        int right = 0;
-
-        for (int i = 0; i < s.length(); i++) {
-            //一个字符作为中心向两边扩散
-            int[] arr1 = centerExtend(s, i, i);
-
-            //两个字符作为中心向两边扩散
-            int[] arr2 = arr1;
-
-            if (i + 1 < s.length() && s.charAt(i) == s.charAt(i + 1)) {
-                arr2 = centerExtend(s, i, i + 1);
-            }
-
-            if (arr1[1] - arr1[0] > arr2[1] - arr2[0]) {
-                if (arr1[1] - arr1[0] > right - left) {
-                    right = arr1[1];
-                    left = arr1[0];
-                }
-            } else {
-                if (arr2[1] - arr2[0] > right - left) {
-                    right = arr2[1];
-                    left = arr2[0];
-                }
-            }
-        }
-
-        return s.substring(left, right + 1);
-    }
-
-    /**
      * 动态规划
      * dp[i][j]：s[i]到s[j]是否是回文串
      * dp[i][j] = false (s[i] != s[j])
@@ -129,7 +81,7 @@ public class Problem5 {
      * @param s
      * @return
      */
-    public String longestPalindrome3(String s) {
+    public String longestPalindrome2(String s) {
         if (s == null || s.length() == 0) {
             return "";
         }
@@ -169,6 +121,63 @@ public class Problem5 {
     }
 
     /**
+     * 双指针，中心扩散
+     * 以一个字符作为中心向两边扩散，找最长回文串
+     * 以两个字符作为中心向两边扩散，找最长回文串
+     * 时间复杂度O(n^2)，空间复杂度O(1)
+     *
+     * @param s
+     * @return
+     */
+    public String longestPalindrome3(String s) {
+        if (s == null || s.length() == 0) {
+            return "";
+        }
+
+        if (s.length() == 1) {
+            return s;
+        }
+
+        int left = 0;
+        int right = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            //一个字符作为中心向两边扩散
+            int[] arr1 = centerExtend(s, i, i);
+
+            //两个字符作为中心向两边扩散
+            int[] arr2 = null;
+
+            if (i + 1 < s.length() && s.charAt(i) == s.charAt(i + 1)) {
+                arr2 = centerExtend(s, i, i + 1);
+            }
+
+            //只考虑一个字符的中心扩散情况
+            if (arr2 == null) {
+                if (arr1[1] - arr1[0] > right - left) {
+                    right = arr1[1];
+                    left = arr1[0];
+                }
+            } else {
+                //考虑一个字符、两个字符的中心扩散情况
+                if (arr1[1] - arr1[0] > arr2[1] - arr2[0]) {
+                    if (arr1[1] - arr1[0] > right - left) {
+                        right = arr1[1];
+                        left = arr1[0];
+                    }
+                } else {
+                    if (arr2[1] - arr2[0] > right - left) {
+                        right = arr2[1];
+                        left = arr2[0];
+                    }
+                }
+            }
+        }
+
+        return s.substring(left, right + 1);
+    }
+
+    /**
      * 中心扩散
      *
      * @param s     原字符串
@@ -177,7 +186,7 @@ public class Problem5 {
      * @return 当前最长回文串的左右指针数组
      */
     private int[] centerExtend(String s, int left, int right) {
-        while (left - 1 >= 0 && right + 1< s.length() && s.charAt(left - 1) == s.charAt(right + 1)) {
+        while (left - 1 >= 0 && right + 1 < s.length() && s.charAt(left - 1) == s.charAt(right + 1)) {
             left--;
             right++;
         }

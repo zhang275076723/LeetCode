@@ -78,7 +78,7 @@ public class Problem209 {
             preSum[i] = preSum[i - 1] + nums[i - 1];
         }
 
-        int length = Integer.MAX_VALUE;
+        int minLength = Integer.MAX_VALUE;
 
         for (int i = 0; i < nums.length; i++) {
             int tempSum = preSum[i] + target;
@@ -92,11 +92,11 @@ public class Problem209 {
 
             //更新length
             if (index <= nums.length) {
-                length = Integer.min(length, index - i);
+                minLength = Integer.min(minLength, index - i);
             }
         }
 
-        return length == Integer.MAX_VALUE ? 0 : length;
+        return minLength == Integer.MAX_VALUE ? 0 : minLength;
     }
 
     /**
@@ -110,7 +110,7 @@ public class Problem209 {
      * @return
      */
     public int minSubArrayLen3(int target, int[] nums) {
-        int length = Integer.MAX_VALUE;
+        int minLength = Integer.MAX_VALUE;
         int left = 0;
         int right = 0;
         int sum = 0;
@@ -120,8 +120,8 @@ public class Problem209 {
 
             while (sum >= target) {
                 //更新满足要求的最小子数组长度
-                if (right - left + 1 < length) {
-                    length = right - left + 1;
+                if (right - left + 1 < minLength) {
+                    minLength = right - left + 1;
                 }
 
                 sum = sum - nums[left];
@@ -131,7 +131,7 @@ public class Problem209 {
             right++;
         }
 
-        return length == Integer.MAX_VALUE ? 0 : length;
+        return minLength == Integer.MAX_VALUE ? 0 : minLength;
     }
 
 }
