@@ -5,10 +5,9 @@ import java.util.*;
 /**
  * @Date 2022/5/21 7:51
  * @Author zsy
- * @Description 滑动窗口最大值 同Offer59
+ * @Description 滑动窗口最大值 类比Problem76、Offer59_2 同Offer59
  * 给你一个整数数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。
  * 你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。
- * <p>
  * 返回 滑动窗口中的最大值 。
  * <p>
  * 输入：nums = [1,3,-1,-3,5,3,6,7], k = 3
@@ -87,13 +86,14 @@ public class Problem239 {
         //优先队列存放二元组(num, index)
         PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(new Comparator<int[]>() {
             @Override
-            public int compare(int[] pair1, int[] pair2) {
+            public int compare(int[] arr1, int[] arr2) {
                 //两个节点值不一样，按由大到小排序
-                if (pair1[0] != pair2[0]) {
-                    return pair2[0] - pair1[0];
+                if (arr1[0] != arr2[0]) {
+                    return arr2[0] - arr1[0];
+                } else {
+                    //两个节点值一样，按索引由小到大排序
+                    return arr1[1] - arr2[1];
                 }
-                //两个节点值一样，按索引由大到小排序
-                return pair2[1] - pair1[1];
             }
         });
 
@@ -108,7 +108,7 @@ public class Problem239 {
             priorityQueue.offer(new int[]{nums[i], i});
 
             //当前优先队列最大值，不在滑动窗口的范围内
-            while (priorityQueue.peek()[1] <= i - k) {
+            while (!priorityQueue.isEmpty() && priorityQueue.peek()[1] <= i - k) {
                 priorityQueue.poll();
             }
 
@@ -150,7 +150,7 @@ public class Problem239 {
 
         for (int i = k; i < nums.length; i++) {
             //单调递减队列队首元素不在滑动窗口范围内，则队首元素出队
-            if (queue.peekFirst() <= i - k) {
+            while (!queue.isEmpty() && queue.peekFirst() <= i - k) {
                 queue.pollFirst();
             }
 

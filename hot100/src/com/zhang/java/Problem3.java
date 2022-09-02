@@ -126,7 +126,7 @@ public class Problem3 {
         int max = 0;
         int left = 0;
         int right = 0;
-        //字符在字符串中最后一次出现的索引下标
+        //当前字符在字符串中最后一次出现的索引下标
         Map<Character, Integer> map = new HashMap<>();
 
         while (right < s.length()) {

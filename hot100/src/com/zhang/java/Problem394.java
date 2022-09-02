@@ -75,10 +75,14 @@ public class Problem394 {
                 sb = new StringBuilder();
             } else if (c == ']') {
                 //右括号，出栈要重复的次数和重复字符串之前保存的字符串，拼接到当前字符串之后
-                StringBuilder tempSb = new StringBuilder(strStack.pop());
-                int curNum = numStack.pop();
+                //当前sb需要重复的次数
+                int count = numStack.pop();
+                String str = strStack.pop();
+                StringBuilder tempSb = new StringBuilder();
 
-                for (int j = 0; j < curNum; j++) {
+                tempSb.append(str);
+
+                for (int j = 0; j < count; j++) {
                     tempSb.append(sb);
                 }
 

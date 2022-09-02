@@ -48,7 +48,9 @@ public class Problem227 {
      * @return
      */
     public int calculate(String s) {
+        //数字栈
         Deque<Integer> numStack = new LinkedList<>();
+        //操作符栈
         Deque<Character> opsStack = new LinkedList<>();
         s = s.trim();
 

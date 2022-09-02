@@ -23,7 +23,11 @@ package com.zhang.java;
 public class Problem74 {
     public static void main(String[] args) {
         Problem74 problem74 = new Problem74();
-        int[][] matrix = {{1, 3, 5, 7}, {10, 11, 16, 20}, {23, 30, 34, 60}};
+        int[][] matrix = {
+                {1, 3, 5, 7},
+                {10, 11, 16, 20},
+                {23, 30, 34, 60}
+        };
         int target = 13;
         System.out.println(problem74.searchMatrix(matrix, target));
     }

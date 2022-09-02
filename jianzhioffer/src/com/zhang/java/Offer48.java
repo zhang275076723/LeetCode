@@ -137,7 +137,7 @@ public class Offer48 {
             }
 
             map.put(c, right);
-            max = Math.max(max, right - left +1);
+            max = Math.max(max, right - left + 1);
             right++;
         }
 

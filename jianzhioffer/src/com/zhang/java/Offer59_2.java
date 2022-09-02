@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * @Date 2022/4/6 11:17
  * @Author zsy
- * @Description 队列的最大值 类比Problem155、Problem232、Offer9、Offer30、Offer41
+ * @Description 队列的最大值 类比Problem155、Problem232、Problem239、Offer9、Offer30、Offer41、Offer59
  * 请定义一个队列并实现函数 max_value 得到队列里的最大值，
  * 要求函数 max_value、push_back 和 pop_front 的均摊时间复杂度都是O(1)。
  * 若队列为空，pop_front 和 max_value 需要返回 -1

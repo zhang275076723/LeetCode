@@ -64,7 +64,7 @@ public class Problem718 {
 
     /**
      * 动态规划
-     * dp[i][j]：以nums1[i-1]结尾的nums1和以nums2[j-1]结尾的nums2的最长公共子数组长度
+     * dp[i][j]：以nums1[i-1]结尾的数组和以nums2[j-1]结尾的数组的最长公共子数组长度
      * dp[i][j] = dp[i-1][j-1] + 1 (nums1[i-1] == nums2[j-1])
      * dp[i][j] = 0                (nums1[i-1] != nums2[j-1])
      * 时间复杂度O(mn)，空间复杂度O(mn)
@@ -74,7 +74,7 @@ public class Problem718 {
      * @return
      */
     public int findLength2(int[] nums1, int[] nums2) {
-        if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0) {
+        if (nums1 == null || nums2 == null || nums1.length == 0 || nums2.length == 0) {
             return 0;
         }
 
@@ -87,9 +87,7 @@ public class Problem718 {
                     dp[i][j] = dp[i - 1][j - 1] + 1;
                 }
 
-                if (dp[i][j] > max) {
-                    max = dp[i][j];
-                }
+                max = Math.max(max, dp[i][j]);
             }
         }
 

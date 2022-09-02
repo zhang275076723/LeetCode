@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/8/27 11:37
  * @Author zsy
- * @Description 丑数 II 类比Problem75 同Offer49
+ * @Description 丑数 II 类比Problem26、Problem75 同Offer49
  * 给你一个整数 n ，请你找出并返回第 n 个 丑数 。
  * 丑数 就是只包含质因数 2、3 和/或 5 的正整数。
  * <p>

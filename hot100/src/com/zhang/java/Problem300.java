@@ -31,7 +31,7 @@ public class Problem300 {
 
     /**
      * 动态规划
-     * dp[i]：以nums[i]结尾的最长递增子序列
+     * dp[i]：以nums[i]结尾的最长递增子序列的长度
      * dp[i] = max(dp[i], dp[j] + 1) (0 <= j < i，且nums[j] < nums[i])
      * 时间复杂度O(n^2)，空间复杂度O(n)
      *
@@ -50,11 +50,12 @@ public class Problem300 {
             dp[i] = 1;
         }
 
-        int maxLen = dp[0];
+        int maxLen = 1;
 
         for (int i = 1; i < nums.length; i++) {
             for (int j = 0; j < i; j++) {
                 if (nums[j] < nums[i]) {
+                    //更新以nums[i]结尾的最长递增子序列的长度
                     dp[i] = Math.max(dp[i], dp[j] + 1);
                 }
             }

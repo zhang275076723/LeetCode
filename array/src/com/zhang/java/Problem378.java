@@ -28,7 +28,11 @@ import java.util.Queue;
 public class Problem378 {
     public static void main(String[] args) {
         Problem378 problem378 = new Problem378();
-        int[][] matrix = new int[][]{{1, 5, 9}, {10, 11, 13}, {12, 13, 15}};
+        int[][] matrix = new int[][]{
+                {1, 5, 9},
+                {10, 11, 13},
+                {12, 13, 15}
+        };
         int k = 8;
         System.out.println(problem378.kthSmallest(matrix, k));
         System.out.println(problem378.kthSmallest2(matrix, k));
@@ -52,7 +56,7 @@ public class Problem378 {
         });
 
         for (int i = 0; i < matrix.length; i++) {
-            //int[0]：每行的当前元素，int[1]：当前元素的行索引，int[2]：当前元素的列索引
+            //int[0]：当前元素，int[1]：当前元素的行索引，int[2]：当前元素的列索引
             priorityQueue.offer(new int[]{matrix[i][0], i, 0});
         }
 
@@ -77,7 +81,7 @@ public class Problem378 {
      * @return
      */
     public int kthSmallest2(int[][] matrix, int k) {
-        //小根堆数组，arr[i][0]：每行的当前元素，arr[i][1]：当前元素的行索引，arr[i][2]：当前元素的列索引
+        //小根堆数组，arr[i][0]：当前元素，arr[i][1]：当前元素的行索引，arr[i][2]：当前元素的列索引
         int[][] arr = new int[matrix.length][3];
         //小根堆大小
         int heapSize = matrix.length;

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/30 9:41
  * @Author zsy
- * @Description 丑数 类比Problem75 同Problem264
+ * @Description 丑数 类比Problem26、Problem75 同Problem264
  * 我们把只包含质因子 2、3 和 5 的数称作丑数（Ugly Number）。
  * 求按从小到大的顺序的第 n 个丑数。
  * <p>

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/4/6 10:00
  * @Author zsy
- * @Description 滑动窗口的最大值 同Problem239
+ * @Description 滑动窗口的最大值 类比Offer59_2 同Problem239
  * 给定一个数组 nums 和滑动窗口的大小 k，请找出所有滑动窗口里的最大值。
  * 你可以假设 k 总是有效的，在输入数组不为空的情况下，1 ≤ k ≤ 输入数组的大小。
  * <p>
@@ -65,7 +65,7 @@ public class Offer59 {
     }
 
     /**
-     * 优先队列，大根堆，堆顶存放的就是当前滑动窗口的最大值
+     * 优先队列，每个节点存放当前元素和索引下标
      * 时间复杂度O(nlogn)，空间复杂度O(n) (最差情况下，数组单调递增，没有元素从优先队列中移除，往优先队列中添加元素为O(logn))
      *
      * @param nums
@@ -73,39 +73,41 @@ public class Offer59 {
      * @return
      */
     public int[] maxSlidingWindow2(int[] nums, int k) {
-        if (nums == null || nums.length == 0) {
+        if (nums == null || nums.length == 0 || k > nums.length) {
             return new int[0];
         }
 
         //优先队列存放二元组(num, index)
-        Queue<int[]> queue = new PriorityQueue<>((pair1, pair2) -> {
-            //如果num值不相等，按num值从大到小排序
-            if (pair1[0] != pair2[0]) {
-                return pair2[0] - pair1[0];
+        PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(new Comparator<int[]>() {
+            @Override
+            public int compare(int[] arr1, int[] arr2) {
+                //两个节点值不一样，按由大到小排序
+                if (arr1[0] != arr2[0]) {
+                    return arr2[0] - arr1[0];
+                } else {
+                    //两个节点值一样，按索引由小到大排序
+                    return arr1[1] - arr2[1];
+                }
             }
-
-            //如果num值相等，按索引从大到小排序
-            return pair2[1] - pair1[1];
         });
 
         for (int i = 0; i < k; i++) {
-            queue.offer(new int[]{nums[i], i});
+            priorityQueue.offer(new int[]{nums[i], i});
         }
 
         int[] result = new int[nums.length - k + 1];
-        //当前堆顶元素为滑动窗口最大值
-        result[0] = queue.peek()[0];
+        result[0] = priorityQueue.peek()[0];
 
         for (int i = k; i < nums.length; i++) {
-            queue.offer(new int[]{nums[i], i});
+            priorityQueue.offer(new int[]{nums[i], i});
 
             //当前优先队列最大值，不在滑动窗口的范围内
-            while (queue.peek()[1] <= i - k) {
-                queue.poll();
+            while (!priorityQueue.isEmpty() && priorityQueue.peek()[1] <= i - k) {
+                priorityQueue.poll();
             }
 
-            //当前堆顶元素为滑动窗口最大值
-            result[i - k + 1] = queue.peek()[0];
+            //当前优先队列最大值为滑动窗口的最大值
+            result[i - k + 1] = priorityQueue.peek()[0];
         }
 
         return result;

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/6/22 7:48
  * @Author zsy
- * @Description 复原 IP 地址 虾皮机试题 类比Problem468
+ * @Description 复原 IP 地址 虾皮机试题、蔚来面试题 类比Problem468
  * 有效 IP 地址 正好由四个整数（每个整数位于 0 到 255 之间组成，且不能含有前导 0），整数之间用 '.' 分隔。
  * 例如："0.1.2.201" 和 "192.168.1.1" 是 有效 IP 地址，
  * 但是 "0.011.255.245"、"192.168.1.312" 和 "192.168@1.1" 是 无效 IP 地址。
@@ -46,9 +46,7 @@ public class Problem93 {
         }
 
         List<String> result = new ArrayList<>();
-
         backtrack(0, new ArrayList<>(), s, result);
-
         return result;
     }
 
@@ -69,14 +67,12 @@ public class Problem93 {
             }
             //删除最后一个'.'
             sb.delete(sb.length() - 1, sb.length());
-
             result.add(sb.toString());
-
             return;
         }
 
         //剩余字符串数字不能构成合法ip地址，则剪枝
-        if (s.length() - start < 4 - list.size() || (s.length() - start) > 3 * (4 - list.size())) {
+        if (s.length() - start < 4 - list.size() || s.length() - start > 3 * (4 - list.size())) {
             return;
         }
 
@@ -85,36 +81,35 @@ public class Problem93 {
                 return;
             }
 
-            int num = isValid(s, start, i);
+            int ip = getSegmentIp(s, start, i);
 
-            //当前数字不是一个合法的ip段，则直接返回
-            if (num == -1) {
+            //当前ip段不是一个合法的ip段，则直接返回
+            if (ip == -1) {
                 return;
             }
 
-            list.add(num + "");
-
+            list.add(ip + "");
             backtrack(i + 1, list, s, result);
-
             list.remove(list.size() - 1);
         }
     }
 
     /**
-     * 返回当前ip段数字，即在0-255之间，且没有前导0；如果不合法，返回-1
+     * 返回当前ip段数字
+     * 如果合法，返回当前ip段数字，即在0-255之间，且没有前导0；如果不合法，返回-1
      *
      * @param s     字符串数字
      * @param start 起始索引
      * @param end   结束索引
      * @return
      */
-    private int isValid(String s, int start, int end) {
+    private int getSegmentIp(String s, int start, int end) {
         //当前字符串只有一位
         if (start == end) {
             return s.charAt(start) - '0';
         }
 
-        //当前字符串长度超过3,
+        //当前字符串长度超过3，则不是合法ip
         if (end - start + 1 > 3) {
             return -1;
         }
@@ -124,16 +119,16 @@ public class Problem93 {
             return -1;
         }
 
-        int num = 0;
+        int ip = 0;
 
         for (int i = start; i <= end; i++) {
-            num = num * 10 + s.charAt(i) - '0';
+            ip = ip * 10 + s.charAt(i) - '0';
         }
 
-        if (num > 255) {
+        if (ip > 255) {
             return -1;
         }
 
-        return num;
+        return ip;
     }
 }

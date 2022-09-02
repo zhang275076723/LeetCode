@@ -6,7 +6,7 @@ import java.util.Comparator;
 /**
  * @Date 2022/5/22 9:19
  * @Author zsy
- * @Description 会议室 类比Problem56、Problem179、Problem253、Problem406、Offer45
+ * @Description 会议室 类比Problem56、Problem253、Problem406
  * 给定一个会议时间安排的数组 intervals ，
  * 每个会议时间都会包括开始和结束的时间 intervals[i] = [starti, endi] ，
  * 请你判断一个人是否能够参加这里面的全部会议。

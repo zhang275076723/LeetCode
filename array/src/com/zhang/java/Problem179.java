@@ -6,7 +6,7 @@ import java.util.Comparator;
 /**
  * @Date 2022/7/9 9:44
  * @Author zsy
- * @Description 最大数 类比Problem56、Problem252、Problem253、Problem406、Offer45
+ * @Description 最大数 类比Offer45
  * 给定一组非负整数 nums，重新排列每个数的顺序（每个数不可拆分）使之组成一个最大的整数。
  * 注意：输出结果可能非常大，所以你需要返回一个字符串而不是整数。
  * <p>
@@ -55,7 +55,7 @@ public class Problem179 {
 //            }
 //        });
 
-        //特殊情况，如果第一个元素为0，则直接返回0
+        //有前导0的情况，直接返回0
         if (nums[0] == 0) {
             return "0";
         }

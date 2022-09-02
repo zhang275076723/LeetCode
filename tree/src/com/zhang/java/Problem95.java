@@ -29,7 +29,7 @@ public class Problem95 {
             TreeNode node = root;
 
             while (!stack.isEmpty() || node != null) {
-                while (node != null){
+                while (node != null) {
                     stack.push(node);
                     node = node.left;
                 }
