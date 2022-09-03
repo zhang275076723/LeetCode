@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/18 15:17
  * @Author zsy
- * @Description 删除链表的节点
+ * @Description 删除链表的节点 类比Problem237
  * 给定单向链表的头指针和一个要删除的节点的值，定义一个函数删除该节点。
  * 返回删除后的链表的头节点。链表中节点的值互不相同
  * <p>
@@ -50,19 +50,21 @@ public class Offer18 {
         if (head == null) {
             return null;
         }
+
         if (head.val == val) {
             return head.next;
         }
 
-        ListNode preNode = head;
+        ListNode pre = head;
         ListNode node = head.next;
 
         while (node != null) {
             if (node.val == val) {
-                preNode.next = node.next;
-                break;
+                pre.next = node.next;
+                return head;
             }
-            preNode = node;
+
+            pre = node;
             node = node.next;
         }
 
@@ -81,44 +83,12 @@ public class Offer18 {
         if (head == null) {
             return null;
         }
+
         if (head.val == val) {
             return head.next;
         }
 
         head.next = deleteNode2(head.next, val);
-
-        return head;
-    }
-
-    /**
-     * 将要删除的节点的下一个节点赋值给当前节点，删除下一个节点
-     * 时间复杂度O(1)，空间复杂度O(1) (要删除的节点不是最后一个节点)
-     * 时间复杂度O(n)，空间复杂度O(1) (要删除的节点是最后一个节点)
-     *
-     * @param head
-     * @param node
-     * @return
-     */
-    public ListNode deleteNode3(ListNode head, ListNode node) {
-        if (head == null || node == null) {
-            return head;
-        }
-        if (head == node) {
-            return head.next;
-        }
-
-        //要删除的节点是最后一个节点，则必须遍历，时间复杂度O(n)
-        if (node.next == null) {
-            ListNode preNode = head;
-            while (preNode.next != node) {
-                preNode = preNode.next;
-            }
-            preNode.next = null;
-        } else {
-            ListNode nextNode = node.next;
-            node.val = nextNode.val;
-            node.next = nextNode.next;
-        }
 
         return head;
     }

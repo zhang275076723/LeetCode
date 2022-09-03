@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/23 11:27
  * @Author zsy
- * @Description 完全平方数 类比Problem322、Problem416
+ * @Description 完全平方数 类比Problem322、Problem416、Problem518
  * 给你一个整数 n ，返回 和为 n 的完全平方数的最少数量 。
  * 完全平方数 是一个整数，其值等于另一个整数的平方；换句话说，其值等于一个整数自乘的积。
  * 例如，1、4、9 和 16 都是完全平方数，而 3 和 11 不是。
@@ -19,15 +19,21 @@ package com.zhang.java;
  * 1 <= n <= 10^4
  */
 public class Problem279 {
+    /**
+     * 回溯+剪枝使用的和为n需要完全平方数的最少数量
+     */
+    private int minCount = Integer.MAX_VALUE;
+
     public static void main(String[] args) {
         Problem279 problem279 = new Problem279();
         System.out.println(problem279.numSquares(13));
         System.out.println(problem279.numSquares2(13));
+        System.out.println(problem279.numSquares3(13));
     }
 
     /**
      * 动态规划 完全背包
-     * dp[i]：最少需要完全平方数的数量
+     * dp[i]：和为i需要完全平方数的最少数量
      * dp[i] = min(dp[i-j^2] + 1) (1 <= j <= i^1/2)
      * 时间复杂度O(n*n^1/2)，空间复杂度O(n)
      *
@@ -35,8 +41,8 @@ public class Problem279 {
      * @return
      */
     public int numSquares(int n) {
-        if (n <= 0) {
-            return -1;
+        if (n == 1) {
+            return 1;
         }
 
         //dp[0]=0，用于初始化
@@ -64,8 +70,8 @@ public class Problem279 {
      * @return
      */
     public int numSquares2(int n) {
-        if (n <= 0) {
-            return -1;
+        if (n == 1) {
+            return 1;
         }
 
         //n是否是完全平方数
@@ -94,5 +100,38 @@ public class Problem279 {
 
         //不满足n能拆分为1、2、4个正整数平方和时，返回3
         return 3;
+    }
+
+    /**
+     * 回溯+剪枝
+     *
+     * @param n
+     * @return
+     */
+    public int numSquares3(int n) {
+        if (n == 1) {
+            return 1;
+        }
+
+        backtrack(n, 0);
+
+        return minCount;
+    }
+
+    private void backtrack(int n, int count) {
+        //最少所需完全平方数的数量小于等于当前所需的数量，则直接剪枝
+        if (minCount <= count) {
+            return;
+        }
+
+        if (n == 0) {
+            minCount = Math.min(minCount, count);
+            return;
+        }
+
+        //由大到小找，可以加快查找速度
+        for (int i = (int) Math.sqrt(n); i > 0; i--) {
+            backtrack(n - i * i, count + 1);
+        }
     }
 }

@@ -153,10 +153,10 @@ public class Problem378 {
         int j = 0;
 
         while (i >= 0 && j < matrix[0].length) {
-            if (matrix[i][j] <= mid) {
-                j++;
+            if (mid >= matrix[i][j]) {
                 //每次统计一列小于等于mid的个数
                 count = count + i + 1;
+                j++;
             } else {
                 i--;
             }

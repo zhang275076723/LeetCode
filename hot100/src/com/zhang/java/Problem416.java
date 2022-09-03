@@ -29,8 +29,8 @@ public class Problem416 {
     /**
      * 动态规划 01背包
      * dp[i][j]：num[0]-nums[i-1]中是否存在和为j的方案
-     * dp[i][j] = dp[i-1][j]                         (nums[i-1] >= j)
-     * dp[i][j] = dp[i-1][j] || dp[i-1][j-nums[i]]   (nums[i-1] < j)
+     * dp[i][j] = dp[i-1][j]                           (nums[i-1] >= j)
+     * dp[i][j] = dp[i-1][j] || dp[i-1][j-nums[i-1]]   (nums[i-1] < j)
      * 时间复杂度O(nums.length*(sum/2))，空间复杂度O(nums.length*(sum/2))
      *
      * @param nums
@@ -42,6 +42,7 @@ public class Problem416 {
         }
 
         int sum = 0;
+
         for (int num : nums) {
             sum = sum + num;
         }
@@ -53,6 +54,7 @@ public class Problem416 {
 
         boolean[][] dp = new boolean[nums.length + 1][sum / 2 + 1];
 
+        //dp初始化
         for (int i = 0; i <= nums.length; i++) {
             dp[i][0] = true;
         }
@@ -74,7 +76,7 @@ public class Problem416 {
      * 动态规划优化，使用滚动数组
      * dp[j]：nums[0]-nums[i-1]中是否存在和为j的方案
      * dp[j] = dp[j]                  (nums[i-1] >= j)
-     * dp[j] = dp[j] || [j-nums[i]]   (nums[i-1] < j)
+     * dp[j] = dp[j] || [j-nums[i-1]]   (nums[i-1] < j)
      * 时间复杂度O(nums.length*(sum/2))，空间复杂度O(sum/2)
      *
      * @param nums
@@ -86,6 +88,7 @@ public class Problem416 {
         }
 
         int sum = 0;
+
         for (int num : nums) {
             sum = sum + num;
         }

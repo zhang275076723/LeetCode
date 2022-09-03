@@ -168,6 +168,7 @@ public class Problem23 {
                 node.next = list2;
                 list2 = list2.next;
             }
+
             node = node.next;
         }
 

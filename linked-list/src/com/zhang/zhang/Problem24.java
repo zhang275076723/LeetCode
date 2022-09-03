@@ -76,14 +76,14 @@ public class Problem24 {
             return head;
         }
 
-        //当前节点后面已经反转好的链表头
-        ListNode node = swapPairs(head.next.next);
         //head节点的下一个节点
         ListNode next = head.next;
+        //当前节点后面已经反转好的链表头
+        ListNode newHead = swapPairs(next.next);
 
-        //head和next节点反转
-        head.next = node;
+        //head和node节点交换，并连接后面链表
         next.next = head;
+        head.next = newHead;
 
         return next;
     }

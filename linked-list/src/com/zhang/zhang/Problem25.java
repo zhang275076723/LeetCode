@@ -59,6 +59,7 @@ public class Problem25 {
         //使用头结点，方便返回
         ListNode hair = new ListNode();
         hair.next = head;
+
         //遍历的当前节点
         ListNode node = head;
         //要反转子链表第一个节点的前一个节点
@@ -66,34 +67,40 @@ public class Problem25 {
         //要反转子链表的最后一个节点的后一个节点
         ListNode next;
         //要反转子链表第一个节点
-        ListNode first = pre.next;
+        ListNode first;
         //要反转子链表的最后一个节点
-        ListNode last = hair;
+        ListNode last;
 
         while (node != null) {
+            first = node;
+
             //k个一组进行反转
-            for (int i = 0; i < k; i++) {
-                last = last.next;
+            for (int i = 1; i < k; i++) {
+                node = node.next;
 
                 //最后一组不够k个，不能进行反转，直接返回
-                if (last == null) {
+                if (node == null) {
                     return hair.next;
                 }
             }
 
-            //更新next节点
+            //更新指针
+            last = node;
             next = last.next;
 
-            //子链表断开、反转、连接
+            //断开子链表
             last.next = null;
-            pre.next = reverse(first);
+
+            //反转子链表
+            reverse(first);
+
+            //子链表连接回原链表
+            pre.next = last;
             first.next = next;
 
             //更新指针
-            node = next;
             pre = first;
-            first = pre.next;
-            last = pre;
+            node = next;
         }
 
         return hair.next;

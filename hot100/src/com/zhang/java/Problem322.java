@@ -42,7 +42,7 @@ public class Problem322 {
      * 动态规划 完全背包
      * dp[i]：凑成金额i所需的最少的硬币个数
      * dp[i] = min(dp[i - coins[j]] + 1) (j为硬币种类)
-     * 时间复杂度O(coins.length*amount)，空间复杂度O(amount)
+     * 时间复杂度O(n*amount)，空间复杂度O(amount) (n=coins.length)
      *
      * @param coins
      * @param amount
@@ -57,7 +57,7 @@ public class Problem322 {
         int[] dp = new int[amount + 1];
 
         for (int i = 1; i <= amount; i++) {
-            //初始化为Integer.MAX_VALUE表示当前无法用硬币凑成总金额
+            //初始化dp[i]为Integer.MAX_VALUE，表示当前无法用硬币凑成总金额i
             dp[i] = Integer.MAX_VALUE;
 
             for (int j = 0; j < coins.length; j++) {
@@ -85,21 +85,22 @@ public class Problem322 {
 
         //按照硬币面值由小到大排序
         Arrays.sort(coins);
+
         //从最大的硬币开始搜索，能够提升效率
-        backtrack(coins, amount, coins.length - 1, 0);
+        backtrack(coins.length - 1, 0, coins, amount);
 
         return minCount == Integer.MAX_VALUE ? -1 : minCount;
     }
 
     /**
-     * @param coins  不同面额的硬币数组
-     * @param amount 当前所要凑的总金额
      * @param index  硬币种类索引下标coins[index]
      * @param count  当前使用的硬币数量
+     * @param coins  不同面额的硬币数组
+     * @param amount 当前所要凑的总金额
      */
-    private void backtrack(int[] coins, int amount, int index, int count) {
+    private void backtrack(int index, int count, int[] coins, int amount) {
         //硬币种类已经遍历完，或者当前所需使用的硬币数量大于等于使用的最少硬币数量，则剪枝
-        if (index < 0 || count + amount / coins[index] >= minCount) {
+        if (index < 0 || count >= minCount) {
             return;
         }
 
@@ -111,7 +112,7 @@ public class Problem322 {
 
         //coins[index]硬币取amount/coins[index]个到0个
         for (int i = amount / coins[index]; i >= 0; i--) {
-            backtrack(coins, amount - i * coins[index], index - 1, count + i);
+            backtrack(index - 1, count + i, coins, amount - i * coins[index]);
         }
     }
 }

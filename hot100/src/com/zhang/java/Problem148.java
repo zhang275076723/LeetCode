@@ -24,9 +24,8 @@ public class Problem148 {
         int[] data = {-1, 5, 3, 4, 0};
         ListNode head = problem148.buildLinkedList(data);
 
-//        head = problem148.sortList(head);
+        head = problem148.sortList(head);
 //        head = problem148.sortList2(head);
-        head = problem148.sortList3(head);
 
         while (head != null) {
             System.out.println(head.val);
@@ -102,22 +101,6 @@ public class Problem148 {
     }
 
     /**
-     * 快排
-     * 时间复杂度O(nlogn)，空间复杂度O(logn)
-     *
-     * @param head
-     * @return
-     */
-    public ListNode sortList3(ListNode head) {
-        if (head == null || head.next == null) {
-            return head;
-        }
-
-        quickSort(head, null);
-        return head;
-    }
-
-    /**
      * 链表归并排序
      *
      * @param head
@@ -158,6 +141,14 @@ public class Problem148 {
      * @return
      */
     private ListNode merge(ListNode head1, ListNode head2) {
+        if (head1 == null) {
+            return head2;
+        }
+
+        if (head2 == null) {
+            return head1;
+        }
+
         //设置链表头结点，方便操作
         ListNode head = new ListNode();
         ListNode node = head;
@@ -175,8 +166,7 @@ public class Problem148 {
 
         if (head1 != null) {
             node.next = head1;
-        }
-        if (head2 != null) {
+        } else {
             node.next = head2;
         }
 
@@ -204,51 +194,6 @@ public class Problem148 {
 
         pre.next = null;
         return head;
-    }
-
-    /**
-     * 快排合并链表
-     * [head, tail)
-     *
-     * @param head
-     * @param tail
-     */
-    private void quickSort(ListNode head, ListNode tail) {
-        if (head == tail) {
-            return;
-        }
-
-        ListNode pivot = partition(head, tail);
-        quickSort(head, pivot);
-        quickSort(pivot.next, tail);
-    }
-
-    /**
-     * 快排合并链表的一次划分，从左到右将遍历，将节点划分为小于pivot的元素，pivot元素，大于pivot的元素
-     * 而常用的快排的划分方式，是使用头尾指针，直至两指针相遇
-     *
-     * @param head
-     * @param tail
-     * @return
-     */
-    private ListNode partition(ListNode head, ListNode tail) {
-        //左指针
-        ListNode pivot = head;
-        //右指针
-        ListNode curNode = head.next;
-        int tempValue = head.val;
-
-        while (curNode != tail) {
-            if (curNode.val < tempValue) {
-                pivot.val = curNode.val;
-                curNode.val = pivot.next.val;
-                pivot = pivot.next;
-            }
-            curNode = curNode.next;
-        }
-
-        pivot.val = tempValue;
-        return pivot;
     }
 
     /**
