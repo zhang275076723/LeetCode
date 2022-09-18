@@ -71,20 +71,20 @@ public class Problem55 {
             return true;
         }
 
-        //第一个元素最远可跳的距离
-        int maxJump = 0;
+        //从nums[0]可以跳到的最远下标索引
+        int maxJumpIndex = 0;
 
         for (int i = 0; i < nums.length; i++) {
-            //即当前位置不可达，返回false
-            if (i > maxJump) {
+            //当前位置不可达，返回false
+            if (i > maxJumpIndex) {
                 return false;
             }
 
-            //更新最远可跳距离
-            maxJump = Math.max(maxJump, i + nums[i]);
+            //更新可跳的最远下标索引
+            maxJumpIndex = Math.max(maxJumpIndex, i + nums[i]);
 
-            //最远可跳距离能过跳到最后一个元素，则返回true
-            if (maxJump >= nums.length - 1) {
+            //能够调到最后一个元素下标索引，返回true
+            if (maxJumpIndex >= nums.length - 1) {
                 return true;
             }
         }

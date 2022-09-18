@@ -76,18 +76,18 @@ public class Problem560 {
         map.put(0, 1);
 
         int count = 0;
-        int pre = 0;
+        int sum = 0;
 
         for (int i = 0; i < nums.length; i++) {
-            pre = pre + nums[i];
+            sum = sum + nums[i];
 
-            //map中存在key为pre - k的前缀和，说明有满足子数组之和为k的情况
-            if (map.containsKey(pre - k)) {
-                count = count + map.get(pre - k);
+            //map中存在key为pre - k的和，说明有满足子数组之和为k的情况
+            if (map.containsKey(sum - k)) {
+                count = count + map.get(sum - k);
             }
 
             //将当前前缀和放入map
-            map.put(pre, map.getOrDefault(pre, 0) + 1);
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
         }
 
         return count;

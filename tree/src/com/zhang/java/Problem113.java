@@ -66,9 +66,9 @@ public class Problem113 {
 
         List<List<Integer>> result = new ArrayList<>();
         Queue<Pos> queue = new LinkedList<>();
+        queue.offer(new Pos(root, root.val));
         //存放当前节点的父节点，用于路径复原
         Map<TreeNode, TreeNode> map = new HashMap<>();
-        queue.offer(new Pos(root, root.val));
         map.put(root, null);
 
         while (!queue.isEmpty()) {

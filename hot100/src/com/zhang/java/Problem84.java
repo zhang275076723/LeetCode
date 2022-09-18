@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2022/4/28 9:35
  * @Author zsy
- * @Description 柱状图中最大的矩形 类比Problem11、Problem42、Problem85、Problem402、Problem739
+ * @Description 柱状图中最大的矩形 类比Problem11、Problem85 单调栈类比Problem42、Problem316、Problem321、Problem402、Problem739
  * 给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。
  * 求在该柱状图中，能够勾勒出来的矩形的最大面积。
  * <p>
@@ -50,17 +50,16 @@ public class Problem84 {
             left = i;
             right = i;
 
-            while (left > 0 && heights[left - 1] >= heights[i]) {
+            while (left - 1 >= 0 && heights[left - 1] >= heights[i]) {
                 left--;
             }
 
-            while (right < heights.length - 1 && heights[right + 1] >= heights[i]) {
+            while (right + 1 < heights.length && heights[right + 1] >= heights[i]) {
                 right++;
             }
 
             //当前矩形的宽
             int w = right - left + 1;
-
             max = Math.max(max, heights[i] * w);
         }
 
@@ -94,11 +93,6 @@ public class Problem84 {
                 //矩形的宽
                 int w;
 
-                //栈顶索引对应元素与矩形的高相等，则直接出栈
-                while (!stack.isEmpty() && h == heights[stack.peek()]) {
-                    stack.pop();
-                }
-
                 if (stack.isEmpty()) {
                     w = i;
                 } else {
@@ -117,11 +111,6 @@ public class Problem84 {
             int h = heights[stack.pop()];
             //矩形的宽
             int w;
-
-            //栈顶索引对应元素与当前矩形的高相等，则可以直接出栈
-            while (!stack.isEmpty() && h == heights[stack.peek()]) {
-                stack.pop();
-            }
 
             if (stack.isEmpty()) {
                 w = heights.length;

@@ -113,7 +113,7 @@ public class Problem138 {
 
         node = head;
 
-        //修改新节点的random指针
+        //为新节点的random指针赋值
         while (node != null) {
             if (node.random == null) {
                 node.next.random = null;
@@ -124,7 +124,7 @@ public class Problem138 {
         }
 
         node = head;
-        Node newHead = node.next;
+        Node newHead = head.next;
         Node newNode = newHead;
 
         //断开原链表，得到新节点链表

@@ -132,11 +132,12 @@ public class Problem3 {
         while (right < s.length()) {
             char c = s.charAt(right);
 
-            //左指针右移
+            //当前字符c在当前子串中出现，左指针右移
             if (map.containsKey(c) && map.get(c) >= left) {
                 left = map.get(c) + 1;
             }
 
+            //更新当前字符c在map中最后一次出现的索引
             map.put(c, right);
             max = Math.max(max, right - left + 1);
             right++;

@@ -43,16 +43,17 @@ public class Problem300 {
             return 0;
         }
 
+        if (nums.length == 1) {
+            return 1;
+        }
+
         int[] dp = new int[nums.length];
+        int maxLen = 1;
 
         for (int i = 0; i < nums.length; i++) {
             //赋以nums[i]结尾的最长递增子序列长度为1
             dp[i] = 1;
-        }
 
-        int maxLen = 1;
-
-        for (int i = 1; i < nums.length; i++) {
             for (int j = 0; j < i; j++) {
                 if (nums[j] < nums[i]) {
                     //更新以nums[i]结尾的最长递增子序列的长度
@@ -60,6 +61,7 @@ public class Problem300 {
                 }
             }
 
+            //更新最长递增子序列长度
             maxLen = Math.max(maxLen, dp[i]);
         }
 
@@ -68,7 +70,7 @@ public class Problem300 {
 
     /**
      * 二分查找变形
-     * 新建一个数组，保证其中的元素严格递增，遍历原数组，通过二分查找找到在新数组的中的位置，
+     * 新建一个数组，保证其中的元素严格递增，遍历原数组，通过二分查找找到当前元素在新数组中的位置，
      * 如果当前元素比新数组中元素都大，则放在尾部；如果在新数组中间，则进行替换
      * nums = [0, 6, 7, 8, 4, 5, 9]
      * 新数组 = [0]
@@ -89,6 +91,10 @@ public class Problem300 {
             return 0;
         }
 
+        if (nums.length == 1) {
+            return 1;
+        }
+
         //严格递增数组
         int[] result = new int[nums.length];
         //严格递增数组的长度
@@ -104,13 +110,15 @@ public class Problem300 {
                 //当前元素替换严格递增数组中的元素
                 int left = 0;
                 int right = maxLen - 1;
+                int mid;
 
-                while (left <= right) {
-                    int mid = left + ((right - left) >> 1);
+                while (left < right) {
+                    mid = left + ((right - left) >> 1);
+
                     if (nums[i] > result[mid]) {
                         left = mid + 1;
                     } else {
-                        right = mid - 1;
+                        right = mid;
                     }
                 }
 

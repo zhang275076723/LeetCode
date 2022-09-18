@@ -44,7 +44,7 @@ public class Offer59_2 {
         //存放元素的队列
         private final Queue<Integer> queue;
 
-        //存放当前队列的最大值元素，作为单调递减栈
+        //存放当前队列的最大值元素，作为单调递减队列
         private final Deque<Integer> maxQueue;
 
         public MaxQueue() {

@@ -56,19 +56,19 @@ public class Problem39 {
 
         List<List<Integer>> result = new ArrayList<>();
 
-        backtrack(candidates, target, 0, result, new ArrayList<>());
+        backtrack(0, candidates, target, result, new ArrayList<>());
 
         return result;
     }
 
     /**
+     * @param t          当前元素索引
      * @param candidates 目标数组
      * @param target     要求元素之和
-     * @param t          目标数组的当前元素索引
      * @param result     结果集合
      * @param list       每个满足元素之和为target的结果
      */
-    public void backtrack(int[] candidates, int target, int t, List<List<Integer>> result, List<Integer> list) {
+    public void backtrack(int t, int[] candidates, int target, List<List<Integer>> result, List<Integer> list) {
         if (target == 0) {
             result.add(new ArrayList<>(list));
             return;
@@ -83,7 +83,7 @@ public class Problem39 {
             list.add(candidates[i]);
 
             //和40题区别，这里是i，因为每个元素可以使用多次，而40题是i+1
-            backtrack(candidates, target - candidates[i], i, result, list);
+            backtrack(i, candidates, target - candidates[i], result, list);
 
             list.remove(list.size() - 1);
         }
@@ -113,6 +113,7 @@ public class Problem39 {
         }
 
         nums[left] = temp;
+
         return left;
     }
 }

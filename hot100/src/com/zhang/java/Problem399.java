@@ -1,11 +1,13 @@
 package com.zhang.java;
 
+import javafx.geometry.Pos;
+
 import java.util.*;
 
 /**
  * @Date 2022/6/4 10:27
  * @Author zsy
- * @Description 除法求值 类比Problem200(并查集)
+ * @Description 除法求值 类比Problem207、Problem210(图) 类比Problem200(并查集)
  * 给你一个变量对数组 equations 和一个实数值数组 values 作为已知条件，
  * 其中 equations[i] = [Ai, Bi] 和 values[i] 共同表示等式 Ai / Bi = values[i] 。
  * 每个 Ai 或 Bi 是一个表示单个变量的字符串。
@@ -91,7 +93,7 @@ public class Problem399 {
      * @return
      */
     public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
-        //将字符串转换成数字存储，便于建立图
+        //将字符串和数字一一对应，便于建图
         Map<String, Integer> map = new HashMap<>();
         //有向图中不同元素的个数
         int count = 0;
@@ -110,27 +112,41 @@ public class Problem399 {
             }
         }
 
-        //邻接表形式的有向图
-        double[][] graph = buildGraph(equations, values, map);
+        //邻接矩阵表示的图
+        double[][] edges = buildGraph(equations, values, map);
         double[] result = new double[queries.size()];
 
         for (int i = 0; i < queries.size(); i++) {
             String str1 = queries.get(i).get(0);
             String str2 = queries.get(i).get(1);
 
+            //map中不存在当前节点，直接赋值-1.0
             if (!map.containsKey(str1) || !map.containsKey(str2)) {
                 result[i] = -1.0;
                 continue;
             }
 
-            int start = map.get(str1);
-            int end = map.get(str2);
-            result[i] = dfs(graph, start, end, new boolean[count], 1.0);
+            //起始节点等于结束节点，直接赋值1.0
+            if (str1.equals(str2)) {
+                result[i] = 1.0;
+                continue;
+            }
 
-            //更新有向图，便于下次查询
+            int u = map.get(str1);
+            int v = map.get(str2);
+
+            //u到v已经在临界矩阵中，直接赋值edge[u][v]
+            if (edges[u][v] != -1.0) {
+                result[i] = edges[u][v];
+                continue;
+            }
+
+            result[i] = dfs(u, v, 1.0, edges, new boolean[map.size()]);
+
+            //更新临界矩阵，便于下次查询
             if (result[i] != -1.0) {
-                graph[start][end] = result[i];
-                graph[end][start] = 1.0 / result[i];
+                edges[u][v] = result[i];
+                edges[v][u] = 1.0 / result[i];
             }
         }
 
@@ -167,27 +183,41 @@ public class Problem399 {
             }
         }
 
-        //邻接表形式的有向图
-        double[][] graph = buildGraph(equations, values, map);
+        //邻接矩阵表示的图
+        double[][] edges = buildGraph(equations, values, map);
         double[] result = new double[queries.size()];
 
         for (int i = 0; i < queries.size(); i++) {
             String str1 = queries.get(i).get(0);
             String str2 = queries.get(i).get(1);
 
+            //map中不存在当前节点，直接赋值-1.0
             if (!map.containsKey(str1) || !map.containsKey(str2)) {
                 result[i] = -1.0;
                 continue;
             }
 
-            int start = map.get(str1);
-            int end = map.get(str2);
-            result[i] = bfs(graph, start, end, new boolean[count]);
+            //起始节点等于结束节点，直接赋值1.0
+            if (str1.equals(str2)) {
+                result[i] = 1.0;
+                continue;
+            }
 
-            //更新有向图，便于下次查询
+            int u = map.get(str1);
+            int v = map.get(str2);
+
+            //u到v已经在临界矩阵中，直接赋值edge[u][v]
+            if (edges[u][v] != -1.0) {
+                result[i] = edges[u][v];
+                continue;
+            }
+
+            result[i] = bfs(u, v, edges, new boolean[map.size()]);
+
+            //更新临界矩阵，便于下次查询
             if (result[i] != -1.0) {
-                graph[start][end] = result[i];
-                graph[end][start] = 1.0 / result[i];
+                edges[u][v] = result[i];
+                edges[v][u] = 1.0 / result[i];
             }
         }
 
@@ -223,16 +253,16 @@ public class Problem399 {
             }
         }
 
-        //邻接表形式的有向图
-        double[][] graph = buildGraph(equations, values, map);
+        //邻接矩阵表示的图
+        double[][] edges = buildGraph(equations, values, map);
         double[] result = new double[queries.size()];
 
         //Floyd，计算任意两个节点之间的距离
-        for (int k = 0; k < graph.length; k++) {
-            for (int i = 0; i < graph.length; i++) {
-                for (int j = 0; j < graph.length; j++) {
-                    if (graph[i][k] > 0 && graph[k][j] > 0) {
-                        graph[i][j] = graph[i][k] * graph[k][j];
+        for (int k = 0; k < edges.length; k++) {
+            for (int i = 0; i < edges.length; i++) {
+                for (int j = 0; j < edges.length; j++) {
+                    if (edges[i][k] > 0 && edges[k][j] > 0) {
+                        edges[i][j] = edges[i][k] * edges[k][j];
                     }
                 }
             }
@@ -242,14 +272,23 @@ public class Problem399 {
             String str1 = queries.get(i).get(0);
             String str2 = queries.get(i).get(1);
 
+            //map中不存在当前节点，直接赋值-1.0
             if (!map.containsKey(str1) || !map.containsKey(str2)) {
                 result[i] = -1.0;
                 continue;
             }
 
-            int start = map.get(str1);
-            int end = map.get(str2);
-            result[i] = graph[start][end];
+            //起始节点等于结束节点，直接赋值1.0
+            if (str1.equals(str2)) {
+                result[i] = 1.0;
+                continue;
+            }
+
+            int u = map.get(str1);
+            int v = map.get(str2);
+
+            //u到v已经计算过，在临界矩阵中，直接赋值edge[u][v]
+            result[i] = edges[u][v];
         }
 
         return result;
@@ -314,58 +353,62 @@ public class Problem399 {
     }
 
     /**
-     * @param graph   邻接表
-     * @param start   起始节点在map中的索引
-     * @param end     最终节点在map中的索引
-     * @param visited 访问数组
      * @param result  结果
+     * @param u       起始节点在map中的索引
+     * @param v       结束节点在map中的索引
+     * @param edges   邻接矩阵
+     * @param visited 访问数组
      * @return
      */
-    private double dfs(double[][] graph, int start, int end, boolean[] visited, double result) {
-        if (start == end) {
+    private double dfs(int u, int v, double result, double[][] edges, boolean[] visited) {
+        if (u == v) {
             return result;
         }
 
-        visited[start] = true;
+        visited[u] = true;
 
-        for (int i = 0; i < graph.length; i++) {
-            //找第i个元素未被访问的邻接顶点
-            if (graph[start][i] != -1.0 && !visited[i]) {
-                double temp = dfs(graph, i, end, visited, result * graph[start][i]);
+        //遍历u未被访问的邻接顶点i
+        for (int i = 0; i < edges[0].length; i++) {
+            if (edges[u][i] != -1.0 && !visited[i]) {
+                double temp = dfs(i, v, result * edges[u][i], edges, visited);
+
+                //结果不为-1.0表示当前路径可达，直接返回
                 if (temp != -1.0) {
                     return temp;
                 }
             }
         }
 
+        //从u到不了v，返回-1.0
         return -1.0;
     }
 
     /**
      * bfs
      *
-     * @param graph   邻接表
-     * @param start   起始节点在map中的索引
-     * @param end     最终节点在map中的索引
+     * @param u       起始节点在map中的索引
+     * @param v       结束节点在map中的索引
+     * @param edges   邻接矩阵
      * @param visited 访问数组
      * @return
      */
-    private double bfs(double[][] graph, int start, int end, boolean[] visited) {
-        Queue<Pair> queue = new LinkedList<>();
-        queue.offer(new Pair(start, start, 1.0));
-        visited[start] = true;
+    private double bfs(int u, int v, double[][] edges, boolean[] visited) {
+        Queue<Pos> queue = new LinkedList<>();
+        queue.offer(new Pos(u, u, 1.0));
+        visited[u] = true;
 
         while (!queue.isEmpty()) {
-            Pair pair = queue.poll();
+            Pos pos = queue.poll();
 
-            if (pair.end == end) {
-                return pair.result;
+            //找到结束节点v，直接返回
+            if (pos.v == v) {
+                return pos.result;
             }
 
-            //找当前节点未被访问的临界顶点
-            for (int i = 0; i < graph.length; i++) {
-                if (graph[pair.end][i] != -1.0 && !visited[i]) {
-                    queue.offer(new Pair(start, i, pair.result * graph[pair.end][i]));
+            //遍历u未被访问的临界顶点i
+            for (int i = 0; i < edges[0].length; i++) {
+                if (edges[pos.v][i] != -1.0 && !visited[i]) {
+                    queue.offer(new Pos(u, i, pos.result * edges[pos.v][i]));
                     visited[i] = true;
                 }
             }
@@ -375,7 +418,7 @@ public class Problem399 {
     }
 
     /**
-     * 建立邻接表形式的有向图
+     * 建立邻接矩阵形式的有向图
      * graph[i][j]；第i个元素ci和第j个元素cj相除，ci/cj表示的值
      *
      * @param equations
@@ -384,56 +427,54 @@ public class Problem399 {
      * @return
      */
     private double[][] buildGraph(List<List<String>> equations, double[] values, Map<String, Integer> map) {
-        int count = map.size();
+        //邻接矩阵表示的有向图
+        double[][] edges = new double[map.size()][map.size()];
 
-        //临界矩阵表示图
-        double[][] graph = new double[count][count];
-
-        for (int i = 0; i < count; i++) {
-            for (int j = 0; j < count; j++) {
-                graph[i][j] = -1.0;
+        for (int i = 0; i < edges.length; i++) {
+            for (int j = 0; j < edges[0].length; j++) {
+                if (i == j) {
+                    edges[i][j] = 1.0;
+                } else {
+                    edges[i][j] = -1.0;
+                }
             }
         }
 
-        for (int i = 0; i < count; i++) {
-            graph[i][i] = 1.0;
+        for (int i = 0; i < values.length; i++) {
+            String str1 = equations.get(i).get(0);
+            String str2 = equations.get(i).get(1);
+            int u = map.get(str1);
+            int v = map.get(str2);
+
+            edges[u][v] = values[i];
+            edges[v][u] = 1.0 / values[i];
         }
 
-        for (int index = 0; index < values.length; index++) {
-            String str1 = equations.get(index).get(0);
-            String str2 = equations.get(index).get(1);
-
-            int i = map.get(str1);
-            int j = map.get(str2);
-            graph[i][j] = values[index];
-            graph[j][i] = 1.0 / values[index];
-        }
-
-        return graph;
+        return edges;
     }
 
     /**
      * bfs中队列存储的节点
      */
-    private static class Pair {
+    private static class Pos {
         /**
          * 起始节点在map中的索引
          */
-        int start;
+        int u;
 
         /**
-         * 最终节点在map中的索引
+         * 结束节点在map中的索引
          */
-        int end;
+        int v;
 
         /**
-         * start到end的结果值
+         * u到v的结果值
          */
         double result;
 
-        Pair(int start, int end, double result) {
-            this.start = start;
-            this.end = end;
+        Pos(int u, int v, double result) {
+            this.u = u;
+            this.v = v;
             this.result = result;
         }
     }
@@ -452,7 +493,7 @@ public class Problem399 {
          */
         private double[] weight;
 
-        public UnionFind (int n) {
+        public UnionFind(int n) {
             parent = new int[n];
             weight = new double[n];
 
@@ -482,13 +523,13 @@ public class Problem399 {
 
         /**
          * 合并，将x的根节点指向y的根节点，并更新x的根节点的权值
-         *              ?
-         *       x ------------>  y
-         *     /\               /\
-         *    / weight[x]      / weight[y]
-         *   /                /
-         *  /     value      /
-         * a —————————————> c
+         * <              ?
+         * <       x ------------>  y
+         * <     /\               /\
+         * <    / weight[x]      / weight[y]
+         * <   /                /
+         * <  /     value      /
+         * < a —————————————> c
          *
          * @param x
          * @param y

@@ -103,7 +103,7 @@ public class Problem140 {
         //s可以拆分
         if (dp[s.length()]) {
             //从后往前拆分，使用到dp数组
-            backtrack2(s.length(), new LinkedList<>(), s, dp, wordDictSet, result);
+            backtrack2(s.length(), new LinkedList<>(), s, dp, wordDict, result);
         }
 
         return result;
@@ -116,33 +116,31 @@ public class Problem140 {
             return;
         }
 
-        for (String str : wordDict) {
-            if (t + str.length() <= s.length() && s.substring(t, t + str.length()).equals(str)) {
+        for (String word : wordDict) {
+            if (t + word.length() <= s.length() && s.substring(t, t + word.length()).equals(word)) {
                 int start = sb.length();
 
-                sb.append(str).append(' ');
-                backtrack(t + str.length(), sb, s, wordDict, result);
+                sb.append(word).append(' ');
+                backtrack(t + word.length(), sb, s, wordDict, result);
                 sb.delete(start, sb.length());
             }
         }
     }
 
     private void backtrack2(int t, Deque<String> deque, String s, boolean[] dp,
-                            Set<String> wordDictSet, List<String> result) {
+                            List<String> wordDict, List<String> result) {
         if (t == 0) {
             //队列中每个元素之间添加空格
             result.add(String.join(" ", deque));
             return;
         }
 
-        for (int i = t - 1; i >= 0; i--) {
-            String str = s.substring(i, t);
-
-            //s[0]-s[i-1]可以拆分为wordDict中的单词，并且str是wordDict中的单词
-            if (dp[i] && wordDictSet.contains(str)) {
+        for (String word : wordDict) {
+            //s[0]-s[t-word.length()-1]可以拆分为wordDict中的单词，并且word是s中单词
+            if (t - word.length() >= 0 && dp[t - word.length()] && s.substring(t - word.length(), t).equals(word)) {
                 //因为是从后往前遍历，所以尾添加
-                deque.offerFirst(str);
-                backtrack2(t - str.length(), deque, s, dp, wordDictSet, result);
+                deque.addFirst(word);
+                backtrack2(t - word.length(), deque, s, dp, wordDict, result);
                 deque.removeFirst();
             }
         }

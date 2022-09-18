@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2022/5/13 9:06
  * @Author zsy
- * @Description 课程表 华为机试题 类比Problem210
+ * @Description 课程表 华为机试题 类比Problem210、Problem399
  * 你这个学期必须选修 numCourses 门课程，记为 0 到 numCourses - 1 。
  * 在选修某些课程之前需要一些先修课程。
  * 先修课程按数组 prerequisites 给出，其中 prerequisites[i] = [ai, bi] ，
@@ -113,21 +113,19 @@ public class Problem207 {
 
         while (!queue.isEmpty()) {
             int u = queue.poll();
-            //获得u的临界顶点v
-            int v = getNextAdjacent(u, 0, edges);
 
             //遍历u的邻接顶点v
-            while (v != -1) {
-                //v入度减1
-                inDegree[v]--;
+            for (int v = 0; v < edges[0].length; v++) {
+                if (edges[u][v] != 0) {
+                    //v入度减1
+                    inDegree[v]--;
 
-                //如果顶点v入度为0，则入队
-                if (inDegree[v] == 0) {
-                    queue.offer(v);
-                    count++;
+                    //顶点v入度为0，则入队
+                    if (inDegree[v] == 0) {
+                        queue.offer(v);
+                        count++;
+                    }
                 }
-
-                v = getNextAdjacent(u, v + 1, edges);
             }
         }
 
@@ -139,50 +137,29 @@ public class Problem207 {
         //当前顶点u正在访问
         visited[u] = 1;
 
-        //u的邻接顶点v
-        int v = getNextAdjacent(u, 0, edges);
-
         //遍历u的邻接顶点v
-        while (v != -1) {
+        for (int v = 0; v < edges[0].length; v++) {
             if (hasCircle) {
                 return;
             }
 
-            //邻接顶点v正在访问，说明有环，不存在拓扑排序
-            if (visited[v] == 1) {
-                hasCircle = true;
-                return;
-            }
+            //找u未被访问的邻接顶点v
+            if (edges[u][v] != 0 && visited[v] != 2) {
+                //邻接顶点v没有访问
+                if (visited[v] == 0) {
+                    dfs(v, edges, visited);
+                    continue;
+                }
 
-            //邻接顶点v没有访问
-            if (visited[v] == 0) {
-                dfs(v, edges, visited);
+                //邻接顶点v正在访问，说明有环，不存在拓扑排序
+                if (visited[v] == 1) {
+                    hasCircle = true;
+                    return;
+                }
             }
-
-            //得到u的下一个临界顶点v
-            v = getNextAdjacent(u, v + 1, edges);
         }
 
         //当前顶点u已经访问
         visited[u] = 2;
-    }
-
-    /**
-     * 从start索引开始，获取u的下一个邻接顶点v
-     *
-     * @param u
-     * @param start
-     * @param edges
-     * @return
-     */
-    private int getNextAdjacent(int u, int start, int[][] edges) {
-        for (int i = start; i < edges[0].length; i++) {
-            if (edges[u][i] == 1) {
-                return i;
-            }
-        }
-
-        //没有邻接顶点，返回-1
-        return -1;
     }
 }

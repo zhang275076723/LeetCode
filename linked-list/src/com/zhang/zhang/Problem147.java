@@ -27,8 +27,6 @@ public class Problem147 {
         head = problem147.insertionSortList(head);
     }
 
-
-
     /**
      * 插入排序的链表形式
      * 时间复杂度O(n^2)，空间复杂度O(1)
@@ -57,7 +55,7 @@ public class Problem147 {
                 ListNode curNode = hair;
 
                 //找到要插入的位置
-                while (node.val > curNode.next.val) {
+                while (curNode.next.val < node.val) {
                     curNode = curNode.next;
                 }
 
@@ -65,6 +63,7 @@ public class Problem147 {
                 node.next = curNode.next;
                 curNode.next = node;
 
+                //更新node，指向下一个节点
                 node = pre.next;
             } else {
                 //当前节点放在链表末尾

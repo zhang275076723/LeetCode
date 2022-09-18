@@ -104,16 +104,10 @@ public class Problem165 {
                 i++;
             }
 
-            //跳过'.'
-            i++;
-
             while (j < version2.length() && version2.charAt(j) != '.') {
                 value2 = value2 * 10 + version2.charAt(j) - '0';
                 j++;
             }
-
-            //跳过'.'
-            j++;
 
             //比较
             if (value1 > value2) {
@@ -121,6 +115,10 @@ public class Problem165 {
             } else if (value1 < value2) {
                 return -1;
             }
+
+            //跳过'.'
+            i++;
+            j++;
         }
 
         return 0;

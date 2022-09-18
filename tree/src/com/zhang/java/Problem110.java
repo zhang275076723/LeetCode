@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/27 8:25
  * @Author zsy
- * @Description 平衡二叉树 类比Problem104、Problem124、Problem543 同Offer55_2
+ * @Description 平衡二叉树 类比Problem104、Problem111、Problem124、Problem543 同Offer55_2
  * 给定一个二叉树，判断它是否是高度平衡的二叉树。
  * 本题中，一棵高度平衡二叉树定义为：
  * 一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1 。
@@ -48,12 +48,12 @@ public class Problem110 {
             return true;
         }
 
-        nodeDepth(root);
+        nodeHeight(root);
 
         return isBalanced;
     }
 
-    private int nodeDepth(TreeNode root) {
+    private int nodeHeight(TreeNode root) {
         if (root == null) {
             return 0;
         }
@@ -63,14 +63,14 @@ public class Problem110 {
             return -1;
         }
 
-        int leftDepth = nodeDepth(root.left);
-        int rightDepth = nodeDepth(root.right);
+        int leftHeight = nodeHeight(root.left);
+        int rightHeight = nodeHeight(root.right);
 
-        if (Math.abs(leftDepth - rightDepth) > 1) {
+        if (Math.abs(leftHeight - rightHeight) > 1) {
             isBalanced = false;
         }
 
-        return Math.max(leftDepth, rightDepth) + 1;
+        return Math.max(leftHeight, rightHeight) + 1;
     }
 
     private TreeNode buildTree(String[] data) {

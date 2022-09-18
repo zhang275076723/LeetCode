@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/1 17:13
  * @Author zsy
- * @Description 回文数 类比Problem5、Problem7、Problem131、Problem234、Problem647
+ * @Description 回文数 类比Problem5、Problem7、Problem131、Problem214、Problem234、Problem516、Problem647
  * 给你一个整数 x ，如果 x 是一个回文整数，返回 true ；否则，返回 false 。
  * 回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。
  * 例如，121 是回文，而 123 不是。
@@ -58,6 +58,7 @@ public class Problem9 {
 
     /**
      * 不将x转换为字符串，而是反转x，比较是否相等
+     * x为回文数，所以不会溢出，不需要考虑溢出的情况
      * 时间复杂度O(logn)，空间复杂度O(1)
      *
      * @param x
@@ -82,9 +83,8 @@ public class Problem9 {
             cur = num % 10;
             num = num / 10;
 
-            //不会溢出，不需要考虑溢出的情况
-
-            reverse = reverse *10 + cur;
+            //回文数逆序不会溢出，不需要考虑溢出的情况
+            reverse = reverse * 10 + cur;
         }
 
         //判断反转之后是否和x相等

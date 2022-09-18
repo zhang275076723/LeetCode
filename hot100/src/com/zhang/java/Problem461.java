@@ -34,18 +34,18 @@ public class Problem461 {
      * @return
      */
     public int hammingDistance(int x, int y) {
-        int result = 0;
+        int count = 0;
         int z = x ^ y;
 
         while (z != 0) {
             //+的优先级高于&，所以需要添加括号
-            result = result + (z & 1);
+            count = count + (z & 1);
 
             //如果存在负数，则需要使用无符号右移
             z = z >> 1;
         }
 
-        return result;
+        return count;
     }
 
     /**
@@ -57,15 +57,14 @@ public class Problem461 {
      * @return
      */
     public int hammingDistance2(int x, int y) {
-        int result = 0;
+        int count = 0;
         int z = x ^ y;
 
         while (z != 0) {
             z = z & (z - 1);
-
-            result++;
+            count++;
         }
 
-        return result;
+        return count;
     }
 }

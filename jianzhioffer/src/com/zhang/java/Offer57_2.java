@@ -107,7 +107,7 @@ public class Offer57_2 {
 
     /**
      * 滑动窗口，双指针
-     * 看到连续子数组，想到滑动窗口和前缀和(适合有负数的情况)
+     * 看到连续子数组，想到滑动窗口和前缀和 (滑动窗口不适合有负数的情况)
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param target
@@ -121,7 +121,7 @@ public class Offer57_2 {
         List<int[]> list = new ArrayList<>();
         int left = 1;
         int right = 1;
-        int sum = left;
+        int sum = 1;
 
         while (right <= target / 2 + 1) {
             while (sum < target) {
@@ -154,7 +154,7 @@ public class Offer57_2 {
 
     /**
      * 前缀和
-     * 看到连续子数组，想到滑动窗口和前缀和(滑动窗口只适合没有负数的情况)
+     * 看到连续子数组，想到滑动窗口和前缀和 (滑动窗口不适合有负数的情况)
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param target

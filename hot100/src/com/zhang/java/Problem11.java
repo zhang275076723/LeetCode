@@ -39,15 +39,15 @@ public class Problem11 {
      * @return
      */
     public int maxArea(int[] height) {
-        int max = 0;
+        int result = 0;
 
         for (int i = 0; i < height.length - 1; i++) {
             for (int j = i + 1; j < height.length; j++) {
-                max = Math.max(max, (j - i) * Math.min(height[i], height[j]));
+                result = Math.max(result, (j - i) * Math.min(height[i], height[j]));
             }
         }
 
-        return max;
+        return result;
     }
 
     /**
@@ -60,20 +60,20 @@ public class Problem11 {
      * @return
      */
     public int maxArea2(int[] height) {
-        int max = 0;
+        int result = 0;
         int left = 0;
         int right = height.length - 1;
 
         while (left < right) {
             if (height[left] < height[right]) {
-                max = Math.max(max, (right - left) * height[left]);
+                result = Math.max(result, (right - left) * height[left]);
                 left++;
             } else {
-                max = Math.max(max, (right - left) * height[right]);
+                result = Math.max(result, (right - left) * height[right]);
                 right--;
             }
         }
 
-        return max;
+        return result;
     }
 }

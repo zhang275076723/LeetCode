@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/8/16 10:16
  * @Author zsy
- * @Description 恢复二叉搜索树 类比Problem95、Problem96、Problem98、Problem230、Offer33、Offer36
+ * @Description 恢复二叉搜索树 类比Problem95、Problem96、Problem98、Problem230、Problem501、Problem538、Offer33、Offer36
  * 给你二叉搜索树的根节点 root ，该树中的 恰好 两个节点的值被错误地交换。
  * 请在不改变其结构的情况下，恢复这棵树 。
  * <p>
@@ -22,7 +22,7 @@ import java.util.*;
  */
 public class Problem99 {
     /**
-     * 中序遍历中当前节点的前一个节点
+     * 递归中序遍历中当前节点的前驱节点
      */
     private TreeNode pre = null;
 

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/12 11:15
  * @Author zsy
- * @Description 寻找两个正序数组的中位数
+ * @Description 寻找两个正序数组的中位数 字节面试题
  * 给定两个大小分别为 m 和 n 的正序（从小到大）数组 nums1 和 nums2。
  * 请你找出并返回这两个正序数组的 中位数 。
  * 算法的时间复杂度应该为 O(log (m+n)) 。
@@ -62,9 +62,9 @@ public class Problem4 {
         int i = 0;
         //nums2指针
         int j = 0;
-        //中位数的前一个数
+        //两个中位数中的前一个数
         int num1 = Integer.MIN_VALUE;
-        //中位数的后一个数
+        //两个中位数中的后一个数
         int num2 = Integer.MIN_VALUE;
         int m = nums1.length;
         int n = nums2.length;
@@ -138,8 +138,6 @@ public class Problem4 {
         int nextI;
         //j的下一个下标索引
         int nextJ;
-        //第k/2小元素
-        int halfK;
 
         while (true) {
             //i、j指针超过数组长度时，直接返回另一个数组当前的第k个元素
@@ -155,16 +153,16 @@ public class Problem4 {
                 return Math.min(nums1[i], nums2[j]);
             }
 
-            halfK = k / 2;
-            nextI = Math.min(i + halfK - 1, nums1.length - 1);
-            nextJ = Math.min(j + halfK - 1, nums2.length - 1);
+            //每次找当前数组的之后k/2个元素
+            nextI = Math.min(i + k / 2 - 1, nums1.length - 1);
+            nextJ = Math.min(j + k / 2 - 1, nums2.length - 1);
 
             if (nums1[nextI] < nums2[nextJ]) {
-                //更新第k小元素
+                //更新k、i
                 k = k - (nextI - i + 1);
                 i = nextI + 1;
             } else {
-                //更新第k小元素
+                //更新k、j
                 k = k - (nextJ - j + 1);
                 j = nextJ + 1;
             }

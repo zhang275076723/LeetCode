@@ -27,7 +27,7 @@ public class Problem40 {
         Problem40 problem40 = new Problem40();
         int[] candidates = {10, 1, 2, 7, 6, 1, 5};
         int target = 8;
-        System.out.println(problem40.combinationSum(candidates, target));
+        System.out.println(problem40.combinationSum2(candidates, target));
     }
 
     /**
@@ -38,7 +38,7 @@ public class Problem40 {
      * @param target
      * @return
      */
-    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         if (candidates == null || candidates.length == 0) {
             return new ArrayList<>();
         }
@@ -49,23 +49,23 @@ public class Problem40 {
         List<List<Integer>> result = new ArrayList<>();
 
         //使用访问数组
-        backtrack(candidates, target, 0, new boolean[candidates.length], result, new ArrayList<>());
+        backtrack(0, candidates, target, new boolean[candidates.length], result, new ArrayList<>());
 
         //不使用访问数组
-//        backtrack(candidates, target, 0, result, new ArrayList<>());
+//        backtrack(0, candidates, target, result, new ArrayList<>());
 
         return result;
     }
 
     /**
+     * @param t          当前元素索引
      * @param candidates 目标数组
      * @param target     要求元素之和
-     * @param t          目标数组的当前元素索引
      * @param visited    结果去重，在i > 0 && candidates[i] == candidates[i - 1] && !visited[i-1]的情况下去重
      * @param result     结果集合
      * @param list       每个满足元素之和为target的结果
      */
-    private void backtrack(int[] candidates, int target, int t, boolean[] visited,
+    private void backtrack(int t, int[] candidates, int target, boolean[] visited,
                            List<List<Integer>> result, List<Integer> list) {
         if (target == 0) {
             result.add(new ArrayList<>(list));
@@ -95,7 +95,7 @@ public class Problem40 {
             visited[i] = true;
 
             //和39题区别，这里是i+1，因为元素只能使用一次，而39题是i
-            backtrack(candidates, target - candidates[i], i + 1, visited, result, list);
+            backtrack(i + 1, candidates, target - candidates[i], visited, result, list);
 
             visited[i] = false;
             list.remove(list.size() - 1);
@@ -116,34 +116,34 @@ public class Problem40 {
     private void merge(int[] nums, int left, int mid, int right, int[] tempArr) {
         int i = left;
         int j = mid + 1;
-        int index = left;
+        int k = left;
 
         while (i <= mid && j <= right) {
             if (nums[i] < nums[j]) {
-                tempArr[index] = nums[i];
+                tempArr[k] = nums[i];
                 i++;
             } else {
-                tempArr[index] = nums[j];
+                tempArr[k] = nums[j];
                 j++;
             }
 
-            index++;
+            k++;
         }
 
         while (i <= mid) {
-            tempArr[index] = nums[i];
+            tempArr[k] = nums[i];
             i++;
-            index++;
+            k++;
         }
 
         while (j <= right) {
-            tempArr[index] = nums[j];
+            tempArr[k] = nums[j];
             j++;
-            index++;
+            k++;
         }
 
-        for (index = left; index <= right; index++) {
-            nums[index] = tempArr[index];
+        for (k = left; k <= right; k++) {
+            nums[k] = tempArr[k];
         }
     }
 }

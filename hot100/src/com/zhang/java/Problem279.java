@@ -32,7 +32,7 @@ public class Problem279 {
     }
 
     /**
-     * 动态规划 完全背包
+     * 动态规划
      * dp[i]：和为i需要完全平方数的最少数量
      * dp[i] = min(dp[i-j^2] + 1) (1 <= j <= i^1/2)
      * 时间复杂度O(n*n^1/2)，空间复杂度O(n)
@@ -50,6 +50,7 @@ public class Problem279 {
 
         for (int i = 1; i <= n; i++) {
             dp[i] = Integer.MAX_VALUE;
+
             for (int j = 1; j * j <= i; j++) {
                 dp[i] = Math.min(dp[i], dp[i - j * j] + 1);
             }

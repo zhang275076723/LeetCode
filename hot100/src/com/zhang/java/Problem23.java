@@ -5,7 +5,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2022/4/16 10:12
  * @Author zsy
- * @Description 合并K个升序链表 类比Problem21、Problem23、Problem25、Problem148、Problem378
+ * @Description 合并K个升序链表 字节面试题 类比Problem21、Problem23、Problem25、Problem148、Problem378
  * 给你一个链表数组，每个链表都已经按升序排列。
  * 请你将所有链表合并到一个升序链表中，返回合并后的链表。
  * <p>
@@ -81,21 +81,7 @@ public class Problem23 {
             return null;
         }
 
-        return mergeKLists2(lists, 0, lists.length - 1);
-    }
-
-    public ListNode mergeKLists2(ListNode[] lists, int left, int right) {
-        if (left >= right) {
-            return lists[left];
-        }
-
-        // >> 优先级小于 + ，所以需要在使用 >> 的时候添加括号
-        int mid = left + ((right - left) >> 1);
-
-        ListNode list1 = mergeKLists2(lists, left, mid);
-        ListNode list2 = mergeKLists2(lists, mid + 1, right);
-
-        return mergeTwoLists(list1, list2);
+        return mergeSort(lists, 0, lists.length - 1);
     }
 
     /**
@@ -139,6 +125,20 @@ public class Problem23 {
         return head.next;
     }
 
+    private ListNode mergeSort(ListNode[] lists, int left, int right) {
+        if (left >= right) {
+            return lists[left];
+        }
+
+        // >> 优先级小于 + ，所以需要在使用 >> 的时候添加括号
+        int mid = left + ((right - left) >> 1);
+
+        ListNode list1 = mergeSort(lists, left, mid);
+        ListNode list2 = mergeSort(lists, mid + 1, right);
+
+        return mergeTwoLists(list1, list2);
+    }
+
     /**
      * 非递归合并两个有序链表
      * 时间复杂度O(m+n)，空间复杂度O(1)
@@ -147,7 +147,7 @@ public class Problem23 {
      * @param list2
      * @return
      */
-    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+    private ListNode mergeTwoLists(ListNode list1, ListNode list2) {
         if (list1 == null) {
             return list2;
         }

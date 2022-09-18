@@ -109,8 +109,10 @@ public class Problem15 {
             int right = nums.length - 1;
 
             while (left < right) {
+                int sum = nums[i] + nums[left] + nums[right];
+
                 //三数之和等于0
-                if (nums[i] + nums[left] + nums[right] == 0) {
+                if (sum == 0) {
                     ArrayList<Integer> list = new ArrayList<>();
                     list.add(nums[i]);
                     list.add(nums[left]);
@@ -129,7 +131,7 @@ public class Problem15 {
 
                     left++;
                     right--;
-                } else if (nums[i] + nums[left] + nums[right] < 0) {
+                } else if (sum < 0) {
                     //三数之和小于0
                     left++;
                 } else {
@@ -168,7 +170,7 @@ public class Problem15 {
      * 时间复杂度O(logn)，空间复杂度O(logn)
      *
      * @param nums
-     * @param index
+     * @param i
      * @param heapSize
      */
     public void heapify(int[] nums, int i, int heapSize) {

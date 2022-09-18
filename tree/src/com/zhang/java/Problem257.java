@@ -70,13 +70,15 @@ public class Problem257 {
 
             if (pos.node.left == null && pos.node.right == null) {
                 result.add(pos.path);
-            } else {
-                if (pos.node.left != null) {
-                    queue.offer(new Pos(pos.node.left, pos.path + "->" + pos.node.left.val));
-                }
-                if (pos.node.right != null) {
-                    queue.offer(new Pos(pos.node.right, pos.path + "->" + pos.node.right.val));
-                }
+                continue;
+            }
+
+            if (pos.node.left != null) {
+                queue.offer(new Pos(pos.node.left, pos.path + "->" + pos.node.left.val));
+            }
+
+            if (pos.node.right != null) {
+                queue.offer(new Pos(pos.node.right, pos.path + "->" + pos.node.right.val));
             }
         }
 

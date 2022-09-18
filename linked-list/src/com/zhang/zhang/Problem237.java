@@ -3,7 +3,7 @@ package com.zhang.zhang;
 /**
  * @Date 2022/9/3 8:11
  * @Author zsy
- * @Description 删除链表中的节点 类比Offer18
+ * @Description 删除链表中的节点 类比Problem19、Offer18
  * 有一个单链表的 head，我们想删除它其中的一个节点 node。
  * 给你一个需要删除的节点 node 。
  * 你将 无法访问 第一个节点 head。

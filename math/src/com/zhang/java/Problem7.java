@@ -39,7 +39,7 @@ public class Problem7 {
     public int reverse(int x) {
         int result = 0;
         //当前位的值
-        int cur = 0;
+        int cur;
 
         while (x != 0) {
             cur = x % 10;

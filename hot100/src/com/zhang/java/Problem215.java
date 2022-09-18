@@ -1,10 +1,13 @@
 package com.zhang.java;
 
 
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 /**
  * @Date 2022/5/15 8:30
  * @Author zsy
- * @Description 数组中的第K个最大元素 类比Problem347、Offer40 字节面试题
+ * @Description 数组中的第K个最大元素 类比Problem347、Problem692、Offer40 字节面试题
  * 给定整数数组 nums 和整数 k，请返回数组中第 k 个最大的元素。
  * 请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
  * <p>
@@ -22,38 +25,22 @@ public class Problem215 {
         Problem215 problem215 = new Problem215();
         int[] nums = {3, 2, 3, 1, 2, 4, 5, 5, 6};
         int k = 4;
-//        System.out.println(problem215.findKthLargest(nums, k));
-        System.out.println(problem215.findKthLargest2(nums, k));
-    }
-
-    /**
-     * 堆排序，找第k大的元素
-     * 时间复杂度O(nlogn)，空间复杂度O(logn)
-     *
-     * @param nums
-     * @param k
-     * @return
-     */
-    public int findKthLargest(int[] nums, int k) {
-        if (nums == null || nums.length == 0) {
-            return Integer.MIN_VALUE;
-        }
-
-        heapSort(nums);
-
-        return nums[nums.length - k];
+        System.out.println(problem215.findKthLargest(nums, k));
+//        System.out.println(problem215.findKthLargest2(nums, k));
+//        System.out.println(problem215.findKthLargest3(nums, k));
     }
 
     /**
      * 快排划分变形
      * 快排的每次划分都能确定一个元素所在的位置，通过该位置和index比较，判断是否是第k大元素
      * 期望时间复杂度O(n)，空间复杂度O(logn)
+     * 最坏时间复杂度O(n^2)，最坏空间复杂度O(n)
      *
      * @param nums
      * @param k
      * @return
      */
-    public int findKthLargest2(int[] nums, int k) {
+    public int findKthLargest(int[] nums, int k) {
         if (nums == null || nums.length == 0) {
             return Integer.MIN_VALUE;
         }
@@ -78,24 +65,71 @@ public class Problem215 {
     }
 
     /**
-     * 大根堆排序
+     * 大根堆
      * 时间复杂度O(nlogn)，空间复杂度O(logn)
      *
      * @param nums
+     * @param k
+     * @return
      */
-    private void heapSort(int[] nums) {
+    public int findKthLargest2(int[] nums, int k) {
+        if (nums == null || nums.length == 0) {
+            return Integer.MIN_VALUE;
+        }
+
+        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(nums.length, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2 - o1;
+            }
+        });
+
+        //建大根堆
+        for (int i = 0; i < nums.length; i++) {
+            priorityQueue.offer(nums[i]);
+        }
+
+        //移除堆顶k-1个元素
+        for (int i = 1; i < k; i++) {
+            priorityQueue.poll();
+        }
+
+        //当前堆顶即为第k大元素
+        return priorityQueue.poll();
+    }
+
+    /**
+     * 手动实现大根堆
+     * 时间复杂度O(nlogn)，空间复杂度O(logn)
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int findKthLargest3(int[] nums, int k) {
+        if (nums == null || nums.length == 0) {
+            return Integer.MIN_VALUE;
+        }
+
         //建堆
         for (int i = nums.length / 2 - 1; i >= 0; i--) {
             heapify(nums, i, nums.length);
         }
 
-        //最后一个元素与堆顶元素交换，再整堆
-        for (int i = nums.length - 1; i > 0; i--) {
+        int heapSize = nums.length;
+
+        //移除堆顶k-1个元素
+        for (int i = 1; i < k; i++) {
             int temp = nums[0];
-            nums[0] = nums[i];
-            nums[i] = temp;
-            heapify(nums, 0, i);
+            nums[0] = nums[heapSize - 1];
+            nums[heapSize - 1] = temp;
+
+            heapSize--;
+            heapify(nums, 0, heapSize);
         }
+
+        //当前堆顶即为第k大元素
+        return nums[0];
     }
 
     /**

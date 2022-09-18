@@ -47,12 +47,14 @@ public class Problem199 {
 
         while (!queue.isEmpty()) {
             int size = queue.size();
+
             while (size > 0) {
                 TreeNode node = queue.poll();
 
                 if (node.left != null) {
                     queue.offer(node.left);
                 }
+
                 if (node.right != null) {
                     queue.offer(node.right);
                 }

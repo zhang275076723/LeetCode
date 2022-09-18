@@ -4,7 +4,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/31 17:17
  * @Author zsy
- * @Description 数组中的逆序对
+ * @Description 数组中的逆序对 类比Problem315
  * 在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。
  * 输入一个数组，求出这个数组中的逆序对的总数。
  * <p>
@@ -82,34 +82,35 @@ public class Offer51 {
     public void merge(int[] nums, int left, int mid, int right, int[] tempArr) {
         int i = left;
         int j = mid + 1;
-        int tempArrIndex = left;
+        int k = left;
 
         while (i <= mid && j <= right) {
             if (nums[i] <= nums[j]) {
-                tempArr[tempArrIndex] = nums[i];
+                tempArr[k] = nums[i];
                 i++;
+                k++;
             } else {
-                tempArr[tempArrIndex] = nums[j];
+                tempArr[k] = nums[j];
                 j++;
-                //左边数组的所有元素都大于右边数组当前元素，都构成了逆序对
+                k++;
+
+                //左边数组当前位置i到末尾mid的所有元素都大于右边数组当前元素，都构成了逆序对
                 count = count + mid - i + 1;
             }
-
-            tempArrIndex++;
         }
 
         while (i <= mid) {
-            tempArr[tempArrIndex] = nums[i];
+            tempArr[k] = nums[i];
             i++;
-            tempArrIndex++;
+            k++;
         }
         while (j <= right) {
-            tempArr[tempArrIndex] = nums[j];
+            tempArr[k] = nums[j];
             j++;
-            tempArrIndex++;
+            k++;
         }
 
-        for (int k = left; k <= right; k++) {
+        for (k = left; k <= right; k++) {
             nums[k] = tempArr[k];
         }
     }

@@ -43,7 +43,6 @@ public class Problem581 {
         }
 
         int[] newNums = Arrays.copyOf(nums, nums.length);
-//        mergeSort(nums, 0, nums.length - 1, new int[nums.length]);
         heapSort(nums);
 
         int left = 0;
@@ -75,13 +74,13 @@ public class Problem581 {
 
         int left = -1;
         int right = -1;
-        //遍历到当前位置的最大值
+        //由前往后遍历到当前位置之前的最大值
         int max = Integer.MIN_VALUE;
-        //遍历到当前位置的最小值
+        //有后往前遍历到当前位置之后的最小值
         int min = Integer.MAX_VALUE;
 
         for (int i = 0; i < nums.length; i++) {
-            //从左往右遍历，找中间部分的右边界，nums[i]比当前max小，说明存在无序子数组，更新right
+            //从左往右遍历，找中间部分的右边界，nums[i]比之前max小，说明存在无序子数组，更新right
             if (nums[i] < max) {
                 right = i;
             }
@@ -89,13 +88,13 @@ public class Problem581 {
             //更新当前最大值
             max = Math.max(max, nums[i]);
 
-            //从右往左遍历，找中间部分的左边界，num[nums.length-i-1]比当前min小，说明存在无序子数组，更新left
-            if (nums[nums.length - i - 1] > min) {
-                left = nums.length - i - 1;
+            //从右往左遍历，找中间部分的左边界，num[nums.length-1-i]比之后min大，说明存在无序子数组，更新left
+            if (nums[nums.length - 1 - i] > min) {
+                left = nums.length - 1 - i;
             }
 
             //更新当前最小值
-            min = Math.min(min, nums[nums.length - i - 1]);
+            min = Math.min(min, nums[nums.length - 1 - i]);
         }
 
         return left == right ? 0 : right - left + 1;
@@ -112,7 +111,6 @@ public class Problem581 {
             int temp = nums[i];
             nums[i] = nums[0];
             nums[0] = temp;
-
             heapify(nums, 0, i);
         }
     }
@@ -125,6 +123,7 @@ public class Problem581 {
         if (left < heapSize && nums[max] < nums[left]) {
             max = left;
         }
+
         if (right < heapSize && nums[max] < nums[right]) {
             max = right;
         }
@@ -133,49 +132,7 @@ public class Problem581 {
             int temp = nums[i];
             nums[i] = nums[max];
             nums[max] = temp;
-
             heapify(nums, max, heapSize);
-        }
-    }
-
-    private void mergeSort(int[] nums, int left, int right, int[] tempArr) {
-        if (left < right) {
-            int mid = left + ((right - left) >> 1);
-            mergeSort(nums, left, mid, tempArr);
-            mergeSort(nums, mid + 1, right, tempArr);
-            merge(nums, left, mid, right, tempArr);
-        }
-    }
-
-    private void merge(int[] nums, int left, int mid, int right, int[] tempArr) {
-        int i = left;
-        int j = mid + 1;
-        int k = left;
-
-        while (i <= mid && j <= right) {
-            if (nums[i] < nums[j]) {
-                tempArr[k] = nums[i];
-                i++;
-            } else {
-                tempArr[k] = nums[j];
-                j++;
-            }
-            k++;
-        }
-
-        while (i <= mid) {
-            tempArr[k] = nums[i];
-            i++;
-            k++;
-        }
-        while (j <= right) {
-            tempArr[k] = nums[j];
-            j++;
-            k++;
-        }
-
-        for (k = left; k <= right; k++) {
-            nums[k] = tempArr[k];
         }
     }
 }

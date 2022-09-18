@@ -139,7 +139,7 @@ public class Knapsack {
      * 完全背包最大价值，不要求背包正好装满
      * dp[i][j]：前i件物品在容量为j的情况下的最大价值
      * dp[i][j] = dp[i-1][j]                                                (weight[i-1] > j)
-     * dp[i][j] = max(dp[i-1][j], dp[i-1][j-weight[i-1]*k] + values[i-1]*k) (weight[i-1] <= j, 0 <= weight[i-1]*k <= j, k = 1,2,3...)
+     * dp[i][j] = max(dp[i-1][j], dp[i][j-weight[i-1]] + values[i-1])       (weight[i-1] <= j)
      * 时间复杂度O(mnk)，空间复杂度O(mn)，可以使用滚动数组优化空间复杂度为O(n) (m=weights.length, n=bagWeight)
      *
      * @param weights
@@ -152,14 +152,11 @@ public class Knapsack {
 
         for (int i = 1; i <= weights.length; i++) {
             for (int j = 1; j <= bagWeight; j++) {
-                for (int k = 0; k <= j / weights[i - 1]; k++) {
-                    if (weights[i - 1] > j) {
-                        dp[i][j] = dp[i - 1][j];
-                    } else {
-                        dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - weights[i - 1] * k] + values[i - 1] * k);
-                    }
+                if (weights[i - 1] > j) {
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - weights[i - 1]] + values[i - 1]);
                 }
-                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j]);
             }
         }
 

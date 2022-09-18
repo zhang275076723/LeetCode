@@ -1,6 +1,8 @@
 package com.zhang.java;
 
 
+import java.util.Random;
+
 /**
  * @Date 2022/6/29 8:35
  * @Author zsy
@@ -39,13 +41,18 @@ public class Problem470 {
      * @return
      */
     public int rand10() {
-        int random = 0;
+        int random = Integer.MAX_VALUE;
 
-        for (int i = 1; i <= 4; i++) {
-            random = (random << 1) + rand7Get0Or1();
+        while (true) {
+            if (random >= 10) {
+                random = 0;
+                for (int i = 1; i <= 4; i++) {
+                    random = (random << 1) + rand7Get0Or1();
+                }
+            } else {
+                return random + 1;
+            }
         }
-
-        return random <= 9 ? random + 1 : rand10();
     }
 
     /**
@@ -59,15 +66,15 @@ public class Problem470 {
      * @return
      */
     public int rand10_2() {
-        //生成等概率的[1,49]
-        int random = (rand7() - 1) * 7 + rand7();
+        while (true) {
+            //生成等概率的[1,49]
+            int random = (rand7() - 1) * 7 + rand7();
 
-        //超过40，即[41,49]的情况，则重新生成
-        while (random > 40) {
-            random = (rand7() - 1) * 7 + rand7();
+            //在[1,40]之间，则直接返回；如果超过40，即[41,49]的情况，则重新生成
+            if (random <= 40) {
+                return random % 10 + 1;
+            }
         }
-
-        return random % 10 + 1;
     }
 
     /**
@@ -84,7 +91,7 @@ public class Problem470 {
             //生成等概率的[1,49]
             int random = (rand7() - 1) * 7 + rand7();
 
-            //在[1,40]之间，则直接返回
+            //在[1,40]之间，直接返回
             if (random <= 40) {
                 return random % 10 + 1;
             }
@@ -128,6 +135,8 @@ public class Problem470 {
     }
 
     private int rand7() {
+        //[1,7]
+//        return new Random().nextInt(7) + 1;
         return (int) (Math.random() * 7 + 1);
     }
 }

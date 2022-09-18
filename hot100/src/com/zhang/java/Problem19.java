@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/15 10:10
  * @Author zsy
- * @Description 删除链表的倒数第 N 个结点
+ * @Description 删除链表的倒数第 N 个结点 类比Problem237、Offer18
  * 给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点。
  * <p>
  * 输入：head = [1,2,3,4,5], n = 2
@@ -60,32 +60,11 @@ public class Problem19 {
             slow = slow.next;
         }
 
-        slow.next = slow.next.next;
+        ListNode deleteNode = slow.next;
+        slow.next = deleteNode.next;
+        deleteNode.next = null;
 
         return hair.next;
-
-//        ListNode fast = head;
-//        ListNode slow = head;
-//        ListNode preNode = null;
-//
-//        for (int i = 0; i < n; i++) {
-//            fast = fast.next;
-//        }
-//
-//        while (fast != null) {
-//            preNode = slow;
-//            slow = slow.next;
-//            fast = fast.next;
-//        }
-//
-//        //删除头结点
-//        if (preNode == null) {
-//            return head.next;
-//        }
-//
-//        //删除其他节点
-//        preNode.next = slow.next;
-//        return head;
     }
 
     public ListNode buildList(int[] data) {

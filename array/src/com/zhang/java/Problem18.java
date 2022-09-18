@@ -81,8 +81,9 @@ public class Problem18 {
                 int right = nums.length - 1;
 
                 while (left < right) {
+                    int sum = nums[i] + nums[j] + nums[left] + nums[right];
                     //四数之和等于target
-                    if (nums[i] + nums[j] + nums[left] + nums[right] == target) {
+                    if (sum == target) {
                         List<Integer> list = new ArrayList<>();
                         list.add(nums[i]);
                         list.add(nums[j]);
@@ -102,7 +103,7 @@ public class Problem18 {
 
                         left++;
                         right--;
-                    } else if (nums[i] + nums[j] + nums[left] + nums[right] < target) {
+                    } else if (sum < target) {
                         //四数之和小于target
                         left++;
                     } else {

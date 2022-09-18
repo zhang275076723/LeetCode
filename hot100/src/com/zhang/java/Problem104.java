@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/1 11:29
  * @Author zsy
- * @Description 二叉树的最大深度 类比Problem110、Problem124、Problem543 同Offer55
+ * @Description 二叉树的最大深度 类比Problem110、Problem111、Problem124、Problem543 同Offer55
  * 给定一个二叉树，找出其最大深度。
  * 二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
  * 说明: 叶子节点是指没有子节点的节点。
@@ -20,10 +20,11 @@ public class Problem104 {
         System.out.println(problem104.maxDepth(root));
         System.out.println(problem104.maxDepth2(root));
         System.out.println(problem104.maxDepth3(root));
+        System.out.println(problem104.maxDepth4(root));
     }
 
     /**
-     * 递归dfs
+     * dfs，递归前序遍历
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -41,7 +42,7 @@ public class Problem104 {
     }
 
     /**
-     * 非递归dfs
+     * dfs，非递归前序遍历
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -79,6 +80,38 @@ public class Problem104 {
      * @return
      */
     public int maxDepth3(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int depth = 1;
+        Queue<Pos> queue = new LinkedList<>();
+        queue.offer(new Pos(root, 1));
+
+        while (!queue.isEmpty()) {
+            Pos pos = queue.poll();
+            depth = Math.max(depth, pos.depth);
+
+            if (pos.node.left != null) {
+                queue.offer(new Pos(pos.node.left, pos.depth + 1));
+            }
+
+            if (pos.node.right != null) {
+                queue.offer(new Pos(pos.node.right, pos.depth + 1));
+            }
+        }
+
+        return depth;
+    }
+
+    /**
+     * bfs
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param root
+     * @return
+     */
+    public int maxDepth4(TreeNode root) {
         if (root == null) {
             return 0;
         }
@@ -143,7 +176,7 @@ public class Problem104 {
     }
 
     /**
-     * 非递归dfs节点
+     * 非递归dfs和bfs节点
      */
     private static class Pos {
         TreeNode node;

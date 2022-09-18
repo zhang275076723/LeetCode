@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/3/19 19:44
  * @Author zsy
- * @Description 树的子结构 字节面试题 类比Problem100、Problem101、Problem226、Offer27、Offer28
+ * @Description 树的子结构 字节面试题 网易面试题 类比Problem100、Problem101、Problem226、Offer27、Offer28
  * 输入两棵二叉树A和B，判断B是不是A的子结构。(约定空树不是任意一个树的子结构)
  * B是A的子结构，即A中有出现和B相同的结构和节点值。
  * <p>
@@ -20,15 +20,18 @@ import java.util.*;
 public class Offer26 {
     public static void main(String[] args) {
         Offer26 offer26 = new Offer26();
-        String[] data1 = {"3", "4", "5", "1", "2"};
-        String[] data2 = {"4", "1"};
+//        String[] data1 = {"3", "4", "5", "1", "2"};
+//        String[] data2 = {"4", "1"};
+        String[] data1 = {"10", "12", "6", "8", "3", "11"};
+        String[] data2 = {"10", "12", "6", "8"};
         TreeNode root1 = offer26.buildTree(data1);
         TreeNode root2 = offer26.buildTree(data2);
         System.out.println(offer26.isSubStructure(root1, root2));
+        System.out.println(offer26.isSubStructure2(root1, root2));
     }
 
     /**
-     * dfs判断B是否是当前根节点的子节点
+     * dfs
      * 时间复杂度O(mn)，空间复杂度O(m) (m：A树节点个数，n:B树节点个数)
      *
      * @param A
@@ -43,6 +46,81 @@ public class Offer26 {
 
         //判断B树是否是A树的子结构，或者B树是否是A树左子树的子结构，或者树是否是A树右子树的子结构
         return contain(A, B) || isSubStructure(A.left, B) || isSubStructure(A.right, B);
+    }
+
+    /**
+     * bfs
+     * 时间复杂度O(mn)，空间复杂度O(m+min(m,n)) (m：A树节点个数，n:B树节点个数)
+     *
+     * @param A
+     * @param B
+     * @return
+     */
+    public boolean isSubStructure2(TreeNode A, TreeNode B) {
+        //空树不是任意一个树的子结构
+        if (A == null || B == null) {
+            return false;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(A);
+
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+
+            //B树是否是以node为根节点的树的子结构
+            boolean flag = true;
+            Queue<TreeNode> queue1 = new LinkedList<>();
+            Queue<TreeNode> queue2 = new LinkedList<>();
+            queue1.offer(node);
+            queue2.offer(B);
+
+            //判断B树是否是以node为根节点的树的子结构
+            while (!queue1.isEmpty() && !queue2.isEmpty()) {
+                TreeNode node1 = queue1.poll();
+                TreeNode node2 = queue2.poll();
+
+                if (node1 == null && node2 == null) {
+                    continue;
+                }
+
+                //B树不是以node为根节点的树的子结构
+                if (node1 == null) {
+                    flag = false;
+                    break;
+                }
+
+                if (node2 == null) {
+                    continue;
+                }
+
+                //B树不是以node为根节点的树的子结构
+                if (node1.val != node2.val) {
+                    flag = false;
+                    break;
+                }
+
+                queue1.offer(node1.left);
+                queue1.offer(node1.right);
+                queue2.offer(node2.left);
+                queue2.offer(node2.right);
+            }
+
+            //B树是以node为根节点的树的子结构
+            if (flag && queue2.isEmpty()) {
+                return true;
+            }
+
+            if (node.left != null) {
+                queue.offer(node.left);
+            }
+
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
+        }
+
+        return false;
     }
 
     /**

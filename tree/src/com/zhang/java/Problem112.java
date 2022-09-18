@@ -54,7 +54,7 @@ public class Problem112 {
             return false;
         }
 
-        dfs(root, targetSum, 0);
+        dfs(root, targetSum);
 
         return flag;
     }
@@ -85,6 +85,7 @@ public class Problem112 {
             if (pos.node.left != null) {
                 queue.offer(new Pos(pos.node.left, pos.pathSum + pos.node.left.val));
             }
+
             if (pos.node.right != null) {
                 queue.offer(new Pos(pos.node.right, pos.pathSum + pos.node.right.val));
             }
@@ -93,7 +94,7 @@ public class Problem112 {
         return false;
     }
 
-    private void dfs(TreeNode root, int targetSum, int curSum) {
+    private void dfs(TreeNode root, int targetSum) {
         if (root == null) {
             return;
         }
@@ -103,16 +104,16 @@ public class Problem112 {
             return;
         }
 
-        curSum = curSum + root.val;
+        targetSum = targetSum - root.val;
 
         //到达叶节点，且路径和为targetSum
-        if (root.left == null && root.right == null && curSum == targetSum) {
+        if (root.left == null && root.right == null && targetSum == 0) {
             flag = true;
             return;
         }
 
-        dfs(root.left, targetSum, curSum);
-        dfs(root.right, targetSum, curSum);
+        dfs(root.left, targetSum);
+        dfs(root.right, targetSum);
     }
 
     private TreeNode buildTree(String[] data) {

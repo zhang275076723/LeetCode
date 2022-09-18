@@ -6,7 +6,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/4/7 12:14
  * @Author zsy
- * @Description n个骰子的点数
+ * @Description n个骰子的点数 类比Problem312
  * 把n个骰子扔在地上，所有骰子朝上一面的点数之和为s。
  * 输入n，打印出s的所有可能的值出现的概率。
  * 你需要用一个浮点数数组返回答案，其中第 i 个元素代表这 n 个骰子所能掷出的点数集合中第 i 小的那个的概率。
@@ -77,7 +77,7 @@ public class Offer60 {
         for (int i = 2; i <= n; i++) {
             for (int j = i; j <= 6 * i; j++) {
                 for (int k = 1; k <= 6; k++) {
-                    //掷i-1个骰子能掷出点数之和为j-k
+                    //掷i-1个骰子能掷出点数之和为j-k，必须大于等于i-1
                     if (j - k >= i - 1) {
                         dp[i][j] = dp[i][j] + dp[i - 1][j - k];
                     }

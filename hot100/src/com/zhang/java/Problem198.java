@@ -79,10 +79,10 @@ public class Problem198 {
         //dp[i-1]
         int q = nums[0];
 
-        for (int i = 2; i <= nums.length; i++) {
-            int temp = q;
-            q = Math.max(q, p + nums[i - 1]);
-            p = temp;
+        for (int i = 1; i < nums.length; i++) {
+            int temp = Math.max(p + nums[i], q);
+            p = q;
+            q = temp;
         }
 
         return q;

@@ -42,7 +42,7 @@ public class Problem122 {
      * dp2[i]：到price[i]那天，不持有股票的最大利润
      * dp1[i] = max(dp1[i-1], dp2[i-1] - prices[i])
      * dp2[i] = max(dp2[i-1], dp1[i-1] + prices[i])
-     * 最大利润 = max(dp1[prices.length-1], dp2[prices.length-1])
+     * 最大利润 = dp2[prices.length-1]
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param prices
@@ -63,7 +63,7 @@ public class Problem122 {
             dp2[i] = Math.max(dp2[i - 1], dp1[i - 1] + prices[i]);
         }
 
-        return Math.max(dp1[prices.length - 1], dp2[prices.length - 1]);
+        return dp2[prices.length - 1];
     }
 
     /**

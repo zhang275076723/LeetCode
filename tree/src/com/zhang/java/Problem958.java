@@ -43,7 +43,7 @@ public class Problem958 {
 
     /**
      * bfs，层序遍历
-     * 当出现第一个null时停止遍历，如果此时还有未遍历到的节点，说明不是完全二叉树
+     * 当出现第一个null时停止遍历，如果此时之后还有未遍历到的节点，说明不是完全二叉树
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -67,7 +67,7 @@ public class Problem958 {
                 continue;
             }
 
-            //当存在null节点时，判断是否还有未遍历到的节点
+            //当存在null节点，之后还有未遍历到的节点，返回false
             if (flag && node != null) {
                 return false;
             }

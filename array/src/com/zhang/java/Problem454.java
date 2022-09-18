@@ -65,6 +65,7 @@ public class Problem454 {
 
         int count = 0;
 
+        //从map集合中找num3和num4数组之和为-(num3 + num4)的元素
         for (int num3 : nums3) {
             for (int num4 : nums4) {
                 count = count + map.getOrDefault(-(num3 + num4), 0);

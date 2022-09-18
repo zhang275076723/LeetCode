@@ -38,31 +38,30 @@ public class Offer55_2 {
             return true;
         }
 
-        nodeDepth(root);
+        nodeHeight(root);
 
         return isBalanced;
     }
 
-    public int nodeDepth(TreeNode root) {
-        //如果isBalanced为false，则直接剪枝返回
-        if (!isBalanced) {
-            return -1;
-        }
-
+    private int nodeHeight(TreeNode root) {
         if (root == null) {
             return 0;
         }
 
-        int leftNodeDepth = nodeDepth(root.left);
-        int rightNodeDepth = nodeDepth(root.right);
+        //当前已经不是平衡二叉树，直接返回，相当于剪枝
+        if (!isBalanced) {
+            return -1;
+        }
 
-        if (Math.abs(leftNodeDepth - rightNodeDepth) > 1) {
+        int leftHeight = nodeHeight(root.left);
+        int rightHeight = nodeHeight(root.right);
+
+        if (Math.abs(leftHeight - rightHeight) > 1) {
             isBalanced = false;
         }
 
-        return Math.max(leftNodeDepth, rightNodeDepth) + 1;
+        return Math.max(leftHeight, rightHeight) + 1;
     }
-
     private TreeNode buildTree(String[] data) {
         if (data == null || data.length == 0) {
             return null;

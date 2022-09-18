@@ -4,7 +4,7 @@ package com.zhang.java;
 /**
  * @Date 2021/11/24 19:15
  * @Author zsy
- * @Description 移除元素 类比Problem283
+ * @Description 移除元素 类比Problem26、Problem75、Problem283
  * 给定一个数组nums和一个值val，你需要原地移除所有数值等于val的元素，并返回移除后数组的新长度
  * 不使用额外的数组空间，你必须仅使用O(1)额外空间并原地修改输入数组
  * 元素的顺序可以改变，不需要考虑数组中超出新长度后面的元素
@@ -35,7 +35,7 @@ public class Problem27 {
 
     /**
      * 双指针
-     * left指针指向当前要替换的索引下标，right指针指向当前遍历的索引下标
+     * 第一个指针指向当前遍历的数组下标索引，第二个指针指向当前要插入的下标索引
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -47,23 +47,22 @@ public class Problem27 {
             return 0;
         }
 
-        int left = 0;
-        int right = 0;
+        //nums[i]要插入的下标索引
+        int index = 0;
 
-        while (right < nums.length) {
-            if (nums[right] != val) {
-                nums[left] = nums[right];
-                left++;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != val){
+                nums[index] = nums[i];
+                index++;
             }
-            right++;
         }
 
-        return left;
+        return index;
     }
 
     /**
-     * 双指针优化
-     * 从左边找第一个值等于val的元素，从右开始找第一个值不等于val的元素，将右边元素赋值给左边元素
+     * 双指针
+     * 从左边找第一个值等于val的元素，从右边找第一个值不等于val的元素，将右边元素赋值给左边元素
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums

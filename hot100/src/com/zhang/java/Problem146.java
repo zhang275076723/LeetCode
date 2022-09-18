@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/5/7 9:43
  * @Author zsy
- * @Description LRU 缓存 类比Problem460
+ * @Description LRU 缓存 类比Problem460 百度面试题
  * 请你设计并实现一个满足 LRU (最近最少使用) 缓存 约束的数据结构。
  * 实现 LRUCache 类：
  * LRUCache(int capacity) 以 正整数 作为容量 capacity 初始化 LRU 缓存
@@ -63,10 +63,11 @@ public class Problem146 {
 
     /**
      * 哈希表+双向链表
+     * 哈希表存储key和缓存节点node的映射
      * 当缓存容量满的时候，优先淘汰最近最少使用的数据，即链表尾节点
-     * 1、新数据直接插入到链表头
-     * 2、缓存数据被命中，则将数据放到链表头
-     * 3、缓存已满，则移除链表尾数据
+     * 1、新数据直接插入到链表头和缓存中
+     * 2、缓存数据被命中，则将数据放到链表头并修改缓存中数据
+     * 3、缓存已满，则移除链表尾和缓存中数据
      */
     private static class LRUCache {
         //缓存容量
@@ -144,20 +145,15 @@ public class Problem146 {
                 //当前容量已满
                 if (curSize == capacity) {
                     cache.remove(tail.pre.key);
-
                     //移除末尾节点，当前节点放到链表的头
                     remove(tail.pre);
                     addFirst(node);
-
                     cache.put(key, node);
                 } else {
-                    //容量未满
-
                     //当前节点放到链表的头，作为最新访问
                     addFirst(node);
-
-                    curSize++;
                     cache.put(key, node);
+                    curSize++;
                 }
             }
         }
@@ -181,10 +177,13 @@ public class Problem146 {
         }
 
         private void addFirst(Node node) {
+            //头结点的下一个节点
+            Node next = head.next;
+
+            node.next = next;
             node.pre = head;
-            node.next = head.next;
-            head.next.pre = node;
             head.next = node;
+            next.pre = node;
         }
 
         private void remove(Node node) {

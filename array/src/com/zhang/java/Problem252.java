@@ -33,8 +33,8 @@ public class Problem252 {
     }
 
     /**
-     * 按照interval[i][0]由小到大排序，记录会议的结束时间，
-     * 如果当前会议的开始时间小于记录的结束时间，说明两个会议有重叠，返回false
+     * 按照interval[i][0](会议开始时间)由小到大排序，end记录之前会议的结束时间，
+     * 如果当前会议的开始时间小于之前记录的会议结束时间，说明两个会议有重叠，返回false
      * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
      * @param intervals
@@ -81,33 +81,33 @@ public class Problem252 {
     private void merge(int[][] intervals, int left, int mid, int right, int[][] tempArr) {
         int i = left;
         int j = mid + 1;
-        int index = left;
+        int k = left;
 
         while (i <= mid && j <= right) {
             if (intervals[i][0] < intervals[j][0]) {
-                tempArr[index] = intervals[i];
+                tempArr[k] = intervals[i];
                 i++;
+                k++;
             } else {
-                tempArr[index] = intervals[j];
+                tempArr[k] = intervals[j];
                 j++;
+                k++;
             }
-
-            index++;
         }
 
         while (i <= mid) {
-            tempArr[index] = intervals[i];
+            tempArr[k] = intervals[i];
             i++;
-            index++;
+            k++;
         }
 
         while (j <= right) {
-            tempArr[index] = intervals[j];
+            tempArr[k] = intervals[j];
             j++;
-            index++;
+            k++;
         }
 
-        for (int k = left; k <= right; k++) {
+        for (k = left; k <= right; k++) {
             intervals[k] = tempArr[k];
         }
     }

@@ -39,7 +39,7 @@ public class Problem322 {
     }
 
     /**
-     * 动态规划 完全背包
+     * 动态规划
      * dp[i]：凑成金额i所需的最少的硬币个数
      * dp[i] = min(dp[i - coins[j]] + 1) (j为硬币种类)
      * 时间复杂度O(n*amount)，空间复杂度O(amount) (n=coins.length)

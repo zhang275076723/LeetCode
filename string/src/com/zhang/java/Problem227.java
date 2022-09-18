@@ -39,9 +39,13 @@ public class Problem227 {
      * 双栈，数字栈和操作符栈
      * 1、如果遇到空格，则跳过
      * 2、如果遇到数字，则保存连续的数字
-     * 3、如果遇到运算符'+'、'-'、'*'、'/'，则将栈顶运算符优先级大于等于当前运算符优先级的符号出栈，
+     * 3、如果遇到'('，则直接入操作符栈
+     * 4、如果遇到')'，则数字栈出栈两个元素，操作符栈出栈一个运算符，进行运算，再将结果入数字栈，直至操作符栈遇到左括号
+     * (左括号出栈，但不进行运算)
+     * 5、如果遇到运算符'+'、'-'、'*'、'/'，则将栈顶运算符优先级大于等于当前运算符优先级的符号出栈，
      * 再从数字栈出栈两个元素进行运算，将结果入栈数字栈，最后将当前运算符入操作数栈
-     * 4、遍历完之后如果操作符栈不为空，则依次出栈进行运算
+     * (需要判断'-'是负号，还是运算符，如果是负号，转换为0-num)
+     * 6、遍历完之后如果操作符栈不为空，则依次出栈进行运算
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param s
@@ -52,44 +56,56 @@ public class Problem227 {
         Deque<Integer> numStack = new LinkedList<>();
         //操作符栈
         Deque<Character> opsStack = new LinkedList<>();
-        s = s.trim();
 
-        //防止第一个数为负数的情况，在开头添加一个0
-        s = '0' + s;
+        //去除所有空格，不能在遍历过程中跳过空格，例如"( -3)"
+        s = s.replaceAll(" ", "");
 
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
 
-            //空格
-            if (c == ' ') {
-                continue;
-            }
-
             //数字
             if (c >= '0' && c <= '9') {
-                int temp = c - '0';
+                int num = c - '0';
                 while (i < s.length() - 1 && s.charAt(i + 1) >= '0' && s.charAt(i + 1) <= '9') {
-                    temp = temp * 10 + s.charAt(i + 1) - '0';
+                    num = num * 10 + s.charAt(i + 1) - '0';
                     i++;
                 }
-                numStack.offerLast(temp);
-            } else {
-                //操作符，先将栈顶操作符优先级大于等于当前操作符优先级的符号出栈，数字栈出栈，进行运算，在将结果入数字栈
-                while (!opsStack.isEmpty() && getPriority(opsStack.peekLast()) >= getPriority(c)) {
-                    int temp = operation(numStack, opsStack);
-                    numStack.offerLast(temp);
-                }
-                //当前操作符入栈
+                numStack.offerLast(num);
+            } else if (c == '(') {
+                //左括号
                 opsStack.offerLast(c);
+            } else if (c == ')') {
+                //右括号
+                while (!opsStack.isEmpty() && opsStack.peekLast() != '(') {
+                    int num = operation(numStack, opsStack);
+                    numStack.offerLast(num);
+                }
+                //左括号出栈
+                opsStack.pollLast();
+            } else {
+                //首位为'-'或存在"(-"这种情况，需要添0
+                if (c == '-' && (i == 0 || s.charAt(i - 1) == '(')) {
+                    numStack.offerLast(0);
+                    opsStack.offerLast(c);
+                } else {
+                    //操作符，将栈顶操作符优先级大于等于当前操作符优先级的符号出栈，数字栈出栈，进行运算，再将结果入数字栈
+                    while (!opsStack.isEmpty() && getPriority(opsStack.peekLast()) >= getPriority(c)) {
+                        int num = operation(numStack, opsStack);
+                        numStack.offerLast(num);
+                    }
+                    //当前操作符入栈
+                    opsStack.offerLast(c);
+                }
             }
         }
 
         //操作符栈非空，运算符栈中剩余符号出栈运算
         while (!opsStack.isEmpty()) {
-            int temp = operation(numStack, opsStack);
-            numStack.offerLast(temp);
+            int num = operation(numStack, opsStack);
+            numStack.offerLast(num);
         }
 
+        //数字栈中剩余的最后一个元素，即为运算结果
         return numStack.pollLast();
     }
 
@@ -172,23 +188,21 @@ public class Problem227 {
         int num2 = numStack.pollLast();
         int num1 = numStack.pollLast();
         char c = opsStack.pollLast();
-        int result;
 
         if (c == '+') {
-            result = num1 + num2;
+            return num1 + num2;
         } else if (c == '-') {
-            result = num1 - num2;
+            return num1 - num2;
         } else if (c == '*') {
-            result = num1 * num2;
+            return num1 * num2;
         } else {
-            result = num1 / num2;
+            return num1 / num2;
         }
-
-        return result;
     }
 
     /**
      * 返回当前运算符的优先级
+     * '('、')'优先级为0
      * '+'、'-'优先级为1
      * '*'、'/'优先级为2
      *
@@ -196,10 +210,14 @@ public class Problem227 {
      * @return
      */
     private int getPriority(char c) {
-        if (c == '+' || c == '-') {
+        if (c == '(' || c == ')') {
+            return 0;
+        } else if (c == '+' || c == '-') {
             return 1;
+        } else if (c == '*' || c == '/') {
+            return 2;
+        } else {
+            return -1;
         }
-
-        return 2;
     }
 }

@@ -5,7 +5,7 @@ package com.zhang.java;
  * @Author zsy
  * @Description 二进制中1的个数 类比Problem190、Problem338、Problem461 同Problem191
  * 编写一个函数，输入是一个无符号整数（以二进制串的形式），
- * 返回其二进制表达式中数字位数为 '1' 的个数（也被称为 汉明重量).）。
+ * 返回其二进制表达式中数字位数为 '1' 的个数（也被称为 汉明重量)）。
  * <p>
  * 输入：n = 11 (控制台输入 00000000000000000000000000001011)
  * 输出：3
@@ -39,16 +39,16 @@ public class Offer15 {
      * @return
      */
     public int hammingWeight(int n) {
-        int result = 0;
+        int count = 0;
 
         while (n != 0) {
-            result = result + (n & 1);
+            count = count + (n & 1);
 
             //有可能n为负数，所以要使用无符号右移
             n = n >>> 1;
         }
 
-        return result;
+        return count;
     }
 
     /**
@@ -60,16 +60,16 @@ public class Offer15 {
      * @return
      */
     public int hammingWeight2(int n) {
-        int result = 0;
+        int count = 0;
 
         while (n != 0) {
             //将n的最低位1变为0
             n = n & (n - 1);
 
-            result++;
+            count++;
         }
 
-        return result;
+        return count;
     }
 
     /**

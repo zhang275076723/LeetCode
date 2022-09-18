@@ -33,7 +33,7 @@ public class Problem49 {
     /**
      * 哈希
      * 将strs中每一个字符串排序，放入哈希表中，找到不同的字母异位词
-     * 时间复杂度O(nklogk)，空间复杂度O(nk) (n为strs中字符串的个数，k为strs中字符串的最大长度)
+     * 时间复杂度O(nklogk)，空间复杂度O(nk) (n:strs中字符串的个数，k:strs中字符串的最大长度)
      *
      * @param strs
      * @return
@@ -43,15 +43,19 @@ public class Problem49 {
         Map<String, List<String>> map = new HashMap<>();
 
         for (String str : strs) {
-            char[] chars = str.toCharArray();
-            heapSort(chars);
-
+            //以排序之后的数组为key
+            char[] arr = str.toCharArray();
+            heapSort(arr);
             //经排序之后的str
-            String key = new String(chars);
+            String key = new String(arr);
 
-            List<String> list = map.getOrDefault(key, new ArrayList<>());
+            //如果map不存在key，则创建新的ArrayList
+            if (!map.containsKey(key)) {
+                map.put(key, new ArrayList<>());
+            }
+
+            List<String> list = map.get(key);
             list.add(str);
-            map.put(key, list);
         }
 
         List<List<String>> result = new ArrayList<>();
@@ -96,9 +100,13 @@ public class Problem49 {
             //str经过转换后的表示
             String key = sb.toString();
 
-            List<String> list = map.getOrDefault(key, new ArrayList<>());
+            //如果map不存在key，则创建新的ArrayList
+            if (!map.containsKey(key)) {
+                map.put(key, new ArrayList<>());
+            }
+
+            List<String> list = map.get(key);
             list.add(str);
-            map.put(key, list);
         }
 
         List<List<String>> result = new ArrayList<>();

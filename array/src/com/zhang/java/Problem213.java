@@ -54,9 +54,6 @@ public class Problem213 {
         int max2 = robInRange(nums, 1, nums.length - 1);
 
         return Math.max(max1, max2);
-
-//        return Math.max(robInRange2(nums, 0, nums.length - 2),
-//                robInRange2(nums, 1, nums.length - 1));
     }
 
     /**
@@ -95,9 +92,9 @@ public class Problem213 {
         int q = nums[start];
 
         for (int i = start + 1; i <= end; i++) {
-            int temp = q;
-            q = Math.max(q, p + nums[i]);
-            p = temp;
+            int temp = Math.max(p + nums[i], q);
+            p = q;
+            q = temp;
         }
 
         return q;

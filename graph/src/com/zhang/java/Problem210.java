@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/14 9:58
  * @Author zsy
- * @Description 课程表 II 类比Problem207
+ * @Description 课程表 II 类比Problem207、Problem399
  * 现在你总共有 numCourses 门课需要选，记为 0 到 numCourses - 1。
  * 给你一个数组 prerequisites ，其中 prerequisites[i] = [ai, bi] ，表示在选修课程 ai 前 必须 先选修 bi 。
  * 例如，想要学习课程 0 ，你需要先完成课程 1 ，我们用一个匹配来表示：[0,1] 。
@@ -65,10 +65,6 @@ public class Problem210 {
         List<List<Integer>> edges = new ArrayList<>();
         //访问数组，0-未访问，1-正在访问，2-已访问
         int[] visited = new int[numCourses];
-        //拓扑排序数组
-        int[] result = new int[numCourses];
-        //拓扑排序数组指针，dfs需要倒序
-        index = numCourses - 1;
 
         for (int i = 0; i < numCourses; i++) {
             edges.add(new ArrayList<>());
@@ -77,6 +73,11 @@ public class Problem210 {
         for (int i = 0; i < prerequisites.length; i++) {
             edges.get(prerequisites[i][1]).add(prerequisites[i][0]);
         }
+
+        //拓扑排序数组
+        int[] result = new int[numCourses];
+        //拓扑排序数组指针，dfs需要倒序
+        index = numCourses - 1;
 
         for (int i = 0; i < numCourses; i++) {
             //从未访问的顶点开始dfs
@@ -163,15 +164,16 @@ public class Problem210 {
                 return;
             }
 
+            //邻接顶点v没有访问
+            if (visited[v] == 0) {
+                dfs(v, result, edges, visited);
+                continue;
+            }
+
             //邻接顶点v正在访问，说明有环，不存在拓扑排序
             if (visited[v] == 1) {
                 hasCircle = true;
                 return;
-            }
-
-            //邻接顶点v没有访问
-            if (visited[v] == 0) {
-                dfs(v, result, edges, visited);
             }
         }
 

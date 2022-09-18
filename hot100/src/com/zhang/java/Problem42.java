@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2022/3/30 16:24
  * @Author zsy
- * @Description 接雨水 类比Problem11、Problem84、Problem238、Problem402、Problem739、Offer66 字节面试题
+ * @Description 接雨水 字节面试题 类比Problem11、Problem238、Offer66 单调栈类比Problem84、Problem316、Problem321、Problem402、Problem739
  * 给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
  * <p>
  * 输入：height = [0,1,0,2,1,0,1,3,2,1,2,1]
@@ -41,14 +41,14 @@ public class Problem42 {
         int result = 0;
 
         for (int i = 0; i < height.length; i++) {
-            int leftMax = 0;
-            int rightMax = 0;
+            int leftMax = height[i];
+            int rightMax = height[i];
 
-            for (int j = 0; j <= i; j++) {
+            for (int j = 0; j < i; j++) {
                 leftMax = Math.max(leftMax, height[j]);
             }
 
-            for (int j = height.length - 1; j >= i; j--) {
+            for (int j = i + 1; j < height.length; j++) {
                 rightMax = Math.max(rightMax, height[j]);
             }
 

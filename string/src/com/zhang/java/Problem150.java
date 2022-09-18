@@ -56,9 +56,7 @@ public class Problem150 {
 
         Stack<Integer> stack = new Stack<>();
 
-        for (int i = 0; i < tokens.length; i++) {
-            String str = tokens[i];
-
+        for (String str : tokens) {
             if ("+".equals(str)) {
                 int num2 = stack.pop();
                 int num1 = stack.pop();

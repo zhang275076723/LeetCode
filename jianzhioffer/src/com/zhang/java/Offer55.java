@@ -21,10 +21,11 @@ public class Offer55 {
         System.out.println(offer55.maxDepth(root));
         System.out.println(offer55.maxDepth2(root));
         System.out.println(offer55.maxDepth3(root));
+        System.out.println(offer55.maxDepth4(root));
     }
 
     /**
-     * 递归dfs
+     * dfs，递归前序遍历
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -42,7 +43,7 @@ public class Offer55 {
     }
 
     /**
-     * 非递归dfs
+     * dfs，非递归前序遍历
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -53,13 +54,13 @@ public class Offer55 {
             return 0;
         }
 
-        Stack<Pos> stack = new Stack<>();
-        stack.push(new Pos(root, 1));
         int depth = 0;
+        Deque<Pos> stack = new LinkedList<>();
+        stack.push(new Pos(root, 1));
 
         while (!stack.isEmpty()) {
             Pos pos = stack.pop();
-            depth = Math.max(pos.depth, depth);
+            depth = Math.max(depth, pos.depth);
 
             if (pos.node.right != null) {
                 stack.push(new Pos(pos.node.right, pos.depth + 1));
@@ -84,18 +85,53 @@ public class Offer55 {
             return 0;
         }
 
+        int depth = 1;
+        Queue<Pos> queue = new LinkedList<>();
+        queue.offer(new Pos(root, 1));
+
+        while (!queue.isEmpty()) {
+            Pos pos = queue.poll();
+            depth = Math.max(depth, pos.depth);
+
+            if (pos.node.left != null) {
+                queue.offer(new Pos(pos.node.left, pos.depth + 1));
+            }
+
+            if (pos.node.right != null) {
+                queue.offer(new Pos(pos.node.right, pos.depth + 1));
+            }
+        }
+
+        return depth;
+    }
+
+    /**
+     * bfs
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param root
+     * @return
+     */
+    public int maxDepth4(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int depth = 0;
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
-        int depth = 0;
 
         while (!queue.isEmpty()) {
             int size = queue.size();
 
-            for (int i = 0; i < size; i++) {
+            while (size > 0) {
                 TreeNode node = queue.poll();
+                size--;
+
                 if (node.left != null) {
                     queue.offer(node.left);
                 }
+
                 if (node.right != null) {
                     queue.offer(node.right);
                 }
@@ -151,7 +187,7 @@ public class Offer55 {
     }
 
     /**
-     * 用于非递归，dfs
+     * 非递归dfs和bfs节点
      */
     public static class Pos {
         TreeNode node;

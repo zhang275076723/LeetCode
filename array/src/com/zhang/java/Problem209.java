@@ -48,7 +48,7 @@ public class Problem209 {
             int sum = 0;
 
             for (int j = i; j < nums.length; j++) {
-                sum += nums[j];
+                sum = sum + nums[j];
 
                 if (sum >= target) {
                     length = Integer.min(length, j - i + 1);

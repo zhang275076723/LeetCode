@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/11 9:27
  * @Author zsy
- * @Description 把二叉搜索树转换为累加树
+ * @Description 把二叉搜索树转换为累加树 类比problem98、Problem99、Problem501
  * 给出二叉 搜索 树的根节点，该树的节点值各不相同，请你将其转换为累加树（Greater Sum Tree），
  * 使每个节点 node 的新值等于原树中大于或等于 node.val 的值之和。
  * 提醒一下，二叉搜索树满足下列约束条件：
@@ -32,22 +32,21 @@ import java.util.*;
  */
 public class Problem538 {
     /**
-     * 先遍历右子树，再遍历根节点，最后遍历左子树的累加值
+     * 递归逆序中序遍历中当前节点的前驱节点
      */
-    private int preSum;
+    private TreeNode pre;
 
     public static void main(String[] args) {
         Problem538 problem538 = new Problem538();
         String[] data = {"4", "1", "6", "0", "2", "5", "7", "null", "null", "null", "3", "null", "null", "null", "8"};
         TreeNode root = problem538.buildTree(data);
 //        root = problem538.convertBST(root);
-//        root = problem538.convertBST2(root);
-        root = problem538.convertBST3(root);
+        root = problem538.convertBST2(root);
         problem538.traversal(root);
     }
 
     /**
-     * 反序中序遍历，使用全局遍历，先遍历右子树，再遍历根节点，最后遍历左子树
+     * 递归逆序中序遍历
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -58,16 +57,13 @@ public class Problem538 {
             return null;
         }
 
-        convertBST(root.right);
-        root.val = root.val + preSum;
-        preSum = root.val;
-        convertBST(root.left);
+        reverseInorder(root);
 
         return root;
     }
 
     /**
-     * 反序中序遍历，不使用全局遍历，先遍历右子树，再遍历根节点，最后遍历左子树
+     * 非递归逆序中序遍历
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -78,26 +74,9 @@ public class Problem538 {
             return null;
         }
 
-        reverseInorder(root, 0);
-
-        return root;
-    }
-
-    /**
-     * 非递归反序中序遍历
-     * 时间复杂度O(n)，空间复杂度O(n)
-     *
-     * @param root
-     * @return
-     */
-    public TreeNode convertBST3(TreeNode root) {
-        if (root == null) {
-            return null;
-        }
-
         Stack<TreeNode> stack = new Stack<>();
         TreeNode node = root;
-        int preSum = 0;
+        TreeNode pre = null;
 
         while (!stack.isEmpty() || node != null) {
             while (node != null) {
@@ -106,24 +85,33 @@ public class Problem538 {
             }
 
             node = stack.pop();
-            node.val = node.val + preSum;
-            preSum = node.val;
+
+            if (pre != null) {
+                node.val = node.val + pre.val;
+            }
+
+            pre = node;
             node = node.left;
         }
 
         return root;
     }
 
-    private int reverseInorder(TreeNode root, int preSum) {
+    private void reverseInorder(TreeNode root) {
         if (root == null) {
-            return preSum;
+            return;
         }
 
-        int value = reverseInorder(root.right, preSum);
-        root.val = root.val + value;
-        value = reverseInorder(root.left, root.val);
+        reverseInorder(root.right);
 
-        return value;
+        if (pre != null) {
+            root.val = root.val + pre.val;
+        }
+
+        //更新逆序中序遍历的前序节点
+        pre = root;
+
+        reverseInorder(root.left);
     }
 
     private TreeNode buildTree(String[] data) {

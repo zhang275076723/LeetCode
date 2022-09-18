@@ -4,7 +4,7 @@ package com.zhang.zhang;
 /**
  * @Date 2022/4/18 14:39
  * @Author zsy
- * @Description K 个一组翻转链表 类比Problem21、Problem23、Problem24、Problem92、Problem206
+ * @Description K 个一组翻转链表 字节面试题 类比Problem21、Problem23、Problem24、Problem92、Problem206
  * 给你一个链表，每 k 个节点一组进行翻转，请你返回翻转后的链表。
  * k 是一个正整数，它的值小于或等于链表的长度。
  * 如果节点总数不是 k 的整数倍，那么请将最后剩余的节点保持原有顺序。

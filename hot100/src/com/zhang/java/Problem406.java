@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @Date 2022/6/5 9:38
  * @Author zsy
- * @Description 根据身高重建队列 中国人寿笔试题 类比Problem56、Problem252、Problem253
+ * @Description 根据身高重建队列 中国人寿机试题 类比Problem56、Problem252、Problem253
  * 假设有打乱顺序的一群人站成一个队列，数组 people 表示队列中一些人的属性（不一定按顺序）。
  * 每个 people[i] = [hi, ki] 表示第 i 个人的身高为 hi ，前面 正好 有 ki 个身高大于或等于 hi 的人。
  * 请你重新构造并返回输入数组 people 所表示的队列。
@@ -29,7 +29,7 @@ import java.util.List;
  * 输出：[[4,0],[5,0],[2,2],[3,2],[1,4],[6,0]]
  * <p>
  * 1 <= people.length <= 2000
- * 0 <= hi <= 106
+ * 0 <= hi <= 10^6
  * 0 <= ki < people.length
  * 题目数据确保队列可以被重建
  */
@@ -84,7 +84,7 @@ public class Problem406 {
     /**
      * 涉及二维数组排序，一般都是第一个元素正序排序，第二个元素倒序排序；或者第一个元素倒序排序，第二个元素正序排序
      * 按照第一个元素正序排序，第二个元素倒序排序，
-     * 当前元素people[i][1]确定在原数组中的位置
+     * 当前元素people[i][1]确定当前元素在原数组中的索引位置
      * 例如：[4,4] [5,2] [5,0] [6,1] [7,1] [7,0]
      * [0,1,2,3,(4),5]    [4,4]    在原数组中索引为4
      * [0,1,(2),3,5]      [5,2]    在原数组中索引为2
@@ -108,9 +108,9 @@ public class Problem406 {
             public int compare(int[] people1, int[] people2) {
                 if (people1[0] != people2[0]) {
                     return people1[0] - people2[0];
+                } else {
+                    return people2[1] - people1[1];
                 }
-
-                return people2[1] - people1[1];
             }
         });
 
@@ -165,7 +165,6 @@ public class Problem406 {
         }
 
         people[left] = temp;
-
         return left;
     }
 }

@@ -33,10 +33,12 @@ public class Problem437 {
 
     public static void main(String[] args) {
         Problem437 problem437 = new Problem437();
-        String[] data = {"10", "5", "-3", "3", "2", "null", "11", "3", "-2", "null", "1"};
+//        String[] data = {"10", "5", "-3", "3", "2", "null", "11", "3", "-2", "null", "1"};
+        String[] data = {"1000000000","1000000000","null","294967296","null","1000000000",
+                "null","1000000000","null","1000000000"};
         TreeNode root = problem437.buildTree(data);
-        System.out.println(problem437.pathSum(root, 8));
-        System.out.println(problem437.pathSum2(root, 8));
+        System.out.println(problem437.pathSum(root, 0));
+        System.out.println(problem437.pathSum2(root, 0));
     }
 
     /**
@@ -62,9 +64,8 @@ public class Problem437 {
 
     /**
      * 路径前缀和
-     * 看到连续子数组，想到滑动窗口和前缀和(适合有负数的情况)
-     * 遍历每个节点，在哈希表中查找前缀和为targetSum-curSum的节点个数
-     * 因为节点存在负数，所以不能使用滑动窗口
+     * 看到连续子数组，想到滑动窗口和前缀和 (滑动窗口不适合有负数的情况)
+     * 遍历每个节点，在哈希表中查找key为curSum - targetSum的节点个数
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -76,10 +77,10 @@ public class Problem437 {
             return 0;
         }
 
-        //前缀和哈希表：key，根节点到当前节点路径前缀和；value，满足路径前缀和key的个数
-        Map<Integer, Integer> map = new HashMap<>();
+        //前缀和哈希表：key，根节点到当前节点路径和，使用long避免相加时int溢出；value，满足路径前缀和key的个数
+        Map<Long, Integer> map = new HashMap<>();
         //用于只有一个节点，即根节点值满足为targetSum的情况
-        map.put(0, 1);
+        map.put(0L, 1);
 
         dfs2(root, targetSum, 0, map);
 
@@ -91,11 +92,12 @@ public class Problem437 {
      * @param targetSum 要求的路径之和
      * @param curSum    当前路径之和
      */
-    private void dfs(TreeNode root, int targetSum, int curSum) {
+    private void dfs(TreeNode root, int targetSum, long curSum) {
         if (root == null) {
             return;
         }
 
+        //使用long避免相加时int溢出
         curSum = curSum + root.val;
 
         if (curSum == targetSum) {
@@ -110,30 +112,30 @@ public class Problem437 {
     /**
      * @param root      当前根节点
      * @param targetSum 要求的路径之和
-     * @param preSum    当前路径之和
+     * @param curSum    当前路径之和
      * @param map       根节点到当前节点路径上，除当前节点之外，所有节点的前缀和哈希表
      */
-    private void dfs2(TreeNode root, int targetSum, int preSum, Map<Integer, Integer> map) {
+    private void dfs2(TreeNode root, int targetSum, long curSum, Map<Long, Integer> map) {
         if (root == null) {
             return;
         }
 
         //更新前缀和，根节点到当前节点的路径和
-        preSum = preSum + root.val;
+        curSum = curSum + root.val;
 
         //从前缀和哈希表中找路径和为curSum-targetSum的数量，即为路径和为targetSum的数量
-        if (map.containsKey(preSum - targetSum)) {
-            count2 = count2 + map.get(preSum - targetSum);
+        if (map.containsKey(curSum - targetSum)) {
+            count2 = count2 + map.get(curSum - targetSum);
         }
 
         //当前前缀和放入前缀和哈希表中
-        map.put(preSum, map.getOrDefault(preSum, 0) + 1);
+        map.put(curSum, map.getOrDefault(curSum, 0) + 1);
 
-        dfs2(root.left, targetSum, preSum, map);
-        dfs2(root.right, targetSum, preSum, map);
+        dfs2(root.left, targetSum, curSum, map);
+        dfs2(root.right, targetSum, curSum, map);
 
-        //当前前缀和从哈希表中删除，因为当前分叉已经遍历结束，要遍历另一分叉，所以当前分叉的前缀和已经不适用
-        map.put(preSum, map.get(preSum) - 1);
+        //当前路径和从哈希表中删除，因为当前分叉已经遍历结束，要遍历另一分叉，所以当前分叉的路径和已经不能使用
+        map.put(curSum, map.get(curSum) - 1);
     }
 
     private TreeNode buildTree(String[] data) {

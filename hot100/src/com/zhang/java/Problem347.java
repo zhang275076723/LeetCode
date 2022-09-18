@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/2 10:09
  * @Author zsy
- * @Description 前 K 个高频元素 华为机试题、腾讯机试题 类比Problem215、Offer40
+ * @Description 前 K 个高频元素 华为机试题、腾讯机试题 类比Problem215、Problem692、Offer40
  * 给你一个整数数组 nums 和一个整数 k ，请你返回其中出现频率前 k 高的元素。你可以按 任意顺序 返回答案。
  * <p>
  * 输入: nums = [1,1,1,2,2,3], k = 2
@@ -29,6 +29,62 @@ public class Problem347 {
     }
 
     /**
+     * 快排划分变形
+     * 使用哈希表统计数组中元素出现次数，使用数组放元素，arr[i][0]：当前元素，arr[i][1]：出现次数
+     * 根据快排划分思想，得到前k大的元素
+     * 平均时间复杂度O(n)，最坏时间复杂度O(n^2)，空间复杂度O(n)，
+     * 哈希表大小为O(n)，快排划分最好空间复杂度O(logn)，快排划分最坏空间复杂度O(n)
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int[] topKFrequent(int[] nums, int k) {
+        if (nums.length == k) {
+            return nums;
+        }
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+
+        //出现次数数组，result[i][0]：当前元素，result[i][1]：出现次数
+        int[][] arr = new int[map.size()][2];
+        int index = 0;
+
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            arr[index] = new int[]{entry.getKey(), entry.getValue()};
+            index++;
+        }
+
+        int left = 0;
+        int right = arr.length - 1;
+        int pivot = partition(arr, left, right);
+
+        while (pivot != arr.length - k) {
+            //基准pivot在前k大频率之前
+            if (pivot < arr.length - k) {
+                left = pivot + 1;
+                pivot = partition(arr, left, right);
+            } else if (pivot > arr.length - k) {
+                //基准pivot在前k大频率之后
+                right = pivot - 1;
+                pivot = partition(arr, left, right);
+            }
+        }
+
+        int[] result = new int[k];
+
+        for (int i = 0; i < k; i++) {
+            result[i] = arr[arr.length - k + i][0];
+        }
+
+        return result;
+    }
+
+    /**
      * 小根堆
      * 使用哈希表统计数组中元素出现次数，再将哈希表中元素存放到大小为k的小根堆中，
      * 如果小根堆元素个数小于k，则直接插入；
@@ -40,7 +96,7 @@ public class Problem347 {
      * @param k
      * @return
      */
-    public int[] topKFrequent(int[] nums, int k) {
+    public int[] topKFrequent2(int[] nums, int k) {
         if (nums.length == k) {
             return nums;
         }
@@ -81,14 +137,14 @@ public class Problem347 {
     }
 
     /**
-     * 手动建立小根堆实现，同topKFrequent(int[] nums, int k)
+     * 手动实现小根堆，同topKFrequent2(int[] nums, int k)
      * 时间复杂度O(nlogk)，空间复杂度O(n)，哈希表大小为O(n)，堆大小为O(k)
      *
      * @param nums
      * @param k
      * @return
      */
-    public int[] topKFrequent2(int[] nums, int k) {
+    public int[] topKFrequent3(int[] nums, int k) {
         if (nums.length == k) {
             return nums;
         }
@@ -135,92 +191,6 @@ public class Problem347 {
 
     /**
      * 快排划分变形
-     * 使用哈希表统计数组中元素出现次数，使用数组放元素，arr[i][0]：当前元素，arr[i][1]：出现次数
-     * 根据快排划分思想，得到前k大的元素
-     * 平均时间复杂度O(n)，最坏时间复杂度O(n^2)，空间复杂度O(n)，
-     * 哈希表大小为O(n)，快排划分最好空间复杂度O(logn)，快排划分最坏空间复杂度O(n)
-     *
-     * @param nums
-     * @param k
-     * @return
-     */
-    public int[] topKFrequent3(int[] nums, int k) {
-        if (nums.length == k) {
-            return nums;
-        }
-
-        Map<Integer, Integer> map = new HashMap<>();
-
-        for (int num : nums) {
-            map.put(num, map.getOrDefault(num, 0) + 1);
-        }
-
-        //出现次数数组，result[i][0]：当前元素，result[i][1]：出现次数
-        int[][] arr = new int[map.size()][2];
-        int index = 0;
-
-        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            arr[index] = new int[]{entry.getKey(), entry.getValue()};
-            index++;
-        }
-
-        int left = 0;
-        int right = arr.length - 1;
-        int pivot = partition(arr, left, right);
-
-        while (pivot != arr.length - k) {
-            //基准pivot在前k大频率之前
-            if (pivot < arr.length - k) {
-                left = pivot + 1;
-                pivot = partition(arr, left, right);
-            } else if (pivot > arr.length - k) {
-                //基准pivot在前k大频率之后
-                right = pivot - 1;
-                pivot = partition(arr, left, right);
-            }
-        }
-
-        int[] result = new int[k];
-
-        for (int i = 0; i < k; i++) {
-            result[i] = arr[arr.length - k + i][0];
-        }
-
-        return result;
-    }
-
-    /**
-     * 小根堆整堆
-     * 时间复杂度O(logn)，空间复杂度O(1)
-     *
-     * @param arr
-     * @param index
-     * @param heapSize
-     */
-    private void heapify(int[][] arr, int index, int heapSize) {
-        int minIndex = index;
-        int leftIndex = 2 * index + 1;
-        int rightIndex = 2 * index + 2;
-
-        if (leftIndex < heapSize && arr[leftIndex][1] < arr[minIndex][1]) {
-            minIndex = leftIndex;
-        }
-
-        if (rightIndex < heapSize && arr[rightIndex][1] < arr[minIndex][1]) {
-            minIndex = rightIndex;
-        }
-
-        if (minIndex != index) {
-            int[] temp = arr[index];
-            arr[index] = arr[minIndex];
-            arr[minIndex] = temp;
-
-            heapify(arr, minIndex, heapSize);
-        }
-    }
-
-    /**
-     * 快排划分变形
      * 平均时间复杂度O(n)，最坏时间复杂度O(n^2)，最好空间复杂度O(logn)，最坏空间复杂度O(n)
      *
      * @param arr   当前排序数组
@@ -253,5 +223,35 @@ public class Problem347 {
         arr[left] = temp;
 
         return left;
+    }
+
+    /**
+     * 小根堆整堆
+     * 时间复杂度O(logn)，空间复杂度O(1)
+     *
+     * @param arr
+     * @param index
+     * @param heapSize
+     */
+    private void heapify(int[][] arr, int index, int heapSize) {
+        int minIndex = index;
+        int leftIndex = 2 * index + 1;
+        int rightIndex = 2 * index + 2;
+
+        if (leftIndex < heapSize && arr[leftIndex][1] < arr[minIndex][1]) {
+            minIndex = leftIndex;
+        }
+
+        if (rightIndex < heapSize && arr[rightIndex][1] < arr[minIndex][1]) {
+            minIndex = rightIndex;
+        }
+
+        if (minIndex != index) {
+            int[] temp = arr[index];
+            arr[index] = arr[minIndex];
+            arr[minIndex] = temp;
+
+            heapify(arr, minIndex, heapSize);
+        }
     }
 }

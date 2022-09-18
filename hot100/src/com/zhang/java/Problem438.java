@@ -70,9 +70,8 @@ public class Problem438 {
                     result.add(left);
                 }
 
-                //将左指针所指字符从sArr删除
+                //左指针所指字符从sArr删除
                 sArr[s.charAt(left) - 'a']--;
-
                 left++;
             }
 
@@ -115,6 +114,7 @@ public class Problem438 {
                     list.add(left);
                 }
 
+                //左指针所指字符从sMap删除
                 sMap.put(s.charAt(left), sMap.get(s.charAt(left)) - 1);
                 left++;
             }

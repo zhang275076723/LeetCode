@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/9/1 9:24
  * @Author zsy
- * @Description 二叉搜索树中第K小的元素 类比 Problem95、Problem96、Problem98、Problem99、Offer33、Offer36 字节面试题
+ * @Description 二叉搜索树中第K小的元素 字节面试题 类比 Problem95、Problem96、Problem98、Problem99、Problem440、Offer33、Offer36
  * 给定一个二叉搜索树的根节点 root ，和一个整数 k ，
  * 请你设计一个算法查找其中第 k 个最小元素（从 1 开始计数）。
  * <p>
@@ -138,7 +138,7 @@ public class Problem230 {
         public int kthSmallest(int k) {
             TreeNode node = root;
 
-            //以当前节点左节点为根的数节点个数，考虑node为null的情况
+            //以当前节点左节点为根的数节点个数，考虑node.left为null，即当前节点没有左子树，得到的count为0
             int count = map.getOrDefault(node.left, 0);
 
             while (count + 1 != k) {
@@ -156,7 +156,7 @@ public class Problem230 {
                     return -1;
                 }
 
-                //考虑node为null的情况
+                //考虑node.left为null，即当前节点没有左子树，得到的count为0
                 count = map.getOrDefault(node.left, 0);
             }
 
@@ -168,11 +168,11 @@ public class Problem230 {
                 return 0;
             }
 
-            int count1 = countNode(node.left);
-            int count2 = countNode(node.right);
-            map.put(node, count1 + count2 + 1);
+            int leftCount = countNode(node.left);
+            int rightCount = countNode(node.right);
+            map.put(node, leftCount + rightCount + 1);
 
-            return map.get(node);
+            return leftCount + rightCount + 1;
         }
     }
 

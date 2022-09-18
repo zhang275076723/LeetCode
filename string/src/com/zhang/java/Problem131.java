@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/6/23 8:39
  * @Author zsy
- * @Description 分割回文串 类比Problem5、Problem9、Problem140、Problem234、Problem329、Problem647
+ * @Description 分割回文串 类比Problem5、Problem9、Problem140、Problem214、Problem234、Problem329、Problem516、Problem647
  * 给你一个字符串 s，请你将 s 分割成一些子串，使每个子串都是 回文串 。
  * 返回 s 所有可能的分割方案。
  * 回文串 是正着读和反着读都一样的字符串。
@@ -45,6 +45,7 @@ public class Problem131 {
         boolean[][] dp = new boolean[s.length()][s.length()];
 
         for (int i = 0; i < s.length(); i++) {
+            //只有一个字符也是回文串
             dp[i][i] = true;
         }
 
@@ -53,10 +54,12 @@ public class Problem131 {
             dp[i][i - 1] = true;
         }
 
-        for (int i = 1; i < s.length(); i++) {
-            for (int j = 0; j < s.length() - i; j++) {
-                if (s.charAt(j) == s.charAt(j + i) && dp[j + 1][j + i - 1]) {
-                    dp[j][j + i] = true;
+        //当前字符串长度
+        for (int i = 2; i <= s.length(); i++) {
+            //当前字符串起始字符索引
+            for (int j = 0; j <= s.length() - i; j++) {
+                if (s.charAt(j) == s.charAt(j + i - 1) && dp[j + 1][j + i - 2]) {
+                    dp[j][j + i - 1] = true;
                 }
             }
         }

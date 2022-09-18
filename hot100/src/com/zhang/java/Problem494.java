@@ -27,8 +27,6 @@ package com.zhang.java;
  * -1000 <= target <= 1000
  */
 public class Problem494 {
-    private int count;
-
     public static void main(String[] args) {
         Problem494 problem494 = new Problem494();
         int[] nums = {1, 1, 1, 1, 1};
@@ -51,19 +49,18 @@ public class Problem494 {
             return 0;
         }
 
-        backtrack(nums, 0, target, 0);
-        return count;
+        return backtrack(0, 0, nums, target);
     }
 
     /**
-     * 动态规划，01背包
+     * 动态规划 01背包
      * 设选择负号的元素之和为negative，选择正号的元素之和为positive，所有元素之和为sum，即sum=pos+neg
      * target=pos-neg=sum-2neg ===> neg=(sum-target)/2
-     * dp[i][j]：前i个元素中选元素之和为j的方案数
+     * dp[i][j]：前i个元素中元素之和为j的方案数
      * dp[i][j] = dp[i-1][j]                        (nums[i-1] > j)
      * dp[i][j] = dp[i-1][j] + dp[i-1][j-nums[i-1]] (nums[i-1] <= j)
      * 结果为dp[nums.length-1][neg]
-     * 时间复杂度O(n*(sum-target))，空间复杂度O(n*(sum-target))
+     * 时间复杂度O(n*(sum-target)/2)，空间复杂度O(n*(sum-target)/2)
      *
      * @param nums
      * @param target
@@ -107,7 +104,7 @@ public class Problem494 {
      * dp[j] = dp[j]                   (nums[i-1]>j)
      * dp[j] = dp[j] + dp[j-nums[i-1]] (nums[i-1]<=j)
      * 结果为dp[neg]
-     * 时间复杂度O(n*(sum-target))，空间复杂度O(sum-target)
+     * 时间复杂度O(n*(sum-target)/2)，空间复杂度O((sum-target)/2)
      *
      * @param nums
      * @param target
@@ -145,20 +142,26 @@ public class Problem494 {
     }
 
     /**
-     * @param nums   数组元素
      * @param t      前t个元素进行了计算
+     * @param sum    当前元素加上正负号之和
+     * @param nums   数组元素
      * @param target 目标和
-     * @param sum    前t个元素加正负符号之和
+     * @return
      */
-    private void backtrack(int[] nums, int t, int target, int sum) {
+    private int backtrack(int t, int sum, int[] nums, int target) {
         if (t == nums.length) {
-            if (target == sum) {
-                count++;
+            if (sum == target) {
+                return 1;
+            } else {
+                return 0;
             }
-            return;
         }
 
-        backtrack(nums, t + 1, target, sum + nums[t]);
-        backtrack(nums, t + 1, target, sum - nums[t]);
+        int count = 0;
+
+        count = count + backtrack(t + 1, sum + nums[t], nums, target);
+        count = count + backtrack(t + 1, sum - nums[t], nums, target);
+
+        return count;
     }
 }

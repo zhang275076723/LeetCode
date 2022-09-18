@@ -24,11 +24,12 @@ public class Problem718 {
         System.out.println(problem718.findLength(num1, num2));
         System.out.println(problem718.findLength2(num1, num2));
         System.out.println(problem718.findLength3(num1, num2));
+        System.out.println(problem718.findLength4(num1, num2));
     }
 
     /**
      * 暴力，对nums1[i]和nums2[j]查找最长公共子数组长度
-     * 时间复杂度O(mn*min(m,n))，空间复杂度O(1)
+     * 时间复杂度O(mn*min(m,n))，空间复杂度O(1) (m=nums1.length, n=nums2.length)
      *
      * @param nums1
      * @param nums2
@@ -67,7 +68,7 @@ public class Problem718 {
      * dp[i][j]：以nums1[i-1]结尾的数组和以nums2[j-1]结尾的数组的最长公共子数组长度
      * dp[i][j] = dp[i-1][j-1] + 1 (nums1[i-1] == nums2[j-1])
      * dp[i][j] = 0                (nums1[i-1] != nums2[j-1])
-     * 时间复杂度O(mn)，空间复杂度O(mn)
+     * 时间复杂度O(mn)，空间复杂度O(mn) (m=nums1.length, n=nums2.length)
      *
      * @param nums1
      * @param nums2
@@ -88,6 +89,37 @@ public class Problem718 {
                 }
 
                 max = Math.max(max, dp[i][j]);
+            }
+        }
+
+        return max;
+    }
+
+    /**
+     * 动态规划优化，使用滚动数组
+     * 时间复杂度O(mn)，空间复杂度O(n) (m=nums1.length, n=nums2.length)
+     *
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    public int findLength3(int[] nums1, int[] nums2) {
+        if (nums1 == null || nums2 == null || nums1.length == 0 || nums2.length == 0) {
+            return 0;
+        }
+
+        int max = 0;
+        int[] dp = new int[nums2.length + 1];
+
+        for (int i = 1; i <= nums1.length; i++) {
+            for (int j = nums2.length; j >= 1; j--) {
+                if (nums1[i - 1] == nums2[j - 1]) {
+                    dp[j] = dp[j - 1] + 1;
+                } else {
+                    dp[j] = 0;
+                }
+
+                max = Math.max(max, dp[j]);
             }
         }
 
@@ -133,13 +165,13 @@ public class Problem718 {
      * nums1：[1,2,3,2,1]
      * nums2：        [3,2,1,4,7]
      * max=0
-     * 时间复杂度O((m+n)*min(m,n))，空间复杂度O(1)
+     * 时间复杂度O((m+n)*min(m,n))，空间复杂度O(1) (m=nums1.length, n=nums2.length)
      *
      * @param nums1
      * @param nums2
      * @return
      */
-    public int findLength3(int[] nums1, int[] nums2) {
+    public int findLength4(int[] nums1, int[] nums2) {
         if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0) {
             return 0;
         }

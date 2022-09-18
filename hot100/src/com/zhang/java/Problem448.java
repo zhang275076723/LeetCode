@@ -24,13 +24,13 @@ public class Problem448 {
     public static void main(String[] args) {
         Problem448 problem448 = new Problem448();
         int[] nums = {4, 3, 2, 7, 8, 2, 3, 1};
-//        System.out.println(problem448.findDisappearedNumbers(nums));
-        System.out.println(problem448.findDisappearedNumbers2(nums));
+        System.out.println(problem448.findDisappearedNumbers(nums));
     }
 
     /**
      * 原地哈希
      * 将nums[i]放到nums[nums[i]-1]，例如将元素3放到数组索引下标2的位置
+     * 从原地哈希中找出nums[i]-1和i不相同的元素i+1
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -55,41 +55,6 @@ public class Problem448 {
         for (int i = 0; i < nums.length; i++) {
             //nums[i]不和i+1相等时，说明i+1缺失
             if (nums[i] != i + 1) {
-                list.add(i + 1);
-            }
-        }
-
-        return list;
-    }
-
-    /**
-     * 原地哈希2
-     * 对nums[i]，让nums[nums[i]-1]+n，因为元素都在1-n之间，增加之后，这些数大于n，如果nums[i]小于等于n，说明i+1缺失
-     * 例如：[4, 3, 2, 7, 8, 2, 3, 1]
-     * 加n之后数组：[4+8, 3+8+8, 2+8+8, 7+8, 8, 2, 3+8, 1+8]
-     * 则说明[5, 6]缺失，因为nums[4]和nums[5]小于等于n
-     * 时间复杂度O(n)，空间复杂度O(1)
-     *
-     * @param nums
-     * @return
-     */
-    public List<Integer> findDisappearedNumbers2(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return null;
-        }
-
-        int n = nums.length;
-        for (int i = 0; i < nums.length; i++) {
-            //+n之后，nums[i]的值会溢出，所以要取余
-            int index = (nums[i]-1) % n;
-            nums[index] = nums[index] + n;
-        }
-
-        List<Integer> list = new ArrayList<>();
-
-        for (int i = 0; i < nums.length; i++) {
-            //nums[i]小于等于n，说明i+1缺失
-            if (nums[i] <= n) {
                 list.add(i + 1);
             }
         }

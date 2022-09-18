@@ -55,22 +55,24 @@ public class Problem297 {
             return "null";
         }
 
-        Queue<TreeNode> queue = new LinkedList<>();
         StringBuilder sb = new StringBuilder();
+        Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
 
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
-            if (node != null) {
+
+            if (node == null) {
+                sb.append("null,");
+            } else {
                 sb.append(node.val).append(',');
                 queue.offer(node.left);
                 queue.offer(node.right);
-            } else {
-                sb.append("null,");
             }
         }
 
-        return sb.toString();
+        //去除末尾','
+        return sb.delete(sb.length() - 1, sb.length()).toString();
     }
 
     /**
@@ -85,19 +87,18 @@ public class Problem297 {
             return null;
         }
 
-        //去除末尾的','
-        data = data.substring(0, data.length() - 1);
         String[] values = data.split(",");
         //不能写成List<String> list = Arrays.asList(values);
         //因为Arrays.asList(values)将数组转为集合之后，底层还是数组，
         //返回的是java.util.Arrays的内部类ArrayList，这个类没有重写add、remove等方法，调用这些方法会抛出异常
         List<String> list = new ArrayList<>(Arrays.asList(values));
-        TreeNode root = new TreeNode(Integer.parseInt(list.remove(0)));
         Queue<TreeNode> queue = new LinkedList<>();
+        TreeNode root = new TreeNode(Integer.parseInt(list.remove(0)));
         queue.offer(root);
 
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
+
             if (!list.isEmpty()) {
                 String leftValue = list.remove(0);
                 if (!"null".equals(leftValue)) {
@@ -133,7 +134,8 @@ public class Problem297 {
 
         StringBuilder sb = new StringBuilder();
         serialize2(root, sb);
-        return sb.toString();
+        //去除末尾','
+        return sb.delete(sb.length() - 1, sb.length()).toString();
     }
 
     private void serialize2(TreeNode root, StringBuilder sb) {
@@ -159,8 +161,6 @@ public class Problem297 {
             return null;
         }
 
-        //去除末尾的','
-        data = data.substring(0, data.length() - 1);
         String[] values = data.split(",");
         //不能写成List<String> list = Arrays.asList(values);
         //因为Arrays.asList(values)将数组转为集合之后，底层还是数组，

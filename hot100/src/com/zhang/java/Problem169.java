@@ -113,6 +113,7 @@ public class Problem169 {
         if (nums == null || nums.length == 0) {
             return Integer.MIN_VALUE;
         }
+
         //摩尔投票
         int vote = 0;
         int result = 0;

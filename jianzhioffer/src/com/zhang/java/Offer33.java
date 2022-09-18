@@ -6,7 +6,7 @@ import java.util.Stack;
 /**
  * @Date 2022/3/21 18:57
  * @Author zsy
- * @Description 二叉搜索树的后序遍历序列 类比Problem98、Problem105、Problem106、Problem145、Offer7、Offer36
+ * @Description 二叉搜索树的后序遍历序列 类比Problem98、Problem105、Problem106、Problem145、Problem889、Problem1008、Offer7、Offer36
  * 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历结果。
  * 如果是则返回 true，否则返回 false。假设输入的数组的任意两个数字都互不相同。
  * <p>
@@ -39,7 +39,7 @@ public class Offer33 {
      * 后序遍历：左右根
      * 找到根节点，为后序遍历数组的最后一个元素，从左往右遍历数组找到第一个比根节点值大的元素到倒数第二个元素为根的右子树，
      * 右子树节点值都要比根节点值大，再递归判断左子树和右子树是否是后序遍历二叉搜索树
-     * 时间复杂度O(n^2)，空间复杂度O(n)
+     * 时间复杂度O(n)，空间复杂度O(n) (最差时间复杂度O(n^2))
      *
      * @param postorder
      * @return
@@ -108,8 +108,8 @@ public class Offer33 {
         //postorder数组中第一个比根节点值大的元素索引，该节点为右子树中的某一个节点
         int index = left;
 
-        //找到第一个比根节点值大的元素索引
-        while (postorder[index] < postorder[right]) {
+        //找第一个比根节点值大的元素索引
+        while (index < right && postorder[index] < postorder[right]) {
             index++;
         }
 

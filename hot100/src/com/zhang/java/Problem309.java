@@ -35,7 +35,7 @@ public class Problem309 {
      * dp1[i] = max(dp1[i-1], dp3[i-1] - prices[i])
      * dp2[i] = dp1[i-1] + prices[i]
      * dp3[i] = max(dp2[i-1], dp3[i-1])
-     * 最大利润 = max(dp1[prices.length-1], dp2[prices.length-1], dp3[prices.length-1])
+     * 最大利润 = max(dp2[prices.length-1], dp3[prices.length-1])
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param prices
@@ -58,8 +58,8 @@ public class Problem309 {
             dp3[i] = Math.max(dp2[i - 1], dp3[i - 1]);
         }
 
-        return Math.max(dp1[prices.length - 1],
-                Math.max(dp2[prices.length - 1], dp3[prices.length - 1]));
+        //最后一天不持有股票，处于冷冻期或不处于冷冻期的最大利润中的最大值即为最大利润
+        return Math.max(dp2[prices.length - 1], dp3[prices.length - 1]);
     }
 
     /**
@@ -89,6 +89,6 @@ public class Problem309 {
             dp3 = Math.max(temp2, temp3);
         }
 
-        return Math.max(dp1, Math.max(dp2, dp3));
+        return Math.max(dp2, dp3);
     }
 }

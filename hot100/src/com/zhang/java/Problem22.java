@@ -97,14 +97,14 @@ public class Problem22 {
      * @param result 结果集合
      */
     public void backtrack(int left, int right, int n, StringBuilder sb, List<String> result) {
-        //当右括号数量和左括号数量都为n时，说明括号完全匹配
-        if (left == n && right == n) {
-            result.add(sb.toString());
+        //当前左括号数量小于右括号数量，则不是合法的括号组合，剪枝
+        if (left < right) {
             return;
         }
 
-        //当前左括号数量小于右括号数量，则不是合法的括号组合，剪枝
-        if (left < right) {
+        //当右括号数量和左括号数量都为n时，说明括号完全匹配
+        if (left == n && right == n) {
+            result.add(sb.toString());
             return;
         }
 

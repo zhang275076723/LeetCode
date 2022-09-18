@@ -3,7 +3,8 @@ package com.zhang.java;
 /**
  * @Date 2022/4/13 9:32
  * @Author zsy
- * @Description 最长回文子串 类比Problem9、Problem131、Problem234、Problem647
+ * @Description 最长回文子串 类比Problem9、Problem131、Problem214、Problem234、Problem516、Problem647
+ * (注意和最长回文子序列的区别)
  * 给你一个字符串 s，找到 s 中最长的回文子串。
  * <p>
  * 输入：s = "babad"
@@ -73,7 +74,7 @@ public class Problem5 {
 
     /**
      * 动态规划
-     * dp[i][j]：s[i]到s[j]是否是回文串
+     * dp[i][j]：s[i]-s[j]是否是回文串
      * dp[i][j] = false (s[i] != s[j])
      * dp[i][j] = true  (s[i] == s[j] && dp[i+1][j-1] == true)
      * 时间复杂度O(n^2)，空间复杂度O(n^2)
@@ -93,6 +94,7 @@ public class Problem5 {
         boolean[][] dp = new boolean[s.length()][s.length()];
 
         for (int i = 0; i < s.length(); i++) {
+            //只有一个字符也是回文串
             dp[i][i] = true;
         }
 
@@ -104,14 +106,17 @@ public class Problem5 {
         int left = 0;
         int right = 0;
 
-        for (int i = 1; i < s.length(); i++) {
-            for (int j = 0; j < s.length() - i; j++) {
-                if (s.charAt(j) == s.charAt(j + i) && dp[j + 1][j + i - 1]) {
-                    dp[j][j + i] = true;
+        //当前字符串长度
+        for (int i = 2; i <= s.length(); i++) {
+            //当前字符串起始字符索引
+            for (int j = 0; j <= s.length() - i; j++) {
+                if (s.charAt(j) == s.charAt(j + i - 1) && dp[j + 1][j + i - 2]) {
+                    dp[j][j + i - 1] = true;
 
-                    if (i + 1 > right - left + 1) {
+                    //更新最长回文串
+                    if (i > right - left + 1) {
                         left = j;
-                        right = j + i;
+                        right = j + i - 1;
                     }
                 }
             }

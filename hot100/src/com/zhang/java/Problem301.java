@@ -25,14 +25,14 @@ import java.util.*;
 public class Problem301 {
     public static void main(String[] args) {
         Problem301 problem301 = new Problem301();
-//        String s = "()())()";
-        String s = ")((())))))()(((l((((";
+        String s = "()())()";
+//        String s = ")((())))))()(((l((((";
         System.out.println(problem301.removeInvalidParentheses(s));
         System.out.println(problem301.removeInvalidParentheses2(s));
     }
 
     /**
-     * 回溯+剪枝，难点在于如何去重和如何确定要删除的最少括号数量
+     * 回溯+剪枝，难点在于如何确定要删除的最少括号数量和去重
      * 先确定要删除的左括号和右括号数量，回溯遍历所有删除左括号和右括号的情况，判断是否是有效字符串，去重，加入到结果集合
      * 时间复杂度O(n*2^n)，空间复杂度O(n^2) (递归栈的深度O(n)，每次递归都需要复制字符串O(n))
      *
@@ -55,15 +55,15 @@ public class Problem301 {
             if (s.charAt(i) == '(') {
                 left++;
             } else if (s.charAt(i) == ')') {
-                if (left == 0) {
-                    right++;
-                } else {
+                if (left > 0) {
                     left--;
+                } else {
+                    right++;
                 }
             }
         }
 
-        backtrack(s, 0, left, right, result);
+        backtrack(0, left, right, s, result);
 
         return result;
     }
@@ -133,13 +133,13 @@ public class Problem301 {
     }
 
     /**
-     * @param str    当前字符串
      * @param t      当前字符串的起始索引
      * @param left   要删除的左括号数量
      * @param right  要删除的右括号数量
+     * @param str    当前字符串
      * @param result 删除最少无效括号之后的有效字符串结果集合
      */
-    private void backtrack(String str, int t, int left, int right, List<String> result) {
+    private void backtrack(int t, int left, int right, String str, List<String> result) {
         //如果要删除的左括号和右括号都为0，则找到要删除的最少无效括号数量，直接返回
         if (left == 0 && right == 0) {
             if (isValid(str)) {
@@ -157,14 +157,12 @@ public class Problem301 {
 
             //删除一个左括号
             if (left > 0 && str.charAt(i) == '(') {
-                backtrack(str.substring(0, i) + str.substring(i + 1),
-                        i, left - 1, right, result);
+                backtrack(i, left - 1, right, str.substring(0, i) + str.substring(i + 1), result);
             }
 
             //删除一个右括号
             if (right > 0 && str.charAt(i) == ')') {
-                backtrack(str.substring(0, i) + str.substring(i + 1),
-                        i, left, right - 1, result);
+                backtrack(i, left, right - 1, str.substring(0, i) + str.substring(i + 1), result);
             }
         }
     }
@@ -177,6 +175,7 @@ public class Problem301 {
      * @return
      */
     private boolean isValid(String str) {
+        //记录左括号的数量
         int count = 0;
 
         for (int i = 0; i < str.length(); i++) {
@@ -186,6 +185,7 @@ public class Problem301 {
                 count--;
             }
 
+            //此时右括号数量比左括号数量多，不是有效字符串
             if (count < 0) {
                 return false;
             }

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/2 11:29
  * @Author zsy
- * @Description 删除有序数组中的重复项 类比Problem75、Problem264、Offer49
+ * @Description 删除有序数组中的重复项 类比Problem27、Problem75、Problem283
  * 给你一个 升序排列 的数组 nums ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，返回删除后数组的新长度。
  * 元素的 相对顺序 应该保持 一致 。
  * 由于在某些语言中不能改变数组的长度，所以必须将结果放在数组nums的第一部分。
@@ -34,7 +34,7 @@ public class Problem26 {
 
     /**
      * 双指针
-     * 第一个指针遍历当前数组元素，第二个指针指向当前要插入的下标索引
+     * 第一个指针指向当前遍历的数组下标索引，第二个指针指向当前要插入的下标索引
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums

@@ -27,7 +27,7 @@ public class Offer61 {
 
     /**
      * 模拟
-     * 先按小到倒排序，遍历数组，统计大小王个数，
+     * 由小到大排序，统计大小王个数，
      * 除了大小王之外，有重复的牌，则不能构成顺子；除了大小王之外，最大牌和最小牌之差小于5，则能构成顺子
      * 时间复杂度O(nlogn)，空间复杂度O(n) (因为使用的排序算法是归并排序)
      *
@@ -76,32 +76,32 @@ public class Offer61 {
     public void merge(int[] nums, int left, int mid, int right, int[] tempArr) {
         int i = left;
         int j = mid + 1;
-        int tempArrIndex = i;
+        int k = i;
 
         while (i <= mid && j <= right) {
             if (nums[i] < nums[j]) {
-                tempArr[tempArrIndex] = nums[i];
+                tempArr[k] = nums[i];
                 i++;
             } else {
-                tempArr[tempArrIndex] = nums[j];
+                tempArr[k] = nums[j];
                 j++;
             }
-            tempArrIndex++;
+            k++;
         }
 
         while (i <= mid) {
-            tempArr[tempArrIndex] = nums[i];
+            tempArr[k] = nums[i];
             i++;
-            tempArrIndex++;
+            k++;
         }
 
         while (j <= right) {
-            tempArr[tempArrIndex] = nums[j];
+            tempArr[k] = nums[j];
             j++;
-            tempArrIndex++;
+            k++;
         }
 
-        for (int k = left; k <= right; k++) {
+        for (k = left; k <= right; k++) {
             nums[k] = tempArr[k];
         }
     }

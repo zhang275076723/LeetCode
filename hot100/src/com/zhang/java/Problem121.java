@@ -30,7 +30,7 @@ public class Problem121 {
 
     /**
      * 动态规划
-     * dp[i]：到price[i]那天的最大利润
+     * dp[i]：到price[i]那天，卖出股票的最大利润
      * dp[i] = dp[i-1]                          (prices[i] <= minPrice)
      * dp[i] = max(dp[i-1], prices[i]-minPrice) (prices[i] > minPrice)
      * 时间复杂度O(n)，空间复杂度O(n)

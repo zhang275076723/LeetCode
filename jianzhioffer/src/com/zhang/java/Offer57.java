@@ -1,8 +1,6 @@
 package com.zhang.java;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Date 2022/4/4 16:05
@@ -43,9 +41,9 @@ public class Offer57 {
             return null;
         }
 
-        for (int i = 0; i < nums.length; i++) {
+        for (int i = 0; i < nums.length - 1; i++) {
             if (nums[i] >= target) {
-                break;
+                return null;
             }
 
             for (int j = i + 1; j < nums.length; j++) {
@@ -76,19 +74,19 @@ public class Offer57 {
 
         for (int i = 0; i < nums.length - 1; i++) {
             if (nums[i] >= target) {
-                break;
+                return null;
             }
 
             int left = i + 1;
             int right = nums.length - 1;
-            int anotherNum = target - nums[i];
+            int mid;
 
             while (left <= right) {
-                int mid = left + ((right - left) >> 1);
+                mid = left + ((right - left) >> 1);
 
-                if (nums[mid] == anotherNum) {
-                    return new int[]{nums[i], anotherNum};
-                } else if (nums[mid] < anotherNum) {
+                if (nums[i] + nums[mid] == target) {
+                    return new int[]{nums[i], nums[mid]};
+                } else if (nums[i] + nums[mid] < target) {
                     left = mid + 1;
                 } else {
                     right = mid - 1;
@@ -108,21 +106,18 @@ public class Offer57 {
      * @return
      */
     public int[] twoSum3(int[] nums, int target) {
-        Map<Integer, Boolean> map = new HashMap<>();
+        if (nums.length < 2) {
+            return null;
+        }
 
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] >= target) {
-                break;
+        Set<Integer> set = new HashSet<>();
+
+        for (int num : nums) {
+            //set中存在target-num，则找到
+            if (set.contains(target - num)) {
+                return new int[]{num, target - num};
             }
-
-            //判断哈希表中是否存在target - nums[i]，如果不存在返回false
-            boolean isContain = map.getOrDefault(target - nums[i], false);
-
-            if (isContain) {
-                return new int[]{nums[i], target - nums[i]};
-            }
-
-            map.put(nums[i], true);
+            set.add(num);
         }
 
         return null;

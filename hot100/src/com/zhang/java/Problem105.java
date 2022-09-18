@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/1 11:57
  * @Author zsy
- * @Description 从前序与中序遍历序列构造二叉树 类比Problem106、Offer33 同Offer7
+ * @Description 从前序与中序遍历序列构造二叉树 类比Problem106、Problem889、Problem1008、Offer33 同Offer7
  * 给定两个整数数组 preorder 和 inorder ，
  * 其中 preorder 是二叉树的先序遍历， inorder 是同一棵树的中序遍历，请构造二叉树并返回其根节点。
  * <p>
@@ -49,48 +49,48 @@ public class Problem105 {
             return null;
         }
 
-        //key：节点值，value：节点在中序遍历数组的索引下标，在O(1)时间，定位中序遍历数组中根节点的索引
+        //key：节点值，value：节点在中序遍历数组的索引下标，在O(1)确定前序遍历数组中元素在中序遍历数组中索引
         Map<Integer, Integer> map = new HashMap<>();
 
         for (int i = 0; i < inorder.length; i++) {
             map.put(inorder[i], i);
         }
 
-        return buildTree(preorder, inorder, map,
-                0, preorder.length - 1, 0, inorder.length - 1);
+        return buildTree(0, preorder.length - 1, 0, inorder.length - 1,
+                preorder, inorder, map);
     }
 
     /**
-     * @param preorder      前序遍历数组
-     * @param inorder       中序遍历数组
-     * @param map           中序遍历数组哈希，在O(1)时间找到中序遍历数组中的根节点索引
      * @param preorderLeft  前序遍历左指针
      * @param preorderRight 前序遍历右指针
      * @param inorderLeft   中序遍历左指针
      * @param inorderRight  中序遍历右指针
+     * @param preorder      前序遍历数组
+     * @param inorder       中序遍历数组
+     * @param map           中序遍历数组哈希，在O(1)时间找到中序遍历数组中的根节点索引
      * @return
      */
-    private TreeNode buildTree(int[] preorder, int[] inorder, Map<Integer, Integer> map,
-                               int preorderLeft, int preorderRight, int inorderLeft, int inorderRight) {
+    private TreeNode buildTree(int preorderLeft, int preorderRight, int inorderLeft, int inorderRight,
+                               int[] preorder, int[] inorder, Map<Integer, Integer> map) {
         if (preorderLeft > preorderRight) {
             return null;
         }
 
-        //前序遍历数组中根节点索引
-        int preorderRootIndex = preorderLeft;
+        if (preorderLeft == preorderRight) {
+            return new TreeNode(preorder[preorderLeft]);
+        }
+
         //中序遍历数组中根节点索引
-        int inorderRootIndex = map.get(preorder[preorderRootIndex]);
+        int inorderRootIndex = map.get(preorder[preorderLeft]);
         //左子树长度
-        int length = inorderRootIndex - inorderLeft;
+        int leftLength = inorderRootIndex - inorderLeft;
 
-        TreeNode root = new TreeNode(preorder[preorderRootIndex]);
+        TreeNode root = new TreeNode(preorder[preorderLeft]);
 
-        root.left = buildTree(preorder, inorder, map,
-                preorderLeft + 1, preorderLeft + length,
-                inorderLeft, inorderRootIndex - 1);
-        root.right = buildTree(preorder, inorder, map,
-                preorderLeft + length + 1, preorderRight,
-                inorderRootIndex + 1, inorderRight);
+        root.left = buildTree(preorderLeft + 1, preorderLeft + leftLength, inorderLeft, inorderRootIndex - 1,
+                preorder, inorder, map);
+        root.right = buildTree(preorderLeft + leftLength + 1, preorderRight, inorderRootIndex + 1, inorderRight,
+                preorder, inorder, map);
 
         return root;
     }
