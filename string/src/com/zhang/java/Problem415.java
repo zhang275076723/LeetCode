@@ -69,9 +69,9 @@ public class Problem415 {
             j--;
         }
 
-        //如果最高位进位为1，则需要添加最高位为1
+        //最高位进位不为1，添加最高位位进位
         if (carry != 0) {
-            sb.append(1);
+            sb.append(carry);
         }
 
         //因为是尾添加，所以需要反转

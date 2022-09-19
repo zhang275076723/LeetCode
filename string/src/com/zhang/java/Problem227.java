@@ -66,7 +66,7 @@ public class Problem227 {
             //数字
             if (c >= '0' && c <= '9') {
                 int num = c - '0';
-                while (i < s.length() - 1 && s.charAt(i + 1) >= '0' && s.charAt(i + 1) <= '9') {
+                while (i + 1 < s.length() && s.charAt(i + 1) >= '0' && s.charAt(i + 1) <= '9') {
                     num = num * 10 + s.charAt(i + 1) - '0';
                     i++;
                 }
