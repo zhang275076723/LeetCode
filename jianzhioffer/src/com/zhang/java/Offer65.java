@@ -40,15 +40,16 @@ public class Offer65 {
      * @return
      */
     public int add(int a, int b) {
-        //二进制表示的每一位的进位值
-        int carry;
+        //二进制表示的进位值
+        int carry = (a & b) << 1;;
 
-        //二进制表示的每一位的进位值为0时，跳出循环
+        //二进制表示的进位值为0时，当前位a即为相加结果
         while (b != 0) {
-            carry = (a & b) << 1;
-            //二进制表示的每一位的非进位和
+            //二进制表示的当前位值
             a = a ^ b;
+            //二进制表示的进位值
             b = carry;
+            carry = (a & b) << 1;
         }
 
         return a;

@@ -1,7 +1,5 @@
 package com.zhang.java;
 
-import javafx.geometry.Pos;
-
 import java.util.*;
 
 /**
@@ -126,12 +124,6 @@ public class Problem399 {
                 continue;
             }
 
-            //起始节点等于结束节点，直接赋值1.0
-            if (str1.equals(str2)) {
-                result[i] = 1.0;
-                continue;
-            }
-
             int u = map.get(str1);
             int v = map.get(str2);
 
@@ -194,12 +186,6 @@ public class Problem399 {
             //map中不存在当前节点，直接赋值-1.0
             if (!map.containsKey(str1) || !map.containsKey(str2)) {
                 result[i] = -1.0;
-                continue;
-            }
-
-            //起始节点等于结束节点，直接赋值1.0
-            if (str1.equals(str2)) {
-                result[i] = 1.0;
                 continue;
             }
 
@@ -275,12 +261,6 @@ public class Problem399 {
             //map中不存在当前节点，直接赋值-1.0
             if (!map.containsKey(str1) || !map.containsKey(str2)) {
                 result[i] = -1.0;
-                continue;
-            }
-
-            //起始节点等于结束节点，直接赋值1.0
-            if (str1.equals(str2)) {
-                result[i] = 1.0;
                 continue;
             }
 
@@ -372,14 +352,14 @@ public class Problem399 {
             if (edges[u][i] != -1.0 && !visited[i]) {
                 double temp = dfs(i, v, result * edges[u][i], edges, visited);
 
-                //结果不为-1.0表示当前路径可达，直接返回
+                //结果不为-1.0，则表示当前路径可达，直接返回
                 if (temp != -1.0) {
                     return temp;
                 }
             }
         }
 
-        //从u到不了v，返回-1.0
+        //从u到v不可达，返回-1.0
         return -1.0;
     }
 
@@ -405,10 +385,10 @@ public class Problem399 {
                 return pos.result;
             }
 
-            //遍历u未被访问的临界顶点i
+            //遍历pos.v未被访问的临界顶点i
             for (int i = 0; i < edges[0].length; i++) {
                 if (edges[pos.v][i] != -1.0 && !visited[i]) {
-                    queue.offer(new Pos(u, i, pos.result * edges[pos.v][i]));
+                    queue.offer(new Pos(pos.u, i, pos.result * edges[pos.v][i]));
                     visited[i] = true;
                 }
             }
@@ -432,9 +412,11 @@ public class Problem399 {
 
         for (int i = 0; i < edges.length; i++) {
             for (int j = 0; j < edges[0].length; j++) {
+                //i到i为自身1.0
                 if (i == j) {
                     edges[i][j] = 1.0;
                 } else {
+                    //不可达为-1.0
                     edges[i][j] = -1.0;
                 }
             }

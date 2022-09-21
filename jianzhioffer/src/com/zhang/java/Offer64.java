@@ -55,72 +55,72 @@ public class Offer64 {
         boolean flag;
 
         //1
-        flag = (b & 1) == 1 && (result = result + a) > 0;
+        flag = ((b & 1) == 1) && (result = result + a) > 0;
         b = b >> 1;
         a = a << 1;
 
         //2
-        flag = (b & 1) == 1 && (result = result + a) > 0;
+        flag = ((b & 1) == 1) && (result = result + a) > 0;
         b = b >> 1;
         a = a << 1;
 
         //3
-        flag = (b & 1) == 1 && (result = result + a) > 0;
+        flag = ((b & 1) == 1) && (result = result + a) > 0;
         b = b >> 1;
         a = a << 1;
 
         //4
-        flag = (b & 1) == 1 && (result = result + a) > 0;
+        flag = ((b & 1) == 1) && (result = result + a) > 0;
         b = b >> 1;
         a = a << 1;
 
         //5
-        flag = (b & 1) == 1 && (result = result + a) > 0;
+        flag = ((b & 1) == 1) && (result = result + a) > 0;
         b = b >> 1;
         a = a << 1;
 
         //6
-        flag = (b & 1) == 1 && (result = result + a) > 0;
+        flag = ((b & 1) == 1) && (result = result + a) > 0;
         b = b >> 1;
         a = a << 1;
 
         //7
-        flag = (b & 1) == 1 && (result = result + a) > 0;
+        flag = ((b & 1) == 1) && (result = result + a) > 0;
         b = b >> 1;
         a = a << 1;
 
         //8
-        flag = (b & 1) == 1 && (result = result + a) > 0;
+        flag = ((b & 1) == 1) && (result = result + a) > 0;
         b = b >> 1;
         a = a << 1;
 
         //9
-        flag = (b & 1) == 1 && (result = result + a) > 0;
+        flag = ((b & 1) == 1) && (result = result + a) > 0;
         b = b >> 1;
         a = a << 1;
 
         //10
-        flag = (b & 1) == 1 && (result = result + a) > 0;
+        flag = ((b & 1) == 1) && (result = result + a) > 0;
         b = b >> 1;
         a = a << 1;
 
         //11
-        flag = (b & 1) == 1 && (result = result + a) > 0;
+        flag = ((b & 1) == 1) && (result = result + a) > 0;
         b = b >> 1;
         a = a << 1;
 
         //12
-        flag = (b & 1) == 1 && (result = result + a) > 0;
+        flag = ((b & 1) == 1) && (result = result + a) > 0;
         b = b >> 1;
         a = a << 1;
 
         //13
-        flag = (b & 1) == 1 && (result = result + a) > 0;
+        flag = ((b & 1) == 1) && (result = result + a) > 0;
         b = b >> 1;
         a = a << 1;
 
         //14
-        flag = (b & 1) == 1 && (result = result + a) > 0;
+        flag = ((b & 1) == 1) && (result = result + a) > 0;
         b = b >> 1;
         a = a << 1;
 

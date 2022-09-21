@@ -77,15 +77,15 @@ public class Offer58_2 {
         //因为String无法修改本串，所以需要使用StringBuilder
         StringBuilder sb = new StringBuilder(s);
 
-        reverse(sb, 0, n);
-        reverse(sb, n, s.length());
-        reverse(sb, 0, s.length());
+        reverse(sb, 0, n-1);
+        reverse(sb, n, s.length()-1);
+        reverse(sb, 0, s.length()-1);
 
         return sb.toString();
     }
 
     /**
-     * 字符串反转，左闭右开
+     * 字符串反转
      *
      * @param sb
      * @param left
@@ -94,8 +94,8 @@ public class Offer58_2 {
     public void reverse(StringBuilder sb, int left, int right) {
         while (left < right) {
             char temp = sb.charAt(left);
-            sb.setCharAt(left, sb.charAt(right - 1));
-            sb.setCharAt(right - 1, temp);
+            sb.setCharAt(left, sb.charAt(right));
+            sb.setCharAt(right, temp);
 
             left++;
             right--;

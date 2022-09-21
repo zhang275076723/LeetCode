@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/6/25 9:09
  * @Author zsy
- * @Description 螺旋矩阵 类比Problem59 同Offer29
+ * @Description 螺旋矩阵 类比Problem48、Problem59 同Offer29
  * 给你一个 m 行 n 列的矩阵 matrix ，请按照 顺时针螺旋顺序 ，返回矩阵中的所有元素。
  * <p>
  * 输入：matrix = [
@@ -90,10 +90,6 @@ public class Problem54 {
                 list.add(matrix[i][left]);
             }
             left++;
-
-            if (list.size() == matrix.length * matrix[0].length){
-                break;
-            }
         }
 
         return list;

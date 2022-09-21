@@ -68,10 +68,11 @@ public class Problem207 {
             //从未访问的顶点开始dfs
             if (visited[i] == 0) {
                 dfs(i, edges, visited);
+            }
 
-                if (hasCircle) {
-                    return false;
-                }
+            //有环说明不存在拓扑排序，返回false
+            if (hasCircle) {
+                return false;
             }
         }
 
@@ -145,16 +146,16 @@ public class Problem207 {
 
             //找u未被访问的邻接顶点v
             if (edges[u][v] != 0 && visited[v] != 2) {
-                //邻接顶点v没有访问
-                if (visited[v] == 0) {
-                    dfs(v, edges, visited);
-                    continue;
-                }
-
                 //邻接顶点v正在访问，说明有环，不存在拓扑排序
                 if (visited[v] == 1) {
                     hasCircle = true;
                     return;
+                }
+
+                //邻接顶点v没有访问
+                if (visited[v] == 0) {
+                    dfs(v, edges, visited);
+                    continue;
                 }
             }
         }

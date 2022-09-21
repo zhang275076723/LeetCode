@@ -83,11 +83,11 @@ public class Problem210 {
             //从未访问的顶点开始dfs
             if (visited[i] == 0) {
                 dfs(i, result, edges, visited);
+            }
 
-                //有环说明不存在拓扑排序，返回空数组
-                if (hasCircle) {
-                    return new int[0];
-                }
+            //有环说明不存在拓扑排序，返回空数组
+            if (hasCircle) {
+                return new int[0];
             }
         }
 
@@ -129,13 +129,13 @@ public class Problem210 {
         for (int i = 0; i < numCourses; i++) {
             if (inDegree[i] == 0) {
                 queue.offer(i);
-                result[index] = i;
-                index++;
             }
         }
 
         while (!queue.isEmpty()) {
             int u = queue.poll();
+            result[index] = u;
+            index++;
 
             //遍历u的邻接顶点v
             for (int v : edges.get(u)) {
@@ -144,8 +144,6 @@ public class Problem210 {
                 //入度为0的顶点入队
                 if (inDegree[v] == 0) {
                     queue.offer(v);
-                    result[index] = u;
-                    index++;
                 }
             }
         }

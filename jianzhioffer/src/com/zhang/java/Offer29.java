@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/3/20 16:06
  * @Author zsy
- * @Description 顺时针打印矩阵 同Problem54 类比Problem59
+ * @Description 顺时针打印矩阵 同Problem48、Problem54 类比Problem59
  * 输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字。
  * <p>
  * 输入：matrix = [
@@ -95,10 +95,6 @@ public class Offer29 {
                 index++;
             }
             left++;
-
-            if (index == result.length) {
-                break;
-            }
         }
 
         return result;

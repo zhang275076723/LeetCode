@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2022/3/16 16:06
  * @Author zsy
- * @Description 机器人的运动范围 类比Problem62、Problem63
+ * @Description 机器人的运动范围 类比Problem62、Problem63、Problem64
  * 地上有一个m行n列的方格，从坐标 [0,0] 到坐标 [m-1,n-1] 。
  * 一个机器人从坐标 [0, 0] 的格子开始移动，它每次可以向左、右、上、下移动一格（不能移动到方格外），
  * 也不能进入行坐标和列坐标的数位之和大于k的格子。
@@ -36,7 +36,7 @@ public class Offer13 {
 
     /**
      * dfs
-     * 机器人只能一步一步走，中间不能跳跃，有可能(i,j)满足小于位数之和小于k，
+     * 注意：机器人只能一步一步走，中间不能跳跃，有可能(i,j)满足小于位数之和小于k，
      * 但(i-1,j)和(i,j-1)无法到达，所以导致(i,j)无法到达
      * 时间复杂度O(mn)，空间复杂的O(mn)
      *
@@ -57,7 +57,7 @@ public class Offer13 {
 
     /**
      * bfs
-     * 机器人只能一步一步走，中间不能跳跃，有可能(i,j)满足小于位数之和小于k，
+     * 注意：机器人只能一步一步走，中间不能跳跃，有可能(i,j)满足小于位数之和小于k，
      * 但(i-1,j)和(i,j-1)无法到达，所以导致(i,j)无法到达
      * 时间复杂度O(mn)，空间复杂的O(mn)
      *
@@ -83,12 +83,13 @@ public class Offer13 {
             int x = position[0];
             int y = position[1];
 
-            //因为从(0,0)开始，所以只需要考虑向下和向右的情况
+            //因为从(0,0)开始往右下角走，所以只需要考虑向下和向右的情况
             if (x + 1 < m && y < n && !visited[x + 1][y] && getNumSum(x + 1, y) <= k) {
                 queue.add(new int[]{x + 1, y});
                 visited[x + 1][y] = true;
                 count++;
             }
+
             if (x < m && y + 1 < n && !visited[x][y + 1] && getNumSum(x, y + 1) <= k) {
                 queue.add(new int[]{x, y + 1});
                 visited[x][y + 1] = true;
@@ -117,7 +118,7 @@ public class Offer13 {
         visited[i][j] = true;
         count++;
 
-        //因为从(0,0)开始，所以只需要考虑向下和向右的情况
+        //因为从(0,0)开始往右下角走，所以只需要考虑向下和向右的情况
         dfs(i + 1, j, m, n, k, visited);
         dfs(i, j + 1, m, n, k, visited);
     }

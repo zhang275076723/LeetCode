@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/4/18 12:31
  * @Author zsy
- * @Description 在排序数组中查找元素的第一个和最后一个位置 类比Problem33、Problem153、Problem154、Problem162、Offer11、Offer53_2 同Offer53
+ * @Description 在排序数组中查找元素的第一个和最后一个位置 类比Problem33、Problem81、Problem153、Problem154、Problem162、Offer11、Offer53_2 同Offer53
  * 在排序数组中查找元素的第一个和最后一个位置
  * 给定一个按照升序排列的整数数组 nums，和一个目标值 target。
  * 找出给定目标值在数组中的开始位置和结束位置。
@@ -49,44 +49,46 @@ public class Problem34 {
         int left = 0;
         int right = nums.length - 1;
         int mid;
-        int start = -1;
-        int end = -1;
+        //第一个target索引
+        int first = -1;
+        //最后个target索引
+        int last = -1;
 
-        //寻找start，第一个target
+        //寻找第一个target
         while (left <= right) {
             mid = left + ((right - left) >> 1);
 
-            if (nums[mid] == target) {
-                start = mid;
+            if (nums[mid] > target) {
                 right = mid - 1;
             } else if (nums[mid] < target) {
                 left = mid + 1;
             } else {
+                first = mid;
                 right = mid - 1;
             }
         }
 
-        if (start == -1) {
+        if (first == -1) {
             return new int[]{-1, -1};
         }
 
-        //寻找end，最后一个target
-        left = start;
+        //寻找最后一个target
+        left = first;
         right = nums.length - 1;
 
         while (left <= right) {
             mid = left + ((right - left) >> 1);
 
-            if (nums[mid] == target) {
-                end = mid;
-                left = mid + 1;
+            if (nums[mid] > target) {
+                right = mid - 1;
             } else if (nums[mid] < target) {
                 left = mid + 1;
             } else {
-                right = mid - 1;
+                last = mid;
+                left = mid + 1;
             }
         }
 
-        return new int[]{start, end};
+        return new int[]{first, last};
     }
 }
