@@ -1,5 +1,6 @@
 package com.zhang.java;
 
+import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
@@ -38,8 +39,8 @@ public class Problem23 {
         Problem23 problem23 = new Problem23();
         int[][] data = {{1, 4, 5}, {1, 3, 4}, {2, 6}};
         ListNode[] lists = problem23.buildList(data);
-//        ListNode head = problem023.mergeKLists(lists);
-//        ListNode head = problem023.mergeKLists2(lists);
+//        ListNode head = problem23.mergeKLists(lists);
+//        ListNode head = problem23.mergeKLists2(lists);
         ListNode head = problem23.mergeKLists3(lists);
         while (head != null) {
             System.out.println(head.val);
@@ -98,7 +99,12 @@ public class Problem23 {
         }
 
         //优先队列，小根堆
-        PriorityQueue<ListNode> priorityQueue = new PriorityQueue<>((list1, list2) -> list1.val - list2.val);
+        PriorityQueue<ListNode> priorityQueue = new PriorityQueue<>(new Comparator<ListNode>() {
+            @Override
+            public int compare(ListNode node1, ListNode node2) {
+                return node1.val - node2.val;
+            }
+        });
 
         for (ListNode node : lists) {
             if (node != null) {
@@ -111,14 +117,13 @@ public class Problem23 {
         ListNode node = head;
 
         while (!priorityQueue.isEmpty()) {
-            ListNode nextNode = priorityQueue.poll();
-            node.next = nextNode;
+            ListNode temp = priorityQueue.poll();
+            node.next = temp;
             node = node.next;
-            nextNode = nextNode.next;
 
             //如果当前节点的下一个节点不为空，则加入到优先队列中
-            if (nextNode != null) {
-                priorityQueue.offer(nextNode);
+            if (temp.next != null) {
+                priorityQueue.offer(temp.next);
             }
         }
 
@@ -133,10 +138,10 @@ public class Problem23 {
         // >> 优先级小于 + ，所以需要在使用 >> 的时候添加括号
         int mid = left + ((right - left) >> 1);
 
-        ListNode list1 = mergeSort(lists, left, mid);
-        ListNode list2 = mergeSort(lists, mid + 1, right);
+        ListNode head1 = mergeSort(lists, left, mid);
+        ListNode head2 = mergeSort(lists, mid + 1, right);
 
-        return mergeTwoLists(list1, list2);
+        return mergeTwoLists(head1, head2);
     }
 
     /**

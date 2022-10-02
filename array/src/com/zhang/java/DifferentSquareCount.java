@@ -3,7 +3,9 @@ package com.zhang.java;
 /**
  * @Date 2022/7/26 12:56
  * @Author zsy
- * @Description 排序数组求每个元素平方后不重复的元素个数 类比Problem88、Problem997 字节面试题
+ * @Description 统计有序数组里平方和的数目 字节面试题 类比Problem88、Problem997
+ * 返回这个数组所有数的平方值中有多少种不同的取值
+ * <p>
  * 输入：nums = [-10, -10, -5, 0, 1, 5, 8, 10]
  * 输出：5
  * 因为平方后不重复的元素数组为[0, 1, 25, 64, 100]，共5个
@@ -17,7 +19,7 @@ public class DifferentSquareCount {
 
     /**
      * 双指针
-     * 分别指向首尾位置，判断首位指针所指元素的绝对值是否和当前元素的绝对值相同，统计不同元素的绝对值的个数
+     * 分别指向首尾位置，判断首位指针所指绝对值交大元素是否和当前元素前一个元素的绝对值相同
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -30,6 +32,7 @@ public class DifferentSquareCount {
 
         int i = 0;
         int j = nums.length - 1;
+        //当前元素的上一个元素值
         int num = Integer.MIN_VALUE;
         int count = 0;
 

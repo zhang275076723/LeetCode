@@ -4,7 +4,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/31 17:17
  * @Author zsy
- * @Description 数组中的逆序对 类比Problem315
+ * @Description 数组中的逆序对 类比Problem315、Problem327、Problem493
  * 在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。
  * 输入一个数组，求出这个数组中的逆序对的总数。
  * <p>
@@ -104,6 +104,7 @@ public class Offer51 {
             i++;
             k++;
         }
+
         while (j <= right) {
             tempArr[k] = nums[j];
             j++;

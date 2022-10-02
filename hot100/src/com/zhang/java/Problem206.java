@@ -23,8 +23,8 @@ public class Problem206 {
         Problem206 problem206 = new Problem206();
         int[] data = {1, 2, 3, 4, 5};
         ListNode head = problem206.buildLinkedList(data);
-//        head = problem206.reverseList(head);
-        head = problem206.reverseList2(head);
+        head = problem206.reverseList(head);
+//        head = problem206.reverseList2(head);
         while (head != null) {
             System.out.println(head.val);
             head = head.next;
@@ -45,7 +45,7 @@ public class Problem206 {
 
         ListNode pre = null;
         ListNode node = head;
-        ListNode next = node.next;
+        ListNode next = head.next;
 
         while (next != null) {
             node.next = pre;

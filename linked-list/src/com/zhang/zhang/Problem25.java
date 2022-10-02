@@ -33,7 +33,7 @@ public class Problem25 {
     public static void main(String[] args) {
         Problem25 problem25 = new Problem25();
         int[] data = {1, 2, 3, 4, 5};
-        int k = 3;
+        int k = 2;
         ListNode head = problem25.buildLinkedList(data);
         head = problem25.reverseKGroup(head, k);
         while (head != null) {

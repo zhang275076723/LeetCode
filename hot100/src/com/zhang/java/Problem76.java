@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/4/26 9:27
  * @Author zsy
- * @Description 最小覆盖子串 字节面试题 类比Problem3、Problem438
+ * @Description 最小覆盖子串 字节面试题 类比Problem3、Problem438、Problem567
  * 给你一个字符串 s 、一个字符串 t 。返回 s 中涵盖 t 所有字符的最小子串。
  * 如果 s 中不存在涵盖 t 所有字符的子串，则返回空字符串 "" 。
  * <p>
@@ -54,18 +54,17 @@ public class Problem76 {
         //tMap中存放t中每个字符对应的个数
         Map<Character, Integer> tMap = new HashMap<>();
 
-        for (int i = 0; i < t.length(); i++) {
-            tMap.put(t.charAt(i), tMap.getOrDefault(t.charAt(i), 0) + 1);
+        for (char c : t.toCharArray()) {
+            tMap.put(c, tMap.getOrDefault(c, 0) + 1);
         }
 
         //滑动窗口指针
         int left = 0;
         int right = 0;
         //最小窗口指针
-        int minLeft = 0;
-        int minRight = Integer.MAX_VALUE;
-        //窗口大小
-        int size = 0;
+        int minLeft = -1;
+        //因为最大窗口大小为100000
+        int minRight = 100000;
 
         while (right < s.length()) {
             char c = s.charAt(right);
@@ -73,27 +72,29 @@ public class Problem76 {
             //sMap中添加右指针元素
             sMap.put(c, sMap.getOrDefault(c, 0) + 1);
 
-            //判断当前窗口是否覆盖t，左指针右移
-            while (isCover(sMap, tMap)) {
-                //更新窗口大小
-                if (right - left < minRight - minLeft) {
-                    minLeft = left;
-                    minRight = right;
-                    size = minRight - minLeft + 1;
+            //当前窗口的大小>=t的大小时，才判断是否覆盖t
+            if (right - left + 1 >= t.length()) {
+                //判断当前窗口是否覆盖t，左指针右移
+                while (isCover(sMap, tMap)) {
+                    //更新窗口大小
+                    if (right - left < minRight - minLeft) {
+                        minLeft = left;
+                        minRight = right;
+                    }
+
+                    //sMap中删除左指针元素
+                    sMap.put(s.charAt(left), sMap.get(s.charAt(left)) - 1);
+
+                    //左指针右移
+                    left++;
                 }
-
-                //sMap中删除左指针元素
-                sMap.put(s.charAt(left), sMap.get(s.charAt(left)) - 1);
-
-                //左指针右移
-                left++;
             }
 
             //右指针右移
             right++;
         }
 
-        return size == 0 ? "" : s.substring(minLeft, minRight + 1);
+        return minLeft == -1 ? "" : s.substring(minLeft, minRight + 1);
     }
 
     /**

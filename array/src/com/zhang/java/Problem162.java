@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/6/30 10:26
  * @Author zsy
- * @Description 寻找峰值 类比Problem33、Problem34、Problem81、Problem153、Problem154、Offer11、Offer53、Offer53_2
+ * @Description 寻找峰值 Google面试题 类比Problem33、Problem34、Problem81、Problem153、Problem154、Problem852、Offer11、Offer53、Offer53_2
  * 峰值元素是指其值严格大于左右相邻值的元素。
  * 给你一个整数数组 nums，找到峰值元素并返回其索引。
  * 数组可能包含多个峰值，在这种情况下，返回 任何一个峰值 所在位置即可。
@@ -80,12 +80,12 @@ public class Problem162 {
         while (left < right) {
             mid = left + ((right - left) >> 1);
 
-            //当前元素大于下一个元素时，峰值在当前元素或当前元素左边
-            if (nums[mid] > nums[mid + 1]) {
-                right = mid;
-            } else {
-                //当前元素小于等于下一个元素时，峰值在当前元素右边
+            //当前元素小于下一个元素时，峰值在当前元素右边
+            if (nums[mid] < nums[mid + 1]) {
                 left = mid + 1;
+            } else {
+                //当前元素大于等于下一个元素时，峰值在当前元素或当前元素左边
+                right = mid;
             }
         }
 

@@ -103,24 +103,24 @@ public class Problem42 {
     public int trap3(int[] height) {
         int result = 0;
         //左指针
-        int left = 0;
+        int i = 0;
         //右指针
-        int right = height.length - 1;
+        int j = height.length - 1;
         //左指针左边的最大值
         int leftMax = 0;
         //右指针右边的最大值
         int rightMax = 0;
 
-        while (left < right) {
-            leftMax = Math.max(leftMax, height[left]);
-            rightMax = Math.max(rightMax, height[right]);
+        while (i < j) {
+            leftMax = Math.max(leftMax, height[i]);
+            rightMax = Math.max(rightMax, height[j]);
 
-            if (height[left] < height[right]) {
-                result = result + Math.min(leftMax, rightMax) - height[left];
-                left++;
+            if (height[i] < height[j]) {
+                result = result + Math.min(leftMax, rightMax) - height[i];
+                i++;
             } else {
-                result = result + Math.min(leftMax, rightMax) - height[right];
-                right--;
+                result = result + Math.min(leftMax, rightMax) - height[j];
+                j--;
             }
         }
 

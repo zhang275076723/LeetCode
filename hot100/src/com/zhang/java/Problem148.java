@@ -121,16 +121,16 @@ public class Problem148 {
         }
 
         //断开链表，分为两个链表
-        ListNode tempNode = slow.next;
+        ListNode head2 = slow.next;
         slow.next = null;
 
         //前半部分链表归并排序
-        ListNode head1 = mergeSort(head);
+        head = mergeSort(head);
         //后半部分链表归并排序
-        ListNode head2 = mergeSort(tempNode);
+        head2 = mergeSort(head2);
 
         //合并链表
-        return merge(head1, head2);
+        return merge(head, head2);
     }
 
     /**

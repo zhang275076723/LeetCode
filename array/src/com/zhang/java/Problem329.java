@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/8/18 9:07
  * @Author zsy
- * @Description 矩阵中的最长递增路径 类比Problem131、Problem139、Problem140
+ * @Description 矩阵中的最长递增路径 类比Problem131、Problem139、Problem140、Problem403
  * 给定一个 m x n 整数矩阵 matrix ，找出其中 最长递增路径 的长度。
  * 对于每个单元格，你可以往上，下，左，右四个方向移动。
  * 你 不能 在 对角线 方向上移动或移动到 边界外（即不允许环绕）。
@@ -32,7 +32,7 @@ public class Problem329 {
     }
 
     /**
-     * 回溯+剪枝+动态规划预处理matrix
+     * 回溯+剪枝+动态规划预处理matrix(记忆化搜索)
      * dp[i][j]：以matrix[i][j]起始的最长递增路径长度
      * dp[i][j] = max(dp[i-1][j],dp[i+1][j],dp[i][j-1],dp[i][j+1]) + 1 (dp[i][j] < dp[i-1][j],dp[i+1][j],dp[i][j-1],dp[i][j+1])
      * 时间复杂度O(mn)，空间复杂度O(mn)

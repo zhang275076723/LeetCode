@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/2 14:48
  * @Author zsy
- * @Description 在排序数组中查找数字 I 类比Problem33、Problem81、Problem153、Problem154、Problem162、Offer11、Offer53_2 同Problem34
+ * @Description 在排序数组中查找数字 I 类比Problem33、Problem81、Problem153、Problem154、Problem162、Problem852、Offer11、Offer53_2 同Problem34
  * 统计一个数字在排序数组中出现的次数。
  * <p>
  * 输入: nums = [5,7,7,8,8,10], target = 8

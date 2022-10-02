@@ -66,14 +66,12 @@ public class Problem4 {
         int num1 = Integer.MIN_VALUE;
         //两个中位数中的后一个数
         int num2 = Integer.MIN_VALUE;
-        int m = nums1.length;
-        int n = nums2.length;
 
         //找到中位数的两个值
-        for (int k = 0; k <= (m + n) / 2; k++) {
+        for (int k = 0; k <= (nums1.length + nums2.length) / 2; k++) {
             num1 = num2;
 
-            if ((i < m && nums1[i] < nums2[j]) || j >= n) {
+            if ((i < nums1.length && j < nums2.length && nums1[i] < nums2[j]) || j >= nums2.length) {
                 num2 = nums1[i];
                 i++;
             } else {
@@ -82,7 +80,7 @@ public class Problem4 {
             }
         }
 
-        if ((m + n) % 2 == 1) {
+        if ((nums1.length + nums2.length) % 2 == 1) {
             return num2;
         } else {
             return (num1 + num2) / 2.0;
@@ -117,12 +115,10 @@ public class Problem4 {
             }
         }
 
-        int m = nums1.length;
-        int n = nums2.length;
         //第k小元素
-        int k = (m + n) / 2 + 1;
+        int k = (nums1.length + nums2.length) / 2 + 1;
 
-        if ((m + n) % 2 == 1) {
+        if ((nums1.length + nums2.length) % 2 == 1) {
             return findMinK(nums1, nums2, k);
         } else {
             return (findMinK(nums1, nums2, k - 1) + findMinK(nums1, nums2, k)) / 2.0;
@@ -141,10 +137,11 @@ public class Problem4 {
 
         while (true) {
             //i、j指针超过数组长度时，直接返回另一个数组当前的第k个元素
-            if (i >= nums1.length) {
+            if (i == nums1.length) {
                 return nums2[j + k - 1];
             }
-            if (j >= nums2.length) {
+
+            if (j == nums2.length) {
                 return nums1[i + k - 1];
             }
 

@@ -69,9 +69,9 @@ public class Problem32 {
                     }
                 } else {
                     //情况3，c2为')'，并且与c2对应的括号为'('
-                    if (i - 1 - dp[i - 1] >= 0 && s.charAt(i - 1 - dp[i - 1]) == '(') {
-                        if (i - 1 - dp[i - 1] - 1 >= 0) {
-                            dp[i] = dp[i - 1] + 2 + dp[i - 1 - dp[i - 1] - 1];
+                    if (i - dp[i - 1] - 1 >= 0 && s.charAt(i - dp[i - 1] - 1) == '(') {
+                        if (i - dp[i - 1] - 2 >= 0) {
+                            dp[i] = dp[i - 1] + 2 + dp[i - dp[i - 1] - 2];
                         } else {
                             dp[i] = dp[i - 1] + 2;
                         }

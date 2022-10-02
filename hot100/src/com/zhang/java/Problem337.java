@@ -62,9 +62,9 @@ public class Problem337 {
         //以根节点右节点为根的最大值
         int[] rightMax = dfs(root.right);
 
-        //不选根节点的最大值
+        //不选根节点的最大值=选或不选左子树作为根节点的最大值+选或不选右子树作为根节点的最大值
         int notSelected = Math.max(leftMax[0], leftMax[1]) + Math.max(rightMax[0], rightMax[1]);
-        //选根节点的最大值
+        //选根节点的最大值=当前根节点值+选左子树作为根节点的最大值+选右子树作为根节点的最大值
         int selected = root.val + leftMax[0] + rightMax[0];
 
         return new int[]{notSelected, selected};

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/8 8:24
  * @Author zsy
- * @Description 找到字符串中所有字母异位词 类比Problem3、Problem49、Problem76
+ * @Description 找到字符串中所有字母异位词 类比Problem3、Problem49、Problem76、Problem567
  * 给定两个字符串 s 和 p，找到 s 中所有 p 的 异位词 的子串，返回这些子串的起始索引。不考虑答案输出的顺序。
  * 异位词 指由相同字母重排列形成的字符串（包括相同的字符串）。
  * <p>
@@ -36,7 +36,7 @@ public class Problem438 {
 
     /**
      * 滑动窗口，双指针
-     * 时间复杂度O(s.length*|C|)，空间复杂度O(|C|)，C为字符集大小，即|C|=26
+     * 时间复杂度O(s.length*|C|)，空间复杂度O(|C|) (字符串仅包含小写字母，所以|C|=26)
      *
      * @param s
      * @param p
@@ -84,7 +84,7 @@ public class Problem438 {
     /**
      * 滑动窗口，双指针
      * 同findAnagrams()，这里存储字符使用的是hashMap，而不是数组
-     * 时间复杂度O(s.length*|C|)，空间复杂度O(|C|)，C为字符集大小，即|C|=26
+     * 时间复杂度O(s.length*|C|)，空间复杂度O(|C|) (字符串仅包含小写字母，所以|C|=26)
      *
      * @param s
      * @param p
