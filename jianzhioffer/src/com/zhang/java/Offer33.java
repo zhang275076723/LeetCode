@@ -105,7 +105,7 @@ public class Offer33 {
             return true;
         }
 
-        //postorder数组中第一个比根节点值大的元素索引，该节点为右子树中的某一个节点
+        //postorder数组中第一个比根节点值大的元素索引，即[index,right-1]都比根节点postorder[right]值要打
         int index = left;
 
         //找第一个比根节点值大的元素索引
@@ -113,7 +113,7 @@ public class Offer33 {
             index++;
         }
 
-        //根节点右边所有值都要比根节点值要大
+        //index之后节点值都比根节点值要大
         for (int i = index + 1; i < right; i++) {
             if (postorder[i] < postorder[right]) {
                 return false;
@@ -123,5 +123,4 @@ public class Offer33 {
         //递归判断左子树和右子树是否是后序遍历二叉搜索树
         return dfs(postorder, left, index - 1) && dfs(postorder, index, right - 1);
     }
-
 }

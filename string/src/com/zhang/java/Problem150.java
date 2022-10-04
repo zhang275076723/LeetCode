@@ -30,7 +30,7 @@ import java.util.Stack;
  * = 17 + 5
  * = 22
  * <p>
- * 1 <= tokens.length <= 104
+ * 1 <= tokens.length <= 10^4
  * tokens[i] 是一个算符（"+"、"-"、"*" 或 "/"），或是在范围 [-200, 200] 内的一个整数
  */
 public class Problem150 {

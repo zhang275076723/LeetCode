@@ -16,8 +16,8 @@ import java.util.Arrays;
  * 输入：nums = [-7,-3,2,3,11]
  * 输出：[4,9,9,49,121]
  * <p>
- * 1 <= nums.length <= 104
- * -104 <= nums[i] <= 104
+ * 1 <= nums.length <= 10^4
+ * -10^4 <= nums[i] <= 10^4
  * nums 已按 非递减顺序 排序
  */
 public class Problem977 {

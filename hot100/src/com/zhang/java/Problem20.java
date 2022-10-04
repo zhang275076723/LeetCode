@@ -26,7 +26,7 @@ import java.util.Stack;
  * 输入：s = "{[]}"
  * 输出：true
  * <p>
- * 1 <= s.length <= 104
+ * 1 <= s.length <= 10^4
  * s 仅由括号 '()[]{}' 组成
  */
 public class Problem20 {

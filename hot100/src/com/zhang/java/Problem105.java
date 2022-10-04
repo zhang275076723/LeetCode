@@ -56,40 +56,43 @@ public class Problem105 {
             map.put(inorder[i], i);
         }
 
-        return buildTree(0, preorder.length - 1, 0, inorder.length - 1,
+        return buildTree(0, preorder.length - 1,
+                0, inorder.length - 1,
                 preorder, inorder, map);
     }
 
     /**
-     * @param preorderLeft  前序遍历左指针
-     * @param preorderRight 前序遍历右指针
-     * @param inorderLeft   中序遍历左指针
-     * @param inorderRight  中序遍历右指针
+     * @param leftPreorder  前序遍历左指针
+     * @param rightPreorder 前序遍历右指针
+     * @param leftInorder   中序遍历左指针
+     * @param rightInorder  中序遍历右指针
      * @param preorder      前序遍历数组
      * @param inorder       中序遍历数组
      * @param map           中序遍历数组哈希，在O(1)时间找到中序遍历数组中的根节点索引
      * @return
      */
-    private TreeNode buildTree(int preorderLeft, int preorderRight, int inorderLeft, int inorderRight,
+    private TreeNode buildTree(int leftPreorder, int rightPreorder, int leftInorder, int rightInorder,
                                int[] preorder, int[] inorder, Map<Integer, Integer> map) {
-        if (preorderLeft > preorderRight) {
+        if (leftPreorder > rightPreorder) {
             return null;
         }
 
-        if (preorderLeft == preorderRight) {
-            return new TreeNode(preorder[preorderLeft]);
+        if (leftPreorder == rightPreorder) {
+            return new TreeNode(preorder[leftPreorder]);
         }
 
         //中序遍历数组中根节点索引
-        int inorderRootIndex = map.get(preorder[preorderLeft]);
+        int inorderRootIndex = map.get(preorder[leftPreorder]);
         //左子树长度
-        int leftLength = inorderRootIndex - inorderLeft;
+        int leftLength = inorderRootIndex - leftInorder;
 
-        TreeNode root = new TreeNode(preorder[preorderLeft]);
+        TreeNode root = new TreeNode(preorder[leftPreorder]);
 
-        root.left = buildTree(preorderLeft + 1, preorderLeft + leftLength, inorderLeft, inorderRootIndex - 1,
+        root.left = buildTree(leftPreorder + 1, leftPreorder + leftLength,
+                leftInorder, inorderRootIndex - 1,
                 preorder, inorder, map);
-        root.right = buildTree(preorderLeft + leftLength + 1, preorderRight, inorderRootIndex + 1, inorderRight,
+        root.right = buildTree(leftPreorder + leftLength + 1, rightPreorder,
+                inorderRootIndex + 1, rightInorder,
                 preorder, inorder, map);
 
         return root;

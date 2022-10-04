@@ -58,30 +58,33 @@ public class Problem106 {
             map.put(inorder[i], i);
         }
 
-        return buildTree(0, inorder.length - 1, 0, postorder.length - 1,
+        return buildTree(0, inorder.length - 1,
+                0, postorder.length - 1,
                 inorder, postorder, map);
     }
 
-    private TreeNode buildTree(int inorderLeft, int inorderRight, int postorderLeft, int postorderRight,
+    private TreeNode buildTree(int leftInorder, int rightInorder, int leftPostorder, int rightPostorder,
                                int[] inorder, int[] postorder, Map<Integer, Integer> map) {
-        if (inorderLeft > inorderRight) {
+        if (leftInorder > rightInorder) {
             return null;
         }
 
-        if (inorderLeft == inorderRight) {
-            return new TreeNode(inorder[inorderLeft]);
+        if (leftInorder == rightInorder) {
+            return new TreeNode(inorder[leftInorder]);
         }
 
         //中序遍历数组根节点索引
-        int inorderRootIndex = map.get(postorder[postorderRight]);
+        int inorderRootIndex = map.get(postorder[rightPostorder]);
         //左子树长度
-        int leftLength = inorderRootIndex - inorderLeft;
+        int leftLength = inorderRootIndex - leftInorder;
 
-        TreeNode root = new TreeNode(postorder[postorderRight]);
+        TreeNode root = new TreeNode(postorder[rightPostorder]);
 
-        root.left = buildTree(inorderLeft, inorderRootIndex - 1, postorderLeft, postorderLeft + leftLength - 1,
+        root.left = buildTree(leftInorder, inorderRootIndex - 1,
+                leftPostorder, leftPostorder + leftLength - 1,
                 inorder, postorder, map);
-        root.right = buildTree(inorderRootIndex + 1, inorderRight, postorderLeft + leftLength, postorderRight - 1,
+        root.right = buildTree(inorderRootIndex + 1, rightInorder,
+                leftPostorder + leftLength, rightPostorder - 1,
                 inorder, postorder, map);
 
         return root;

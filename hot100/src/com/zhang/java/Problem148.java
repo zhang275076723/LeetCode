@@ -15,7 +15,7 @@ package com.zhang.java;
  * 输入：head = []
  * 输出：[]
  * <p>
- * 链表中节点的数目在范围 [0, 5 * 104] 内
+ * 链表中节点的数目在范围 [0, 5 * 10^4] 内
  * -10^5 <= Node.val <= 10^5
  */
 public class Problem148 {
