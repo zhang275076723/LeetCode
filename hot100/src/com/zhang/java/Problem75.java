@@ -92,16 +92,17 @@ public class Problem75 {
         k = i;
 
         while (i <= k && k <= j) {
+            //当前元素为0时，nums[i]和nums[k]交换，指针i、k右移
             if (nums[k] == 0) {
                 swap(nums, k, i);
                 i++;
                 k++;
             } else if (nums[k] == 2) {
-                //当前元素为2时，交换之后，指针k不后移
+                //当前元素为2时，num[j]和nums[k]交换，指针j左移
                 swap(nums, k, j);
                 j--;
             } else {
-                //当前元素为1时，k指针后移
+                //当前元素为1时，k指针右移
                 k++;
             }
         }
