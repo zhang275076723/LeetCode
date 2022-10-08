@@ -84,6 +84,7 @@ public class Offer3 {
                 nums[nums[i]] = nums[i];
                 nums[i] = temp;
             }
+
             //当前元素值nums[i]不在索引位置i时，说明有重复元素
             if (i != nums[i]) {
                 return nums[i];

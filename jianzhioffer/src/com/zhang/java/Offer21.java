@@ -21,10 +21,12 @@ public class Offer21 {
         Offer21 offer21 = new Offer21();
         int[] nums = {2, 1, 1, 1};
         System.out.println(Arrays.toString(offer21.exchange(nums)));
+        System.out.println(Arrays.toString(offer21.exchange2(nums)));
     }
 
     /**
-     * 双指针，快排的一次划分
+     * 双指针，一次遍历，新建数组
+     * 遍历当前数组，如果是奇数放在新数组前面，如果是偶数，放在新数组后面
      * 时间复杂度O(n)，空间复杂的O(1)
      *
      * @param nums
@@ -35,21 +37,51 @@ public class Offer21 {
             return nums;
         }
 
+        int[] result = new int[nums.length];
         int left = 0;
         int right = nums.length - 1;
-        int temp;
 
-        while (left < right) {
-            //从右往左找奇数
-            while (left < right && nums[right] % 2 == 0) {
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] % 2 == 1) {
+                result[left] = nums[i];
+                left++;
+            } else {
+                result[right] = nums[i];
                 right--;
             }
+        }
+
+        return result;
+    }
+
+    /**
+     * 双指针，一次遍历，原数组交换
+     * 从前往后找第一个偶数，从后往前找第一个奇数，进行交换
+     * 时间复杂度O(n)，空间复杂的O(1)
+     *
+     * @param nums
+     * @return
+     */
+    public int[] exchange2(int[] nums) {
+        if (nums.length == 0 || nums.length == 1) {
+            return nums;
+        }
+
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left < right) {
             //从左往右找偶数
             while (left < right && nums[left] % 2 == 1) {
                 left++;
             }
 
-            temp = nums[left];
+            //从右往左找奇数
+            while (left < right && nums[right] % 2 == 0) {
+                right--;
+            }
+
+            int temp = nums[left];
             nums[left] = nums[right];
             nums[right] = temp;
         }

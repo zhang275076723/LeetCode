@@ -19,7 +19,7 @@ package com.zhang.zhang;
 public class Problem61 {
     public static void main(String[] args) {
         Problem61 problem61 = new Problem61();
-        int[] data = {1,2,3,4,5};
+        int[] data = {1, 2, 3, 4, 5};
         int k = 2;
         ListNode head = problem61.buildList(data);
         head = problem61.rotateRight(head, k);
@@ -27,7 +27,7 @@ public class Problem61 {
 
     /**
      * 两次遍历
-     * 第一次遍历，得到链表长度，确定要移动的步数k；
+     * 第一次遍历，得到链表长度，确定要移动的步数k (因为k存在较大的值，所以必须得到链表长度，取模)
      * 第二次遍历，得到要断开链表的位置，将链表断开，再重新连接
      * 时间复杂度O(n)，空间复杂度O(1)
      *
