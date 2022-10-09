@@ -85,6 +85,7 @@ public class Offer51 {
         int k = left;
 
         while (i <= mid && j <= right) {
+            //注意是小于等于，不能是小于，因为要保证nums[i]>nums[j]的时候，nums[i]-nums[mid]都要大于nums[j]，才能构成逆序对
             if (nums[i] <= nums[j]) {
                 tempArr[k] = nums[i];
                 i++;
@@ -94,7 +95,7 @@ public class Offer51 {
                 j++;
                 k++;
 
-                //左边数组当前位置i到末尾mid的所有元素都大于右边数组当前元素，都构成了逆序对
+                //nums[i]-nums[mid]都大于nums[j]，都构成了逆序对
                 count = count + mid - i + 1;
             }
         }

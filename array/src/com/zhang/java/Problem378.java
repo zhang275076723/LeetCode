@@ -28,7 +28,7 @@ import java.util.Queue;
 public class Problem378 {
     public static void main(String[] args) {
         Problem378 problem378 = new Problem378();
-        int[][] matrix = new int[][]{
+        int[][] matrix = {
                 {1, 5, 9},
                 {10, 11, 13},
                 {12, 13, 15}
@@ -103,7 +103,7 @@ public class Problem378 {
                 arr[0] = new int[]{matrix[temp[1]][temp[2] + 1], temp[1], temp[2] + 1};
                 heapify(arr, 0, heapSize);
             } else {
-                //当前元素到该行末尾时，堆尾元素替代堆首元素，再整堆
+                //当前元素到该行末尾时，堆大小减1，堆尾元素替代堆首元素，再整堆
                 heapSize--;
                 arr[0] = arr[heapSize];
                 heapify(arr, 0, heapSize);
@@ -119,7 +119,8 @@ public class Problem378 {
      * 如果二维数组左边小于等于当前中值的数量小于k，说明中值小于第k小元素，左指针=mid+1
      * 如果二维数组左边小于等于当前中值的数量大于等于k，说明中值大于等于第k小元素，右指针=mid
      * 每次循环都保证了第k小元素在左指针-右指针之间，当左指针等于右指针时，即找到第k小元素，等于左指针，也等于右指针
-     * 时间复杂度O(nlog(right-left))，空间复杂度O(1) (n=matrix.length, left=matrix[0][0], right=matrix[matrix.length-1][matrix[0].length-1])
+     * 时间复杂度O(n*log(right-left))，空间复杂度O(1)
+     * (n=matrix.length, left=matrix[0][0], right=matrix[matrix.length-1][matrix[0].length-1])
      *
      * @param matrix
      * @param k
@@ -153,13 +154,14 @@ public class Problem378 {
         int j = 0;
 
         while (i >= 0 && j < matrix[0].length) {
-            if (mid >= matrix[i][j]) {
-                //每次统计一列小于等于mid的个数
-                count = count + i + 1;
-                j++;
-            } else {
+            //mid小于当前元素matrix[i][j]，i--
+            while (i >= 0 && mid < matrix[i][j]) {
                 i--;
             }
+
+            //统计当前列小于等于mid的个数
+            count = count + i + 1;
+            j++;
         }
 
         return count;
