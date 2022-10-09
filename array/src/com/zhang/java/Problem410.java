@@ -52,10 +52,8 @@ public class Problem410 {
         int mid;
 
         for (int num : nums) {
+            left = Math.max(left, num);
             right = right + num;
-            if (num > left) {
-                left = num;
-            }
         }
 
         //二分查找当前子数组之和mid

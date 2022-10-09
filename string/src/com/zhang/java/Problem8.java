@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/6/23 16:28
  * @Author zsy
- * @Description 字符串转换整数 (atoi) 类比Problem7 同Offer67
+ * @Description 字符串转换整数 (atoi) 类比Problem7、CharacterToInteger 同Offer67
  * 请你来实现一个 myAtoi(string s) 函数，使其能将字符串转换成一个 32 位有符号整数（类似 C/C++ 中的 atoi 函数）。
  * 函数 myAtoi(string s) 的算法如下：
  * 1、读入字符串并丢弃无用的前导空格
@@ -110,13 +110,13 @@ public class Problem8 {
             int num = s.charAt(index) - '0';
 
             //上溢出
-            if (sign == 1 && result > Integer.MAX_VALUE / 10 ||
+            if (result > Integer.MAX_VALUE / 10 ||
                     (result == Integer.MAX_VALUE / 10 && num >= Integer.MAX_VALUE % 10)) {
                 return Integer.MAX_VALUE;
             }
 
             //下溢出
-            if (sign == -1 && result < Integer.MIN_VALUE / 10 ||
+            if (result < Integer.MIN_VALUE / 10 ||
                     (result == Integer.MIN_VALUE / 10 && num >= -(Integer.MIN_VALUE % 10))) {
                 return Integer.MIN_VALUE;
             }

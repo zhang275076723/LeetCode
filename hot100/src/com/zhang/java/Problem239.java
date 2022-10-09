@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/21 7:51
  * @Author zsy
- * @Description 滑动窗口最大值 字节面试题 类比Problem76、Offer59_2 同Offer59
+ * @Description 滑动窗口最大值 字节面试题 华为面试题 类比Problem76、Offer59_2 同Offer59
  * 给你一个整数数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。
  * 你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。
  * 返回 滑动窗口中的最大值 。
@@ -151,7 +151,7 @@ public class Problem239 {
 
         for (int i = k; i < nums.length; i++) {
             //单调递减队列队首元素不在滑动窗口范围内，则队首元素出队
-            while (!queue.isEmpty() && queue.peekFirst() <= i - k) {
+            while (!queue.isEmpty() && queue.peekFirst() < i - k + 1) {
                 queue.pollFirst();
             }
 

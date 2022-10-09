@@ -58,6 +58,7 @@ public class Offer58 {
 
     /**
      * 双指针
+     * 从后往前找每一个单词进行拼接
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param s

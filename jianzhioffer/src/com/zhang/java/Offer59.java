@@ -143,7 +143,7 @@ public class Offer59 {
 
         for (int i = k; i < nums.length; i++) {
             //当前单调递减队列队首元素对应索引下标超出滑动窗口范围，则出队
-            if (queue.peekFirst() <= i - k) {
+            if (queue.peekFirst() < i - k + 1) {
                 queue.pollFirst();
             }
 

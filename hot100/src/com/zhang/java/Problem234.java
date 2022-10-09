@@ -4,7 +4,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/17 11:20
  * @Author zsy
- * @Description 回文链表 类比Problem5、Problem9、Problem131、Problem143、Problem214、Problem516、Problem674
+ * @Description 回文链表 字节面试题 类比Problem5、Problem9、Problem131、Problem143、Problem214、Problem516、Problem674
  * 给你一个单链表的头节点 head ，请你判断该链表是否为回文链表。
  * 如果是，返回 true ；否则，返回 false 。
  * <p>
