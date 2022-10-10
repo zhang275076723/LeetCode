@@ -82,7 +82,7 @@ public class Problem230 {
 
         MyTree myTree = new MyTree(root);
 
-        return myTree.kthSmallest(k);
+        return myTree.findMinKVal(k);
     }
 
     private TreeNode buildTree(String[] data) {
@@ -127,37 +127,37 @@ public class Problem230 {
         /**
          * 记录每个节点为根节点的节点个数
          */
-        private Map<TreeNode, Integer> map;
+        private Map<TreeNode, Integer> nodeCountMap;
 
         MyTree(TreeNode root) {
             this.root = root;
-            this.map = new HashMap<>();
+            this.nodeCountMap = new HashMap<>();
             countNode(root);
         }
 
-        public int kthSmallest(int k) {
+        public int findMinKVal(int k) {
             TreeNode node = root;
 
-            //以当前节点左节点为根的数节点个数，考虑node.left为null，即当前节点没有左子树，得到的count为0
-            int count = map.getOrDefault(node.left, 0);
+            //以当前节点左节点为根的数节点个数，考虑node.left为null，即当前节点没有左子树，count为0
+            int count = nodeCountMap.getOrDefault(node.left, 0);
 
             while (count + 1 != k) {
-                //当前节点的节点个数+1小于k，则往右子树找
-                if (count + 1 < k) {
+                //则往左子树找
+                if (count > k - 1) {
+                    node = node.left;
+                } else {
+                    //往右子树找
                     k = k - count - 1;
                     node = node.right;
-                } else {
-                    //当前节点的节点个数+1大于k，则往左子树找
-                    node = node.left;
                 }
 
-                //node为空说明没有找到，返回-1
+                //node为空说明没有找到第k小，返回-1
                 if (node == null) {
                     return -1;
                 }
 
-                //考虑node.left为null，即当前节点没有左子树，得到的count为0
-                count = map.getOrDefault(node.left, 0);
+                //考虑node.left为null，即当前节点没有左子树，count为0
+                count = nodeCountMap.getOrDefault(node.left, 0);
             }
 
             return node.val;
@@ -170,7 +170,8 @@ public class Problem230 {
 
             int leftCount = countNode(node.left);
             int rightCount = countNode(node.right);
-            map.put(node, leftCount + rightCount + 1);
+
+            nodeCountMap.put(node, leftCount + rightCount + 1);
 
             return leftCount + rightCount + 1;
         }
