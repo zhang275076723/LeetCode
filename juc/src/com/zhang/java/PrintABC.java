@@ -116,7 +116,7 @@ public class PrintABC {
     }
 
     /**
-     * 使用synchronized实现
+     * 使用synchronized实现，count可以保证原子性和可见性
      */
     static class Resource2 {
         private final Object object;
