@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * @Date 2022/10/14 19:24
  * @Author zsy
- * @Description
+ * @Description 实现一个死锁
  */
 public class DeadLock {
     public static void main(String[] args) {
