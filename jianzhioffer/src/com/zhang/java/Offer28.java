@@ -88,14 +88,11 @@ public class Offer28 {
         if (leftNode == null && rightNode == null) {
             return true;
         }
-        if (leftNode == null || rightNode == null) {
+        if (leftNode == null || rightNode == null || leftNode.val != rightNode.val) {
             return false;
         }
-        if (leftNode.val == rightNode.val) {
-            return dfs(leftNode.left, rightNode.right) && dfs(leftNode.right, rightNode.left);
-        }
 
-        return false;
+        return dfs(leftNode.left, rightNode.right) && dfs(leftNode.right, rightNode.left);
     }
 
     private TreeNode buildTree(String[] data) {

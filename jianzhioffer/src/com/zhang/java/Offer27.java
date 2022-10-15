@@ -18,15 +18,16 @@ public class Offer27 {
         Offer27 offer27 = new Offer27();
         String[] data = {"4", "2", "7", "1", "3", "6", "9"};
         TreeNode root = offer27.buildTree(data);
-//        TreeNode root = offer27.mirrorTree(data);
-//        TreeNode root = offer27.mirrorTree2(data);
-        root = offer27.mirrorTree3(root);
+        root = offer27.mirrorTree(root);
+//      root = offer27.mirrorTree2(root);
+//        root = offer27.mirrorTree3(root);
         offer27.traversal(root);
     }
 
 
     /**
-     * dfs，前序遍历，自下而上交换
+     * dfs递归
+     * dfs遍历所有节点，交换当前节点的左右子节点
      * 时间复杂度O(n)，平均空间复杂度O(logn)，最差空间复杂度O(n)
      *
      * @param root
@@ -37,16 +38,18 @@ public class Offer27 {
             return null;
         }
 
-        TreeNode leftNode = root.left;
-        TreeNode rightNode = root.right;
-        root.left = mirrorTree(rightNode);
-        root.right = mirrorTree(leftNode);
+        TreeNode tempNode = root.left;
+        root.left = root.right;
+        root.right = tempNode;
+
+        mirrorTree(root.left);
+        mirrorTree(root.right);
 
         return root;
     }
 
     /**
-     * 栈，自上而下交换
+     * dfs非递归
      * 时间复杂度O(n)，平均空间复杂度O(logn)，最差空间复杂度O(n)
      *
      * @param root
@@ -62,15 +65,17 @@ public class Offer27 {
 
         while (!stack.empty()) {
             TreeNode node = stack.pop();
+
+            TreeNode tempNode = node.left;
+            node.left = node.right;
+            node.right = tempNode;
+
             if (node.left != null) {
                 stack.push(node.left);
             }
             if (node.right != null) {
                 stack.push(node.right);
             }
-            TreeNode tempNode = node.left;
-            node.left = node.right;
-            node.right = tempNode;
         }
 
         return root;

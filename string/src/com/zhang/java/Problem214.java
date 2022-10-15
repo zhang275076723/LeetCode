@@ -122,8 +122,8 @@ public class Problem214 {
                 j++;
             }
 
+            //j遍历到末尾，则匹配，返回字符串s匹配的第一个字符索引
             if (j == p.length()) {
-                //返回匹配的第一个字符索引
                 return i - j + 1;
             }
         }

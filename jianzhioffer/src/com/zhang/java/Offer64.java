@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/8 16:06
  * @Author zsy
- * @Description 求1+2+…+n
+ * @Description 求1+2+…+n 阿里面试题
  * 求 1+2+...+n ，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。
  * <p>
  * 输入: n = 3

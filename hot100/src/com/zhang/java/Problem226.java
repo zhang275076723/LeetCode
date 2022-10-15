@@ -28,12 +28,13 @@ public class Problem226 {
         problem226.traversal(root);
         System.out.println();
 //        root = problem226.invertTree(root);
-        root = problem226.invertTree2(root);
+//        root = problem226.invertTree2(root);
+        root = problem226.invertTree3(root);
         problem226.traversal(root);
     }
 
     /**
-     * dfs
+     * dfs递归
      * dfs遍历所有节点，交换当前节点的左右子节点
      * 时间复杂度O(n)，平均空间复杂度O(logn)，最坏空间复杂度O(n)
      *
@@ -56,13 +57,46 @@ public class Problem226 {
     }
 
     /**
+     * dfs非递归
+     * 时间复杂度O(n)，平均空间复杂度O(logn)，最差空间复杂度O(n)
+     *
+     * @param root
+     * @return
+     */
+    public TreeNode invertTree2(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+
+        while (!stack.empty()) {
+            TreeNode node = stack.pop();
+
+            TreeNode tempNode = node.left;
+            node.left = node.right;
+            node.right = tempNode;
+
+            if (node.left != null) {
+                stack.push(node.left);
+            }
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+        }
+
+        return root;
+    }
+
+    /**
      * dfs，层序遍历
      * 时间复杂度O(n)，平均空间复杂度O(logn)，最坏空间复杂度O(n)
      *
      * @param root
      * @return
      */
-    public TreeNode invertTree2(TreeNode root) {
+    public TreeNode invertTree3(TreeNode root) {
         if (root == null) {
             return null;
         }

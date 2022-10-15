@@ -27,11 +27,6 @@ package com.zhang.java;
  * board 和 word 仅由大小写英文字母组成
  */
 public class Offer12 {
-    /**
-     * word是否存在于board中
-     */
-    private boolean isExist = false;
-
     public static void main(String[] args) {
         Offer12 offer12 = new Offer12();
         char[][] board = {
@@ -60,11 +55,12 @@ public class Offer12 {
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                dfs(i, j, 0, board, word, visited);
-
-                //已经找到，则直接返回true
-                if (isExist) {
-                    return true;
+                //第一个字符相等才开始查找
+                if (board[i][j] == word.charAt(0)) {
+                    boolean flag = backtrack(0, i, j, visited, board, word);
+                    if (flag) {
+                        return true;
+                    }
                 }
             }
         }
@@ -72,32 +68,27 @@ public class Offer12 {
         return false;
     }
 
-    private void dfs(int i, int j, int t, char[][] board, String word, boolean[][] visited) {
+    private boolean backtrack(int t, int i, int j, boolean[][] visited, char[][] board, String word) {
+        //遍历到末尾，返回true
+        if (t == word.length()) {
+            return true;
+        }
+
         //不满足要求，直接剪枝，返回false
-        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length ||
-                visited[i][j] || word.charAt(t) != board[i][j]) {
-            return;
-        }
-
-        //已经遍历到最后一个字母，返回true
-        if (t == word.length() - 1) {
-            isExist = true;
-            return;
-        }
-
-        //已经找到，直接返回，相当于剪枝
-        if (isExist) {
-            return;
+        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || visited[i][j] || word.charAt(t) != board[i][j]) {
+            return false;
         }
 
         visited[i][j] = true;
 
-        //从当前位置往上下左右遍历
-        dfs(i - 1, j, t + 1, board, word, visited);
-        dfs(i + 1, j, t + 1, board, word, visited);
-        dfs(i, j - 1, t + 1, board, word, visited);
-        dfs(i, j + 1, t + 1, board, word, visited);
+        //往上下左右找
+        boolean flag = backtrack(t + 1, i - 1, j, visited, board, word) ||
+                backtrack(t + 1, i + 1, j, visited, board, word) ||
+                backtrack(t + 1, i, j - 1, visited, board, word) ||
+                backtrack(t + 1, i, j + 1, visited, board, word);
 
         visited[i][j] = false;
+
+        return flag;
     }
 }

@@ -38,7 +38,7 @@ public class Offer36 {
     }
 
     /**
-     * 中序遍历
+     * 非递归中序遍历
      * 将节点保存在集合中，再按照中序遍历顺序重新赋值左右指针，构建双向链表
      * 时间复杂度O(n)，空间复杂度O(n)
      *
@@ -51,12 +51,22 @@ public class Offer36 {
         }
 
         List<Node> list = new ArrayList<>();
+        Stack<Node> stack = new Stack<>();
+        Node node = root;
 
-        inorder(root, list);
+        while (!stack.isEmpty() || node != null) {
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+
+            node = stack.pop();
+            list.add(node);
+            node = node.right;
+        }
 
         Node head = list.remove(0);
         Node pre = head;
-        Node node;
 
         while (!list.isEmpty()) {
             node = list.remove(0);
@@ -65,7 +75,7 @@ public class Offer36 {
             pre = node;
         }
 
-        //连接首尾节点
+        //连接首尾节点，形成循环链表
         pre.right = head;
         head.left = pre;
 
@@ -73,7 +83,7 @@ public class Offer36 {
     }
 
     /**
-     * 中序遍历
+     * 非递归中序遍历
      * 使用两个指针pre和head，pre指向当前节点的前驱节点，head指向头节点，在遍历过程中将二叉搜索树转换为双向链表
      * 时间复杂度O(n)，空间复杂度O(n)
      *
@@ -86,11 +96,11 @@ public class Offer36 {
         }
 
         Stack<Node> stack = new Stack<>();
+        Node node = root;
         //头结点
         Node head = null;
         //当前节点的前驱节点
         Node pre = null;
-        Node node = root;
 
         while (!stack.isEmpty() || node != null) {
             while (node != null) {
@@ -120,26 +130,6 @@ public class Offer36 {
         head.left = pre;
 
         return head;
-    }
-
-    private void inorder(Node root, List<Node> list) {
-        if (root == null) {
-            return;
-        }
-
-        Stack<Node> stack = new Stack<>();
-        Node node = root;
-
-        while (!stack.isEmpty() || node != null) {
-            while (node != null) {
-                stack.push(node);
-                node = node.left;
-            }
-
-            node = stack.pop();
-            list.add(node);
-            node = node.right;
-        }
     }
 
     private Node buildTree(String[] data) {

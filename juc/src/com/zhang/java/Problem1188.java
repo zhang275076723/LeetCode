@@ -105,7 +105,7 @@ public class Problem1188 {
         }, "consumer4").start();
     }
 
-    public static class BoundedBlockingQueue {
+    static class BoundedBlockingQueue {
         /**
          * 队列最大容量
          */
@@ -117,7 +117,7 @@ public class Problem1188 {
         private LinkedList<Integer> queue;
 
         /**
-         * 队列当前大小，不能使用queue.size()，因为LinkedList的queue非线程安全
+         * 队列当前大小，不能使用queue.size()，因为LinkedList的queue.size()非线程安全
          */
         private int size;
 
@@ -145,6 +145,7 @@ public class Problem1188 {
                 queue.addLast(element);
                 size++;
                 System.out.println(Thread.currentThread().getName() + ":生产" + element);
+                //通知消费者消费
                 consumer.signal();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -163,6 +164,7 @@ public class Problem1188 {
                 element = queue.removeFirst();
                 size--;
                 System.out.println(Thread.currentThread().getName() + ":消费" + element);
+                //通知生产者生产
                 producer.signal();
             } catch (InterruptedException e) {
                 e.printStackTrace();
