@@ -23,15 +23,15 @@ public class Offer10_2 {
 
     public static void main(String[] args) {
         Offer10_2 offer10_2 = new Offer10_2();
-        System.out.println(offer10_2.numWays(7));
-        System.out.println(offer10_2.numWays2(7));
-        System.out.println(offer10_2.numWays3(44));
-        System.out.println(offer10_2.numWays4(44));
+        System.out.println(offer10_2.numWays(88));
+        System.out.println(offer10_2.numWays2(88));
+        System.out.println(offer10_2.numWays3(88));
+        System.out.println(offer10_2.numWays4(88));
     }
 
     /**
-     * 递归
-     * 时间复杂度O(2^n)，空间复杂的O(n)
+     * 递归+记忆数组
+     * 时间复杂度O(n)，空间复杂的O(n)
      *
      * @param n
      * @return
@@ -41,7 +41,11 @@ public class Offer10_2 {
             return 1;
         }
 
-        return (numWays(n - 1) + numWays(n - 2)) % MOD;
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        dp[1] = 1;
+
+        return dfs(n, dp);
     }
 
     /**
@@ -81,15 +85,14 @@ public class Offer10_2 {
 
         int p = 1;
         int q = 1;
-        int result = 0;
 
         for (int i = 2; i <= n; i++) {
-            result = (p + q) % MOD;
-            p = q;
-            q = result;
+            int temp = q;
+            q = (p + q) % MOD;
+            p = temp;
         }
 
-        return result;
+        return q;
     }
 
     /**
@@ -106,13 +109,23 @@ public class Offer10_2 {
             return 1;
         }
 
-        int[][] result = {{1, 1}, {1, 0}};
+        int[][] a = {{1, 1}, {1, 0}};
 
-        result = quickPow(result, n - 1);
+        int[][] result = quickPow(a, n - 1);
 
         result = multiply(result, new int[][]{{1}, {1}});
 
         return result[0][0];
+    }
+
+    private int dfs(int n, int[] dp) {
+        if (dp[n] != 0) {
+            return dp[n];
+        }
+
+        dp[n] = (dfs(n - 1, dp) + dfs(n - 2, dp)) % MOD;
+
+        return dp[n];
     }
 
     private int[][] quickPow(int[][] a, int n) {

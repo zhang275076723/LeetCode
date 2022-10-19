@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/17 19:14
  * @Author zsy
- * @Description 数值的整数次方
+ * @Description 数值的整数次方 同Problem50
  * 实现 pow(x, n) ，即计算 x 的 n 次幂函数（即，x^n）。不得使用库函数，同时不需要考虑大数问题。
  * <p>
  * 输入：x = 2.00000, n = 10
@@ -44,7 +44,7 @@ public class Offer16 {
         //使用long避免n取得int类型的最小值-(2^31)时，对n取反导致溢出
         long a = n;
 
-        if (a > 0) {
+        if (n > 0) {
             return quickPow(x, a);
         } else {
             return 1.0 / quickPow(x, -a);
@@ -71,7 +71,6 @@ public class Offer16 {
 
         //如果a小于0，则需要进行调整
         if (a < 0) {
-            x = 1 / x;
             a = -a;
         }
 
@@ -84,7 +83,11 @@ public class Offer16 {
             a = a >> 1;
         }
 
-        return result;
+        if (n > 0) {
+            return result;
+        } else {
+            return 1.0 / result;
+        }
     }
 
     /**

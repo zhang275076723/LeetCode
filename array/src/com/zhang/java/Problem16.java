@@ -1,5 +1,7 @@
 package com.zhang.java;
 
+import java.util.Arrays;
+
 /**
  * @Date 2022/8/29 9:53
  * @Author zsy
@@ -23,8 +25,10 @@ package com.zhang.java;
 public class Problem16 {
     public static void main(String[] args) {
         Problem16 problem16 = new Problem16();
-        int[] nums = {-1, 2, 1, -4};
-        int target = 1;
+//        int[] nums = {-1, 2, 1, -4};
+        int[] nums = {-1000, -5, -5, -5, -5, -5, -5, -1, -1, -1};
+//        int target = 1;
+        int target = -14;
         System.out.println(problem16.threeSumClosest(nums, target));
     }
 
@@ -48,8 +52,8 @@ public class Problem16 {
 
         for (int i = 0; i < nums.length - 2; i++) {
             //nums[i]去重
-            while (i > 0 && i < nums.length - 2 && nums[i] == nums[i - 1]) {
-                i++;
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
             }
 
             int left = i + 1;
@@ -68,21 +72,22 @@ public class Problem16 {
                     result = sum;
                 }
 
-                //nums[left]去重
-                while (left < right && nums[left] == nums[left + 1]) {
-                    left++;
-                }
-
-                //nums[right]去重
-                while (left < right && nums[right] == nums[right - 1]) {
-                    right--;
-                }
-
                 //三数之和小于target
                 if (sum < target) {
+                    //nums[left]去重
+                    while (left < right && nums[left] == nums[left + 1]) {
+                        left++;
+                    }
+
                     left++;
                 } else {
                     //三数之和大于target
+
+                    //nums[right]去重
+                    while (left < right && nums[right] == nums[right - 1]) {
+                        right--;
+                    }
+
                     right--;
                 }
             }

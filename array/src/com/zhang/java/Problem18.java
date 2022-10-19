@@ -1,6 +1,7 @@
 package com.zhang.java;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,10 +29,8 @@ import java.util.List;
 public class Problem18 {
     public static void main(String[] args) {
         Problem18 problem18 = new Problem18();
-//        int[] nums = {1, 0, -1, 0, -2, 2};
-//        int target = 0;
-        int[] nums = {0, 0, 0, -1000000000, -1000000000, -1000000000, -1000000000};
-        int target = -1000000000;
+        int[] nums = {1, 0, 1, 2, -1, -4};
+        int target = 0;
         System.out.println(problem18.fourSum(nums, target));
     }
 
@@ -61,8 +60,8 @@ public class Problem18 {
             }
 
             //nums[i]去重
-            while (i > 0 && i < nums.length - 3 && nums[i] == nums[i - 1]) {
-                i++;
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
             }
 
             for (int j = i + 1; j < nums.length - 2; j++) {
@@ -73,8 +72,8 @@ public class Problem18 {
                 }
 
                 //nums[j]去重
-                while (j > i + 1 && j < nums.length - 2 && nums[j] == nums[j - 1]) {
-                    j++;
+                if (j > i + 1 && nums[j] == nums[j - 1]) {
+                    continue;
                 }
 
                 int left = j + 1;
@@ -82,6 +81,7 @@ public class Problem18 {
 
                 while (left < right) {
                     int sum = nums[i] + nums[j] + nums[left] + nums[right];
+
                     //四数之和等于target
                     if (sum == target) {
                         List<Integer> list = new ArrayList<>();
@@ -105,9 +105,21 @@ public class Problem18 {
                         right--;
                     } else if (sum < target) {
                         //四数之和小于target
+
+                        //nums[left]去重
+                        while (left < right && nums[left] == nums[left + 1]) {
+                            left++;
+                        }
+
                         left++;
                     } else {
                         //四数之和大于target
+
+                        //nums[right]去重
+                        while (left < right && nums[right] == nums[right - 1]) {
+                            right--;
+                        }
+
                         right--;
                     }
                 }

@@ -25,9 +25,8 @@ import java.util.*;
 public class Problem15 {
     public static void main(String[] args) {
         Problem15 problem15 = new Problem15();
-//        int[] nums = {-1, 0, 1, 2, -1, -4};
-        int[] nums = {0, 0, 0, 0};
-        System.out.println(problem15.threeSum(nums));
+        int[] nums = {-1, 0, 1, 2, -1, -4};
+//        System.out.println(problem15.threeSum(nums));
         System.out.println(problem15.threeSum2(nums));
     }
 
@@ -101,8 +100,8 @@ public class Problem15 {
             }
 
             //nums[i]去重
-            while (i > 0 && i < nums.length - 2 && nums[i] == nums[i - 1]) {
-                i++;
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
             }
 
             int left = i + 1;
@@ -133,9 +132,21 @@ public class Problem15 {
                     right--;
                 } else if (sum < 0) {
                     //三数之和小于0
+
+                    //nums[left]去重
+                    while (left < right && nums[left] == nums[left + 1]) {
+                        left++;
+                    }
+
                     left++;
                 } else {
                     //三数之和大于0
+
+                    //nums[right]去重
+                    while (left < right && nums[right] == nums[right - 1]) {
+                        right--;
+                    }
+
                     right--;
                 }
             }

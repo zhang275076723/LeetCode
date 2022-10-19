@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/4 10:27
  * @Author zsy
- * @Description 除法求值 类比Problem207、Problem210(图) 类比Problem200(并查集)
+ * @Description 除法求值 类比Problem207、Problem210、Problem329(图) 类比Problem200(并查集)
  * 给你一个变量对数组 equations 和一个实数值数组 values 作为已知条件，
  * 其中 equations[i] = [Ai, Bi] 和 values[i] 共同表示等式 Ai / Bi = values[i] 。
  * 每个 Ai 或 Bi 是一个表示单个变量的字符串。
@@ -133,7 +133,7 @@ public class Problem399 {
                 continue;
             }
 
-            result[i] = dfs(u, v, 1.0, edges, new boolean[map.size()]);
+            result[i] = dfs(u, v, 1.0, edges, new boolean[count]);
 
             //更新临界矩阵，便于下次查询
             if (result[i] != -1.0) {
@@ -247,6 +247,7 @@ public class Problem399 {
         for (int k = 0; k < edges.length; k++) {
             for (int i = 0; i < edges.length; i++) {
                 for (int j = 0; j < edges.length; j++) {
+                    //只有在i-k和k-j存在路径时，才计算i-j的路径
                     if (edges[i][k] > 0 && edges[k][j] > 0) {
                         edges[i][j] = edges[i][k] * edges[k][j];
                     }

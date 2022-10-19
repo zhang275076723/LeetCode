@@ -24,28 +24,29 @@ public class Offer10 {
 
     public static void main(String[] args) {
         Offer10 offer10 = new Offer10();
-//        System.out.println(offer10.fib(48));
-        System.out.println(offer10.fib2(48));
-        System.out.println(offer10.fib3(48));
-        System.out.println(offer10.fib4(48));
+        System.out.println(offer10.fib(88));
+        System.out.println(offer10.fib2(88));
+        System.out.println(offer10.fib3(88));
+        System.out.println(offer10.fib4(88));
     }
 
     /**
-     * 递归
-     * 时间复杂度O(2^n)，空间复杂的O(n)
+     * 递归+记忆数组
+     * 时间复杂度O(n)，空间复杂的O(n)
      *
      * @param n
      * @return
      */
     public int fib(int n) {
-        if (n == 0) {
-            return 0;
-        }
-        if (n == 1 || n == 2) {
-            return 1;
+        if (n == 0 || n == 1) {
+            return n;
         }
 
-        return (fib(n - 1) + fib(n - 2)) % MOD;
+        int[] dp = new int[n + 1];
+        dp[0] = 0;
+        dp[1] = 1;
+
+        return dfs(n, dp);
     }
 
     /**
@@ -92,15 +93,14 @@ public class Offer10 {
 
         int p = 0;
         int q = 1;
-        int result = 0;
 
         for (int i = 2; i <= n; i++) {
-            result = (p + q) % MOD;
-            p = q;
-            q = result;
+            int temp = q;
+            q = (p + q) % MOD;
+            p = temp;
         }
 
-        return result;
+        return q;
     }
 
     /**
@@ -122,11 +122,21 @@ public class Offer10 {
 
         int[][] a = new int[][]{{1, 1}, {1, 0}};
 
-        int[][] fib = quickPow2D(a, n - 1);
+        int[][] result = quickPow2D(a, n - 1);
 
-        fib = multiply2D(fib, new int[][]{{1}, {0}});
+        result = multiply2D(result, new int[][]{{1}, {0}});
 
-        return fib[0][0];
+        return result[0][0];
+    }
+
+    private int dfs(int n, int[] dp) {
+        if (dp[n] != 0 || n == 0) {
+            return dp[n];
+        }
+
+        dp[n] = (dfs(n - 1, dp) + dfs(n - 2, dp)) % MOD;
+
+        return dp[n];
     }
 
     /**
@@ -143,10 +153,10 @@ public class Offer10 {
         }
 
         if (n % 2 == 0) {
-            int temp = quickPow(a, n / 2) % MOD;
-            return temp * temp % MOD;
+            int temp = quickPow(a, n / 2);
+            return temp * temp;
         } else {
-            return quickPow(a, n - 1) * a % MOD;
+            return quickPow(a, n - 1) * a;
         }
     }
 
@@ -164,7 +174,7 @@ public class Offer10 {
         while (n > 0) {
             //如果末位为1
             if ((n & 1) == 1) {
-                result = result * a % MOD;
+                result = result * a;
             }
 
             a = a * a;

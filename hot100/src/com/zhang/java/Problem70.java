@@ -25,10 +25,10 @@ package com.zhang.java;
 public class Problem70 {
     public static void main(String[] args) {
         Problem70 problem70 = new Problem70();
-        System.out.println(problem70.climbStairs(7));
-        System.out.println(problem70.climbStairs2(7));
-        System.out.println(problem70.climbStairs3(7));
-        System.out.println(problem70.climbStairs4(7));
+        System.out.println(problem70.climbStairs(45));
+        System.out.println(problem70.climbStairs2(45));
+        System.out.println(problem70.climbStairs3(45));
+        System.out.println(problem70.climbStairs4(45));
     }
 
     /**
@@ -69,20 +69,20 @@ public class Problem70 {
         }
 
         int p = 1;
-        int q = 1;
-        int result = 1;
+        int q = 2;
 
-        for (int i = 2; i <= n; i++) {
-            result = p + q;
-            p = q;
-            q = result;
+        for (int i = 3; i <= n; i++) {
+            int temp = q;
+            q = p + q;
+            p = temp;
         }
 
-        return result;
+        return q;
     }
 
     /**
      * 递归+记忆数组
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param n
      * @return
@@ -114,9 +114,9 @@ public class Problem70 {
             return n;
         }
 
-        int[][] result = {{1, 1}, {1, 0}};
+        int[][] a = {{1, 1}, {1, 0}};
 
-        result = quickPow(result, n - 2);
+        int[][] result = quickPow(a, n - 2);
 
         result = multiply(result, new int[][]{{2}, {1}});
 
@@ -124,9 +124,11 @@ public class Problem70 {
     }
 
     private int dfs(int n, int[] dp) {
-        if (dp[n] == 0) {
-            dp[n] = dfs(n - 1, dp) + dfs(n - 2, dp);
+        if (dp[n] != 0) {
+            return dp[n];
         }
+
+        dp[n] = dfs(n - 1, dp) + dfs(n - 2, dp);
 
         return dp[n];
     }

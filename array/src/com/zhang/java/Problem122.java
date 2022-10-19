@@ -38,11 +38,11 @@ public class Problem122 {
 
     /**
      * 动态规划
-     * dp1[i]：到price[i]那天，持有一只股票的最大利润
-     * dp2[i]：到price[i]那天，不持有股票的最大利润
-     * dp1[i] = max(dp1[i-1], dp2[i-1] - prices[i])
-     * dp2[i] = max(dp2[i-1], dp1[i-1] + prices[i])
-     * 最大利润 = dp2[prices.length-1]
+     * dp[i][0]：到price[i]那天，持有一只股票的最大利润
+     * dp[i][1]：到price[i]那天，不持有股票的最大利润
+     * dp[i][0] = max(dp[i-1][0], dp[i-1][1] - prices[i])
+     * dp[i][1] = max(dp[i-1][1], dp[i-1][0] + prices[i])
+     * 最大利润 = dp[prices.length-1][1]
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param prices
@@ -53,17 +53,17 @@ public class Problem122 {
             return 0;
         }
 
-        int[] dp1 = new int[prices.length];
-        int[] dp2 = new int[prices.length];
-
-        dp1[0] = -prices[0];
+        //dp[][0]：持有股票
+        //dp[][1]：不持有股票
+        int[][] dp = new int[prices.length][2];
+        dp[0][0] = -prices[0];
 
         for (int i = 1; i < prices.length; i++) {
-            dp1[i] = Math.max(dp1[i - 1], dp2[i - 1] - prices[i]);
-            dp2[i] = Math.max(dp2[i - 1], dp1[i - 1] + prices[i]);
+            dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] - prices[i]);
+            dp[i][1] = Math.max(dp[i - 1][0] + prices[i], dp[i - 1][1]);
         }
 
-        return dp2[prices.length - 1];
+        return dp[prices.length - 1][1];
     }
 
     /**
@@ -92,7 +92,7 @@ public class Problem122 {
             dp2 = Math.max(temp2, temp1 + prices[i]);
         }
 
-        return Math.max(dp1, dp2);
+        return dp2;
     }
 
     /**

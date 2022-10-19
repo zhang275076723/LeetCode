@@ -82,9 +82,7 @@ public class Problem131 {
             //当前s[t]-s[i]是回文串才继续遍历
             if (dp[t][i]) {
                 list.add(s.substring(t, i + 1));
-
                 backtrack(i + 1, s, dp, list, result);
-
                 list.remove(list.size() - 1);
             }
         }

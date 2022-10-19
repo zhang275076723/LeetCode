@@ -145,7 +145,6 @@ public class Problem301 {
             if (isValid(str)) {
                 result.add(str);
             }
-
             return;
         }
 
@@ -183,11 +182,10 @@ public class Problem301 {
                 count++;
             } else if (str.charAt(i) == ')') {
                 count--;
-            }
-
-            //此时右括号数量比左括号数量多，不是有效字符串
-            if (count < 0) {
-                return false;
+                //此时右括号数量比左括号数量多，不是有效字符串
+                if (count < 0) {
+                    return false;
+                }
             }
         }
 
