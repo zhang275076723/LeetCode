@@ -15,7 +15,6 @@ import java.util.*;
  * 1 <= s 的长度 <= 8
  */
 public class Offer38 {
-
     public static void main(String[] args) {
         Offer38 offer38 = new Offer38();
         String s = "aab";
@@ -39,17 +38,17 @@ public class Offer38 {
         char[] c = s.toCharArray();
         mergeSort(c, 0, c.length - 1, new char[c.length]);
 
-        List<String> result = new ArrayList<>();
+        List<String> list = new ArrayList<>();
 
-        backtrack(c, 0, new StringBuilder(), new boolean[s.length()], result);
+        backtrack(c, 0, new StringBuilder(), new boolean[s.length()], list);
 
-        String[] strResult = new String[result.size()];
+        String[] result = new String[list.size()];
 
-        for (int i = 0; i < strResult.length; i++) {
-            strResult[i] = result.get(i);
+        for (int i = 0; i < result.length; i++) {
+            result[i] = list.get(i);
         }
 
-        return strResult;
+        return result;
     }
 
     /**
@@ -80,7 +79,7 @@ public class Offer38 {
 
             backtrack(c, t + 1, sb, visited, result);
 
-            sb.deleteCharAt(sb.length() - 1);
+            sb.delete(sb.length() - 1, sb.length());
             visited[i] = false;
         }
     }

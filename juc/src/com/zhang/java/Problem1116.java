@@ -35,8 +35,8 @@ import java.util.function.IntConsumer;
  */
 public class Problem1116 {
     public static void main(String[] args) {
-        ZeroEvenOdd zeroEvenOdd = new ZeroEvenOdd(2);
-//        ZeroEvenOdd2 zeroEvenOdd2 = new ZeroEvenOdd2(2);
+//        ZeroEvenOdd zeroEvenOdd = new ZeroEvenOdd(2);
+        ZeroEvenOdd2 zeroEvenOdd = new ZeroEvenOdd2(10);
 
         new Thread(new Runnable() {
             @Override
@@ -76,7 +76,7 @@ public class Problem1116 {
      * 使用lock+condition实现
      */
     static class ZeroEvenOdd {
-        private int n;
+        private final int n;
         private int flag;
         private final Lock lock;
         private final Condition condition0;
@@ -153,8 +153,9 @@ public class Problem1116 {
      * 使用synchronized实现
      */
     static class ZeroEvenOdd2 {
-        private int n;
+        private final int n;
         private int flag;
+        //加锁保证i操作的原子性和可见性
         private volatile int i;
         private final Object object;
 
@@ -183,8 +184,8 @@ public class Problem1116 {
         }
 
         public void odd() throws InterruptedException {
-            while (i <= n) {
-                synchronized (object) {
+            synchronized (object) {
+                while (i <= n) {
                     if (flag == 1) {
                         System.out.print(i);
                         i++;
@@ -198,8 +199,8 @@ public class Problem1116 {
         }
 
         public void even() throws InterruptedException {
-            while (i <= n) {
-                synchronized (object) {
+            synchronized (object) {
+                while (i <= n) {
                     if (flag == 2) {
                         System.out.print(i);
                         i++;

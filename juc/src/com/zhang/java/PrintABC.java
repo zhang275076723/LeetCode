@@ -121,6 +121,7 @@ public class PrintABC {
     static class Resource2 {
         private final Object object;
         private int flag;
+        //加锁保证count操作的原子性和可见性
         private int count;
 
         Resource2() {

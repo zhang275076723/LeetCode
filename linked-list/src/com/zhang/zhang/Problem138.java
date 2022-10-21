@@ -127,7 +127,7 @@ public class Problem138 {
         Node newHead = head.next;
         Node newNode = newHead;
 
-        //断开原链表，得到新节点链表
+        //设置每个新节点的next，将链表拆分为两个链表，得到拷贝链表
         while (newNode != null) {
             node.next = node.next.next;
 

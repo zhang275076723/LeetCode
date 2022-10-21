@@ -38,7 +38,7 @@ public class Offer14 {
      */
     public int cuttingRope(int n) {
         int[] dp = new int[n + 1];
-        //至少剪成2段
+        //初始化，长度为2的绳子，至少剪为2段
         dp[2] = 1;
 
         //长度为i的绳子

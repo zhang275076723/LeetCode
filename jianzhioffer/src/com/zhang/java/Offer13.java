@@ -71,30 +71,25 @@ public class Offer13 {
             return 1;
         }
 
-        int count = 1;
+        int count = 0;
         //队列中存放当前位置的行列索引下标
         Queue<int[]> queue = new LinkedList<>();
         boolean[][] visited = new boolean[m][n];
         queue.offer(new int[]{0, 0});
-        visited[0][0] = true;
 
         while (!queue.isEmpty()) {
-            int[] position = queue.poll();
-            int x = position[0];
-            int y = position[1];
+            int[] arr = queue.poll();
+
+            if (arr[0] >= m || arr[1] >= n || visited[arr[0]][arr[1]] || getNumSum(arr[0], arr[1]) > k) {
+                continue;
+            }
+
+            count++;
+            visited[arr[0]][arr[1]] = true;
 
             //因为从(0,0)开始往右下角走，所以只需要考虑向下和向右的情况
-            if (x + 1 < m && y < n && !visited[x + 1][y] && getNumSum(x + 1, y) <= k) {
-                queue.add(new int[]{x + 1, y});
-                visited[x + 1][y] = true;
-                count++;
-            }
-
-            if (x < m && y + 1 < n && !visited[x][y + 1] && getNumSum(x, y + 1) <= k) {
-                queue.add(new int[]{x, y + 1});
-                visited[x][y + 1] = true;
-                count++;
-            }
+            queue.add(new int[]{arr[0] + 1, arr[1]});
+            queue.add(new int[]{arr[0], arr[1] + 1});
         }
 
         return count;
@@ -110,8 +105,7 @@ public class Offer13 {
      * @return
      */
     public void dfs(int i, int j, int m, int n, int k, boolean[][] visited) {
-        if (i < 0 || i >= m || j < 0 || j >= n ||
-                visited[i][j] || getNumSum(i, j) > k) {
+        if (i < 0 || i >= m || j < 0 || j >= n || visited[i][j] || getNumSum(i, j) > k) {
             return;
         }
 

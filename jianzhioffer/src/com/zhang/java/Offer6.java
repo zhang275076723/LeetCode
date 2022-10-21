@@ -14,16 +14,6 @@ import java.util.Arrays;
  * 0 <= 链表长度 <= 10000
  */
 public class Offer6 {
-    /**
-     * 递归从尾到头打印链表的结果数组
-     */
-    private int[] result;
-
-    /**
-     * 递归从尾到头打印链表的结果数组长度
-     */
-    private int length = 0;
-
     public static void main(String[] args) {
         Offer6 offer6 = new Offer6();
         int[] data = {1, 3, 2, 4};
@@ -33,7 +23,7 @@ public class Offer6 {
     }
 
     /**
-     * 非递归从尾到头打印链表
+     * 先计算链表长度，再遍历链表，每次尾插
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param head
@@ -64,7 +54,7 @@ public class Offer6 {
     }
 
     /**
-     * 递归从尾到头打印链表
+     * 非递归反转链表，再顺序遍历反转之后的链表
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param head
@@ -75,22 +65,33 @@ public class Offer6 {
             return new int[0];
         }
 
-        helper(head, 0);
-
-        return result;
-    }
-
-    private void helper(ListNode head, int index) {
-        if (head == null) {
-            result = new int[length];
-            return;
+        if (head.next == null) {
+            return new int[]{head.val};
         }
 
-        length++;
 
-        helper(head.next, index + 1);
+        int length = 1;
+        ListNode node = head;
+        ListNode pre = null;
+        ListNode next = head.next;
 
-        result[length - index - 1] = head.val;
+        while (node.next != null) {
+            next = node.next;
+            node.next = pre;
+            pre = node;
+            node = next;
+            length++;
+        }
+
+        node.next = pre;
+        int[] result = new int[length];
+
+        for (int i = 0; i < length; i++) {
+            result[i] = node.val;
+            node = node.next;
+        }
+
+        return result;
     }
 
     private ListNode buildList(int[] data) {

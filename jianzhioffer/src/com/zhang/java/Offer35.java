@@ -126,7 +126,7 @@ public class Offer35 {
         Node newHead = head.next;
         Node newNode = newHead;
 
-        //将链表拆分为两个链表，得到拷贝链表
+        //设置每个新节点的next，将链表拆分为两个链表，得到拷贝链表
         while (newNode != null) {
             node.next = node.next.next;
 

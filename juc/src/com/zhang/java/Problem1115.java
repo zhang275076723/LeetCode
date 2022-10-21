@@ -85,7 +85,7 @@ public class Problem1115 {
      * 使用lock+condition实现
      */
     static class FooBar {
-        private int n;
+        private final int n;
         private int flag;
         private final Lock lock;
         private final Condition condition1;
@@ -136,7 +136,7 @@ public class Problem1115 {
      * 使用synchronized实现
      */
     static class FooBar2 {
-        private int n;
+        private final int n;
         private int flag;
         private final Object object;
 

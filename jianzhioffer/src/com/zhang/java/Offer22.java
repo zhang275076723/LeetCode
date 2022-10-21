@@ -36,9 +36,8 @@ public class Offer22 {
         ListNode slow = head;
 
         //快指针先走k步
-        while (fast != null && k > 0) {
+        for (int i = 0; i < k; i++) {
             fast = fast.next;
-            k--;
         }
 
         //当快指针为null时，慢指针即为倒数第k个节点

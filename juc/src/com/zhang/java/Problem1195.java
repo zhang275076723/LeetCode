@@ -100,7 +100,7 @@ public class Problem1195 {
      * lock+condition实现
      */
     static class FizzBuzz {
-        private int n;
+        private final int n;
         private int flag;
         private final Lock lock;
         private final Condition condition;
@@ -201,7 +201,8 @@ public class Problem1195 {
      * synchronized实现
      */
     static class FizzBuzz2 {
-        private int n;
+        private final int n;
+        //加锁保证i操作的原子性和可见性
         private int i;
         private final Object object;
 
@@ -212,8 +213,8 @@ public class Problem1195 {
         }
 
         public void fizz(Runnable printFizz) throws InterruptedException {
-            while (i <= n) {
-                synchronized (object) {
+            synchronized (object) {
+                while (i <= n) {
                     if (i % 3 == 0 && i % 5 != 0) {
                         printFizz.run();
                         i++;
@@ -226,8 +227,8 @@ public class Problem1195 {
         }
 
         public void buzz(Runnable printBuzz) throws InterruptedException {
-            while (i <= n) {
-                synchronized (object) {
+            synchronized (object) {
+                while (i <= n) {
                     if (i % 5 == 0 && i % 3 != 0) {
                         printBuzz.run();
                         i++;
@@ -240,8 +241,8 @@ public class Problem1195 {
         }
 
         public void fizzbuzz(Runnable printFizzBuzz) throws InterruptedException {
-            while (i <= n) {
-                synchronized (object) {
+            synchronized (object) {
+                while (i <= n) {
                     if (i % 3 == 0 && i % 5 == 0) {
                         printFizzBuzz.run();
                         i++;
@@ -254,8 +255,8 @@ public class Problem1195 {
         }
 
         public void number() throws InterruptedException {
-            while (i <= n) {
-                synchronized (object) {
+            synchronized (object) {
+                while (i <= n) {
                     if (i % 3 != 0 && i % 5 != 0) {
                         System.out.println(i);
                         i++;

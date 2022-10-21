@@ -56,8 +56,11 @@ public class Offer20 {
         //去掉首尾空格
         s = s.trim();
 
+        //数字标志位
         boolean numFlag = false;
+        //'.'标志位
         boolean dotFlag = false;
+        //'e'/'E'标志位
         boolean eFlag = false;
 
         for (int i = 0; i < s.length(); i++) {
@@ -65,22 +68,30 @@ public class Offer20 {
 
             if (c >= '0' && c <= '9') {
                 numFlag = true;
-            } else if (c == '.' && !dotFlag && !eFlag) {
-                //如果为'.'，则需要之前没有'.'，且'.'在e和E之前
+            } else if (c == '.') {
+                //出现'.'时，如果之前出现过'.'或'e'/'E'，则不合法
+                if (dotFlag || eFlag) {
+                    return false;
+                }
+
                 dotFlag = true;
-            } else if ((c == 'e' || c == 'E') && !eFlag && numFlag) {
-                //如果为'e'/'E'，则需要之前没出现过'e'/'E'，且之前有数字
+            } else if (c == 'e' || c == 'E') {
+                //出现'e'/'E'时，如果之前出现过'e'/'E'或没有出现数字，则不合法
+                if (eFlag || !numFlag) {
+                    return false;
+                }
+
                 eFlag = true;
-                //出现'e'/'E'之后，将numFlag置位false，因为后面需要判断是否是整数
+                //出现'e'/'E'之后，将numFlag置位false，因为'e'/'E'之后必须为数字
                 numFlag = false;
-            } else if ((c == '+' || c == '-') &&
-                    (i == 0 || s.charAt(i - 1) == 'e' || s.charAt(i - 1) == 'E')) {
-                //如果为'+'/'-'，则要么出现在第一位，要么在'e'/'E'的后一位
+            } else if ((c == '+' || c == '-') && (i == 0 || s.charAt(i - 1) == 'e' || s.charAt(i - 1) == 'E')) {
+                //出现'+'/'-'，则要么出现在第一位，要么出现在'e'/'E'的后一位
             } else {
                 return false;
             }
         }
 
+        //判断是否为数字，则必须包含数字
         return numFlag;
     }
 }

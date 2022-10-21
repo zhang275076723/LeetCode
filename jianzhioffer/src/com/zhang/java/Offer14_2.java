@@ -31,7 +31,7 @@ public class Offer14_2 {
 
     /**
      * 贪心，尽可能把绳子分为每段长度为3的子段
-     * 与上题不同的是，需要考虑子段乘积有可能会溢出，所以不能使用动态规划
+     * 注意：与上题不同的是不能使用动态规划，需要考虑子段乘积有可能会溢出的情况，溢出取模即数据不准确
      * 子段相乘有可能会int范围，所以每次乘3都要取模
      * 最优：3
      * 次优：2
@@ -53,21 +53,29 @@ public class Offer14_2 {
         //尽可能剪成长度为3的子段
         int a = n / 3;
         int b = n % 3;
-        //result * 3 可能在求余之前超出int范围，所以用long
-        long result = 1;
-
-        //3的a-1次幂
-        for (int i = 0; i < a - 1; i++) {
-            result = result * 3 % MOD;
-        }
 
         //需要考虑最后一段和倒数第二段
         if (b == 0) {
-            return (int) (result * 3 % MOD);
+            return (int) (quickPow(3, a) % MOD);
         } else if (b == 1) {
-            return (int) (result * 2 * 2 % MOD);
+            return (int) (quickPow(3, a - 1) * 2 * 2 % MOD);
         } else {
-            return (int) (result * 3 * 2 % MOD);
+            return (int) (quickPow(3, a) * 2 % MOD);
         }
+    }
+
+    private long quickPow(long a, int n) {
+        //int可能溢出，所以使用long
+        long result = 1;
+
+        while (n != 0) {
+            if ((n & 1) == 1) {
+                result = result * a % MOD;
+            }
+            n = n >> 1;
+            a = a * a % MOD;
+        }
+
+        return result;
     }
 }
