@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/23 11:37
  * @Author zsy
- * @Description 正则表达式匹配 同Problem10 类比Problem678
+ * @Description 正则表达式匹配 类比Problem678 同Problem10
  * 请实现一个函数用来匹配包含'.'和'*'的正则表达式。
  * 模式中的字符'.'表示任意一个字符，而'*'表示它前面的一个字符可以出现任意次（含0次）。
  * 在本题中，匹配是指字符串的所有字符匹配整个模式。

@@ -121,26 +121,36 @@ public class Offer57_2 {
         List<int[]> list = new ArrayList<>();
         int left = 1;
         int right = 1;
-        int sum = 1;
+        int sum = 0;
 
         while (right <= target / 2 + 1) {
-            while (sum < target) {
-                right++;
-                sum = sum + right;
-            }
+            sum = sum + right;
 
             if (sum == target) {
                 int[] temp = new int[right - left + 1];
-
                 for (int i = 0; i < temp.length; i++) {
                     temp[i] = left + i;
                 }
-
                 list.add(temp);
+                sum = sum - left;
+                left++;
+            } else if (sum > target) {
+                while (sum > target) {
+                    sum = sum - left;
+                    left++;
+                }
+                if (sum == target) {
+                    int[] temp = new int[right - left + 1];
+                    for (int i = 0; i < temp.length; i++) {
+                        temp[i] = left + i;
+                    }
+                    list.add(temp);
+                    sum = sum - left;
+                    left++;
+                }
             }
 
-            sum = sum - left;
-            left++;
+            right++;
         }
 
         int[][] result = new int[list.size()][];

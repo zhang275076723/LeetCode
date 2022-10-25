@@ -63,8 +63,6 @@ public class Offer56_2 {
      */
     public int singleNumber2(int[] nums) {
         int result = 0;
-        //二进制的某一位
-        int bit = 1;
 
         //因为num在[1,2^31-1]，所以只需要遍历31位
         for (int i = 0; i < 31; i++) {
@@ -72,15 +70,13 @@ public class Offer56_2 {
             int count = 0;
 
             for (int num : nums) {
-                count = count + (num & bit) / bit;
+                count = count + ((num & (1 << i)) >> i);
             }
 
             //如果某一位之和不能够被3整除，说明对于只出现一次的数来说为1
             if (count % 3 != 0) {
-                result = result + bit;
+                result = result + (1 << i);
             }
-
-            bit = bit << 1;
         }
 
         return result;

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/10/19 09:31
  * @Author zsy
- * @Description Pow(x, n) 同Offer16
+ * @Description Pow(x, n) 类比Problem69 同Offer16
  * 实现 pow(x, n) ，即计算 x 的整数 n 次幂函数（即，x^n ）。
  * <p>
  * 输入：x = 2.00000, n = 10

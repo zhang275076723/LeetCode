@@ -20,8 +20,8 @@ import java.util.List;
 public class Offer17 {
     public static void main(String[] args) {
         Offer17 offer17 = new Offer17();
-        System.out.println(Arrays.toString(offer17.printNumbers(3)));
-        System.out.println(offer17.printNumbers2(3));
+//        System.out.println(Arrays.toString(offer17.printNumbers(3)));
+        System.out.println(offer17.printNumbers2(8));
     }
 
     /**
@@ -53,7 +53,7 @@ public class Offer17 {
     public List<String> printNumbers2(int n) {
         List<String> list = new ArrayList<>();
 
-        backtrack(n, 0, list, new StringBuilder());
+        backtrack(0, n, new StringBuilder(), list);
 
         return list;
     }
@@ -62,14 +62,13 @@ public class Offer17 {
      * 回溯+剪枝
      * 全排列树，从最高位向低位拼接0~9，考虑首位0的情况
      *
-     * @param n     结果集合上限，最大的 n 位十进制数
-     * @param index 当前结果第index位
-     * @param list  结果集合
-     * @param sb    每个结果
+     * @param t    当前结果第index位
+     * @param n    结果集合上限，最大的 n 位十进制数
+     * @param sb   每个结果
+     * @param list 结果集合
      */
-    public void backtrack(int n, int index, List<String> list, StringBuilder sb) {
-        //当index为从左到右第n位时，剪枝
-        if (index == n) {
+    public void backtrack(int t, int n, StringBuilder sb, List<String> list) {
+        if (t == n) {
             //如果当前数为空，则不添加
             if (sb.length() != 0) {
                 list.add(sb.toString());
@@ -81,12 +80,12 @@ public class Offer17 {
         for (int i = 0; i <= 9; i++) {
             //如果当前位为0，且只有一位，则不添加，继续判断下一位
             if (i == 0 && sb.length() == 0) {
-                backtrack(n, index + 1, list, sb);
+                backtrack(t + 1, n, sb, list);
                 continue;
             }
 
             sb.append(i);
-            backtrack(n, index + 1, list, sb);
+            backtrack(t + 1, n, sb, list);
             sb.delete(sb.length() - 1, sb.length());
         }
     }

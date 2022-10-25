@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/4/10 8:48
  * @Author zsy
- * @Description 二叉搜索树的最近公共祖先 类比Problem236、Problem700、Offer68_2 同Problem235
+ * @Description 二叉搜索树的最近公共祖先 类比Problem236、Problem700、Offer54、Offer68_2 同Problem235
  * 给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。
  * 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，
  * 满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
@@ -39,7 +39,7 @@ public class Offer68 {
 
     /**
      * 非递归找
-     * 最近公共祖先的值比p的值大，比q的值小
+     * 最近公共祖先的值比p、q中一个值大，一个值小
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param root
@@ -54,7 +54,7 @@ public class Offer68 {
 
         TreeNode node = root;
 
-        while (true) {
+        while (node != null) {
             //往左子树找
             if (node.val > p.val && node.val > q.val) {
                 node = node.left;
@@ -66,11 +66,14 @@ public class Offer68 {
                 return node;
             }
         }
+
+        //p、q不是树中节点，返回null，表示没有找到
+        return null;
     }
 
     /**
      * 递归找
-     * 最近公共祖先的值比p的值大，比q的值小
+     * 最近公共祖先的值比p、q中一个值大，一个值小
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root

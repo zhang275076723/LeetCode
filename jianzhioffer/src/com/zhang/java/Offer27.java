@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/3/20 10:45
  * @Author zsy
- * @Description 二叉树的镜像 类比Problem100、Problem101、Offer26、Offer28 同Problem226
+ * @Description 二叉树的镜像 类比Problem100、Problem101、Offer26、Offer28、Offer55、Offer55_2 同Problem226
  * 请完成一个函数，输入一个二叉树，该函数输出它的镜像
  * <p>
  * 输入：root = [4,2,7,1,3,6,9]

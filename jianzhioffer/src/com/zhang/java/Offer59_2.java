@@ -77,8 +77,8 @@ public class Offer59_2 {
             }
 
             int value = queue.poll();
-
-            if (value == maxQueue.peekFirst()) {
+            //maxQueue.peekFirst()得到的是Integer对象，不能使用==，而应该使用equals()
+            if (maxQueue.peekFirst().equals(value)) {
                 maxQueue.pollFirst();
             }
 

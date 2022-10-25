@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/3/28 9:26
  * @Author zsy
- * @Description 把数字翻译成字符串 类比Offer10_2
+ * @Description 把数字翻译成字符串 类比Problem93、Problem468、Offer10、Offer10_2
  * 给定一个数字，我们按照如下规则把它翻译为字符串：
  * 0 翻译成 “a” ，1 翻译成 “b”，……，11 翻译成 “l”，……，25 翻译成 “z”。一个数字可能有多个翻译。
  * 请编程实现一个函数，用来计算一个数字有多少种不同的翻译方法。
@@ -41,7 +41,7 @@ public class Offer46 {
 
         List<String> list = new ArrayList<>();
 
-        backtrack(String.valueOf(num), 0, list, new StringBuilder());
+        backtrack(0, num + "", list, new StringBuilder());
 
         System.out.println(list);
 
@@ -95,12 +95,14 @@ public class Offer46 {
         int p = 1;
         int q = 1;
 
-        for (int i = 1; i < str.length(); i++) {
-            int temp = q;
-            if (str.charAt(i - 1) != '0' && Integer.parseInt(str.substring(i - 1, i + 1)) < 26) {
+        for (int i = 2; i <= str.length(); i++) {
+            if (str.charAt(i - 2) != '0' && Integer.parseInt(str.substring(i - 2, i)) < 26) {
+                int temp = q;
                 q = p + q;
+                p = temp;
+            } else {
+                p = q;
             }
-            p = temp;
         }
 
         return q;
@@ -109,29 +111,28 @@ public class Offer46 {
     /**
      * 每次往后找1个或2个数字
      *
-     * @param str
      * @param t
+     * @param num
      * @param list
      * @param sb
      */
-    public void backtrack(String str, int t, List<String> list, StringBuilder sb) {
+    public void backtrack(int t, String num, List<String> list, StringBuilder sb) {
         //找到最后，表示找到，则返回
-        if (t == str.length()) {
+        if (t == num.length()) {
             list.add(sb.toString());
             count++;
             return;
         }
 
         //往后找一个
-        sb.append((char) (str.charAt(t) - '0' + 'a'));
-        backtrack(str, t + 1, list, sb);
+        sb.append((char) (num.charAt(t) - '0' + 'a'));
+        backtrack(t + 1, num, list, sb);
         sb.delete(sb.length() - 1, sb.length());
 
         //往后找两个，不能有前导0，且不能超过表示的字符'z'
-        if (t + 2 <= str.length() && str.charAt(t) != '0'
-                && Integer.parseInt(str.substring(t, t + 2)) < 26) {
-            sb.append((char) (Integer.parseInt(str.substring(t, t + 2)) + 'a'));
-            backtrack(str, t + 2, list, sb);
+        if (t + 2 <= num.length() && num.charAt(t) != '0' && Integer.parseInt(num.substring(t, t + 2)) < 26) {
+            sb.append((char) (Integer.parseInt(num.substring(t, t + 2)) + 'a'));
+            backtrack(t + 2, num, list, sb);
             sb.delete(sb.length() - 1, sb.length());
         }
     }

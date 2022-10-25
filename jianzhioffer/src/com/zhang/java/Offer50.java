@@ -35,18 +35,19 @@ public class Offer50 {
      */
     public char firstUniqChar(String s) {
         //计数数组
-        int[] count = new int[26];
+        int[] arr = new int[26];
 
-        for (int i = 0; i < s.length(); i++) {
-            count[s.charAt(i) - 'a']++;
+        for (char c : s.toCharArray()) {
+            arr[c - 'a']++;
         }
 
-        for (int i = 0; i < s.length(); i++) {
-            if (1 == count[s.charAt(i) - 'a']) {
-                return s.charAt(i);
+        for (char c : s.toCharArray()) {
+            if (arr[c - 'a'] == 1) {
+                return c;
             }
         }
 
+        //返回空格表示没有找到
         return ' ';
     }
 
@@ -60,16 +61,18 @@ public class Offer50 {
     public char firstUniqChar2(String s) {
         Map<Character, Integer> map = new HashMap<>();
 
-        for (int i = 0; i < s.length(); i++) {
-            map.put(s.charAt(i), map.getOrDefault(s.charAt(i), 0) + 1);
+        for (char c : s.toCharArray()) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
         }
 
-        for (int i = 0; i < s.length(); i++) {
-            if (1 == map.get(s.charAt(i))) {
-                return s.charAt(i);
+        for (char c : s.toCharArray()) {
+            //Integer比较不能使用==，而应该使用equals
+            if (map.get(c).equals(1)) {
+                return c;
             }
         }
 
+        //返回空格表示没有找到
         return ' ';
     }
 
@@ -86,7 +89,7 @@ public class Offer50 {
 
         for (int i = 0; i < s.length(); i++) {
             if (map.containsKey(s.charAt(i))) {
-                //-1表示该字符出现多次
+                //-1表示该字符出现多次，即不可能为只出现一次的字符
                 map.put(s.charAt(i), -1);
             } else {
                 //存放该字符第一次出现的下标索引
@@ -96,13 +99,14 @@ public class Offer50 {
 
         int index = s.length();
 
-        //从后往前遍历，找到第一个出现一次的索引下标
+        //遍历map而不是遍历字符串s，找最小的索引，即为第一个只出现一次的字符，在字符串s较长的情况下，遍历map最多只需要遍历26次
         for (Map.Entry<Character, Integer> entry : map.entrySet()) {
-            if (entry.getValue() != -1 && entry.getValue() < index) {
-                index = entry.getValue();
+            if (entry.getValue() != -1) {
+                index = Math.min(index, entry.getValue());
             }
         }
 
+        //返回空格表示没有找到
         return index == s.length() ? ' ' : s.charAt(index);
     }
 }

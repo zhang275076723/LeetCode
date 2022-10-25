@@ -23,13 +23,16 @@ import java.util.*;
 public class Problem235 {
     public static void main(String[] args) {
         Problem235 problem235 = new Problem235();
-        String[] data = {"6", "2", "8", "0", "4", "7", "9", "null", "null", "3", "5"};
+//        String[] data = {"6", "2", "8", "0", "4", "7", "9", "null", "null", "3", "5"};
+        String[] data = {"2", "1"};
         TreeNode root = problem235.buildTree(data);
-        TreeNode p = root.left;
-        TreeNode q = root.left.right;
-//        TreeNode commonNode = problem235.lowestCommonAncestor(root, p, q);
+//        TreeNode p = root.left;
+//        TreeNode q = root.left.right;
+        TreeNode p = root;
+        TreeNode q = root.left;
+        TreeNode commonNode = problem235.lowestCommonAncestor(root, p, q);
 //        TreeNode commonNode = problem235.lowestCommonAncestor2(root, p, q);
-        TreeNode commonNode = problem235.lowestCommonAncestor3(root, p, q);
+//        TreeNode commonNode = problem235.lowestCommonAncestor3(root, p, q);
     }
 
     /**
@@ -49,7 +52,7 @@ public class Problem235 {
 
         TreeNode node = root;
 
-        while (true) {
+        while (node != null) {
             //往左子树找
             if (node.val > p.val && node.val > q.val) {
                 node = node.left;
@@ -61,6 +64,9 @@ public class Problem235 {
                 return node;
             }
         }
+
+        //p、q不是树中节点，返回null，表示没有找到
+        return null;
     }
 
     /**

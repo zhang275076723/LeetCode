@@ -43,7 +43,7 @@ public class Problem958 {
 
     /**
      * bfs，层序遍历
-     * 当出现第一个null时停止遍历，如果此时之后还有未遍历到的节点，说明不是完全二叉树
+     * 当出现第一个null时，如果之后还有未遍历到的非null节点，说明不是完全二叉树
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -54,7 +54,7 @@ public class Problem958 {
             return true;
         }
 
-        //遍历到第一个null的停止标志位
+        //遍历到第一个null的标志位，如果之后还有null节点，则说明不是
         boolean flag = false;
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
@@ -64,16 +64,15 @@ public class Problem958 {
 
             if (node == null) {
                 flag = true;
-                continue;
-            }
+            } else {
+                //当存在null节点，之后还有null节点，返回false
+                if (flag) {
+                    return false;
+                }
 
-            //当存在null节点，之后还有未遍历到的节点，返回false
-            if (flag && node != null) {
-                return false;
+                queue.offer(node.left);
+                queue.offer(node.right);
             }
-
-            queue.offer(node.left);
-            queue.offer(node.right);
         }
 
         return true;
@@ -81,7 +80,7 @@ public class Problem958 {
 
     /**
      * bfs，层序遍历
-     * 如果树中节点个数等于最后一个节点的索引(索引从1开始)，则是完全二叉树
+     * 树中节点个数等于最后一个节点的索引(索引从1开始)，则是完全二叉树
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root

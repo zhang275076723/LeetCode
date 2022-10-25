@@ -111,9 +111,11 @@ public class Offer34 {
         path.add(root.val);
 
         //当前节点为叶节点，并且路径之和等于target，将path加入result集合中
-        if (root.left == null && root.right == null && curSum == target) {
-            //将满足条件的路径复制到结果集合需要O(n)
-            result.add(new ArrayList<>(path));
+        if (root.left == null && root.right == null) {
+            if(curSum == target){
+                //将满足条件的路径复制到结果集合需要O(n)
+                result.add(new ArrayList<>(path));
+            }
             path.remove(path.size() - 1);
             return;
         }

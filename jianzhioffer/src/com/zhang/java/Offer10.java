@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/13 21:31
  * @Author zsy
- * @Description 斐波那契数列 字节面试题 类比Offer10_2
+ * @Description 斐波那契数列 字节面试题 类比Offer10_2、Offer46
  * 写一个函数，输入 n ，求斐波那契（Fibonacci）数列的第 n 项（即 F(N)）。
  * 斐波那契数列的定义如下：
  * F(0) = 0,   F(1) = 1

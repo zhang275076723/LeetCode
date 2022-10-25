@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/4/4 16:05
  * @Author zsy
- * @Description 和为s的两个数字 类比Offer57_2
+ * @Description 和为s的两个数字 类比Problem1、Offer57_2
  * 输入一个 递增排序 的数组和一个数字s，在数组中查找两个数，使得它们的和正好是s。
  * 如果有多对数字的和等于s，则输出任意一对即可。
  * <p>
@@ -139,7 +139,7 @@ public class Offer57 {
         int left = 0;
         int right = nums.length - 1;
 
-        while (left <= right) {
+        while (left < right) {
             int sum = nums[left] + nums[right];
 
             if (sum == target) {

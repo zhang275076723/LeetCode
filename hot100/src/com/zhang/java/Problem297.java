@@ -171,6 +171,10 @@ public class Problem297 {
     }
 
     private TreeNode deserialize2(List<String> list) {
+        if (list.isEmpty()) {
+            return null;
+        }
+
         String value = list.remove(0);
 
         if ("null".equals(value)) {

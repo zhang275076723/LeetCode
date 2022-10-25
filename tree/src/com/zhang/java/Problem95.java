@@ -58,29 +58,29 @@ public class Problem95 {
         return backtrack(1, n);
     }
 
-    private List<TreeNode> backtrack(int start, int end) {
+    private List<TreeNode> backtrack(int left, int right) {
         //没有节点，null放入集合中返回
-        if (start > end) {
+        if (left > right) {
             List<TreeNode> list = new ArrayList<>();
             list.add(null);
             return list;
         }
 
         //只有一个节点，当前节点放入集合中返回
-        if (start == end) {
+        if (left == right) {
             List<TreeNode> list = new ArrayList<>();
-            list.add(new TreeNode(start));
+            list.add(new TreeNode(left));
             return list;
         }
 
         List<TreeNode> list = new ArrayList<>();
 
         //[start,end]选择一个数作为根节点
-        for (int i = start; i <= end; i++) {
+        for (int i = left; i <= right; i++) {
             //[start,i-1]作为左子树集合
-            List<TreeNode> leftNodes = backtrack(start, i - 1);
+            List<TreeNode> leftNodes = backtrack(left, i - 1);
             //[i+1,end]作为右子树集合
-            List<TreeNode> rightNodes = backtrack(i + 1, end);
+            List<TreeNode> rightNodes = backtrack(i + 1, right);
 
             for (TreeNode leftNode : leftNodes) {
                 for (TreeNode rightNode : rightNodes) {

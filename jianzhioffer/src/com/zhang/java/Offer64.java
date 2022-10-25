@@ -25,7 +25,7 @@ public class Offer64 {
      * 不使用乘除法，则使用加减法和位运算
      * 不使用for、while循环，则使用递归
      * 不使用if、else、switch、case及条件判断语句（A?B:C），则使用逻辑运算短路与
-     * 时间复杂度O(n)，空间复杂的O(n）
+     * 时间复杂度O(n)，空间复杂的O(n)
      *
      * @param n
      * @return

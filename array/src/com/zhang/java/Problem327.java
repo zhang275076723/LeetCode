@@ -16,7 +16,7 @@ package com.zhang.java;
  * 输出：1
  * <p>
  * 1 <= nums.length <= 10^5
- * -2^31 <= nums[i] <= 231 - 1
+ * -2^31 <= nums[i] <= 2^31 - 1
  * -10^5 <= lower <= upper <= 10^5
  * 题目数据保证答案是一个 32 位 的整数
  */
@@ -57,7 +57,7 @@ public class Problem327 {
             for (int j = i; j < nums.length; j++) {
                 sum = sum + nums[j];
 
-                if (sum >= lower && sum <= upper) {
+                if (lower <= sum && sum <= upper) {
                     count++;
                 }
             }

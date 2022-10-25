@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/4/1 10:12
  * @Author zsy
- * @Description 两个链表的第一个公共节点 同Problem160
+ * @Description 两个链表的第一个公共节点 类比Problem141、Problem142 同Problem160
  * 输入两个链表，找出它们的第一个公共节点。
  * <p>
  * 输入：intersectVal = 8, listA = [4,1,8,4,5], listB = [5,0,1,8,4,5], skipA = 2, skipB = 3

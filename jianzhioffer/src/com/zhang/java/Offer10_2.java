@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/14 15:12
  * @Author zsy
- * @Description 青蛙跳台阶问题 同Problem70 类比Offer10、Offer46
+ * @Description 青蛙跳台阶问题 类比Offer10、Offer46 同Problem70
  * 一只青蛙一次可以跳上1级台阶，也可以跳上2级台阶。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
  * 总跳法 = 1次跳上1级台阶和剩余n-1级台阶的跳法 + 1次跳上2级台阶和剩余n-2级台阶的跳法
  * <p>

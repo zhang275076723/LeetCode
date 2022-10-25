@@ -103,7 +103,7 @@ public class Problem138 {
 
         Node node = head;
 
-        //复制新节点
+        //链表每个节点复制为2个相同节点
         while (node != null) {
             Node tempNode = new Node(node.val);
             tempNode.next = node.next;

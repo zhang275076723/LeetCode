@@ -105,22 +105,22 @@ public class Offer33 {
             return true;
         }
 
-        //postorder数组中第一个比根节点值大的元素索引，即[index,right-1]都比根节点postorder[right]值要打
-        int index = left;
+        //postorder数组中第一个比根节点值大的元素索引，即[rightIndex,right-1]都比根节点postorder[right]值要大
+        int rightIndex = left;
 
         //找第一个比根节点值大的元素索引
-        while (index < right && postorder[index] < postorder[right]) {
-            index++;
+        while (rightIndex < right && postorder[rightIndex] < postorder[right]) {
+            rightIndex++;
         }
 
         //index之后节点值都比根节点值要大
-        for (int i = index + 1; i < right; i++) {
+        for (int i = rightIndex + 1; i < right; i++) {
             if (postorder[i] < postorder[right]) {
                 return false;
             }
         }
 
         //递归判断左子树和右子树是否是后序遍历二叉搜索树
-        return dfs(postorder, left, index - 1) && dfs(postorder, index, right - 1);
+        return dfs(postorder, left, rightIndex - 1) && dfs(postorder, rightIndex, right - 1);
     }
 }

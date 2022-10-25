@@ -71,7 +71,7 @@ public class Problem315 {
      */
     public List<Integer> countSmaller2(int[] nums) {
         //每个元素大于之后元素的个数数组
-        int[] countArr = new int[nums.length];
+        int[] result = new int[nums.length];
         //当前元素索引下标在原数组中索引下标
         int[] indexArr = new int[nums.length];
 
@@ -80,11 +80,11 @@ public class Problem315 {
             indexArr[i] = i;
         }
 
-        mergeSort(nums, 0, nums.length - 1, new int[nums.length], countArr, indexArr, new int[nums.length]);
+        mergeSort(nums, 0, nums.length - 1, new int[nums.length], indexArr, new int[nums.length], result);
 
         List<Integer> list = new ArrayList<>();
 
-        for (int count : countArr) {
+        for (int count : result) {
             list.add(count);
         }
 
@@ -92,17 +92,17 @@ public class Problem315 {
     }
 
     private void mergeSort(int[] nums, int left, int right, int[] tempArr,
-                           int[] countArr, int[] indexArr, int[] tempIndexArr) {
+                           int[] indexArr, int[] tempIndexArr, int[] result) {
         if (left < right) {
             int mid = left + ((right - left) >> 1);
-            mergeSort(nums, left, mid, tempArr, countArr, indexArr, tempIndexArr);
-            mergeSort(nums, mid + 1, right, tempArr, countArr, indexArr, tempIndexArr);
-            merge(nums, left, mid, right, tempArr, countArr, indexArr, tempIndexArr);
+            mergeSort(nums, left, mid, tempArr, indexArr, tempIndexArr, result);
+            mergeSort(nums, mid + 1, right, tempArr, indexArr, tempIndexArr, result);
+            merge(nums, left, mid, right, tempArr, indexArr, tempIndexArr, result);
         }
     }
 
     private void merge(int[] nums, int left, int mid, int right, int[] tempArr,
-                       int[] countArr, int[] indexArr, int[] tempIndexArr) {
+                       int[] indexArr, int[] tempIndexArr, int[] result) {
         int i = left;
         int j = mid + 1;
         int k = left;
@@ -111,7 +111,7 @@ public class Problem315 {
             //注意是小于等于，不能是小于，因为要保证nums[i]都大于nums[mid+1]-nums[j-1]，才能统计右侧小于nums[i]的元素个数
             if (nums[i] <= nums[j]) {
                 //nums[i]都大于nums[mid+1]-nums[j-1]，统计nums[i]右侧小于nums[i]的元素个数
-                countArr[indexArr[i]] = countArr[indexArr[i]] + j - mid - 1;
+                result[indexArr[i]] = result[indexArr[i]] + j - mid - 1;
                 //更新当前元素索引下标
                 tempIndexArr[k] = indexArr[i];
                 tempArr[k] = nums[i];
@@ -129,7 +129,7 @@ public class Problem315 {
         while (i <= mid) {
             //左边数组的当前元素小于等于右边数组的当前元素，
             //即左边数组的当前元素大于右边数组的第一个元素到右边数组的当前元素的前一个元素
-            countArr[indexArr[i]] = countArr[indexArr[i]] + j - mid - 1;
+            result[indexArr[i]] = result[indexArr[i]] + j - mid - 1;
             //更新当前元素索引下标
             tempIndexArr[k] = indexArr[i];
             tempArr[k] = nums[i];

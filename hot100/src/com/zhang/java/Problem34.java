@@ -54,7 +54,7 @@ public class Problem34 {
         //最后个target索引
         int last = -1;
 
-        //寻找第一个target
+        //找第一个值为target的索引下标first
         while (left <= right) {
             mid = left + ((right - left) >> 1);
 
@@ -68,14 +68,16 @@ public class Problem34 {
             }
         }
 
+        //target不存在，直接返回
         if (first == -1) {
             return new int[]{-1, -1};
         }
 
-        //寻找最后一个target
-        left = first;
+        last = first;
+        left = first + 1;
         right = nums.length - 1;
 
+        //找最后一个值为target的索引下标last
         while (left <= right) {
             mid = left + ((right - left) >> 1);
 

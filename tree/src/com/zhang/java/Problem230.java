@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/9/1 9:24
  * @Author zsy
- * @Description 二叉搜索树中第K小的元素 字节面试题 类比 Problem95、Problem96、Problem98、Problem99、Problem440、Offer33、Offer36
+ * @Description 二叉搜索树中第K小的元素 字节面试题 类比 Problem95、Problem96、Problem98、Problem99、Problem440、Offer33、Offer36、Offer54
  * 给定一个二叉搜索树的根节点 root ，和一个整数 k ，
  * 请你设计一个算法查找其中第 k 个最小元素（从 1 开始计数）。
  * <p>
@@ -61,15 +61,16 @@ public class Problem230 {
             node = node.right;
         }
 
+        //没有找到第k小节点，返回-1
         return -1;
     }
 
     /**
-     * 优化，记录以每个节点为根节点的节点个数，用于频繁查找二叉搜索树的第k小节点值的情况
+     * 优化，记录以每个节点为根节点的子节点个数，用于频繁查找二叉搜索树的第k小节点值的情况
      * 1、当前节点左节点为根节点的节点个数left+1小于k，则第k小节点在当前节点的右子树，查找当前节点的右子树的第k-left-1小
      * 2、当前节点左节点为根节点的节点个数left+1大于k，则第k小节点在当前节点的左子树，查找当前节点的左子树的第k小
      * 3、当前节点左节点为根节点的节点个数left+1等于k，则第k小节点即为当前节点，返回当前节点
-     * 时间复杂度O(n)，空间复杂度O(n)
+     * 时间复杂度O(n)，空间复杂度O(n) (第一次查询时间复杂度O(n)，之后每次查询时间复杂度O(logn))
      *
      * @param root
      * @param k
@@ -142,8 +143,8 @@ public class Problem230 {
             int count = nodeCountMap.getOrDefault(node.left, 0);
 
             while (count + 1 != k) {
-                //则往左子树找
-                if (count > k - 1) {
+                //往左子树找
+                if (count + 1 > k) {
                     node = node.left;
                 } else {
                     //往右子树找

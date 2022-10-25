@@ -33,12 +33,14 @@ public class Problem437 {
 
     public static void main(String[] args) {
         Problem437 problem437 = new Problem437();
-//        String[] data = {"10", "5", "-3", "3", "2", "null", "11", "3", "-2", "null", "1"};
-        String[] data = {"1000000000","1000000000","null","294967296","null","1000000000",
-                "null","1000000000","null","1000000000"};
+        String[] data = {"10", "5", "-3", "3", "2", "null", "11", "3", "-2", "null", "1"};
+        int targetSum = 8;
+//        String[] data = {"1000000000", "1000000000", "null", "294967296", "null", "1000000000",
+//                "null", "1000000000", "null", "1000000000"};
+//        int targetSum = 0;
         TreeNode root = problem437.buildTree(data);
-        System.out.println(problem437.pathSum(root, 0));
-        System.out.println(problem437.pathSum2(root, 0));
+        System.out.println(problem437.pathSum(root, targetSum));
+        System.out.println(problem437.pathSum2(root, targetSum));
     }
 
     /**
@@ -112,30 +114,30 @@ public class Problem437 {
     /**
      * @param root      当前根节点
      * @param targetSum 要求的路径之和
-     * @param curSum    当前路径之和
+     * @param sum       当前路径之和
      * @param map       根节点到当前节点路径上，除当前节点之外，所有节点的前缀和哈希表
      */
-    private void dfs2(TreeNode root, int targetSum, long curSum, Map<Long, Integer> map) {
+    private void dfs2(TreeNode root, int targetSum, long sum, Map<Long, Integer> map) {
         if (root == null) {
             return;
         }
 
         //更新前缀和，根节点到当前节点的路径和
-        curSum = curSum + root.val;
+        sum = sum + root.val;
 
         //从前缀和哈希表中找路径和为curSum-targetSum的数量，即为路径和为targetSum的数量
-        if (map.containsKey(curSum - targetSum)) {
-            count2 = count2 + map.get(curSum - targetSum);
+        if (map.containsKey(sum - targetSum)) {
+            count2 = count2 + map.get(sum - targetSum);
         }
 
         //当前前缀和放入前缀和哈希表中
-        map.put(curSum, map.getOrDefault(curSum, 0) + 1);
+        map.put(sum, map.getOrDefault(sum, 0) + 1);
 
-        dfs2(root.left, targetSum, curSum, map);
-        dfs2(root.right, targetSum, curSum, map);
+        dfs2(root.left, targetSum, sum, map);
+        dfs2(root.right, targetSum, sum, map);
 
         //当前路径和从哈希表中删除，因为当前分叉已经遍历结束，要遍历另一分叉，所以当前分叉的路径和已经不能使用
-        map.put(curSum, map.get(curSum) - 1);
+        map.put(sum, map.get(sum) - 1);
     }
 
     private TreeNode buildTree(String[] data) {

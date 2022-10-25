@@ -60,22 +60,21 @@ public class Offer42 {
      * @return
      */
     public int maxSubArray2(int[] nums) {
-        int sum = Integer.MIN_VALUE;
-        int[] dp = new int[nums.length + 1];
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0];
+        int max = dp[0];
 
-        for (int i = 0; i < nums.length; i++) {
-            if (dp[i] > 0) {
-                dp[i + 1] = dp[i] + nums[i];
+        for (int i = 1; i < nums.length; i++) {
+            if (dp[i - 1] > 0) {
+                dp[i] = dp[i - 1] + nums[i];
             } else {
-                dp[i + 1] = nums[i];
+                dp[i] = nums[i];
             }
 
-            if (dp[i + 1] > sum) {
-                sum = dp[i + 1];
-            }
+            max = Math.max(max, dp[i]);
         }
 
-        return sum;
+        return max;
     }
 
     /**
@@ -86,22 +85,19 @@ public class Offer42 {
      * @return
      */
     public int maxSubArray3(int[] nums) {
-        int sum = Integer.MIN_VALUE;
-        int dp = 0;
+        int dp = nums[0];
+        int max = dp;
 
-        for (int i = 0; i < nums.length; i++) {
+        for (int i = 1; i < nums.length; i++) {
             if (dp > 0) {
                 dp = dp + nums[i];
             } else {
                 dp = nums[i];
             }
-
-            if (dp > sum) {
-                sum = dp;
-            }
+            max = Math.max(max, dp);
         }
 
-        return sum;
+        return max;
     }
 
     /**
@@ -148,7 +144,7 @@ public class Offer42 {
 
         tempMidSum = 0;
 
-        for (int i = mid +1; i <= right; i++) {
+        for (int i = mid + 1; i <= right; i++) {
             tempMidSum = tempMidSum + nums[i];
 
             if (tempMidSum > rightMidMax) {

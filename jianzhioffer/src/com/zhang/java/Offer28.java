@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/3/20 15:30
  * @Author zsy
- * @Description 对称的二叉树 类比Problem100、Problem226、Offer26、Offer27 同Problem101
+ * @Description 对称的二叉树 类比Problem100、Problem226、Offer26、Offer27、Offer55、Offer55_2 同Problem101
  * 请实现一个函数，用来判断一棵二叉树是不是对称的。如果一棵二叉树和它的镜像一样，那么它是对称的。
  * <p>
  * 输入：root = [1,2,2,3,4,4,3]

@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/4/20 9:13
  * @Author zsy
- * @Description 旋转图像 类比Problem54、Problem59、Offer29
+ * @Description 旋转图像 类比Problem54、Problem59、Problem498、Offer29
  * 给定一个 n × n 的二维矩阵 matrix 表示一个图像。请你将图像顺时针旋转 90 度。
  * 你必须在 原地 旋转图像，这意味着你需要直接修改输入的二维矩阵。请不要 使用另一个矩阵来旋转图像。
  * <p>
@@ -60,10 +60,10 @@ public class Problem48 {
 
         //由外到内一圈一圈调整几轮，每组的四个元素
         for (int i = 0; i < matrix.length / 2; i++) {
-            //每组要调整的四个元素的起始元素
+            //每组要调整的四个元素矩阵的左上元素
             int start = i;
-            //每组要调整的四个元素的末尾元素
-            int end = matrix.length - i - 1;
+            //每组要调整的四个元素矩阵的右下元素
+            int end = matrix.length - 1 - i;
 
             //每轮需要调整的每四个元素的组数
             for (int j = 0; j < end - start; j++) {

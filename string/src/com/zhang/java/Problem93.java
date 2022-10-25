@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/6/22 7:48
  * @Author zsy
- * @Description 复原 IP 地址 虾皮机试题、蔚来面试题 类比Problem468
+ * @Description 复原 IP 地址 虾皮机试题、蔚来面试题 类比Problem468、Offer46
  * 有效 IP 地址 正好由四个整数（每个整数位于 0 到 255 之间组成，且不能含有前导 0），整数之间用 '.' 分隔。
  * 例如："0.1.2.201" 和 "192.168.1.1" 是 有效 IP 地址，
  * 但是 "0.011.255.245"、"192.168.1.312" 和 "192.168@1.1" 是 无效 IP 地址。
@@ -46,89 +46,75 @@ public class Problem93 {
         }
 
         List<String> result = new ArrayList<>();
-        backtrack(0, new ArrayList<>(), s, result);
+        backtrack(0, s, result, new ArrayList<>());
         return result;
     }
 
-    /**
-     * 回溯+剪枝
-     *
-     * @param start  起始索引
-     * @param list   当前每个ip段集合
-     * @param s      字符串数字
-     * @param result 结果集合
-     */
-    private void backtrack(int start, List<String> list, String s, List<String> result) {
-        //找到合法的ip地址
-        if (list.size() == 4 && start == s.length()) {
-            StringBuilder sb = new StringBuilder();
-            for (String str : list) {
-                sb.append(str).append('.');
+    private void backtrack(int t, String s, List<String> result, List<String> list) {
+        //当找到4个ip段，且已经遍历到末尾时，即找到一个合法ip
+        if (list.size() == 4) {
+            if (t == s.length()) {
+                StringBuilder sb = new StringBuilder();
+                for (String num : list) {
+                    sb.append(num).append('.');
+                }
+                //删除最后一个'.'
+                sb.delete(sb.length() - 1, sb.length());
+                result.add(sb.toString());
             }
-            //删除最后一个'.'
-            sb.delete(sb.length() - 1, sb.length());
-            result.add(sb.toString());
             return;
         }
 
-        //剩余字符串数字不能构成合法ip地址，则剪枝
-        if (s.length() - start < 4 - list.size() || s.length() - start > 3 * (4 - list.size())) {
-            return;
-        }
-
-        for (int i = start; i < start + 3; i++) {
-            if (i >= s.length()) {
+        for (int i = t; i < s.length(); i++) {
+            //ip段最长只能是3位
+            if (i >= t + 3) {
                 return;
             }
 
-            int ip = getSegmentIp(s, start, i);
+            int segment = getIpSegment(s, t, i);
 
             //当前ip段不是一个合法的ip段，则直接返回
-            if (ip == -1) {
+            if (segment == -1) {
                 return;
             }
 
-            list.add(ip + "");
-            backtrack(i + 1, list, s, result);
+            list.add(segment + "");
+            backtrack(i + 1, s, result, list);
             list.remove(list.size() - 1);
         }
     }
 
     /**
-     * 返回当前ip段数字
-     * 如果合法，返回当前ip段数字，即在0-255之间，且没有前导0；如果不合法，返回-1
+     * 返回当前ip段
+     * 合法ip段在0-255之间，且没有前导0；如果不合法，返回-1
      *
-     * @param s     字符串数字
-     * @param start 起始索引
-     * @param end   结束索引
+     * @param s
+     * @param left
+     * @param right
      * @return
      */
-    private int getSegmentIp(String s, int start, int end) {
-        //当前字符串只有一位
-        if (start == end) {
-            return s.charAt(start) - '0';
+    private int getIpSegment(String s, int left, int right) {
+        //当前ip段只有一位
+        if (left == right) {
+            return s.charAt(left) - '0';
         }
 
-        //当前字符串长度超过3，则不是合法ip
-        if (end - start + 1 > 3) {
+        //当前ip段以0开头，不是合法ip段
+        if (s.charAt(left) == '0') {
             return -1;
         }
 
-        //当前字符串长度超过1，且有前导0
-        if (start < end && s.charAt(start) == '0') {
+        int segment = 0;
+
+        for (int i = left; i <= right; i++) {
+            segment = segment * 10 + s.charAt(i) - '0';
+        }
+
+        //当前ip段超过255，不是合法ip段
+        if (segment > 255) {
             return -1;
         }
 
-        int ip = 0;
-
-        for (int i = start; i <= end; i++) {
-            ip = ip * 10 + s.charAt(i) - '0';
-        }
-
-        if (ip > 255) {
-            return -1;
-        }
-
-        return ip;
+        return segment;
     }
 }

@@ -45,7 +45,7 @@ public class Offer53 {
         //最后个target索引
         int last = -1;
 
-        //找第一个值为target的索引下标start
+        //找第一个值为target的索引下标first
         while (left <= right) {
             mid = left + ((right - left) >> 1);
 
@@ -64,10 +64,11 @@ public class Offer53 {
             return 0;
         }
 
-        //找最后一个值为target的索引下标end
-        left = first;
+        last = first;
+        left = first + 1;
         right = nums.length - 1;
 
+        //找最后一个值为target的索引下标last
         while (left <= right) {
             mid = left + ((right - left) >> 1);
 

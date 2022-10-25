@@ -30,7 +30,8 @@ package com.zhang.java;
 public class Offer58 {
     public static void main(String[] args) {
         Offer58 offer58 = new Offer58();
-        String s = " hello   world! ";
+//        String s = " hello   world! ";
+        String s = "  ";
         System.out.println(offer58.reverseWords(s));
         System.out.println(offer58.reverseWords2(s));
     }
@@ -66,6 +67,12 @@ public class Offer58 {
      */
     public String reverseWords2(String s) {
         s = s.trim();
+
+        //s只有空格，直接返回
+        if (s.length() == 0) {
+            return "";
+        }
+
         int left = s.length() - 1;
         int right = s.length() - 1;
         StringBuilder sb = new StringBuilder();
@@ -86,6 +93,6 @@ public class Offer58 {
         }
 
         //去除末尾空格
-        return sb.toString().trim();
+        return sb.delete(sb.length() - 1, sb.length()).toString();
     }
 }

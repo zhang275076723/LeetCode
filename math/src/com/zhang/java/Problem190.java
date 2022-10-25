@@ -39,15 +39,12 @@ public class Problem190 {
      */
     public int reverseBits(int n) {
         int result = 0;
-        //n移位次数，必须移位32次，因为有可能最高位几位为0，导致最高位的几位0丢失
-        int count = 0;
 
-        while (count < 32) {
-            result = (result << 1) | (n & 1);
-
-            //有可能n为负数，所以使用无符号右移
+        //n必须移位32次，因为有可能最高位几位为0，导致最高位的几位0丢失
+        for (int i = 0; i < 32; i++) {
+            result = (result << 1) + (n & 1);
+            //n可能为负数，所以使用无符号右移
             n = n >>> 1;
-            count++;
         }
 
         return result;

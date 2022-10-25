@@ -99,9 +99,11 @@ public class Problem113 {
         curSum = curSum + root.val;
         path.add(root.val);
 
-        if (root.left == null && root.right == null && curSum == targetSum) {
-            //将满足条件的路径复制到结果集合需要O(n)
-            result.add(new ArrayList<>(path));
+        if (root.left == null && root.right == null) {
+            if (curSum == targetSum) {
+                //将满足条件的路径复制到结果集合需要O(n)
+                result.add(new ArrayList<>(path));
+            }
             path.remove(path.size() - 1);
             return;
         }

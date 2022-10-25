@@ -44,7 +44,7 @@ public class Offer32_3 {
         int flag = 1;
 
         while (!queue.isEmpty()) {
-            LinkedList<Integer> list = new LinkedList<>();
+            List<Integer> list = new ArrayList<>();
             int size = queue.size();
 
             while (size > 0) {
@@ -52,9 +52,11 @@ public class Offer32_3 {
                 size--;
 
                 if (flag == 1) {
-                    list.addLast(node.val);
+                    //尾添加
+                    list.add(node.val);
                 } else {
-                    list.addFirst(node.val);
+                    //首添加
+                    list.add(0, node.val);
                 }
 
                 if (node.left != null) {
@@ -92,13 +94,13 @@ public class Offer32_3 {
         queue1.offer(root);
 
         while (!queue1.isEmpty() || !queue2.isEmpty()) {
-            LinkedList<Integer> list = new LinkedList<>();
+            List<Integer> list = new ArrayList<>();
 
             if (!queue1.isEmpty()) {
                 while (!queue1.isEmpty()) {
                     TreeNode node = queue1.poll();
                     //queue1从左到右，尾添加
-                    list.addLast(node.val);
+                    list.add(node.val);
 
                     if (node.left != null) {
                         queue2.offer(node.left);
@@ -111,7 +113,7 @@ public class Offer32_3 {
                 while (!queue2.isEmpty()) {
                     TreeNode node = queue2.poll();
                     //queue2从右到左，首添加
-                    list.addFirst(node.val);
+                    list.add(0, node.val);
 
                     if (node.left != null) {
                         queue1.offer(node.left);

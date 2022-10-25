@@ -20,79 +20,17 @@ public class Offer37 {
         String[] value = {"1", "2", "3", "null", "null", "4", "5"};
         TreeNode root = offer37.buildTree(value);
 
-        //前序遍历
-//        String data = offer37.serialize(root);
-//        System.out.println(data);
-//        TreeNode node = offer37.deserialize(data);
-//        offer37.preorderPrint(node);
-
         //层次遍历
-        String data = offer37.serialize2(root);
+        String data = offer37.serialize(root);
         System.out.println(data);
-        TreeNode node = offer37.deserialize2(data);
+        TreeNode node = offer37.deserialize(data);
         offer37.levelPrint(node);
-    }
 
-    /**
-     * 前序遍历的序列化
-     * 时间复杂度O(n)，空间复杂度O(n)
-     *
-     * @param root
-     * @return
-     */
-    public String serialize(TreeNode root) {
-        StringBuilder sb = new StringBuilder();
-
-        preorderSerialize(root, sb);
-
-        return sb.toString();
-    }
-
-    public void preorderSerialize(TreeNode root, StringBuilder sb) {
-        if (root == null) {
-            sb.append("null,");
-            return;
-        }
-
-        sb.append(root.val).append(",");
-
-        preorderSerialize(root.left, sb);
-        preorderSerialize(root.right, sb);
-    }
-
-    /**
-     * 前序遍历的反序列化
-     * 时间复杂度O(n)，空间复杂度O(n)
-     *
-     * @param data
-     * @return
-     */
-    public TreeNode deserialize(String data) {
-        //去除末尾的','
-        data = data.substring(0, data.length() - 1);
-        String[] values = data.split(",");
-
-        //不能写成List<String> list = Arrays.asList(values);
-        //因为Arrays.asList(values)将数组转为集合之后，底层还是数组，
-        //返回的是java.util.Arrays的内部类ArrayList，这个类没有重写add、remove等方法，调用这些方法会抛出异常
-        List<String> list = new ArrayList<>(Arrays.asList(values));
-
-        return preorderDeserialize(list);
-    }
-
-    public TreeNode preorderDeserialize(List<String> list) {
-        if ("null".equals(list.get(0))) {
-            list.remove(0);
-            return null;
-        }
-
-        int value = Integer.parseInt(list.remove(0));
-        TreeNode node = new TreeNode(value);
-
-        node.left = preorderDeserialize(list);
-        node.right = preorderDeserialize(list);
-
-        return node;
+        //前序遍历
+        String data2 = offer37.serialize2(root);
+        System.out.println(data2);
+        TreeNode node2 = offer37.deserialize2(data2);
+        offer37.preorderPrint(node2);
     }
 
     /**
@@ -102,23 +40,28 @@ public class Offer37 {
      * @param root
      * @return
      */
-    public String serialize2(TreeNode root) {
+    public String serialize(TreeNode root) {
+        if (root == null) {
+            return "null";
+        }
+
         Queue<TreeNode> queue = new LinkedList<>();
-        StringBuilder sb = new StringBuilder();
         queue.offer(root);
+        StringBuilder sb = new StringBuilder();
 
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
             if (node == null) {
                 sb.append("null,");
             } else {
-                sb.append(node.val).append(',');
+                sb.append(node.val).append(",");
                 queue.offer(node.left);
                 queue.offer(node.right);
             }
         }
 
-        return sb.toString();
+        //去除末尾','
+        return sb.delete(sb.length() - 1, sb.length()).toString();
     }
 
     /**
@@ -128,46 +71,106 @@ public class Offer37 {
      * @param data
      * @return
      */
-    public TreeNode deserialize2(String data) {
-        //去除末尾的','
-        data = data.substring(0, data.length() - 1);
-        String[] values = data.split(",");
-
-        //如果第一个为null，则为空树，直接返回null
-        if ("null".equals(values[0])) {
+    public TreeNode deserialize(String data) {
+        if (data == null || "null".equals(data)) {
             return null;
         }
 
+        String[] values = data.split(",");
         //不能写成List<String> list = Arrays.asList(values);
         //因为Arrays.asList(values)将数组转为集合之后，底层还是数组，
         //返回的是java.util.Arrays的内部类ArrayList，这个类没有重写add、remove等方法，调用这些方法会抛出异常
         List<String> list = new ArrayList<>(Arrays.asList(values));
         Queue<TreeNode> queue = new LinkedList<>();
-        //记录根节点
         TreeNode root = new TreeNode(Integer.parseInt(list.remove(0)));
         queue.offer(root);
 
-        //要保证队列不为空，且list集合中元素大于1个，才能从list中拿出2个
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
-            if (!list.isEmpty()){
+            if (!list.isEmpty()) {
                 String leftValue = list.remove(0);
                 if (!"null".equals(leftValue)) {
-                    TreeNode leftNode = new TreeNode(Integer.parseInt(leftValue));
-                    node.left = leftNode;
-                    queue.offer(leftNode);
+                    node.left = new TreeNode(Integer.parseInt(leftValue));
+                    queue.offer(node.left);
                 }
             }
-            if (!list.isEmpty()){
+            if (!list.isEmpty()) {
                 String rightValue = list.remove(0);
                 if (!"null".equals(rightValue)) {
-                    TreeNode rightNode = new TreeNode(Integer.parseInt(rightValue));
-                    node.right = rightNode;
-                    queue.offer(rightNode);
+                    node.right = new TreeNode(Integer.parseInt(rightValue));
+                    queue.offer(node.right);
                 }
             }
         }
 
+        return root;
+    }
+
+    /**
+     * 前序遍历的序列化
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param root
+     * @return
+     */
+    public String serialize2(TreeNode root) {
+        if (root == null) {
+            return "null";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode node = root;
+
+        while (!stack.isEmpty() || node != null) {
+            while (node != null) {
+                sb.append(node.val).append(",");
+                stack.push(node);
+                node = node.left;
+            }
+
+            sb.append("null,");
+            node = stack.pop();
+            node = node.right;
+        }
+
+        //去除末尾','
+        return sb.delete(sb.length() - 1, sb.length()).toString();
+    }
+
+    /**
+     * 前序遍历的反序列化
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param data
+     * @return
+     */
+    public TreeNode deserialize2(String data) {
+        if (data == null || "null".equals(data)) {
+            return null;
+        }
+
+        String[] values = data.split(",");
+        //不能写成List<String> list = Arrays.asList(values);
+        //因为Arrays.asList(values)将数组转为集合之后，底层还是数组，
+        //返回的是java.util.Arrays的内部类ArrayList，这个类没有重写add、remove等方法，调用这些方法会抛出异常
+        List<String> list = new ArrayList<>(Arrays.asList(values));
+        return deserialize2(list);
+    }
+
+    private TreeNode deserialize2(List<String> list) {
+        if (list.isEmpty()) {
+            return null;
+        }
+
+        String value = list.remove(0);
+        if ("null".equals(value)) {
+            return null;
+        }
+
+        TreeNode root = new TreeNode(Integer.parseInt(value));
+        root.left = deserialize2(list);
+        root.right = deserialize2(list);
         return root;
     }
 

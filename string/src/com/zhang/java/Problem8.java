@@ -81,52 +81,45 @@ public class Problem8 {
             return 0;
         }
 
-        //符号，1-正，-1-负
-        int sign = 1;
+        //符号标志位，1：正，-1：负
+        int flag = 1;
 
         if (s.charAt(index) == '+') {
             index++;
         } else if (s.charAt(index) == '-') {
-            sign = -1;
-            index++;
-        } else if (s.charAt(index) < '0' || s.charAt(index) > '9') {
-            //当前索引元素不是+、-、数字，即为字母，则直接返回0
-            return 0;
-        }
-
-        //去除前导0
-        while (index < s.length() && s.charAt(index) == '0') {
+            flag = -1;
             index++;
         }
 
-        //已经到末尾，或者当前位不是数字
-        if (index == s.length() || s.charAt(index) < '0' || s.charAt(index) > '9') {
-            return 0;
-        }
+        int num = 0;
 
-        int result = 0;
+        while (index < s.length()) {
+            char c = s.charAt(index);
 
-        while (index < s.length() && s.charAt(index) >= '0' && s.charAt(index) <= '9') {
-            int num = s.charAt(index) - '0';
+            if (c >= '0' && c <= '9') {
+                //上溢出
+                if (num > Integer.MAX_VALUE / 10 ||
+                        (num == Integer.MAX_VALUE / 10 && (c - '0') >= Integer.MAX_VALUE % 10)) {
+                    return Integer.MAX_VALUE;
+                }
 
-            //上溢出
-            if (result > Integer.MAX_VALUE / 10 ||
-                    (result == Integer.MAX_VALUE / 10 && num >= Integer.MAX_VALUE % 10)) {
-                return Integer.MAX_VALUE;
+                //下溢出
+                if (num < Integer.MIN_VALUE / 10 ||
+                        (num == Integer.MIN_VALUE / 10 && (c - '0') >= -(Integer.MIN_VALUE % 10))) {
+                    return Integer.MIN_VALUE;
+                }
+
+                num = num * 10 + (c - '0') * flag;
+
+                index++;
+            } else {
+                //当前不是数字，则直接返回
+                return num;
             }
-
-            //下溢出
-            if (result < Integer.MIN_VALUE / 10 ||
-                    (result == Integer.MIN_VALUE / 10 && num >= -(Integer.MIN_VALUE % 10))) {
-                return Integer.MIN_VALUE;
-            }
-
-            result = result * 10 + num * sign;
-
-            index++;
         }
 
-        //不能写成return sign == 1 ? result : -result，因为int类型的最大值和最小值不一样，需要每次累加都判断是否溢出
-        return result;
+        //遍历到末尾，直接返回
+        //不能写成return flag == 1 ? num : -num，因为int类型的最大值和最小值不一样，需要每次累加都判断是否溢出
+        return num;
     }
 }
