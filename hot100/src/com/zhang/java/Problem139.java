@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/4 9:58
  * @Author zsy
- * @Description 单词拆分 类比Problem72、Problem140
+ * @Description 单词拆分 类比Problem72、Problem140、Problem300
  * 给你一个字符串 s 和一个字符串列表 wordDict 作为字典。
  * 请你判断是否可以利用字典中出现的单词拼接出 s 。
  * 注意：不要求字典中出现的单词全部都使用，并且字典中的单词可以重复使用。
@@ -36,8 +36,10 @@ public class Problem139 {
 
     public static void main(String[] args) {
         Problem139 problem139 = new Problem139();
-        String s = "catsandog";
-        String[] words = {"cats", "dog", "sand", "and", "cat"};
+//        String s = "catsandog";
+//        String[] words = {"cats", "dog", "sand", "and", "cat"};
+        String s = "leetcode";
+        String[] words = {"leet", "code"};
         List<String> wordDict = new ArrayList<>(Arrays.asList(words));
         System.out.println(problem139.wordBreak(s, wordDict));
         System.out.println(problem139.wordBreak2(s, wordDict));

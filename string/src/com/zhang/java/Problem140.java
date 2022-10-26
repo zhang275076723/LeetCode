@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/8/24 11:16
  * @Author zsy
- * @Description 单词拆分 II 类比Problem139
+ * @Description 单词拆分 II 小米面试题 类比Problem139
  * 给定一个字符串 s 和一个字符串字典 wordDict ，在字符串 s 中增加空格来构建一个句子，使得句子中所有的单词都在词典中。
  * 以任意顺序 返回所有这些可能的句子。
  * 注意：词典中的同一个单词可能在分段中被重复使用多次。
@@ -29,8 +29,8 @@ import java.util.*;
 public class Problem140 {
     public static void main(String[] args) {
         Problem140 problem140 = new Problem140();
-        String s = "pineapplepenapple";
-        String[] words = {"apple", "pen", "applepen", "pine", "pineapple"};
+        String s = "catsanddog";
+        String[] words = {"cat", "cats", "and", "sand", "dog"};
         List<String> wordDict = new ArrayList<>(Arrays.asList(words));
         System.out.println(problem140.wordBreak(s, wordDict));
         System.out.println(problem140.wordBreak2(s, wordDict));
@@ -49,8 +49,10 @@ public class Problem140 {
         }
 
         List<String> result = new ArrayList<>();
+        //从set中查询元素O(1)，比从list中查询元素速度快O(n)
+        Set<String> wordDictSet = new HashSet<>(wordDict);
 
-        backtrack(0, new StringBuilder(), s, wordDict, result);
+        backtrack(0, new StringBuilder(), s, wordDictSet, result);
 
         return result;
     }
@@ -102,46 +104,48 @@ public class Problem140 {
 
         //s可以拆分
         if (dp[s.length()]) {
-            //从后往前拆分，使用到dp数组
-            backtrack2(s.length(), new LinkedList<>(), s, dp, wordDict, result);
+            //从后往前拆分，使用到dp数组和队列
+            backtrack2(s.length(), new LinkedList<>(), s, dp, wordDictSet, result);
         }
 
         return result;
     }
 
-    private void backtrack(int t, StringBuilder sb, String s, List<String> wordDict, List<String> result) {
+    private void backtrack(int t, StringBuilder sb, String s, Set<String> wordDictSet, List<String> result) {
         if (t == s.length()) {
-            //去除末尾空格
-            result.add(sb.substring(0, sb.length() - 1));
+            //删除末尾空格
+            result.add(sb.delete(sb.length() - 1, sb.length()).toString());
             return;
         }
 
-        for (String word : wordDict) {
-            if (t + word.length() <= s.length() && s.substring(t, t + word.length()).equals(word)) {
+        for (int i = t; i < s.length(); i++) {
+            if (wordDictSet.contains(s.substring(t, i + 1))) {
                 int start = sb.length();
-
-                sb.append(word).append(' ');
-                backtrack(t + word.length(), sb, s, wordDict, result);
+                sb.append(s.substring(t, i + 1)).append(' ');
+                backtrack(i + 1, sb, s, wordDictSet, result);
                 sb.delete(start, sb.length());
             }
         }
     }
 
     private void backtrack2(int t, Deque<String> deque, String s, boolean[] dp,
-                            List<String> wordDict, List<String> result) {
+                            Set<String> wordDictSet, List<String> result) {
         if (t == 0) {
-            //队列中每个元素之间添加空格
-            result.add(String.join(" ", deque));
+            StringBuilder sb = new StringBuilder();
+            for (String word : deque) {
+                sb.append(word).append(' ');
+            }
+            //删除末尾空格
+            result.add(sb.delete(sb.length() - 1, sb.length()).toString());
             return;
         }
 
-        for (String word : wordDict) {
-            //s[0]-s[t-word.length()-1]可以拆分为wordDict中的单词，并且word是s中单词
-            if (t - word.length() >= 0 && dp[t - word.length()] && s.substring(t - word.length(), t).equals(word)) {
-                //因为是从后往前遍历，所以尾添加
-                deque.addFirst(word);
-                backtrack2(t - word.length(), deque, s, dp, wordDict, result);
-                deque.removeFirst();
+        for (int i = t - 1; i >= 0; i--) {
+            //当s[0]-s[i-1]可以拆分为wordDict中的单词，并且s[i]-s[t-1]是s中单词的时候，才继续查找
+            if (dp[i] && wordDictSet.contains(s.substring(i, t))) {
+                deque.offerFirst(s.substring(i, t));
+                backtrack2(i, deque, s, dp, wordDictSet, result);
+                deque.pollFirst();
             }
         }
     }

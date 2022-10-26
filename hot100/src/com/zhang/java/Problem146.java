@@ -71,30 +71,23 @@ public class Problem146 {
      */
     private static class LRUCache {
         //缓存容量
-        private int capacity;
+        private final int capacity;
 
         //当前缓存容量
         private int curSize;
 
         //缓存map，在O(1)找到当前缓存节点，key：缓存关键字，value：数据节点
-        private Map<Integer, Node> cache;
+        private final Map<Integer, Node> cache;
 
-        //链表头节点，设置链表头尾空节点，在添加节点和删除节点时，不需要进行非空判断
-        private Node head;
-
-        //链表尾节点
-        private Node tail;
+        //双向链表
+        private final LinkedList linkedList;
 
         public LRUCache(int capacity) {
             this.capacity = capacity;
             curSize = 0;
             //缓存map，在O(1)找到当前节点
             cache = new HashMap<>(capacity);
-            //设置头尾节点，方便头插和尾移除
-            head = new Node();
-            tail = new Node();
-            head.next = tail;
-            tail.pre = head;
+            linkedList = new LinkedList();
         }
 
         /**
@@ -105,17 +98,14 @@ public class Problem146 {
          * @return
          */
         public int get(int key) {
-            Node node = cache.get(key);
-
-            //不在缓存map中
-            if (node == null) {
+            //当前节点不在缓存map中，返回-1
+            if (!cache.containsKey(key)) {
                 return -1;
             }
 
-            //当前节点放到链表的头，作为最新访问
-            remove(node);
-            addFirst(node);
-
+            Node node = cache.get(key);
+            linkedList.delete(node);
+            linkedList.addFirst(node);
             return node.value;
         }
 
@@ -128,32 +118,33 @@ public class Problem146 {
          * @param value
          */
         public void put(int key, int value) {
-            Node node = cache.get(key);
-
-            //在缓存map中
-            if (node != null) {
-                //更新该节点的value
+            //当前节点在缓存map中
+            if (cache.containsKey(key)) {
+                Node node = cache.get(key);
+                //更新当前节点的value
                 node.value = value;
-
-                //当前节点放到链表的头，作为最新访问
-                remove(node);
-                addFirst(node);
+                //当前节点放到链表的头，作为最新访问节点
+                linkedList.delete(node);
+                linkedList.addFirst(node);
             } else {
-                //不在缓存map中
-                node = new Node(key, value);
+                //当前节点不在缓存map中
 
-                //当前容量已满
+                //缓存map已满，链表和缓存map中移除末尾节点，当前节点放到链表的头和缓存中，作为最新访问节点
                 if (curSize == capacity) {
-                    cache.remove(tail.pre.key);
-                    //移除末尾节点，当前节点放到链表的头
-                    remove(tail.pre);
-                    addFirst(node);
+                    Node deleteNode = linkedList.tail.pre;
+                    linkedList.delete(deleteNode);
+                    cache.remove(deleteNode.key);
+
+                    Node node = new Node(key, value);
+                    linkedList.addFirst(node);
                     cache.put(key, node);
                 } else {
-                    //当前节点放到链表的头，作为最新访问
-                    addFirst(node);
-                    cache.put(key, node);
+                    //缓存map未满，当前节点放到链表的头和缓存中，作为最新访问节点
+
+                    Node node = new Node(key, value);
                     curSize++;
+                    linkedList.addFirst(node);
+                    cache.put(key, node);
                 }
             }
         }
@@ -176,19 +167,39 @@ public class Problem146 {
             }
         }
 
-        private void addFirst(Node node) {
-            //头结点的下一个节点
-            Node next = head.next;
+        /**
+         * 双向链表
+         */
+        private static class LinkedList {
+            //设置链表头尾空节点，在添加节点和删除节点时，不需要进行非空判断
+            public Node head;
 
-            node.next = next;
-            node.pre = head;
-            head.next = node;
-            next.pre = node;
-        }
+            public Node tail;
 
-        private void remove(Node node) {
-            node.pre.next = node.next;
-            node.next.pre = node.pre;
+            LinkedList() {
+                head = new Node();
+                tail = new Node();
+                head.next = tail;
+                tail.pre = head;
+            }
+
+            public void addFirst(Node node) {
+                //头结点的下一个节点
+                Node next = head.next;
+                head.next = node;
+                next.pre = node;
+                node.pre = head;
+                node.next = next;
+            }
+
+            public void delete(Node node) {
+                Node pre = node.pre;
+                Node next = node.next;
+                pre.next = next;
+                next.pre = pre;
+                node.pre = null;
+                node.next = null;
+            }
         }
     }
 }

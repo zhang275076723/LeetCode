@@ -76,7 +76,7 @@ public class Problem460 {
      */
     private static class LFUCache {
         //缓存容量
-        private int capacity;
+        private final int capacity;
 
         //当前缓存容量
         private int curSize;
@@ -85,10 +85,10 @@ public class Problem460 {
         private int minFrequency;
 
         //缓存map，在O(1)找到当前缓存节点，key为缓存关键字，value为数据节点
-        private Map<Integer, Node> cache;
+        private final Map<Integer, Node> cache;
 
         //缓存使用频率map，在O(1)找到当前节点使用频率链表，key为缓存使用频率，value为使用频率相等的双向链表
-        private Map<Integer, LinkedList> frequencyCache;
+        private final Map<Integer, LinkedList> frequencyCache;
 
         public LFUCache(int capacity) {
             this.capacity = capacity;
@@ -107,49 +107,29 @@ public class Problem460 {
          * @return
          */
         public int get(int key) {
-            if (capacity == 0) {
+            //当前节点不在缓存map中，返回-1
+            if (!cache.containsKey(key)) {
                 return -1;
             }
 
             Node node = cache.get(key);
-
-            //不在缓存中
-            if (node == null) {
-                return -1;
-            }
-
-            //得到当前节点的使用频率链表
             LinkedList linkedList = frequencyCache.get(node.frequency);
-            //从频率链表中移除当前节点
-            linkedList.remove(node);
+            //当前节点从当前频率链表中删除
+            linkedList.delete(node);
 
-            //当前使用频率链表为空，更新最少使用的频率，并在frequencyCache删除该链表
+            //当前频率链表为空，从frequencyCache中移除，更新minFrequency
             if (linkedList.head.next == linkedList.tail) {
                 frequencyCache.remove(node.frequency);
-                //更新最少的使用频率
                 if (minFrequency == node.frequency) {
                     minFrequency++;
                 }
-                //更新当前节点的使用频率
-                node.frequency++;
-
-                //得到当前节点最近使用频率链表
-                LinkedList newLinkedList = frequencyCache.get(node.frequency);
-                if (newLinkedList == null) {
-                    newLinkedList = new LinkedList();
-                }
-                newLinkedList.addFirst(node);
-                frequencyCache.put(node.frequency, newLinkedList);
-            } else {
-                //更新当前节点的使用频率
-                node.frequency++;
-                LinkedList newLinkedList = frequencyCache.get(node.frequency);
-                if (newLinkedList == null) {
-                    newLinkedList = new LinkedList();
-                }
-                newLinkedList.addFirst(node);
-                frequencyCache.put(node.frequency, newLinkedList);
             }
+
+            node.frequency++;
+            LinkedList newLinkedList = frequencyCache.getOrDefault(node.frequency, new LinkedList());
+            //当前节点放到新频率链表的头
+            newLinkedList.addFirst(node);
+            frequencyCache.put(node.frequency, newLinkedList);
 
             return node.value;
         }
@@ -164,89 +144,63 @@ public class Problem460 {
          * @param value
          */
         public void put(int key, int value) {
+            //容量为空，直接返回
             if (capacity == 0) {
                 return;
             }
 
-            Node node = cache.get(key);
-
-            //在缓存中
-            if (node != null) {
-                //更新节点的value
+            //当前节点在缓存map中
+            if (cache.containsKey(key)) {
+                Node node = cache.get(key);
                 node.value = value;
-                //得到当前节点的使用频率链表
                 LinkedList linkedList = frequencyCache.get(node.frequency);
-                linkedList.remove(node);
+                //当前节点从当前频率链表中删除
+                linkedList.delete(node);
 
-                //当前使用频率链表为空，更新最少使用的频率，并在frequencyCache删除该链表
+                //当前频率链表为空，从frequencyCache中移除，更新minFrequency
                 if (linkedList.head.next == linkedList.tail) {
                     frequencyCache.remove(node.frequency);
-                    //更新最少使用的频率
                     if (minFrequency == node.frequency) {
                         minFrequency++;
                     }
-                    //更新当前节点的使用频率
-                    node.frequency++;
-
-                    //得到当前节点最近使用频率链表
-                    LinkedList newLinkedList = frequencyCache.get(node.frequency);
-                    if (newLinkedList == null) {
-                        newLinkedList = new LinkedList();
-                    }
-                    newLinkedList.addFirst(node);
-                    frequencyCache.put(node.frequency, newLinkedList);
-                } else {
-                    //更新当前节点的使用频率
-                    node.frequency++;
-
-                    //得到当前节点最近使用频率链表
-                    LinkedList newLinkedList = frequencyCache.get(node.frequency);
-                    if (newLinkedList == null) {
-                        newLinkedList = new LinkedList();
-                    }
-                    newLinkedList.addFirst(node);
-                    frequencyCache.put(node.frequency, newLinkedList);
                 }
+
+                node.frequency++;
+                LinkedList newLinkedList = frequencyCache.getOrDefault(node.frequency, new LinkedList());
+                //当前节点放到新频率链表的头
+                newLinkedList.addFirst(node);
+                frequencyCache.put(node.frequency, newLinkedList);
             } else {
-                node = new Node(key, value, 1);
+                //当前节点不在缓存map中
 
-                //缓存已满，删除frequencyCache中minFrequency链表中尾结点，删除cache中minFrequency链表的尾结点
+                //缓存map已满，最小频率链表和缓存map中移除末尾节点，当前节点插入频率为1的链表中，更新缓存map和频率链表map
                 if (curSize == capacity) {
-                    //得到最少使用频率链表
-                    LinkedList linkedList = frequencyCache.get(minFrequency);
-                    //删除最少使用链表中最久没有使用的节点
-                    Node deleteNode = linkedList.tail.pre;
-                    linkedList.remove(deleteNode);
+                    LinkedList minLinkedList = frequencyCache.get(minFrequency);
+                    //要删除的节点
+                    Node deleteNode = minLinkedList.tail.pre;
                     cache.remove(deleteNode.key);
-
-                    //当前使用频率链表为空，在frequencyCache删除该链表
-                    if (linkedList.head.next == linkedList.tail) {
+                    minLinkedList.delete(deleteNode);
+                    if (minLinkedList.head.next == minLinkedList.tail) {
                         frequencyCache.remove(minFrequency);
                     }
-
-                    //更新最少使用频率
                     minFrequency = 1;
-                    //得到当前节点最近使用频率链表
-                    LinkedList newLinkedList = frequencyCache.get(node.frequency);
-                    if (newLinkedList == null) {
-                        newLinkedList = new LinkedList();
-                    }
-                    newLinkedList.addFirst(node);
-                    frequencyCache.put(node.frequency, newLinkedList);
+
+                    //当前要插入的节点
+                    Node node = new Node(key, value, 1);
                     cache.put(key, node);
-                } else {
-                    //更新缓存大小和最少使用频率
-                    curSize++;
-                    minFrequency = 1;
-
-                    //得到当前节点最近使用频率链表
-                    LinkedList newLinkedList = frequencyCache.get(node.frequency);
-                    if (newLinkedList == null) {
-                        newLinkedList = new LinkedList();
-                    }
+                    LinkedList newLinkedList = frequencyCache.getOrDefault(minFrequency, new LinkedList());
                     newLinkedList.addFirst(node);
-                    frequencyCache.put(node.frequency, newLinkedList);
-                    cache.put(key,node);
+                    frequencyCache.put(minFrequency, newLinkedList);
+                } else {
+                    //缓存map未满，当前节点放入频率为1的链表的头和缓存map中，更新频率链表map
+
+                    Node node = new Node(key, value, 1);
+                    minFrequency = 1;
+                    curSize++;
+                    cache.put(key, node);
+                    LinkedList linkedList = frequencyCache.getOrDefault(minFrequency, new LinkedList());
+                    linkedList.addFirst(node);
+                    frequencyCache.put(minFrequency, linkedList);
                 }
             }
         }
@@ -290,16 +244,19 @@ public class Problem460 {
             public void addFirst(Node node) {
                 //头结点的下一个节点
                 Node next = head.next;
-
-                node.next = next;
-                node.pre = head;
                 head.next = node;
                 next.pre = node;
+                node.pre = head;
+                node.next = next;
             }
 
-            public void remove(Node node) {
-                node.pre.next = node.next;
-                node.next.pre = node.pre;
+            public void delete(Node node) {
+                Node pre = node.pre;
+                Node next = node.next;
+                pre.next = next;
+                next.pre = pre;
+                node.pre = null;
+                node.next = null;
             }
         }
     }
