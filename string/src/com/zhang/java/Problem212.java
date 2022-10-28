@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/8/28 11:58
  * @Author zsy
- * @Description 单词搜索 II 类比Problem79、Problem200、Offer12
+ * @Description 单词搜索 II 类比Problem79、Problem200、Offer12 前缀树类比Problem14、Problem208、Problem211
  * 给定一个 m x n 二维字符网格 board 和一个单词（字符串）列表 words， 返回所有二维网格上的单词 。
  * 单词必须按照字母顺序，通过 相邻的单元格 内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。
  * 同一个单元格内的字母在一个单词中不允许被重复使用。
@@ -65,7 +65,7 @@ public class Problem212 {
 
             for (int i = 0; i < board.length; i++) {
                 for (int j = 0; j < board[0].length; j++) {
-                    backtrack(i, j, 0, board, word,
+                    backtrack(0, i, j, board, word,
                             new boolean[board.length][board[0].length], set, list);
                 }
             }
@@ -76,6 +76,7 @@ public class Problem212 {
 
     /**
      * 回溯+剪枝+前缀树预处理
+     * 每次遍历都判断当前路径是否是words中任意单词的前缀，如果不是，则剪枝
      * 时间复杂度O(mn*(4^l)*words.length)，空间复杂度O(words.length*l)
      * (m = board.length, n = board[0].length, l = word.length())
      *
@@ -87,17 +88,15 @@ public class Problem212 {
         List<String> list = new ArrayList<>();
         Set<String> set = new HashSet<>();
         Trie trie = new Trie();
-        int maxWordLength = 0;
 
         for (String word : words) {
             set.add(word);
             trie.insert(word);
-            maxWordLength = Math.max(maxWordLength, word.length());
         }
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                backtrack2(i, j, board, new StringBuilder(), maxWordLength, trie.root,
+                backtrack2(i, j, board, new StringBuilder(), trie.root,
                         new boolean[board.length][board[0].length], set, list);
             }
         }
@@ -105,10 +104,16 @@ public class Problem212 {
         return list;
     }
 
-    private void backtrack(int i, int j, int t, char[][] board, String word,
+    private void backtrack(int t, int i, int j, char[][] board, String word,
                            boolean[][] visited, Set<String> set, List<String> list) {
         //用于去重
         if (set.contains(word)) {
+            return;
+        }
+
+        if (t == word.length()) {
+            set.add(word);
+            list.add(word);
             return;
         }
 
@@ -117,27 +122,20 @@ public class Problem212 {
             return;
         }
 
-        if (t + 1 == word.length()) {
-            set.add(word);
-            list.add(word);
-            return;
-        }
-
         visited[i][j] = true;
 
         //往上下左右找
-        backtrack(i - 1, j, t + 1, board, word, visited, set, list);
-        backtrack(i + 1, j, t + 1, board, word, visited, set, list);
-        backtrack(i, j - 1, t + 1, board, word, visited, set, list);
-        backtrack(i, j + 1, t + 1, board, word, visited, set, list);
+        backtrack(t + 1, i - 1, j, board, word, visited, set, list);
+        backtrack(t + 1, i + 1, j, board, word, visited, set, list);
+        backtrack(t + 1, i, j - 1, board, word, visited, set, list);
+        backtrack(t + 1, i, j + 1, board, word, visited, set, list);
 
         visited[i][j] = false;
     }
 
-    private void backtrack2(int i, int j, char[][] board, StringBuilder sb, int maxWordLength,
-                           Trie.TrieNode node, boolean[][] visited, Set<String> set, List<String> list) {
-        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length ||
-                visited[i][j] || sb.length() > maxWordLength) {
+    private void backtrack2(int i, int j, char[][] board, StringBuilder sb,
+                            Trie.TrieNode node, boolean[][] visited, Set<String> set, List<String> list) {
+        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || visited[i][j]) {
             return;
         }
 
@@ -151,16 +149,16 @@ public class Problem212 {
         visited[i][j] = true;
         sb.append(board[i][j]);
 
-        if (set.contains(sb.toString())) {
+        if (node.isEnd && set.contains(sb.toString())) {
             list.add(sb.toString());
             set.remove(sb.toString());
         }
 
         //往上下左右找
-        backtrack2(i - 1, j, board, sb, maxWordLength, node, visited, set, list);
-        backtrack2(i + 1, j, board, sb, maxWordLength, node, visited, set, list);
-        backtrack2(i, j - 1, board, sb, maxWordLength, node, visited, set, list);
-        backtrack2(i, j + 1, board, sb, maxWordLength, node, visited, set, list);
+        backtrack2(i - 1, j, board, sb, node, visited, set, list);
+        backtrack2(i + 1, j, board, sb, node, visited, set, list);
+        backtrack2(i, j - 1, board, sb, node, visited, set, list);
+        backtrack2(i, j + 1, board, sb, node, visited, set, list);
 
         sb.delete(sb.length() - 1, sb.length());
         visited[i][j] = false;

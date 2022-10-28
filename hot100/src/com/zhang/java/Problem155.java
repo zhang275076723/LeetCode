@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2022/5/10 9:33
  * @Author zsy
- * @Description 最小栈 类比Problem232、Offer9、Offer41、Offer59_2 同Offer30
+ * @Description 最小栈 类比Problem225、Problem232、Problem295、Problem716、Offer9、Offer41、Offer59_2 同Offer30
  * 设计一个支持 push ，pop ，top 操作，并能在常数时间内检索到最小元素的栈。
  * 实现 MinStack 类:
  * MinStack() 初始化堆栈对象。
@@ -67,7 +67,7 @@ public class Problem155 {
         public void push(int val) {
             stack.push(val);
 
-            //等于号，考虑连续入栈两个相同的最小元素
+            //等于号，考虑连续当前栈中最小元素和入栈元素相等的情况
             if (minStack.isEmpty() || val <= minStack.peek()) {
                 minStack.push(val);
             }

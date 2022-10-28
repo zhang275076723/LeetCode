@@ -108,7 +108,7 @@ public class Problem76 {
     private boolean isCover(Map<Character, Integer> sMap, Map<Character, Integer> tMap) {
         for (Map.Entry<Character, Integer> entry : tMap.entrySet()) {
             //sMap中没有tMap中的key，或者sMap中有tMap中的key，但value小于tMap中的value，则说明当前窗口不能覆盖t
-            //如果Integer要比较是否相等，不能用==，而必须用equals，因为==比较的是地址是否相同
+            //如果Integer之间要比较是否相等，不能用==，而必须用equals，因为==比较的是地址是否相同
             if (!sMap.containsKey(entry.getKey()) || sMap.get(entry.getKey()) < entry.getValue()) {
                 return false;
             }

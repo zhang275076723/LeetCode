@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/7/1 9:24
  * @Author zsy
- * @Description 最长公共前缀 类比Problem208、Problem212
+ * @Description 最长公共前缀 类比Problem208、Problem211、Problem212
  * 编写一个函数来查找字符串数组中的最长公共前缀。
  * 如果不存在公共前缀，返回空字符串 ""。
  * <p>
@@ -111,8 +111,8 @@ public class Problem14 {
 
         Trie trie = new Trie();
 
-        for (int i = 0; i < strs.length; i++) {
-            trie.insert(strs[i]);
+        for (String word : strs) {
+            trie.insert(word);
         }
 
         int index = 0;

@@ -127,7 +127,7 @@ public class Problem438 {
 
     private boolean isCover(Map<Character, Integer> sMap, Map<Character, Integer> pMap) {
         for (Map.Entry<Character, Integer> entry : pMap.entrySet()) {
-            //注意Integer比较要使用equals，如果范围在[-128,127]之内能比较正确，其他范围比较失败
+            //注意Integer之间比较要使用equals，如果范围在[-128,127]之内能比较正确，其他范围比较失败
             if (!sMap.containsKey(entry.getKey()) || !sMap.get(entry.getKey()).equals(entry.getValue())) {
                 return false;
             }

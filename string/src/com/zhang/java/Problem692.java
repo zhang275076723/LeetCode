@@ -88,7 +88,7 @@ public class Problem692 {
         PriorityQueue<Map.Entry<String, Integer>> priorityQueue = new PriorityQueue<>(new Comparator<Map.Entry<String, Integer>>() {
             @Override
             public int compare(Map.Entry<String, Integer> entry1, Map.Entry<String, Integer> entry2) {
-                //因为是Integer，不能使用==
+                //因为是Integer之间比较，不能使用==
                 if (!entry1.getValue().equals(entry2.getValue())) {
                     //频率由小到大排序
                     return entry1.getValue() - entry2.getValue();

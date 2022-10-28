@@ -6,7 +6,7 @@ import java.util.Stack;
 /**
  * @Date 2022/3/20 16:41
  * @Author zsy
- * @Description 包含min函数的栈 类比Problem232、Offer9、Offer31、Offer41、Offer59_2 同Problem155
+ * @Description 包含min函数的栈 类比Problem225、Problem232、Problem295、Problem716、Offer9、Offer31、Offer41、Offer59_2 同Problem155
  * 定义栈的数据结构，请在该类型中实现一个能够得到栈的最小元素的 min 函数在该栈中，
  * 调用 min、push 及 pop 的时间复杂度都是 O(1)。
  * <p>
@@ -52,7 +52,7 @@ public class Offer30 {
         public void push(int x) {
             stack.push(x);
 
-            //等于号，考虑连续入栈两个相同的最小元素
+            //等于号，考虑连续当前栈中最小元素和入栈元素相等的情况
             if (minStack.isEmpty() || x <= minStack.peek()) {
                 minStack.push(x);
             }
