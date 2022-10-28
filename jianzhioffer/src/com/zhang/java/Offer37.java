@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/3/24 8:58
  * @Author zsy
- * @Description 序列化二叉树 同Problem297
+ * @Description 序列化二叉树 类比Problem449 同Problem297
  * 请实现两个函数，分别用来序列化和反序列化二叉树。
  * 你需要设计一个算法来实现二叉树的序列化与反序列化。
  * 这里不限定你的序列 / 反序列化算法执行逻辑，
@@ -164,6 +164,7 @@ public class Offer37 {
         }
 
         String value = list.remove(0);
+
         if ("null".equals(value)) {
             return null;
         }

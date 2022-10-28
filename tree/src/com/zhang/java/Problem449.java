@@ -3,44 +3,41 @@ package com.zhang.java;
 import java.util.*;
 
 /**
- * @Date 2022/5/27 9:52
+ * @Date 2022/10/28 18:34
  * @Author zsy
- * @Description 二叉树的序列化与反序列化 类比Problem449 同Offer37
- * 序列化是将一个数据结构或者对象转换为连续的比特位的操作，进而可以将转换后的数据存储在一个文件或者内存中，
- * 同时也可以通过网络传输到另一个计算机环境，采取相反方式重构得到原数据。
- * 请设计一个算法来实现二叉树的序列化与反序列化。这里不限定你的序列 / 反序列化算法执行逻辑，
- * 你只需要保证一个二叉树可以被序列化为一个字符串并且将这个字符串反序列化为原始的树结构。
+ * @Description 序列化和反序列化二叉搜索树 类比Problem297、Problem1008、Offer37
+ * 序列化是将数据结构或对象转换为一系列位的过程，以便它可以存储在文件或内存缓冲区中，
+ * 或通过网络连接链路传输，以便稍后在同一个或另一个计算机环境中重建。
+ * 设计一个算法来序列化和反序列化 二叉搜索树 。
+ * 对序列化/反序列化算法的工作方式没有限制。
+ * 您只需确保二叉搜索树可以序列化为字符串，并且可以将该字符串反序列化为最初的二叉搜索树。
+ * 编码的字符串应尽可能紧凑。
  * <p>
- * 输入：root = [1,2,3,null,null,4,5]
- * 输出：[1,2,3,null,null,4,5]
+ * 输入：root = [2,1,3]
+ * 输出：[2,1,3]
  * <p>
  * 输入：root = []
  * 输出：[]
  * <p>
- * 输入：root = [1]
- * 输出：[1]
- * <p>
- * 输入：root = [1,2]
- * 输出：[1,2]
- * <p>
- * 树中结点数在范围 [0, 10^4] 内
- * -1000 <= Node.val <= 1000
+ * 树中节点数范围是 [0, 10^4]
+ * 0 <= Node.val <= 10^4
+ * 题目数据 保证 输入的树是一棵二叉搜索树。
  */
-public class Problem297 {
+public class Problem449 {
     public static void main(String[] args) {
-        Problem297 problem297 = new Problem297();
-        String[] data = {"1", "2", "3", "null", "null", "4", "5"};
-        TreeNode root = problem297.buildTree(data);
+        Problem449 problem449 = new Problem449();
+        String[] data = {"2", "1", "3"};
+        TreeNode root = problem449.buildTree(data);
 
         //层序遍历序列化和反序列化
-        String serializeData = problem297.serialize(root);
+        String serializeData = problem449.serialize(root);
         System.out.println(serializeData);
-        TreeNode deserializeRoot = problem297.deserialize(serializeData);
+        TreeNode deserializeRoot = problem449.deserialize(serializeData);
 
-        //前序遍历序列化和反序列化
-        String serializeData2 = problem297.serialize2(root);
+        //利用二叉搜索树性质，前序遍历序列化和反序列化
+        String serializeData2 = problem449.serialize2(root);
         System.out.println(serializeData2);
-        TreeNode deserializeRoot2 = problem297.deserialize2(serializeData2);
+        TreeNode deserializeRoot2 = problem449.deserialize2(serializeData2);
     }
 
     /**
@@ -61,7 +58,6 @@ public class Problem297 {
 
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
-
             if (node == null) {
                 sb.append("null,");
             } else {
@@ -76,7 +72,7 @@ public class Problem297 {
     }
 
     /**
-     * 层序遍历反序列化
+     * 层次遍历反序列化
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param data
@@ -88,9 +84,6 @@ public class Problem297 {
         }
 
         String[] values = data.split(",");
-        //不能写成List<String> list = Arrays.asList(values);
-        //因为Arrays.asList(values)将数组转为集合之后，底层还是数组，
-        //返回的是java.util.Arrays的内部类ArrayList，这个类没有重写add、remove等方法，调用这些方法会抛出异常
         List<String> list = new ArrayList<>(Arrays.asList(values));
         Queue<TreeNode> queue = new LinkedList<>();
         TreeNode root = new TreeNode(Integer.parseInt(list.remove(0)));
@@ -121,7 +114,7 @@ public class Problem297 {
     }
 
     /**
-     * 前序遍历序列化二叉树
+     * 前序遍历序列化
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -133,24 +126,28 @@ public class Problem297 {
         }
 
         StringBuilder sb = new StringBuilder();
-        serialize2(root, sb);
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode node = root;
+
+        while (!stack.isEmpty() || node != null) {
+            while (node != null) {
+                sb.append(node.val).append(',');
+                stack.push(node);
+                node = node.left;
+            }
+
+            node = stack.pop();
+            node = node.right;
+        }
+
         //去除末尾','
         return sb.delete(sb.length() - 1, sb.length()).toString();
     }
 
-    private void serialize2(TreeNode root, StringBuilder sb) {
-        if (root == null) {
-            sb.append("null,");
-            return;
-        }
-
-        sb.append(root.val).append(",");
-        serialize2(root.left, sb);
-        serialize2(root.right, sb);
-    }
-
     /**
-     * 前序遍历反序列化二叉树
+     * 反前序遍历
+     * 二叉搜索树的中序遍历为顺序，即只根据二叉搜索树的前序遍历结果反序列化
+     * 二叉搜索树的前序遍历第一个节点为根节点，之后小于根节点值的都为左子树节点，之后都为右子树节点
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param data
@@ -162,31 +159,39 @@ public class Problem297 {
         }
 
         String[] values = data.split(",");
-        //不能写成List<String> list = Arrays.asList(values);
-        //因为Arrays.asList(values)将数组转为集合之后，底层还是数组，
-        //返回的是java.util.Arrays的内部类ArrayList，这个类没有重写add、remove等方法，调用这些方法会抛出异常
-        List<String> list = new ArrayList<>(Arrays.asList(values));
+        //二叉搜索树的前序遍历数组
+        int[] preorder = new int[values.length];
 
-        return deserialize2(list);
+        for (int i = 0; i < values.length; i++) {
+            preorder[i] = Integer.parseInt(values[i]);
+        }
+
+        //根据前序遍历数组构件二叉搜索树
+        return deserialize2(0, preorder.length - 1, preorder);
     }
 
-    private TreeNode deserialize2(List<String> list) {
-        if (list.isEmpty()) {
+    private TreeNode deserialize2(int left, int right, int[] preorder) {
+        if (left > right) {
             return null;
         }
 
-        String value = list.remove(0);
-
-        if ("null".equals(value)) {
-            return null;
+        if (left == right) {
+            return new TreeNode(preorder[left]);
         }
 
-        TreeNode node = new TreeNode(Integer.parseInt(value));
+        //右子树根节点为第一个比preorder[left]节点值大的元素
+        int rightRootIndex = left + 1;
 
-        node.left = deserialize2(list);
-        node.right = deserialize2(list);
+        while (rightRootIndex <= right && preorder[left] > preorder[rightRootIndex]) {
+            rightRootIndex++;
+        }
 
-        return node;
+        TreeNode root = new TreeNode(preorder[left]);
+
+        root.left = deserialize2(left + 1, rightRootIndex - 1, preorder);
+        root.right = deserialize2(rightRootIndex, right, preorder);
+
+        return root;
     }
 
     private TreeNode buildTree(String[] data) {
