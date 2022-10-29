@@ -59,9 +59,9 @@ public class Problem498 {
 
                 while (x >= 0 && y < n) {
                     result[index] = mat[x][y];
-                    index++;
                     x--;
                     y++;
+                    index++;
                 }
             } else {
                 //从右上到左下遍历
@@ -70,9 +70,9 @@ public class Problem498 {
 
                 while (x < m && y >= 0) {
                     result[index] = mat[x][y];
-                    index++;
                     x++;
                     y--;
+                    index++;
                 }
             }
         }
