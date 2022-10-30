@@ -43,7 +43,7 @@ public class Problem82 {
         }
 
         //设置头结点，使原先头结点成为普通节点，避免特殊情况的考虑
-        ListNode hair = new ListNode(0);
+        ListNode hair = new ListNode(head.val - 1);
         hair.next = head;
 
         ListNode node = head;
@@ -77,12 +77,14 @@ public class Problem82 {
             return head;
         }
 
+        //当前节点和下一个节点相等，更新头结点
         if (head.val == head.next.val) {
             while (head.next != null && head.val == head.next.val) {
                 head = head.next;
             }
-            return deleteDuplicates2(head.next);
+            head = deleteDuplicates2(head.next);
         } else {
+            //当前节点和下一个节点不相等，不更新头结点
             head.next = deleteDuplicates2(head.next);
         }
 

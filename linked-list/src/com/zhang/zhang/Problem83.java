@@ -42,17 +42,24 @@ public class Problem83 {
             return head;
         }
 
-        ListNode node = head;
+        ListNode hair = new ListNode(head.val - 1);
+        hair.next = head;
 
-        while (node.next != null) {
-            if (node.val == node.next.val) {
-                node.next = node.next.next;
+        ListNode node = head;
+        ListNode pre = hair;
+
+        while (node != null) {
+            if (pre.val == node.val) {
+                pre.next = node.next;
+                node.next = null;
+                node = pre.next;
             } else {
+                pre = node;
                 node = node.next;
             }
         }
 
-        return head;
+        return hair.next;
     }
 
     /**
@@ -67,10 +74,12 @@ public class Problem83 {
             return head;
         }
 
-        head.next = deleteDuplicates2(head.next);
-
+        //当前节点和下一个节点相等，更新头结点
         if (head.val == head.next.val) {
-            head.next = head.next.next;
+            head = deleteDuplicates(head.next);
+        } else {
+            //当前节点和下一个节点不相等，不更新头结点
+            head.next = deleteDuplicates(head.next);
         }
 
         return head;

@@ -62,17 +62,19 @@ public class Problem958 {
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
 
+            //标志位为true，且当前节点不为null，则说明之前出现过null节点，不是完全二叉树，返回false
+            if (flag && node != null) {
+                return false;
+            }
+
+            //当第一次出现null节点时，设置标志位为true
             if (node == null) {
                 flag = true;
-            } else {
-                //当存在null节点，之后还有null节点，返回false
-                if (flag) {
-                    return false;
-                }
-
-                queue.offer(node.left);
-                queue.offer(node.right);
+                continue;
             }
+
+            queue.offer(node.left);
+            queue.offer(node.right);
         }
 
         return true;
@@ -111,7 +113,7 @@ public class Problem958 {
             }
         }
 
-        return lastIndex == size;
+        return size == lastIndex;
     }
 
     /**
