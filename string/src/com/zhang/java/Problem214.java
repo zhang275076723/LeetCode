@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/17 11:42
  * @Author zsy
- * @Description 最短回文串 网易机试题 美团机试题 华为面试题 字节面试题 类比Problem5、Problem9、Problem131、Problem234、Problem516、Problem647
+ * @Description 最短回文串 网易机试题 美团机试题 华为面试题 字节面试题 类比Problem5、Problem9、Problem131、Problem234、Problem516、Problem647 kmp类比Problem28
  * 给定一个字符串 s，你可以通过在字符串前面添加字符将其转换为回文串。
  * 找到并返回可以用这种方式转换的最短回文串。
  * <p>
@@ -96,7 +96,7 @@ public class Problem214 {
 
     /**
      * kmp算法
-     * 主串指针不回退，模式串指针根据next数组回退
+     * 主串指针不回退，模式串指针在不匹配时根据next数组回退
      * 时间复杂度O(m+n)，空间复杂度O(n) (m=s.length()，n=p.length())
      *
      * @param s
@@ -122,7 +122,7 @@ public class Problem214 {
                 j++;
             }
 
-            //j遍历到末尾，则匹配，返回字符串s匹配的第一个字符索引
+            //j遍历到末尾，则匹配，返回字符串s匹配的第一个字符下标索引
             if (j == p.length()) {
                 return i - j + 1;
             }

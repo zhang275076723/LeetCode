@@ -68,6 +68,12 @@ public class Problem211 {
             node.isEnd = true;
         }
 
+        /**
+         * 带有通配符的字符串查询
+         *
+         * @param word
+         * @return
+         */
         public boolean search(String word) {
             return backtrack(0, word, root);
         }
