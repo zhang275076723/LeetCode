@@ -56,7 +56,7 @@ public class Problem13 {
 
     /**
      * 模拟
-     * 当前罗马字符小于右边罗马字符时，减去当前罗马数字；当前罗马字符大于右边罗马字符时，加上当前罗马数字
+     * 当前罗马字符小于右边罗马字符时，减去当前罗马数字；当前罗马字符大于等于右边罗马字符时，加上当前罗马数字
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param s
@@ -78,7 +78,7 @@ public class Problem13 {
             if (index + 1 < s.length() && value < getRomanValue(s.charAt(index + 1))) {
                 num = num - value;
             } else {
-                //如果当前罗马字符大于下一个罗马字符，则说明要加上当前罗马字符
+                //如果当前罗马字符大于等于下一个罗马字符，则说明要加上当前罗马字符
                 num = num + value;
             }
 
