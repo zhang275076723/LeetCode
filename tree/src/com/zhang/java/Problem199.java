@@ -71,7 +71,8 @@ public class Problem199 {
     }
 
     /**
-     * dfs，先遍历根节点，再遍历右子树，最后遍历左子树
+     * dfs
+     * 先遍历根节点，再遍历右子树，最后遍历左子树，保证每行首次都访问最右边节点
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -95,15 +96,17 @@ public class Problem199 {
      * @param depth 当前节点的深度
      */
     private void dfs(TreeNode root, List<Integer> list, int depth) {
-        if (root != null) {
-            //如果当前节点所在的深度正好和list集合大小相等，则说明当前节点是当前深度最右边节点
-            if (list.size() == depth) {
-                list.add(root.val);
-            }
-
-            dfs(root.right, list, depth + 1);
-            dfs(root.left, list, depth + 1);
+        if (root == null) {
+            return;
         }
+
+        //如果当前节点所在的深度正好和list集合大小相等，则说明当前节点是当前深度最右边节点
+        if (depth == list.size()) {
+            list.add(root.val);
+        }
+
+        dfs(root.right, list, depth + 1);
+        dfs(root.left, list, depth + 1);
     }
 
     private TreeNode buildTree(String[] data) {

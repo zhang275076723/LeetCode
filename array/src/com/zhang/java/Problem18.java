@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @Date 2022/8/29 8:27
  * @Author zsy
- * @Description 四数之和 类比Problem1、Problem15、Problem16、Problem454
+ * @Description 四数之和 类比Problem1、Problem15、Problem16、Problem167、Problem454、Offer57
  * 给你一个由 n 个整数组成的数组 nums ，和一个目标值 target 。
  * 请你找出并返回满足下述全部条件且不重复的四元组 [nums[a], nums[b], nums[c], nums[d]]
  * （若两个四元组元素一一对应，则认为两个四元组重复）：

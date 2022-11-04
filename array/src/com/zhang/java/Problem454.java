@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/8/29 11:09
  * @Author zsy
- * @Description 四数相加 II 类比Problem1、Problem15、Problem16、Problem18
+ * @Description 四数相加 II 类比Problem1、Problem15、Problem16、Problem18、Problem167、Offer57
  * 给你四个整数数组 nums1、nums2、nums3 和 nums4 ，数组长度都是 n ，
  * 请你计算有多少个元组 (i, j, k, l) 能满足：
  * 0 <= i, j, k, l < n
