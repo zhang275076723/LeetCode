@@ -1,24 +1,24 @@
 package com.zhang.java;
 
 /**
- * @Date 2022/3/26 17:04
+ * @Date 2022/11/6 08:58
  * @Author zsy
- * @Description 1～n 整数中 1 出现的次数 类比Offer44、Problem400 同Problem233
- * 输入一个整数 n ，求1～n这n个整数的十进制表示中1出现的次数。
- * 例如，输入12，1～12这些整数中包含1 的数字有1、10、11和12，1一共出现了5次。
- * <p>
- * 输入：n = 12
- * 输出：5
+ * @Description 数字 1 的个数 类比Problem400、Offer44 同Offer43
+ * 给定一个整数 n，计算所有小于等于 n 的非负整数中数字 1 出现的个数。
  * <p>
  * 输入：n = 13
  * 输出：6
  * <p>
- * 1 <= n < 2^31
+ * 输入：n = 0
+ * 输出：0
+ * <p>
+ * 0 <= n <= 10^9
  */
-public class Offer43 {
+public class Problem233 {
     public static void main(String[] args) {
-        Offer43 offer43 = new Offer43();
-        System.out.println(offer43.countDigitOne(123));
+        Problem233 problem233 = new Problem233();
+        int n = 123;
+        System.out.println(problem233.countDigitOne(n));
     }
 
     /**

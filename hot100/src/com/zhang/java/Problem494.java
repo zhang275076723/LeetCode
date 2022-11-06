@@ -159,7 +159,10 @@ public class Problem494 {
 
         int count = 0;
 
+        //加上当前元素nums[t]
         count = count + backtrack(t + 1, sum + nums[t], nums, target);
+
+        //减去当前元素nums[t]
         count = count + backtrack(t + 1, sum - nums[t], nums, target);
 
         return count;

@@ -78,6 +78,7 @@ public class Offer56 {
         //异或结果二进制不同的一位，根据这一位将数组中元素分为两部分
         int bit = 1;
 
+        //找异或结果中不相同，即为1的一位
         while ((result & bit) == 0) {
             bit = bit << 1;
         }
