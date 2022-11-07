@@ -42,19 +42,16 @@ public class Problem83 {
             return head;
         }
 
-        ListNode hair = new ListNode(head.val - 1);
+        //设置头结点，便于第一个节点的删除
+        ListNode hair = new ListNode(Integer.MAX_VALUE);
         hair.next = head;
 
-        ListNode node = head;
-        ListNode pre = hair;
+        ListNode node = hair;
 
-        while (node != null) {
-            if (pre.val == node.val) {
-                pre.next = node.next;
-                node.next = null;
-                node = pre.next;
+        while (node.next != null) {
+            if (node.val == node.next.val) {
+                node.next = node.next.next;
             } else {
-                pre = node;
                 node = node.next;
             }
         }
