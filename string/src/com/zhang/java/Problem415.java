@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/6/19 9:30
  * @Author zsy
- * @Description 字符串相加 类比Problem2、Problem43
+ * @Description 字符串相加 类比Problem2、Problem43、Problem67、Problem369
  * 给定两个字符串形式的非负整数 num1 和num2 ，计算它们的和并同样以字符串形式返回。
  * 你不能使用任何內建的用于处理大整数的库（比如 BigInteger）， 也不能直接将输入的字符串转换为整数形式。
  * <p>
@@ -74,7 +74,7 @@ public class Problem415 {
             sb.append(carry);
         }
 
-        //因为是尾添加，所以需要反转
+        //因为是从后往前遍历相加，所以需要反转
         return sb.reverse().toString();
     }
 }

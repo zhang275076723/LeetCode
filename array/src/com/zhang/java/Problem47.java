@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/8/6 10:00
  * @Author zsy
- * @Description 全排列 II 类比Problem39、Problem40、Problem46
+ * @Description 全排列 II 类比Problem39、Problem40、Problem46、Offer38
  * 给定一个可包含重复数字的序列 nums ，按任意顺序 返回所有不重复的全排列。
  * <p>
  * 输入：nums = [1,1,2]
@@ -37,6 +37,7 @@ public class Problem47 {
             return new ArrayList<>();
         }
 
+        //从小到大排序，便于去重
         heapSort(nums);
 
         List<List<Integer>> result = new ArrayList<>();
@@ -53,7 +54,7 @@ public class Problem47 {
         }
 
         for (int i = 0; i < nums.length; i++) {
-            //当前元素值和前一个元素值相同，直接剪枝，去重
+            //当前元素值和前一个元素值相同，且上一个元素没有被访问，说明本次和上次重复，直接剪枝
             if (i > 0 && nums[i] == nums[i - 1] && !visited[i - 1]) {
                 continue;
             }

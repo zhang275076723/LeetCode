@@ -49,6 +49,7 @@ public class Problem337 {
 
         int[] result = dfs(root);
 
+        //选根节点或者不选根节点的最大值，即为所能盗窃的最高金额
         return Math.max(result[0], result[1]);
     }
 

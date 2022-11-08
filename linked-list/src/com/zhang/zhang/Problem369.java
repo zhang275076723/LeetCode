@@ -3,7 +3,7 @@ package com.zhang.zhang;
 /**
  * @Date 2022/5/19 19:19
  * @Author zsy
- * @Description 给单链表加一 类比Problem2、Problem66 七牛云面试题
+ * @Description 给单链表加一 七牛云面试题 类比Problem2、Problem66、Problem67
  * 用一个 非空 单链表来表示一个非负整数，然后将这个整数加一。
  * 你可以假设这个整数除了 0 本身，没有任何前导的 0。
  * 这个整数的各个数位按照 高位在链表头部、低位在链表尾部 的顺序排列。
@@ -14,8 +14,8 @@ package com.zhang.zhang;
 public class Problem369 {
     public static void main(String[] args) {
         Problem369 problem369 = new Problem369();
-//        int[] data = {1, 9, 9};
-        int[] data = {9, 9, 9};
+        int[] data = {1, 9, 9};
+//        int[] data = {9, 9, 9};
         ListNode head = problem369.buildList(data);
         head = problem369.plusOne(head);
         while (head != null) {
@@ -36,27 +36,37 @@ public class Problem369 {
             return new ListNode(1);
         }
 
+        //反转链表，便于末尾加一操作
         head = reverse(head);
 
         ListNode node = head;
+        ListNode pre = head;
         //当前位进位
         int carry = 0;
         node.val++;
 
-        while (node.val > 9) {
-            carry = node.val / 10;
-            node.val = node.val % 10;
+        while (node != null) {
+            node.val = node.val + carry;
 
-            if (node.next != null) {
-                node.next.val = node.next.val + carry;
+            if (node.val > 9) {
+                carry = node.val / 10;
+                node.val = node.val % 10;
             } else {
-                //最高位进位，添加新节点
-                node.next = new ListNode(carry);
+                carry = 0;
+                //当前位进位为0，之后就不需要继续进行遍历
+                break;
             }
 
+            pre = node;
             node = node.next;
         }
 
+        //最高位有进位
+        if (node == null && carry != 0) {
+            pre.next = new ListNode(carry);
+        }
+
+        //再反转回来，得到结果链表
         return reverse(head);
     }
 

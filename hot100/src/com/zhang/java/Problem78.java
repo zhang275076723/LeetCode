@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/4/26 10:39
  * @Author zsy
- * @Description 子集 类比Problem17
+ * @Description 子集 类比Problem17、Problem77
  * 给你一个整数数组 nums ，数组中的元素 互不相同 。返回该数组所有可能的子集（幂集）。
  * 解集 不能 包含重复的子集。你可以按 任意顺序 返回解集。
  * <p>
@@ -29,7 +29,7 @@ public class Problem78 {
     }
 
     /**
-     * 回溯
+     * 回溯+剪枝
      * 时间复杂度O(n*2^n)，空间复杂度O(n) (一共2^n种状态，每一种状态添加到集合中需要O(n))
      *
      * @param nums
@@ -49,7 +49,7 @@ public class Problem78 {
 
     /**
      * 每遍历到一个元素，就将原结果集合中每个list添加该元素，重新添加回结果集合
-     * 时间复杂度O(n*2^n)，空间复杂度O(1)，一共2^n种状态，获取结果集合每个list需要O(n)
+     * 时间复杂度O(n*2^n)，空间复杂度O(1) (一共2^n种状态，获取结果集合每个list需要O(n))
      *
      * @param nums
      * @return
@@ -60,6 +60,7 @@ public class Problem78 {
         }
 
         List<List<Integer>> result = new ArrayList<>();
+        //先往结果集合中添加空集合，作为起始元素
         result.add(new ArrayList<>());
 
         for (int i = 0; i < nums.length; i++) {
@@ -69,9 +70,9 @@ public class Problem78 {
             for (int j = 0; j < size; j++) {
                 //结果集合每个list，需要当前list的副本，不能在原list上操作，会修改之后的list
                 List<Integer> list = new ArrayList<>(result.get(j));
-                //list添加该元素
+                //list添加当前元素
                 list.add(nums[i]);
-                //重新添加回集合
+                //重新添加回结果集合
                 result.add(list);
             }
         }

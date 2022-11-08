@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/5/19 19:08
  * @Author zsy
- * @Description 加一 类比Problem2、Problem369
+ * @Description 加一 类比Problem2、Problem67、Problem369
  * 给定一个由 整数 组成的 非空 数组所表示的非负整数，在该数的基础上加一。
  * 最高位数字存放在数组的首位， 数组中每个元素只存储单个数字。
  * 你可以假设除了整数 0 之外，这个整数不会以零开头。
@@ -27,12 +27,13 @@ import java.util.Arrays;
 public class Problem66 {
     public static void main(String[] args) {
         Problem66 problem66 = new Problem66();
-        int[] digits = {4, 3, 2, 1, 0};
+        int[] digits = {4, 3, 2, 9, 9};
         System.out.println(Arrays.toString(problem66.plusOne(digits)));
     }
 
     /**
      * 模拟
+     * 末尾元素加1，由后往前遍历
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param digits
@@ -43,31 +44,50 @@ public class Problem66 {
             return digits;
         }
 
-        digits[digits.length - 1]++;
+        int i = digits.length - 1;
+        //当前位的进位
+        int carry = 0;
 
-        int index = digits.length - 1;
+        //末尾加1
+        digits[i]++;
 
-        while (digits[index] == 10) {
-            //当前位置0
-            digits[index] = 0;
-            index--;
+        //末尾元素超过9才进行进位处理
+        if (digits[i] > 9) {
+            digits[i] = digits[i] - 10;
+            carry = 1;
+            i--;
 
-            if (index < 0) {
-                break;
+            while (i >= 0) {
+                //进位为0，则不需要往前再相加
+                if (carry == 0) {
+                    break;
+                }
+
+                digits[i] = digits[i] + carry;
+
+                if (digits[i] > 9) {
+                    digits[i] = digits[i] - 10;
+                    carry = 1;
+                } else {
+                    carry = 0;
+                }
+
+                i--;
+            }
+        }
+
+        //最高位有进位
+        if (i == -1 && carry != 0) {
+            int[] result = new int[digits.length + 1];
+            result[0] = carry;
+
+            for (int j = 1; j < result.length; j++) {
+                result[j] = digits[j - 1];
             }
 
-            //高位进1
-            digits[index]++;
-        }
-
-        //加一之后变成n+1位
-        if (index == -1) {
-            int[] result = new int[digits.length + 1];
-            result[0] = 1;
             return result;
+        } else {
+            return digits;
         }
-
-        //加一之后还是n位
-        return digits;
     }
 }

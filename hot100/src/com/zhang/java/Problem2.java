@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/11 8:02
  * @Author zsy
- * @Description 两数相加 类比Problem66、Problem369、Problem415
+ * @Description 两数相加 类比Problem66、Problem67、Problem369、Problem415
  * 给你两个 非空 的链表，表示两个非负的整数。
  * 它们每位数字都是按照 逆序 的方式存储的，并且每个节点只能存储 一位 数字。
  * 请你将两个数相加，并以相同形式返回一个表示和的链表。
@@ -43,6 +43,14 @@ public class Problem2 {
      * @return
      */
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        if (l1 == null) {
+            return l2;
+        }
+
+        if (l2 == null) {
+            return l1;
+        }
+
         //设置头结点，方便处理
         ListNode head = new ListNode();
         ListNode node = head;
@@ -98,8 +106,8 @@ public class Problem2 {
         }
 
         //最后一位进位处理
-        if (carry == 1) {
-            node.next = new ListNode(1);
+        if (carry != 0) {
+            node.next = new ListNode(carry);
         }
 
         return head.next;

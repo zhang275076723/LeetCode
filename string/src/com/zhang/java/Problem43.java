@@ -182,7 +182,7 @@ public class Problem43 {
             sb.append(carry);
         }
 
-        //因为是尾添加，所以需要反转
+        //因为是从后往前遍历相加，所以需要反转
         return sb.reverse().toString();
     }
 }
