@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/4/26 10:39
  * @Author zsy
- * @Description 子集 类比Problem17、Problem77
+ * @Description 子集 类比Problem17、Problem77、Problem90
  * 给你一个整数数组 nums ，数组中的元素 互不相同 。返回该数组所有可能的子集（幂集）。
  * 解集 不能 包含重复的子集。你可以按 任意顺序 返回解集。
  * <p>
@@ -86,10 +86,10 @@ public class Problem78 {
             return;
         }
 
-        //不添加当前元素的回溯
+        //不添加当前元素
         backtrack(t + 1, nums, list, result);
 
-        //添加当前元素的回溯
+        //添加当前元素
         list.add(nums[t]);
         backtrack(t + 1, nums, list, result);
         list.remove(list.size() - 1);

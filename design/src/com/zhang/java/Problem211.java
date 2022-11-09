@@ -97,8 +97,8 @@ public class Problem211 {
                 return false;
             } else {
                 //当前字符为普通字符，从当前节点继续遍历
-                if (node.children.containsKey(c) && backtrack(t + 1, word, node.children.get(c))) {
-                    return true;
+                if (node.children.containsKey(c)) {
+                    return backtrack(t + 1, word, node.children.get(c));
                 }
 
                 return false;
