@@ -40,7 +40,7 @@ public class Offer65 {
      * @return
      */
     public int add(int a, int b) {
-        //当进位位为0时，当前位即为a+b结果
+        //当进位为0时，当前位即为a+b结果
         while (b != 0) {
             //当前位
             int temp1 = a ^ b;

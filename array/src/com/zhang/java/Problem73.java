@@ -1,0 +1,98 @@
+package com.zhang.java;
+
+/**
+ * @Date 2022/11/10 11:32
+ * @Author zsy
+ * @Description 矩阵置零
+ * 给定一个 m x n 的矩阵，如果一个元素为 0 ，则将其所在行和列的所有元素都设为 0 。请使用 原地 算法。
+ * <p>
+ * 输入：matrix = [[1,1,1],[1,0,1],[1,1,1]]
+ * 输出：[[1,0,1],[0,0,0],[1,0,1]]
+ * <p>
+ * 输入：matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]
+ * 输出：[[0,0,0,0],[0,4,5,0],[0,3,1,0]]
+ * <p>
+ * m == matrix.length
+ * n == matrix[0].length
+ * 1 <= m, n <= 200
+ * -2^31 <= matrix[i][j] <= 2^31 - 1
+ */
+public class Problem73 {
+    public static void main(String[] args) {
+        Problem73 problem73 = new Problem73();
+        int[][] matrix = {
+                {0, 1, 2, 1},
+                {3, 4, 0, 2},
+                {1, 3, 1, 5}
+        };
+        problem73.setZeroes(matrix);
+    }
+
+    /**
+     * 使用两个标志位，分别记录第一行和第一列中是否有0
+     * 从第二行第二列开始遍历，如果当前元素为0，则在当前元素对应的首行和首列赋值为0，
+     * 最后遍历首行首列元素，如果为0，则对应的行或列整体为0
+     * 时间复杂度O(mn)，空间复杂度O(1)
+     *
+     * @param matrix
+     */
+    public void setZeroes(int[][] matrix) {
+        boolean rowFlag = false;
+        boolean columnFlag = false;
+
+        for (int i = 0; i < matrix.length; i++) {
+            if (matrix[i][0] == 0) {
+                columnFlag = true;
+                break;
+            }
+        }
+
+        for (int j = 0; j < matrix[0].length; j++) {
+            if (matrix[0][j] == 0) {
+                rowFlag = true;
+                break;
+            }
+        }
+
+        for (int i = 1; i < matrix.length; i++) {
+            for (int j = 1; j < matrix[0].length; j++) {
+                //当前元素为0，则对应的首行和首列赋值为0
+                if (matrix[i][j] == 0) {
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                }
+            }
+        }
+
+        //遍历首列为0的元素
+        for (int i = 1; i < matrix.length; i++) {
+            if (matrix[i][0] == 0) {
+                for (int j = 1; j < matrix[0].length; j++) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
+        //遍历首行为0的元素
+        for (int j = 1; j < matrix[0].length; j++) {
+            if (matrix[0][j] == 0) {
+                for (int i = 1; i < matrix.length; i++) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
+        //根据rowFlag和columnFlag，判断首行和首列是否需要赋值为0
+        if (rowFlag) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                matrix[0][j] = 0;
+            }
+        }
+
+        if (columnFlag) {
+            for (int i = 0; i < matrix.length; i++) {
+                matrix[i][0] = 0;
+            }
+        }
+    }
+}

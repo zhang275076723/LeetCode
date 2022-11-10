@@ -4,7 +4,7 @@ package com.zhang.java;
 /**
  * @Date 2021/11/24 19:15
  * @Author zsy
- * @Description 移除元素 类比Problem26、Problem75、Problem283
+ * @Description 移除元素 类比Problem26、Problem75、Problem80、Problem283
  * 给定一个数组nums和一个值val，你需要原地移除所有数值等于val的元素，并返回移除后数组的新长度
  * 不使用额外的数组空间，你必须仅使用O(1)额外空间并原地修改输入数组
  * 元素的顺序可以改变，不需要考虑数组中超出新长度后面的元素
