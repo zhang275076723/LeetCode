@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/17 11:42
  * @Author zsy
- * @Description 最短回文串 网易机试题 美团机试题 华为面试题 字节面试题 类比Problem5、Problem9、Problem131、Problem234、Problem516、Problem647 kmp类比Problem28
+ * @Description 最短回文串 网易机试题 美团机试题 华为面试题 字节面试题 类比Problem5、Problem9、Problem131、Problem132、Problem234、Problem516、Problem647 kmp类比Problem28
  * 给定一个字符串 s，你可以通过在字符串前面添加字符将其转换为回文串。
  * 找到并返回可以用这种方式转换的最短回文串。
  * <p>
@@ -37,7 +37,7 @@ public class Problem214 {
             return "";
         }
 
-        //从后往前找s[0]开头的最长回文串
+        //从后往前找以s[0]开头的最长回文串
         for (int i = s.length() - 1; i >= 0; i--) {
             int left = 0;
             int right = i;
@@ -47,7 +47,7 @@ public class Problem214 {
                 right--;
             }
 
-            //s[0]-s[i]构成回文串
+            //s[0]-s[i]能构成回文串
             if (left > right) {
                 //反转s[i+1]-s[s.length()-1]，拼接上s，得到最短回文串
                 return new StringBuilder().append(s.substring(i + 1, s.length())).reverse().append(s).toString();
@@ -79,7 +79,7 @@ public class Problem214 {
         //模式串s指针
         int j = 0;
 
-        //通过kmp，得到reverse(s)和s的匹配结果，即以s[0]开始的最长回文串，s[0]-s[j]
+        //通过kmp，得到reverse(s)和s匹配的，以s[0]开始的最长回文串，s[0]-s[j-1]
         for (i = 0; i < p.length(); i++) {
             while (j > 0 && p.charAt(i) != s.charAt(j)) {
                 j = next[j - 1];

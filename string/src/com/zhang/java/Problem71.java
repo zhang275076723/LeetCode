@@ -2,7 +2,6 @@ package com.zhang.java;
 
 import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Stack;
 
 /**
  * @Date 2022/11/10 12:10

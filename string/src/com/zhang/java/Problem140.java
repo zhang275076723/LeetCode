@@ -130,6 +130,7 @@ public class Problem140 {
 
     private void backtrack2(int t, Deque<String> deque, String s, boolean[] dp,
                             Set<String> wordDictSet, List<String> result) {
+        //因为是从后往前遍历，当t为0时，即找到一个字符串s的拆分
         if (t == 0) {
             StringBuilder sb = new StringBuilder();
             for (String word : deque) {
