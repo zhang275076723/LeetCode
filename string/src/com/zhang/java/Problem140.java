@@ -144,6 +144,7 @@ public class Problem140 {
         for (int i = t - 1; i >= 0; i--) {
             //当s[0]-s[i-1]可以拆分为wordDict中的单词，并且s[i]-s[t-1]是s中单词的时候，才继续查找
             if (dp[i] && wordDictSet.contains(s.substring(i, t))) {
+                //因为是从后往前遍历，所以需要首添加
                 deque.offerFirst(s.substring(i, t));
                 backtrack2(i, deque, s, dp, wordDictSet, result);
                 deque.pollFirst();

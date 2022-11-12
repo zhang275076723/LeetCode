@@ -20,7 +20,7 @@ import java.util.Map;
  * -1000 <= nums[i] <= 1000
  * -10^7 <= k <= 10^7
  * <p>
- * 注意：因为数组中元素存在负数所以不能使用滑动窗口，如果都是正数，则可以使用滑动窗口，所以只能使用前缀和
+ * 注意：因为数组中元素存在负数所以不能使用滑动窗口，只能使用前缀和，如果都是正数，则可以使用滑动窗口
  */
 public class Problem560 {
     public static void main(String[] args) {

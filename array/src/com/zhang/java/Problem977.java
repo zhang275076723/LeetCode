@@ -24,26 +24,7 @@ public class Problem977 {
     public static void main(String[] args) {
         Problem977 p = new Problem977();
         int[] nums = {-4, -1, 0, 3, 10};
-        System.out.println(Arrays.toString(p.sortedSquares2(nums)));
-    }
-
-    /**
-     * 暴力
-     * 时间复杂度O(nlogn)，空间复杂度O(logn)
-     *
-     * @param nums
-     * @return
-     */
-    public int[] sortedSquares(int[] nums) {
-        int[] result = new int[nums.length];
-
-        for (int i = 0; i < nums.length; i++) {
-            result[i] = nums[i] * nums[i];
-        }
-
-        Arrays.sort(result);
-
-        return result;
+        System.out.println(Arrays.toString(p.sortedSquares(nums)));
     }
 
     /**
@@ -54,8 +35,9 @@ public class Problem977 {
      * @param nums
      * @return
      */
-    public int[] sortedSquares2(int[] nums) {
+    public int[] sortedSquares(int[] nums) {
         int[] result = new int[nums.length];
+
         int i = 0;
         int j = nums.length - 1;
         int index = nums.length - 1;

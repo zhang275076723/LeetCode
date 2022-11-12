@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/4/21 10:30
  * @Author zsy
- * @Description 缺失的第一个正数 字节面试题 类比Problem287、Problem448、Offer3
+ * @Description 缺失的第一个正数 字节面试题 类比Problem268、Problem287、Problem448、Offer3
  * 给你一个未排序的整数数组 nums ，请你找出其中没有出现的最小的正整数。
  * 请你实现时间复杂度为 O(n) 并且只使用常数级别额外空间的解决方案。
  * <p>

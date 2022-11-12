@@ -57,7 +57,7 @@ public class Problem692 {
         Collections.sort(list, new Comparator<String>() {
             @Override
             public int compare(String s1, String s2) {
-                //因为是Integer，不能使用==
+                //Integer之间比较，不能使用==，而应该使用equals()
                 if (!map.get(s1).equals(map.get(s2))) {
                     return map.get(s2) - map.get(s1);
                 } else {
@@ -88,7 +88,7 @@ public class Problem692 {
         PriorityQueue<Map.Entry<String, Integer>> priorityQueue = new PriorityQueue<>(new Comparator<Map.Entry<String, Integer>>() {
             @Override
             public int compare(Map.Entry<String, Integer> entry1, Map.Entry<String, Integer> entry2) {
-                //因为是Integer之间比较，不能使用==
+                //Integer之间比较，不能使用==，而应该使用equals()
                 if (!entry1.getValue().equals(entry2.getValue())) {
                     //频率由小到大排序
                     return entry1.getValue() - entry2.getValue();
@@ -110,7 +110,7 @@ public class Problem692 {
 
         LinkedList<String> list = new LinkedList<>();
 
-        while(!priorityQueue.isEmpty()){
+        while (!priorityQueue.isEmpty()) {
             //小根堆按照频率由小到大排序，按照字典顺序逆序排序，所以list首添加
             list.addFirst(priorityQueue.poll().getKey());
         }
