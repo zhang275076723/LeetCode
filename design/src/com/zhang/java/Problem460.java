@@ -1,4 +1,4 @@
-package com.zhang.zhang;
+package com.zhang.java;
 
 import java.util.HashMap;
 import java.util.Map;

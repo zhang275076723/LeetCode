@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/2 10:09
  * @Author zsy
- * @Description 前 K 个高频元素 华为机试题、腾讯机试题、字节面试题 类比Problem215、Problem692、Offer40
+ * @Description 前 K 个高频元素 华为机试题、腾讯机试题、字节面试题 类比Problem215、Problem451、Problem692、Offer40
  * 给你一个整数数组 nums 和一个整数 k ，请你返回其中出现频率前 k 高的元素。你可以按 任意顺序 返回答案。
  * <p>
  * 输入: nums = [1,1,1,2,2,3], k = 2

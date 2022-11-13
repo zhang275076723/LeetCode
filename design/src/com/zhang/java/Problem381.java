@@ -86,20 +86,15 @@ public class Problem381 {
             set.remove(index);
 
             int lastValue = list.get(list.size() - 1);
-            list.set(index, lastValue);
-
             Set<Integer> lastValueSet = map.get(lastValue);
+
+            list.set(index, lastValue);
             lastValueSet.add(index);
             lastValueSet.remove(list.size() - 1);
 
-            //当前元素val的set集合为空，map中直接删除队列
+            //当前元素val的set集合为空，map中直接删除set
             if (set.isEmpty()) {
                 map.remove(val);
-            }
-
-            //最后一个元素的set集合为空，map中直接删除队列
-            if (lastValueSet.isEmpty()) {
-                map.remove(lastValue);
             }
 
             list.remove(list.size() - 1);
