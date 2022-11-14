@@ -94,7 +94,9 @@ public class Problem307 {
                 }
 
                 int mid = left + ((right - left) >> 1);
+                //左子树根节点
                 int leftRootIndex = rootIndex * 2 + 1;
+                //右子树根节点
                 int rightRootIndex = rootIndex * 2 + 2;
 
                 buildSegmentTree(nums, segmentTreeArr, leftRootIndex, left, mid);
@@ -126,7 +128,9 @@ public class Problem307 {
                 }
 
                 int mid = left + ((right - left) >> 1);
+                //左子树根节点
                 int leftRootIndex = rootIndex * 2 + 1;
+                //右子树根节点
                 int rightRootIndex = rootIndex * 2 + 2;
 
                 int leftValue = query(leftRootIndex, left, mid, queryLeft, queryRight);
@@ -152,7 +156,7 @@ public class Problem307 {
                     return;
                 }
 
-                //找到线段树数值中的叶节点，进行修改
+                //找到线段树数组中表示nums[index]的叶节点，进行修改
                 if (left == right) {
                     nums[index] = value;
                     segmentTreeArr[rootIndex] = value;
@@ -160,7 +164,9 @@ public class Problem307 {
                 }
 
                 int mid = left + ((right - left) >> 1);
+                //左子树根节点
                 int leftRootIndex = rootIndex * 2 + 1;
+                //右子树根节点
                 int rightRootIndex = rootIndex * 2 + 2;
 
                 update(nums, leftRootIndex, left, mid, index, value);

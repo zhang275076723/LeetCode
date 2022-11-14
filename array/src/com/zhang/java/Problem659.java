@@ -52,6 +52,7 @@ public class Problem659 {
             return false;
         }
 
+        //key：连续子序列的结尾元素，value：连续子序列长度的小根堆
         Map<Integer, Queue<Integer>> map = new HashMap<>();
 
         for (int num : nums) {

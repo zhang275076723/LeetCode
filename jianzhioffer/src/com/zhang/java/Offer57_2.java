@@ -181,23 +181,24 @@ public class Offer57_2 {
         map.put(0, 0);
 
         List<int[]> list = new ArrayList<>();
-        int pre = 0;
+        //当前前缀和
+        int sum = 0;
 
         for (int i = 1; i <= target / 2 + 1; i++) {
-            pre = pre + i;
+            sum = sum + i;
 
             //map中存在key为pre - target的前缀和，说明有满足子数组之和为target的情况
-            if (map.containsKey(pre - target)) {
-                int[] temp = new int[i - map.get(pre - target)];
+            if (map.containsKey(sum - target)) {
+                int[] temp = new int[i - map.get(sum - target)];
 
                 for (int j = 0; j < temp.length; j++) {
-                    temp[j] = map.get(pre - target) + j + 1;
+                    temp[j] = map.get(sum - target) + j + 1;
                 }
 
                 list.add(temp);
             }
 
-            map.put(pre, i);
+            map.put(sum, i);
         }
 
         return list.toArray(new int[list.size()][]);
