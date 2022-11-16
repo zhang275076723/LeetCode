@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/7/5 21:18
  * @Author zsy
- * @Description 买卖股票的最佳时机 II 类比Problem121、Problem309、Offer63
+ * @Description 买卖股票的最佳时机 II 类比Problem121、Problem123、Problem188、Problem309、Problem714、Offer63
  * 给你一个整数数组 prices ，其中 prices[i] 表示某支股票第 i 天的价格。
  * 在每一天，你可以决定是否购买和/或出售股票。你在任何时候 最多 只能持有 一股 股票。
  * 你也可以先购买，然后在 同一天 出售。
@@ -38,8 +38,8 @@ public class Problem122 {
 
     /**
      * 动态规划
-     * dp[i][0]：到price[i]那天，持有一只股票的最大利润
-     * dp[i][1]：到price[i]那天，不持有股票的最大利润
+     * dp[i][0]：到prices[i]那天，持有一只股票的最大利润
+     * dp[i][1]：到prices[i]那天，不持有股票的最大利润
      * dp[i][0] = max(dp[i-1][0], dp[i-1][1] - prices[i])
      * dp[i][1] = max(dp[i-1][1], dp[i-1][0] + prices[i])
      * 最大利润 = dp[prices.length-1][1]
@@ -60,7 +60,7 @@ public class Problem122 {
 
         for (int i = 1; i < prices.length; i++) {
             dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] - prices[i]);
-            dp[i][1] = Math.max(dp[i - 1][0] + prices[i], dp[i - 1][1]);
+            dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + prices[i]);
         }
 
         return dp[prices.length - 1][1];
@@ -68,8 +68,8 @@ public class Problem122 {
 
     /**
      * 动态规划优化，滚动数组
-     * dp1：到price[i]那天，持有一只股票的最大利润
-     * dp2：到price[i]那天，不持有股票的最大利润
+     * dp1：到prices[i]那天，持有一只股票的最大利润
+     * dp2：到prices[i]那天，不持有股票的最大利润
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param prices
@@ -84,7 +84,7 @@ public class Problem122 {
         int dp2 = 0;
 
         for (int i = 1; i < prices.length; i++) {
-            //因为上一次的状态会在本次中变化，所以要使用临时变量
+            //保存上次状态，因为上次状态会在本次发生变化
             int temp1 = dp1;
             int temp2 = dp2;
 

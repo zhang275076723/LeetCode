@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/8 12:53
  * @Author zsy
- * @Description 二进制求和 类比Problem2、Problem66、Problem369、Problem415
+ * @Description 二进制求和 类比Problem2、Problem66、Problem369、Problem415、Problem445
  * 给你两个二进制字符串 a 和 b ，以二进制字符串的形式返回它们的和。
  * <p>
  * 输入:a = "11", b = "1"
@@ -92,7 +92,7 @@ public class Problem67 {
             j--;
         }
 
-        //最高位进位不为1，添加最高位进位
+        //最高位进位处理
         if (carry != 0) {
             sb.append(carry);
         }

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/8 15:26
  * @Author zsy
- * @Description 股票的最大利润 类比Problem122、Problem309 同Problem121
+ * @Description 股票的最大利润 类比Problem122、Problem123、Problem188、Problem309、Problem714 同Problem121
  * 假设把某股票的价格按照时间先后顺序存储在数组中，请问买卖该股票一次可能获得的最大利润是多少？
  * <p>
  * 输入: [7,1,5,3,6,4]
@@ -27,7 +27,7 @@ public class Offer63 {
 
     /**
      * 动态规划
-     * dp[i]：到price[i]那天的最大利润
+     * dp[i]：到prices[i]那天获取的最大利润
      * dp[i] = dp[i-1]                         (prices[i] < minPrice)
      * dp[i] = max(dp[i-1], price[i]-minPrice) (prices[i] >= minPrice)
      * 时间复杂度(n)，空间复杂度O(n)
