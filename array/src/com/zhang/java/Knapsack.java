@@ -140,7 +140,7 @@ public class Knapsack {
      * dp[i][j]：前i件物品在容量为j的情况下的最大价值
      * dp[i][j] = dp[i-1][j]                                                (weight[i-1] > j)
      * dp[i][j] = max(dp[i-1][j], dp[i][j-weight[i-1]] + values[i-1])       (weight[i-1] <= j)
-     * 时间复杂度O(mnk)，空间复杂度O(mn)，可以使用滚动数组优化空间复杂度为O(n) (m=weights.length, n=bagWeight)
+     * 时间复杂度O(mn)，空间复杂度O(mn)，可以使用滚动数组优化空间复杂度为O(n) (m=weights.length, n=bagWeight)
      *
      * @param weights
      * @param values
