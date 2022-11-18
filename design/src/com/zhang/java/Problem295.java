@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * @Date 2022/10/27 09:07
  * @Author zsy
- * @Description 数据流的中位数 类比Problem155、Problem232、Problem295、Problem716、Offer9、Offer30、Offer59_2 同Offer41
+ * @Description 数据流的中位数 类比Problem155、Problem232、Problem295、Problem716、Offer9、Offer30、Offer31、Offer59_2 同Offer41
  * 中位数是有序列表中间的数。如果列表长度是偶数，中位数则是中间两个数的平均值。
  * 例如，
  * [2,3,4] 的中位数是 3
@@ -70,7 +70,7 @@ public class Problem295 {
             maxQueue.offer(num);
             minQueue.offer(maxQueue.poll());
 
-            //当大根堆元素个数小于小根堆元素个数时，小根堆堆顶元素出栈，大根堆入栈
+            //当大根堆元素个数小于小根堆元素个数时，小根堆堆顶元素出栈，大根堆入栈，始终保证大根堆元素数量大于等于小根堆元素数量
             if (maxQueue.size() < minQueue.size()) {
                 maxQueue.offer(minQueue.poll());
             }

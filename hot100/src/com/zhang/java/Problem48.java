@@ -58,7 +58,7 @@ public class Problem48 {
             return;
         }
 
-        //由外到内一圈一圈调整几轮，每组的四个元素
+        //由外到内一圈一圈调整，每组的四个元素
         for (int i = 0; i < matrix.length / 2; i++) {
             //每组要调整的四个元素矩阵的左上元素
             int start = i;

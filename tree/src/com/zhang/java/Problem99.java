@@ -94,6 +94,7 @@ public class Problem99 {
 
             //当前节点前驱节点的值大于等于当前节点的值，则当前的两个节点需要调整
             if (pre != null && pre.val >= node.val) {
+                //当要交换的第一个节点为空时，为node1赋值
                 if (node1 == null) {
                     node1 = pre;
                 }
@@ -101,7 +102,9 @@ public class Problem99 {
                 node2 = node;
             }
 
+            //更新前驱节点
             pre = node;
+            //更新当前节点
             node = node.right;
         }
 
@@ -120,6 +123,7 @@ public class Problem99 {
 
         //当前节点前驱节点的值大于等于当前节点的值，则当前的两个节点需要调整
         if (pre != null && pre.val >= root.val) {
+            //当要交换的第一个节点为空时，为node1赋值
             if (node1 == null) {
                 node1 = pre;
             }
@@ -127,6 +131,7 @@ public class Problem99 {
             node2 = root;
         }
 
+        //更新前驱节点
         pre = root;
 
         inorder(root.right);

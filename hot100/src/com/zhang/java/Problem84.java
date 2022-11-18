@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2022/4/28 9:35
  * @Author zsy
- * @Description 柱状图中最大的矩形 类比Problem11、Problem85 单调栈类比Problem42、Problem316、Problem321、Problem402、Problem739
+ * @Description 柱状图中最大的矩形 类比Problem11、Problem85 单调栈类比Problem42、Problem316、Problem321、Problem402、Problem496、Problem503、Problem739
  * 给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。
  * 求在该柱状图中，能够勾勒出来的矩形的最大面积。
  * <p>
@@ -67,7 +67,7 @@ public class Problem84 {
     }
 
     /**
-     * 单调栈
+     * 单调栈 (求当前元素之后，比当前元素大或小的元素，就要想到单调栈)
      * 当前位置的最大面积：当前位置为高，往左右找第一个小于当前高的位置为宽
      * 如果height[i]大于等于栈顶元素，则将对应索引下标i入栈；
      * 如果height[i]小于栈顶元素，则依次出栈，直至栈空或满足单调递增栈，并将对应索引下标i入栈

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/9/12 17:08
  * @Author zsy
- * @Description 去除重复字母 腾讯面试题 华为面试题 类比Problem42、Problem84、Problem321、Problem402、Problem739
+ * @Description 去除重复字母 腾讯面试题 华为面试题 类比Problem42、Problem84、Problem321、Problem402、Problem496、Problem503、Problem739
  * 给你一个字符串 s ，请你去除字符串中重复的字母，使得每个字母只出现一次。
  * 需保证 返回结果的字典序最小（要求不能打乱其他字符的相对位置）。
  * <p>
@@ -26,10 +26,10 @@ public class Problem316 {
     }
 
     /**
-     * 单调栈+哈希
+     * 单调栈+哈希 (求当前元素之后，比当前元素大或小的元素，就要想到单调栈)
      * 单调递增栈存放字典序最小，并不打乱其他字符的相对位置的字符串
      * 哈希统计不同字符和出现的次数
-     * 时间复杂度O(n)，空间复杂度O(|Σ|) (共26个小写英文字母，所以|Σ|=26)
+     * 时间复杂度O(n)，空间复杂度O(|Σ|) (|Σ| = 26，s只包含小写字母，共26个字符)
      *
      * @param s
      * @return
@@ -52,11 +52,12 @@ public class Problem316 {
         Deque<Character> stack = new ArrayDeque<>();
 
         for (char c : s.toCharArray()) {
-            //当栈不为空，c未被访问，栈顶元素字典序大于c字典序，且栈顶元素在后面还有的情况下，才栈顶元素出栈
+            //当栈不为空，c未被访问，栈顶元素字典序大于c字典序，且栈顶元素在后面还有的情况下，才将栈顶元素出栈
             while (!stack.isEmpty() && !visited[c - 'a'] && stack.peekLast() > c && map.get(stack.peekLast()) > 0) {
-                //栈顶元素出栈，当前元素未访问
+                //栈顶元素出栈
                 char c2 = stack.pollLast();
-                visited[c2-'a'] = false;
+                //当前元素未访问
+                visited[c2 - 'a'] = false;
             }
 
             //c未被添加到单调栈中，则进行添加
@@ -65,7 +66,7 @@ public class Problem316 {
                 stack.offerLast(c);
             }
 
-            //c的个数减1
+            //字符c的个数减1
             map.put(c, map.get(c) - 1);
         }
 

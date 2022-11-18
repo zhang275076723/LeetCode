@@ -169,7 +169,7 @@ public class Problem14 {
             TrieNode node = root;
 
             for (char c : str.toCharArray()) {
-                if (node.children.get(c) == null) {
+                if (!node.children.containsKey(c)) {
                     node.children.put(c, new TrieNode());
                 }
 

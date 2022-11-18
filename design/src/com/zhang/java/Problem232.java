@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2022/7/19 8:09
  * @Author zsy
- * @Description 用栈实现队列 类比Problem155、Problem232、Problem295、Problem716、Offer30、Offer41、Offer59_2 同Offer9
+ * @Description 用栈实现队列 类比Problem155、Problem232、Problem295、Problem716、Offer30、Offer31、Offer41、Offer59_2 同Offer9
  * 请你仅使用两个栈实现先入先出队列。队列应当支持一般队列支持的所有操作（push、pop、peek、empty）：
  * 实现 MyQueue 类：
  * void push(int x) 将元素 x 推到队列的末尾

@@ -59,6 +59,7 @@ public class Problem501 {
         }
 
         List<Integer> list = new ArrayList<>();
+
         inorder(root, list);
 
         int[] result = new int[list.size()];

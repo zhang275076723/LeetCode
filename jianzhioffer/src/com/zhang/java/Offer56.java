@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * @Date 2022/4/4 9:09
  * @Author zsy
- * @Description 数组中数字出现的次数 类比Problem136、Problem137、Offer56_2、Offer65 同Problem260
+ * @Description 数组中数字出现的次数 类比Problem136、Problem137、Problem389、Offer56_2、Offer65 同Problem260
  * 一个整型数组 nums 里除两个数字之外，其他数字都出现了两次。
  * 请写程序找出这两个只出现一次的数字。
  * 要求时间复杂度是O(n)，空间复杂度是O(1)。

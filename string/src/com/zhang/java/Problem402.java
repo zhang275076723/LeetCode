@@ -6,7 +6,7 @@ import java.util.LinkedList;
 /**
  * @Date 2022/4/19 19:00
  * @Author zsy
- * @Description 移掉 K 位数字 华为面试题、字节面试题 类比Problem42、Problem84、Problem316、Problem321、Problem739
+ * @Description 移掉 K 位数字 华为面试题、字节面试题 类比Problem42、Problem84、Problem316、Problem321、Problem496、Problem503、Problem739
  * 给你一个以字符串表示的非负整数 num 和一个整数 k ，
  * 移除这个数中的 k 位数字，使得剩下的数字最小。请你以字符串形式返回这个最小的数字。
  * <p>
@@ -84,7 +84,7 @@ public class Problem402 {
     }
 
     /**
-     * 单调栈
+     * 单调栈 (求当前元素之后，比当前元素大或小的元素，就要想到单调栈)
      * 单调递增栈，移除k个不满足栈要求的元素，加上之后的元素，构成最小数字
      * 时间复杂度O(n)，空间复杂度O(n)
      *

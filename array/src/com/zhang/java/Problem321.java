@@ -8,7 +8,7 @@ import java.util.LinkedList;
 /**
  * @Date 2022/9/12 8:32
  * @Author zsy
- * @Description 拼接最大数 字节面试题 类比Problem42、Problem84、Problem316、Problem402、Problem739
+ * @Description 拼接最大数 字节面试题 类比Problem42、Problem84、Problem316、Problem402、Problem496、Problem503、Problem739
  * 给定长度分别为 m 和 n 的两个数组，其元素由 0-9 构成，表示两个自然数各位上的数字。
  * 现在从这两个数组中选出 k (k <= m + n) 个数字拼接成一个新的数，要求从同一个数组中取出的数字保持其在原数组中的相对顺序。
  * 求满足该条件的最大数。结果返回一个表示该最大数的长度为 k 的数组。
@@ -74,7 +74,7 @@ public class Problem321 {
     }
 
     /**
-     * 得到nums中长度为k的最大数子序列
+     * 得到nums中长度为k的最大数子序列 (求当前元素之后，比当前元素大或小的元素，就要想到单调栈)
      * 单调栈，单调递减栈保证元素单调递减，即保证得到长度为k的最大数子序列
      * 时间复杂度O(n)，空间复杂度O(n)
      *

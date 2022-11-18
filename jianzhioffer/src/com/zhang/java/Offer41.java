@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/3/25 19:30
  * @Author zsy
- * @Description 数据流中的中位数 类比Problem155、Problem225、Problem232、Problem716、Offer9、Offer30、Offer59_2 同Problem295
+ * @Description 数据流中的中位数 类比Problem155、Problem225、Problem232、Problem716、Offer9、Offer30、Offer31、Offer59_2 同Problem295
  * 如何得到一个数据流中的中位数？
  * 如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。
  * 如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。
@@ -69,6 +69,7 @@ public class Offer41 {
             maxHeap.offer(num);
             minHeap.offer(maxHeap.poll());
 
+            //当大根堆元素个数小于小根堆元素个数时，小根堆堆顶元素出栈，大根堆入栈，始终保证大根堆元素数量大于等于小根堆元素数量
             if (maxHeap.size() < minHeap.size()) {
                 maxHeap.offer(minHeap.poll());
             }

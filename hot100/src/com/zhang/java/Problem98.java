@@ -81,7 +81,9 @@ public class Problem98 {
                 return false;
             }
 
+            //更新前驱节点
             pre = node;
+            //更新当前节点
             node = node.right;
         }
 

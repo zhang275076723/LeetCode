@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/10 8:40
  * @Author zsy
- * @Description 单调递增的数字
+ * @Description 单调递增的数字 类比Problem31、Problem556
  * 当且仅当每个相邻位数上的数字 x 和 y 满足 x <= y 时，我们称这个整数是单调递增的。
  * 给定一个整数 n ，返回 小于或等于 n 的最大数字，且数字呈 单调递增 。
  * <p>
@@ -59,7 +59,7 @@ public class Problem738 {
         //第一个nums[i]减1
         nums[i]--;
 
-        //之后元素均为9
+        //nums[i]之后元素均为9
         for (int j = i + 1; j < nums.length; j++) {
             nums[j] = '9';
         }

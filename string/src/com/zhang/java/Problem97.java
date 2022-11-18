@@ -38,7 +38,7 @@ public class Problem97 {
     /**
      * 动态规划
      * dp[i][j]：s1[0]-s1[i-1]和s2[0]-s2[j-1]能否交错形成s3[0]-s3[i+j-1]
-     * dp[i][j] = (dp[i-1][j] && s1[i-1] == s3[i+j-1]) || (dp[i][j-1] && s2[j-1] == s3[i+j-1])
+     * dp[i][j] = (s1[i-1] == s3[i+j-1] && dp[i-1][j]) || (s2[j-1] == s3[i+j-1] && dp[i][j-1])
      * 时间复杂度O(mn)，空间复杂度O(mn) (m=s1.length()，n=s2.length())
      *
      * @param s1
@@ -72,8 +72,10 @@ public class Problem97 {
 
         for (int i = 1; i <= s1.length(); i++) {
             for (int j = 1; j <= s2.length(); j++) {
-                dp[i][j] = (dp[i - 1][j] && s1.charAt(i - 1) == s3.charAt(i + j - 1)) ||
-                        (dp[i][j - 1] && s2.charAt(j - 1) == s3.charAt(i + j - 1));
+                //s1[i-1]==s3[i+j-1]，并且s1[0]-s1[i-2]和s2[0]-s2[j-1]能够交错形成s3[0]-s3[i+j-2]；
+                //或者s2[j-1]==s3[i+j-1]，并且s1[0]-s1[i-1]和s2[0]-s2[j-2]能够交错形成s3[0]-s3[i+j-2]
+                dp[i][j] = (s1.charAt(i - 1) == s3.charAt(i + j - 1) && dp[i - 1][j]) ||
+                        (s2.charAt(j - 1) == s3.charAt(i + j - 1) && dp[i][j - 1]);
             }
         }
 

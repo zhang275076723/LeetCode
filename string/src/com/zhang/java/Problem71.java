@@ -56,7 +56,7 @@ public class Problem71 {
      */
     public String simplifyPath(String path) {
         String[] names = path.split("/");
-        //保存路径
+        //保存路径的栈
         Deque<String> stack = new LinkedList<>();
 
         for (String name : names) {

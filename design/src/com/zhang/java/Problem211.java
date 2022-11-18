@@ -59,7 +59,7 @@ public class Problem211 {
             TrieNode node = root;
 
             for (char c : word.toCharArray()) {
-                if (node.children.get(c) == null) {
+                if (!node.children.containsKey(c)) {
                     node.children.put(c, new TrieNode());
                 }
                 node = node.children.get(c);

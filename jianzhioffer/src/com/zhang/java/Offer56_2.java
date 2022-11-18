@@ -6,10 +6,9 @@ import java.util.Map;
 /**
  * @Date 2022/4/4 11:45
  * @Author zsy
- * @Description 数组中数字出现的次数 II 类比Problem136、Problem260、Offer56、Offer65 同Problem137
+ * @Description 数组中数字出现的次数 II 类比Problem136、Problem260、Problem389、Offer56、Offer65 同Problem137
  * 在一个数组 nums 中除一个数字只出现一次之外，其他数字都出现了三次。
  * 请找出那个只出现一次的数字。
- * 1 <= nums[i] < 2^31
  * <p>
  * 输入：nums = [3,4,3,3]
  * 输出：4
@@ -64,16 +63,17 @@ public class Offer56_2 {
     public int singleNumber2(int[] nums) {
         int result = 0;
 
-        //因为num在[1,2^31-1]，所以只需要遍历31位
+        //num[i]取值范围在[1,2^31-1]，所以只需要遍历31位
         for (int i = 0; i < 31; i++) {
-            //当前位1的个数
+            //当前位为1的个数
             int count = 0;
 
+            //统计nums中元素当前位为1的个数
             for (int num : nums) {
                 count = count + ((num & (1 << i)) >> i);
             }
 
-            //如果某一位之和不能够被3整除，说明对于只出现一次的数来说为1
+            //如果当前位之和不能够被3整除，说明对于只出现一次的数来说为1
             if (count % 3 != 0) {
                 result = result + (1 << i);
             }
