@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @Date 2022/4/22 15:22
  * @Author zsy
- * @Description 合并区间 字节面试题 类比Problem57、Problem252、Problem253、Problem406
+ * @Description 合并区间 字节面试题 类比Problem57、Problem252、Problem253、Problem406、Problem435、Problem763
  * 以数组 intervals 表示若干个区间的集合，其中单个区间为 intervals[i] = [starti, endi] 。
  * 请你合并所有重叠的区间，并返回 一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间。
  * <p>
@@ -32,7 +32,7 @@ public class Problem56 {
     }
 
     /**
-     * 先按照interval[i][0]由小到大排序，然后再合并相交区间
+     * 按照左区间interval[i][0]由小到大排序，再合并相交区间
      * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
      * @param intervals
@@ -43,6 +43,7 @@ public class Problem56 {
             return intervals;
         }
 
+        //按照左区间interval[i][0]由小到大排序
         quickSort(intervals, 0, intervals.length - 1);
 
         List<int[]> list = new ArrayList<>();
@@ -58,6 +59,8 @@ public class Problem56 {
                 right = Math.max(right, intervals[i + 1][1]);
                 i++;
             }
+
+            //添加合并的区间
             list.add(new int[]{left, right});
         }
 

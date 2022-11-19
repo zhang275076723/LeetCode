@@ -53,21 +53,21 @@ public class Problem312 {
             temp[i + 1] = nums[i];
         }
 
-        //dp[i][j]：将(i,j)(即第i个气球和第j个气球)之内的气球全部戳完能得到的最多硬币
-        int[][] dp = new int[nums.length + 2][nums.length + 2];
+        //dp[i][j]：将区间(i,j)(即第i个气球和第j个气球)之内的气球全部戳完能得到的最多硬币
+        int[][] dp = new int[temp.length][temp.length];
 
         //区间长度i
-        for (int i = 3; i <= nums.length + 2; i++) {
+        for (int i = 3; i <= temp.length; i++) {
             //区间起始位置j
-            for (int j = 0; j <= nums.length + 2 - i; j++) {
-                //长度为i的区间之内要戳的气球k
-                for (int k = j + 1; k <= i + j - 2; k++) {
-                    dp[j][i + j - 1] = Math.max(dp[j][i + j - 1],
-                            dp[j][k] + dp[k][i + j - 1] + temp[j] * temp[k] * temp[i + j - 1]);
+            for (int j = 0; j <= temp.length - i; j++) {
+                //区间(j,j+i-1)之内最后要戳的气球k下标索引
+                for (int k = j + 1; k <= j + i - 2; k++) {
+                    dp[j][j + i - 1] = Math.max(dp[j][j + i - 1],
+                            dp[j][k] + dp[k][j + i - 1] + temp[j] * temp[k] * temp[j + i - 1]);
                 }
             }
         }
 
-        return dp[0][nums.length + 1];
+        return dp[0][temp.length - 1];
     }
 }
