@@ -163,9 +163,9 @@ public class Problem440 {
      */
     private int getCount(long num, int n) {
         int count = 1;
-        //当前层字典序的第一个元素
+        //num下一层字典序的第一个元素
         long left = num * 10;
-        //当前层字典序的最后个元素
+        //num下一层字典序的最后一个元素
         long right = Math.min(num * 10 + 9, n);
 
         while (left <= n) {

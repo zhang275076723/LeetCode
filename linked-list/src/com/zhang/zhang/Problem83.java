@@ -46,12 +46,15 @@ public class Problem83 {
         ListNode hair = new ListNode(Integer.MAX_VALUE);
         hair.next = head;
 
-        ListNode node = hair;
+        ListNode pre = hair;
+        ListNode node = head;
 
-        while (node.next != null) {
-            if (node.val == node.next.val) {
-                node.next = node.next.next;
+        while (node != null) {
+            if (pre.val == node.val) {
+                pre.next = node.next;
+                node = node.next;
             } else {
+                pre = node;
                 node = node.next;
             }
         }

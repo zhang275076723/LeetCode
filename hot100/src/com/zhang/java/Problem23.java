@@ -40,8 +40,8 @@ public class Problem23 {
         int[][] data = {{1, 4, 5}, {1, 3, 4}, {2, 6}};
         ListNode[] lists = problem23.buildList(data);
 //        ListNode head = problem23.mergeKLists(lists);
-//        ListNode head = problem23.mergeKLists2(lists);
-        ListNode head = problem23.mergeKLists3(lists);
+        ListNode head = problem23.mergeKLists2(lists);
+//        ListNode head = problem23.mergeKLists3(lists);
         while (head != null) {
             System.out.println(head.val);
             head = head.next;

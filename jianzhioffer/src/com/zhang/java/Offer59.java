@@ -126,7 +126,7 @@ public class Offer59 {
             return new int[0];
         }
 
-        //单调队列
+        //单调递减队列
         Deque<Integer> queue = new LinkedList<>();
 
         for (int i = 0; i < k; i++) {

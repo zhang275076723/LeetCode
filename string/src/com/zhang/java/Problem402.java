@@ -111,7 +111,7 @@ public class Problem402 {
         }
 
         //栈中元素依次递增的情况，例如"34567"，如果k>0说明删除的元素个数小于原生的k个，则还要删除栈顶剩下的k个元素
-        while (k > 0) {
+        while (!stack.isEmpty() && k > 0) {
             stack.pollLast();
             k--;
         }

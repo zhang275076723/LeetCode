@@ -54,7 +54,8 @@ public class Problem307 {
         }
 
         public void update(int index, int val) {
-            segmentTree.update(nums, 0, 0, nums.length - 1, index, val);
+            nums[index] = val;
+            segmentTree.update(0, 0, nums.length - 1, index, val);
         }
 
         public int sumRange(int left, int right) {
@@ -66,31 +67,33 @@ public class Problem307 {
          */
         static class SegmentTree {
             /**
-             * 线段树数组，类似堆排序数组，用数组表示树，表示每个节点的区间和
+             * 线段树数组，类似堆排序数组，用数组表示树，每个节点表示nums数组的区间和，
+             * segmentTreeArr[0]为nums[0]-nums[nums.length-1]的区间和，
+             * 左子树segmentTreeArr[1]为nums[0]-nums[(nums.length-1)/2]的区间和，
+             * 左子树segmentTreeArr[2]为nums[(nums.length-1)/2+1]-nums[nums.length-1]的区间和
              */
             private final int[] segmentTreeArr;
 
             SegmentTree(int[] nums) {
-                //确保线段树数组能够覆盖nums中元素的区间
+                //线段树数组大小至少为4n，确保线段树数组能够覆盖nums中所有区间元素
                 segmentTreeArr = new int[nums.length * 4];
 
-                buildSegmentTree(nums, segmentTreeArr, 0, 0, nums.length - 1);
+                buildSegmentTree(nums, 0, 0, nums.length - 1);
             }
 
             /**
              * 建立线段树
              * 时间复杂度O(n)，空间复杂度O(logn)
              *
-             * @param nums           要建立线段树的数组
-             * @param segmentTreeArr 线段树数组
-             * @param rootIndex      当前节点在线段树数组中的下标索引
-             * @param left           当前区间在nums数组中的左边界
-             * @param right          当前区间在nums数组中的右边界
+             * @param nums      要建立线段树的数组
+             * @param rootIndex 当前节点在线段树数组中的下标索引
+             * @param left      当前区间在nums数组中的左边界
+             * @param right     当前区间在nums数组中的右边界
              */
-            private void buildSegmentTree(int[] nums, int[] segmentTreeArr, int rootIndex, int left, int right) {
+            private int buildSegmentTree(int[] nums, int rootIndex, int left, int right) {
                 if (left == right) {
                     segmentTreeArr[rootIndex] = nums[left];
-                    return;
+                    return segmentTreeArr[rootIndex];
                 }
 
                 int mid = left + ((right - left) >> 1);
@@ -99,10 +102,12 @@ public class Problem307 {
                 //右子树根节点
                 int rightRootIndex = rootIndex * 2 + 2;
 
-                buildSegmentTree(nums, segmentTreeArr, leftRootIndex, left, mid);
-                buildSegmentTree(nums, segmentTreeArr, rightRootIndex, mid + 1, right);
+                int leftSum = buildSegmentTree(nums, leftRootIndex, left, mid);
+                int rightSum = buildSegmentTree(nums, rightRootIndex, mid + 1, right);
 
-                segmentTreeArr[rootIndex] = segmentTreeArr[leftRootIndex] + segmentTreeArr[rightRootIndex];
+                segmentTreeArr[rootIndex] = leftSum + rightSum;
+
+                return segmentTreeArr[rootIndex];
             }
 
             /**
@@ -143,14 +148,13 @@ public class Problem307 {
              * 更新线段树数组中的值，nums[index]修改为value，导致nums[index]在线段树数组中的叶节点到根节点的值都进行修改
              * 时间复杂度O(logn)，空间复杂度O(logn)
              *
-             * @param nums
              * @param rootIndex
              * @param left
              * @param right
              * @param index
              * @param value
              */
-            private void update(int[] nums, int rootIndex, int left, int right, int index, int value) {
+            private void update(int rootIndex, int left, int right, int index, int value) {
                 //要修改的nums[index]不在当前区间[left,right]，直接返回
                 if (!(left <= index && index <= right)) {
                     return;
@@ -158,7 +162,6 @@ public class Problem307 {
 
                 //找到线段树数组中表示nums[index]的叶节点，进行修改
                 if (left == right) {
-                    nums[index] = value;
                     segmentTreeArr[rootIndex] = value;
                     return;
                 }
@@ -169,8 +172,8 @@ public class Problem307 {
                 //右子树根节点
                 int rightRootIndex = rootIndex * 2 + 2;
 
-                update(nums, leftRootIndex, left, mid, index, value);
-                update(nums, rightRootIndex, mid + 1, right, index, value);
+                update(leftRootIndex, left, mid, index, value);
+                update(rightRootIndex, mid + 1, right, index, value);
 
                 segmentTreeArr[rootIndex] = segmentTreeArr[leftRootIndex] + segmentTreeArr[rightRootIndex];
             }

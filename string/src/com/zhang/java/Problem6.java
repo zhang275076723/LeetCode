@@ -63,34 +63,38 @@ public class Problem6 {
         //遍历标志位，1：由上往下添加，-1：由下往上添加
         int flag = 1;
         //当前遍历到的sb数组索引下标
-        int sbIndex = 0;
+        int index = 0;
 
         for (int i = 0; i < s.length(); i++) {
-            sbArr[sbIndex].append(s.charAt(i));
+            char c = s.charAt(i);
 
-            //当遍历到第一个sb时，改变遍历方向为由上到下
-            if (sbIndex == 0) {
-                flag = 1;
-            } else if (sbIndex == numRows - 1) {
-                //当遍历到最后一个sb时，改变遍历方向为由下到上
-                flag = -1;
-            }
-
-            //由上往下添加
             if (flag == 1) {
-                sbIndex++;
+                sbArr[index].append(c);
+                index++;
+
+                //当遍历到最后一个sb时，改变遍历方向为由下到上
+                if (index == numRows) {
+                    index = numRows - 2;
+                    flag = -1;
+                }
             } else {
-                //由下往上添加
-                sbIndex--;
+                sbArr[index].append(c);
+                index--;
+
+                //当遍历到第一个sb时，改变遍历方向为由上到下
+                if (index == -1) {
+                    index = 1;
+                    flag = 1;
+                }
             }
         }
 
-        StringBuilder result = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
 
-        for (StringBuilder sb : sbArr) {
-            result.append(sb);
+        for (int i = 0; i < numRows; i++) {
+            sb.append(sbArr[i]);
         }
 
-        return result.toString();
+        return sb.toString();
     }
 }

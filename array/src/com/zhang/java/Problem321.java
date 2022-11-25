@@ -55,14 +55,14 @@ public class Problem321 {
      * @return
      */
     public int[] maxNumber(int[] nums1, int[] nums2, int k) {
-        int[] result = new int[k];
+        int[] result = new int[0];
 
         //保证nums1和nums2取的最大数子序列长度不会越界
         for (int i = Math.max(0, k - nums2.length); i <= Math.min(k, nums1.length); i++) {
-            int[] tempNums1 = getMaxKNumber(nums1, i);
-            int[] tempNums2 = getMaxKNumber(nums2, k - i);
-            //tempNums1和tempNums2合并，得到最大数
-            int[] tempResult = merge(tempNums1, tempNums2);
+            int[] result1 = getMaxKNumber(nums1, i);
+            int[] result2 = getMaxKNumber(nums2, k - i);
+            //result1和result2合并，得到最大数
+            int[] tempResult = merge(result1, result2);
 
             //如果最大数小于当前最大数，更新最大数
             if (compare(result, 0, tempResult, 0) < 0) {
@@ -106,7 +106,7 @@ public class Problem321 {
         }
 
         //移除的元素个数小于count，则继续移除
-        while (count > 0) {
+        while (!stack.isEmpty() && count > 0) {
             stack.pollLast();
             count--;
         }
@@ -169,9 +169,9 @@ public class Problem321 {
     }
 
     /**
-     * 比较两个数组中的数从起始位置i和j开始的大小
-     * nums1[i]-nums1[nums1.length-1]大于nums2[i]-nums2[nums2.length-1]，返回正数
-     * nums1[i]-nums1[nums1.length-1]小于nums2[i]-nums2[nums2.length-1]，返回负数
+     * 比较nums1[i]和nums2[j]的大小
+     * nums1[i]和nums2[j]不相等时，返回较大值
+     * nums1[i]和nums2[j]相等时，继续往后判断
      * 时间复杂度O(m+n)，空间复杂度O(m+n) (m=nums1.length, n=nums2.length)
      *
      * @param nums1
@@ -182,7 +182,7 @@ public class Problem321 {
      */
     private int compare(int[] nums1, int i, int[] nums2, int j) {
         while (i < nums1.length && j < nums2.length) {
-            //当前元素不相等，直接返回较大值
+            //nums1[i]和nums2[j]不相等，直接比较返回
             if (nums1[i] != nums2[j]) {
                 return nums1[i] - nums2[j];
             }

@@ -83,7 +83,7 @@ public class Problem230 {
 
         MyTree myTree = new MyTree(root);
 
-        return myTree.findMinKVal(k);
+        return myTree.getMinKVal(k);
     }
 
     private TreeNode buildTree(String[] data) {
@@ -136,7 +136,7 @@ public class Problem230 {
             countNode(root);
         }
 
-        public int findMinKVal(int k) {
+        public int getMinKVal(int k) {
             TreeNode node = root;
 
             //以当前节点左节点为根的数节点个数，考虑node.left为null，即当前节点没有左子树，count为0
@@ -152,7 +152,7 @@ public class Problem230 {
                     node = node.right;
                 }
 
-                //node为空说明没有找到第k小，返回-1
+                //node为空说明没有第k小节点，返回-1，表示未找到
                 if (node == null) {
                     return -1;
                 }

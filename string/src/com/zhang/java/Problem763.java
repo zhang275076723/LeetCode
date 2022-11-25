@@ -30,7 +30,7 @@ public class Problem763 {
     }
 
     /**
-     * 统计字符最后一次出现下标索引，作为一个区间的右边界，遍历区间内字符，更新右边界，得到可以合并的最大区间
+     * 统计字符最后一次出现下标索引，遍历区间内字符，更新区间右边界，得到可以合并的最大区间
      * 时间复杂度O(n)，空间复杂度O(|Σ|) (|Σ| = 26，s只包含小写字母，共26个字符)
      *
      * @param s
@@ -51,9 +51,10 @@ public class Problem763 {
 
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
+            //更新区间右边界
             end = Math.max(end, map.get(c));
 
-            //到达当前区间的右边界
+            //到达区间的右边界，作为一个区间添加到list中
             if (end == i) {
                 list.add(end - start + 1);
                 start = end + 1;

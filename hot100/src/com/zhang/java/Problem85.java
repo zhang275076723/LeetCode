@@ -162,11 +162,6 @@ public class Problem85 {
                 //矩形的宽
                 int w;
 
-                //栈顶索引对应元素与矩形的高相等，则直接出栈
-                while (!stack.isEmpty() && h == heights[stack.peek()]) {
-                    stack.pop();
-                }
-
                 if (stack.isEmpty()) {
                     w = i;
                 } else {
@@ -185,11 +180,6 @@ public class Problem85 {
             int h = heights[stack.pop()];
             //矩形的宽
             int w;
-
-            //栈顶索引对应元素与当前矩形的高相等，则可以直接出栈
-            while (!stack.isEmpty() && h == heights[stack.peek()]) {
-                stack.pop();
-            }
 
             if (stack.isEmpty()) {
                 w = heights.length;

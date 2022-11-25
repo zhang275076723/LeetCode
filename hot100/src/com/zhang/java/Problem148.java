@@ -152,23 +152,25 @@ public class Problem148 {
         //设置链表头结点，方便操作
         ListNode head = new ListNode();
         ListNode node = head;
+        ListNode node1 = head1;
+        ListNode node2 = head2;
 
-        while (head1 != null && head2 != null) {
-            if (head1.val < head2.val) {
-                node.next = head1;
-                head1 = head1.next;
+        while (node1 != null && node2 != null) {
+            if (node1.val < node2.val) {
+                node.next = node1;
+                node1 = node1.next;
+                node = node.next;
             } else {
-                node.next = head2;
-                head2 = head2.next;
+                node.next = node2;
+                node2 = node2.next;
+                node = node.next;
             }
-
-            node = node.next;
         }
 
-        if (head1 != null) {
-            node.next = head1;
+        if (node1 != null) {
+            node.next = node1;
         } else {
-            node.next = head2;
+            node.next = node2;
         }
 
         return head.next;
@@ -217,7 +219,7 @@ public class Problem148 {
         return head;
     }
 
-    public class ListNode {
+    public static class ListNode {
         int val;
         ListNode next;
 

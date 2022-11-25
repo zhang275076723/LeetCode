@@ -51,10 +51,10 @@ public class Problem82 {
 
         while (node != null && node.next != null) {
             if (node.val == node.next.val) {
-                while (node.next != null && node.val == node.next.val) {
+                while (node != null && pre.next.val == node.val) {
                     node = node.next;
                 }
-                node = node.next;
+
                 pre.next = node;
             } else {
                 pre = node;
@@ -79,10 +79,14 @@ public class Problem82 {
 
         //当前节点和下一个节点相等，更新头结点
         if (head.val == head.next.val) {
-            while (head.next != null && head.val == head.next.val) {
-                head = head.next;
+            ListNode node = head;
+
+            //找到和head节点值不同的node节点
+            while (node != null && head.val == node.val) {
+                node = node.next;
             }
-            head = deleteDuplicates2(head.next);
+
+            head = deleteDuplicates(node);
         } else {
             //当前节点和下一个节点不相等，不更新头结点
             head.next = deleteDuplicates2(head.next);

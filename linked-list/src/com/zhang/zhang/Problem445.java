@@ -1,9 +1,9 @@
 package com.zhang.zhang;
 
 /**
- * @Date 2022/11/15 08:22 类比Problem2、Problem66、Problem67、Problem369、Problem415
+ * @Date 2022/11/15 08:22
  * @Author zsy
- * @Description 两数相加 II
+ * @Description 两数相加 II 类比Problem2、Problem66、Problem67、Problem369、Problem415
  * 给你两个 非空 链表来代表两个非负整数。数字最高位位于链表开始位置。
  * 它们的每个节点只存储一位数字。将这两数相加会返回一个新的链表。
  * 你可以假设除了数字 0 之外，这两个数字都不会以零开头。

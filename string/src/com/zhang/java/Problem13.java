@@ -68,21 +68,18 @@ public class Problem13 {
         }
 
         int num = 0;
-        int index = 0;
 
-        while (index < s.length()) {
-            char c = s.charAt(index);
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
             int value = getRomanValue(c);
 
             //如果当前罗马字符小于下一个罗马字符，则说明要减去当前罗马字符
-            if (index + 1 < s.length() && value < getRomanValue(s.charAt(index + 1))) {
+            if (i + 1 < s.length() && value < getRomanValue(s.charAt(i + 1))) {
                 num = num - value;
             } else {
                 //如果当前罗马字符大于等于下一个罗马字符，则说明要加上当前罗马字符
                 num = num + value;
             }
-
-            index++;
         }
 
         return num;

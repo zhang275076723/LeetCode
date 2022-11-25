@@ -67,14 +67,12 @@ public class Problem25 {
         //要反转子链表的最后一个节点的后一个节点
         ListNode next;
         //要反转子链表第一个节点
-        ListNode first;
+        ListNode first = head;
         //要反转子链表的最后一个节点
         ListNode last;
 
         while (node != null) {
-            first = node;
-
-            //k个一组进行反转
+            //k个一组进行反转，找到当前组最后一个节点
             for (int i = 1; i < k; i++) {
                 node = node.next;
 
@@ -101,6 +99,7 @@ public class Problem25 {
             //更新指针
             pre = first;
             node = next;
+            first = next;
         }
 
         return hair.next;
