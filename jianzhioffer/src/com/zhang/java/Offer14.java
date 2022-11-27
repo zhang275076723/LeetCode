@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/16 17:48
  * @Author zsy
- * @Description 剪绳子
+ * @Description 剪绳子 类比Problem343、Offer14_2
  * 给你一根长度为 n 的绳子，请把绳子剪成整数长度的 m 段（m、n都是整数，n>1并且m>1），
  * 每段绳子的长度记为 k[0],k[1]...k[m-1] 。
  * 请问 k[0]*k[1]*...*k[m-1] 可能的最大乘积是多少？
@@ -29,7 +29,7 @@ public class Offer14 {
     /**
      * 动态规划
      * dp[i]：长度为i的绳子，剪成x段，所有子段长度的最大乘积
-     * dp[i] = max(j*(i-j), j*dp[i-j]) (1 < j < i)
+     * dp[i] = max(dp[i-j]*j, (i-j)*j) (1 < j < i)
      * 先减掉长度为j的子段，剩余部分不剪，乘积为j*(i-j)；剩余部分要剪，乘积为j*dp[i-j]
      * 时间复杂度O(n^2)，空间复杂的O(n)
      *
@@ -38,14 +38,14 @@ public class Offer14 {
      */
     public int cuttingRope(int n) {
         int[] dp = new int[n + 1];
-        //初始化，长度为2的绳子，至少剪为2段
-        dp[2] = 1;
+        //初始化，长度为1的绳子，最大乘积为1
+        dp[1] = 1;
 
         //长度为i的绳子
-        for (int i = 3; i <= n; i++) {
+        for (int i = 2; i <= n; i++) {
             //减掉长度为j的一段
             for (int j = 1; j < i; j++) {
-                dp[i] = Math.max(dp[i], Math.max(j * (i - j), j * dp[i - j]));
+                dp[i] = Math.max(dp[i], Math.max(dp[i - j] * j, (i - j) * j));
             }
         }
 
@@ -76,11 +76,24 @@ public class Offer14 {
         int b = n % 3;
 
         if (b == 0) {
-            return (int) Math.pow(3, a);
+            return quickPow(3, a);
         } else if (b == 1) {
-            return (int) Math.pow(3, a - 1) * 2 * 2;
+            return quickPow(3, a - 1) * 2 * 2;
         } else {
-            return (int) Math.pow(3, a) * 2;
+            return quickPow(3, a) * 2;
+        }
+    }
+
+    private int quickPow(int a, int n) {
+        if (n == 0) {
+            return 1;
+        }
+
+        if (a % 2 == 0) {
+            int temp = quickPow(a, n / 2);
+            return temp * temp;
+        } else {
+            return a * quickPow(a, n - 1);
         }
     }
 }

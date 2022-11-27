@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/3/28 9:26
  * @Author zsy
- * @Description 把数字翻译成字符串 类比Problem93、Problem468、Offer10、Offer10_2
+ * @Description 把数字翻译成字符串 类比problem70、Problem93、Problem468、Problem509、Problem746、Problem1137、Offer10、Offer10_2
  * 给定一个数字，我们按照如下规则把它翻译为字符串：
  * 0 翻译成 “a” ，1 翻译成 “b”，……，11 翻译成 “l”，……，25 翻译成 “z”。一个数字可能有多个翻译。
  * 请编程实现一个函数，用来计算一个数字有多少种不同的翻译方法。
@@ -51,7 +51,7 @@ public class Offer46 {
     /**
      * 动态规划
      * dp[i]：以num[i-1]结束的数字，翻译成字符串的方案数
-     * dp[i] = dp[i-1] + dp[i-2] ((数字：nums[i-1] + nums[i]) < 26，且没有前导0)
+     * dp[i] = dp[i-1] + dp[i-2] ((数字：nums[i-1]-nums[i]) < 26，且没有前导0)
      * dp[i] = dp[i-1] ((数字：nums[i-1] + nums[i]) >= 26)
      * 时间复杂度O(n)，空间复杂度O(n)
      *
@@ -69,6 +69,7 @@ public class Offer46 {
         dp[1] = 1;
 
         for (int i = 2; i <= str.length(); i++) {
+            //str[i-2]-str[i-1]不存在前导0，且小于26
             if (str.charAt(i - 2) != '0' && Integer.parseInt(str.substring(i - 2, i)) < 26) {
                 dp[i] = dp[i - 1] + dp[i - 2];
             } else {
@@ -96,6 +97,7 @@ public class Offer46 {
         int q = 1;
 
         for (int i = 2; i <= str.length(); i++) {
+            //str[i-2]-str[i-1]不存在前导0，且小于26
             if (str.charAt(i - 2) != '0' && Integer.parseInt(str.substring(i - 2, i)) < 26) {
                 int temp = q;
                 q = p + q;

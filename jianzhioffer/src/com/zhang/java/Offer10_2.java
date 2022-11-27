@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/14 15:12
  * @Author zsy
- * @Description 青蛙跳台阶问题 类比Offer10、Offer46 同Problem70
+ * @Description 青蛙跳台阶问题 类比Problem509、Problem746、Problem1137、Offer10、Offer46 同Problem70
  * 一只青蛙一次可以跳上1级台阶，也可以跳上2级台阶。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
  * 总跳法 = 1次跳上1级台阶和剩余n-1级台阶的跳法 + 1次跳上2级台阶和剩余n-2级台阶的跳法
  * <p>
@@ -87,9 +87,9 @@ public class Offer10_2 {
         int q = 1;
 
         for (int i = 2; i <= n; i++) {
-            int temp = q;
-            q = (p + q) % MOD;
-            p = temp;
+            int temp = (p + q) % MOD;
+            p = q;
+            q = temp;
         }
 
         return q;
@@ -129,7 +129,12 @@ public class Offer10_2 {
     }
 
     private int[][] quickPow(int[][] a, int n) {
-        int[][] result = {{1, 0}, {0, 1}};
+        int[][] result = new int[a.length][a.length];
+
+        //初始化为单位矩阵
+        for (int i = 0; i < a.length; i++) {
+            result[i][i] = 1;
+        }
 
         while (n > 0) {
             if ((n & 1) != 0) {

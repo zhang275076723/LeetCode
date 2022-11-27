@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/23 11:45
  * @Author zsy
- * @Description 爬楼梯 同Offer10_2
+ * @Description 爬楼梯 类比Problem509、Problem746、Problem1137、Offer10、Offer46 同Offer10_2
  * 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
  * 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
  * <p>
@@ -34,6 +34,7 @@ public class Problem70 {
     /**
      * 动态规划
      * dp[i]：从第1阶爬到第n阶台阶的不同方法数
+     * dp[i] = dp[i-1] + dp[i-2]
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param n
@@ -45,10 +46,10 @@ public class Problem70 {
         }
 
         int[] dp = new int[n + 1];
+        dp[0] = 1;
         dp[1] = 1;
-        dp[2] = 2;
 
-        for (int i = 3; i <= n; i++) {
+        for (int i = 2; i <= n; i++) {
             dp[i] = dp[i - 1] + dp[i - 2];
         }
 
@@ -69,12 +70,12 @@ public class Problem70 {
         }
 
         int p = 1;
-        int q = 2;
+        int q = 1;
 
-        for (int i = 3; i <= n; i++) {
-            int temp = q;
-            q = p + q;
-            p = temp;
+        for (int i = 2; i <= n; i++) {
+            int temp = p + q;
+            p = q;
+            q = temp;
         }
 
         return q;
@@ -134,10 +135,15 @@ public class Problem70 {
     }
 
     private int[][] quickPow(int[][] a, int n) {
-        int[][] result = {{1, 0}, {0, 1}};
+        int[][] result = new int[a.length][a.length];
+
+        //初始化为单位矩阵
+        for (int i = 0; i < a.length; i++) {
+            result[i][i] = 1;
+        }
 
         while (n > 0) {
-            if ((n & 1) == 1) {
+            if ((n & 1) != 0) {
                 result = multiply(result, a);
             }
 
