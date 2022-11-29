@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/8/6 10:00
  * @Author zsy
- * @Description 全排列 II 类比Problem39、Problem40、Problem46、Offer38
+ * @Description 全排列 II 类比Problem17、Problem39、Problem40、Problem46、Problem77、Problem78、Problem90、Offer17、Offer38
  * 给定一个可包含重复数字的序列 nums ，按任意顺序 返回所有不重复的全排列。
  * <p>
  * 输入：nums = [1,1,2]
@@ -42,12 +42,12 @@ public class Problem47 {
 
         List<List<Integer>> result = new ArrayList<>();
 
-        backtrack(nums, 0, new boolean[nums.length], new ArrayList<>(), result);
+        backtrack(0, nums, new boolean[nums.length], new ArrayList<>(), result);
 
         return result;
     }
 
-    private void backtrack(int[] nums, int t, boolean[] visited, List<Integer> list, List<List<Integer>> result) {
+    private void backtrack(int t, int[] nums, boolean[] visited, List<Integer> list, List<List<Integer>> result) {
         if (t == nums.length) {
             result.add(new ArrayList<>(list));
             return;
@@ -63,7 +63,7 @@ public class Problem47 {
                 list.add(nums[i]);
                 visited[i] = true;
 
-                backtrack(nums, t + 1, visited, list, result);
+                backtrack(t + 1, nums, visited, list, result);
 
                 visited[i] = false;
                 list.remove(list.size() - 1);

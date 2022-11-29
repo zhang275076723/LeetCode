@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/11/10 11:32
  * @Author zsy
- * @Description 矩阵置零 类比Problem289
+ * @Description 矩阵置零 类比Problem130、Problem289
  * 给定一个 m x n 的矩阵，如果一个元素为 0 ，则将其所在行和列的所有元素都设为 0 。请使用 原地 算法。
  * <p>
  * 输入：matrix = [[1,1,1],[1,0,1],[1,1,1]]

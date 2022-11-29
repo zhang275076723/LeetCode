@@ -85,7 +85,8 @@ public class Problem79 {
         }
 
         //不满足要求，直接剪枝，返回false
-        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || visited[i][j] || word.charAt(t) != board[i][j]) {
+        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length ||
+                visited[i][j] || word.charAt(t) != board[i][j]) {
             return false;
         }
 
@@ -98,6 +99,7 @@ public class Problem79 {
                 backtrack(t + 1, i, j + 1, visited, board, word);
 
         visited[i][j] = false;
+
         return flag;
     }
 }

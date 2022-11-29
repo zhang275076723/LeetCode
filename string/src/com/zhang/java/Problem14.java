@@ -71,26 +71,25 @@ public class Problem14 {
             return strs[0];
         }
 
-        int index = 0;
         int minLength = strs[0].length();
 
+        //找到最短字符串长度
         for (int i = 1; i < strs.length; i++) {
             minLength = Math.min(minLength, strs[i].length());
         }
 
-        while (index < minLength) {
-            char c = strs[0].charAt(index);
+        for (int i = 0; i < minLength; i++) {
+            char c = strs[0].charAt(i);
 
-            for (int i = 1; i < strs.length; i++) {
-                if (c != strs[i].charAt(index)) {
-                    return strs[0].substring(0, index);
+            for (int j = 0; j < strs.length; j++) {
+                //字符串strs[j]的索引下标i对应的字符和c不相同，说明已经找到了最长公共前缀
+                if (c != strs[j].charAt(i)) {
+                    return strs[0].substring(0, i);
                 }
             }
-
-            index++;
         }
 
-        return strs[0].substring(0, index);
+        return strs[0].substring(0, minLength);
     }
 
     /**
@@ -121,7 +120,8 @@ public class Problem14 {
         //找前缀树中第一个分叉之前的所有元素，即为最长公共前缀
         //当前节点必须不是尾节点，保证空串""也能够找到最长公共前缀
         while (node.children.size() == 1 && !node.isEnd) {
-            node = node.children.get(strs[0].charAt(index));
+            char c = strs[0].charAt(index);
+            node = node.children.get(c);
             index++;
         }
 

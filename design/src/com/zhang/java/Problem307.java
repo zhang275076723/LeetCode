@@ -128,7 +128,7 @@ public class Problem307 {
                 }
 
                 //要查询的区间包含当前线段树[left,right]区间，直接返回segmentTreeArr[rootIndex]
-                if (queryLeft <= left && queryRight >= right) {
+                if (queryLeft <= left && right <= queryRight) {
                     return segmentTreeArr[rootIndex];
                 }
 
@@ -156,7 +156,7 @@ public class Problem307 {
              */
             private void update(int rootIndex, int left, int right, int index, int value) {
                 //要修改的nums[index]不在当前区间[left,right]，直接返回
-                if (!(left <= index && index <= right)) {
+                if (index < left || index > right) {
                     return;
                 }
 

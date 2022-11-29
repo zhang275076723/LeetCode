@@ -50,15 +50,15 @@ public class Offer13 {
             return 1;
         }
 
-        dfs(0, 0, m, n, k, new boolean[m][n]);
+        backtrack(0, 0, m, n, k, new boolean[m][n]);
 
         return count;
     }
 
     /**
      * bfs
-     * 注意：机器人只能一步一步走，中间不能跳跃，有可能(i,j)满足小于位数之和小于k，
-     * 但(i-1,j)和(i,j-1)无法到达，所以导致(i,j)无法到达
+     * 注意：机器人只能一步一步走，中间不能跳跃，
+     * 有可能存在情况，(i,j)满足小于位数之和小于k，但(i-1,j)和(i,j-1)无法到达，所以从(i-1,j)或(i,j-1)无法到达(i,j)
      * 时间复杂度O(mn)，空间复杂的O(mn)
      *
      * @param m
@@ -76,20 +76,22 @@ public class Offer13 {
         Queue<int[]> queue = new LinkedList<>();
         boolean[][] visited = new boolean[m][n];
         queue.offer(new int[]{0, 0});
+        visited[0][0] = true;
 
         while (!queue.isEmpty()) {
             int[] arr = queue.poll();
-
-            if (arr[0] >= m || arr[1] >= n || visited[arr[0]][arr[1]] || getNumSum(arr[0], arr[1]) > k) {
-                continue;
-            }
-
             count++;
-            visited[arr[0]][arr[1]] = true;
 
             //因为从(0,0)开始往右下角走，所以只需要考虑向下和向右的情况
-            queue.add(new int[]{arr[0] + 1, arr[1]});
-            queue.add(new int[]{arr[0], arr[1] + 1});
+            if (arr[0] + 1 < m && !visited[arr[0] + 1][arr[1]] && getNumSum(arr[0] + 1, arr[1]) <= k) {
+                queue.offer(new int[]{arr[0] + 1, arr[1]});
+                visited[arr[0] + 1][arr[1]] = true;
+            }
+
+            if (arr[1] + 1 < n && !visited[arr[0]][arr[1] + 1] && getNumSum(arr[0], arr[1] + 1) <= k) {
+                queue.offer(new int[]{arr[0], arr[1] + 1});
+                visited[arr[0]][arr[1] + 1] = true;
+            }
         }
 
         return count;
@@ -104,7 +106,7 @@ public class Offer13 {
      * @param visited 方格访问数组
      * @return
      */
-    public void dfs(int i, int j, int m, int n, int k, boolean[][] visited) {
+    public void backtrack(int i, int j, int m, int n, int k, boolean[][] visited) {
         if (i < 0 || i >= m || j < 0 || j >= n || visited[i][j] || getNumSum(i, j) > k) {
             return;
         }
@@ -113,8 +115,8 @@ public class Offer13 {
         count++;
 
         //因为从(0,0)开始往右下角走，所以只需要考虑向下和向右的情况
-        dfs(i + 1, j, m, n, k, visited);
-        dfs(i, j + 1, m, n, k, visited);
+        backtrack(i + 1, j, m, n, k, visited);
+        backtrack(i, j + 1, m, n, k, visited);
     }
 
     /**

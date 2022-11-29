@@ -35,7 +35,7 @@ public class Problem63 {
     /**
      * 动态规划
      * dp[i][j]：从(0,0)到(i,j)不同的路径数量
-     * dp[i][j] = dp[i-1][j] + dp[i][j-1] (obstacleGrid[i][j] != 0)
+     * dp[i][j] = dp[i-1][j] + dp[i][j-1] (obstacleGrid[i][j] == 1)
      * dp[i][j] = 0                       (obstacleGrid[i][j] == 0)
      * 时间复杂度O(mn)，空间复杂度O(mn) (m = obstacleGrid.length, n = obstacleGrid[0].length)
      *
@@ -63,6 +63,7 @@ public class Problem63 {
 
         for (int i = 1; i < obstacleGrid.length; i++) {
             for (int j = 1; j < obstacleGrid[0].length; j++) {
+                //当前位置不是障碍物
                 if (obstacleGrid[i][j] == 0) {
                     dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
                 }
@@ -94,17 +95,15 @@ public class Problem63 {
             for (int j = 0; j < obstacleGrid[0].length; j++) {
                 //每行第一列元素处理
                 if (j == 0) {
-                    if (obstacleGrid[i][j] == 1) {
+                    if (obstacleGrid[i][0] == 1) {
+                        dp[0] = 0;
+                    }
+                } else {
+                    if (obstacleGrid[i][j] == 0) {
+                        dp[j] = dp[j] + dp[j - 1];
+                    } else {
                         dp[j] = 0;
                     }
-
-                    continue;
-                }
-
-                if (obstacleGrid[i][j] == 0) {
-                    dp[j] = dp[j - 1] + dp[j];
-                } else {
-                    dp[j] = 0;
                 }
             }
         }

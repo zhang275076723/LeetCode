@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/11/8 13:06
  * @Author zsy
- * @Description 组合 类比Problem17、Problem78、Problem90
+ * @Description 组合 类比Problem17、Problem39、Problem40、Problem46、Problem47、Problem78、Problem90、Offer17、Offer38
  * 给定两个整数 n 和 k，返回范围 [1, n] 中所有可能的 k 个数的组合。
  * 你可以按 任何顺序 返回答案。
  * <p>
@@ -46,36 +46,21 @@ public class Problem77 {
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> result = new ArrayList<>();
 
-        backtrack(0, 1, n, k, result, new ArrayList<>());
+        backtrack(1, n, k, result, new ArrayList<>());
 
         return result;
     }
 
-    /**
-     * @param t      list集合添加的元素个数，用于剪枝判断
-     * @param start  当前起始元素
-     * @param n
-     * @param k
-     * @param result
-     * @param list
-     */
-    private void backtrack(int t, int start, int n, int k, List<List<Integer>> result, List<Integer> list) {
-        //添加的元素个数等于k时，加入结果集合list，剪枝
-        if (t == k) {
+    private void backtrack(int t, int n, int k, List<List<Integer>> result, List<Integer> list) {
+        if (list.size() == k) {
             result.add(new ArrayList<>(list));
             return;
         }
 
-        //当前还能添加的元素个数不满足添加k个元素，则剪枝
-        if (start + k - t - 1 > n) {
-            return;
-        }
-
-        //从当前元素往后找
-        for (int i = start; i <= n; i++) {
+        for (int i = t; i <= n; i++) {
             list.add(i);
 
-            backtrack(t + 1, i + 1, n, k, result, list);
+            backtrack(i + 1, n, k, result, list);
 
             list.remove(list.size() - 1);
         }

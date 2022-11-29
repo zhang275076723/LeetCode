@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/11/9 08:38
  * @Author zsy
- * @Description 子集 II 类比Problem17、Problem77、Problem78
+ * @Description 子集 II 类比Problem17、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Offer17、Offer38
  * 给你一个整数数组 nums ，其中可能包含重复元素，请你返回该数组所有可能的子集（幂集）。
  * 解集 不能 包含重复的子集。返回的解集中，子集可以按 任意顺序 排列。
  * <p>
@@ -43,7 +43,7 @@ public class Problem90 {
 
         List<List<Integer>> result = new ArrayList<>();
 
-        //flag为0，表示前一个元素未添加，flag为1，表示前一个元素已经添加
+        //flag记录前一个元素的访问状态，0：前一个元素未添加，1：前一个元素已经添加
         backtrack(0, nums, 0, new ArrayList<>(), result);
 
         return result;

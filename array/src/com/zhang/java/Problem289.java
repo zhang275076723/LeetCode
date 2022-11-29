@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/11/26 11:04
  * @Author zsy
- * @Description 生命游戏 类比Problem73
+ * @Description 生命游戏 类比Problem73、Problem130
  * 根据 百度百科 ， 生命游戏 ，简称为 生命 ，是英国数学家约翰·何顿·康威在 1970 年发明的细胞自动机。
  * 给定一个包含 m × n 个格子的面板，每一个格子都可以看成是一个细胞。
  * 每个细胞都具有一个初始状态： 1 即为 活细胞 （live），或 0 即为 死细胞 （dead）。
@@ -136,7 +136,7 @@ public class Problem289 {
             }
         }
 
-        //将上次发送变化的细胞状态2和3，转为1和0
+        //将上次发生变化的细胞状态2和3，转为1和0
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 if (board[i][j] == 2) {

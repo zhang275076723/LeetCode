@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/13 21:31
  * @Author zsy
- * @Description 斐波那契数列 字节面试题 类比Offer10_2、Offer46
+ * @Description 斐波那契数列 字节面试题 类比Problem70、Problem746、Problem1137、Offer10_2、Offer46 同Problem509
  * 写一个函数，输入 n ，求斐波那契（Fibonacci）数列的第 n 项（即 F(N)）。
  * 斐波那契数列的定义如下：
  * F(0) = 0,   F(1) = 1
@@ -95,9 +95,9 @@ public class Offer10 {
         int q = 1;
 
         for (int i = 2; i <= n; i++) {
-            int temp = q;
-            q = (p + q) % MOD;
-            p = temp;
+            int temp = (p + q) % MOD;
+            p = q;
+            q = temp;
         }
 
         return q;
@@ -193,7 +193,14 @@ public class Offer10 {
      */
     public int[][] quickPow2D(int[][] a, int n) {
         if (n == 0) {
-            return new int[][]{{1, 0}, {0, 1}};
+            int[][] result = new int[a.length][a.length];
+
+            //初始化为单位矩阵
+            for (int i = 0; i < a.length; i++) {
+                result[i][i] = 1;
+            }
+
+            return result;
         }
 
         if (n % 2 == 0) {
@@ -212,7 +219,12 @@ public class Offer10 {
      * @return
      */
     public int[][] quickPow2D2(int[][] a, int n) {
-        int[][] result = new int[][]{{1, 0}, {0, 1}};
+        int[][] result = new int[a.length][a.length];
+
+        //初始化为单位矩阵
+        for (int i = 0; i < a.length; i++) {
+            result[i][i] = 1;
+        }
 
         while (n > 0) {
             if ((n & 1) == 1) {

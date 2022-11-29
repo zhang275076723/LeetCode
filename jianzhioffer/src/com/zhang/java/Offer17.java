@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @Date 2022/3/18 10:13
  * @Author zsy
- * @Description 打印从1到最大的n位数
+ * @Description 打印从1到最大的n位数 类比Problem17、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem90、Offer38 类比Problem386、Problem440
  * 输入数字 n，按顺序打印出从 1 到最大的 n 位十进制数。
  * 比如输入 3，则打印出 1、2、3 一直到最大的 3 位数 999。
  * <p>
@@ -20,8 +20,8 @@ import java.util.List;
 public class Offer17 {
     public static void main(String[] args) {
         Offer17 offer17 = new Offer17();
-//        System.out.println(Arrays.toString(offer17.printNumbers(3)));
-        System.out.println(offer17.printNumbers2(8));
+//        System.out.println(Arrays.toString(offer17.printNumbers(2)));
+        System.out.println(offer17.printNumbers2(2));
     }
 
     /**
@@ -78,7 +78,7 @@ public class Offer17 {
         }
 
         for (int i = 0; i <= 9; i++) {
-            //如果当前位为0，且只有一位，则不添加，继续判断下一位
+            //当前位为0，且为前导0，则不添加，继续判断下一位
             if (i == 0 && sb.length() == 0) {
                 backtrack(t + 1, n, sb, list);
                 continue;

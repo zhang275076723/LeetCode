@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2022/5/12 9:22
  * @Author zsy
- * @Description 岛屿数量 类比Problem79、Problem212、Problem399(并查集)、Offer12 字节面试题
+ * @Description 岛屿数量 字节面试题 类比Problem79、Problem212、Offer12 并查集类比Problem399
  * 给你一个由 '1'（陆地）和 '0'（水）组成的的二维网格，请你计算网格中岛屿的数量。
  * 岛屿总是被水包围，并且每座岛屿只能由水平方向和/或竖直方向上相邻的陆地连接形成。
  * 此外，你可以假设该网格的四条边均被水包围。
@@ -147,7 +147,7 @@ public class Problem200 {
             return;
         }
 
-        //将当前位置置为'2'，表示已经访问过
+        //将当前位置置为'2'，原数组作为访问数组，表示已经访问过
         grid[i][j] = '2';
 
         //往上下左右找
@@ -168,7 +168,7 @@ public class Problem200 {
                 continue;
             }
 
-            //将当前位置置为'2'，表示已经访问过
+            //将当前位置置为'2'，原数组作为访问数组，表示已经访问过
             grid[pos.i][pos.j] = '2';
 
             queue.offer(new Pos(pos.i - 1, pos.j));

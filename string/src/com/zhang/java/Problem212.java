@@ -106,7 +106,7 @@ public class Problem212 {
 
     private void backtrack(int t, int i, int j, char[][] board, String word,
                            boolean[][] visited, Set<String> set, List<String> list) {
-        //用于去重
+        //用于去重，当找到word时，直接返回，相当于剪枝
         if (set.contains(word)) {
             return;
         }
@@ -149,6 +149,8 @@ public class Problem212 {
         visited[i][j] = true;
         sb.append(board[i][j]);
 
+        //当前单词是前缀树中的一个单词，且当前单词第一次被找到
+        //注意：找到一个单词后，不能return，需要继续寻找
         if (node.isEnd && set.contains(sb.toString())) {
             list.add(sb.toString());
             set.remove(sb.toString());
