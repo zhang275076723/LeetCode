@@ -81,15 +81,15 @@ public class Problem403 {
             //跳跃到stone[i]的前一块石头stone[j]
             for (int j = 0; j < i; j++) {
                 //从stone[j]跳跃到stone[i]的步数
-                int jump = stones[i] - stones[j];
+                int jumpDistance = stones[i] - stones[j];
 
                 //从stone[j]最多只能跳j+1步到达stone[i]
-                //因为跳的最远情况为stone[0]跳1步到stone[1]，stone[1]跳2步到stone[2]，stone[2]跳3步到stone[3]，...，stone[j]跳j+1步到stone[j+1]
-                if (j + 1 >= jump) {
-                    dp[i][jump] = dp[j][jump - 1] || dp[j][jump] || dp[j][jump + 1];
+                //因为跳的最远情况为stone[0]最多跳1步到stone[1]，stone[1]最多跳2步到stone[2]，stone[2]最多跳3步到stone[3]，...，stone[j]最多跳j+1步到stone[j+1]
+                if (j + 1 >= jumpDistance) {
+                    dp[i][jumpDistance] = dp[j][jumpDistance - 1] || dp[j][jumpDistance] || dp[j][jumpDistance + 1];
 
                     //能够跳跃到最后一个石头，返回true
-                    if (i == stones.length - 1 && dp[i][jump]) {
+                    if (i == stones.length - 1 && dp[i][jumpDistance]) {
                         return true;
                     }
                 }

@@ -50,14 +50,14 @@ public class Problem621 {
     /**
      * 模拟
      * 每次调度不在冷却中，且剩余执行次数最多的任务，如果任务都在冷却中，则将处于冷却的所有任务冷却时间都减1
-     * 时间复杂度O(tasks.length * |Σ|)，空间复杂度O(|Σ|) (Σ:任务数组中任务种类)
+     * 时间复杂度O(n * |Σ|)，空间复杂度O(|Σ|) (n:tasks.length，Σ:任务数组中任务种类，|Σ|=26)
      *
      * @param tasks
      * @param n
      * @return
      */
     public int leastInterval(char[] tasks, int n) {
-        if (tasks.length == 1 || n == 0) {
+        if (n == 0) {
             return tasks.length;
         }
 
@@ -96,10 +96,11 @@ public class Problem621 {
                         timeMap.put(entry.getKey(), entry.getValue() - 1);
                     }
                 }
-            }else{
+            } else {
                 //找不在冷却中，且剩余执行次数最多的任务
                 for (Map.Entry<Character, Integer> entry : timeMap.entrySet()) {
-                    if (countMap.get(entry.getKey()) > countMap.get(curTask) && entry.getValue() == 0) {
+                    //Integer比较不能用==，而应该用equals()
+                    if (countMap.get(entry.getKey()) > countMap.get(curTask) && entry.getValue().equals(0)) {
                         curTask = entry.getKey();
                     }
                 }
@@ -126,14 +127,14 @@ public class Problem621 {
      * 贪心
      * 以需要执行次数最多的任务为基准，执行所有任务的最短时间为(maxExecCount-1)*(n+1)+sameCount
      * (maxExecCount:执行次数最多的任务，sameCount:具有最多执行次数任务的数量)
-     * 时间复杂度O(tasks.length + |Σ|)，空间复杂度O(|Σ|) (Σ:任务数组中任务种类)
+     * 时间复杂度O(n + |Σ|)，空间复杂度O(|Σ|) (n:tasks.length，Σ:任务数组中任务种类，|Σ|=26)
      *
      * @param tasks
      * @param n
      * @return
      */
     public int leastInterval2(char[] tasks, int n) {
-        if (tasks.length == 1 || n == 0) {
+        if (n == 0) {
             return tasks.length;
         }
 
@@ -151,7 +152,8 @@ public class Problem621 {
         int sameCount = 0;
 
         for (Map.Entry<Character, Integer> entry : countMap.entrySet()) {
-            if (entry.getValue() == maxExecCount) {
+            //Integer比较不能用==，而应该用equals()
+            if (entry.getValue().equals(maxExecCount)) {
                 sameCount++;
             }
         }
@@ -159,7 +161,8 @@ public class Problem621 {
         //如果最多任务A、B执行次数为3，n = 2，则最少时间安排为ABxABxAB
         int time = (maxExecCount - 1) * (n + 1) + sameCount;
 
-        //如果time小于task.length，例如['A','A','B','C']，n = 0，则取数组的长度为最少执行时间
+        //最少执行时间最少为数组的长度，取算出的执行时间time和数组长度的最大值为所需执行时间
+        //例如['A','A','A','B','B','B','C','C','C','D','D','E']，n = 2，所需执行时间不是(3-1)*(2+1)+3=9，而是数组长度12
         return Math.max(time, tasks.length);
     }
 }

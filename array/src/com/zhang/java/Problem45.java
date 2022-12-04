@@ -65,28 +65,29 @@ public class Problem45 {
      * @return
      */
     public int jump2(int[] nums) {
-        if (nums == null || nums.length == 0) {
+        if (nums == null || nums.length <= 1) {
             return 0;
         }
 
         //跳跃到当前位置所需的最少跳跃次数
         int count = 0;
         //当前能够跳跃到的最远距离
-        int maxDistance = 0;
+        int curJumpDistance = 0;
         //上次能够跳跃到的最远距离
-        int curDistance = 0;
+        int lastJumpDistance = 0;
 
         for (int i = 0; i < nums.length; i++) {
-            maxDistance = Math.max(maxDistance, i + nums[i]);
+            //更新当前能够跳跃到的最远距离
+            curJumpDistance = Math.max(curJumpDistance, i + nums[i]);
 
-            //当前已经可以跳跃到最后位置，直接返回
-            if (curDistance >= nums.length - 1) {
-                return count;
+            //当前能够跳跃到的最远距离可以跳跃到最后位置，直接返回
+            if (curJumpDistance >= nums.length - 1) {
+                return count + 1;
             }
 
             //当到达上次能够跳跃的最大距离时，更新上次能够跳跃的最大距离，并更新最少跳跃次数
-            if (i == curDistance) {
-                curDistance = maxDistance;
+            if (i == lastJumpDistance) {
+                lastJumpDistance = curJumpDistance;
                 count++;
             }
         }

@@ -62,6 +62,8 @@ public class Problem581 {
     /**
      * 将数组分为三部分，左边部分和右边部分都是升序，
      * 中间部分的最小值大于左边部分的最大值，中间部分的最大值小于右边部分的最小值
+     * 从前往后遍历，如果当前元素nums[i]小于nums[0]-nums[i-1]的最大值，则存在无序子数组，更新无序子数组右边界right；
+     * 从后往前遍历，如果当前元素nums[i]大于nums[i+1]-nums[nums.length-1]的最小值，则存在无序子数组，更新无序子数组左边界left
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -72,29 +74,33 @@ public class Problem581 {
             return 0;
         }
 
+        //无序子数组左边界
         int left = -1;
+        //无序子数组右边界
         int right = -1;
-        //由前往后遍历到当前位置之前的最大值
+        //nums[0]-nums[i-1]的最大值
         int max = Integer.MIN_VALUE;
-        //有后往前遍历到当前位置之后的最小值
+        //nums[i+1]-nums[nums.length-1]的最小值
         int min = Integer.MAX_VALUE;
 
+        //从左往右遍历，找中间部分的右边界，nums[i]比nums[0]-nums[i-1]的最大值max还小，说明存在无序子数组，更新right
         for (int i = 0; i < nums.length; i++) {
-            //从左往右遍历，找中间部分的右边界，nums[i]比之前max小，说明存在无序子数组，更新right
             if (nums[i] < max) {
                 right = i;
             }
 
-            //更新当前最大值
+            //更新nums[0]-nums[i]的最大值
             max = Math.max(max, nums[i]);
+        }
 
-            //从右往左遍历，找中间部分的左边界，num[nums.length-1-i]比之后min大，说明存在无序子数组，更新left
-            if (nums[nums.length - 1 - i] > min) {
-                left = nums.length - 1 - i;
+        //从右往左遍历，找中间部分的左边界，num[i]比nums[i+1]-nums[nums.length-1]的最小值还大，说明存在无序子数组，更新left
+        for (int i = nums.length - 1; i >= 0; i--) {
+            if (nums[i] > min) {
+                left = i;
             }
 
-            //更新当前最小值
-            min = Math.min(min, nums[nums.length - 1 - i]);
+            //更新nums[i]-nums[nums.length-1]当前最小值
+            min = Math.min(min, nums[i]);
         }
 
         return left == right ? 0 : right - left + 1;

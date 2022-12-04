@@ -29,8 +29,8 @@ public class Problem55 {
 
     /**
      * 动态规划
-     * dp[i]：nums[i]到是否能够到达结尾
-     * dp[i] = dp[i+j] (1 <= j <= nums[i]) (从nums[i]到nums[i+nums[i]]只要有一个能到达结尾就是true)
+     * dp[i]：能否从nums[i]到达nums[i]
+     * dp[i] = true (dp[j] && j+nums[j] >= i)
      * 时间复杂度O(n^2)，空间复杂度O(n)
      *
      * @param nums
@@ -42,18 +42,18 @@ public class Problem55 {
         }
 
         boolean[] dp = new boolean[nums.length];
-        dp[nums.length - 1] = true;
+        dp[0] = true;
 
-        for (int i = nums.length - 2; i >= 0; i--) {
-            for (int j = 1; j <= nums[i]; j++) {
-                if (dp[i + j]) {
+        for (int i = 1; i < nums.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (dp[j] && j + nums[j] >= i) {
                     dp[i] = true;
                     break;
                 }
             }
         }
 
-        return dp[0];
+        return dp[nums.length - 1];
     }
 
     /**

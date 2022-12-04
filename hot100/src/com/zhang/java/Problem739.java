@@ -120,6 +120,8 @@ public class Problem739 {
         }
 
         int[] result = new int[temperatures.length];
+
+        //单调递减栈
         Deque<Integer> stack = new LinkedList<>();
 
         for (int i = 0; i < temperatures.length; i++) {
