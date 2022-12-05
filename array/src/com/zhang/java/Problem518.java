@@ -64,18 +64,18 @@ public class Problem518 {
 
         int[][] dp = new int[coins.length + 1][amount + 1];
 
-        //dp初始化
-        for (int i = 1; i <= coins.length; i++) {
+        //dp初始化，前i种硬币，凑成金额0的数量为1种
+        for (int i = 0; i <= coins.length; i++) {
             //前i种硬币凑成金额为0的组合数量为1
             dp[i][0] = 1;
         }
 
         for (int i = 1; i <= coins.length; i++) {
             for (int j = 1; j <= amount; j++) {
-                if (coins[i - 1] <= j) {
-                    dp[i][j] = dp[i - 1][j] + dp[i][j - coins[i - 1]];
-                } else {
+                if (coins[i - 1] > j) {
                     dp[i][j] = dp[i - 1][j];
+                } else {
+                    dp[i][j] = dp[i - 1][j] + dp[i][j - coins[i - 1]];
                 }
             }
         }

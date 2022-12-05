@@ -45,12 +45,12 @@ public class Problem977 {
         while (i <= j) {
             if (Math.abs(nums[i]) < Math.abs(nums[j])) {
                 result[index] = nums[j] * nums[j];
-                index--;
                 j--;
+                index--;
             } else {
                 result[index] = nums[i] * nums[i];
-                index--;
                 i++;
+                index--;
             }
         }
 

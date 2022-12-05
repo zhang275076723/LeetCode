@@ -23,7 +23,7 @@ public class ElevatorSchedule {
 
     /**
      * 暴力
-     * 遍历每个楼层，找出电梯所停的楼层，使所有人达到想到楼层要爬楼梯的总数
+     * 遍历电梯所停在的楼层，计算所有人达到想到楼层所要爬的楼梯总数
      * 时间复杂度O(n^2)，空间复杂度O(1)
      *
      * @param person
@@ -47,15 +47,19 @@ public class ElevatorSchedule {
         //电梯停的最佳楼层
         int bestFloor = minFloor;
         //电梯停下后乘客达到要去楼层所爬的楼层之和
-        int minSum = Integer.MAX_VALUE;
+        int minCount = Integer.MAX_VALUE;
 
         for (int i = minFloor; i <= maxFloor; i++) {
+            //电梯停在第i层，所需爬的楼层数量
             int tempSum = 0;
+
             for (int j = 0; j < person.length; j++) {
                 tempSum = tempSum + Math.abs(i - person[j]);
             }
-            if (tempSum < minSum) {
-                minSum = tempSum;
+
+            //更新电梯停下的最佳楼层和所需的最少爬楼梯数
+            if (tempSum < minCount) {
+                minCount = tempSum;
                 bestFloor = i;
             }
         }
@@ -91,14 +95,15 @@ public class ElevatorSchedule {
 
         //floor[i]：到达到第i+minFloor层的人数
         int[] floor = new int[maxFloor - minFloor + 1];
+
         for (int i = 0; i < person.length; i++) {
             floor[person[i] - minFloor]++;
         }
 
         //电梯停的最佳楼层
         int bestFloor = minFloor;
-        //电梯停下后乘客达到要去楼层所爬的楼层之和
-        int minSum = 0;
+        //电梯停在某一层后，乘客达到要去楼层所爬的楼层之和
+        int count = 0;
         //要去i楼以下的乘客数量
         int n1 = 0;
         //要去i楼的乘客数量
@@ -108,14 +113,14 @@ public class ElevatorSchedule {
 
         //电梯停在minFloor楼，乘客需要爬的楼层总数之和
         for (int i = 1; i < floor.length; i++) {
-            minSum = minSum + floor[i] * (i + minFloor);
+            count = count + floor[i] * i;
             n3 = n3 + floor[i];
         }
 
         for (int i = 1; i < floor.length; i++) {
-            //i+1楼比i楼，乘客需要爬的楼层总数之和较少，进行更新
+            //电梯停在i+1楼比停在i楼，i+1层之下的乘客需要多爬n1+n2层，i+1层及至上的乘客需要少爬n3层
             if (n1 + n2 < n3) {
-                minSum = minSum + n1 + n2 - n3;
+                count = count + n1 + n2 - n3;
                 bestFloor = i + minFloor;
             }
 

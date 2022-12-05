@@ -66,7 +66,7 @@ public class FindMaxArrayMinAfterKMinus {
 
         while (left < right) {
             //使用long，避免溢出
-            mid = (int) ( left + (((long) right - left) >> 1));
+            mid = (int) (left + (((long) right - left) >> 1));
 
             //数组中元素都小于等于mid所需的次数
             int count = 0;

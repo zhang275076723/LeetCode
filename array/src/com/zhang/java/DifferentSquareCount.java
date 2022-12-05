@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/7/26 12:56
  * @Author zsy
- * @Description 统计有序数组里平方和的数目 字节面试题 类比Problem88、Problem997
+ * @Description 统计有序数组里平方和不同的数目 字节面试题 类比Problem88、Problem977
  * 返回这个数组所有数的平方值中有多少种不同的取值
  * <p>
  * 输入：nums = [-10, -10, -5, 0, 1, 5, 8, 10]
@@ -19,7 +19,7 @@ public class DifferentSquareCount {
 
     /**
      * 双指针
-     * 分别指向首尾位置，判断首位指针所指绝对值交大元素是否和当前元素前一个元素的绝对值相同
+     * 判断左右指针所指元素中绝对值较大的元素是否和前一个元素的绝对值相同，如果不同计数count加1
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -32,7 +32,7 @@ public class DifferentSquareCount {
 
         int i = 0;
         int j = nums.length - 1;
-        //当前元素的上一个元素值
+        //当前元素的上一个元素值，赋初值为数组中不存在的元素
         int num = Integer.MIN_VALUE;
         int count = 0;
 

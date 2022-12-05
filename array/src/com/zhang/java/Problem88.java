@@ -140,17 +140,15 @@ public class Problem88 {
         }
 
         //nums2已结遍历结束，直接返回
-        if (i >= 0) {
+        if (j == -1) {
             return;
         }
 
         //nums2没有遍历结束，将nums2剩余元素复制到nums1中
-        if (j >= 0) {
-            while (index >= 0) {
-                nums1[index] = nums2[j];
-                index--;
-                j--;
-            }
+        while (j >= 0) {
+            nums1[index] = nums2[j];
+            index--;
+            j--;
         }
     }
 }

@@ -12,7 +12,6 @@ public class Random1_100 {
     public static void main(String[] args) {
         Random1_100 random1_100 = new Random1_100();
         System.out.println(Arrays.toString(random1_100.random(10)));
-        System.out.println(Arrays.toString(random1_100.random(10)));
     }
 
     /**
@@ -32,6 +31,7 @@ public class Random1_100 {
 
         //从后往前，每次选择随机元素与末尾元素交换
         for (int i = result.length - 1; i > 0; i--) {
+            //生成[0-i]的随机整数
             int randomIndex = new Random().nextInt(i + 1);
 
             //将当前随机数和末尾随机数交换，下次取随机数时不会取到重复随机数

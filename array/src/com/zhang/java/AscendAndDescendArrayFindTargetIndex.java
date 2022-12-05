@@ -78,7 +78,7 @@ public class AscendAndDescendArrayFindTargetIndex {
     }
 
     /**
-     * 二分查找target是否在nums数组的[left,right]区间内，同时根据isAscend判断nums数组是升序还是降序
+     * 二分查找target是否在nums数组的[left,right]区间内，根据isAscend标志位判断nums数组是升序还是降序
      *
      * @param nums
      * @param left
