@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/8/27 11:37
  * @Author zsy
- * @Description 丑数 II 类比Problem26、Problem75 同Offer49
+ * @Description 丑数 II 类比Problem26、Problem75、Problem204、Problem263 同Offer49
  * 给你一个整数 n ，请你找出并返回第 n 个 丑数 。
  * 丑数 就是只包含质因数 2、3 和/或 5 的正整数。
  * <p>
@@ -42,35 +42,34 @@ public class Problem264 {
             return -1;
         }
 
-        if (n == 1) {
-            return 1;
-        }
-
-        int[] ugly = new int[n];
-        ugly[0] = 1;
+        int[] dp = new int[n];
+        dp[0] = 1;
 
         //i、j、k分别指向当前丑数数组的下标索引
         int i = 0;
         int j = 0;
         int k = 0;
 
-        for (int l = 1; l < n; l++) {
-            ugly[l] = Math.min(ugly[i] * 2, Math.min(ugly[j] * 3, ugly[k] * 5));
+        for (int m = 1; m < n; m++) {
+            //i、j、k指针分别乘上2、3、5的最小值即为当前丑数
+            dp[m] = Math.min(dp[i] * 2, Math.min(dp[j] * 3, dp[k] * 5));
 
-            if (ugly[i] * 2 == ugly[l]) {
+            //i指针后移
+            if (dp[m] == dp[i] * 2) {
                 i++;
             }
 
-            if (ugly[j] * 3 == ugly[l]) {
+            //j指针后移
+            if (dp[m] == dp[j] * 3) {
                 j++;
             }
 
-            if (ugly[k] * 5 == ugly[l]) {
+            //k指针后移
+            if (dp[m] == dp[k] * 5) {
                 k++;
             }
         }
 
-
-        return ugly[n - 1];
+        return dp[n - 1];
     }
 }

@@ -48,7 +48,7 @@ public class Problem518 {
 
     /**
      * 动态规划 完全背包
-     * dp[i][j]：前i种硬币coin[0]-coin[i-1]凑成金额j的组合数量
+     * dp[i][j]：coin[0]-coin[i-1]凑成金额j的组合数量
      * dp[i][j] = dp[i-1][j]                       (coins[i-1] > j)
      * dp[i][j] = dp[i-1][j] + dp[i][j-coins[i-1]] (coins[i-1] <= j)
      * 时间复杂度O(n*amount)，空间复杂度O(n*amount) (n=coins.length)

@@ -56,59 +56,29 @@ public class CharacterToInteger {
                 stack.push(8);
             } else if (c == '九') {
                 stack.push(9);
-            } else if (c == '亿') {
-                //栈中小于一亿的元素之和
-                int sum = 0;
-                //一亿
-                int num = 100000000;
+            } else {
+                //栈中小于num的元素之和
+                int num = 0;
 
-                //栈顶小于num的所有元素出栈，并相加
-                while (!stack.isEmpty() && stack.peek() < num) {
-                    sum = sum + stack.pop();
+                if (c == '亿') {
+                    //一亿
+                    num = 100000000;
+                } else if (c == '万') {
+                    //一万
+                    num = 10000;
+                } else if (c == '千') {
+                    //一千
+                    num = 1000;
+                } else if (c == '百') {
+                    //一百
+                    num = 100;
+                } else if (c == '十') {
+                    //一十
+                    num = 10;
                 }
 
-                stack.push(sum * num);
-            } else if (c == '万') {
-                //栈中小于一万的元素之和
+                //栈中小于num的元素之和
                 int sum = 0;
-                //一万
-                int num = 10000;
-
-                //栈顶小于num的所有元素出栈，并相加
-                while (!stack.isEmpty() && stack.peek() < num) {
-                    sum = sum + stack.pop();
-                }
-
-                stack.push(sum * num);
-            } else if (c == '千') {
-                //栈中小于一千的元素之和
-                int sum = 0;
-                //一千
-                int num = 1000;
-
-                //栈顶小于num的所有元素出栈，并相加
-                while (!stack.isEmpty() && stack.peek() < num) {
-                    sum = sum + stack.pop();
-                }
-
-                stack.push(sum * num);
-            } else if (c == '百') {
-                //栈中小于一百的元素之和
-                int sum = 0;
-                //一百
-                int num = 100;
-
-                //栈顶小于num的所有元素出栈，并相加
-                while (!stack.isEmpty() && stack.peek() < num) {
-                    sum = sum + stack.pop();
-                }
-
-                stack.push(sum * num);
-            } else if (c == '十') {
-                //栈中小于一十的元素之和
-                int sum = 0;
-                //一十
-                int num = 10;
 
                 //栈顶小于num的所有元素出栈，并相加
                 while (!stack.isEmpty() && stack.peek() < num) {

@@ -96,6 +96,7 @@ public class Problem165 {
         int j = 0;
 
         while (i < version1.length() || j < version2.length()) {
+            //赋版本号初值为0
             int value1 = 0;
             int value2 = 0;
 
@@ -116,7 +117,7 @@ public class Problem165 {
                 return -1;
             }
 
-            //跳过'.'
+            //指针后移，跳过'.'
             i++;
             j++;
         }
