@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/12 11:15
  * @Author zsy
- * @Description 寻找两个正序数组的中位数 字节面试题
+ * @Description 寻找两个正序数组的中位数 字节面试题 类比Problem378、Problem410、Problem658、Problem1482、FindMaxArrayMinAfterKMinus
  * 给定两个大小分别为 m 和 n 的正序（从小到大）数组 nums1 和 nums2。
  * 请你找出并返回这两个正序数组的 中位数 。
  * 算法的时间复杂度应该为 O(log (m+n)) 。
@@ -69,27 +69,39 @@ public class Problem4 {
 
         //找到中位数的两个值
         for (int k = 0; k <= (nums1.length + nums2.length) / 2; k++) {
-            num1 = num2;
-
-            if ((i < nums1.length && j < nums2.length && nums1[i] < nums2[j]) || j >= nums2.length) {
-                num2 = nums1[i];
-                i++;
+            if (i < nums1.length && j < nums2.length) {
+                if (nums1[i] < nums2[j]) {
+                    num1 = num2;
+                    num2 = nums1[i];
+                    i++;
+                } else {
+                    num1 = num2;
+                    num2 = nums2[j];
+                    j++;
+                }
             } else {
-                num2 = nums2[j];
-                j++;
+                if (i < nums1.length) {
+                    num1 = num2;
+                    num2 = nums1[i];
+                    i++;
+                } else {
+                    num1 = num2;
+                    num2 = nums2[j];
+                    j++;
+                }
             }
         }
 
-        if ((nums1.length + nums2.length) % 2 == 1) {
-            return num2;
-        } else {
+        if ((nums1.length + nums2.length) % 2 == 0) {
             return (num1 + num2) / 2.0;
+        } else {
+            return num2;
         }
     }
 
     /**
      * 二分查找变形，看到有序数组，就要想到二分查找
-     * 求第k小的数，则比较nums1中第k/2个元素和nums2中第k/2个元素，
+     * 求第k小的数，则比较nums1中从起始位置开始第k/2个元素和nums2中从起始位置开始第k/2个元素，
      * 把较小的值和它之前的元素去掉，即去掉了较小的k/2个元素，因为这些数不可能是第k小的数，
      * 然后再求删除后的两个数组第(k-删除的元素个数)小的数，直至找到第k小的数
      * 时间复杂度O(log(m+n))，空间复杂度O(1)
@@ -115,54 +127,55 @@ public class Problem4 {
             }
         }
 
-        //第k小元素
-        int k = (nums1.length + nums2.length) / 2 + 1;
+        //两个中位数中的前一个数
+        int num1 = getMinK(nums1, nums2, (nums1.length + nums2.length) / 2);
+        //两个中位数中的后一个数
+        int num2 = getMinK(nums1, nums2, (nums1.length + nums2.length) / 2 + 1);
 
-        if ((nums1.length + nums2.length) % 2 == 1) {
-            return findMinK(nums1, nums2, k);
+        if ((nums1.length + nums2.length) % 2 == 0) {
+            return (num1 + num2) / 2.0;
         } else {
-            return (findMinK(nums1, nums2, k - 1) + findMinK(nums1, nums2, k)) / 2.0;
+            return num2;
         }
     }
 
-    private int findMinK(int[] nums1, int[] nums2, int k) {
+    private int getMinK(int[] nums1, int[] nums2, int k) {
         //当前指向nums1的起始下标索引
         int i = 0;
         //当前指向nums2的起始下标索引
         int j = 0;
-        //i的下一个下标索引
-        int nextI;
-        //j的下一个下标索引
-        int nextJ;
+        //i的下一个下标索引，最多为nums1中最后一个元素下标索引
+        int nextI = Math.min(nums1.length - 1, i + k / 2 - 1);
+        //j的下一个下标索引，最多为nums2中最后一个元素下标索引
+        int nextJ = Math.min(nums2.length - 1, j + k / 2 - 1);
 
-        while (true) {
-            //i、j指针超过数组长度时，直接返回另一个数组当前的第k个元素
+        while (k != 1) {
+            //nums1[nextI]小于nums2[nextJ]，说明nums1[i]-nums1[nextI]不是第k小元素，更新k、i
+            if (nums1[nextI] < nums2[nextJ]) {
+                k = k - (nextI - i + 1);
+                i = nextI + 1;
+            } else {
+                //nums1[nextI]大于等于nums2[nextJ]，说明nums2[j]-nums2[nextJ]不是第k小元素，更新k、i
+                k = k - (nextJ - j + 1);
+                j = nextJ + 1;
+            }
+
+            //i已经遍历完，直接nums2中j起始的第k个元素
             if (i == nums1.length) {
                 return nums2[j + k - 1];
             }
 
+            //j已经遍历完，直接nums1中i起始的第k个元素
             if (j == nums2.length) {
                 return nums1[i + k - 1];
             }
 
-            //当k为1时，直接返回两个数组当前的第1个元素的较小值
-            if (k == 1) {
-                return Math.min(nums1[i], nums2[j]);
-            }
-
-            //每次找当前数组的之后k/2个元素
-            nextI = Math.min(i + k / 2 - 1, nums1.length - 1);
-            nextJ = Math.min(j + k / 2 - 1, nums2.length - 1);
-
-            if (nums1[nextI] < nums2[nextJ]) {
-                //更新k、i
-                k = k - (nextI - i + 1);
-                i = nextI + 1;
-            } else {
-                //更新k、j
-                k = k - (nextJ - j + 1);
-                j = nextJ + 1;
-            }
+            //更新i、j的下一次要找的元素下标索引，每次往后找k/2个元素
+            nextI = Math.min(nums1.length - 1, i + k / 2 - 1);
+            nextJ = Math.min(nums2.length - 1, j + k / 2 - 1);
         }
+
+        //第1小即为nums1[i]和nums2[j]中的较小值
+        return Math.min(nums1[i], nums2[j]);
     }
 }

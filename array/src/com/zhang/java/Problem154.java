@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/7/17 9:49
  * @Author zsy
- * @Description 寻找旋转排序数组中的最小值 II 类比Problem33、Problem34、Problem81、Problem153、Problem162、Problem852、Offer53、Offer53_2 同Offer11
+ * @Description 寻找旋转排序数组中的最小值 II 类比Problem33、Problem34、Problem35、Problem81、Problem153、Problem162、Problem852、Offer53、Offer53_2 同Offer11
  * 已知一个长度为 n 的数组，预先按照升序排列，经由 1 到 n 次 旋转 后，得到输入数组。
  * 例如，原数组 nums = [0,1,4,4,5,6,7] 在变化后可能得到：
  * 若旋转 4 次，则可以得到 [4,5,6,7,0,1,4]
@@ -53,12 +53,15 @@ public class Problem154 {
         while (left < right) {
             mid = left + ((right - left) >> 1);
 
-            if (nums[mid] > nums[right]) {
-                left = mid + 1;
+            //nums[mid]和nums[right]相等，右指针左移
+            if (nums[mid] == nums[right]) {
+                right--;
             } else if (nums[mid] < nums[right]) {
+                //nums[mid]-nums[right]单调递增，最小值在左边
                 right = mid;
             } else {
-                right--;
+                //nums[left]-nums[mid]单调递增，最小值在右边
+                left = mid + 1;
             }
         }
 

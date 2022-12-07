@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/1 16:41
  * @Author zsy
- * @Description 搜索插入位置
+ * @Description 搜索插入位置 类比Problem33、Problem34、Problem81、Problem153、Problem154、Problem162、Problem852
  * 给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
  * 请必须使用时间复杂度为 O(logn) 的算法。
  * <p>
@@ -30,8 +30,7 @@ public class Problem35 {
     }
 
     /**
-     * 二分查找
-     * 看到有序数组，就要想到二分查找
+     * 二分查找变形，看到有序数组，就要想到二分查找
      * 时间复杂度O(logn)，空间复杂度O(1)
      *
      * @param nums
@@ -39,28 +38,27 @@ public class Problem35 {
      * @return
      */
     public int searchInsert(int[] nums, int target) {
-        if (nums[0] > target) {
-            return 0;
-        }
-
-        if (nums[nums.length - 1] < target) {
-            return nums.length;
-        }
-
         int left = 0;
         int right = nums.length - 1;
         int mid;
+        int index = -1;
 
-        while (left < right) {
+        while (left <= right) {
             mid = left + ((right - left) >> 1);
 
-            if (nums[mid] < target) {
-                left = mid + 1;
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] > target) {
+                //nums[mid]大于target，往左找
+                right = mid - 1;
+                index = mid;
             } else {
-                right = mid;
+                //nums[mid]小于target，往右找
+                left = mid + 1;
+                index = mid + 1;
             }
         }
 
-        return left;
+        return index;
     }
 }

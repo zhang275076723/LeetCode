@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/4/18 12:31
  * @Author zsy
- * @Description 在排序数组中查找元素的第一个和最后一个位置 类比Problem33、Problem81、Problem153、Problem154、Problem162、Problem852、Offer11、Offer53_2 同Offer53
+ * @Description 在排序数组中查找元素的第一个和最后一个位置 类比Problem33、Problem34、Problem81、Problem153、Problem154、Problem162、Problem852、Offer11、Offer53_2 同Offer53
  * 在排序数组中查找元素的第一个和最后一个位置
  * 给定一个按照升序排列的整数数组 nums，和一个目标值 target。
  * 找出给定目标值在数组中的开始位置和结束位置。

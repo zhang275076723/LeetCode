@@ -49,9 +49,9 @@ public class Problem56 {
         List<int[]> list = new ArrayList<>();
 
         for (int i = 0; i < intervals.length; i++) {
-            //当前区间左端点
+            //当前区间左边界
             int left = intervals[i][0];
-            //当前区间右端点
+            //当前区间右边界
             int right = intervals[i][1];
 
             //找相交区间，更新右端点

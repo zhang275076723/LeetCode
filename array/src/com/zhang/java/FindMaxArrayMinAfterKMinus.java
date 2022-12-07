@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/4 21:27
  * @Author zsy
- * @Description 找数组执行k次减x之后的尽可能小的最大值 网易机试题 类比Problem378、Problem410、Problem1482
+ * @Description 找数组执行k次减x之后的尽可能小的最大值 网易机试题 类比Problem4、Problem378、Problem410、Problem658、Problem1482
  * 一个数组中选一个数减去x，执行k次之后，返回数组中尽可能小的最大值
  * <p>
  * 输入：arr = [1,0,7], k = 2, x = 3
