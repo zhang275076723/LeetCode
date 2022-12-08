@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/5 17:19
  * @Author zsy
- * @Description 鸡蛋掉落 Google面试题 字节面试题 腾讯面试题 vivo机试题 类比Offer62
+ * @Description 鸡蛋掉落 Google面试题 字节面试题 腾讯面试题 vivo机试题 类比Problem375、Offer62
  * 给你 k 枚相同的鸡蛋，并可以使用一栋从第 1 层到第 n 层共有 n 层楼的建筑。
  * 已知存在楼层 f ，满足 0 <= f <= n ，任何从 高于 f 的楼层落下的鸡蛋都会碎，从 f 楼层或比它低的楼层落下的鸡蛋都不会破。
  * 每次操作，你可以取一枚没有碎的鸡蛋并把它从任一楼层 x 扔下（满足 1 <= x <= n）。
@@ -72,7 +72,7 @@ public class Problem887 {
         //楼层从2楼开始往上递增
         for (int i = 2; i <= n; i++) {
             for (int j = 2; j <= k; j++) {
-                //赋初值为最大值，则可以取到最小的m
+                //赋初值为最大值，则可以取到扔鸡蛋的最佳楼层m
                 dp[i][j] = Integer.MAX_VALUE;
 
                 //当前从第m层楼扔鸡蛋
