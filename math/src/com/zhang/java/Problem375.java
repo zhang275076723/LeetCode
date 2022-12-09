@@ -63,7 +63,7 @@ public class Problem375 {
      * @return
      */
     public int getMoneyAmount(int n) {
-        //避免dp[k+1][j+i-1]中k+1溢出
+        //使用n+2，而不是n+1，原因是要避免dp[k+1][j+i-1]中k+1溢出
         int[][] dp = new int[n + 2][n + 2];
 
         //数字区间长度

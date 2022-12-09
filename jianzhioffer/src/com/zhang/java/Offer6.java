@@ -23,7 +23,7 @@ public class Offer6 {
     }
 
     /**
-     * 先计算链表长度，再遍历链表，每次尾插
+     * 先计算链表长度，再遍历链表，每次得到的值是数组末尾元素
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param head
@@ -69,12 +69,12 @@ public class Offer6 {
             return new int[]{head.val};
         }
 
-
         int length = 1;
         ListNode node = head;
         ListNode pre = null;
         ListNode next = head.next;
 
+        //反转链表
         while (node.next != null) {
             next = node.next;
             node.next = pre;
@@ -84,6 +84,7 @@ public class Offer6 {
         }
 
         node.next = pre;
+
         int[] result = new int[length];
 
         for (int i = 0; i < length; i++) {

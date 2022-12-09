@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/3/28 9:26
  * @Author zsy
- * @Description 把数字翻译成字符串 类比problem70、Problem93、Problem468、Problem509、Problem746、Problem1137、Offer10、Offer10_2
+ * @Description 把数字翻译成字符串 类比Problem91 类比problem70、Problem93、Problem468、Problem509、Problem746、Problem1137、Offer10、Offer10_2
  * 给定一个数字，我们按照如下规则把它翻译为字符串：
  * 0 翻译成 “a” ，1 翻译成 “b”，……，11 翻译成 “l”，……，25 翻译成 “z”。一个数字可能有多个翻译。
  * 请编程实现一个函数，用来计算一个数字有多少种不同的翻译方法。

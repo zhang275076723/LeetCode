@@ -70,14 +70,13 @@ public class Problem100 {
             return false;
         }
 
-        Queue<TreeNode> queue1 = new LinkedList<>();
-        Queue<TreeNode> queue2 = new LinkedList<>();
-        queue1.offer(p);
-        queue2.offer(q);
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(p);
+        queue.offer(q);
 
-        while (!queue1.isEmpty() && !queue2.isEmpty()) {
-            TreeNode node1 = queue1.poll();
-            TreeNode node2 = queue2.poll();
+        while (!queue.isEmpty()) {
+            TreeNode node1 = queue.poll();
+            TreeNode node2 = queue.poll();
 
             if (node1 == null && node2 == null) {
                 continue;
@@ -87,14 +86,13 @@ public class Problem100 {
                 return false;
             }
 
-            queue1.offer(node1.left);
-            queue1.offer(node1.right);
-            queue2.offer(node2.left);
-            queue2.offer(node2.right);
+            queue.offer(node1.left);
+            queue.offer(node2.left);
+            queue.offer(node1.right);
+            queue.offer(node2.right);
         }
 
-        //当两个队列都为空的时候，两个树才相同
-        return queue1.isEmpty() && queue2.isEmpty();
+        return true;
     }
 
     private TreeNode buildTree(String[] data) {

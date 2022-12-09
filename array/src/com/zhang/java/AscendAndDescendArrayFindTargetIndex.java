@@ -35,7 +35,7 @@ public class AscendAndDescendArrayFindTargetIndex {
         int left = 0;
         int right = nums.length - 1;
         int mid;
-        int index = -1;
+        int index;
 
         while (left <= right) {
             mid = left + ((right - left) >> 1);

@@ -58,15 +58,14 @@ public class Problem212 {
      */
     public List<String> findWords(char[][] board, String[] words) {
         List<String> list = new ArrayList<>();
+        //用于去重，当找到满足要求的word时，加入set，避免之后再次遍历得到相同的word，相当于剪枝
+        Set<String> set = new HashSet<>();
 
         for (String word : words) {
-            //用于去重，当找到满足要求的word时，直接返回，相当于剪枝
-            Set<String> set = new HashSet<>();
-
             for (int i = 0; i < board.length; i++) {
                 for (int j = 0; j < board[0].length; j++) {
                     backtrack(0, i, j, board, word,
-                            new boolean[board.length][board[0].length], set, list);
+                            new boolean[board.length][board[0].length], list, set);
                 }
             }
         }
@@ -86,62 +85,64 @@ public class Problem212 {
      */
     public List<String> findWords2(char[][] board, String[] words) {
         List<String> list = new ArrayList<>();
+        //用于去重，当找到满足要求的word时，加入set，避免之后再次遍历得到相同的word，相当于剪枝
         Set<String> set = new HashSet<>();
+        //前缀树
         Trie trie = new Trie();
 
         for (String word : words) {
-            set.add(word);
             trie.insert(word);
         }
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 backtrack2(i, j, board, new StringBuilder(), trie.root,
-                        new boolean[board.length][board[0].length], set, list);
+                        new boolean[board.length][board[0].length], list, set);
             }
         }
 
         return list;
     }
 
-    private void backtrack(int t, int i, int j, char[][] board, String word,
-                           boolean[][] visited, Set<String> set, List<String> list) {
-        //用于去重，当找到word时，直接返回，相当于剪枝
+    private boolean backtrack(int t, int i, int j, char[][] board, String word,
+                              boolean[][] visited, List<String> list, Set<String> set) {
         if (set.contains(word)) {
-            return;
+            return true;
         }
 
         if (t == word.length()) {
-            set.add(word);
             list.add(word);
-            return;
+            set.add(word);
+            return true;
         }
 
         if (i < 0 || i >= board.length || j < 0 || j >= board[0].length ||
                 visited[i][j] || word.charAt(t) != board[i][j]) {
-            return;
+            return false;
         }
 
         visited[i][j] = true;
 
         //往上下左右找
-        backtrack(t + 1, i - 1, j, board, word, visited, set, list);
-        backtrack(t + 1, i + 1, j, board, word, visited, set, list);
-        backtrack(t + 1, i, j - 1, board, word, visited, set, list);
-        backtrack(t + 1, i, j + 1, board, word, visited, set, list);
+        boolean flag = backtrack(t + 1, i - 1, j, board, word, visited, list, set) ||
+                backtrack(t + 1, i + 1, j, board, word, visited, list, set) ||
+                backtrack(t + 1, i, j - 1, board, word, visited, list, set) ||
+                backtrack(t + 1, i, j + 1, board, word, visited, list, set);
 
         visited[i][j] = false;
+
+        return flag;
     }
 
     private void backtrack2(int i, int j, char[][] board, StringBuilder sb,
-                            Trie.TrieNode node, boolean[][] visited, Set<String> set, List<String> list) {
+                            Trie.TrieNode node, boolean[][] visited, List<String> list, Set<String> set) {
         if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || visited[i][j]) {
             return;
         }
 
         node = node.children[board[i][j] - 'a'];
 
-        //当前节点不是前缀树节点，说明当前字符不是word中字符，直接返回，相当于剪枝
+        //当前节点不是前缀树节点，说明当前单词不是前缀树中单词的前缀，直接返回，相当于剪枝
         if (node == null) {
             return;
         }
@@ -149,18 +150,18 @@ public class Problem212 {
         visited[i][j] = true;
         sb.append(board[i][j]);
 
-        //当前单词是前缀树中的一个单词，且当前单词第一次被找到
-        //注意：找到一个单词后，不能return，需要继续寻找
-        if (node.isEnd && set.contains(sb.toString())) {
+        //当前单词是前缀树中的一个单词，且当前单词第一次被遍历到，才加入结果集合
+        //注意：找到一个单词后，不能return，需要接着当前单词继续往后寻找
+        if (node.isEnd && !set.contains(sb.toString())) {
             list.add(sb.toString());
-            set.remove(sb.toString());
+            set.add(sb.toString());
         }
 
         //往上下左右找
-        backtrack2(i - 1, j, board, sb, node, visited, set, list);
-        backtrack2(i + 1, j, board, sb, node, visited, set, list);
-        backtrack2(i, j - 1, board, sb, node, visited, set, list);
-        backtrack2(i, j + 1, board, sb, node, visited, set, list);
+        backtrack2(i - 1, j, board, sb, node, visited, list, set);
+        backtrack2(i + 1, j, board, sb, node, visited, list, set);
+        backtrack2(i, j - 1, board, sb, node, visited, list, set);
+        backtrack2(i, j + 1, board, sb, node, visited, list, set);
 
         sb.delete(sb.length() - 1, sb.length());
         visited[i][j] = false;
@@ -187,7 +188,7 @@ public class Problem212 {
                 node = node.children[c - 'a'];
             }
 
-            //最后一个节点作为尾节点
+            //最后一个节点作为单词尾节点
             node.isEnd = true;
         }
 
