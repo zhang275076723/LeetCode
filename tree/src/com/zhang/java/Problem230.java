@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/9/1 9:24
  * @Author zsy
- * @Description 二叉搜索树中第K小的元素 字节面试题 类比 Problem95、Problem96、Problem98、Problem99、Offer33、Offer36、Offer54 线段树类比Problem440、Problem307
+ * @Description 二叉搜索树中第K小的元素 字节面试题 类比Problem95、Problem96、Problem98、Problem99、Offer33、Offer36、Offer54 二分搜索树类比Problem440  线段树类比Problem307、Problem729、Problem731、Problem732
  * 给定一个二叉搜索树的根节点 root ，和一个整数 k ，
  * 请你设计一个算法查找其中第 k 个最小元素（从 1 开始计数）。
  * <p>

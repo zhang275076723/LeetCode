@@ -38,6 +38,7 @@ public class Problem303 {
 
     /**
      * 前缀和数组，多次求区间和
+     * 时间复杂度O(n)，空间复杂度O(n)
      */
     static class NumArray {
         private final int[] preSum;

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/13 8:40
  * @Author zsy
- * @Description 字典序的第K小数字 字节面试题 类比Problem386、Offer17 线段树类比Problem230、Problem307
+ * @Description 字典序的第K小数字 字节面试题 类比Problem386、Offer17 二分搜索树类比Problem230 线段树类比Problem307、Problem729、Problem731、Problem732
  * 给定整数 n 和 k，返回  [1, n] 中字典序第 k 小的数字。
  * <p>
  * 输入: n = 13, k = 2
