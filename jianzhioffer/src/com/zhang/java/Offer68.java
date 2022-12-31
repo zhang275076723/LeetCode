@@ -67,7 +67,7 @@ public class Offer68 {
             }
         }
 
-        //p、q不是树中节点，返回null，表示没有找到
+        //p、q不是树中节点，返回null，即没有找到
         return null;
     }
 

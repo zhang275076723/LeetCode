@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/10/7 09:24
  * @Author zsy
- * @Description 二叉搜索树中的搜索 类比Problem450、Problem701、Offer68
+ * @Description 二叉搜索树中的搜索 类比Problem173、Problem450、Problem701、Offer68
  * 给定二叉搜索树（BST）的根节点 root 和一个整数值 val。
  * 你需要在 BST 中找到节点值等于 val 的节点。
  * 返回以该节点为根的子树。 如果节点不存在，则返回 null 。
@@ -69,16 +69,18 @@ public class Problem700 {
             return null;
         }
 
-        while (root != null) {
+        TreeNode node = root;
+
+        while (node != null) {
             //往右找
-            if (root.val < val) {
-                root = root.right;
-            } else if (root.val > val) {
+            if (node.val < val) {
+                node = node.right;
+            } else if (node.val > val) {
                 //往左找
-                root = root.left;
+                node = node.left;
             } else {
                 //找到
-                return root;
+                return node;
             }
         }
 
