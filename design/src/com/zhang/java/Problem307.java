@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/13 11:38
  * @Author zsy
- * @Description 区域和检索 - 数组可修改 类比Problem303 线段树类比Problem729、Problem731、Problem732 二分搜索树类比Problem230、Problem440
+ * @Description 区域和检索 - 数组可修改 类比Problem303、Problem304、Problem308 线段树类比Problem729、Problem731、Problem732 二分搜索树类比Problem230、Problem440
  * 给你一个数组 nums ，请你完成两类查询。
  * 1、其中一类查询要求 更新 数组 nums 下标对应的值
  * 2、另一类查询要求返回数组 nums 中索引 left 和索引 right 之间（ 包含 ）的nums元素的 和 ，其中 left <= right
@@ -42,11 +42,12 @@ public class Problem307 {
     }
 
     /**
-     * 线段树，用数组表示树，用于多次求区间和，并且区间内元素会修改的情况
+     * 线段树，用数组表示线段树，适用于：多次求区间和、区间最大值，并且区间内元素多次修改的情况
      */
     static class NumArray {
+        //需要线段化的数组
         private final int[] nums;
-
+        //线段树
         private final SegmentTree segmentTree;
 
         public NumArray(int[] nums) {
@@ -64,11 +65,11 @@ public class Problem307 {
         }
 
         /**
-         * 线段树，用于多次修改某一位置元素值和多次求区间和
+         * 线段树，适用于：多次求区间和、区间最大值，并且区间内元素多次修改的情况
          */
         private static class SegmentTree {
             /**
-             * 线段树数组，类似堆排序数组，用数组表示树，每个节点表示nums数组的区间和，
+             * 线段树数组，每个节点表示区间内元素之和，类似堆排序数组，用数组表示树
              * segmentTreeArr[0]为nums[0]-nums[nums.length-1]的区间和，
              * 左子树segmentTreeArr[1]为nums[0]-nums[(nums.length-1)/2]的区间和，
              * 左子树segmentTreeArr[2]为nums[(nums.length-1)/2+1]-nums[nums.length-1]的区间和
@@ -79,6 +80,7 @@ public class Problem307 {
                 //线段树数组大小至少为4n，确保线段树数组能够覆盖nums中所有区间元素
                 segmentTreeArr = new int[nums.length * 4];
 
+                //建立线段树
                 buildSegmentTree(nums, 0, 0, nums.length - 1);
             }
 
@@ -103,16 +105,16 @@ public class Problem307 {
                 //右子树根节点
                 int rightRootIndex = rootIndex * 2 + 2;
 
-                int leftSum = buildSegmentTree(nums, leftRootIndex, left, mid);
-                int rightSum = buildSegmentTree(nums, rightRootIndex, mid + 1, right);
+                int leftValue = buildSegmentTree(nums, leftRootIndex, left, mid);
+                int rightValue = buildSegmentTree(nums, rightRootIndex, mid + 1, right);
 
-                segmentTreeArr[rootIndex] = leftSum + rightSum;
+                segmentTreeArr[rootIndex] = leftValue + rightValue;
 
                 return segmentTreeArr[rootIndex];
             }
 
             /**
-             * 查询区间[queryLeft,queryRight]的数组元素之和
+             * 查询区间[queryLeft,queryRight]元素之和
              * 时间复杂度O(logn)，空间复杂度O(logn)
              *
              * @param rootIndex
@@ -142,11 +144,12 @@ public class Problem307 {
                 int leftValue = query(leftRootIndex, left, mid, queryLeft, queryRight);
                 int rightValue = query(rightRootIndex, mid + 1, right, queryLeft, queryRight);
 
+                //左节点区间和右节点区间元素之和，即为当前节点区间元素之和
                 return leftValue + rightValue;
             }
 
             /**
-             * 更新线段树数组中的值，nums[index]修改为value，导致nums[index]在线段树数组中的叶节点到根节点的值都进行修改
+             * 修改线段树区间[index,index]值为value，导致线段树数组中区间[index,index]到根节点的元素之和都要修改
              * 时间复杂度O(logn)，空间复杂度O(logn)
              *
              * @param rootIndex
@@ -176,15 +179,14 @@ public class Problem307 {
                 update(leftRootIndex, left, mid, index, value);
                 update(rightRootIndex, mid + 1, right, index, value);
 
-                //更新当前节点表示的区间范围
+                //更新当前节点表示的区间元素之和
                 segmentTreeArr[rootIndex] = segmentTreeArr[leftRootIndex] + segmentTreeArr[rightRootIndex];
             }
         }
     }
 
     /**
-     * 线段树，动态开点，适用于：不知道数组长度的情况
-     * 注意：当前线段树节点存放的是区间内元素之和
+     * 线段树，动态开点，适用于：不知道数组长度的情况下，多次求区间和、区间最大值，并且区间内元素多次修改的情况
      */
     static class NumArray2 {
         //线段树所能表示区间的最大范围[0,maxRight]
@@ -215,7 +217,6 @@ public class Problem307 {
 
         /**
          * 线段树
-         * 注意：当前线段树节点存放的是区间内元素之和
          */
         private static class SegmentTree {
             //线段树根节点
@@ -242,9 +243,9 @@ public class Problem307 {
                     return 0;
                 }
 
-                //要查询区间[queryLeft,queryRight]包含当前节点表示的范围[left,right]，直接返回当前节点表示区间元素之和node.value
+                //要查询区间[queryLeft,queryRight]包含当前节点表示的范围[left,right]，直接返回当前节点表示区间元素之和node.sumValue
                 if (queryLeft <= left && right <= queryRight) {
-                    return node.value;
+                    return node.sumValue;
                 }
 
                 //当前节点左右子树为空，动态开点
@@ -258,11 +259,12 @@ public class Problem307 {
 
                 int mid = left + ((right - left) >> 1);
 
-                //将当前节点懒标记值传递给左右子节点，更新左右子树表示的区间元素之和和懒标记值，并将当前节点的懒标记值置0
+                //将当前节点懒标记值传递给左右子节点，更新左右子节点表示区间元素之和、区间的最大值、懒标记值，并将当前节点的懒标记值置0
                 if (node.lazyValue != 0) {
-                    //左右子树节点表示的区间元素之和，要加上左右子树分别的节点个数乘以当前节点懒标记值
-                    node.leftNode.value = node.leftNode.value + (mid - left + 1) * node.lazyValue;
-                    node.rightNode.value = node.rightNode.value + (right - mid) * node.lazyValue;
+                    node.leftNode.sumValue = node.leftNode.sumValue + (mid - left + 1) * node.lazyValue;
+                    node.rightNode.sumValue = node.rightNode.sumValue + (right - mid) * node.lazyValue;
+                    node.leftNode.maxValue = node.leftNode.maxValue + node.lazyValue;
+                    node.rightNode.maxValue = node.rightNode.maxValue + node.lazyValue;
                     node.leftNode.lazyValue = node.lazyValue;
                     node.rightNode.lazyValue = node.lazyValue;
 
@@ -293,9 +295,10 @@ public class Problem307 {
                     return;
                 }
 
-                //要修改的区间[updateLeft,updateRight]包含当前节点表示的范围[left,right]，直接修改当前节点表示区间元素之和和懒标记值
+                //要修改的区间[updateLeft,updateRight]包含当前节点表示的范围[left,right]，直接修改当前节点表示区间元素之和、区间的最大值、懒标记值
                 if (updateLeft <= left && right <= updateRight) {
-                    node.value = value * (right - left + 1);
+                    node.sumValue = value * (right - left + 1);
+                    node.maxValue = value;
                     node.lazyValue = value;
                     return;
                 }
@@ -311,11 +314,12 @@ public class Problem307 {
 
                 int mid = left + ((right - left) >> 1);
 
-                //将当前节点懒标记值传递给左右子节点，更新左右子树表示的区间元素之和和懒标记值，并将当前节点的懒标记值置0
+                //将当前节点懒标记值传递给左右子节点，更新左右子节点表示区间元素之和、区间的最大值、懒标记值，并将当前节点的懒标记值置0
                 if (node.lazyValue != 0) {
-                    //左右子树节点表示的区间范围值，要加上左右子树分别的节点个数乘以当前节点懒标记值
-                    node.leftNode.value = node.leftNode.value + (mid - left + 1) * node.lazyValue;
-                    node.rightNode.value = node.rightNode.value + (right - mid) * node.lazyValue;
+                    node.leftNode.sumValue = node.leftNode.sumValue + (mid - left + 1) * node.lazyValue;
+                    node.rightNode.sumValue = node.rightNode.sumValue + (right - mid) * node.lazyValue;
+                    node.leftNode.maxValue = node.leftNode.maxValue + node.lazyValue;
+                    node.rightNode.maxValue = node.rightNode.maxValue + node.lazyValue;
                     node.leftNode.lazyValue = node.lazyValue;
                     node.rightNode.lazyValue = node.lazyValue;
 
@@ -326,8 +330,9 @@ public class Problem307 {
                 update(node.leftNode, left, mid, updateLeft, updateRight, value);
                 update(node.rightNode, mid + 1, right, updateLeft, updateRight, value);
 
-                //更新当前节点表示的区间元素之和
-                node.value = node.leftNode.value + node.rightNode.value;
+                //更新当前节点表示的区间元素之和、区间的最大值
+                node.sumValue = node.leftNode.sumValue + node.rightNode.sumValue;
+                node.maxValue = Math.max(node.leftNode.maxValue, node.rightNode.maxValue);
             }
 
             /**
@@ -335,7 +340,9 @@ public class Problem307 {
              */
             private static class SegmentTreeNode {
                 //当前节点表示区间元素之和
-                int value;
+                int sumValue;
+                //当前节点表示区间的最大值
+                int maxValue;
                 //懒标记值，当前节点所有子孙节点表示区间的每个元素需要添加的值
                 int lazyValue;
                 SegmentTreeNode leftNode;

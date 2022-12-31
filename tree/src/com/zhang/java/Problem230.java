@@ -86,53 +86,22 @@ public class Problem230 {
         return myTree.getMinKVal(k);
     }
 
-    private TreeNode buildTree(String[] data) {
-        if (data == null || data.length == 0) {
-            return null;
-        }
-
-        List<String> list = new ArrayList<>(Arrays.asList(data));
-        Queue<TreeNode> queue = new LinkedList<>();
-        TreeNode root = new TreeNode(Integer.parseInt(list.remove(0)));
-        queue.offer(root);
-
-        while (!queue.isEmpty()) {
-            TreeNode node = queue.poll();
-            if (!list.isEmpty()) {
-                String leftValue = list.remove(0);
-                if (!"null".equals(leftValue)) {
-                    TreeNode leftNode = new TreeNode(Integer.parseInt(leftValue));
-                    node.left = leftNode;
-                    queue.offer(leftNode);
-                }
-            }
-            if (!list.isEmpty()) {
-                String rightValue = list.remove(0);
-                if (!"null".equals(rightValue)) {
-                    TreeNode rightNode = new TreeNode(Integer.parseInt(rightValue));
-                    node.right = rightNode;
-                    queue.offer(rightNode);
-                }
-            }
-        }
-
-        return root;
-    }
-
     /**
      * 记录以每个节点为根节点的节点个数的树
      */
     private static class MyTree {
-        private TreeNode root;
+        private final TreeNode root;
 
         /**
          * 记录每个节点为根节点的节点个数
          */
-        private Map<TreeNode, Integer> nodeCountMap;
+        private final Map<TreeNode, Integer> nodeCountMap;
 
         MyTree(TreeNode root) {
             this.root = root;
             this.nodeCountMap = new HashMap<>();
+
+            //创建以每个节点为根节点包含节点个数的map
             countNode(root);
         }
 
@@ -176,6 +145,39 @@ public class Problem230 {
 
             return leftCount + rightCount + 1;
         }
+    }
+
+    private TreeNode buildTree(String[] data) {
+        if (data == null || data.length == 0) {
+            return null;
+        }
+
+        List<String> list = new ArrayList<>(Arrays.asList(data));
+        Queue<TreeNode> queue = new LinkedList<>();
+        TreeNode root = new TreeNode(Integer.parseInt(list.remove(0)));
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (!list.isEmpty()) {
+                String leftValue = list.remove(0);
+                if (!"null".equals(leftValue)) {
+                    TreeNode leftNode = new TreeNode(Integer.parseInt(leftValue));
+                    node.left = leftNode;
+                    queue.offer(leftNode);
+                }
+            }
+            if (!list.isEmpty()) {
+                String rightValue = list.remove(0);
+                if (!"null".equals(rightValue)) {
+                    TreeNode rightNode = new TreeNode(Integer.parseInt(rightValue));
+                    node.right = rightNode;
+                    queue.offer(rightNode);
+                }
+            }
+        }
+
+        return root;
     }
 
     public static class TreeNode {

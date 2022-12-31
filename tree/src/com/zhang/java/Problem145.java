@@ -69,7 +69,7 @@ public class Problem145 {
         while (!stack.isEmpty()) {
             TreeNode node = stack.pollLast();
 
-            //结果集合首添加
+            //首添加到结果集合
             list.addFirst(node.val);
 
             //先将左子树节点压入栈中

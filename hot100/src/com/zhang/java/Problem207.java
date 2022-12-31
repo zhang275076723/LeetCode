@@ -155,7 +155,6 @@ public class Problem207 {
                 //邻接顶点v没有访问
                 if (visited[v] == 0) {
                     dfs(v, edges, visited);
-                    continue;
                 }
             }
         }

@@ -29,7 +29,7 @@ public class Problem55 {
 
     /**
      * 动态规划
-     * dp[i]：能否从nums[i]到达nums[i]
+     * dp[i]：能否跳跃到nums[i]
      * dp[i] = true (dp[j] && j+nums[j] >= i)
      * 时间复杂度O(n^2)，空间复杂度O(n)
      *

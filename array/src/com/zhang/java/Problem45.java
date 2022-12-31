@@ -29,7 +29,7 @@ public class Problem45 {
 
     /**
      * 动态规划
-     * dp[i]：跳到nums[i]所需的最少次数
+     * dp[i]：跳跃到nums[i]所需的最少次数
      * 时间复杂度O(n^2)，空间复杂度O(n)
      *
      * @param nums
@@ -58,7 +58,8 @@ public class Problem45 {
 
     /**
      * 贪心
-     * 使用两个变量，一个记录当前可以跳跃的最远距离，另一个记录上次可以跳跃的最远距离，当达到上次可跳跃的最远距离时，更新跳跃次数
+     * 使用两个变量，一个变量记录当前可以跳跃到的最远距离，另一个变量记录上次可以跳跃到的最远距离，
+     * 当前跳跃到的距离和上次可以跳跃的最远距离相等时，跳跃到最后一个位置所需的最少跳跃次数加1
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -69,7 +70,7 @@ public class Problem45 {
             return 0;
         }
 
-        //跳跃到当前位置所需的最少跳跃次数
+        //跳跃到最后一个位置所需的最少跳跃次数
         int count = 0;
         //当前能够跳跃到的最远距离
         int curJumpDistance = 0;
@@ -80,12 +81,13 @@ public class Problem45 {
             //更新当前能够跳跃到的最远距离
             curJumpDistance = Math.max(curJumpDistance, i + nums[i]);
 
-            //当前能够跳跃到的最远距离可以跳跃到最后位置，直接返回
+            //当前能够跳跃到的最远距离可以跳跃到最后一个位置，直接返回
             if (curJumpDistance >= nums.length - 1) {
                 return count + 1;
             }
 
-            //当到达上次能够跳跃的最大距离时，更新上次能够跳跃的最大距离，并更新最少跳跃次数
+            //当前跳跃到的距离和上次可以跳跃的最远距离相等时，更新上次能够跳跃的最远距离为当前能够跳跃到的最远距离，
+            //并更新最少跳跃次数
             if (i == lastJumpDistance) {
                 lastJumpDistance = curJumpDistance;
                 count++;

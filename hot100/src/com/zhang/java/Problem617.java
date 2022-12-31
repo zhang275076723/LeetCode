@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/15 8:28
  * @Author zsy
- * @Description 合并二叉树
+ * @Description 合并二叉树 类比Offer68_2
  * 给你两棵二叉树： root1 和 root2 。
  * 想象一下，当你将其中一棵覆盖到另一棵之上时，两棵树上的一些节点将会重叠（而另一些不会）。
  * 你需要将这两棵树合并成一棵新二叉树。

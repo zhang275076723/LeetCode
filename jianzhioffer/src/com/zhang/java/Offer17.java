@@ -81,12 +81,11 @@ public class Offer17 {
             //当前位为0，且为前导0，则不添加，继续判断下一位
             if (i == 0 && sb.length() == 0) {
                 backtrack(t + 1, n, sb, list);
-                continue;
+            } else {
+                sb.append(i);
+                backtrack(t + 1, n, sb, list);
+                sb.delete(sb.length() - 1, sb.length());
             }
-
-            sb.append(i);
-            backtrack(t + 1, n, sb, list);
-            sb.delete(sb.length() - 1, sb.length());
         }
     }
 }

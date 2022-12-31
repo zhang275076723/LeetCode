@@ -29,7 +29,6 @@ public class Offer62 {
         System.out.println(offer62.lastRemaining3(5, 3));
     }
 
-
     /**
      * 模拟
      * 将元素放在集合中，每次移除当前位置的之后的第m个元素
@@ -50,7 +49,7 @@ public class Offer62 {
         //当前要删除的元素索引
         int index = 0;
 
-        while (list.size() > 1) {
+        for (int i = 0; i < n - 1; i++) {
             index = (index + m - 1) % list.size();
             list.remove(index);
         }

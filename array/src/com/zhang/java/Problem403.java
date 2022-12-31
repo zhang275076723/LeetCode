@@ -32,6 +32,9 @@ import java.util.Set;
  * stones 按严格升序排列
  */
 public class Problem403 {
+    /**
+     * 回溯中是否能够跳跃到最后一块石头的标志位
+     */
     private boolean flag = false;
 
     public static void main(String[] args) {
@@ -61,8 +64,9 @@ public class Problem403 {
 
     /**
      * 动态规划
-     * dp[i][k]：能否跳跃到stones[i]，且上次跳跃k步到达stones[i]
-     * dp[i][j] = dp[j][jump-1] || dp[j][jump] || dp[j][jump+1] (stone[j]为跳跃到stones[i]的前一块石头)
+     * dp[i][k]：能否跳跃k步到达stones[i]
+     * dp[i][jumpDistance] = dp[j][jumpDistance-1] || dp[j][jumpDistance] || dp[j][jumpDistance+1]
+     * (stones[j]为跳跃到stones[i]的前一块石头，jumpDistance = stones[i]-stones[j]，j+1 >= jumpDistance)
      * 时间复杂度O(n^2)，空间复杂度O(n^2)
      *
      * @param stones
@@ -74,17 +78,19 @@ public class Problem403 {
         }
 
         boolean[][] dp = new boolean[stones.length][stones.length];
+        //起始第一块石头可达
         dp[0][0] = true;
 
-        //当前石头stone[i]
+        //当前石头stones[i]
         for (int i = 1; i < stones.length; i++) {
-            //跳跃到stone[i]的前一块石头stone[j]
+            //跳跃到stones[i]的前一块石头stones[j]
             for (int j = 0; j < i; j++) {
-                //从stone[j]跳跃到stone[i]的步数
+                //从stones[j]跳跃到stones[i]的步数
                 int jumpDistance = stones[i] - stones[j];
 
-                //从stone[j]最多只能跳j+1步到达stone[i]
-                //因为跳的最远情况为stone[0]最多跳1步到stone[1]，stone[1]最多跳2步到stone[2]，stone[2]最多跳3步到stone[3]，...，stone[j]最多跳j+1步到stone[j+1]
+                //从stones[j]最多只能跳j+1步到达stones[i]，
+                //因为跳的最远情况为stones[0]最多跳1步到stones[1]，stones[1]最多跳2步到stones[2]，
+                //stones[2]最多跳3步到stones[3]，...，stones[j]最多跳j+1步到stones[i]
                 if (j + 1 >= jumpDistance) {
                     dp[i][jumpDistance] = dp[j][jumpDistance - 1] || dp[j][jumpDistance] || dp[j][jumpDistance + 1];
 
@@ -96,6 +102,7 @@ public class Problem403 {
             }
         }
 
+        //不能跳跃到最后一个石头，返回false
         return false;
     }
 
@@ -110,13 +117,13 @@ public class Problem403 {
         }
 
 
-        //跳跃到stone[t]，且上次跳跃了jump步到达stone[t]，标记当前路径已经遍历，如果之后再次以jump步到达t，说明此路不通，直接返回
+        //跳跃到stones[t]，且上次跳跃了jump步到达stones[t]，标记当前路径已经遍历，如果之后再次以jump步到达t，说明此路不通，直接返回
         dp[t][jump] = true;
 
         for (int i = t + 1; i < stones.length; i++) {
             //只有跳跃范围在[jump-1,jump+1]范围内的石头才能跳
             if (stones[i] - stones[t] >= jump - 1 && stones[i] - stones[t] <= jump + 1) {
-                //之前跳跃到过stone[i]，且跳跃到stone[i]之前的上一步跳跃了stones[i]-stones[t]步到达stone[i]，说明本次路径不通
+                //之前跳跃到过stones[i]，且跳跃到stones[i]之前的上一步跳跃了stones[i]-stones[t]步到达stones[i]，说明本次路径不通
                 if (dp[i][stones[i] - stones[t]]) {
                     continue;
                 }
@@ -124,7 +131,7 @@ public class Problem403 {
                 backtrack(i, stones[i] - stones[t], stones, dp);
             }
 
-            //不能从stones[t]跳到stone[i]，说明之后石头都不能跳到，剪枝，直接返回
+            //不能从stones[t]跳到stones[i]，说明之后石头都不能跳到，剪枝，直接返回
             if (stones[i] - stones[t] > jump + 1) {
                 return;
             }

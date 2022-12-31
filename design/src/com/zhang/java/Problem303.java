@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/13 10:42
  * @Author zsy
- * @Description 区域和检索 - 数组不可变 类比Problem307
+ * @Description 区域和检索 - 数组不可变 类比Problem304、Problem307、Problem308
  * 给定一个整数数组 nums，处理以下类型的多个查询:
  * 计算索引 left 和 right（包含 left 和 right）之间的 nums 元素的 和 ，其中 left <= right
  * 实现 NumArray 类：
@@ -37,10 +37,13 @@ public class Problem303 {
     }
 
     /**
-     * 前缀和数组，多次求区间和
+     * 前缀和数组，适用于：多次求区间元素之和
+     * preSum[i]：nums[0]-nums[i-1]元素之和
+     * preSum[i] = preSum[i-1] + nums[i-1]
      * 时间复杂度O(n)，空间复杂度O(n)
      */
     static class NumArray {
+        //前缀和数组
         private final int[] preSum;
 
         public NumArray(int[] nums) {

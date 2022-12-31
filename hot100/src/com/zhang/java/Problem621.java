@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/6/16 9:12
  * @Author zsy
- * @Description 任务调度器
+ * @Description 任务调度器 类比Problem659
  * 给你一个用字符数组 tasks 表示的 CPU 需要执行的任务列表。其中每个字母表示一种不同种类的任务。
  * 任务可以以任意顺序执行，并且每个任务都可以在 1 个单位时间内执行完。
  * 在任何一个单位时间，CPU 可以完成一个任务，或者处于待命状态。
@@ -82,6 +82,7 @@ public class Problem621 {
 
             //判断是否存在不在冷却中，且剩余执行次数大于0的任务
             for (Map.Entry<Character, Integer> entry : timeMap.entrySet()) {
+                //Integer之间的比较不能用==，而应该用equals()；Integer和int之间的比较可以使用==
                 if (entry.getValue() == 0 && countMap.get(entry.getKey()) > 0) {
                     curTask = entry.getKey();
                     break;
@@ -99,7 +100,7 @@ public class Problem621 {
             } else {
                 //找不在冷却中，且剩余执行次数最多的任务
                 for (Map.Entry<Character, Integer> entry : timeMap.entrySet()) {
-                    //Integer比较不能用==，而应该用equals()
+                    //Integer之间的比较不能用==，而应该用equals()；Integer和int之间的比较可以使用==
                     if (countMap.get(entry.getKey()) > countMap.get(curTask) && entry.getValue().equals(0)) {
                         curTask = entry.getKey();
                     }
@@ -149,17 +150,17 @@ public class Problem621 {
         }
 
         //执行次数是maxExecute的任务数量
-        int sameCount = 0;
+        int maxExecSameCount = 0;
 
         for (Map.Entry<Character, Integer> entry : countMap.entrySet()) {
-            //Integer比较不能用==，而应该用equals()
+            //Integer之间的比较不能用==，而应该用equals()；Integer和int之间的比较可以使用==
             if (entry.getValue().equals(maxExecCount)) {
-                sameCount++;
+                maxExecSameCount++;
             }
         }
 
         //如果最多任务A、B执行次数为3，n = 2，则最少时间安排为ABxABxAB
-        int time = (maxExecCount - 1) * (n + 1) + sameCount;
+        int time = (maxExecCount - 1) * (n + 1) + maxExecSameCount;
 
         //最少执行时间最少为数组的长度，取算出的执行时间time和数组长度的最大值为所需执行时间
         //例如['A','A','A','B','B','B','C','C','C','D','D','E']，n = 2，所需执行时间不是(3-1)*(2+1)+3=9，而是数组长度12

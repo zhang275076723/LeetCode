@@ -30,17 +30,17 @@ package com.zhang.java;
 public class Problem887 {
     public static void main(String[] args) {
         Problem887 problem887 = new Problem887();
-        int k = 2;
-        int n = 100;
+        int k = 3;
+        int n = 14;
         System.out.println(problem887.superEggDrop(k, n));
         System.out.println(problem887.superEggDrop2(k, n));
     }
 
     /**
      * 动态规划
-     * dp[i][j]：i层楼j个鸡蛋找到临界楼层最少需要的次数
+     * dp[i][j]：i层楼j个鸡蛋，找到临界楼层需要的最少操作次数
      * dp[i][j] = max(dp[m-1][j-1], dp[i-m][j]) + 1 (1 <= m <= i)
-     * 假设在第m层扔鸡蛋，如果鸡蛋碎了，则需要在[1,m-1]，m-1层楼j-1个鸡蛋找临界楼层，即dp[m-1][j-1]；
+     * 假设在第m层楼扔鸡蛋，如果鸡蛋碎了，则需要在[1,m-1]，m-1层楼j-1个鸡蛋找临界楼层，即dp[m-1][j-1]；
      * 如果鸡蛋没碎，则需要在[m+1,i]，i-m层楼j个鸡蛋找临界楼层，即dp[i-m][j]
      * 时间复杂度O(n^2*k)，空间复杂度O(nk)
      *
