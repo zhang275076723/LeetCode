@@ -38,12 +38,12 @@ public class Problem227 {
     /**
      * 双栈，数字栈和操作符栈
      * 1、如果遇到空格，则跳过
-     * 2、如果遇到数字，则保存连续的数字
+     * 2、如果遇到数字，则保存连续的数字，入数字栈
      * 3、如果遇到'('，则直接入操作符栈
      * 4、如果遇到')'，则数字栈出栈两个元素，操作符栈出栈一个运算符，进行运算，再将结果入数字栈，直至操作符栈遇到左括号
      * (左括号出栈，但不进行运算)
-     * 5、如果遇到运算符'+'、'-'、'*'、'/'，则将栈顶运算符优先级大于等于当前运算符优先级的符号出栈，
-     * 再从数字栈出栈两个元素进行运算，将结果入栈数字栈，最后将当前运算符入操作数栈
+     * 5、如果遇到运算符'+'、'-'、'*'、'/'，则将操作符栈顶运算符优先级大于等于当前运算符优先级的运算符出栈，
+     * 再从数字栈出栈两个元素进行运算，再将结果入栈数字栈，最后将当前运算符入操作数栈
      * (需要判断'-'是负号，还是运算符，如果是负号，转换为0-num)
      * 6、遍历完之后如果操作符栈不为空，则依次出栈进行运算
      * 时间复杂度O(n)，空间复杂度O(n)
@@ -72,34 +72,40 @@ public class Problem227 {
                 }
                 numStack.offerLast(num);
             } else if (c == '(') {
-                //左括号
+                //左括号，直接入操作符栈
+
                 opsStack.offerLast(c);
             } else if (c == ')') {
-                //右括号
+                //右括号，数字栈出栈两个元素，操作符栈出栈一个运算符，进行运算，再将结果入数字栈，直至操作符栈遇到左括号
+
                 while (!opsStack.isEmpty() && opsStack.peekLast() != '(') {
                     int num = operation(numStack, opsStack);
                     numStack.offerLast(num);
                 }
+
                 //左括号出栈
                 opsStack.pollLast();
             } else {
-                //首位为'-'或存在"(-"这种情况，需要添0
+                //运算符，+-*/
+
+                //首位为'-'或存在"(-"这种情况，数字栈需要补0
                 if (c == '-' && (i == 0 || s.charAt(i - 1) == '(')) {
                     numStack.offerLast(0);
                     opsStack.offerLast(c);
                 } else {
-                    //操作符，将栈顶操作符优先级大于等于当前操作符优先级的符号出栈，数字栈出栈，进行运算，再将结果入数字栈
+                    //将操作符栈顶运算符优先级大于等于当前运算符优先级的运算符出栈，数字栈出栈，进行运算，再将结果入数字栈
                     while (!opsStack.isEmpty() && getPriority(opsStack.peekLast()) >= getPriority(c)) {
                         int num = operation(numStack, opsStack);
                         numStack.offerLast(num);
                     }
-                    //当前操作符入栈
+
+                    //当前运算符入操作符栈
                     opsStack.offerLast(c);
                 }
             }
         }
 
-        //操作符栈非空，运算符栈中剩余符号出栈运算
+        //操作符栈非空，即存在未运算的运算符，操作符栈中剩余运算符出栈运算，再将结果入数字栈
         while (!opsStack.isEmpty()) {
             int num = operation(numStack, opsStack);
             numStack.offerLast(num);
@@ -202,7 +208,6 @@ public class Problem227 {
 
     /**
      * 返回当前运算符的优先级
-     * '('、')'优先级为0
      * '+'、'-'优先级为1
      * '*'、'/'优先级为2
      *
@@ -210,9 +215,7 @@ public class Problem227 {
      * @return
      */
     private int getPriority(char c) {
-        if (c == '(' || c == ')') {
-            return 0;
-        } else if (c == '+' || c == '-') {
+        if (c == '+' || c == '-') {
             return 1;
         } else if (c == '*' || c == '/') {
             return 2;

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/12/11 09:20
  * @Author zsy
- * @Description 我的日程安排表 I 线段树类比Problem307、Problem731、Problem732 二分搜索树类比Problem230、Problem440
+ * @Description 我的日程安排表 I 线段树类比Problem307、Problem308、Problem731、Problem732 二分搜索树类比Problem230、Problem440
  * 实现一个 MyCalendar 类来存放你的日程安排。如果要添加的日程安排不会造成 重复预订 ，则可以存储这个新的日程安排。
  * 当两个日程安排有一些时间上的交叉时（例如两个日程安排都在同一时间内），就会产生 重复预订 。
  * 日程可以用一对整数 start 和 end 表示，这里的时间是半开区间，即 [start, end), 实数 x 的范围为， start <= x < end 。
@@ -65,7 +65,7 @@ public class Problem729 {
                 }
             }
 
-            //当前日程安排区间和list集合中区间不重叠，则将当前日程安排区间加入list集合
+            //当前日程安排区间和list集合中所有区间都不重叠，则将当前日程安排区间加入list集合
             list.add(new int[]{start, end});
 
             return true;
@@ -192,8 +192,7 @@ public class Problem729 {
     }
 
     /**
-     * 线段树，动态开点，适用于：不知道数组长度的情况
-     * 注意：当前线段树节点存放的是区间内元素之和
+     * 线段树，动态开点，适用于：不知道数组长度的情况下，多次求区间和、区间最大值，并且区间内元素多次修改的情况
      * 时间复杂度O(nlogC)，空间复杂度O(nlogC) (n=插入区间的个数，C=10^9，区间的最大值)
      */
     static class MyCalendar4 {
@@ -207,19 +206,19 @@ public class Problem729 {
         }
 
         public boolean book(int start, int end) {
-            //当前区间[start,end)可以插入，即区间[start,end)元素之和为0，更新区间[start,end)节点值均为1
+            //区间[start,end)元素之和为0，即当前区间[start,end)可以插入，更新区间[start,end)节点值均为1
             if (segmentTree.query(segmentTree.root, 0, maxRight, start, end - 1) == 0) {
                 segmentTree.update(segmentTree.root, 0, maxRight, start, end - 1, 1);
                 return true;
             }
 
-            //当前区间不能插入
+            //区间[start,end)元素之和不为0，即当前区间不能[start,end)插入，返回false
             return false;
         }
 
         /**
-         * 线段树
-         * 注意：当前线段树节点存放的是区间内元素之和
+         * 线段树，动态开点
+         * 注意：线段树节点存储的是区间元素之和sumValue，线段树的update()是更新区间节点值为value，而不是区间节点值加上value
          */
         private static class SegmentTree {
             //线段树根节点
@@ -246,9 +245,9 @@ public class Problem729 {
                     return 0;
                 }
 
-                //要查询区间[queryLeft,queryRight]包含当前节点表示的范围[left,right]，直接返回当前节点表示区间元素之和node.value
+                //要查询区间[queryLeft,queryRight]包含当前节点表示的范围[left,right]，直接返回当前节点表示区间元素之和sumValue
                 if (queryLeft <= left && right <= queryRight) {
-                    return node.value;
+                    return node.sumValue;
                 }
 
                 //当前节点左右子树为空，动态开点
@@ -262,15 +261,14 @@ public class Problem729 {
 
                 int mid = left + ((right - left) >> 1);
 
-                //将当前节点懒标记值传递给左右子节点，更新左右子树表示的区间元素之和和懒标记值，并将当前节点的懒标记值置0
+                //将当前节点懒标记值向下传递给左右子节点，更新左右子节点表示的区间元素之和、懒标记值，并将当前节点的懒标记值置0
                 if (node.lazyValue != 0) {
-                    //左右子树节点表示的区间元素之和，要加上左右子树分别的节点个数乘以当前节点懒标记值
-                    node.leftNode.value = node.leftNode.value + node.lazyValue * (mid - left + 1);
-                    node.rightNode.value = node.rightNode.value + node.lazyValue * (right - mid);
+                    node.leftNode.sumValue = node.leftNode.sumValue + node.lazyValue * (mid - left + 1);
+                    node.rightNode.sumValue = node.rightNode.sumValue + node.lazyValue * (right - mid);
                     node.leftNode.lazyValue = node.lazyValue;
                     node.rightNode.lazyValue = node.lazyValue;
 
-                    //将懒标记值传递给左右子树之后，当前节点的懒标记值置为0
+                    //将懒标记值传递给左右子节点之后，当前节点的懒标记值置为0
                     node.lazyValue = 0;
                 }
 
@@ -281,8 +279,8 @@ public class Problem729 {
             }
 
             /**
-             * 更新区间[queryLeft,queryRight]元素值都为value
-             * 时间复杂度O(logC)，空间复杂度O(logC) (C=10^9，区间的最大值)
+             * 更新区间[updateLeft,updateRight]节点值为value
+             * 时间复杂度O(logC)，空间复杂度O(logC) (C=10^9，即区间的最大值)
              *
              * @param node
              * @param left
@@ -297,9 +295,9 @@ public class Problem729 {
                     return;
                 }
 
-                //要修改的区间[updateLeft,updateRight]包含当前节点表示的范围[left,right]，直接修改当前节点表示区间元素之和和懒标记值
+                //要修改的区间[updateLeft,updateRight]包含当前节点表示的范围[left,right]，修改当前节点表示区间元素之和、懒标记值
                 if (updateLeft <= left && right <= updateRight) {
-                    node.value = value * (right - left + 1);
+                    node.sumValue = value * (right - left + 1);
                     node.lazyValue = value;
                     return;
                 }
@@ -315,15 +313,14 @@ public class Problem729 {
 
                 int mid = left + ((right - left) >> 1);
 
-                //将当前节点懒标记值传递给左右子节点，更新左右子树表示的区间元素之和和懒标记值，并将当前节点的懒标记值置0
+                //将当前节点懒标记值向下传递给左右子节点，更新左右子节点表示区间元素之和、懒标记值，并将当前节点的懒标记值置0
                 if (node.lazyValue != 0) {
-                    //左右子树节点表示的区间范围值，要加上左右子树分别的节点个数乘以当前节点懒标记值
-                    node.leftNode.value = node.leftNode.value + node.lazyValue * (mid - left + 1);
-                    node.rightNode.value = node.rightNode.value + node.lazyValue * (right - mid);
+                    node.leftNode.sumValue = node.leftNode.sumValue + node.lazyValue * (mid - left + 1);
+                    node.rightNode.sumValue = node.rightNode.sumValue + node.lazyValue * (right - mid);
                     node.leftNode.lazyValue = node.lazyValue;
                     node.rightNode.lazyValue = node.lazyValue;
 
-                    //将懒标记值传递给左右子树之后，当前节点的懒标记值置为0
+                    //将懒标记值传递给左右子节点之后，当前节点的懒标记值置为0
                     node.lazyValue = 0;
                 }
 
@@ -331,16 +328,17 @@ public class Problem729 {
                 update(node.rightNode, mid + 1, right, updateLeft, updateRight, value);
 
                 //更新当前节点表示的区间元素之和
-                node.value = node.leftNode.value + node.rightNode.value;
+                node.sumValue = node.leftNode.sumValue + node.rightNode.sumValue;
             }
 
             /**
              * 线段树节点
+             * 注意：节点存储的是区间元素之和sumValue
              */
             private static class SegmentTreeNode {
                 //当前节点表示区间元素之和
-                int value;
-                //懒标记值，当前节点所有子孙节点表示区间的每个元素需要添加的值
+                int sumValue;
+                //懒标记值，当前节点的所有子孙节点表示的区间需要向下传递的值
                 int lazyValue;
                 SegmentTreeNode leftNode;
                 SegmentTreeNode rightNode;

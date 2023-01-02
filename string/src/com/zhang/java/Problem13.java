@@ -1,5 +1,8 @@
 package com.zhang.java;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @Date 2022/11/1 09:05
  * @Author zsy
@@ -67,41 +70,32 @@ public class Problem13 {
             return -1;
         }
 
+        //存放罗马数字和对应数值
+        Map<Character, Integer> map = new HashMap<>();
+        map.put('I', 1);
+        map.put('V', 5);
+        map.put('X', 10);
+        map.put('L', 50);
+        map.put('C', 100);
+        map.put('D', 500);
+        map.put('M', 1000);
+
         int num = 0;
 
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            int value = getRomanValue(c);
+            //当前罗马字符表示的值
+            int value = map.get(c);
 
-            //如果当前罗马字符小于下一个罗马字符，则说明要减去当前罗马字符
-            if (i + 1 < s.length() && value < getRomanValue(s.charAt(i + 1))) {
+            //当前罗马字符的值小于下一个罗马字符的值，则要减去当前罗马字符的值
+            if (i + 1 < s.length() && value < map.get(s.charAt(i + 1))) {
                 num = num - value;
             } else {
-                //如果当前罗马字符大于等于下一个罗马字符，则说明要加上当前罗马字符
+                //当前罗马字符的值大于等于下一个罗马字符的值，则要加上当前罗马字符的值
                 num = num + value;
             }
         }
 
         return num;
-    }
-
-    private int getRomanValue(char c) {
-        if (c == 'I') {
-            return 1;
-        } else if (c == 'V') {
-            return 5;
-        } else if (c == 'X') {
-            return 10;
-        } else if (c == 'L') {
-            return 50;
-        } else if (c == 'C') {
-            return 100;
-        } else if (c == 'D') {
-            return 500;
-        } else if (c == 'M') {
-            return 1000;
-        }
-
-        return -1;
     }
 }

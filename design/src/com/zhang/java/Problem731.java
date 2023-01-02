@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/12/12 09:44
  * @Author zsy
- * @Description 我的日程安排表 II 线段树类比Problem307、Problem729、Problem732 二分搜索树类比Problem230、Problem440
+ * @Description 我的日程安排表 II 线段树类比Problem307、Problem308、Problem729、Problem732 二分搜索树类比Problem230、Problem440
  * 实现一个 MyCalendar 类来存放你的日程安排。如果要添加的时间内不会导致三重预订时，则可以存储这个新的日程安排。
  * MyCalendar 有一个 book(int start, int end)方法。它意味着在 start 到 end 时间内增加一个日程安排，
  * 注意，这里的时间是半开区间，即 [start, end), 实数 x 的范围为， start <= x < end。
@@ -76,9 +76,9 @@ public class Problem731 {
                 }
             }
 
-            //当前日程安排区间[start,end)先再和list1中区间比较
+            //当前日程安排区间[start,end)再和list1中区间比较
             for (int[] arr : list1) {
-                //当前日程安排区间[start,end)和list1集合中区间存在重叠部分，将重叠部分区间添加到list2集合中
+                //当前日程安排区间[start,end)和list1集合中区间存在重叠部分，将重叠部分区间添加到list2集合中，表示存在二重重叠
                 if (!(arr[0] >= end || arr[1] <= start)) {
                     list2.add(new int[]{Math.max(arr[0], start), Math.min(arr[1], end)});
                 }
@@ -92,8 +92,7 @@ public class Problem731 {
     }
 
     /**
-     * 线段树，动态开点，适用于：不知道数组长度的情况
-     * 注意：当前线段树节点存放的是区间内元素的最大值
+     * 线段树，动态开点，适用于：不知道数组长度的情况下，多次求区间和、区间最大值，并且区间内元素多次修改的情况
      * 时间复杂度O(nlogC)，空间复杂度O(nlogC) (n=插入区间的个数，C=10^9，区间的最大值)
      */
     static class MyCalendarTwo2 {
@@ -107,19 +106,20 @@ public class Problem731 {
         }
 
         public boolean book(int start, int end) {
-            //当前区间[start,end)的最大值小于2，即区间[start,end)不存在三重预订，设置区间[start,end)节点值均加1
+            //当前区间[start,end)的最大值小于2，即当前区间[start,end)不存在三重预订，可以插入，
+            //并更新区间[start,end)节点的最大值均加上1，表示多了一重预订
             if (segmentTree.query(segmentTree.root, 0, rightMax, start, end - 1) < 2) {
                 segmentTree.update(segmentTree.root, 0, rightMax, start, end - 1, 1);
                 return true;
             }
 
-            //存在三重预订，即区间[start,end)的最大值大于等于2
+            //存在三重预订，即区间[start,end)的最大值大于等于2，不能插入，直接返回false
             return false;
         }
 
         /**
-         * 线段树
-         * 注意：当前线段树节点存放的是区间内元素的最大值
+         * 线段树，动态开点
+         * 注意：线段树节点存储的是区间元素的最大值maxValue，当前线段树update()是区间节点值加上value，而不是更新区间节点值为value
          */
         private static class SegmentTree {
             //线段树根节点
@@ -146,9 +146,9 @@ public class Problem731 {
                     return 0;
                 }
 
-                //要查询区间[queryLeft,queryRight]包含当前节点表示的范围[left,right]，直接返回当前节点表示区间元素的最大值node.value
+                //要查询区间[queryLeft,queryRight]包含当前节点表示的范围[left,right]，直接返回当前节点表示区间元素的最大值maxValue
                 if (queryLeft <= left && right <= queryRight) {
-                    return node.value;
+                    return node.maxValue;
                 }
 
                 //当前节点左右子树为空，动态开点
@@ -160,14 +160,14 @@ public class Problem731 {
                     node.rightNode = new SegmentTreeNode();
                 }
 
-                //将当前节点懒标记值传递给左右子节点，更新左右子树表示的区间元素最大值和懒标记值，并将当前节点的懒标记值置0
+                //将当前节点懒标记值向下传递给左右子节点，更新左右子节点表示的区间元素的最大值、懒标记值，并将当前节点的懒标记值置0
                 if (node.lazyValue != 0) {
-                    node.leftNode.value = node.leftNode.value + node.lazyValue;
-                    node.rightNode.value = node.rightNode.value + node.lazyValue;
+                    node.leftNode.maxValue = node.leftNode.maxValue + node.lazyValue;
+                    node.rightNode.maxValue = node.rightNode.maxValue + node.lazyValue;
                     node.leftNode.lazyValue = node.leftNode.lazyValue + node.lazyValue;
                     node.rightNode.lazyValue = node.rightNode.lazyValue + node.lazyValue;
 
-                    //将懒标记值传递给左右子树之后，当前节点的懒标记值置为0
+                    //将懒标记值传递给左右子节点之后，当前节点的懒标记值置为0
                     node.lazyValue = 0;
                 }
 
@@ -176,12 +176,12 @@ public class Problem731 {
                 int leftValue = query(node.leftNode, left, mid, queryLeft, queryRight);
                 int rightValue = query(node.rightNode, mid + 1, right, queryLeft, queryRight);
 
-                //返回左右子树区间元素的最大值即为查询区间内最大值
+                //返回左右子节点区间元素的最大值中较大的值，即为查询区间[queryLeft,queryRight]元素的最大值
                 return Math.max(leftValue, rightValue);
             }
 
             /**
-             * 更新区间[queryLeft,queryRight]元素值都加上value
+             * 更新区间[updateLeft,updateRight]节点值加上value
              * 时间复杂度O(logC)，空间复杂度O(logC) (C=10^9，区间的最大值)
              *
              * @param node
@@ -197,9 +197,9 @@ public class Problem731 {
                     return;
                 }
 
-                //要修改的区间[updateLeft,updateRight]包含当前节点表示的范围[left,right]，直接修改当前节点区间元素的最大值加上value，修改懒标记值加上value
+                //要修改的区间[updateLeft,updateRight]包含当前节点表示的范围[left,right]，修改当前节点表示区间元素的最大值、懒标记值
                 if (updateLeft <= left && right <= updateRight) {
-                    node.value = node.value + value;
+                    node.maxValue = node.maxValue + value;
                     node.lazyValue = node.lazyValue + value;
                     return;
                 }
@@ -213,14 +213,14 @@ public class Problem731 {
                     node.rightNode = new SegmentTreeNode();
                 }
 
-                //将当前节点懒标记值传递给左右子节点，更新左右子树表示的区间元素最大值和懒标记值，并将当前节点的懒标记值置0
+                //将当前节点懒标记值向下传递给左右子节点，更新左右子节点表示区间元素的最大值、懒标记值，并将当前节点的懒标记值置0
                 if (node.lazyValue != 0) {
-                    node.leftNode.value = node.leftNode.value + node.lazyValue;
-                    node.rightNode.value = node.rightNode.value + node.lazyValue;
+                    node.leftNode.maxValue = node.leftNode.maxValue + node.lazyValue;
+                    node.rightNode.maxValue = node.rightNode.maxValue + node.lazyValue;
                     node.leftNode.lazyValue = node.leftNode.lazyValue + node.lazyValue;
                     node.rightNode.lazyValue = node.rightNode.lazyValue + node.lazyValue;
 
-                    //将懒标记值传递给左右子树之后，当前节点的懒标记值置为0
+                    //将懒标记值传递给左右子节点之后，当前节点的懒标记值置为0
                     node.lazyValue = 0;
                 }
 
@@ -229,14 +229,18 @@ public class Problem731 {
                 update(node.leftNode, left, mid, updateLeft, updateRight, value);
                 update(node.rightNode, mid + 1, right, updateLeft, updateRight, value);
 
-                //左右节点表示区间元素的最大值，即为当前节点表示区间元素的最大值
-                node.value = Math.max(node.leftNode.value, node.rightNode.value);
+                //更新当前节点表示的区间元素的最大值，即为左右节点表示区间元素的最大值中较大的值
+                node.maxValue = Math.max(node.leftNode.maxValue, node.rightNode.maxValue);
             }
 
+            /**
+             * 线段树节点
+             * 注意：节点存储的是区间元素的最大值maxValue
+             */
             private static class SegmentTreeNode {
                 //当前节点表示区间元素的最大值
-                int value;
-                //懒标记值，当前节点所有子孙节点表示区间的每个元素需要添加的值
+                int maxValue;
+                //懒标记值，当前节点的所有子孙节点表示的区间需要向下传递的值
                 int lazyValue;
                 SegmentTreeNode leftNode;
                 SegmentTreeNode rightNode;

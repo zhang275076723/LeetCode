@@ -97,6 +97,7 @@ public class Problem381 {
                 map.remove(val);
             }
 
+            //list集合中删除尾元素
             list.remove(list.size() - 1);
 
             return true;
