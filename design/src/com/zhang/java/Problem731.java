@@ -119,7 +119,9 @@ public class Problem731 {
 
         /**
          * 线段树，动态开点
-         * 注意：线段树节点存储的是区间元素的最大值maxValue，当前线段树update()是区间节点值加上value，而不是更新区间节点值为value
+         * 注意：线段树节点存储的是区间元素的最大值maxValue，
+         * 线段树的query()是查询区间[queryLeft,queryRight]元素的最大值，而不是查询区间[queryLeft,queryRight]元素之和，
+         * 线段树的update()区间长度超过1是区间节点值加上value，update()区间长度为1是更新区间节点值为value
          */
         private static class SegmentTree {
             //线段树根节点
@@ -213,7 +215,7 @@ public class Problem731 {
                     node.rightNode = new SegmentTreeNode();
                 }
 
-                //将当前节点懒标记值向下传递给左右子节点，更新左右子节点表示区间元素的最大值、懒标记值，并将当前节点的懒标记值置0
+                //将当前节点懒标记值向下传递给左右子节点，更新左右子节点表示的区间元素的最大值、懒标记值，并将当前节点的懒标记值置0
                 if (node.lazyValue != 0) {
                     node.leftNode.maxValue = node.leftNode.maxValue + node.lazyValue;
                     node.rightNode.maxValue = node.rightNode.maxValue + node.lazyValue;
@@ -228,6 +230,57 @@ public class Problem731 {
 
                 update(node.leftNode, left, mid, updateLeft, updateRight, value);
                 update(node.rightNode, mid + 1, right, updateLeft, updateRight, value);
+
+                //更新当前节点表示的区间元素的最大值，即为左右节点表示区间元素的最大值中较大的值
+                node.maxValue = Math.max(node.leftNode.maxValue, node.rightNode.maxValue);
+            }
+
+            /**
+             * 更新区间[updateIndex,updateIndex]节点值为value
+             * 时间复杂度O(logC)，空间复杂度O(logC) (C=10^9，区间的最大值)
+             *
+             * @param node
+             * @param left
+             * @param right
+             * @param updateIndex
+             * @param value
+             */
+            private void update(SegmentTreeNode node, int left, int right, int updateIndex, int value) {
+                //要修改的区间[updateIndex,updateIndex]不在当前节点表示的范围[left,right]之内，直接返回
+                if (!(left <= updateIndex && updateIndex <= right)) {
+                    return;
+                }
+
+                //找到要修改的区间[updateIndex,updateIndex]，进行修改
+                if (left == right) {
+                    node.maxValue = value;
+                    return;
+                }
+
+                //当前节点左右子树为空，动态开点
+                if (node.leftNode == null) {
+                    node.leftNode = new SegmentTreeNode();
+                }
+
+                if (node.rightNode == null) {
+                    node.rightNode = new SegmentTreeNode();
+                }
+
+                //将当前节点懒标记值向下传递给左右子节点，更新左右子节点表示的区间元素的最大值、懒标记值，并将当前节点的懒标记值置0
+                if (node.lazyValue != 0) {
+                    node.leftNode.maxValue = node.leftNode.maxValue + node.lazyValue;
+                    node.rightNode.maxValue = node.rightNode.maxValue + node.lazyValue;
+                    node.leftNode.lazyValue = node.leftNode.lazyValue + node.lazyValue;
+                    node.rightNode.lazyValue = node.rightNode.lazyValue + node.lazyValue;
+
+                    //将懒标记值传递给左右子节点之后，当前节点的懒标记值置为0
+                    node.lazyValue = 0;
+                }
+
+                int mid = left + ((right - left) >> 1);
+
+                update(node.leftNode, left, mid, updateIndex, value);
+                update(node.rightNode, mid + 1, right, updateIndex, value);
 
                 //更新当前节点表示的区间元素的最大值，即为左右节点表示区间元素的最大值中较大的值
                 node.maxValue = Math.max(node.leftNode.maxValue, node.rightNode.maxValue);
