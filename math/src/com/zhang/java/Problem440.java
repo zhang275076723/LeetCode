@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/13 8:40
  * @Author zsy
- * @Description 字典序的第K小数字 字节面试题 类比Problem386、Offer17 二分搜索树类比Problem230 线段树类比Problem307、Problem729、Problem731、Problem732
+ * @Description 字典序的第K小数字 字节面试题 类比Problem386、Offer17 二分搜索树类比Problem230、Problem378 线段树类比Problem307、Problem308、Problem729、Problem731、Problem732
  * 给定整数 n 和 k，返回  [1, n] 中字典序第 k 小的数字。
  * <p>
  * 输入: n = 13, k = 2
@@ -75,8 +75,8 @@ public class Problem440 {
         //num为long，避免乘10，int溢出
         long num = 1;
 
-        for (int i = 0; i < n; i++) {
-            if (i + 1 == k) {
+        for (int i = 1; i <= n; i++) {
+            if (i == k) {
                 return (int) num;
             }
 
@@ -93,6 +93,7 @@ public class Problem440 {
             }
         }
 
+        //没有找到字典序第k小元素，直接返回-1
         return -1;
     }
 
@@ -101,7 +102,7 @@ public class Problem440 {
      * 找num为根节点小于等于n的字典序个数count，
      * 如果count小于k，第k小节点不在num为根节点的树中，找num+1为根节点小于等于n的字典序个数，找第k-count个节点，直至k为0，表示找到
      * 如果count大于等于k，第k小节点在i为根节点的树中，递归找num*10为根节点中子树小于等于n的字典序个数，直至k为0，表示找到
-     * 时间复杂度O((logn)^2)，空间复杂度O(1)
+     * 时间复杂度O((logn)^2)，空间复杂度O(1) (树的高度为log10(n)，每次查找的时间复杂度O(log10(n))，最多需要计算10*(log10(n))^2次)
      *
      * @param n
      * @param k
@@ -114,8 +115,8 @@ public class Problem440 {
 
         //t为long，避免乘10，int溢出
         long num = 1;
-        //以num为根节点字典序小于等于n的个数
-        int count = getCount(num, n);
+        //以num为根节点字典序树中小于等于n的个数
+        int count = getNotBiggerThanNCount(num, n);
 
         //当k为1时，当前num即为结果
         while (k != 1) {
@@ -129,13 +130,14 @@ public class Problem440 {
                 num = num * 10;
             }
 
-            count = getCount(num, n);
+            count = getNotBiggerThanNCount(num, n);
         }
 
         return (int) num;
     }
 
     private void backtrack(long t, int n, int k) {
+        //当前数字t已经超过最大值n，或者已经遍历到了字典序第k小元素，直接返回
         if (t > n || count >= k) {
             return;
         }
@@ -154,18 +156,18 @@ public class Problem440 {
     }
 
     /**
-     * 返回以num为根节点字典序小于等于n的个数
+     * 返回以num为根节点字典序树中小于等于n的个数
      * 时间复杂度O(logn)，空间复杂度O(1)
      *
      * @param num
      * @param n
      * @return
      */
-    private int getCount(long num, int n) {
+    private int getNotBiggerThanNCount(long num, int n) {
         int count = 1;
-        //num下一层字典序的第一个元素
+        //num下一层字典序树的第一个元素，使用long避免int溢出
         long left = num * 10;
-        //num下一层字典序的最后一个元素
+        //num下一层字典序树的最后一个元素，使用long避免int溢出
         long right = Math.min(num * 10 + 9, n);
 
         while (left <= n) {

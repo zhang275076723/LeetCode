@@ -65,7 +65,7 @@ public class Problem386 {
         List<Integer> list = new ArrayList<>();
         int num = 1;
 
-        for (int i = 0; i < n; i++) {
+        for (int i = 1; i <= n; i++) {
             list.add(num);
 
             //当前num的下一个字典序为num*10

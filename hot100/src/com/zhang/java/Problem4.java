@@ -35,7 +35,7 @@ public class Problem4 {
     /**
      * 暴力
      * 两个指针分别指向nums1和nums2，找到两个数组的中位数
-     * 时间复杂度O(m+n)，空间复杂度O(1)
+     * 时间复杂度O(m+n)，空间复杂度O(1) (m=nums1.length, n=nums2.length)
      *
      * @param nums1
      * @param nums2
@@ -104,7 +104,7 @@ public class Problem4 {
      * 求第k小的数，则比较nums1中从起始位置开始第k/2个元素和nums2中从起始位置开始第k/2个元素，
      * 把较小的值和它之前的元素去掉，即去掉了较小的k/2个元素，因为这些数不可能是第k小的数，
      * 然后再求删除后的两个数组第(k-删除的元素个数)小的数，直至找到第k小的数
-     * 时间复杂度O(log(m+n))，空间复杂度O(1)
+     * 时间复杂度O(log(m+n))，空间复杂度O(1) (m=nums1.length, n=nums2.length)
      *
      * @param nums1
      * @param nums2
@@ -128,34 +128,43 @@ public class Problem4 {
         }
 
         //两个中位数中的前一个数
-        int num1 = getMinK(nums1, nums2, (nums1.length + nums2.length) / 2);
+        int value1 = getMinKValue(nums1, nums2, (nums1.length + nums2.length) / 2);
         //两个中位数中的后一个数
-        int num2 = getMinK(nums1, nums2, (nums1.length + nums2.length) / 2 + 1);
+        int value2 = getMinKValue(nums1, nums2, (nums1.length + nums2.length) / 2 + 1);
 
         if ((nums1.length + nums2.length) % 2 == 0) {
-            return (num1 + num2) / 2.0;
+            return (value1 + value2) / 2.0;
         } else {
-            return num2;
+            return value2;
         }
     }
 
-    private int getMinK(int[] nums1, int[] nums2, int k) {
+    /**
+     * 获取nums1数组和nums2数组中的第k小元素的值
+     * 时间复杂度O(log(m+n))，空间复杂度O(1) (m=nums1.length, n=nums2.length)
+     *
+     * @param nums1
+     * @param nums2
+     * @param k
+     * @return
+     */
+    private int getMinKValue(int[] nums1, int[] nums2, int k) {
         //当前指向nums1的起始下标索引
         int i = 0;
         //当前指向nums2的起始下标索引
         int j = 0;
-        //i的下一个下标索引，最多为nums1中最后一个元素下标索引
+        //i的下一个下标索引，最多为nums1中最后一个元素下标索引，用于判断nums1[i]-nums1[nextI]和nums2[j]-nums2[nextJ]的大小
         int nextI = Math.min(nums1.length - 1, i + k / 2 - 1);
-        //j的下一个下标索引，最多为nums2中最后一个元素下标索引
+        //j的下一个下标索引，最多为nums2中最后一个元素下标索引，用于判断nums1[i]-nums1[nextI]和nums2[j]-nums2[nextJ]的大小
         int nextJ = Math.min(nums2.length - 1, j + k / 2 - 1);
 
         while (k != 1) {
-            //nums1[nextI]小于nums2[nextJ]，说明nums1[i]-nums1[nextI]不是第k小元素，更新k、i
+            //nums1[nextI]小于nums2[nextJ]，说明nums1[i]-nums1[nextI]不是第k小元素，i指针后移
             if (nums1[nextI] < nums2[nextJ]) {
                 k = k - (nextI - i + 1);
                 i = nextI + 1;
             } else {
-                //nums1[nextI]大于等于nums2[nextJ]，说明nums2[j]-nums2[nextJ]不是第k小元素，更新k、i
+                //nums1[nextI]大于等于nums2[nextJ]，说明nums2[j]-nums2[nextJ]不是第k小元素，j指针后移
                 k = k - (nextJ - j + 1);
                 j = nextJ + 1;
             }

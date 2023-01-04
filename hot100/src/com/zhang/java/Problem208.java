@@ -75,6 +75,7 @@ public class Problem208 {
                 if (!node.children.containsKey(c)) {
                     node.children.put(c, new TrieNode());
                 }
+
                 node = node.children.get(c);
             }
 
@@ -97,7 +98,7 @@ public class Problem208 {
             TrieNode node = root;
 
             for (char c : word.toCharArray()) {
-                //前缀树遍历到结尾，但字符串还没有遍历到结尾，例如：字符串"app"，前缀树"ap"
+                //前缀树中没有当前字符，例如：字符串"ab"，前缀树"ap"
                 if (!node.children.containsKey(c)) {
                     return false;
                 }
@@ -124,7 +125,7 @@ public class Problem208 {
             TrieNode node = root;
 
             for (char c : prefix.toCharArray()) {
-                //前缀树遍历到结尾，但字符串还没有遍历到结尾，例如：字符串"app"，前缀树"ap"
+                //前缀树中没有当前字符，例如：字符串"ab"，前缀树"ap"
                 if (!node.children.containsKey(c)) {
                     return false;
                 }

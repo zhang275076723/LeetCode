@@ -61,7 +61,7 @@ public class Problem145 {
             return new ArrayList<>();
         }
 
-        //可以首尾添加
+        //使用LinkedList便于首添加，首添加时间复杂度O(1)
         LinkedList<Integer> list = new LinkedList<>();
         Deque<TreeNode> stack = new LinkedList<>();
         stack.offerLast(root);

@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * @Date 2022/8/17 8:07
  * @Author zsy
- * @Description 有序矩阵中第 K 小的元素 类比Problem23、Problem74、Problem240、Offer4 二分查找类比Problem4、Problem410、Problem658、Problem1482、FindMaxArrayMinAfterKMinus
+ * @Description 有序矩阵中第 K 小的元素 类比Problem23、Problem74、Problem240、Offer4 二分查找类比Problem4、Problem410、Problem658、Problem1482、FindMaxArrayMinAfterKMinus 二分搜索树类比Problem230、Problem440
  * 给你一个 n x n 矩阵 matrix ，其中每行和每列元素均按升序排序，找到矩阵中第 k 小的元素。
  * 请注意，它是 排序后 的第 k 小元素，而不是第 k 个 不同 的元素。
  * <p>
@@ -64,8 +64,8 @@ public class Problem378 {
         for (int i = 0; i < k - 1; i++) {
             int[] arr = priorityQueue.poll();
 
-            //当前元素没有到该行末尾时，该行下一个元素入队
-            if (arr[2] < matrix[0].length - 1) {
+            //当前元素所在行还存在下一个元素时，该行下一个元素入队
+            if (arr[2] + 1 < matrix[0].length) {
                 priorityQueue.offer(new int[]{matrix[arr[1]][arr[2] + 1], arr[1], arr[2] + 1});
             }
         }
@@ -138,7 +138,7 @@ public class Problem378 {
             mid = left + ((right - left) >> 1);
 
             //小于等于mid的元素个数小于k，说明前k小元素在右边
-            if (notBiggerThanMidCount(matrix, mid) < k) {
+            if (getNotBiggerThanMidCount(matrix, mid) < k) {
                 left = mid + 1;
             } else {
                 //小于等于mid的元素个数大于等于k，说明前k小元素在左边或mid处
@@ -149,7 +149,7 @@ public class Problem378 {
         return left;
     }
 
-    private int notBiggerThanMidCount(int[][] matrix, int mid) {
+    private int getNotBiggerThanMidCount(int[][] matrix, int mid) {
         int count = 0;
         int i = matrix.length - 1;
         int j = 0;

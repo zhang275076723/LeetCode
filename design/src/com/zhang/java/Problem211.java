@@ -62,6 +62,7 @@ public class Problem211 {
                 if (!node.children.containsKey(c)) {
                     node.children.put(c, new TrieNode());
                 }
+
                 node = node.children.get(c);
             }
 
@@ -75,10 +76,10 @@ public class Problem211 {
          * @return
          */
         public boolean search(String word) {
-            return backtrack(0, word, root);
+            return backtrack(0, root, word);
         }
 
-        private boolean backtrack(int t, String word, TrieNode node) {
+        private boolean backtrack(int t, TrieNode node, String word) {
             //遍历到单词末尾，判断当前节点是否是前缀树中一个单词的结尾
             if (t == word.length()) {
                 return node.isEnd;
@@ -89,7 +90,7 @@ public class Problem211 {
             //当前字符为'.'，遍历当前节点所包含的所有字符
             if (c == '.') {
                 for (Map.Entry<Character, TrieNode> entry : node.children.entrySet()) {
-                    if (backtrack(t + 1, word, entry.getValue())) {
+                    if (backtrack(t + 1, entry.getValue(), word)) {
                         return true;
                     }
                 }
@@ -98,7 +99,7 @@ public class Problem211 {
             } else {
                 //当前字符为普通字符，从当前节点继续遍历
                 if (node.children.containsKey(c)) {
-                    return backtrack(t + 1, word, node.children.get(c));
+                    return backtrack(t + 1, node.children.get(c), word);
                 }
 
                 return false;

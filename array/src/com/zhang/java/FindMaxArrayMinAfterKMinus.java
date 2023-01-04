@@ -52,7 +52,7 @@ public class FindMaxArrayMinAfterKMinus {
      * 假定k次减法之后数组中尽可能小的最大值为a，对a进行二分查找
      * 如果a作为结果，需要使数组中元素都小于等于a的操作次数大于k，则left = a + 1；
      * 如果a作为结果，需要使数组中元素都小于等于a的操作次数小于等于k，则right = a
-     * 时间复杂度O((log32)*n)，空间复杂度O(1) (n = arr.length) (因为二分查找的范围为int长度，32位)
+     * 时间复杂度O(n*log(right-left))=O(n)，空间复杂度O(1) (n = arr.length) (二分查找的范围为int长度，32位，log(right-left)为常数)
      *
      * @param arr
      * @param k

@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/11/13 09:50
  * @Author zsy
- * @Description 字符串中的第一个唯一字符 类比Offer50
+ * @Description 字符串中的第一个唯一字符 同Offer50
  * 给定一个字符串 s ，找到 它的第一个不重复的字符，并返回它的索引 。
  * 如果不存在，则返回 -1 。
  * <p>
@@ -45,7 +45,7 @@ public class Problem387 {
         }
 
         for (int i = 0; i < s.length(); i++) {
-            //Integer比较不能使用==，而应该使用equals()
+            //Integer之间的比较不能使用==，而应该使用equals()；Integer和int的比较，可以使用==，自动拆箱
             if (map.get(s.charAt(i)).equals(1)) {
                 return i;
             }
@@ -78,7 +78,7 @@ public class Problem387 {
         int index = s.length();
 
         for (Map.Entry<Character, Integer> entry : map.entrySet()) {
-            //Integer比较不能使用==，而应该使用equals()
+            //Integer之间的比较不能使用==，而应该使用equals()；Integer和int的比较，可以使用==，自动拆箱
             if (!entry.getValue().equals(-1)) {
                 index = Math.min(index, entry.getValue());
             }

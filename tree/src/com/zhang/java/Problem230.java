@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/9/1 9:24
  * @Author zsy
- * @Description 二叉搜索树中第K小的元素 字节面试题 类比Problem95、Problem96、Problem98、Problem99、Offer33、Offer36、Offer54 二分搜索树类比Problem440  线段树类比Problem307、Problem729、Problem731、Problem732
+ * @Description 二叉搜索树中第K小的元素 字节面试题 类比Problem95、Problem96、Problem98、Problem99、Offer33、Offer36、Offer54 二分搜索树类比Problem378、Problem440  线段树类比Problem307、Problem308、Problem729、Problem731、Problem732
  * 给定一个二叉搜索树的根节点 root ，和一个整数 k ，
  * 请你设计一个算法查找其中第 k 个最小元素（从 1 开始计数）。
  * <p>
@@ -66,7 +66,7 @@ public class Problem230 {
     }
 
     /**
-     * 优化，记录以每个节点为根节点的子节点个数，用于频繁查找二叉搜索树的第k小节点值的情况
+     * 优化，记录以每个节点为根节点的子节点个数，适用于：多次查找二叉搜索树的第k小节点值的情况
      * 1、当前节点左节点为根节点的节点个数left+1小于k，则第k小节点在当前节点的右子树，查找当前节点的右子树的第k-left-1小
      * 2、当前节点左节点为根节点的节点个数left+1大于k，则第k小节点在当前节点的左子树，查找当前节点的左子树的第k小
      * 3、当前节点左节点为根节点的节点个数left+1等于k，则第k小节点即为当前节点，返回当前节点
@@ -83,7 +83,7 @@ public class Problem230 {
 
         MyTree myTree = new MyTree(root);
 
-        return myTree.getMinKVal(k);
+        return myTree.getMinKValue(k);
     }
 
     /**
@@ -93,31 +93,39 @@ public class Problem230 {
         private final TreeNode root;
 
         /**
-         * 记录每个节点为根节点的节点个数
+         * 记录以当前节点为根节点的树中所有节点个数map
          */
-        private final Map<TreeNode, Integer> nodeCountMap;
+        private final Map<TreeNode, Integer> nodeMap;
 
         MyTree(TreeNode root) {
             this.root = root;
-            this.nodeCountMap = new HashMap<>();
+            this.nodeMap = new HashMap<>();
 
-            //创建以每个节点为根节点包含节点个数的map
-            countNode(root);
+            //建立map
+            buildNodeMap(root);
         }
 
-        public int getMinKVal(int k) {
+        /**
+         * 找二叉搜索树中第k小元素的值
+         * 时间复杂度O(logn)，空间复杂度O(1)
+         *
+         * @param k
+         * @return
+         */
+        public int getMinKValue(int k) {
             TreeNode node = root;
 
             //以当前节点左节点为根的数节点个数，考虑node.left为null，即当前节点没有左子树，count为0
-            int count = nodeCountMap.getOrDefault(node.left, 0);
+            int leftNodecount = nodeMap.getOrDefault(node.left, 0);
 
-            while (count + 1 != k) {
+            while (leftNodecount + 1 != k) {
                 //往左子树找
-                if (count + 1 > k) {
+                if (leftNodecount + 1 > k) {
                     node = node.left;
                 } else {
                     //往右子树找
-                    k = k - count - 1;
+
+                    k = k - leftNodecount - 1;
                     node = node.right;
                 }
 
@@ -127,21 +135,21 @@ public class Problem230 {
                 }
 
                 //考虑node.left为null，即当前节点没有左子树，count为0
-                count = nodeCountMap.getOrDefault(node.left, 0);
+                leftNodecount = nodeMap.getOrDefault(node.left, 0);
             }
 
             return node.val;
         }
 
-        private int countNode(TreeNode node) {
+        private int buildNodeMap(TreeNode node) {
             if (node == null) {
                 return 0;
             }
 
-            int leftCount = countNode(node.left);
-            int rightCount = countNode(node.right);
+            int leftCount = buildNodeMap(node.left);
+            int rightCount = buildNodeMap(node.right);
 
-            nodeCountMap.put(node, leftCount + rightCount + 1);
+            nodeMap.put(node, leftCount + rightCount + 1);
 
             return leftCount + rightCount + 1;
         }
