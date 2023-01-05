@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/8 16:06
  * @Author zsy
- * @Description 求1+2+…+n 阿里面试题
+ * @Description 求1+2+…+n 阿里面试题 类比Problem29、Offer65
  * 求 1+2+...+n ，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。
  * <p>
  * 输入: n = 3
@@ -138,7 +138,7 @@ public class Offer64 {
      * 3*2=6  (7的二进制表示的第二位)
      * 3*4=12 (7的二进制表示的第一位)
      * 3*7=3+6+12=21
-     * 时间复杂度O(logn)，空间复杂的O(1）
+     * 时间复杂度O(logn)，空间复杂的O(1) (n=b)
      *
      * @param a
      * @param b

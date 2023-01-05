@@ -108,11 +108,11 @@ public class Problem678 {
                 stack2.push(i);
             } else {
                 //如果是')'，先和stack1中的'('匹配，再和stack2中的'*'匹配
-                if (!stack1.empty()) {
+                if (!stack1.isEmpty()) {
                     //stack1中'('匹配')'
                     stack1.pop();
                 } else {
-                    if (!stack2.empty()) {
+                    if (!stack2.isEmpty()) {
                         //stack2中'*'匹配')'
                         stack2.pop();
                     } else {
@@ -126,16 +126,17 @@ public class Problem678 {
         //1、stack1和stack2都不为空，则需要用stack2中的'*'匹配stack1中的'('，必须保证'*'的索引大于'('的索引
         //2、stack1为空，stack2不为空，说明'*'有剩余，返回true
         //3、stack1不为空，stack2为空，说明还有未匹配的'('，返回false
-        while (!stack1.empty() && !stack2.empty()) {
+        while (!stack1.isEmpty() && !stack2.isEmpty()) {
             int c1 = stack1.pop();
             int c2 = stack2.pop();
 
+            //stack1中的'('下标索引比stack2中的'*'下标索引大，说明存在"*("情况，无法匹配，返回false
             if (c1 > c2) {
                 return false;
             }
         }
 
-        return stack1.empty();
+        return stack1.isEmpty();
     }
 
     /**

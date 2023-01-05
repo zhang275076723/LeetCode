@@ -65,7 +65,7 @@ public class Problem137 {
 
         //nums[i]取值范围为32位
         for (int i = 0; i < 32; i++) {
-            //二进制表示的当前位为1的个数
+            //二进制表示nums中元素从右往左第i位1的个数
             int count = 0;
 
             //统计nums中元素当前位为1的个数

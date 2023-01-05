@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/9 9:15
  * @Author zsy
- * @Description 不用加减乘除做加法 类比Problem136、Problem137、Problem260、Problem389、Offer56、Offer56_2
+ * @Description 不用加减乘除做加法 类比Problem136、Problem137、Problem260、Problem389、Offer56、Offer56_2 类比Problem29
  * 写一个函数，求两个整数之和，要求在函数体内不得使用 “+”、“-”、“*”、“/” 四则运算符号。
  * <p>
  * 输入: a = 1, b = 1

@@ -47,14 +47,18 @@ public class Problem301 {
             return result;
         }
 
+        //要删除的左括号和右括号数量
         int left = 0;
         int right = 0;
 
         //确定要删除的左括号和右括号数量，保证是有效字符串
         for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == '(') {
+            char c = s.charAt(i);
+
+            if (c == '(') {
                 left++;
-            } else if (s.charAt(i) == ')') {
+            } else if (c == ')') {
+                //如果当前字符为')'，如果存在'('，则可以匹配，左括号数量减1，如果不存在'('，右括号数量加1
                 if (left > 0) {
                     left--;
                 } else {
@@ -178,12 +182,15 @@ public class Problem301 {
         int count = 0;
 
         for (int i = 0; i < str.length(); i++) {
-            if (str.charAt(i) == '(') {
+            char c = str.charAt(i);
+
+            if (c == '(') {
                 count++;
-            } else if (str.charAt(i) == ')') {
-                count--;
-                //此时右括号数量比左括号数量多，不是有效字符串
-                if (count < 0) {
+            } else if (c == ')') {
+                if (count > 0) {
+                    count--;
+                } else {
+                    //不存在可以匹配的'('，直接返回false
                     return false;
                 }
             }

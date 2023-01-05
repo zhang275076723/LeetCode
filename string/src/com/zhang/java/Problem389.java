@@ -46,13 +46,14 @@ public class Problem389 {
             map.put(c, map.getOrDefault(c, 0) + 1);
         }
 
+        //遍历t，对t中每个字符判断是否存在于map中，如果不存在，即找到，如果存在，当前字符次数减1
         for (char c : t.toCharArray()) {
             //map中没有字符c，或者map中字符c的个数为0，说明当前字符c就是t中被添加的字符
-            if (!map.containsKey(c) || map.get(c).equals(0)) {
+            if (!map.containsKey(c) || map.get(c) == 0) {
                 return c;
             }
 
-            //当前字符c的个数减1
+            //当前字符c的次数减1
             map.put(c, map.get(c) - 1);
         }
 
@@ -73,13 +74,14 @@ public class Problem389 {
         int result = 0;
 
         for (char c : s.toCharArray()) {
-            result = result ^ c;
+            result = result ^ (int) c;
         }
 
         for (char c : t.toCharArray()) {
-            result = result ^ c;
+            result = result ^ (int) c;
         }
 
+        //s和t中只存在一个字符只出现一次，其他字符都出现偶数次，异或之后得到只出现一次的字符
         return (char) result;
     }
 }

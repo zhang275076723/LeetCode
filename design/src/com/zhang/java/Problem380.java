@@ -45,18 +45,24 @@ public class Problem380 {
     }
 
     /**
-     * 哈希表+list集合
-     * 哈希表，key：存储元素，value：元素在list集合中的下标索引
-     * list集合存储元素
+     * list集合+哈希表
+     * 移除元素的时候，用list集合中最后一个元素替换当前元素，再删除最后一个元素
+     * 时间复杂度O(1)，空间复杂度O(n)
      */
     static class RandomizedSet {
-        private final Map<Integer, Integer> map;
-
+        //存储元素集合
         private final List<Integer> list;
 
+        //存储list集合中元素和对应在list集合中的下标索引
+        private final Map<Integer, Integer> map;
+
+        //获取随机值
+        private final Random random;
+
         public RandomizedSet() {
-            map = new HashMap<>();
             list = new ArrayList<>();
+            map = new HashMap<>();
+            random = new Random();
         }
 
         public boolean insert(int val) {
@@ -80,11 +86,11 @@ public class Problem380 {
             //list集合中最后一个元素
             int lastValue = list.get(list.size() - 1);
 
-            //map中移除当前元素，更新map中list集合中最后一个元素在list集合中的下标索引
+            //map中移除当前元素，更新map中list集合中最后一个元素在list集合中的下标索引，必须先put再remove
             map.put(lastValue, index);
             map.remove(val);
 
-            //将list集合中最后一个元素替换当前元素，删除list集合中的最后一个元素
+            //用list集合中最后一个元素替换当前元素，再删除最后一个元素
             list.set(index, lastValue);
             list.remove(list.size() - 1);
 
@@ -92,7 +98,7 @@ public class Problem380 {
         }
 
         public int getRandom() {
-            return list.get(new Random().nextInt(list.size()));
+            return list.get(random.nextInt(list.size()));
         }
     }
 }

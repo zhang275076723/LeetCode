@@ -46,33 +46,40 @@ public class Problem381 {
     }
 
     /**
-     * 哈希表+list集合
-     * 哈希表，key：存储元素，value：相同元素在list集合中下标索引的set集合
-     * list集合存储元素
+     * list集合+哈希表，哈希表存储的是list集合中相同元素的下标索引set集合
+     * 移除元素的时候，用list集合中最后一个元素替换当前元素，再删除最后一个元素
+     * 时间复杂度O(1)，空间复杂度O(n)
      */
     static class RandomizedCollection {
-        private final Map<Integer, Set<Integer>> map;
-
+        //存储元素集合
         private final List<Integer> list;
 
+        //存储list集合中相同元素的下标索引set集合
+        private final Map<Integer, Set<Integer>> map;
+
+        //获取随机值
+        private final Random random;
+
         public RandomizedCollection() {
-            map = new HashMap<>();
             list = new ArrayList<>();
+            map = new HashMap<>();
+            random = new Random();
         }
 
         public boolean insert(int val) {
+            //map中包含val，说明存在val，返回false
             if (map.containsKey(val)) {
                 map.get(val).add(list.size());
                 list.add(val);
 
                 return false;
-            } else {
-                map.put(val, new HashSet<>());
-                map.get(val).add(list.size());
-                list.add(val);
-
-                return true;
             }
+
+            map.put(val, new HashSet<>());
+            map.get(val).add(list.size());
+            list.add(val);
+
+            return true;
         }
 
         public boolean remove(int val) {
@@ -80,31 +87,37 @@ public class Problem381 {
                 return false;
             }
 
-            //移除相同val的set集合中的某一个元素，并在list集合中以为尾元素替换的方式删除当前元素
+            //当前元素val在list集合中的下标索引
+            int index = map.get(val).iterator().next();
+            //list集合中最后一个元素的下标索引
+            int lastValueIndex = list.size() - 1;
+            //list集合中最后一个元素的值
+            int lastValue = list.get(lastValueIndex);
+            //存储list集合中相同val元素的下标索引set集合
             Set<Integer> set = map.get(val);
-            int index = set.iterator().next();
-            set.remove(index);
-
-            int lastValue = list.get(list.size() - 1);
+            //存储list集合中相同lastValue元素的下标索引set集合
             Set<Integer> lastValueSet = map.get(lastValue);
 
-            list.set(index, lastValue);
+            //val对应set删除val在list集合中的下标索引index，
+            //list集合中最后一个元素lastValue对应lastValueSet修改在list集合中的下标索引
+            set.remove(index);
             lastValueSet.add(index);
-            lastValueSet.remove(list.size() - 1);
+            lastValueSet.remove(lastValueIndex);
 
-            //当前元素val的set集合为空，map中直接删除set
+            //val对应set为空，直接从map中删除set
             if (set.isEmpty()) {
                 map.remove(val);
             }
 
-            //list集合中删除尾元素
+            //用list集合中最后一个元素替换当前元素，再删除最后一个元素
+            list.set(index, lastValue);
             list.remove(list.size() - 1);
 
             return true;
         }
 
         public int getRandom() {
-            return list.get(new Random().nextInt(list.size()));
+            return list.get(random.nextInt(list.size()));
         }
     }
 }
