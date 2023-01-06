@@ -31,7 +31,7 @@ public class Problem29 {
 
     /**
      * 快速乘思想
-     * 不使用乘除法，则使用位运算左移，相当于等2
+     * 不使用乘除和mod，则使用加减法，使用位运算左移，相当于等2
      * 每次从bit为1开始找最大的能够减去divisor*bit的bit，dividend = dividend - (bit * divisor)，
      * 直至dividend小于divisor(dividend和divisor都是正数的情况)
      * 例如：60/8 ==> 60 = 8*4 + 8*2 + 8*1 + 4 ==> 60/8 = 7

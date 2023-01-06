@@ -65,12 +65,12 @@ public class Offer56_2 {
 
         //num[i]取值范围在[1,2^31-1]，所以只需要遍历31位
         for (int i = 0; i < 31; i++) {
-            //当前位为1的个数
+            //二进制表示nums中元素从右往左第i位1的个数
             int count = 0;
 
             //统计nums中元素当前位为1的个数
             for (int num : nums) {
-                count = count + ((num & (1 << i)) >> i);
+                count = count + ((num >> i) & 1);
             }
 
             //如果当前位之和不能够被3整除，说明对于只出现一次的数来说为1

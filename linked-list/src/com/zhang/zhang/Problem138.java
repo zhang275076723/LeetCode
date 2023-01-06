@@ -54,8 +54,7 @@ public class Problem138 {
     }
 
     /**
-     * 哈希表
-     * 使用哈希表存储原节点和新建节点之间的映射关系
+     * 哈希表，建立原节点和拷贝节点的映射
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param head
@@ -70,6 +69,7 @@ public class Problem138 {
         Map<Node, Node> map = new HashMap<>();
         Node node = head;
 
+        //创建新链表节点放入map
         while (node != null) {
             map.put(node, new Node(node.val));
             node = node.next;
@@ -77,6 +77,7 @@ public class Problem138 {
 
         node = head;
 
+        //设置每个新节点的next和random
         while (node != null) {
             Node tempNode = map.get(node);
             tempNode.next = map.get(node.next);
@@ -89,7 +90,7 @@ public class Problem138 {
 
     /**
      * 节点拆分
-     * 将原节点拆分为原节点和新建节点，然后再将链表分开，得到新节点链表
+     * 将链表中的每个节点拆分为两个相同节点，设置新链表节点的random指针之后进行拆分，即设置新链表节点的next指针，得到拷贝链表
      * 例如：A->B->C变为A->A'->B->B'->C->C'，再拆分得到A'->B'->C'
      * 时间复杂度O(n)，空间复杂度O(1)
      *
@@ -113,13 +114,14 @@ public class Problem138 {
 
         node = head;
 
-        //为新节点的random指针赋值
+        //设置每个新节点的random
         while (node != null) {
-            if (node.random == null) {
-                node.next.random = null;
-            } else {
+            if (node.random != null) {
                 node.next.random = node.random.next;
+            } else {
+                node.next.random = null;
             }
+
             node = node.next.next;
         }
 

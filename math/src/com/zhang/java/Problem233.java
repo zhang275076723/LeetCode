@@ -41,10 +41,10 @@ public class Problem233 {
         }
 
         //1出现的次数
-        int count = 0;
+        int result = 0;
         //当前剩余数字
         int num = n;
-        //当前位低位的个数
+        //当前位低位所能表示数字的个数
         int lowCount = 1;
         //当前位低位的值
         int low = 0;
@@ -56,13 +56,13 @@ public class Problem233 {
         while (num != 0) {
             if (cur == 0) {
                 //当前cur为0，高位值0到high-1，共high种取值，乘上低位0到9..9，共lowCount种取值
-                count = count + high * lowCount;
+                result = result + high * lowCount;
             } else if (cur == 1) {
                 //当前cur为1，高位先取0到high-1，共high种取值，乘上低位0到9..9，共lowCount种取值；再加上高位取high，乘上低位取0到low
-                count = count + high * lowCount + low + 1;
+                result = result + high * lowCount + low + 1;
             } else {
                 //当前cur大于1，高位取0-high，共high+1种取值，乘上低位0到9..9，共lowCount种取值
-                count = count + (high + 1) * lowCount;
+                result = result + (high + 1) * lowCount;
             }
 
             lowCount = lowCount * 10;
@@ -72,6 +72,6 @@ public class Problem233 {
             high = high / 10;
         }
 
-        return count;
+        return result;
     }
 }

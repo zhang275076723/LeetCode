@@ -44,27 +44,32 @@ public class Problem400 {
      * @return
      */
     public int findNthDigit(int n) {
-        //当前数字的长度
-        int length = 1;
-        //长度为length数字的个数，使用long避免溢出
-        long count = 9;
-        //长度小于length数字的总个数，使用long避免溢出
-        long sum = 0;
-
-        while (sum + length * count < n) {
-            sum = sum + length * count;
-            length++;
-            count = count * 10;
+        if (n == 0) {
+            return 0;
         }
 
-        //n在长度为length数字的索引下标，索引从0开始
-        int index = (int) (n - sum - 1);
-        //长度为length的起始数字
-        int startNum = (int) Math.pow(10, length - 1);
-        //在长度为length的数字的第几个位置
-        int i = index / length;
-        //在i个位置的偏移量
-        int j = index % length;
+        //当前数字的长度
+        int numLength = 1;
+        //长度为numLength的数字个数，使用long，避免int溢出
+        long numCount = 9;
+        //长度小于numLength的所有数字所占的位数，使用long，避免int溢出
+        long count = 0;
+
+        //找到n所在的长度为numLength的起始数字10^(numLength-1)
+        while (count + numLength * numCount < n) {
+            count = count + numLength * numCount;
+            numLength++;
+            numCount = numCount * 10;
+        }
+
+        //n所在的长度为numLength的起始数字
+        int startNum = (int) Math.pow(10, numLength - 1);
+        //从startNum开始开始的索引下标
+        int index = (int) (n - count - 1);
+        //第几个数字startNum+i
+        int i = index / numLength;
+        //startNum+i的第j个数字即为最后结果
+        int j = index % numLength;
 
         return String.valueOf(startNum + i).charAt(j) - '0';
     }

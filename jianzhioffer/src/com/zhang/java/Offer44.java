@@ -49,29 +49,29 @@ public class Offer44 {
             return 0;
         }
 
-        //当前所占的位数，如果是int类型，有可能溢出
+        //当前数字的长度
+        int numLength = 1;
+        //长度为numLength的数字个数，使用long，避免int溢出
+        long numCount = 9;
+        //长度小于numLength的所有数字所占的位数，使用long，避免int溢出
         long count = 0;
-        //当前数字的位数
-        int length = 1;
-        //长度为length数字的个数
-        long size = 9;
 
-        //使用long，避免相乘溢出
-        while (count + size * length < n) {
-            count = count + size * length;
-            length++;
-            size = size * 10;
+        //找到n所在的长度为numLength的起始数字10^(numLength-1)
+        while (count + numLength * numCount < n) {
+            count = count + numLength * numCount;
+            numLength++;
+            numCount = numCount * 10;
         }
 
-        //从length长度最小值开始的索引
-        int startIndex = (int) (n - count - 1);
-        //length长度起始值
-        int start = (int) Math.pow(10, length - 1);
-        //第几个数字
-        int i = startIndex / length;
-        //当前数字的偏移量
-        int j = startIndex % length;
+        //n所在的长度为numLength的起始数字
+        int startNum = (int) Math.pow(10, numLength - 1);
+        //从startNum开始开始的索引下标
+        int index = (int) (n - count - 1);
+        //第几个数字startNum+i
+        int i = index / numLength;
+        //startNum+i的第j个数字即为最后结果
+        int j = index % numLength;
 
-        return String.valueOf(start + i).charAt(j) - '0';
+        return String.valueOf(startNum + i).charAt(j) - '0';
     }
 }
