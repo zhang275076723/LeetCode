@@ -35,8 +35,8 @@ public class Problem450 {
         String[] data = {"5", "3", "6", "2", "4", "null", "7"};
         TreeNode root = problem450.buildTree(data);
         int key = 7;
-//        root = problem450.deleteNode(root, key);
-        root = problem450.deleteNode2(root, key);
+        root = problem450.deleteNode(root, key);
+//        root = problem450.deleteNode2(root, key);
     }
 
     /**

@@ -111,7 +111,7 @@ public class ElevatorSchedule {
         //要去i楼以上的乘客数量
         int n3 = 0;
 
-        //电梯停在minFloor楼，乘客需要爬的楼层总数之和
+        //电梯停在minFloor楼，乘客需要爬的楼层总数之和，并更新要去i楼以上的乘客数量n3
         for (int i = 1; i < floor.length; i++) {
             count = count + floor[i] * i;
             n3 = n3 + floor[i];
@@ -121,7 +121,7 @@ public class ElevatorSchedule {
             //电梯停在i+1楼比停在i楼，i+1层之下的乘客需要多爬n1+n2层，i+1层及至上的乘客需要少爬n3层
             if (n1 + n2 < n3) {
                 count = count + n1 + n2 - n3;
-                bestFloor = i + minFloor;
+                bestFloor = minFloor + i;
             }
 
             n1 = n1 + n2;

@@ -32,8 +32,8 @@ import java.util.*;
 public class Problem398 {
     public static void main(String[] args) {
         int[] nums = {1, 2, 3, 3, 3};
-        Solution solution = new Solution(nums);
-//        Solution2 solution = new Solution2(nums);
+//        Solution solution = new Solution(nums);
+        Solution2 solution = new Solution2(nums);
         System.out.println(solution.pick(3));
         System.out.println(solution.pick(1));
         System.out.println(solution.pick(3));
@@ -73,7 +73,7 @@ public class Problem398 {
      * 蓄水池抽样，从n个元素中随机等概率的抽取k个元素，n未知
      * 时间换空间，适用于nums数组很大，无法将nums元素下标索引全部保存到内存中的情况
      */
-    class Solution2 {
+    static class Solution2 {
         //含有重复元素的数组
         private final int[] nums;
 

@@ -67,7 +67,6 @@ public class Problem71 {
                 }
             } else if ("".equals(name) || ".".equals(name)) {
                 //当前文件名为""或"."，则不需要进行操作
-                continue;
             } else {
                 //将当前文件名不为".."或""或"."，则将当前文件名加入栈中
                 stack.offerLast(name);

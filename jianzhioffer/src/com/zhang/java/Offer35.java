@@ -53,7 +53,7 @@ public class Offer35 {
 
     /**
      * 哈希表，建立原节点和拷贝节点的映射
-     * 时间复杂度O(n)，空间复杂的O(n)
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param head
      * @return
@@ -66,7 +66,7 @@ public class Offer35 {
         Map<Node, Node> map = new HashMap<>();
         Node node = head;
 
-        //创建新节点放入map
+        //创建新链表节点放入map
         while (node != null) {
             map.put(node, new Node(node.val));
             node = node.next;
@@ -87,9 +87,9 @@ public class Offer35 {
 
     /**
      * 节点拆分
-     * 将链表中的节点拆分为两个相邻节点，设置next和random之后进行拆分，得到拷贝链表
-     * 例如：A->B->C变为A->A'->B->B'->C->C'，再拆分获得A'->B'->C'
-     * 时间复杂度O(n)，空间复杂的O(1)
+     * 将链表中的每个节点拆分为两个相同节点，设置新链表节点的random指针之后进行拆分，即设置新链表节点的next指针，得到拷贝链表
+     * 例如：A->B->C变为A->A'->B->B'->C->C'，再拆分得到A'->B'->C'
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param head
      * @return
