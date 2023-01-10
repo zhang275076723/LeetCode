@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/4/6 10:00
  * @Author zsy
- * @Description 滑动窗口的最大值 类比Offer59_2 同Problem239
+ * @Description 滑动窗口的最大值 类比Offer59_2 滑动窗口类比Problem3、Problem76、Problem209、Problem438、Problem567、Offer48、Offer57_2 同Problem239
  * 给定一个数组 nums 和滑动窗口的大小 k，请找出所有滑动窗口里的最大值。
  * 你可以假设 k 总是有效的，在输入数组不为空的情况下，1 ≤ k ≤ 输入数组的大小。
  * <p>

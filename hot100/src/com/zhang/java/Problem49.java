@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/4/21 15:24
  * @Author zsy
- * @Description 字母异位词分组 类比Problem438
+ * @Description 字母异位词分组 类比Problem242、Problem438
  * 给你一个字符串数组，请你将 字母异位词 组合在一起。可以按任意顺序返回结果列表。
  * 字母异位词 是由重新排列源单词的字母得到的一个新单词，所有源单词中的字母通常恰好只用一次。
  * <p>
@@ -31,8 +31,8 @@ public class Problem49 {
     }
 
     /**
-     * 哈希
-     * 将strs中每一个字符串排序，放入哈希表中，找到不同的字母异位词
+     * 排序+哈希
+     * 将strs中每一个字符串排序，在map中作为key，找到不同的字母异位词，放入哈希表中
      * 时间复杂度O(nklogk)，空间复杂度O(nk) (n:strs中字符串的个数，k:strs中字符串的最大长度)
      *
      * @param strs
@@ -68,9 +68,9 @@ public class Problem49 {
     }
 
     /**
-     * 计数
-     * 字母异位词中字母出现的次数相同，统计strs中每一个字符串中字母出现的次数，放入哈希表中，找到不同的字母异位词
-     * 时间复杂度O(n(k+∣Σ∣))，空间复杂度O(n(k+∣Σ∣)) (n为strs中字符串的个数，k为strs中字符串的最大长度，Σ只包含小写字母，∣Σ∣=26)
+     * 计数+哈希
+     * 字母异位词中字母出现的次数相同，统计strs中每一个字符串中字母出现的次数，在map中作为key，找到不同的字母异位词，放入哈希表中
+     * 时间复杂度O(n(k+|Σ|))，空间复杂度O(n(k+|Σ|)) (n为strs中字符串的个数，k为strs中字符串的最大长度，Σ只包含小写字母，|Σ|=26)
      *
      * @param strs
      * @return
@@ -91,9 +91,8 @@ public class Problem49 {
 
             //转换为字符串，例如：abad-->a2b1d1
             for (int i = 0; i < count.length; i++) {
-                if (count[i] > 0) {
-                    sb.append((char) ('a' + i));
-                    sb.append(count[i]);
+                if (count[i] != 0) {
+                    sb.append((char) ('a' + i)).append(count[i]);
                 }
             }
 

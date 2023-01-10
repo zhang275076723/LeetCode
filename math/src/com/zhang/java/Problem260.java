@@ -61,10 +61,10 @@ public class Problem260 {
     }
 
     /**
-     * 位运算
-     * 不使用额外的空间，就要想到位运算
+     * 位运算，不使用额外的空间，就要想到位运算
      * 所有元素异或，得到不同的两个数异或结果，找出异或结果二进制不同的一位，根据这一位将数组中元素分为两部分，
      * 根据当前不同的二进制位，将数组分为两部分，分别异或，得到不同的两个数
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
      * @return
@@ -89,6 +89,7 @@ public class Problem260 {
         int result1 = 0;
         int result2 = 0;
 
+        //根据bit位将不同的两个数分开
         for (int num : nums) {
             if ((num & bit) == 0) {
                 result1 = result1 ^ num;

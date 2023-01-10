@@ -21,7 +21,7 @@ package com.zhang.java;
 public class Offer61 {
     public static void main(String[] args) {
         Offer61 offer61 = new Offer61();
-        int[] nums = {0, 0, 1, 2, 5};
+        int[] nums = {9, 10, 4, 0, 9};
         System.out.println(offer61.isStraight(nums));
     }
 
@@ -35,17 +35,17 @@ public class Offer61 {
      * @return
      */
     public boolean isStraight(int[] nums) {
-        //大小王牌计数
+        //大小王牌的数量
         int joker = 0;
 
         mergeSort(nums, 0, nums.length - 1, new int[nums.length]);
 
-        for (int i = 0; i < nums.length - 1; i++) {
+        for (int i = 0; i < nums.length; i++) {
             if (nums[i] == 0) {
                 joker++;
             } else {
                 //有两张一样的牌，则不能构成顺子
-                if (nums[i] == nums[i + 1]) {
+                if (i != nums.length - 1 && nums[i] == nums[i + 1]) {
                     return false;
                 }
             }

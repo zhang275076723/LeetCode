@@ -61,7 +61,7 @@ public class Problem130 {
 
     /**
      * dfs
-     * 从边界'O'dfs，将相连的'O'置为'Y'，此时的'O'是外部未被'X'围绕的区域，
+     * 从边界'O'dfs，将相连的'O'置为'Y'，表示当前的'O'是外部未被'X'围绕的区域，其余剩下的'O'都是需要置为'X'，
      * 遍历内部的元素'O'，将剩余'O'置为'X'，此时的'O'是被'X'围绕的区域，再将'Y'重新置为'O'
      * 时间复杂度O(mn)，空间复杂度O(mn)
      *
@@ -80,7 +80,7 @@ public class Problem130 {
             dfs(board.length - 1, j, board);
         }
 
-        //将剩余'O'置为'X'，此时的'O'是被'X'围绕的区域，再将'Y'重新置为'O'
+        //将剩余未被置为'Y'的'O'置为'X'，此时的'O'是被'X'围绕的区域，将被置为'Y'的'O'重新置为'O'
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 if (board[i][j] == 'O') {
@@ -94,7 +94,7 @@ public class Problem130 {
 
     /**
      * bfs
-     * 边界'O'加入队列，bfs边界'O'，将相连的'O'置为'Y'，此时的'O'是外部未被'X'围绕的区域，
+     * 边界'O'加入队列，bfs边界'O'，将相连的'O'置为'Y'，表示当前的'O'是外部未被'X'围绕的区域，其余剩下的'O'都是需要置为'X'，
      * 将剩余'O'置为'X'，此时的'O'是被'X'围绕的区域，再将'Y'重新置为'O'
      * 时间复杂度O(mn)，空间复杂度O(mn)
      *
@@ -125,7 +125,7 @@ public class Problem130 {
             }
         }
 
-        //bfs边界'O'，将相连的'O'置为'Y'
+        //bfs边界'O'，将相连的'O'置为'Y'，表示当前的'O'是外部未被'X'围绕的区域
         while (!queue.isEmpty()) {
             int[] arr = queue.poll();
 
@@ -142,7 +142,7 @@ public class Problem130 {
             queue.offer(new int[]{arr[0], arr[1] + 1});
         }
 
-        //将剩余'O'置为'X'，此时的'O'是被'X'围绕的区域，再将'Y'重新置为'O'
+        //将剩余未被置为'Y'的'O'置为'X'，此时的'O'是被'X'围绕的区域，将被置为'Y'的'O'重新置为'O'
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 if (board[i][j] == 'O') {
@@ -161,6 +161,7 @@ public class Problem130 {
 
         board[i][j] = 'Y';
 
+        //往上下左右找
         dfs(i - 1, j, board);
         dfs(i + 1, j, board);
         dfs(i, j - 1, board);

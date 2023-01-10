@@ -50,6 +50,7 @@ public class Problem73 {
 
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
+                //当前元素为0，将所在行和列置为0
                 if (tempArr[i][j] == 0) {
                     for (int m = 0; m < matrix.length; m++) {
                         matrix[m][j] = 0;
@@ -75,6 +76,7 @@ public class Problem73 {
         boolean rowFlag = false;
         boolean columnFlag = false;
 
+        //遍历首列，如果存在0，则将列标志位columnFlag置为true，表示当前列最后都要置为0
         for (int i = 0; i < matrix.length; i++) {
             if (matrix[i][0] == 0) {
                 columnFlag = true;
@@ -82,6 +84,7 @@ public class Problem73 {
             }
         }
 
+        //遍历首行，如果存在0，则将行标志位rowFlag置为true，表示当前行最后都要置为0
         for (int j = 0; j < matrix[0].length; j++) {
             if (matrix[0][j] == 0) {
                 rowFlag = true;
@@ -89,6 +92,7 @@ public class Problem73 {
             }
         }
 
+        //遍历除首行和首列外的其他元素，如果当前元素为0，则将对应的首行和首列赋值为0
         for (int i = 1; i < matrix.length; i++) {
             for (int j = 1; j < matrix[0].length; j++) {
                 //当前元素为0，则对应的首行和首列赋值为0
@@ -99,7 +103,7 @@ public class Problem73 {
             }
         }
 
-        //遍历首列为0的元素
+        //遍历首列除索引为0的元素之外的元素，如果当前元素值为0，将对应行元素都置为0
         for (int i = 1; i < matrix.length; i++) {
             if (matrix[i][0] == 0) {
                 for (int j = 1; j < matrix[0].length; j++) {
@@ -108,7 +112,7 @@ public class Problem73 {
             }
         }
 
-        //遍历首行为0的元素
+        //遍历首行除索引为0的元素之外的元素，如果当前元素值为0，将对应列元素都置为0
         for (int j = 1; j < matrix[0].length; j++) {
             if (matrix[0][j] == 0) {
                 for (int i = 1; i < matrix.length; i++) {

@@ -47,8 +47,9 @@ public class Problem232 {
     }
 
     private static class MyQueue {
+        //元素入栈存放的栈
         private final Stack<Integer> stack1;
-
+        //stack1中元素出栈存放的栈
         private final Stack<Integer> stack2;
 
         public MyQueue() {

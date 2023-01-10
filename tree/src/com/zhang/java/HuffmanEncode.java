@@ -45,6 +45,7 @@ public class HuffmanEncode {
             //存储str中每个字符节点
             List<HuffmanNode> list = new ArrayList<>();
 
+            //统计str中每个字符出现的次数
             for (char c : str.toCharArray()) {
                 map.put(c, map.getOrDefault(c, 0) + 1);
             }
@@ -82,7 +83,7 @@ public class HuffmanEncode {
 
             root = list.get(0);
 
-            //计算定长编码的长度
+            //计算定长编码的长度，因为没有2为底的log，所以使用到了换底公式
             fixedEncodeLength = root.weight * (int) Math.ceil(Math.log(map.size()) / Math.log(2));
         }
 
@@ -125,6 +126,12 @@ public class HuffmanEncode {
             while (!queue.isEmpty()) {
                 HuffmanNode node = queue.poll();
 
+                //当前节点为叶节点，即需要编码的哈夫曼节点，加入到encodeMap，继续下次循环
+                if (node.left == null && node.right == null) {
+                    encodeMap.put(node.key, node.code);
+                    continue;
+                }
+
                 if (node.left != null) {
                     if (node.code == null) {
                         node.left.code = "0";
@@ -143,11 +150,6 @@ public class HuffmanEncode {
                     }
 
                     queue.offer(node.right);
-                }
-
-                //当前节点为叶节点，即需要编码的哈夫曼节点，加入到encodeMap
-                if (node.left == null && node.right == null) {
-                    encodeMap.put(node.key, node.code);
                 }
             }
         }

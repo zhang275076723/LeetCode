@@ -88,6 +88,7 @@ public class Offer28 {
         if (leftNode == null && rightNode == null) {
             return true;
         }
+
         if (leftNode == null || rightNode == null || leftNode.val != rightNode.val) {
             return false;
         }

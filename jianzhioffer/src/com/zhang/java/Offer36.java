@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/3/23 10:03
  * @Author zsy
- * @Description 二叉搜索树与双向链表 类比Problem95、Problem96、Problem98、Problem99、Problem114、Problem230、Offer33
+ * @Description 二叉搜索树与双向链表 二叉树和链表之间转化类比Problem114、Problem430 类比Problem95、Problem96、Problem98、Problem99、Problem230、Offer33
  * 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的循环双向链表。
  * 要求不能创建任何新的节点，只能调整树中节点指针的指向。
  * 我们希望将这个二叉搜索树转化为双向循环链表。链表中的每个节点都有一个前驱和后继指针。
@@ -22,24 +22,11 @@ public class Offer36 {
         Node root = offer36.buildTree(data);
 //        Node head = offer36.treeToDoublyList(root);
         Node head = offer36.treeToDoublyList2(root);
-
-        if (head == null) {
-            return;
-        } else if (head.right == head) {
-            System.out.println(head.val);
-        } else {
-            Node node = head;
-            while (node.right != head) {
-                System.out.println(node.val);
-                node = node.right;
-            }
-            System.out.println(node.val);
-        }
     }
 
     /**
-     * 非递归中序遍历
-     * 将节点保存在集合中，再按照中序遍历顺序重新赋值左右指针，构建双向链表
+     * 中序遍历
+     * 将节点保存在list集合中，再按照中序遍历顺序重新赋值list集合中节点的左右指针，构建循环双向链表
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -65,6 +52,7 @@ public class Offer36 {
             node = node.right;
         }
 
+        //双向链表头结点
         Node head = list.remove(0);
         Node pre = head;
 
@@ -75,7 +63,7 @@ public class Offer36 {
             pre = node;
         }
 
-        //连接首尾节点，形成循环链表
+        //连接尾结点的右指针和头结点的左指针，形成循环双向链表
         pre.right = head;
         head.left = pre;
 
@@ -83,8 +71,8 @@ public class Offer36 {
     }
 
     /**
-     * 非递归中序遍历
-     * 使用两个指针pre和head，pre指向当前节点的前驱节点，head指向头节点，在遍历过程中将二叉搜索树转换为双向链表
+     * 中序遍历
+     * 在中序遍历过程中就修改节点的左右指针，将二叉搜索树转换为循环双向链表
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root

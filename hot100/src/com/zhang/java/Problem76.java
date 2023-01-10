@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/4/26 9:27
  * @Author zsy
- * @Description 最小覆盖子串 字节面试题 类比Problem3、Problem438、Problem567
+ * @Description 最小覆盖子串 字节面试题 滑动窗口类比Problem3、Problem209、Problem438、Problem567、Offer48、Offer57_2、Offer59
  * 给你一个字符串 s 、一个字符串 t 。返回 s 中涵盖 t 所有字符的最小子串。
  * 如果 s 中不存在涵盖 t 所有字符的子串，则返回空字符串 "" 。
  * 对于 t 中重复字符，我们寻找的子字符串中该字符数量必须不少于 t 中该字符数量。

@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/6/13 11:38
  * @Author zsy
- * @Description 和为 K 的子数组 类比problem209、Problem437、Offer57_2
+ * @Description 和为 K 的子数组 前缀和类比problem209、Problem437、Offer57_2
  * 给你一个整数数组 nums 和一个整数 k ，请你统计并返回 该数组中和为 k 的子数组的个数 。
  * 注意：子数组中的元素在原数组中必须连续
  * <p>

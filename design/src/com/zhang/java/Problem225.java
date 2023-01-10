@@ -125,8 +125,10 @@ public class Problem225 {
         }
 
         public void push(int x) {
+            //记录当前队列元素个数，重新出队再入队，用于模拟栈
             int size = queue.size();
             queue.offer(x);
+
             for (int i = 0; i < size; i++) {
                 queue.offer(queue.poll());
             }

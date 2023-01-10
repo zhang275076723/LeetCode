@@ -70,15 +70,15 @@ public class Offer60 {
         int[][] dp = new int[n + 1][6 * n + 1];
 
         //dp初始化
-        for (int i = 1; i <= 6; i++) {
-            dp[1][i] = 1;
+        for (int j = 1; j <= 6; j++) {
+            dp[1][j] = 1;
         }
 
         for (int i = 2; i <= n; i++) {
             for (int j = i; j <= 6 * i; j++) {
                 for (int k = 1; k <= 6; k++) {
                     //掷i-1个骰子能掷出点数之和为j-k，必须大于等于i-1
-                    if (j - k >= i - 1) {
+                    if (i - 1 <= j - k) {
                         dp[i][j] = dp[i][j] + dp[i - 1][j - k];
                     }
                 }
@@ -86,11 +86,11 @@ public class Offer60 {
         }
 
         //掷n个骰子的总样本数量
-        int total = (int) Math.pow(6, n);
+        int count = (int) Math.pow(6, n);
         double[] result = new double[5 * n + 1];
 
         for (int i = 0; i < result.length; i++) {
-            result[i] = (double) dp[n][n + i] / total;
+            result[i] = (double) dp[n][n + i] / count;
         }
 
         return result;

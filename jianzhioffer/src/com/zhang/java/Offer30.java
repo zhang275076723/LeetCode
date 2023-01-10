@@ -37,12 +37,12 @@ public class Offer30 {
      * 使用两个栈，一个栈保存所有元素，另一个栈在栈顶保存当前栈的最小值元素，作为单调递减栈
      * 均摊时间复杂度O(1)，空间复杂度O(n)
      */
-    private static class MinStack {
-        //保存所有元素的栈
-        private Stack<Integer> stack;
+    static class MinStack {
+        //保存元素的栈
+        private final Stack<Integer> stack;
 
-        //栈顶保存当前栈的最小值元素的栈，单调递减栈
-        private Stack<Integer> minStack;
+        //保存当前最小元素的栈，单调递减栈
+        private final Stack<Integer> minStack;
 
         public MinStack() {
             stack = new Stack<>();
@@ -52,13 +52,17 @@ public class Offer30 {
         public void push(int x) {
             stack.push(x);
 
-            //等于号，考虑连续当前栈中最小元素和入栈元素相等的情况
-            if (minStack.isEmpty() || x <= minStack.peek()) {
+            //minStack为空，或minStack栈顶元素大于等于当前元素x，x入minStack栈(必须是大于等于)
+            if (minStack.isEmpty() || minStack.peek() >= x) {
                 minStack.push(x);
             }
         }
 
         public void pop() {
+            if (stack.isEmpty()) {
+                return;
+            }
+
             int x = stack.pop();
 
             if (minStack.peek() == x) {
@@ -67,10 +71,18 @@ public class Offer30 {
         }
 
         public int top() {
+            if (stack.isEmpty()) {
+                return -1;
+            }
+
             return stack.peek();
         }
 
         public int min() {
+            if (minStack.isEmpty()) {
+                return -1;
+            }
+
             return minStack.peek();
         }
     }
@@ -80,43 +92,55 @@ public class Offer30 {
      * 头插法，每次将新节点放在链表头
      * 时间复杂度O(1)，空间复杂度O(n)
      */
-    private static class MinStack2 {
+    static class MinStack2 {
         //头结点
         private Node head;
 
         public MinStack2() {
-            head = new Node(Integer.MAX_VALUE, Integer.MAX_VALUE, null);
+            head = new Node();
+            head.min = Integer.MAX_VALUE;
         }
 
-        public void push(int x) {
-            Node node = new Node(x, Math.min(x, head.min), head);
+        public void push(int value) {
+            Node node = new Node();
+            node.value = value;
+            node.min = Math.min(value, head.min);
+            node.next = head;
             head = node;
         }
 
         public void pop() {
-            Node newHead = head.next;
-            head.next = null;
-            head = newHead;
+            if (head.next == null) {
+                return;
+            }
+
+            Node node = head;
+            head = head.next;
+            node.next = null;
         }
 
         public int top() {
+            if (head.next == null) {
+                return -1;
+            }
+
             return head.value;
         }
 
         public int min() {
+            if (head.next == null) {
+                return -1;
+            }
+
             return head.min;
         }
 
         private static class Node {
-            int value;
-            int min;
-            Node next;
-
-            Node(int value, int min, Node next) {
-                this.value = value;
-                this.min = min;
-                this.next = next;
-            }
+            //当前节点值
+            private int value;
+            //当前节点和之后节点的最小值
+            private int min;
+            private Node next;
         }
     }
 
@@ -124,7 +148,7 @@ public class Offer30 {
      * 只使用一个栈，不使用额外的栈存储当前栈的最小元素
      * 时间复杂度O(1)，空间复杂度O(1)
      */
-    private static class MinStack3 {
+    static class MinStack3 {
         //保存当前元素和最小元素差值的栈
         //因为int类型差值可能会溢出，所以使用long
         private Stack<Long> stack;

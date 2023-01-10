@@ -82,7 +82,7 @@ public class Offer20 {
                 }
 
                 eFlag = true;
-                //出现'e'/'E'之后，将numFlag置位false，因为'e'/'E'之后必须为数字
+                //出现'e'/'E'之后，将numFlag置位false，因为'e'/'E'之后必须出现数字
                 numFlag = false;
             } else if ((c == '+' || c == '-') && (i == 0 || s.charAt(i - 1) == 'e' || s.charAt(i - 1) == 'E')) {
                 //出现'+'/'-'，则要么出现在第一位，要么出现在'e'/'E'的后一位

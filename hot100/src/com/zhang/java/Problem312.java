@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/30 12:06
  * @Author zsy
- * @Description 戳气球 类比Offer60
+ * @Description 戳气球 类比Problem887、Problem375、Offer60
  * 有 n 个气球，编号为0 到 n - 1，每个气球上都标有一个数字，这些数字存在数组 nums 中。
  * 现在要求你戳破所有的气球。戳破第 i 个气球，你可以获得 nums[i - 1] * nums[i] * nums[i + 1] 枚硬币。
  * 这里的 i - 1 和 i + 1 代表和 i 相邻的两个气球的序号。
@@ -32,7 +32,7 @@ public class Problem312 {
 
     /**
      * 动态规划
-     * dp[i][j]：将temp[i]-temp[j]之内的气球全部戳完能得到的最多硬币
+     * dp[i][j]：temp[i]-temp[j]之内的气球全部戳完能得到的最多硬币
      * dp[i][j] = max(dp[i][k] + dp[k][j] + nums[i] * nums[k] * nums[j]) (i < k < j)
      * 时间复杂度O(n^3)，空间复杂度O(n^2)
      *
@@ -53,17 +53,17 @@ public class Problem312 {
             temp[i + 1] = nums[i];
         }
 
-        //dp[i][j]：将区间(i,j)(即第i个气球和第j个气球)之内的气球全部戳完能得到的最多硬币
+        //dp[i][j]：temp[i]-temp[j]之内的气球全部戳完能得到的最多硬币
         int[][] dp = new int[temp.length][temp.length];
 
         //区间长度i
         for (int i = 3; i <= temp.length; i++) {
             //区间起始位置j
             for (int j = 0; j <= temp.length - i; j++) {
-                //区间(j,j+i-1)之内最后要戳的气球k下标索引
+                //选择区间[j,j+i-1]之内最后要戳的气球k下标索引
                 for (int k = j + 1; k <= j + i - 2; k++) {
                     dp[j][j + i - 1] = Math.max(dp[j][j + i - 1],
-                            dp[j][k] + dp[k][j + i - 1] + temp[j] * temp[k] * temp[j + i - 1]);
+                            temp[j] * temp[k] * temp[j + i - 1] + dp[j][k] + dp[k][j + i - 1]);
                 }
             }
         }

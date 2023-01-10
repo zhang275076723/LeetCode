@@ -113,7 +113,7 @@ public class Offer33 {
             rightIndex++;
         }
 
-        //index之后节点值都比根节点值要大
+        //[rightIndex+1,right-1]为右子树的值，均比根节点值要大
         for (int i = rightIndex + 1; i < right; i++) {
             if (postorder[i] < postorder[right]) {
                 return false;

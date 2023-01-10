@@ -48,7 +48,7 @@ public class Problem389 {
 
         //遍历t，对t中每个字符判断是否存在于map中，如果不存在，即找到，如果存在，当前字符次数减1
         for (char c : t.toCharArray()) {
-            //map中没有字符c，或者map中字符c的个数为0，说明当前字符c就是t中被添加的字符
+            //map中没有字符c，或者map中字符c的个数为0，说明当前字符c就是t中被添加的字符，即不同的字符
             if (!map.containsKey(c) || map.get(c) == 0) {
                 return c;
             }

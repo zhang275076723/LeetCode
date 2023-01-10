@@ -4,7 +4,7 @@ package com.zhang.java;
 import java.util.*;
 
 /**
- * @Date 2022/12/14 08:48
+ * @Date 2023/1/4 08:51
  * @Author zsy
  * @Description 二叉搜索树迭代器 类比Problem94、Problem450、Problem700、Problem701 迭代器类比Problem284
  * 实现一个二叉搜索树迭代器类BSTIterator ，表示一个按中序遍历二叉搜索树（BST）的迭代器：

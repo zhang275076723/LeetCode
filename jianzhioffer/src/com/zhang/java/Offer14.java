@@ -45,6 +45,7 @@ public class Offer14 {
         for (int i = 2; i <= n; i++) {
             //减掉长度为j的一段
             for (int j = 1; j < i; j++) {
+                //dp[i - j] * j：绳子剪为至少3段，(i - j) * j：绳子剪为2段
                 dp[i] = Math.max(dp[i], Math.max(dp[i - j] * j, (i - j) * j));
             }
         }

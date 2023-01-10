@@ -48,11 +48,13 @@ public class Offer31 {
         }
 
         Stack<Integer> stack = new Stack<>();
+        //popped数组指针
         int j = 0;
 
         for (int i = 0; i < pushed.length; i++) {
             stack.push(pushed[i]);
 
+            //栈顶元素和popped[j]相等，则说明入栈和出栈顺序匹配，栈顶元素出栈，popped指针j后移
             while (!stack.isEmpty() && stack.peek() == popped[j]) {
                 stack.pop();
                 j++;

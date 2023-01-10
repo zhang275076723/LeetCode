@@ -50,8 +50,8 @@ public class Problem234 {
         }
 
         //得到的两个链表头结点
-        ListNode node1;
-        ListNode node2 = slow.next;
+        ListNode head1;
+        ListNode head2 = slow.next;
 
         //断开链表，根据fast决定前半部分链表是否包括slow所指向的节点
         if (fast.next == null) {
@@ -61,10 +61,14 @@ public class Problem234 {
         }
 
         //反转前半部分链表
-        node1 = reverse(head);
+        head1 = reverse(head);
 
-        //两链表比较，判断是否是回文链表
+        ListNode node1 = head1;
+        ListNode node2 = head2;
+
+        //两链表中节点依次比较，判断是否是回文链表
         while (node1 != null && node2 != null) {
+            //档两个链表当前节点值不同，则不是回文链表，返回false
             if (node1.val != node2.val) {
                 return false;
             }

@@ -68,7 +68,7 @@ public class Problem284 {
 
         @Override
         public Integer next() {
-            int temp = nextValue;
+            Integer temp = nextValue;
 
             //更新下一个元素
             if (iterator.hasNext()) {

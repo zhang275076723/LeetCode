@@ -69,7 +69,7 @@ public class Problem29 {
             sign = -1;
         }
 
-        //除数和被除数转化为负数进行相除，避免溢出
+        //除数和被除数都转为负数进行相除，避免溢出
         if (dividend > 0) {
             dividend = -dividend;
         }
@@ -91,12 +91,12 @@ public class Problem29 {
             //如果大于等于，则result加上bit，dividend减去bit*divisor
             //(bit << 1) * divisor < 0，避免相乘时int溢出
             while ((bit << 1) * divisor < 0 && (bit << 1) * divisor >= dividend) {
-                //bit在int表示的范围之内最大值为2^30，如果再往左移一位，则变为负数溢出
+                bit = bit << 1;
+
+                //bit在int表示的范围之内最大值为2^30，如果再往左移一位，则溢出变为负数
                 if (bit == (1 << 30)) {
                     break;
                 }
-
-                bit = bit << 1;
             }
 
             //dividend减去bit*divisor

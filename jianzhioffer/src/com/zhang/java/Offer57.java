@@ -124,7 +124,7 @@ public class Offer57 {
     }
 
     /**
-     * 滑动窗口，双指针
+     * 双指针
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums

@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/3/29 15:59
  * @Author zsy
- * @Description 最长不含重复字符的子字符串 同Problem3
+ * @Description 最长不含重复字符的子字符串 滑动窗口类比Problem3、Problem76、Problem209、Problem438、Problem567、Offer57_2、Offer59 同Problem3
  * 请从字符串中找出一个最长的不包含重复字符的子字符串，计算该最长子字符串的长度。
  * <p>
  * 输入: "abcabcbb"
@@ -49,25 +49,28 @@ public class Offer48 {
             return 0;
         }
 
-        //当前字符在字符串中最后一次出现的索引下标
+        //当前字符在字符串中上次出现的索引下标
         Map<Character, Integer> map = new HashMap<>();
         int[] dp = new int[s.length()];
         int max = 1;
 
+        //初始化，第一个字符放入map中
         map.put(s.charAt(0), 0);
         dp[0] = 1;
 
         for (int i = 1; i < s.length(); i++) {
             char c = s.charAt(i);
-            int j = map.getOrDefault(c, -1);
+            //当前字符c上次出现的下标索引
+            int index = map.getOrDefault(c, -1);
 
-            if (i - j > dp[i - 1]) {
-                dp[i] = dp[i - 1] + 1;
+            if (i - index <= dp[i - 1]) {
+                dp[i] = i - index;
             } else {
-                dp[i] = i - j;
+                dp[i] = dp[i - 1] + 1;
             }
 
             max = Math.max(max, dp[i]);
+            //更新当前字符c上次出现的索引下标
             map.put(c, i);
         }
 
@@ -75,7 +78,7 @@ public class Offer48 {
     }
 
     /**
-     * 动态规划优化
+     * 动态规划优化，使用滚动数组
      * 使用哈希表，在O(1)时间内找到s[i]之前相同字符的索引下标
      * 时间复杂度O(n)，空间复杂度O(|Σ|)，|Σ|=128，ascii码
      *
@@ -87,23 +90,26 @@ public class Offer48 {
             return 0;
         }
 
-        //当前字符在字符串中最后一次出现的索引下标
+        //当前字符在字符串中上次出现的索引下标
         Map<Character, Integer> map = new HashMap<>();
+        //初始化，第一个字符放入map中
         map.put(s.charAt(0), 0);
         int dp = 1;
         int max = 1;
 
         for (int i = 1; i < s.length(); i++) {
             char c = s.charAt(i);
-            int j = map.getOrDefault(c, -1);
+            //当前字符c上次出现的下标索引
+            int index = map.getOrDefault(c, -1);
 
-            if (i - j > dp) {
-                dp++;
+            if (i - index <= dp) {
+                dp = i - index;
             } else {
-                dp = i - j;
+                dp++;
             }
 
             max = Math.max(max, dp);
+            //更新当前字符c上次出现的索引下标
             map.put(c, i);
         }
 
@@ -125,19 +131,23 @@ public class Offer48 {
         int max = 1;
         int left = 0;
         int right = 0;
-        //当前字符在字符串中最后一次出现的索引下标
+        //当前字符在字符串中上次出现的索引下标
         Map<Character, Integer> map = new HashMap<>();
 
         while (right < s.length()) {
             char c = s.charAt(right);
+            //当前字符c上次出现的下标索引
+            int index = map.getOrDefault(c, -1);
 
-            //左指针右移
-            if (map.containsKey(c) && left <= map.get(c)) {
-                left = map.get(c) + 1;
+            //当前字符c上次出现的下标索引大于等于左指针left时，左指针右移，变为index+1
+            if (index >= left) {
+                left = index + 1;
             }
 
+            //更新当前字符c上次出现的索引下标
             map.put(c, right);
             max = Math.max(max, right - left + 1);
+            //右指针右移
             right++;
         }
 

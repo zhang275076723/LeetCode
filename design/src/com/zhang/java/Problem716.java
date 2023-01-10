@@ -50,14 +50,10 @@ public class Problem716 {
      * 另一个栈作为单调递增栈，保存当前最大元素
      */
     static class MaxStack {
-        /**
-         * 保存元素的栈
-         */
+        //保存元素的栈
         private final Stack<Integer> stack;
 
-        /**
-         * 单调递增栈，保存当前最大元素
-         */
+        //保存当前最大元素的栈，单调递增栈
         private final Stack<Integer> maxStack;
 
         public MaxStack() {
@@ -68,7 +64,7 @@ public class Problem716 {
         public void push(int x) {
             stack.push(x);
 
-            //等于号，考虑连续当前栈中最大元素和入栈元素相等的情况
+            //maxStack为空，或maxStack栈顶元素小于等于当前元素x，x入maxStack栈(必须是小于等于)
             if (maxStack.isEmpty() || maxStack.peek() <= x) {
                 maxStack.push(x);
             }
@@ -80,9 +76,11 @@ public class Problem716 {
             }
 
             int x = stack.pop();
+
             if (maxStack.peek() == x) {
                 maxStack.pop();
             }
+
             return x;
         }
 
@@ -108,7 +106,8 @@ public class Problem716 {
             }
 
             int max = maxStack.pop();
-            //临时栈中保存最大元素上面的元素
+
+            //临时栈中保存stack栈中最大元素上面的元素
             Stack<Integer> tempStack = new Stack<>();
 
             while (stack.peek() != max) {

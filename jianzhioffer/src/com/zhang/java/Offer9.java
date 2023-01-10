@@ -34,8 +34,9 @@ public class Offer9 {
      * 使用两个栈，一个出栈，一个入栈
      */
     public static class CQueue {
+        //元素入栈存放的栈
         private final Stack<Integer> stack1;
-
+        //stack1中元素出栈存放的栈
         private final Stack<Integer> stack2;
 
         public CQueue() {

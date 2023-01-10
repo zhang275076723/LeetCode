@@ -72,6 +72,7 @@ public class Problem214 {
             return "";
         }
 
+        //主串p、模式串s
         String p = new StringBuilder(s).reverse().toString();
         int[] next = getNext(s);
         //主串p指针
@@ -143,11 +144,11 @@ public class Problem214 {
         int[] next = new int[p.length()];
         //当前字符串索引
         int i;
-        //当前相同的最长前缀和后缀长度
+        //当前字符串相同的最长前缀和后缀长度
         int j = 0;
 
         for (i = 1; i < p.length(); i++) {
-            //当p[i]和p[j]不相等时，j指针前移
+            //当p[i]和p[j]不相等时，j指针右移
             while (j > 0 && p.charAt(i) != p.charAt(j)) {
                 j = next[j - 1];
             }

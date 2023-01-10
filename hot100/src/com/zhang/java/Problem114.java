@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/2 9:42
  * @Author zsy
- * @Description 二叉树展开为链表 类比Offer36
+ * @Description 二叉树展开为链表 二叉树和链表之间转化类比Problem430、Offer36
  * 给你二叉树的根结点 root ，请你将它展开为一个单链表：
  * 展开后的单链表应该同样使用 TreeNode ，其中 right 子指针指向链表中下一个结点，而左子指针始终为 null 。
  * 展开后的单链表应该与二叉树 先序遍历 顺序相同。
@@ -60,7 +60,8 @@ public class Problem114 {
     }
 
     /**
-     * 找当前节点左子树的最右下节点，将当前节点的右子树作为最右下节点的右子树，再将当前节点的左子树作为当前节点的右子树
+     * 根据前序遍历性质，在前序遍历过程中，左子树中最右下节点的下一个遍历到节点是右子树根节点，
+     * 所以找当前节点左子树的最右下节点，将当前节点的右子树作为最右下节点的右子树，再将当前节点的左子树作为当前节点的右子树
      * <     1                1        1            1            1
      * <    / \              /          \            \            \
      * <   2   5     =>     2     =>     2     =>     2     =>     2
@@ -84,16 +85,20 @@ public class Problem114 {
         TreeNode node = root;
 
         while (node != null) {
-            if (node.left != null){
-                //当前节点左子树的最右下节点
-                TreeNode mostRightNode = node.left;
+            //当前节点左子树的最右下节点
+            TreeNode mostRightNode = node.left;
 
+            if (node.left != null) {
+                //找当前节点左子树的最右下节点
                 while (mostRightNode.right != null) {
                     mostRightNode = mostRightNode.right;
                 }
 
+                //当前节点左子树的最右下节点的右指针指向当前节点的右子树
                 mostRightNode.right = node.right;
+                //将当前节点的左子树作为右子树
                 node.right = node.left;
+                //当前节点的左子树为空
                 node.left = null;
             }
 

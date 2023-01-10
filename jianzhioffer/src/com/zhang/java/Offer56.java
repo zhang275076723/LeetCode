@@ -46,7 +46,7 @@ public class Offer56 {
         int index = 0;
 
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            if (entry.getValue() == 0) {
+            if (entry.getValue() == 1) {
                 result[index] = entry.getKey();
                 index++;
             }
@@ -56,7 +56,7 @@ public class Offer56 {
     }
 
     /**
-     * 位运算，不需要额外的空间，就要想到位运算
+     * 位运算，不使用额外的空间，就要想到位运算
      * a ^ 0 = a
      * a ^ a = 0
      * a ^ b = c  ==>  a ^ b ^ b = c ^ b  ==>  b ^ c = a
@@ -87,6 +87,7 @@ public class Offer56 {
         int result1 = 0;
         int result2 = 0;
 
+        //根据bit位将不同的两个数分开
         for (int num : nums) {
             if ((num & bit) == 0) {
                 result1 = result1 ^ num;

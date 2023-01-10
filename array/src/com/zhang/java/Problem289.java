@@ -113,7 +113,7 @@ public class Problem289 {
                 for (int k = 0; k < direction.length; k++) {
                     if (i + direction[k][0] >= 0 && i + direction[k][0] < board.length &&
                             j + direction[k][1] >= 0 && j + direction[k][1] < board[0].length) {
-                        //周围细胞本来就是活细胞
+                        //周围细胞本来就是活细胞，包括一直是活细胞，和由活细胞变死细胞
                         if (board[i + direction[k][0]][j + direction[k][1]] == 1 ||
                                 board[i + direction[k][0]][j + direction[k][1]] == 3) {
                             aliveCount++;
