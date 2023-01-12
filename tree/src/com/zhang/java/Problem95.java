@@ -84,7 +84,7 @@ public class Problem95 {
 
             for (TreeNode leftNode : leftNodes) {
                 for (TreeNode rightNode : rightNodes) {
-                    //i作为根节点值
+                    //i作为根节点
                     TreeNode root = new TreeNode(i);
                     root.left = leftNode;
                     root.right = rightNode;

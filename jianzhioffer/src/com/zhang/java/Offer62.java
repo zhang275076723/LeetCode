@@ -49,11 +49,13 @@ public class Offer62 {
         //当前要删除的元素索引
         int index = 0;
 
+        //移除n-1次list中元素
         for (int i = 0; i < n - 1; i++) {
             index = (index + m - 1) % list.size();
             list.remove(index);
         }
 
+        //list中最后剩余的元素，即为最后一个数字
         return list.get(0);
     }
 

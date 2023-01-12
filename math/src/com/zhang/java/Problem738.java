@@ -27,8 +27,8 @@ public class Problem738 {
 
     /**
      * 模拟
-     * 从左往右遍历，找第一个nums[i]>nums[i+1]的元素，再往前找和nums[i]连续相等的元素，找到最前面第一个与nums[i]相等的nums[j]，
-     * nums[j]减1，之后元素均赋值为9
+     * 从左往右遍历，找到从nums[0]开始的递增数组nums[0]-nums[i]，再往前找和nums[i]连续相等的第一个元素nums[j]，
+     * nums[j]减1，nums[j]之后所有元素均赋值为9
      * 时间复杂度O(logn)，空间复杂度O(logn)
      *
      * @param n
@@ -43,6 +43,7 @@ public class Problem738 {
 
         int i = 0;
 
+        //找从nums[0]开始的递增数组nums[0]-nums[i]
         while (i < nums.length - 1 && nums[i] <= nums[i + 1]) {
             i++;
         }
@@ -52,14 +53,15 @@ public class Problem738 {
             return n;
         }
 
+        //往前找和nums[i]连续相等的第一个元素nums[j]
         while (i > 0 && nums[i] == nums[i - 1]) {
             i--;
         }
 
-        //第一个nums[i]减1
+        //第一个元素nums[i]减1
         nums[i]--;
 
-        //nums[i]之后元素均为9
+        //nums[i]之后所有元素均赋值为9
         for (int j = i + 1; j < nums.length; j++) {
             nums[j] = '9';
         }

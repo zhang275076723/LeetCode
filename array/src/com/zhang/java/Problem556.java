@@ -25,7 +25,7 @@ public class Problem556 {
 
     /**
      * 模拟
-     * 将数字n转化为数组，从右往左遍历，找最长递减序列，将最长递减序列翻转，
+     * 将数字n转化为数组，从右往左遍历，找最长递减序列，将最长递减序列翻转，成为单调递增序列
      * 最长递减序列的前一个元素和序列中第一个大于当前元素进行交换
      * 时间复杂度O(logn)，空间复杂度O(logn)
      *
@@ -37,16 +37,17 @@ public class Problem556 {
 
         int i = nums.length - 1;
 
+        //找最长递减序列
         while (i > 0 && nums[i - 1] >= nums[i]) {
             i--;
         }
 
-        //nums为递减序列，没有下一个更大元素，返回-1
+        //nums整体为递减序列，即n是单调递减，没有下一个更大元素，返回-1
         if (i == 0) {
             return -1;
         }
 
-        //翻转递减序列
+        //翻转递减序列，成为单调递增序列
         reverse(nums, i, nums.length - 1);
 
         //递减序列的前一个元素下标索引
@@ -65,7 +66,7 @@ public class Problem556 {
         int result = 0;
 
         for (char num : nums) {
-            //溢出处理
+            //溢出处理，有可能n在int范围，但比n大的下一个元素不在int范围
             if (result > Integer.MAX_VALUE / 10 ||
                     (result == Integer.MAX_VALUE / 10 && (num - '0') > Integer.MAX_VALUE % 10)) {
                 return -1;

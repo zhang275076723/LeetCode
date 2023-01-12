@@ -25,8 +25,8 @@ public class Offer32_3 {
     }
 
     /**
-     * 使用size统计树每行元素的个数
-     * 存储标志确定存储正序或反序
+     * bfs
+     * 使用size记录树中每层元素的个数，使用标志位确定树中每层元素是首添加还是尾添加
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -40,34 +40,36 @@ public class Offer32_3 {
         List<List<Integer>> result = new ArrayList<>();
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
-        //反转标志，1-正序，-1-逆序
-        int flag = 1;
+        //标志位，1：尾添加，-1：首添加
+        int sign = 1;
 
         while (!queue.isEmpty()) {
-            List<Integer> list = new ArrayList<>();
+            //方便首尾添加
+            LinkedList<Integer> list = new LinkedList<>();
+            //当前层元素的个数
             int size = queue.size();
 
-            while (size > 0) {
+            for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
-                size--;
 
-                if (flag == 1) {
-                    //尾添加
-                    list.add(node.val);
+                //尾添加
+                if (sign == 1) {
+                    list.addLast(node.val);
                 } else {
                     //首添加
-                    list.add(0, node.val);
+                    list.addFirst(node.val);
                 }
 
                 if (node.left != null) {
                     queue.offer(node.left);
                 }
+
                 if (node.right != null) {
                     queue.offer(node.right);
                 }
             }
 
-            flag = -flag;
+            sign = -sign;
             result.add(list);
         }
 

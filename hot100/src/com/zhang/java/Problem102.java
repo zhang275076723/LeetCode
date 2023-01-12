@@ -30,7 +30,8 @@ public class Problem102 {
     }
 
     /**
-     * bfs，使用size统计树每行元素的个数
+     * bfs
+     * 使用size记录树中每层元素的个数
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -47,16 +48,17 @@ public class Problem102 {
 
         while (!queue.isEmpty()) {
             List<Integer> list = new ArrayList<>();
+            //当前层元素的个数
             int size = queue.size();
 
-            while (size > 0) {
+            for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
-                size--;
                 list.add(node.val);
 
                 if (node.left != null) {
                     queue.offer(node.left);
                 }
+
                 if (node.right != null) {
                     queue.offer(node.right);
                 }

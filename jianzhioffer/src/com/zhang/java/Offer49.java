@@ -24,7 +24,7 @@ public class Offer49 {
      * 动态规划，三指针
      * 要点：一个丑数乘上2、3、5也是丑数
      * dp[i]：第i+1个丑数
-     * dp[l] = min(dp[i]*2,dp[j]*3,dp[k]*5) (i,j,k < l)
+     * dp[m] = min(dp[i]*2,dp[j]*3,dp[k]*5) (i,j,k < m)
      * 当前丑数数组乘上2、3、5也是丑数，所以根据前面的丑数可以得到当前的丑数
      * 三个指针分别指向当前丑数数组的下标索引，分别乘上2、3、5，取最小值，即为当前丑数
      * 1, 2, 3, 4, 5, 6, 8, 9, 10, 12是前10个丑数
@@ -51,10 +51,10 @@ public class Offer49 {
         int j = 0;
         int k = 0;
 
-        for (int l = 1; l < n; l++) {
-            //三者最小值即为当前丑数
+        for (int m = 1; m < n; m++) {
+            //三个指针对应元素乘上相应的2、3、5，得到的值中最小值即为当前丑数
             int curUgly = Math.min(ugly[i] * 2, Math.min(ugly[j] * 3, ugly[k] * 5));
-            ugly[l] = curUgly;
+            ugly[m] = curUgly;
 
             //指针后移
             if (curUgly == ugly[i] * 2) {

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/27 8:25
  * @Author zsy
- * @Description 平衡二叉树 类比Problem104、Problem111、Problem124、Problem543 同Offer55_2
+ * @Description 平衡二叉树 dfs类比Problem104、Problem111、Problem124、Problem337、Problem543 同Offer55_2
  * 给定一个二叉树，判断它是否是高度平衡的二叉树(AVL)。
  * 本题中，一棵高度平衡二叉树定义为：
  * 一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1 。
@@ -48,12 +48,12 @@ public class Problem110 {
             return true;
         }
 
-        nodeHeight(root);
+        getHeight(root);
 
         return isBalanced;
     }
 
-    private int nodeHeight(TreeNode root) {
+    private int getHeight(TreeNode root) {
         if (root == null) {
             return 0;
         }
@@ -63,9 +63,10 @@ public class Problem110 {
             return -1;
         }
 
-        int leftHeight = nodeHeight(root.left);
-        int rightHeight = nodeHeight(root.right);
+        int leftHeight = getHeight(root.left);
+        int rightHeight = getHeight(root.right);
 
+        //当前节点左子树的高度和右子树的高度之差超过1，则不是平衡二叉树
         if (Math.abs(leftHeight - rightHeight) > 1) {
             isBalanced = false;
         }

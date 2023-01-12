@@ -97,10 +97,10 @@ public class Problem204 {
     }
 
     /**
-     * 动态规划 埃氏筛
-     * 质数：在大于 1 的自然数中，除了 1 和该数自身外，无法被其他自然数整除的数
-     * dp[i]：数字是否是质数
-     * 如果dp[i] = true，则dp[i*2] = dp[i*3] = ... = dp[i*n] = false (如果i是质数，则i的倍数都不是质数)
+     * 动态规划，埃氏筛
+     * 质数：大于1的自然数中，除了1和该数本身外，无法被其他自然数整除的数
+     * dp[i]：数字i是否是质数
+     * 如果dp[i] = true，则dp[i*2] = dp[i*3] = ... = dp[i*n] = false (如果i是质数，则i的倍数表示的数都不是质数)
      * 时间复杂度O(nloglogn)，空间复杂度O(n)
      *
      * @param n
@@ -114,25 +114,22 @@ public class Problem204 {
         //dp[i]是否是质数
         boolean[] dp = new boolean[n];
 
+        //初始化每个数都是质数
         for (int i = 2; i < n; i++) {
             dp[i] = true;
-        }
-
-        for (int i = 2; i < n; i++) {
-            //i是质数，则i的倍数都不是质数
-            if (dp[i]) {
-                //从i*i开始遍历，因为i*2、i*3...在之前遍历2、3...时已经置为非质数false
-                for (int j = i; (long) i * j < n; j++) {
-                    dp[i * j] = false;
-                }
-            }
         }
 
         int count = 0;
 
         for (int i = 2; i < n; i++) {
+            //如果i是质数，则i的倍数表示的数都不是质数
             if (dp[i]) {
                 count++;
+
+                //从i*i开始遍历，因为i*2、i*3...在之前遍历2、3...时已经置为非质数false
+                for (int j = i; (long) i * j < n; j++) {
+                    dp[i * j] = false;
+                }
             }
         }
 

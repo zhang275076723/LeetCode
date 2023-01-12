@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2021/11/25 10:05
  * @Author zsy
- * @Description 长度最小的子数组 滑动窗口类比Problem3、Problem76、Problem438、Problem567、Offer48、Offer57_2、Offer59 前缀和类比Problem437、Problem560、Offer57_2
+ * @Description 长度最小的子数组 滑动窗口类比Problem3、Problem76、Problem239、Problem438、Problem567、Offer48、Offer57_2、Offer59 前缀和类比Problem437、Problem560、Offer57_2
  * 给定一个含有n个正整数的数组和一个正整数target
  * 找出该数组中满足其和 ≥ target的长度最小的连续子数组，并返回其长度。如果不存在符合条件的子数组，返回0
  * 注意：涉及连续子数组问题，一：考虑前缀和；二：考虑滑动窗口

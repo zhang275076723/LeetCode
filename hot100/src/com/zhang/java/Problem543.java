@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/12 9:43
  * @Author zsy
- * @Description 二叉树的直径 类比Problem104、Problem110 类比Problem111、Problem124、Problem337
+ * @Description 二叉树的直径 dfs类比Problem104、Problem110、Problem111、Problem124、Problem337
  * 给定一棵二叉树，你需要计算它的直径长度。一棵二叉树的直径长度是任意两个结点路径长度中的最大值。
  * 这条路径可能穿过也可能不穿过根结点。
  * <p>
@@ -23,7 +23,7 @@ public class Problem543 {
     /**
      * 二叉树的直径长度
      */
-    private int max = 0;
+    private int diameter = 0;
 
     public static void main(String[] args) {
         Problem543 problem543 = new Problem543();
@@ -46,7 +46,8 @@ public class Problem543 {
         }
 
         dfs(root);
-        return max;
+
+        return diameter;
     }
 
     private int dfs(TreeNode root) {
@@ -60,7 +61,7 @@ public class Problem543 {
         int rightMax = dfs(root.right);
 
         //更新二叉树的直径长度
-        max = Math.max(max, leftMax + rightMax);
+        diameter = Math.max(diameter, leftMax + rightMax);
 
         //返回当前节点对父节点的路径长度
         return Math.max(leftMax, rightMax) + 1;

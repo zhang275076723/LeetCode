@@ -38,12 +38,12 @@ public class Offer55_2 {
             return true;
         }
 
-        nodeHeight(root);
+        getHeight(root);
 
         return isBalanced;
     }
 
-    private int nodeHeight(TreeNode root) {
+    private int getHeight(TreeNode root) {
         if (root == null) {
             return 0;
         }
@@ -53,9 +53,10 @@ public class Offer55_2 {
             return -1;
         }
 
-        int leftHeight = nodeHeight(root.left);
-        int rightHeight = nodeHeight(root.right);
+        int leftHeight = getHeight(root.left);
+        int rightHeight = getHeight(root.right);
 
+        //当前节点左子树的高度和右子树的高度之差超过1，则不是平衡二叉树
         if (Math.abs(leftHeight - rightHeight) > 1) {
             isBalanced = false;
         }

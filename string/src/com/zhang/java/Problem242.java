@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * @Date 2023/1/10 08:53
  * @Author zsy
- * @Description 有效的字母异位词 类比Problem49、Problem438
+ * @Description 有效的字母异位词 字母异位词类比Problem49、Problem438
  * 给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的字母异位词。
  * 注意：若 s 和 t 中每个字符出现的次数都相同，则称 s 和 t 互为字母异位词。
  * <p>

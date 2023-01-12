@@ -43,6 +43,7 @@ public class Problem263 {
         }
 
         while (n != 1) {
+            //n如果能被2、3、5整除，则除以2、3、5
             if (n % 5 == 0 || n % 3 == 0 || n % 2 == 0) {
                 while (n % 5 == 0) {
                     n = n / 5;
@@ -56,7 +57,7 @@ public class Problem263 {
                     n = n / 2;
                 }
             } else {
-                //n不能被2、3、5整除，即不是丑数
+                //n不能被2、3、5整除，即不是丑数，返回false
                 return false;
             }
         }

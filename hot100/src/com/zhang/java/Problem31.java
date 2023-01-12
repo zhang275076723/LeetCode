@@ -40,7 +40,7 @@ public class Problem31 {
 
     /**
      * 模拟
-     * 从后往前找到最长的逆序nums[i]-nums[nums.length-1]，按升序排序，
+     * 从后往前找到最长递减序列nums[i]-nums[nums.length-1]，将最长递减序列翻转，成为单调递增序列
      * num[i-1]和nums[i]-nums[nums.length-1]中第一个比num[i-1]大的元素交换，得到下一个排列
      * 时间复杂度O(n)，空间复杂度O(1)
      */
@@ -52,19 +52,20 @@ public class Problem31 {
         //逆序的第一个下标索引
         int j = nums.length - 1;
 
-        //必须是大于等于，不能是大于，需要包含两者相同的情况
+        //找最长递减序列，必须是大于等于，不能是大于，需要包含两者相同的情况
         while (j > 0 && nums[j - 1] >= nums[j]) {
             j--;
         }
 
-        //整个数组为逆序，直接反转数组
+        //整个数组为逆序，即为最大值，下一个排列是最小值，直接反转数组
         if (j == 0) {
             reverse(nums, 0, nums.length - 1);
             return;
         }
 
-        //翻转逆序数组，使之成为正序
+        //翻转递减数组，使之成为递增数组
         reverse(nums, j, nums.length - 1);
+
         //逆序数组之前的一个元素
         int i = j - 1;
 

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/21 7:51
  * @Author zsy
- * @Description 滑动窗口最大值 字节面试题 华为面试题 类比Problem76、Offer59_2 同Offer59
+ * @Description 滑动窗口最大值 字节面试题 华为面试题 类比Offer59_2 滑动窗口类比Problem3、Problem76、Problem209、Problem438、Problem567、Offer48、Offer57_2、Offer59 同Offer59
  * 给你一个整数数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。
  * 你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。
  * 返回 滑动窗口中的最大值 。
@@ -53,10 +53,9 @@ public class Problem239 {
         }
 
         int[] result = new int[nums.length - k + 1];
-        int tempMax;
 
         for (int i = 0; i < result.length; i++) {
-            tempMax = Integer.MIN_VALUE;
+            int tempMax = Integer.MIN_VALUE;
 
             for (int j = i; j < i + k; j++) {
                 if (nums[j] > tempMax) {
@@ -71,8 +70,9 @@ public class Problem239 {
     }
 
     /**
-     * 优先队列，大根堆，每个节点存放当前元素和索引下标
-     * 时间复杂度O(nlogn)，空间复杂度O(n) (最差情况下，数组单调递增，没有元素从优先队列中移除，往优先队列中添加元素为O(logn))
+     * 大根堆
+     * 时间复杂度O(nlogn)，空间复杂度O(n)
+     * (最差情况下，数组单调递增，当前元素入大根堆整堆之后，堆顶元素不需要移除，大根堆最终有n个元素)
      *
      * @param nums
      * @param k
@@ -87,11 +87,11 @@ public class Problem239 {
         PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(new Comparator<int[]>() {
             @Override
             public int compare(int[] arr1, int[] arr2) {
-                //两个节点值不一样，按由大到小排序
+                //两个元素值不同，按由元素值由大到小排序
                 if (arr1[0] != arr2[0]) {
                     return arr2[0] - arr1[0];
                 } else {
-                    //两个节点值一样，按索引由小到大排序
+                    //两个元素值不同，按元素下标索引由小到大排序
                     return arr1[1] - arr2[1];
                 }
             }
@@ -121,7 +121,7 @@ public class Problem239 {
 
     /**
      * 单调队列
-     * 单调递减队列存放由大到小元素对应的索引下标
+     * 单调递减队列存放nums数组中由大到小元素的索引下标
      * 时间复杂度O(n)，空间复杂度O(k)
      *
      * @param nums
@@ -133,16 +133,15 @@ public class Problem239 {
             return new int[0];
         }
 
-        //单调递减队列，存放由大到小元素对应的索引下标
+        //单调递减队列
         Deque<Integer> queue = new LinkedList<>();
 
         for (int i = 0; i < k; i++) {
-            //当前元素不满足单调递减队列要求，则队尾元素出队
-            while (!queue.isEmpty() && nums[i] > nums[queue.peekLast()]) {
+            //队尾元素在数组中表示的值小于当前元素，队尾元素出队
+            while (!queue.isEmpty() && nums[queue.peekLast()]<nums[i]) {
                 queue.pollLast();
             }
 
-            //当前元素入队
             queue.offerLast(i);
         }
 
@@ -150,20 +149,17 @@ public class Problem239 {
         result[0] = nums[queue.peekFirst()];
 
         for (int i = k; i < nums.length; i++) {
-            //单调递减队列队首元素不在滑动窗口范围内，则队首元素出队
-            while (!queue.isEmpty() && queue.peekFirst() < i - k + 1) {
+            //列首元素索引下标超出当前滑动窗口范围，则出队
+            if (queue.peekFirst() <= i - k) {
                 queue.pollFirst();
             }
 
-            //当前元素不满足单调递减队列要求，则队尾元素出队
+            //队尾元素在数组中表示的值小于当前元素，队尾元素出队
             while (!queue.isEmpty() && nums[i] > nums[queue.peekLast()]) {
                 queue.pollLast();
             }
 
-            //当前元素入队
             queue.offerLast(i);
-
-            //滑动窗口的最大值为单调递减队列的队首元素索引对应的值
             result[i - k + 1] = nums[queue.peekFirst()];
         }
 
