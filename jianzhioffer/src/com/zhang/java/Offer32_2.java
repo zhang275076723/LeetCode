@@ -22,8 +22,9 @@ public class Offer32_2 {
     }
 
     /**
-     * 使用size记录数每行元素的个数
-     *  时间复杂度O(n)，空间复杂度O(n)
+     * bfs
+     * 使用size记录树中每层元素的个数
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
@@ -38,17 +39,18 @@ public class Offer32_2 {
         queue.offer(root);
 
         while (!queue.isEmpty()) {
-            int size = queue.size();
             List<Integer> list = new ArrayList<>();
+            //当前层元素的个数
+            int size = queue.size();
 
-            while (size > 0) {
+            for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
-                size--;
                 list.add(node.val);
 
                 if (node.left != null) {
                     queue.offer(node.left);
                 }
+
                 if (node.right != null) {
                     queue.offer(node.right);
                 }

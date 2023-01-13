@@ -31,20 +31,20 @@ public class Problem485 {
      * @return
      */
     public int findMaxConsecutiveOnes(int[] nums) {
+        int result = 0;
         int left = 0;
         int right = 0;
-        int count = 0;
 
         while (right < nums.length) {
-            if (nums[right] == 1) {
-                count = Math.max(count, right - left + 1);
-                right++;
-            } else {
+            if (nums[right] == 0) {
                 right++;
                 left = right;
+            } else {
+                result = Math.max(result, right - left + 1);
+                right++;
             }
         }
 
-        return count;
+        return result;
     }
 }

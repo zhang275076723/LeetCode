@@ -36,11 +36,11 @@ public class Problem394 {
     }
 
     /**
-     * 双栈，数字栈保存重复的次数，字母串栈保存英文字母
+     * 双栈，数字栈保存当前字符串重复的次数，字符串栈保存当前遍历到的字符串
      * 1、如果遇到数字，则保存连续数字
-     * 2、如果遇到字母，则拼接字符串
-     * 3、如果遇到'['，则将当前数字入数字栈，当前字母串入字符串栈
-     * 4、如果遇到']'，则字符串栈出栈，数字栈出栈，当前字符串栈出栈的字符串拼接该数字栈出栈的次数，拼接到结果字符串之后
+     * 2、如果遇到字符，则拼接字符串
+     * 3、如果遇到'['，则将当前数字入数字栈，当前字符串入字符串栈
+     * 4、如果遇到']'，则字符串栈出栈，数字栈出栈，字符串栈出栈的字符串拼接当前结果字符串数字栈出栈的次数，得到当前结果字符串
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param s
@@ -55,7 +55,7 @@ public class Problem394 {
         Stack<Integer> numStack = new Stack<>();
         //字母串栈
         Stack<String> strStack = new Stack<>();
-        //当前字符串
+        //结果字符串
         StringBuilder sb = new StringBuilder();
         //当前字符串重复的次数
         int num = 0;
@@ -75,11 +75,13 @@ public class Problem394 {
                 numStack.push(num);
                 strStack.push(sb.toString());
 
+                //结果字符串和当前字符串重复的次数重新赋值
                 num = 0;
                 sb = new StringBuilder();
             } else if (c == ']') {
                 //右括号，出栈要重复的次数和重复字符串之前保存的字符串，拼接到当前字符串之后
-                //当前sb需要重复的次数
+
+                //当前字符串需要重复的次数
                 int count = numStack.pop();
                 StringBuilder tempSb = new StringBuilder(strStack.pop());
 
@@ -89,7 +91,7 @@ public class Problem394 {
 
                 sb = tempSb;
             } else {
-                //字母
+                //字符
                 sb.append(c);
             }
         }

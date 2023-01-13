@@ -63,9 +63,11 @@ public class Offer48 {
             //当前字符c上次出现的下标索引
             int index = map.getOrDefault(c, -1);
 
+            //当前字符c在以s[i-1]结尾表示的不重复字符串中出现，则dp[i]=i-index
             if (i - index <= dp[i - 1]) {
                 dp[i] = i - index;
             } else {
+                //当前字符c在以s[i-1]结尾表示的不重复字符串中没有出现，则dp[i]=dp[i-1]+1
                 dp[i] = dp[i - 1] + 1;
             }
 
@@ -102,9 +104,11 @@ public class Offer48 {
             //当前字符c上次出现的下标索引
             int index = map.getOrDefault(c, -1);
 
+            //当前字符c在以s[i-1]结尾表示的不重复字符串中出现，则dp[i]=i-index
             if (i - index <= dp) {
                 dp = i - index;
             } else {
+                //当前字符c在以s[i-1]结尾表示的不重复字符串中没有出现，则dp[i]=dp[i-1]+1
                 dp++;
             }
 

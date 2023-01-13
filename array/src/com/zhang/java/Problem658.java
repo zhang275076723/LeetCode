@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/12/7 09:16
  * @Author zsy
- * @Description 找到 K 个最接近的元素 类比Problem4、Problem378、Problem410、Problem1482、FindMaxArrayMinAfterKMinus
+ * @Description 找到 K 个最接近的元素 类比Problem4、Problem287、Problem378、Problem410、Problem1482、FindMaxArrayMinAfterKMinus
  * 给定一个 排序好 的数组 arr ，两个整数 k 和 x ，从数组中找到最靠近 x（两数之差最小）的 k 个数。
  * 返回的结果必须要是按升序排好的。
  * 整数 a 比整数 b 更接近 x 需要满足：
@@ -78,8 +78,8 @@ public class Problem658 {
 
     /**
      * 双指针
-     * 保留k个元素，即要删除n-k个元素，两个指针分别指向首尾元素，将距离x较远的元素删除
-     * 时间复杂度O(n-k)，空间复杂度O(1)
+     * 保留k个元素，即要删除n-k个元素，两个指针分别指向首尾下标，比较arr[left]和arr[right]哪个离x远，将距离x较远的指针移动
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param arr
      * @param k
@@ -92,7 +92,7 @@ public class Problem658 {
 
         //删除n-k个元素
         for (int i = 0; i < arr.length - k; i++) {
-            //arr[left]和arr[right]相比，arr[right]距离x更远或两者距离相同，右指针左移
+            //arr[left]和arr[right]相比，arr[right]距离x更远或两者距离相同时，右指针左移
             if (x - arr[left] <= arr[right] - x) {
                 right--;
             } else {
@@ -111,7 +111,10 @@ public class Problem658 {
 
     /**
      * 二分查找变形，看到有序数组，就要想到二分查找
-     * 对长度为k+1的区间左边界进行二分查找，判断左边界arr[mid]和右边界arr[mid+k]哪个更接近x，确定删除左边界还是右边界
+     * 对[left,right]进行二分查找，每个元素都表示长度为k+1的区间左边界，left为数组下标索引0，right为数组数组下标索引n-k，
+     * 比较以mid为左边界的区间[mid,mid+k]，两个端点arr[mid]和arr[mid+k]哪个距离x远
+     * 如果x-arr[mid]大于arr[mid+k]-x，则以mid+k为左边界的区间比以mid为左边界的区间更接近x，继续往mid右边寻找区间，left=mid+1；
+     * 如果x-arr[mid]小于等于arr[mid+k]-x，则以mid为左边界的区间是最接近x区间，或以mid为左边界的区间比以mid+k为左边界的区间更接近x，继续往mid左边寻找区间，right=mid
      * 时间复杂度O(log(n-k))，空间复杂度O(1)
      *
      * @param arr
@@ -120,20 +123,20 @@ public class Problem658 {
      * @return
      */
     public List<Integer> findClosestElements3(int[] arr, int k, int x) {
-        //left-right都是长度为k+1的区间左边界
+        //[left,right]都表示的是长度为k+1的区间左边界
         int left = 0;
         int right = arr.length - k;
         int mid;
 
+        //比较以mid为左边界的区间[mid,mid+k]，两个端点arr[mid]和arr[mid+k]哪个距离x远
         while (left < right) {
-            //长度k+1的区间[mid,mid+k]，判断左边界arr[mid]和右边界arr[mid+k]哪个更接近x，确定删除左边界还是右边界
             mid = left + ((right - left) >> 1);
 
-            //右边界arr[mid+k]更接近x，往右边找
+            //以mid+k为左边界的区间比以mid为左边界的区间更接近x，继续往mid右边寻找区间
             if (x - arr[mid] > arr[mid + k] - x) {
                 left = mid + 1;
             } else {
-                //左边界arr[mid+k]更接近x，或左右边界距离x相同，往左边找
+                //以mid为左边界的区间是最接近x区间，或以mid为左边界的区间比以mid+k为左边界的区间更接近x，继续往mid左边寻找区间
                 right = mid;
             }
         }

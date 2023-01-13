@@ -130,7 +130,7 @@ public class Problem140 {
 
     private void backtrack2(int t, Deque<String> deque, String s, boolean[] dp,
                             Set<String> wordDictSet, List<String> result) {
-        //因为是从后往前遍历，当t为0时，即找到一个字符串s的拆分
+        //因为是从后往前遍历，当t为0时，即找到字符串s的一个拆分
         if (t == 0) {
             StringBuilder sb = new StringBuilder();
             for (String word : deque) {
@@ -142,7 +142,7 @@ public class Problem140 {
         }
 
         for (int i = t - 1; i >= 0; i--) {
-            //当s[0]-s[i-1]可以拆分为wordDict中的单词，并且s[i]-s[t-1]是s中单词的时候，才继续查找
+            //当s[0]-s[i-1]可以拆分为wordDict中的单词，并且s[i]-s[t-1]是wordDictSet中单词的时候，才继续查找
             if (dp[i] && wordDictSet.contains(s.substring(i, t))) {
                 //因为是从后往前遍历，所以需要首添加
                 deque.offerFirst(s.substring(i, t));

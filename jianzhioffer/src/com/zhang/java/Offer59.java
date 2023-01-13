@@ -132,7 +132,7 @@ public class Offer59 {
 
         for (int i = 0; i < k; i++) {
             //队尾元素在数组中表示的值小于当前元素，队尾元素出队
-            while (!queue.isEmpty() && nums[queue.peekLast()]<nums[i]) {
+            while (!queue.isEmpty() && nums[queue.peekLast()] < nums[i]) {
                 queue.pollLast();
             }
 

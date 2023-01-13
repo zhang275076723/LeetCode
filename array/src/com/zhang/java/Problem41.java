@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/4/21 10:30
  * @Author zsy
- * @Description 缺失的第一个正数 字节面试题 类比Problem268、Problem287、Problem448、Offer3
+ * @Description 缺失的第一个正数 字节面试题 原地哈希类比Problem268、Problem287、Problem448、Offer3
  * 给你一个未排序的整数数组 nums ，请你找出其中没有出现的最小的正整数。
  * 请你实现时间复杂度为 O(n) 并且只使用常数级别额外空间的解决方案。
  * <p>
@@ -82,18 +82,15 @@ public class Problem41 {
         }
 
         for (int i = 0; i < nums.length; i++) {
+            //当nums[i]为正数，且nums[i]不超过数组能够存放的范围，nums[i]和nums[nums[i]-1]不相等时，才进行交换
             //将数组元素nums[i]放到nums[nums[i]-1]，数组下标nums[i]-1和数组元素nums[i]对应，例如元素3放到下标2
-            //只有nums[i]为正数，且不超过数组能够存放的范围时，才进行交换
             while (nums[i] > 0 && nums[i] <= nums.length && nums[i] != nums[nums[i] - 1]) {
-                //交换时，只能先保存nums[nums[i]-1]，如果先保存nums[i]，对nums[i]的修改会导致无法找到nums[nums[i]-1]
-                int temp = nums[nums[i] - 1];
-                nums[nums[i] - 1] = nums[i];
-                nums[i] = temp;
+                swap(nums, i, nums[i] - 1);
             }
         }
 
         for (int i = 0; i < nums.length; i++) {
-            //找第一个nums[i]和i+1不相等的下标
+            //找第一个nums[i]和i+1不相等的下标索引
             if (nums[i] != i + 1) {
                 return i + 1;
             }
@@ -101,5 +98,11 @@ public class Problem41 {
 
         //数组nums[i]和i+1都相等，则返回nums.length+1
         return nums.length + 1;
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 }

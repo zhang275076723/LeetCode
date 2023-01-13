@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/11/12 10:54
  * @Author zsy
- * @Description 丢失的数字 类比Problem41、Problem287、Problem448、Offer3
+ * @Description 丢失的数字 原地哈希类比Problem41、Problem287、Problem448、Offer3
  * 给定一个包含 [0, n] 中 n 个数的数组 nums ，找出 [0, n] 这个范围内没有出现在数组中的那个数。
  * <p>
  * 输入：nums = [3,0,1]
@@ -36,6 +36,8 @@ public class Problem268 {
         int[] nums = {3, 0, 1};
         System.out.println(problem268.missingNumber(nums));
         System.out.println(problem268.missingNumber2(nums));
+        System.out.println(problem268.missingNumber3(nums));
+        System.out.println(problem268.missingNumber4(nums));
     }
 
     /**
@@ -67,7 +69,7 @@ public class Problem268 {
     }
 
     /**
-     * 原地哈希表
+     * 原地哈希
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -79,20 +81,76 @@ public class Problem268 {
         }
 
         for (int i = 0; i < nums.length; i++) {
-            while (nums[i] < nums.length && i != nums[i]) {
-                //temp必须保存nums[nums[i]]，如果保存nums[i]，则对nums[i]修改导致无法正确找到nums[nums[i]]
-                int temp = nums[nums[i]];
-                nums[nums[i]] = nums[i];
-                nums[i] = temp;
+            //当nums[i]小于n，nums[i]和nums[nums[i]]不相等时，才进行交换
+            while (nums[i] < nums.length && nums[i] != nums[nums[i]]) {
+                swap(nums, i, nums[i]);
             }
         }
 
         for (int i = 0; i < nums.length; i++) {
+            //找第一个nums[i]和i不相等的下标索引
             if (i != nums[i]) {
                 return i;
             }
         }
 
+        //数组nums[i]和i都相等，则返回nums.length
         return nums.length;
+    }
+
+    /**
+     * 数学
+     * 0-n之和为n*(n+1)/2，减去数组中的元素，即得到缺失的那个数
+     * 时间复杂度O(n)，空间复杂度O(1)
+     *
+     * @param nums
+     * @return
+     */
+    public int missingNumber3(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+
+        int result = nums.length * (nums.length + 1) / 2;
+
+        for (int num : nums) {
+            result = result - num;
+        }
+
+        return result;
+    }
+
+    /**
+     * 位运算
+     * 0-n中缺失了一个数，数组元素和0-n分别进行异或，得到的结果就是缺失的那个数
+     * 时间复杂度O(n)，空间复杂度O(1)
+     *
+     * @param nums
+     * @return
+     */
+    public int missingNumber4(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+
+        int result = 0;
+
+        //0-n都进行异或
+        for (int i = 0; i <= nums.length; i++) {
+            result = result ^ i;
+        }
+
+        //数组中每个元素进行异或
+        for (int num : nums) {
+            result = result ^ num;
+        }
+
+        return result;
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 }

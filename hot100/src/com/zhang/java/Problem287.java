@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/5/26 10:15
  * @Author zsy
- * @Description 寻找重复数 美团面试题 原地哈希类比Problem41、Problem268、Problem448、Offer3 循环链表找环类比Problem141、Problem142
+ * @Description 寻找重复数 美团面试题 原地哈希类比Problem41、Problem268、Problem448、Offer3 循环链表找环类比Problem141、Problem142 二分查找类比Problem4、Problem378、Problem410、Problem658、Problem1482、FindMaxArrayMinAfterKMinus
  * 给定一个包含n + 1 个整数的数组nums ，其数字都在[1, n]范围内（包括 1 和 n），可知至少存在一个重复的整数。
  * 假设 nums 只有 一个重复的整数 ，返回 这个重复的数 。
  * 你设计的解决方案必须 不修改 数组 nums 且只用常量级 O(1) 的额外空间。
@@ -70,12 +70,11 @@ public class Problem287 {
         }
 
         for (int i = 0; i < nums.length; i++) {
+            //当nums[i]和nums[nums[i]-1]不相等时，元素进行交换
             while (nums[i] != nums[nums[i] - 1]) {
-                //交换时，只能用temp保存nums[nums[i]-1]，如果先保存nums[i]，对nums[i]的修改会导致无法找到nums[nums[i]-1]
-                int temp = nums[nums[i] - 1];
-                nums[nums[i] - 1] = nums[i];
-                nums[i] = temp;
+                swap(nums, i, nums[i] - 1);
             }
+
             //当前nums[i]不在数组索引i+1位置上时，说明有重复元素
             if (nums[i] != i + 1) {
                 return nums[i];
@@ -87,10 +86,10 @@ public class Problem287 {
 
     /**
      * 二分查找变形
-     * 不是对原数组进行二分查找，而是对1,2,3,...,n-1，这n-1个数构成的升序数组进行二分查找
-     * count[i]：原数组中小于等于i的元素个数
-     * 如果count[i]大于等于i，说明重复的元素在升序数组当前基准i的左边或就是i；否则，说明重复的元素在升序数组当前基准i的右边
-     * 时间复杂度O(nlogn)，空间复杂度O(1)
+     * 对[left,right]进行二分查找，left为数组中最小值，right为数组中最大值，统计数组中小于等于mid的元素个数count，
+     * 如果count小于等于mid，则重复元素在mid右边，left=mid+1；
+     * 如果count大于mid，则重复元素在mid或mid左边，right=mid
+     * 时间复杂度O(nlog(right-left))=O(n)，空间复杂度O(1) (left:数组中最小值，right:数组中最大值)
      *
      * @param nums
      * @return
@@ -100,40 +99,42 @@ public class Problem287 {
             return -1;
         }
 
-        //升序数组的最左边元素为1
-        int left = 1;
-        //升序数组的最右边元素为n-1
-        int right = nums.length - 1;
+        //二分查找左区间，为数组中元素的最小值
+        int left = nums[0];
+        //二分查找左区间，为数组中元素的最大值
+        int right = nums[0];
         int mid;
-        //统计小于等于当前二分元素值的个数
-        int count;
-        int result = -1;
 
-        while (left <= right) {
+        for (int num : nums) {
+            left = Math.min(left, num);
+            right = Math.max(right, num);
+        }
+
+        while (left < right) {
             mid = left + ((right - left) >> 1);
-            count = 0;
+            //小于等于mid的个数
+            int count = 0;
 
-            //统计小于等于当前二分元素值的个数
-            for (int i = 0; i < nums.length; i++) {
-                if (nums[i] <= mid) {
+            for (int num : nums) {
+                if (num <= mid) {
                     count++;
                 }
             }
 
-            //重复的元素在升序数组基准的右边
+            //count小于等于mid，说明重复元素在mid右边
             if (count <= mid) {
                 left = mid + 1;
             } else {
-                //重复的元素在升序数组基准的左边，或就是基准
-                right = mid - 1;
-                result = mid;
+                //count大于mid，说明重复元素在mid或mid左边
+                right = mid;
             }
         }
 
-        return result;
+        return left;
     }
 
     /**
+     * 循环链表，快慢指针
      * 将数组看成链表，i连接的下一个元素为nums[i]，因为存在相同的元素，所以链表存在环，即转换为找出链表环的入口位置
      * 数组：[1,3,4,2,2] ---> 链表：1->3->[2]->4->[2]->4
      * 时间复杂度O(n)，空间复杂度O(1)
@@ -146,23 +147,30 @@ public class Problem287 {
             return -1;
         }
 
+        //快慢指针分别指向的数组下标索引
         int slow = nums[0];
         int fast = nums[nums[0]];
 
         //快慢指针未相遇之前，慢指针每次走1步，快指针每次走2步
-        while (slow != fast) {
+        while (nums[slow] != nums[fast]) {
             slow = nums[slow];
             fast = nums[nums[fast]];
         }
 
-        //其中一个指针指向链表头，快慢指针各走1步，直至两指针相遇，共同指向有环的第一个节点
+        //其中一个指针指向链表头，快慢指针每次走1步，直至两指针相遇，共同指向环的第一个节点
         slow = 0;
 
-        while (slow != fast) {
+        while (nums[slow] != nums[fast]) {
             slow = nums[slow];
             fast = nums[fast];
         }
 
-        return fast;
+        return nums[slow];
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 }

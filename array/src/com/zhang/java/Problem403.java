@@ -78,7 +78,7 @@ public class Problem403 {
         }
 
         boolean[][] dp = new boolean[stones.length][stones.length];
-        //起始第一块石头可达
+        //起始石头stones[0]跳跃0步到达
         dp[0][0] = true;
 
         //当前石头stones[i]

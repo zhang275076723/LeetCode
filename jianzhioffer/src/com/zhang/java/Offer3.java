@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/3/13 10:27
  * @Author zsy
- * @Description 数组中重复的数字 类比Problem41、Problem268、Problem287、Problem448
+ * @Description 数组中重复的数字 原地哈希类比Problem41、Problem268、Problem287、Problem448
  * 在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。数组中某些数字是重复的，
  * 但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字
  * <p>
@@ -78,11 +78,9 @@ public class Offer3 {
      */
     public int findRepeatNumber3(int[] nums) {
         for (int i = 0; i < nums.length; i++) {
+            //当nums[i]和nums[nums[i]]不相等时，元素进行交换
             while (nums[i] != nums[nums[i]]) {
-                //交换时，只能用temp保存nums[nums[i]]，如果先保存nums[i]，对nums[i]的修改会导致无法找到nums[nums[i]]
-                int temp = nums[nums[i]];
-                nums[nums[i]] = nums[i];
-                nums[i] = temp;
+                swap(nums, i, nums[i]);
             }
 
             //当前元素值nums[i]不在索引位置i时，说明有重复元素
@@ -92,5 +90,11 @@ public class Offer3 {
         }
 
         return -1;
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 }

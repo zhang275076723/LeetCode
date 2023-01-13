@@ -14,10 +14,14 @@ import java.util.List;
  * 输出：最佳调度时间 = 5.1，最佳调度方案 = 机器0执行work[0]、work[1]，机器1执行work[2]
  */
 public class BestSchedule {
-    //最佳调度时间
+    /**
+     * 最佳调度时间
+     */
     double bestTime = Double.MAX_VALUE;
 
-    //最佳调度方案，bestMachineSchedule[0] = [0,1,3]，表示work[0]、work[1]、work[3]由机器0执行
+    /**
+     * 最佳调度方案，bestMachineSchedule[0] = [0,1,3]，表示机器0执行work[0]、work[1]、work[3]
+     */
     List<Integer>[] bestMachineSchedule;
 
     public static void main(String[] args) {
@@ -25,6 +29,9 @@ public class BestSchedule {
         int n = 10;
         int k = 4;
         double[] work = {1.0, 4.3, 10.3, 2.4, 5.3, 3.1, 4.9, 2.1, 8.4, 5.9};
+        //List<List<Integer>>适用于：arr[][]一维和二维都不确定的情况
+        //List<int[]>适用于：arr[][]一维不确定，二维确定的情况
+        //List<Integer>[]适用于：arr[][]一维确定，二维不确定的情况
         bestSchedule.bestMachineSchedule = new List[k];
 
         System.out.println(bestSchedule.findBestSchedule(n, k, work));

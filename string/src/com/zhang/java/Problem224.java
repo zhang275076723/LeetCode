@@ -100,7 +100,7 @@ public class Problem224 {
                     numStack.offerLast(0);
                     opsStack.offerLast(c);
                 } else {
-                    //将操作符栈顶运算符优先级大于等于当前运算符优先级的运算符出栈，数字栈出栈，进行运算，再将结果入数字栈
+                    //如果操作符栈顶运算符优先级大于等于当前运算符优先级时，操作符栈顶运算符出栈，数字栈出栈，进行运算，再将运算结果重新入数字栈
                     while (!opsStack.isEmpty() && getPriority(opsStack.peekLast()) >= getPriority(c)) {
                         int num = operation(numStack, opsStack);
                         numStack.offerLast(num);

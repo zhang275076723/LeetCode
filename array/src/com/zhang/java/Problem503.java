@@ -66,9 +66,9 @@ public class Problem503 {
      * @return
      */
     public int[] nextGreaterElements2(int[] nums) {
+        int[] result = new int[nums.length];
         //单调递减栈，存放nums中元素下标索引
         Stack<Integer> stack = new Stack<>();
-        int[] result = new int[nums.length];
 
         //循环数组，遍历原数组的2倍，相当于原数组后面又拼接了一遍原数组，除去最后一个元素
         for (int i = 0; i < 2 * nums.length - 1; i++) {

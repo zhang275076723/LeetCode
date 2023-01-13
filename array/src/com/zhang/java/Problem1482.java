@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/8 16:25
  * @Author zsy
- * @Description 制作 m 束花所需的最少天数 类比Problem4、Problem378、Problem410、Problem658、FindMaxArrayMinAfterKMinus
+ * @Description 制作 m 束花所需的最少天数 类比Problem4、Problem287、Problem378、Problem410、Problem658、FindMaxArrayMinAfterKMinus
  * 给你一个整数数组 bloomDay，以及两个整数 m 和 k 。
  * 现需要制作 m 束花。制作花束时，需要使用花园中 相邻的 k 朵花 。
  * 花园中有 n 朵花，第 i 朵花会在 bloomDay[i] 时盛开，恰好 可以用于 一束 花中。
@@ -54,10 +54,10 @@ public class Problem1482 {
 
     /**
      * 二分查找变形，使...最大值尽可能小，就要想到二分查找
-     * 假定day为摘m束花需要等待的最少的天数，对sum进行二分查找，
-     * 如果day作为结果，能够制作花的数量大于等于m，right = day
-     * 如果day作为结果，能够制作花的数量小于m，left = day + 1
-     * 时间复杂度O(n*log(right-left))，空间复杂度O(1) (n:bloomDay长度，left:bloomDay中最小值，right:bloomDay中最大值)
+     * 对[left,right]进行二分查找，left为数组中最小值，right为数组中最大值，统计在mid那天能够制作花的数量flower，
+     * 如果flower小于m，则制作m朵花的最小天数在mid右边，left=mid+1；
+     * 如果flower大于等于m，则制作m朵花的最小天数在mid或mid左边，right=mid
+     * 时间复杂度O(n*log(right-left))=O(n)，空间复杂度O(1) (n:bloomDay长度，left:bloomDay中最小值，right:bloomDay中最大值)
      *
      * @param bloomDay
      * @param m
@@ -65,8 +65,8 @@ public class Problem1482 {
      * @return
      */
     public int minDays(int[] bloomDay, int m, int k) {
-        //至少需要m*k朵花
-        if (bloomDay == null || bloomDay.length == 0 || m * k > bloomDay.length) {
+        //至少需要m*k朵花，使用long避免m*k在int范围内溢出
+        if (bloomDay == null || bloomDay.length == 0 || (long) m * k > bloomDay.length) {
             return -1;
         }
 
@@ -85,28 +85,28 @@ public class Problem1482 {
             mid = left + ((right - left) >> 1);
 
             //当前天数mid能够制作花的数量
-            int count = 0;
-            //当前天数mid中连续盛开花的数量
             int flower = 0;
+            //当前天数mid中连续盛开花的数量
+            int count = 0;
 
             for (int day : bloomDay) {
                 if (day <= mid) {
-                    flower++;
+                    count++;
                 } else {
-                    flower = 0;
+                    count = 0;
                 }
 
-                //能够制作一朵花
-                if (flower == k) {
-                    count++;
-                    flower = 0;
+                //count等于k，则能够制作一朵花
+                if (count == k) {
+                    flower++;
+                    count = 0;
                 }
             }
 
-            if (count >= m) {
-                right = mid;
-            } else {
+            if (flower < m) {
                 left = mid + 1;
+            } else {
+                right = mid;
             }
         }
 

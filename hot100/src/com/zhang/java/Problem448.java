@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/6/9 20:49
  * @Author zsy
- * @Description 找到所有数组中消失的数字 类比Problem41、Problem268、Problem287、Offer3
+ * @Description 找到所有数组中消失的数字 原地哈希类比Problem41、Problem268、Problem287、Offer3
  * 给你一个含 n 个整数的数组 nums ，其中 nums[i] 在区间 [1, n] 内。
  * 请你找出所有在 [1, n] 范围内但没有出现在 nums 中的数字，并以数组的形式返回结果。
  * <p>
@@ -42,23 +42,27 @@ public class Problem448 {
         }
 
         for (int i = 0; i < nums.length; i++) {
+            //当nums[i]和nums[nums[i]-1]不相等时，元素进行交换
             while (nums[i] != nums[nums[i] - 1]) {
-                //交换时，只能用temp保存nums[nums[i]-1]，如果先保存nums[i]，对nums[i]的修改会导致无法找到nums[nums[i]-1]
-                int temp = nums[nums[i] - 1];
-                nums[nums[i] - 1] = nums[i];
-                nums[i] = temp;
+                swap(nums, i, nums[i] - 1);
             }
         }
 
         List<Integer> list = new ArrayList<>();
 
         for (int i = 0; i < nums.length; i++) {
-            //nums[i]不和i+1相等时，说明i+1缺失
+            //nums[i]和i+1不相等时，说明i+1缺失
             if (nums[i] != i + 1) {
                 list.add(i + 1);
             }
         }
 
         return list;
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 }

@@ -27,7 +27,6 @@ public class Problem1004 {
         int k = 2;
         System.out.println(problem1004.longestOnes(nums, k));
     }
-
     /**
      * 滑动窗口，双指针
      * 时间复杂度O(n)，空间复杂度O(1)
@@ -39,17 +38,17 @@ public class Problem1004 {
     public int longestOnes(int[] nums, int k) {
         int left = 0;
         int right = 0;
-        int count = 0;
+        int result = 0;
 
         while (right < nums.length) {
-            //右指针所指元素为0时，将可修改0的个数减1，即将当前元素0假设置为1
+            //右指针所指元素为0时，将可修改0为1的个数k减1，即将当前元素0假设置为1
             if (nums[right] == 0) {
                 k--;
             }
 
-            //当可修改0的个数小于0时，左指针右移
+            //当可修改0为1的个数小于0时，左指针右移
             while (k < 0) {
-                //左指针所指元素为0时，即之前把当前元素0假设为1，k要++
+                //左指针所指元素为0时，即把之前假设为1的元素0恢复为0，可修改0为1的个数k加1
                 if (nums[left] == 0) {
                     k++;
                 }
@@ -57,10 +56,10 @@ public class Problem1004 {
                 left++;
             }
 
-            count = Math.max(count, right - left + 1);
+            result = Math.max(result, right - left + 1);
             right++;
         }
 
-        return count;
+        return result;
     }
 }

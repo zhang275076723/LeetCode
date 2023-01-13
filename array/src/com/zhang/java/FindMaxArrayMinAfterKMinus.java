@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/4 21:27
  * @Author zsy
- * @Description 找数组执行k次减x之后的尽可能小的最大值 网易机试题 类比Problem4、Problem378、Problem410、Problem658、Problem1482
+ * @Description 找数组执行k次减x之后的尽可能小的最大值 网易机试题 类比Problem4、Problem287、Problem378、Problem410、Problem658、Problem1482
  * 一个数组中选一个数减去x，执行k次之后，返回数组中尽可能小的最大值
  * <p>
  * 输入：arr = [1,0,7], k = 2, x = 3
@@ -49,10 +49,10 @@ public class FindMaxArrayMinAfterKMinus {
 
     /**
      * 二分查找变形，使...最大值尽可能小，就要想到二分查找
-     * 假定k次减法之后数组中尽可能小的最大值为a，对a进行二分查找
-     * 如果a作为结果，需要使数组中元素都小于等于a的操作次数大于k，则left = a + 1；
-     * 如果a作为结果，需要使数组中元素都小于等于a的操作次数小于等于k，则right = a
-     * 时间复杂度O(n*log(right-left))=O(n)，空间复杂度O(1) (n = arr.length) (二分查找的范围为int长度，32位，log(right-left)为常数)
+     * 对[left,right]进行二分查找，left为int最小值，right为int最大值，统计数组中元素都小于等于mid，减去x的次数count，
+     * 如果count大于k，则数组中元素减去x，执行k次之后的最大值在mid右边，left=mid+1；
+     * 如果count小于等于mid，则数组中元素减去x，执行k次之后的最大值在mid或mid左边，right=mid
+     * 时间复杂度O(n*log(right-left))=O(n)，空间复杂度O(1) (n = arr.length，二分查找的范围为int范围，log(right-left)为常数)
      *
      * @param arr
      * @param k
@@ -65,10 +65,10 @@ public class FindMaxArrayMinAfterKMinus {
         int mid;
 
         while (left < right) {
-            //使用long，避免溢出
+            //使用long，避免int溢出
             mid = (int) (left + (((long) right - left) >> 1));
 
-            //数组中元素都小于等于mid所需的次数
+            //数组中元素都小于等于mid，需要减去x的次数
             int count = 0;
 
             for (int num : arr) {

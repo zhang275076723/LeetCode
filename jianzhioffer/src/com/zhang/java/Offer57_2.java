@@ -29,32 +29,38 @@ public class Offer57_2 {
 
     /**
      * 暴力
-     * 时间复杂度O(n^(3/2))，空间复杂度O(1)
+     * 时间复杂度O(n^(3/2))，空间复杂度O(1) (n=target)
      *
      * @param target
      * @return
      */
     public int[][] findContinuousSequence(int target) {
+        //和为target至少包含两个数，target为1，直接返回null
         if (target == 1) {
             return null;
         }
 
+        //List<List<Integer>>适用于：arr[][]一维和二维都不确定的情况
+        //List<int[]>适用于：arr[][]一维不确定，二维确定的情况
+        //List<Integer>[]适用于：arr[][]一维确定，二维不确定的情况
         List<int[]> list = new ArrayList<>();
 
         for (int i = 1; i <= target / 2; i++) {
-            int sum = i;
+            int sum = 0;
 
-            for (int j = i + 1; j <= target / 2 + 1; j++) {
+            for (int j = i; j <= target / 2 + 1; j++) {
                 sum = sum + j;
 
                 if (sum == target) {
-                    int[] temp = new int[j - i + 1];
-                    for (int k = 0; k < temp.length; k++) {
-                        temp[k] = i + k;
+                    int[] arr = new int[j - i + 1];
+                    for (int k = 0; k <= arr.length; k++) {
+                        arr[k] = i + k;
                     }
-                    list.add(temp);
-                    break;
-                } else if (sum > target) {
+                    list.add(arr);
+                }
+
+                //从i-j之和已经大于等于target，j就不需要往后继续寻找，直接跳出循环
+                if (sum >= target) {
                     break;
                 }
             }
@@ -65,24 +71,28 @@ public class Offer57_2 {
 
     /**
      * 暴力优化
-     * 如果i到j满足和为target，根据(i+j)(j-i+1)/2=target，得到j
-     * 时间复杂度O(n)，空间复杂度O(1)
+     * 如果i到j满足和为target，根据(i+j)(j-i+1)/2=target，解方程组得到正整数j
+     * 时间复杂度O(n)，空间复杂度O(1) (n=target)
      *
      * @param target
      * @return
      */
     public int[][] findContinuousSequence2(int target) {
+        //和为target至少包含两个数，target为1，直接返回null
         if (target == 1) {
             return null;
         }
 
+        //List<List<Integer>>适用于：arr[][]一维和二维都不确定的情况
+        //List<int[]>适用于：arr[][]一维不确定，二维确定的情况
+        //List<Integer>[]适用于：arr[][]一维确定，二维不确定的情况
         List<int[]> list = new ArrayList<>();
 
         for (int i = 1; i <= target / 2; i++) {
-            //避免溢出
+            //使用long，避免int溢出
             long delta = 1 + 4 * ((long) i * i - i + 2L * target);
 
-            //如果delta小于等于0，说明j不存在
+            //如果delta小于等于0，说明不存在i对应的j，继续下次循环
             if (delta <= 0) {
                 continue;
             }
@@ -92,13 +102,13 @@ public class Offer57_2 {
             //如果delta开方为整数，说明j存在
             if ((long) sqrtDelta * sqrtDelta == delta) {
                 int j = (-1 + sqrtDelta) / 2;
-                int[] temp = new int[j - i + 1];
+                int[] arr = new int[j - i + 1];
 
-                for (int k = 0; k < temp.length; k++) {
-                    temp[k] = i + k;
+                for (int k = 0; k <= arr.length; k++) {
+                    arr[k] = i + k;
                 }
 
-                list.add(temp);
+                list.add(arr);
             }
         }
 
@@ -106,98 +116,95 @@ public class Offer57_2 {
     }
 
     /**
-     * 滑动窗口，双指针
-     * 看到连续子数组，想到滑动窗口和前缀和 (滑动窗口不适合有负数的情况)
-     * 时间复杂度O(n)，空间复杂度O(1)
+     * 滑动窗口，双指针 (注意：滑动窗口不适合有负数的情况，有负数前缀和仍然可用)
+     * 左指针left为连续序列的左边界，右指针right为连续序列的右边界，
+     * 如果当前连续序列之和sum小于target，右指针右移right++，sum加上right；
+     * 如果当前连续序列之和sum大于target，sum减去left，左指针右移left++；
+     * 如果当前连续序列之和sum等于target，则找到了一种满足要求的情况，加入结果集合，sum减去left，左指针右移left++
+     * 时间复杂度O(n)，空间复杂度O(1) (n=target)
      *
      * @param target
      * @return
      */
     public int[][] findContinuousSequence3(int target) {
+        //和为target至少包含两个数，target为1，直接返回null
         if (target == 1) {
             return null;
         }
 
+        //List<List<Integer>>适用于：arr[][]一维和二维都不确定的情况
+        //List<int[]>适用于：arr[][]一维不确定，二维确定的情况
+        //List<Integer>[]适用于：arr[][]一维确定，二维不确定的情况
         List<int[]> list = new ArrayList<>();
         int left = 1;
         int right = 1;
-        int sum = 0;
+        int sum = 1;
 
+        //right最多为target/2+1，再往右移动连续序列之和超过target，不存在和为target的情况
         while (right <= target / 2 + 1) {
-            sum = sum + right;
-
+            //sum等于target，left-right加入结果集合，sum减去left，左指针右移left++
             if (sum == target) {
-                int[] temp = new int[right - left + 1];
-                for (int i = 0; i < temp.length; i++) {
-                    temp[i] = left + i;
+                int[] arr = new int[right - left + 1];
+                for (int i = 0; i < arr.length; i++) {
+                    arr[i] = left + i;
                 }
-                list.add(temp);
+                list.add(arr);
                 sum = sum - left;
                 left++;
             } else if (sum > target) {
-                while (sum > target) {
-                    sum = sum - left;
-                    left++;
-                }
-                if (sum == target) {
-                    int[] temp = new int[right - left + 1];
-                    for (int i = 0; i < temp.length; i++) {
-                        temp[i] = left + i;
-                    }
-                    list.add(temp);
-                    sum = sum - left;
-                    left++;
-                }
+                //sum大于target，sum减去left，左指针右移left++
+                sum = sum - left;
+                left++;
+            } else {
+                //sum小于target，右指针右移right++，sum加上right
+                right++;
+                sum = sum + right;
             }
-
-            right++;
         }
 
-        int[][] result = new int[list.size()][];
-
-        for (int i = 0; i < list.size(); i++) {
-            result[i] = list.get(i);
-        }
-
-        return result;
+        return list.toArray(new int[list.size()][]);
     }
 
     /**
      * 前缀和
-     * 看到连续子数组，想到滑动窗口和前缀和 (滑动窗口不适合有负数的情况)
-     * 时间复杂度O(n)，空间复杂度O(n)
+     * 看到连续子数组，想到滑动窗口和前缀和 (注意：滑动窗口不适合有负数的情况，有负数前缀和仍然可用)
+     * 时间复杂度O(n)，空间复杂度O(n) (n=target)
      *
      * @param target
      * @return
      */
     public int[][] findContinuousSequence4(int target) {
+        //和为target至少包含两个数，target为1，直接返回null
         if (target == 1) {
             return null;
         }
 
-        //key：当前前缀和的值，value：当前前缀和的最后一个元素值
-        Map<Integer, Integer> map = new HashMap<>();
-        //用于1到k相加满足和为target的情况
-        map.put(0, 0);
-
+        //List<List<Integer>>适用于：arr[][]一维和二维都不确定的情况
+        //List<int[]>适用于：arr[][]一维不确定，二维确定的情况
+        //List<Integer>[]适用于：arr[][]一维确定，二维不确定的情况
         List<int[]> list = new ArrayList<>();
         //当前前缀和
         int sum = 0;
+        //key：当前区间和，value：当前区间和的最后一个元素值
+        Map<Integer, Integer> map = new HashMap<>();
+        //用于1到k的连续序列之和为target的情况
+        map.put(0, 0);
 
         for (int i = 1; i <= target / 2 + 1; i++) {
             sum = sum + i;
 
-            //map中存在key为pre - target的前缀和，说明有满足子数组之和为target的情况
+            //map中key存在为pre-target的区间和，则map.get(sum-target)+1到i的连续序列之和为target
             if (map.containsKey(sum - target)) {
                 int[] temp = new int[i - map.get(sum - target)];
 
                 for (int j = 0; j < temp.length; j++) {
-                    temp[j] = map.get(sum - target) + j + 1;
+                    temp[j] = map.get(sum - target) + 1 + j;
                 }
 
                 list.add(temp);
             }
 
+            //将当前1到i的连续序列之和sum和最后一个元素i，加入map中
             map.put(sum, i);
         }
 

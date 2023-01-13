@@ -128,6 +128,7 @@ public class Problem204 {
 
                 //从i*i开始遍历，因为i*2、i*3...在之前遍历2、3...时已经置为非质数false
                 for (int j = i; (long) i * j < n; j++) {
+                    //质数i的j倍元素不是质数
                     dp[i * j] = false;
                 }
             }
