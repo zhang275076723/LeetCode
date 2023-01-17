@@ -65,9 +65,9 @@ public class Problem128 {
 
     /**
      * 哈希表
-     * 每次判断nums[i]的前一个元素nums[i]-1是否在哈希表中：
-     * 1、如果在，则可以到nums[i]-1时再进行判断
-     * 2、如果不在，则循环判断nums[i]+1是否在哈希表中，并更新最大长度
+     * 将数组中所有元素加入哈希表，遍历数组判断nums[i]的前一个元素nums[i]-1是否在哈希表中：
+     * 1、如果在，则可以等到遍历到nums[i]-1时，才找最长连续序列
+     * 2、如果不在，则从nums[i]开始在哈希表中往后找，循环判断nums[i]+1是否在哈希表中，并更新最长连续序列
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param nums
@@ -87,7 +87,7 @@ public class Problem128 {
         int maxLen = 0;
 
         for (int i = 0; i < nums.length; i++) {
-            //nums[i]的前一个元素nums[i]-1不在哈希表中，则说明nums[i]为连续元素的第一个元素，查找最长的连续序列长度
+            //nums[i]的前一个元素nums[i]-1不在哈希表中，则说明nums[i]为连续元素的第一个元素，从nums[i]开始往后找
             if (!set.contains(nums[i] - 1)) {
                 int tempLen = 1;
                 int tempNum = nums[i];

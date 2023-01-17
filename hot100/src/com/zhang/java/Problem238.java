@@ -29,9 +29,10 @@ public class Problem238 {
     }
 
     /**
-     * 使用两个前缀数组，一个表示从左边到当前位置前一个位置的乘积，另一个表示从右边到当前位置后一个位置的乘积
-     * 结果数组是两个前缀数组的乘积
-     * 时间复杂度O(n)，空间复杂度O(n)
+     * 动态规划
+     * left[i]：nums[0]-nums[left-1]所有元素乘积
+     * right[i]：nums[left+1]-nums[a.length-1]所有元素乘积
+     * 时间复杂度O(n)，空间复杂的O(n)
      *
      * @param nums
      * @return
@@ -41,7 +42,6 @@ public class Problem238 {
             return nums;
         }
 
-        int[] result = new int[nums.length];
         int[] left = new int[nums.length];
         int[] right = new int[nums.length];
 
@@ -52,6 +52,8 @@ public class Problem238 {
             left[i] = left[i - 1] * nums[i - 1];
             right[nums.length - i - 1] = right[nums.length - i] * nums[nums.length - i];
         }
+
+        int[] result = new int[nums.length];
 
         for (int i = 0; i < nums.length; i++) {
             result[i] = left[i] * right[i];

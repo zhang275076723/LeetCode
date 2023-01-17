@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/4 10:27
  * @Author zsy
- * @Description 除法求值 类比Problem207、Problem210、Problem329 并查集类比Problem200
+ * @Description 除法求值 图类比Problem207、Problem210、Problem329 并查集类比Problem130、Problem200
  * 给你一个变量对数组 equations 和一个实数值数组 values 作为已知条件，
  * 其中 equations[i] = [Ai, Bi] 和 values[i] 共同表示等式 Ai / Bi = values[i] 。
  * 每个 Ai 或 Bi 是一个表示单个变量的字符串。
@@ -104,6 +104,7 @@ public class Problem399 {
                 map.put(str1, count);
                 count++;
             }
+
             if (!map.containsKey(str2)) {
                 map.put(str2, count);
                 count++;
@@ -127,19 +128,16 @@ public class Problem399 {
             int u = map.get(str1);
             int v = map.get(str2);
 
-            //u到v已经在临界矩阵中，直接赋值edge[u][v]
+            //u到v已经在邻接矩阵中，直接赋值edge[u][v]
             if (edges[u][v] != -1.0) {
                 result[i] = edges[u][v];
                 continue;
             }
 
-            result[i] = dfs(u, v, 1.0, edges, new boolean[count]);
-
-            //更新临界矩阵，便于下次查询
-            if (result[i] != -1.0) {
-                edges[u][v] = result[i];
-                edges[v][u] = 1.0 / result[i];
-            }
+            //更新邻接矩阵，便于下次查询
+            edges[u][v] = dfs(u, v, 1.0, edges, new boolean[edges.length]);
+            edges[v][u] = 1.0 / edges[u][v];
+            result[i] = edges[u][v];
         }
 
         return result;
@@ -169,6 +167,7 @@ public class Problem399 {
                 map.put(str1, count);
                 count++;
             }
+
             if (!map.containsKey(str2)) {
                 map.put(str2, count);
                 count++;
@@ -192,26 +191,23 @@ public class Problem399 {
             int u = map.get(str1);
             int v = map.get(str2);
 
-            //u到v已经在临界矩阵中，直接赋值edge[u][v]
+            //u到v已经在邻接矩阵中，直接赋值edge[u][v]
             if (edges[u][v] != -1.0) {
                 result[i] = edges[u][v];
                 continue;
             }
 
-            result[i] = bfs(u, v, edges, new boolean[map.size()]);
-
-            //更新临界矩阵，便于下次查询
-            if (result[i] != -1.0) {
-                edges[u][v] = result[i];
-                edges[v][u] = 1.0 / result[i];
-            }
+            //更新邻接矩阵，便于下次查询
+            edges[u][v] = bfs(u, v, edges);
+            edges[v][u] = 1.0 / edges[u][v];
+            result[i] = edges[u][v];
         }
 
         return result;
     }
 
     /**
-     * Floyd，计算任意两个节点之间的距离
+     * Floyd，计算任意两个节点之间的最近距离
      * 时间复杂度O(ML+N^3+QL)，空间复杂度O(NL+N^2) (M：边的数量，N：节点数量，Q：询问的数量，L：字符串的平均长度)
      *
      * @param equations
@@ -233,6 +229,7 @@ public class Problem399 {
                 map.put(str1, count);
                 count++;
             }
+
             if (!map.containsKey(str2)) {
                 map.put(str2, count);
                 count++;
@@ -243,7 +240,7 @@ public class Problem399 {
         double[][] edges = buildGraph(equations, values, map);
         double[] result = new double[queries.size()];
 
-        //Floyd，计算任意两个节点之间的距离
+        //Floyd，计算任意两个节点之间的最近距离
         for (int k = 0; k < edges.length; k++) {
             for (int i = 0; i < edges.length; i++) {
                 for (int j = 0; j < edges.length; j++) {
@@ -268,7 +265,7 @@ public class Problem399 {
             int u = map.get(str1);
             int v = map.get(str2);
 
-            //u到v已经计算过，在临界矩阵中，直接赋值edge[u][v]
+            //u到v已经计算过，在邻接矩阵中，直接赋值edge[u][v]
             result[i] = edges[u][v];
         }
 
@@ -300,6 +297,7 @@ public class Problem399 {
                 map.put(str1, count);
                 count++;
             }
+
             if (!map.containsKey(str2)) {
                 map.put(str2, count);
                 count++;
@@ -313,8 +311,10 @@ public class Problem399 {
         for (int i = 0; i < values.length; i++) {
             String str1 = equations.get(i).get(0);
             String str2 = equations.get(i).get(1);
+            int u = map.get(str1);
+            int v = map.get(str2);
 
-            unionFind.union(map.get(str1), map.get(str2), values[i]);
+            unionFind.union(u, v, values[i]);
         }
 
         //查询并查集
@@ -322,12 +322,16 @@ public class Problem399 {
             String str1 = queries.get(i).get(0);
             String str2 = queries.get(i).get(1);
 
+            //map中不存在当前节点，直接赋值-1.0
             if (!map.containsKey(str1) || !map.containsKey(str2)) {
                 result[i] = -1.0;
                 continue;
             }
 
-            result[i] = unionFind.isConnected(map.get(str1), map.get(str2));
+            int u = map.get(str1);
+            int v = map.get(str2);
+
+            result[i] = unionFind.isConnected(u, v);
         }
 
         return result;
@@ -353,48 +357,50 @@ public class Problem399 {
             if (edges[u][i] != -1.0 && !visited[i]) {
                 double temp = dfs(i, v, result * edges[u][i], edges, visited);
 
-                //结果不为-1.0，则表示当前路径可达，直接返回
+                //结果不为-1.0，则表示当前路径可达，直接返回；结果为-1.0，说明当前路径不可达，要寻找其他路径
                 if (temp != -1.0) {
                     return temp;
                 }
             }
         }
 
-        //从u到v不可达，返回-1.0
+        visited[u] = false;
+
+        //u到v不可达，返回-1.0
         return -1.0;
     }
 
     /**
      * bfs
      *
-     * @param u       起始节点在map中的索引
-     * @param v       结束节点在map中的索引
-     * @param edges   邻接矩阵
-     * @param visited 访问数组
+     * @param u     起始节点在map中的索引
+     * @param v     结束节点在map中的索引
+     * @param edges 邻接矩阵
      * @return
      */
-    private double bfs(int u, int v, double[][] edges, boolean[] visited) {
+    private double bfs(int u, int v, double[][] edges) {
         Queue<Pos> queue = new LinkedList<>();
+        boolean[] visited = new boolean[edges.length];
         queue.offer(new Pos(u, u, 1.0));
-        visited[u] = true;
 
         while (!queue.isEmpty()) {
             Pos pos = queue.poll();
+            visited[u] = true;
 
             //找到结束节点v，直接返回
             if (pos.v == v) {
                 return pos.result;
             }
 
-            //遍历pos.v未被访问的临界顶点i
+            //遍历pos.v未被访问的邻接顶点i
             for (int i = 0; i < edges[0].length; i++) {
                 if (edges[pos.v][i] != -1.0 && !visited[i]) {
                     queue.offer(new Pos(pos.u, i, pos.result * edges[pos.v][i]));
-                    visited[i] = true;
                 }
             }
         }
 
+        //u到v不可达，返回-1.0
         return -1.0;
     }
 
@@ -413,7 +419,7 @@ public class Problem399 {
 
         for (int i = 0; i < edges.length; i++) {
             for (int j = 0; j < edges[0].length; j++) {
-                //i到i为自身1.0
+                //i到i自身为1.0
                 if (i == j) {
                     edges[i][j] = 1.0;
                 } else {
@@ -455,7 +461,7 @@ public class Problem399 {
          */
         double result;
 
-        Pos(int u, int v, double result) {
+        public Pos(int u, int v, double result) {
             this.u = u;
             this.v = v;
             this.result = result;
@@ -464,23 +470,30 @@ public class Problem399 {
 
     /**
      * 并查集(不相交数据集)类
+     * 用数组的形式表示图
      */
     private static class UnionFind {
         /**
-         * 当前位置节点对应的父节点
+         * 并查集个数
          */
-        int[] parent;
+        private int count;
 
         /**
-         * 当前位置节点指向父节点的权值
+         * 节点的父节点下标索引数组，从0开始存储
          */
-        private double[] weight;
+        private final int[] parent;
+
+        /**
+         * 节点的权值数组，当前节点除以根节点的值
+         */
+        private final double[] weight;
 
         public UnionFind(int n) {
             parent = new int[n];
             weight = new double[n];
 
             for (int i = 0; i < n; i++) {
+                count = n;
                 //当前位置节点的父节点是它本身
                 parent[i] = i;
                 //当前位置节点的权值为1.0
@@ -489,64 +502,73 @@ public class Problem399 {
         }
 
         /**
-         * 路径压缩，使每个节点直接指向根节点，并更新每个节点的权值
+         * 节点合并
+         * 将节点i的根节点指向节点y的根节点，并更新节点i的根节点的权值
+         * <              ?
+         * <    rootI ---------> rootJ
+         * <     /\               /\
+         * <    / weight[i]      / weight[j]
+         * <   /                /
+         * <  /     value      /
+         * < i —————————————> j
+         *
+         * @param i
+         * @param j
+         * @param value
+         */
+        public void union(int i, int j, double value) {
+            int rootI = find(i);
+            int rootJ = find(j);
+
+            if (rootI != rootJ) {
+                //节点i的根节点指向节点j的根节点
+                parent[rootI] = rootJ;
+                //更新节点i根节点的权值
+                weight[rootI] = weight[j] * value / weight[i];
+                //i、j两个集合合并之后，并查集个数减一
+                count--;
+            }
+        }
+
+        /**
+         * 路径压缩
+         * 使每个节点的父节点直接指向根节点，并更新每个节点的权值
          *
          * @param i
          * @return
          */
         public int find(int i) {
-            //当前位置节点的父节点不是他本身，则当前节点的父节点指向父节点的父节点
+            //当前节点不是根节点，则当前节点的父节点指向父节点的父节点，进行递归，最终当前节点的父节点指向根节点，
+            //并更新路径中每个节点的权值，即每个节点除以根节点的值
             if (parent[i] != i) {
+                //当前节点之前的父节点
                 int originParent = parent[i];
                 parent[i] = find(parent[i]);
+                //更新当前节点的权值，为当前节点之前的权值乘上当前节点之前父节点的权值
                 weight[i] = weight[i] * weight[originParent];
             }
+
             return parent[i];
         }
 
         /**
-         * 合并，将x的根节点指向y的根节点，并更新x的根节点的权值
-         * <              ?
-         * <       x ------------>  y
-         * <     /\               /\
-         * <    / weight[x]      / weight[y]
-         * <   /                /
-         * <  /     value      /
-         * < a —————————————> c
+         * 判断节点i和节点j是否连通 (判断之前，需要进行路径压缩)
+         * 如果连通，返回x/y；如果不连通，返回-1.0
          *
-         * @param x
-         * @param y
-         * @param value
-         */
-        public void union(int x, int y, double value) {
-            int rootX = find(x);
-            int rootY = find(y);
-
-            if (rootX != rootY) {
-                //x的根节点指向y的根节点
-                parent[rootX] = rootY;
-                //更新x根节点的权值
-                weight[rootX] = weight[y] * value / weight[x];
-            }
-        }
-
-        /**
-         * 获取节点x到节点y的权值，x/y
-         *
-         * @param x
-         * @param y
+         * @param i
+         * @param j
          * @return
          */
-        public double isConnected(int x, int y) {
-            int rootX = find(x);
-            int rootY = find(y);
+        public double isConnected(int i, int j) {
+            int rootI = find(i);
+            int rootJ = find(j);
 
-            //x和y相交，范围x/y
-            if (rootX == rootY) {
-                return weight[x] / weight[y];
+            //i和j连通，返回节点i到根节点的权值weight[i]/节点j到根节点的权值weight[j]，即为i/j
+            if (rootI == rootJ) {
+                return weight[i] / weight[j];
             }
 
-            //x和y不相交，返回-1.0
+            //x和y不连通，返回-1.0
             return -1.0;
         }
     }

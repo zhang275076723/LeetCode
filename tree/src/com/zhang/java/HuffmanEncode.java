@@ -173,10 +173,10 @@ public class HuffmanEncode {
             private char key;
             //当前节点的权值
             private int weight;
-            private HuffmanNode left;
-            private HuffmanNode right;
             //当前节点的Huffman编码
             private String code;
+            private HuffmanNode left;
+            private HuffmanNode right;
         }
     }
 }

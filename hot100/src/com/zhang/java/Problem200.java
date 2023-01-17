@@ -1,12 +1,14 @@
 package com.zhang.java;
 
+import javafx.geometry.Pos;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
 /**
  * @Date 2022/5/12 9:22
  * @Author zsy
- * @Description 岛屿数量 字节面试题 类比Problem79、Problem212、Offer12 并查集类比Problem399
+ * @Description 岛屿数量 字节面试题 类比Problem79、Problem212、Offer12 并查集类比Problem130、Problem399
  * 给你一个由 '1'（陆地）和 '0'（水）组成的的二维网格，请你计算网格中岛屿的数量。
  * 岛屿总是被水包围，并且每座岛屿只能由水平方向和/或竖直方向上相邻的陆地连接形成。
  * 此外，你可以假设该网格的四条边均被水包围。
@@ -41,14 +43,13 @@ public class Problem200 {
                 {'0', '0', '1', '0', '0'},
                 {'0', '0', '0', '1', '1'}
         };
-//        System.out.println(problem200.numIslands(grid));
-//        System.out.println(problem200.numIslands2(grid));
+        System.out.println(problem200.numIslands(grid));
+        System.out.println(problem200.numIslands2(grid));
         System.out.println(problem200.numIslands3(grid));
     }
 
     /**
-     * 深度优先遍历dfs
-     * 原数组作为访问数组，访问当前为'1'的位置，并置为'2'，表示当前位置已访问，直至没有'1'的位置表示遍历结束
+     * dfs
      * 时间复杂度O(mn)，空间复杂度O(mn)
      *
      * @param grid
@@ -59,24 +60,24 @@ public class Problem200 {
             return 0;
         }
 
-        int landNum = 0;
+        int count = 0;
+        boolean[][] visited = new boolean[grid.length][grid[0].length];
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
-                //只有当前位置是'1'时，才进行遍历
-                if (grid[i][j] == '1') {
-                    dfs(i, j, grid);
-                    landNum++;
+                //对未被访问的'1'进行dfs
+                if (!visited[i][j] && grid[i][j] == '1') {
+                    dfs(i, j, grid, visited);
+                    count++;
                 }
             }
         }
 
-        return landNum;
+        return count;
     }
 
     /**
-     * 广度优先遍历bfs
-     * 原数组作为访问数组，访问当前为'1'的位置，并置为'2'，表示当前位置已访问，将该位置加入队列，直至没有'1'的位置表示遍历结束
+     * bfs
      * 时间复杂度O(mn)，空间复杂度O(min(m,n))
      *
      * @param grid
@@ -87,24 +88,25 @@ public class Problem200 {
             return 0;
         }
 
-        int landNum = 0;
+        int count = 0;
+        boolean[][] visited = new boolean[grid.length][grid[0].length];
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
-                //只有当前位置是'1'时，才进行遍历
-                if (grid[i][j] == '1') {
-                    bfs(i, j, grid);
-                    landNum++;
+                //对未被访问的'1'进行dfs
+                if (!visited[i][j] && grid[i][j] == '1') {
+                    bfs(i, j, grid, visited);
+                    count++;
                 }
             }
         }
 
-        return landNum;
+        return count;
     }
 
     /**
      * 并查集
-     * 时间复杂度O(mn)，空间复杂度O(mn)
+     * 时间复杂度O(mn*α(mn))=O(mn)，空间复杂度O(mn) (find()和union()的时间复杂度为O(α(mn))，可视为常数O(1))
      *
      * @param grid
      * @return
@@ -114,19 +116,18 @@ public class Problem200 {
             return 0;
         }
 
-        int row = grid.length;
-        int column = grid[0].length;
         UnionFind unionFind = new UnionFind(grid);
 
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < column; j++) {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                //当前节点为'1'时，和当前节点的下边和右边的'1'进行合并，成为一个集合
                 if (grid[i][j] == '1') {
-                    //不需要判断当前位置的左边和上边，只需要判断右边和下边
-                    if (j + 1 < column && grid[i][j + 1] == '1') {
-                        unionFind.union(i * column + j, i * column + j + 1);
+                    if (i + 1 < grid.length && grid[i + 1][j] == '1') {
+                        unionFind.union(grid[0].length * i + j, grid[0].length * (i + 1) + j);
                     }
-                    if (i + 1 < row && grid[i + 1][j] == '1') {
-                        unionFind.union(i * column + j, (i + 1) * column + j);
+
+                    if (j + 1 < grid[0].length && grid[i][j + 1] == '1') {
+                        unionFind.union(grid[0].length * i + j, grid[0].length * i + j + 1);
                     }
                 }
             }
@@ -135,140 +136,139 @@ public class Problem200 {
         return unionFind.count;
     }
 
-    /**
-     * 将遍历过的位置置为'2'，表示已经访问过
-     *
-     * @param i
-     * @param j
-     * @param grid
-     */
-    private void dfs(int i, int j, char[][] grid) {
-        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] != '1') {
+    private void dfs(int i, int j, char[][] grid, boolean[][] visited) {
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || visited[i][j] || grid[i][j] != '1') {
             return;
         }
 
-        //将当前位置置为'2'，原数组作为访问数组，表示已经访问过
-        grid[i][j] = '2';
+        //当前位置已被访问
+        visited[i][j] = true;
 
         //往上下左右找
-        dfs(i - 1, j, grid);
-        dfs(i + 1, j, grid);
-        dfs(i, j - 1, grid);
-        dfs(i, j + 1, grid);
+        dfs(i - 1, j, grid, visited);
+        dfs(i + 1, j, grid, visited);
+        dfs(i, j - 1, grid, visited);
+        dfs(i, j + 1, grid, visited);
     }
 
-    private void bfs(int i, int j, char[][] grid) {
-        Queue<Pos> queue = new LinkedList<>();
-        queue.offer(new Pos(i, j));
+    private void bfs(int i, int j, char[][] grid, boolean[][] visited) {
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{i, j});
 
         while (!queue.isEmpty()) {
-            Pos pos = queue.poll();
+            int[] arr = queue.poll();
 
-            if (pos.i < 0 || pos.i >= grid.length || pos.j < 0 || pos.j >= grid[0].length || grid[pos.i][pos.j] != '1') {
+            if (arr[0] < 0 || arr[0] >= grid.length || arr[1] < 0 || arr[1] >= grid[0].length ||
+                    visited[arr[0]][arr[1]] || grid[arr[0]][arr[1]] != '1') {
                 continue;
             }
 
-            //将当前位置置为'2'，原数组作为访问数组，表示已经访问过
-            grid[pos.i][pos.j] = '2';
+            //当前位置已被访问
+            visited[arr[0]][arr[1]] = true;
 
-            queue.offer(new Pos(pos.i - 1, pos.j));
-            queue.offer(new Pos(pos.i + 1, pos.j));
-            queue.offer(new Pos(pos.i, pos.j - 1));
-            queue.offer(new Pos(pos.i, pos.j + 1));
-        }
-    }
-
-    /**
-     * 广度优先遍历队列中存储的节点
-     */
-    private static class Pos {
-        int i;
-        int j;
-
-        public Pos(int i, int j) {
-            this.i = i;
-            this.j = j;
+            //当前位置的上下左右加入队列
+            queue.offer(new int[]{arr[0] - 1, arr[1]});
+            queue.offer(new int[]{arr[0] + 1, arr[1]});
+            queue.offer(new int[]{arr[0], arr[1] - 1});
+            queue.offer(new int[]{arr[0], arr[1] + 1});
         }
     }
 
     /**
      * 并查集(不相交数据集)类
+     * 用数组的形式表示图
      */
     private static class UnionFind {
         /**
          * 并查集个数
          */
-        int count;
+        private int count;
 
         /**
-         * 当前位置节点的秩(高度)
+         * 节点的父节点下标索引数组，二维数组按照由左到右由上到下的顺序，从0开始存储
          */
-        int[] rank;
+        private final int[] parent;
 
         /**
-         * 当前位置节点对应的父节点
+         * 节点的秩(节点的高度)数组，只有一个节点的秩为0
          */
-        int[] parent;
+        private final int[] rank;
 
         public UnionFind(char[][] grid) {
             count = 0;
-            int row = grid.length;
-            int column = grid[0].length;
-            rank = new int[row * column];
-            parent = new int[row * column];
+            parent = new int[grid.length * grid[0].length];
+            rank = new int[grid.length * grid[0].length];
 
-            for (int i = 0; i < row; i++) {
-                for (int j = 0; j < column; j++) {
+            for (int i = 0; i < grid.length; i++) {
+                for (int j = 0; j < grid[0].length; j++) {
+                    //当前节点为'1'时，才加入并查集中
                     if (grid[i][j] == '1') {
+                        //当前节点的父节点是它本身
+                        parent[grid[0].length * i + j] = grid[0].length * i + j;
+                        //并查集个数加1
                         count++;
-                        //当前位置节点的父节点是它本身
-                        parent[i * column + j] = i * column + j;
                     }
-
-                    //当前位置节点的秩为0
-                    rank[i * column + j] = 0;
                 }
             }
         }
 
         /**
-         * 按秩合并，具有较小秩的根节点指向具有较大秩的根节点
+         * 按秩合并
+         * 具有较小秩的根节点指向具有较大秩的根节点，将两个集合合并为一个集合 (合并之前，需要进行路径压缩)
          *
          * @param i
          * @param j
          */
         public void union(int i, int j) {
+            //找到包含集合i、j的根节点
             int rootI = find(i);
             int rootJ = find(j);
 
+            //i、j是两个集合，则进行合并，较小秩的根节点指向具有较大秩的根节点
             if (rootI != rootJ) {
-                if (rank[rootI] > rank[rootJ]) {
-                    parent[rootJ] = rootI;
-                } else if (rank[rootI] < rank[rootJ]) {
+                if (rank[rootI] < rank[rootJ]) {
                     parent[rootI] = rootJ;
-                } else { //两个根节点秩相等，则其中一个根节点的秩加1
+                } else if (rank[rootI] > rank[rootJ]) {
+                    parent[rootJ] = rootI;
+                } else {
+                    //两个根节点秩相等，则其中任意一个根节点指向另一个根节点，被指向的根节点秩加1
                     parent[rootJ] = rootI;
                     rank[rootI]++;
                 }
 
-                //合并之后，并查集个数减少一个
+                //i、j两个集合合并之后，并查集个数减一
                 count--;
             }
         }
 
         /**
-         * 路径压缩，使每个节点直接指向根节点
+         * 路径压缩
+         * 使每个节点的父节点直接指向根节点，并不改变节点的秩
          *
          * @param i
          * @return
          */
         public int find(int i) {
-            //当前位置节点的父节点不是他本身，则当前节点的父节点指向父节点的父节点
+            //当前节点不是根节点，则当前节点的父节点指向父节点的父节点，进行递归，最终当前节点的父节点指向根节点
             if (parent[i] != i) {
                 parent[i] = find(parent[i]);
             }
 
             return parent[i];
+        }
+
+        /**
+         * 判断节点i和节点j是否连通，即在一个集合中 (判断之前，需要进行路径压缩)
+         *
+         * @param i
+         * @param j
+         * @return
+         */
+        public boolean isConnected(int i, int j) {
+            int rootI = find(i);
+            int rootJ = find(j);
+
+            return rootI == rootJ;
         }
     }
 }

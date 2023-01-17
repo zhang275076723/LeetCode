@@ -54,6 +54,7 @@ public class Problem516 {
         for (int i = 2; i <= s.length(); i++) {
             //当前字符串起始字符索引
             for (int j = 0; j <= s.length() - i; j++) {
+                //表示的字符串s[j]-s[j+i-1]
                 if (s.charAt(j) == s.charAt(j + i - 1)) {
                     dp[j][j + i - 1] = dp[j + 1][j + i - 2] + 2;
                 } else {

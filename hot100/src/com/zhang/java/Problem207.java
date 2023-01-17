@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2022/5/13 9:06
  * @Author zsy
- * @Description 课程表 华为机试题 类比Problem210、Problem329、Problem399
+ * @Description 课程表 华为机试题 拓扑排序类比Problem210、Problem329
  * 你这个学期必须选修 numCourses 门课程，记为 0 到 numCourses - 1 。
  * 在选修某些课程之前需要一些先修课程。
  * 先修课程按数组 prerequisites 给出，其中 prerequisites[i] = [ai, bi] ，
@@ -108,12 +108,12 @@ public class Problem207 {
         for (int i = 0; i < numCourses; i++) {
             if (inDegree[i] == 0) {
                 queue.offer(i);
-                count++;
             }
         }
 
         while (!queue.isEmpty()) {
             int u = queue.poll();
+            count++;
 
             //遍历u的邻接顶点v
             for (int v = 0; v < edges[0].length; v++) {
@@ -124,7 +124,6 @@ public class Problem207 {
                     //顶点v入度为0，则入队
                     if (inDegree[v] == 0) {
                         queue.offer(v);
-                        count++;
                     }
                 }
             }

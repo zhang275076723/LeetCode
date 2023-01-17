@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2022/8/18 9:07
  * @Author zsy
- * @Description 矩阵中的最长递增路径 类比Problem131、Problem132、Problem139、Problem140、Problem403(回溯+预处理) 类比Problem207、Problem210、Problem399(图)
+ * @Description 矩阵中的最长递增路径 回溯+预处理类比Problem131、Problem132、Problem139、Problem140、Problem403 拓扑排序类比Problem207、Problem210
  * 给定一个 m x n 整数矩阵 matrix ，找出其中 最长递增路径 的长度。
  * 对于每个单元格，你可以往上，下，左，右四个方向移动。
  * 你 不能 在 对角线 方向上移动或移动到 边界外（即不允许环绕）。
@@ -30,7 +30,11 @@ import java.util.Queue;
 public class Problem329 {
     public static void main(String[] args) {
         Problem329 problem329 = new Problem329();
-        int[][] matrix = {{9, 9, 4}, {6, 6, 8}, {2, 1, 1}};
+        int[][] matrix = {
+                {9, 9, 4},
+                {6, 6, 8},
+                {2, 1, 1}
+        };
         System.out.println(problem329.longestIncreasingPath(matrix));
         System.out.println(problem329.longestIncreasingPath2(matrix));
     }
@@ -50,7 +54,8 @@ public class Problem329 {
 
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
-                maxLen = Math.max(maxLen, backtrack(i, j, matrix, dp));
+                backtrack(i, j, matrix, dp);
+                maxLen = Math.max(maxLen, dp[i][j]);
             }
         }
 
@@ -58,29 +63,32 @@ public class Problem329 {
     }
 
     /**
-     * 逆拓扑排序
-     * 每次找出度为0的节点放入队列中，保证了由大到小查找路径
+     * 逆拓扑排序 (使用拓扑排序，通过入度，由小到大查找路径也可以得到正确结果)
+     * 将matrix看做图，图中两个节点的指向是相邻节点中较小值指向较大值，将出度为0的节点放入队列，保证由大到小查找路径
      * 时间复杂度O(mn)，空间复杂度O(mn)
      *
      * @param matrix
      * @return
      */
     public int longestIncreasingPath2(int[][] matrix) {
-        //使用出度，需要找最长递增路径，所以通过出度，逆拓扑排序
+        //使用出度，逆拓扑排序，找最长递增路径
         int[][] outDegree = new int[matrix.length][matrix[0].length];
 
-        //出度赋值
+        //图中节点出度赋值
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
                 if (i - 1 >= 0 && matrix[i][j] < matrix[i - 1][j]) {
                     outDegree[i][j]++;
                 }
+
                 if (i + 1 < matrix.length && matrix[i][j] < matrix[i + 1][j]) {
                     outDegree[i][j]++;
                 }
+
                 if (j - 1 >= 0 && matrix[i][j] < matrix[i][j - 1]) {
                     outDegree[i][j]++;
                 }
+
                 if (j + 1 < matrix[0].length && matrix[i][j] < matrix[i][j + 1]) {
                     outDegree[i][j]++;
                 }
@@ -91,49 +99,54 @@ public class Problem329 {
 
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
+                //出度为0的节点加入队列
                 if (outDegree[i][j] == 0) {
-                    //arr[0]：当前行，arr[1]：当前列，arr[2]：路径长度
-                    queue.offer(new int[]{i, j, 1});
+                    //arr[0]：当前行，arr[1]：当前列
+                    queue.offer(new int[]{i, j});
                 }
             }
         }
 
-        int maxLen = 1;
+        int maxLen = 0;
 
         while (!queue.isEmpty()) {
-            int[] arr = queue.poll();
-            //更新最长递增路径
-            maxLen = Math.max(maxLen, arr[2]);
+            //每次从后往前找，最大路径长度加1
+            maxLen++;
+            int size = queue.size();
 
-            //往上找出度为0的节点放入队列中
-            if (arr[0] - 1 >= 0 && matrix[arr[0] - 1][arr[1]] < matrix[arr[0]][arr[1]]) {
-                outDegree[arr[0] - 1][arr[1]]--;
-                if (outDegree[arr[0] - 1][arr[1]] == 0) {
-                    queue.offer(new int[]{arr[0] - 1, arr[1], arr[2] + 1});
+            for (int i = 0; i < size; i++) {
+                int[] arr = queue.poll();
+
+                //往上找出度为0的节点加入队列中
+                if (arr[0] - 1 >= 0 && matrix[arr[0]][arr[1]] > matrix[arr[0] - 1][arr[1]]) {
+                    outDegree[arr[0] - 1][arr[1]]--;
+                    if (outDegree[arr[0] - 1][arr[1]] == 0) {
+                        queue.offer(new int[]{arr[0] - 1, arr[1]});
+                    }
                 }
-            }
 
-            //往下找出度为0的节点放入队列中
-            if (arr[0] + 1 < matrix.length && matrix[arr[0] + 1][arr[1]] < matrix[arr[0]][arr[1]]) {
-                outDegree[arr[0] + 1][arr[1]]--;
-                if (outDegree[arr[0] + 1][arr[1]] == 0) {
-                    queue.offer(new int[]{arr[0] + 1, arr[1], arr[2] + 1});
+                //往下找出度为0的节点加入队列中
+                if (arr[0] + 1 < matrix.length && matrix[arr[0]][arr[1]] > matrix[arr[0] + 1][arr[1]]) {
+                    outDegree[arr[0] + 1][arr[1]]--;
+                    if (outDegree[arr[0] + 1][arr[1]] == 0) {
+                        queue.offer(new int[]{arr[0] + 1, arr[1]});
+                    }
                 }
-            }
 
-            //往左找出度为0的节点放入队列中
-            if (arr[1] - 1 >= 0 && matrix[arr[0]][arr[1] - 1] < matrix[arr[0]][arr[1]]) {
-                outDegree[arr[0]][arr[1] - 1]--;
-                if (outDegree[arr[0]][arr[1] - 1] == 0) {
-                    queue.offer(new int[]{arr[0], arr[1] - 1, arr[2] + 1});
+                //往左找出度为0的节点加入队列中
+                if (arr[1] - 1 >= 0 && matrix[arr[0]][arr[1]] > matrix[arr[0]][arr[1] - 1]) {
+                    outDegree[arr[0]][arr[1] - 1]--;
+                    if (outDegree[arr[0]][arr[1] - 1] == 0) {
+                        queue.offer(new int[]{arr[0], arr[1] - 1});
+                    }
                 }
-            }
 
-            //往右找出度为0的节点放入队列中
-            if (arr[1] + 1 < matrix[0].length && matrix[arr[0]][arr[1] + 1] < matrix[arr[0]][arr[1]]) {
-                outDegree[arr[0]][arr[1] + 1]--;
-                if (outDegree[arr[0]][arr[1] + 1] == 0) {
-                    queue.offer(new int[]{arr[0], arr[1] + 1, arr[2] + 1});
+                //往右找出度为0的节点加入队列中
+                if (arr[1] + 1 < matrix[0].length && matrix[arr[0]][arr[1]] > matrix[arr[0]][arr[1] + 1]) {
+                    outDegree[arr[0]][arr[1] + 1]--;
+                    if (outDegree[arr[0]][arr[1] + 1] == 0) {
+                        queue.offer(new int[]{arr[0], arr[1] + 1});
+                    }
                 }
             }
         }
@@ -141,36 +154,36 @@ public class Problem329 {
         return maxLen;
     }
 
-    private int backtrack(int i, int j, int[][] matrix, int[][] dp) {
-        //已经找到以matrix[i][j]起始的最长递增路径长度，直接返回
-        if (dp[i][j] != 0) {
-            return dp[i][j];
+    private void backtrack(int i, int j, int[][] matrix, int[][] dp) {
+        //matrix[i][j]超过数组范围，或已经找到以matrix[i][j]起始的最长递增路径长度，直接返回
+        if (i < 0 || i >= matrix.length || j < 0 || j >= matrix[0].length || dp[i][j] != 0) {
+            return;
         }
 
-        int max = 1;
+        dp[i][j] = 1;
 
-        //往上找更新最长递增路径
+        //往上找
         if (i - 1 >= 0 && matrix[i][j] < matrix[i - 1][j]) {
-            max = Math.max(max, backtrack(i - 1, j, matrix, dp) + 1);
+            backtrack(i - 1, j, matrix, dp);
+            dp[i][j] = Math.max(dp[i][j], dp[i - 1][j] + 1);
         }
 
-        //往下找更新最长递增路径
+        //往下找
         if (i + 1 < matrix.length && matrix[i][j] < matrix[i + 1][j]) {
-            max = Math.max(max, backtrack(i + 1, j, matrix, dp) + 1);
+            backtrack(i + 1, j, matrix, dp);
+            dp[i][j] = Math.max(dp[i][j], dp[i + 1][j] + 1);
         }
 
-        //往左找更新最长递增路径
+        //往左找
         if (j - 1 >= 0 && matrix[i][j] < matrix[i][j - 1]) {
-            max = Math.max(max, backtrack(i, j - 1, matrix, dp) + 1);
+            backtrack(i, j - 1, matrix, dp);
+            dp[i][j] = Math.max(dp[i][j], dp[i][j - 1] + 1);
         }
 
-        //往右找更新最长递增路径
+        //往右找
         if (j + 1 < matrix[0].length && matrix[i][j] < matrix[i][j + 1]) {
-            max = Math.max(max, backtrack(i, j + 1, matrix, dp) + 1);
+            backtrack(i, j + 1, matrix, dp);
+            dp[i][j] = Math.max(dp[i][j], dp[i][j + 1] + 1);
         }
-
-        dp[i][j] = max;
-
-        return dp[i][j];
     }
 }
