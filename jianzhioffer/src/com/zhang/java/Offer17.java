@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @Date 2022/3/18 10:13
  * @Author zsy
- * @Description 打印从1到最大的n位数 类比Problem17、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem90、Offer38 类比Problem386、Problem440
+ * @Description 打印从1到最大的n位数 字典序类比Problem386、Problem440 回溯+剪枝类比Problem17、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem90、Offer38
  * 输入数字 n，按顺序打印出从 1 到最大的 n 位十进制数。
  * 比如输入 3，则打印出 1、2、3 一直到最大的 3 位数 999。
  * <p>
@@ -44,7 +44,8 @@ public class Offer17 {
     }
 
     /**
-     * 考虑大数溢出的情况，用字符串模拟，排列树
+     * 回溯+剪枝
+     * 考虑大数溢出的情况，用字符串模拟
      * 时间复杂度O(10^n)，空间复杂的O(n)
      *
      * @param n

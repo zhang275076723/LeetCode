@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/11/12 11:26
  * @Author zsy
- * @Description 一维数组的动态和 类比Problem152、Problem239、Offer66
+ * @Description 一维数组的动态和
  * 给你一个数组 nums 。数组「动态和」的计算公式为：runningSum[i] = sum(nums[0]…nums[i]) 。
  * 请返回 nums 的动态和。
  * <p>

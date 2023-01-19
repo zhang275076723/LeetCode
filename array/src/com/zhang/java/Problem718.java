@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/6/30 11:20
  * @Author zsy
- * @Description 最长重复子数组 类比Problem300、Problem1143 (注意子序列和子数组转移方程的区别)
+ * @Description 最长重复子数组 子序列和子数组类比Problem300、Problem1143
  * 给两个整数数组 nums1 和 nums2 ，返回 两个数组中 公共的 、长度最长的子数组的长度 。
  * <p>
  * 输入：nums1 = [1,2,3,2,1], nums2 = [3,2,1,4,7]
@@ -65,7 +65,7 @@ public class Problem718 {
 
     /**
      * 动态规划
-     * dp[i][j]：以nums1[i-1]结尾的数组和以nums2[j-1]结尾的数组的最长公共子数组长度
+     * dp[i][j]：以nums1[i-1]结尾的数组和以nums2[j-1]结尾的数组，两个数组的最长公共子数组长度
      * dp[i][j] = dp[i-1][j-1] + 1 (nums1[i-1] == nums2[j-1])
      * dp[i][j] = 0                (nums1[i-1] != nums2[j-1])
      * 时间复杂度O(mn)，空间复杂度O(mn) (m=nums1.length, n=nums2.length)

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/23 11:27
  * @Author zsy
- * @Description 完全平方数 类比Problem322、Problem416、Problem494、Problem518
+ * @Description 完全平方数 动态规划类比Problem322、Problem343、Problem416、Problem494、Problem518、Offer14、Offer14_2
  * 给你一个整数 n ，返回 和为 n 的完全平方数的最少数量 。
  * 完全平方数 是一个整数，其值等于另一个整数的平方；换句话说，其值等于一个整数自乘的积。
  * 例如，1、4、9 和 16 都是完全平方数，而 3 和 11 不是。
@@ -33,9 +33,9 @@ public class Problem279 {
 
     /**
      * 动态规划
-     * dp[i]：和为i需要完全平方数的最少数量
+     * dp[i]：和为i需要的完全平方数的最少数量
      * dp[i] = min(dp[i-j^2] + 1) (1 <= j <= i^1/2)
-     * 时间复杂度O(n*n^1/2)，空间复杂度O(n)
+     * 时间复杂度O(n^(3/2))，空间复杂度O(n)
      *
      * @param n
      * @return
@@ -61,10 +61,10 @@ public class Problem279 {
 
     /**
      * 四平方和定理：任意一个正整数都可以表示为至多四个正整数的平方和
-     * 当结果为1时，说明n为完全平方数
-     * 当结果为2时，则有n=a^2+b^2，遍历1<=a<=n^1/2，判断n-a^2是否是是完全平方数
-     * 当结果为3时，即结果不为1、2、4时，结果为3
-     * 当结果为4时，n=4^k*(8m+7) 时，能拆分为4个正整数平方和
+     * 如果n为完全平方数，则n可以拆分为1个正整数平方和
+     * 如果n=4^k*(8m+7)，则n可以拆分为4个正整数平方和
+     * 如果n=a^2+b^2，则n可以拆分为2个正整数平方和
+     * 如果n不能拆分为1、2、4个正整数平方和，则n肯定能拆分为3个正整数平方和
      * 时间复杂度O(n^1/2)，空间复杂度O(1)
      *
      * @param n
@@ -75,31 +75,36 @@ public class Problem279 {
             return 1;
         }
 
-        //n是否是完全平方数
-        int x = (int) Math.sqrt(n);
-        if (x * x == n) {
+        //n能否拆分为1个正整数平方和
+        int sqrt = (int) Math.sqrt(n);
+
+        if (sqrt * sqrt == n) {
             return 1;
         }
 
-        //n是否能表示成n=4^k*(8m+7)
-        x = n;
+        //n能否表示成n=4^k*(8m+7)，拆分为4个正整数平方和
+        int x = n;
+
         while (x % 4 == 0) {
             x = x / 4;
         }
+
         if (x % 8 == 7) {
             return 4;
         }
 
-        //n是否能表示为n=a^2+b^2
+        //n是否能表示为n=a^2+b^2，拆分为2个正整数平方和
         for (int i = 1; i * i < n; i++) {
             int j = n - i * i;
-            x = (int) Math.sqrt(j);
-            if (x * x == j) {
+            int sqrt2 = (int) Math.sqrt(j);
+
+            //j开方为整数，说明i^2+j^2==n
+            if (sqrt2 * sqrt2 == j) {
                 return 2;
             }
         }
 
-        //不满足n能拆分为1、2、4个正整数平方和时，返回3
+        //n不能拆分为1、2、4个正整数平方和，则n肯定能拆分为3个正整数平方和
         return 3;
     }
 

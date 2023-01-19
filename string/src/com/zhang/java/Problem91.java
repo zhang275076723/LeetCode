@@ -1,9 +1,12 @@
 package com.zhang.java;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Date 2022/12/9 12:02
  * @Author zsy
- * @Description 解码方法 类比Offer46
+ * @Description 解码方法 类比Problem93、Problem468、Offer46
  * 一条包含字母 A-Z 的消息通过以下映射进行了 编码 ：
  * 'A' -> "1"
  * 'B' -> "2"
@@ -38,6 +41,7 @@ public class Problem91 {
         String s = "11106";
         System.out.println(problem91.numDecodings(s));
         System.out.println(problem91.numDecodings2(s));
+        System.out.println(problem91.numDecodings3(s));
     }
 
     /**
@@ -74,6 +78,7 @@ public class Problem91 {
             //c2和c组成的数字
             int num = (c2 - '0') * 10 + (c - '0');
 
+            //两个字符都不为0
             if (c != '0' && c2 != '0') {
                 if (num <= 26) {
                     dp[i] = dp[i - 1] + dp[i - 2];
@@ -81,10 +86,12 @@ public class Problem91 {
                     dp[i] = dp[i - 1];
                 }
             } else if (c2 != '0') {
+                //c2不为0，c为0
                 if (num <= 26) {
                     dp[i] = dp[i - 2];
                 }
             } else if (c != '0') {
+                //c不为0，c2为0
                 dp[i] = dp[i - 1];
             }
         }
@@ -120,6 +127,7 @@ public class Problem91 {
             //c2和c组成的数字
             int num = (c2 - '0') * 10 + (c - '0');
 
+            //两个字符都不为0
             if (c != '0' && c2 != '0') {
                 if (num <= 26) {
                     int temp = p + q;
@@ -129,6 +137,7 @@ public class Problem91 {
                     p = q;
                 }
             } else if (c2 != '0') {
+                //c2不为0，c为0
                 if (num <= 26) {
                     int temp = p;
                     p = q;
@@ -138,13 +147,63 @@ public class Problem91 {
                     q = 0;
                 }
             } else if (c != '0') {
+                //c不为0，c2为0
                 p = q;
             } else {
+                //c和c2都为0
                 p = q;
                 q = 0;
             }
         }
 
         return q;
+    }
+
+    /**
+     * 回溯+剪枝
+     * 时间复杂度O(2^n)，空间复杂度O(n)
+     */
+    public int numDecodings3(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+
+        //存在前导0，则不存在解码方法
+        if (s.charAt(0) == '0') {
+            return 0;
+        }
+
+        List<String> list = new ArrayList<>();
+
+        int count = backtrack(0, s, list, new StringBuilder());
+
+        System.out.println(list);
+
+        return count;
+    }
+
+    private int backtrack(int t, String s, List<String> list, StringBuilder sb) {
+        if (t == s.length()) {
+            list.add(sb.toString());
+            return 1;
+        }
+
+        int count = 0;
+
+        //往后找一个字符，不能为0
+        if (s.charAt(t) != '0') {
+            sb.append((char) (s.charAt(t) - '1' + 'a'));
+            count = count + backtrack(t + 1, s, list, sb);
+            sb.delete(sb.length() - 1, sb.length());
+        }
+
+        //往后找两个字符，不能有前导0，且不能超过26，表示的字符'z'
+        if (t + 2 <= s.length() && s.charAt(t) != '0' && Integer.parseInt(s.substring(t, t + 2)) <= 26) {
+            sb.append((char) (Integer.parseInt(s.substring(t, t + 2)) - 1 + 'a'));
+            count = count + backtrack(t + 2, s, list, sb);
+            sb.delete(sb.length() - 1, sb.length());
+        }
+
+        return count;
     }
 }

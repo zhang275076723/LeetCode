@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/9 11:55
  * @Author zsy
- * @Description 交错字符串 类比Problem72
+ * @Description 交错字符串 动态规划类比Problem72、Problem221、Problem516、Problem1143
  * 给定三个字符串 s1、s2、s3，请你帮忙验证 s3 是否是由 s1 和 s2 交错 组成的。
  * 两个字符串 s 和 t 交错 的定义与过程如下，其中每个字符串都会被分割成若干 非空 子字符串：
  * s = s1 + s2 + ... + sn

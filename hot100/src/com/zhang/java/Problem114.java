@@ -91,7 +91,7 @@ public class Problem114 {
             //当前节点左子树的最右下节点
             TreeNode mostRightNode = node.left;
 
-            if (node.left != null) {
+            if (mostRightNode != null) {
                 //找当前节点左子树的最右下节点
                 while (mostRightNode.right != null) {
                     mostRightNode = mostRightNode.right;

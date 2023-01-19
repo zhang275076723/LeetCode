@@ -116,14 +116,11 @@ public class Problem347 {
         });
 
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            if (priorityQueue.size() < k) {
-                priorityQueue.offer(new int[]{entry.getKey(), entry.getValue()});
-            } else {
-                //当前元素的频率大于小根堆堆顶元素频率，堆顶元素出队，当前元素入队
-                if (priorityQueue.peek()[1] < entry.getValue()) {
-                    priorityQueue.poll();
-                    priorityQueue.offer(new int[]{entry.getKey(), entry.getValue()});
-                }
+            priorityQueue.offer(new int[]{entry.getKey(), entry.getValue()});
+
+            //小根堆中元素个数超过k个，则移除小根堆堆顶元素
+            if (priorityQueue.size() > k) {
+                priorityQueue.poll();
             }
         }
 

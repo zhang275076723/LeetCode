@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/14 8:37
  * @Author zsy
- * @Description 划分为k个相等的子集 网易机试题 类比Problem416
+ * @Description 划分为k个相等的子集 网易机试题 划分子集类比类比Problem416
  * 给定一个整数数组  nums 和一个正整数 k，找出是否有可能把这个数组分成 k 个非空子集，其总和都相等。
  * <p>
  * 输入： nums = [4, 3, 2, 3, 5, 2, 1], k = 4
@@ -52,6 +52,7 @@ public class Problem698 {
             sum = sum + num;
         }
 
+        //元素之和不能被k整除，则不能划分为k个子集，直接返回false
         if (sum % k != 0) {
             return false;
         }
@@ -61,12 +62,12 @@ public class Problem698 {
 
         int target = sum / k;
 
-        //最大的元素大于target，则不存在等k个相等的子集，返回false
+        //最大的元素大于target，因为元素都大于0，所以不存在等k个相等的子集，返回false
         if (nums[nums.length - 1] > target) {
             return false;
         }
 
-        //从后往前遍历，先选择大的元素遍历回溯和剪枝
+        //从小到大排序之后从后往前遍历，先选择大的元素遍历回溯和剪枝
         backtrack(nums.length - 1, new int[k], nums, target);
 
         return flag;
@@ -115,11 +116,12 @@ public class Problem698 {
             if (arr[i] < arr[j]) {
                 tempArr[k] = arr[i];
                 i++;
+                k++;
             } else {
                 tempArr[k] = arr[j];
                 j++;
+                k++;
             }
-            k++;
         }
 
         while (i <= mid) {

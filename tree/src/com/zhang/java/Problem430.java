@@ -127,19 +127,19 @@ public class Problem430 {
 
         while (node != null) {
             //当前节点左子树的最右下节点
-            Node mostRightChild = node.child;
+            Node mostRightNode = node.child;
 
-            if (mostRightChild != null) {
+            if (mostRightNode != null) {
                 //找当前节点左子树的最右下节点
-                while (mostRightChild.next != null) {
-                    mostRightChild = mostRightChild.next;
+                while (mostRightNode.next != null) {
+                    mostRightNode = mostRightNode.next;
                 }
 
                 //当前节点左子树的最右下节点的右指针next指向当前节点的右子树next
-                mostRightChild.next = node.next;
+                mostRightNode.next = node.next;
                 //当前节点node的右节点的前驱指针prev指向当前节点左子树的最右下节点
                 if (node.next != null) {
-                    node.next.prev = mostRightChild;
+                    node.next.prev = mostRightNode;
                 }
                 //当前节点node的左节点的前驱指针prev指向当前节点node
                 node.child.prev = node;

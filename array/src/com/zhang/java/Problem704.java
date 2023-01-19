@@ -3,8 +3,9 @@ package com.zhang.java;
 /**
  * @Date 2021/11/18 21:21
  * @Author zsy
- * @Description 给定一个n个元素有序的（升序）整型数组nums和一个目标值target，
- * 写一个函数搜索nums中的target，如果目标值存在返回下标，否则返回-1
+ * @Description 二分查找
+ * 给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target ，
+ * 写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。
  * <p>
  * 输入: nums = [-1,0,3,5,9,12], target = 9
  * 输出: 4
@@ -13,32 +14,39 @@ package com.zhang.java;
  * 输入: nums = [-1,0,3,5,9,12], target = 2
  * 输出: -1
  * 解释: 2 不存在 nums 中因此返回 -1
+ * <p>
+ * 你可以假设 nums 中的所有元素是不重复的。
+ * n 将在 [1, 10000]之间。
+ * nums 的每个元素都将在 [-9999, 9999]之间。
  */
 public class Problem704 {
     public static void main(String[] args) {
-        Problem704 p = new Problem704();
+        Problem704 problem704 = new Problem704();
         int[] nums = {-1, 0, 3, 5, 9, 12};
-        System.out.println(p.search(nums, 9));
+        System.out.println(problem704.search(nums, 9));
+        System.out.println(problem704.search2(nums, 9));
     }
 
     /**
-     * [a,b]左闭右闭情况：循环判断条件是<=，如果nums[mid] > target，则right = mid-1
+     * 二分查找
+     * 时间复杂度O(logn)，空间复杂度O(1)
      *
      * @param nums
      * @param target
      * @return
      */
     public int search(int[] nums, int target) {
-        //如果target小于第一个元素或者大于最后一个元素，直接返回-1，提升效率
-        if (target < nums[0] || target > nums[nums.length - 1]) {
+        if (nums == null || nums.length == 0 || target < nums[0] || target > nums[nums.length - 1]) {
             return -1;
         }
 
-        int mid;
         int left = 0;
         int right = nums.length - 1;
+        int mid;
+
         while (left <= right) {
-            mid = (left + right) / 2;
+            mid = left + ((right - left) >> 1);
+
             if (nums[mid] == target) {
                 return mid;
             } else if (nums[mid] < target) {
@@ -47,35 +55,47 @@ public class Problem704 {
                 right = mid - 1;
             }
         }
+
         return -1;
     }
 
     /**
-     * [a,b)左闭右开情况：循环判断条件是<，如果nums[mid] > target，right = mid
+     * 递归二分查找
+     * 时间复杂度O(logn)，空间复杂度O(logn)
      *
      * @param nums
      * @param target
      * @return
      */
     public int search2(int[] nums, int target) {
-        //如果target小于第一个元素或者大于最后一个元素，直接返回-1，提升效率
-        if (target < nums[0] || target > nums[nums.length - 1]) {
+        if (nums == null || nums.length == 0 || target < nums[0] || target > nums[nums.length - 1]) {
             return -1;
         }
 
-        int mid;
-        int left = 0;
-        int right = nums.length;
-        while (left < right) {
-            mid = (left + right) / 2;
-            if (nums[mid] == target) {
-                return mid;
-            } else if (nums[mid] < target) {
-                left = mid + 1;
-            } else {
-                right = mid;
-            }
+        return search2(nums, target, 0, nums.length - 1);
+    }
+
+    private int search2(int[] nums, int target, int left, int right) {
+        if (left > right) {
+            return -1;
         }
-        return -1;
+
+        if (left == right) {
+            if (nums[left] == target) {
+                return left;
+            }
+
+            return -1;
+        }
+
+        int mid = left + ((right - left) >> 1);
+
+        if (nums[mid] == target) {
+            return mid;
+        } else if (nums[mid] > target) {
+            return search2(nums, target, left, mid - 1);
+        } else {
+            return search2(nums, target, mid + 1, right);
+        }
     }
 }

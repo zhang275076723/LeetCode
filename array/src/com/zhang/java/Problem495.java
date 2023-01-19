@@ -33,16 +33,16 @@ package com.zhang.java;
 public class Problem495 {
     public static void main(String[] args) {
         Problem495 problem495 = new Problem495();
-        int[] timeSeries = {1, 4};
+        int[] timeSeries = {1, 2, 4, 7, 8, 13};
         int duration = 2;
         System.out.println(problem495.findPoisonedDuration(timeSeries, duration));
     }
 
     /**
      * 模拟
-     * 攻击间隔时间小于中毒持续时间，中毒总时间加上攻击间隔时间；
-     * 攻击间隔时间大于等于中毒持续时间，中毒总时间加上中毒持续时间
-     * 最后一次攻击，还需要另外加上一次中毒持续时间
+     * 如果两次攻击之间的时间intervalTime大于中毒持续时间duration，则中毒总时间加上duration；
+     * 如果两次攻击之间的时间intervalTime小于等于中毒持续时间duration，则中毒总时间加上两次攻击之间的时间intervalTime，
+     * 最后，还需要加上duration
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param timeSeries
@@ -51,19 +51,22 @@ public class Problem495 {
      */
     public int findPoisonedDuration(int[] timeSeries, int duration) {
         //中毒总时间
-        int count = 0;
+        int time = 0;
 
-        for (int i = 0; i < timeSeries.length - 1; i++) {
-            //攻击间隔时间小于中毒持续时间，中毒总时间加上攻击间隔时间
-            if (timeSeries[i + 1] - timeSeries[i] < duration) {
-                count = count + timeSeries[i + 1] - timeSeries[i];
+        for (int i = 1; i < timeSeries.length; i++) {
+            //两次攻击之间的时间
+            int intervalTime = timeSeries[i] - timeSeries[i - 1];
+
+            //两次攻击之间的时间intervalTime大于中毒持续时间duration，中毒总时间加上duration
+            if (intervalTime > duration) {
+                time = time + duration;
             } else {
-                //攻击间隔时间大于等于中毒持续时间，中毒总时间加上中毒持续时间
-                count = count + duration;
+                //两次攻击之间的时间intervalTime小于等于中毒持续时间duration，中毒总时间加上两次攻击之间的时间intervalTime
+                time = time + intervalTime;
             }
         }
 
-        //最后一次攻击之后，还要加上一次中毒持续时间
-        return count + duration;
+        //最后一次攻击之后，总毒总时间还要加上duration
+        return time + duration;
     }
 }

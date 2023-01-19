@@ -81,7 +81,7 @@ public class Problem45 {
             //更新当前能够跳跃到的最远距离
             curJumpDistance = Math.max(curJumpDistance, i + nums[i]);
 
-            //当前能够跳跃到的最远距离可以跳跃到最后一个位置，直接返回
+            //当前能够跳跃到的最远距离可以跳跃到最后一个位置，返回count+1，需要加上本次所跳的次数
             if (curJumpDistance >= nums.length - 1) {
                 return count + 1;
             }

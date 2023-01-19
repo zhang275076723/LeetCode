@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/7/12 8:42
  * @Author zsy
- * @Description 零钱兑换 II 类比Problem279、Problem322、Problem416、Problem494
+ * @Description 零钱兑换 II 动态规划类比Problem279、Problem322、Problem343、Problem416、Problem494、Offer14、Offer14_2
  * 给你一个整数数组 coins 表示不同面额的硬币，另给一个整数 amount 表示总金额。
  * 请你计算并返回可以凑成总金额的硬币组合数。如果任何硬币组合都无法凑出总金额，返回 0 。
  * 假设每一种面额的硬币有无限个。
@@ -66,7 +66,6 @@ public class Problem518 {
 
         //dp初始化，前i种硬币，凑成金额0的数量为1种
         for (int i = 0; i <= coins.length; i++) {
-            //前i种硬币凑成金额为0的组合数量为1
             dp[i][0] = 1;
         }
 

@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2022/4/29 9:26
  * @Author zsy
- * @Description 柱状图中最大的矩形 类比Problem84、Problem221
+ * @Description 柱状图中最大的矩形 类比Problem84
  * 给定一个仅包含 0 和 1 、大小为 rows x cols 的二维二进制矩阵，找出只包含 1 的最大矩形，并返回其面积。
  * <p>
  * 输入：matrix = [

@@ -38,7 +38,7 @@ public class Problem746 {
 
     /**
      * 动态规划
-     * dp[i]：到达cost[i]对应台阶所需的费用
+     * dp[i]：到达cost[i]对应台阶所需的最低费用
      * dp[i] = mid(dp[i-1]+cost[i-1],dp[i-2]+cost[i-2])
      * 时间复杂度O(n)，空间复杂度O(n)
      *

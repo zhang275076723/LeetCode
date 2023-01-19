@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/27 17:19
  * @Author zsy
- * @Description 整数拆分 类比Offer14、Offer14_2
+ * @Description 整数拆分 动态规划类比Problem279、Problem322、Problem416、Problem494、Problem518、Offer14、Offer14_2
  * 给定一个正整数 n ，将其拆分为 k 个 正整数 的和（ k >= 2 ），并使这些整数的乘积最大化。
  * 返回 你可以获得的最大乘积 。
  * <p>
@@ -26,7 +26,7 @@ public class Problem343 {
 
     /**
      * 动态规划
-     * dp[i]：数字i拆分得到的最大乘积
+     * dp[i]：数字i拆分得到的最大乘积 (数字i至少拆为2个数字)
      * dp[i] = max(dp[i-j]*j, (i-j)*j) (1 < j < i)
      * 时间复杂度O(n^2)，空间复杂度O(n)
      *
@@ -62,14 +62,20 @@ public class Problem343 {
         }
 
         //尽可能拆分为3的和
+
+        //商
         int a = n / 3;
+        //余数
         int b = n % 3;
 
+        //余数为0
         if (b == 0) {
             return quickPow(3, a);
         } else if (b == 1) {
+            //余数为1，需要考虑最后一段和倒数第二段
             return quickPow(3, a - 1) * 2 * 2;
         } else {
+            //余数为2
             return quickPow(3, a) * 2;
         }
     }

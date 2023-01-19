@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/6/22 7:48
  * @Author zsy
- * @Description 复原 IP 地址 虾皮机试题、蔚来面试题 类比Problem468、Offer46
+ * @Description 复原 IP 地址 虾皮机试题 蔚来面试题 类比Problem91、Problem468、Offer46
  * 有效 IP 地址 正好由四个整数（每个整数位于 0 到 255 之间组成，且不能含有前导 0），整数之间用 '.' 分隔。
  * 例如："0.1.2.201" 和 "192.168.1.1" 是 有效 IP 地址，
  * 但是 "0.011.255.245"、"192.168.1.312" 和 "192.168@1.1" 是 无效 IP 地址。
@@ -55,18 +55,26 @@ public class Problem93 {
         if (list.size() == 4) {
             if (t == s.length()) {
                 StringBuilder sb = new StringBuilder();
+
                 for (String num : list) {
                     sb.append(num).append('.');
                 }
+
                 //删除最后一个'.'
                 sb.delete(sb.length() - 1, sb.length());
                 result.add(sb.toString());
             }
+
             return;
         }
 
         for (int i = t; i < s.length(); i++) {
-            //ip段最长只能是3位
+            //当前已经存在4个ip段，直接返回
+            if (list.size() == 4) {
+                return;
+            }
+
+            //ip段的长度不能超过3
             if (i >= t + 3) {
                 return;
             }
@@ -94,12 +102,12 @@ public class Problem93 {
      * @return
      */
     private int getIpSegment(String s, int left, int right) {
-        //当前ip段只有一位
+        //当前ip段长度为1
         if (left == right) {
             return s.charAt(left) - '0';
         }
 
-        //当前ip段以0开头，不是合法ip段
+        //当前ip段以0开头，且长度超过1，不是合法ip段
         if (s.charAt(left) == '0') {
             return -1;
         }

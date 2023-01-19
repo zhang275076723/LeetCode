@@ -72,7 +72,7 @@ public class Problem503 {
 
         //循环数组，遍历原数组的2倍，相当于原数组后面又拼接了一遍原数组，除去最后一个元素
         for (int i = 0; i < 2 * nums.length - 1; i++) {
-            //结果数组赋初值
+            //结果数组赋初值-1，表示没有比nums[i]更大的元素
             if (i < nums.length) {
                 result[i] = -1;
             }

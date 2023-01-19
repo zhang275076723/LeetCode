@@ -70,6 +70,7 @@ public class Problem69 {
         while (left <= right) {
             mid = left + ((right - left) >> 1);
 
+            //使用long，避免相乘int溢出
             if ((long) mid * mid == x) {
                 return mid;
             } else if ((long) mid * mid < x) {

@@ -58,7 +58,7 @@ public class Problem367 {
         while (left <= right) {
             mid = left + ((right - left) >> 1);
 
-            //使用long，避免相乘溢出
+            //使用long，避免相乘int溢出
             if ((long) mid * mid == num) {
                 return true;
             } else if ((long) mid * mid < num) {

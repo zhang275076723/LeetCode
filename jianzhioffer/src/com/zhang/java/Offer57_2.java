@@ -29,7 +29,7 @@ public class Offer57_2 {
 
     /**
      * 暴力
-     * 时间复杂度O(n^(3/2))，空间复杂度O(1) (n=target)
+     * 时间复杂度O(target^(3/2))，空间复杂度O(1)
      *
      * @param target
      * @return
@@ -72,7 +72,7 @@ public class Offer57_2 {
     /**
      * 暴力优化
      * 如果i到j满足和为target，根据(i+j)(j-i+1)/2=target，解方程组得到正整数j
-     * 时间复杂度O(n)，空间复杂度O(1) (n=target)
+     * 时间复杂度O(target)，空间复杂度O(1)
      *
      * @param target
      * @return
@@ -121,7 +121,7 @@ public class Offer57_2 {
      * 如果当前连续序列之和sum小于target，右指针右移right++，sum加上right；
      * 如果当前连续序列之和sum大于target，sum减去left，左指针右移left++；
      * 如果当前连续序列之和sum等于target，则找到了一种满足要求的情况，加入结果集合，sum减去left，左指针右移left++
-     * 时间复杂度O(n)，空间复杂度O(1) (n=target)
+     * 时间复杂度O(target)，空间复杂度O(1)
      *
      * @param target
      * @return
@@ -140,7 +140,7 @@ public class Offer57_2 {
         int right = 1;
         int sum = 1;
 
-        //right最多为target/2+1，再往右移动连续序列之和超过target，不存在和为target的情况
+        //right最多为target/2+1，right再往右移动连续序列之和超过target，不存在和为target的情况
         while (right <= target / 2 + 1) {
             //sum等于target，left-right加入结果集合，sum减去left，左指针右移left++
             if (sum == target) {
@@ -168,7 +168,7 @@ public class Offer57_2 {
     /**
      * 前缀和
      * 看到连续子数组，想到滑动窗口和前缀和 (注意：滑动窗口不适合有负数的情况，有负数前缀和仍然可用)
-     * 时间复杂度O(n)，空间复杂度O(n) (n=target)
+     * 时间复杂度O(target)，空间复杂度O(target)
      *
      * @param target
      * @return

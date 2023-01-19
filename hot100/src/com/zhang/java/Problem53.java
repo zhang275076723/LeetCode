@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/21 16:38
  * @Author zsy
- * @Description 最大子数组和 美团面试题 类比Problem152、Problem416 同Offer42
+ * @Description 最大子数组和 美团面试题 数组类比Problem152、Problem238、Problem416、Problem581、Offer66 同Offer42
  * 给你一个整数数组 nums ，请你找出一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
  * 子数组 是数组中的一个连续部分。
  * <p>
@@ -45,10 +45,7 @@ public class Problem53 {
 
             for (int j = i; j < nums.length; j++) {
                 tempSum = tempSum + nums[j];
-
-                if (tempSum > max) {
-                    max = tempSum;
-                }
+                max = Math.max(max, tempSum);
             }
         }
 

@@ -44,13 +44,16 @@ public class Problem470 {
         int random = Integer.MAX_VALUE;
 
         while (true) {
-            if (random >= 10) {
+            //生成的random，小于等于9，直接返回random+1作为随机数
+            if (random <= 9) {
+                return random + 1;
+            } else {
+                //生成的random大于9，则需要重新生成
                 random = 0;
+
                 for (int i = 1; i <= 4; i++) {
                     random = (random << 1) + rand7Get0Or1();
                 }
-            } else {
-                return random + 1;
             }
         }
     }
@@ -134,8 +137,12 @@ public class Problem470 {
         }
     }
 
+    /**
+     * 返回1-7的随机整数
+     *
+     * @return
+     */
     private int rand7() {
-        //[1,7]
 //        return new Random().nextInt(7) + 1;
         return (int) (Math.random() * 7 + 1);
     }
