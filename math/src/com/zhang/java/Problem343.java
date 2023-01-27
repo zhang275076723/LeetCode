@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/27 17:19
  * @Author zsy
- * @Description 整数拆分 动态规划类比Problem279、Problem322、Problem416、Problem494、Problem518、Offer14、Offer14_2
+ * @Description 整数拆分 动态规划类比Problem279、Problem322、Problem416、Problem494、Problem518、Problem983、Offer14、Offer14_2、Knapsack
  * 给定一个正整数 n ，将其拆分为 k 个 正整数 的和（ k >= 2 ），并使这些整数的乘积最大化。
  * 返回 你可以获得的最大乘积 。
  * <p>

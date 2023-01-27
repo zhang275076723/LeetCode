@@ -110,6 +110,6 @@ public class Offer62 {
             return 0;
         }
 
-        return (m + f(n - 1, m)) % n;
+        return (f(n - 1, m) + m) % n;
     }
 }

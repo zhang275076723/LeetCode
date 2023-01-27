@@ -31,8 +31,8 @@ public class Problem121 {
     /**
      * 动态规划
      * dp[i]：到prices[i]那天获取的最大利润
-     * dp[i] = dp[i-1]                          (prices[i] <= minPrice)
-     * dp[i] = max(dp[i-1], prices[i]-minPrice) (prices[i] > minPrice)
+     * dp[i] = dp[i-1]                          (prices[i] < minPrice)
+     * dp[i] = max(dp[i-1], prices[i]-minPrice) (prices[i] >= minPrice)
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param prices
@@ -47,11 +47,11 @@ public class Problem121 {
         int minPrice = prices[0];
 
         for (int i = 1; i < prices.length; i++) {
-            if (prices[i] > minPrice) {
-                dp[i] = Math.max(dp[i - 1], prices[i] - minPrice);
-            } else {
-                dp[i] = dp[i - 1];
+            if (prices[i] < minPrice) {
                 minPrice = prices[i];
+                dp[i] = dp[i - 1];
+            } else {
+                dp[i] = Math.max(dp[i - 1], prices[i] - minPrice);
             }
         }
 
@@ -77,10 +77,10 @@ public class Problem121 {
         int minPrice = prices[0];
 
         for (int i = 1; i < prices.length; i++) {
-            if (prices[i] > minPrice) {
-                dp = Math.max(dp, prices[i] - minPrice);
-            } else {
+            if (prices[i] < minPrice) {
                 minPrice = prices[i];
+            } else {
+                dp = Math.max(dp, prices[i] - minPrice);
             }
         }
 

@@ -43,7 +43,7 @@ public class Problem83 {
         }
 
         //设置头结点，便于第一个节点的删除
-        ListNode hair = new ListNode(Integer.MAX_VALUE);
+        ListNode hair = new ListNode(Integer.MIN_VALUE);
         hair.next = head;
 
         ListNode pre = hair;

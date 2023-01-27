@@ -112,6 +112,7 @@ public class Problem42 {
         int rightMax = 0;
 
         while (left < right) {
+            //更新两边的最大高度
             leftMax = Math.max(leftMax, height[left]);
             rightMax = Math.max(rightMax, height[right]);
 

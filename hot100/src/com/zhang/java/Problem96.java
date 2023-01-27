@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/30 9:26
  * @Author zsy
- * @Description 不同的二叉搜索树 类比Problem95、Problem98、Problem99、Problem230、Offer33、Offer36
+ * @Description 不同的二叉搜索树 二叉搜索树类比Problem95、Problem98、Problem99、Problem230、Offer33、Offer36
  * 给你一个整数 n ，求恰由 n 个节点组成且节点值从 1 到 n 互不相同的 二叉搜索树 有多少种？
  * 返回满足题意的二叉搜索树的种数。
  * <p>

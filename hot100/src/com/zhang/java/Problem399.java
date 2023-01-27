@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/4 10:27
  * @Author zsy
- * @Description 除法求值 图类比Problem207、Problem210、Problem329 并查集类比Problem130、Problem200
+ * @Description 除法求值 图类比Problem133、Problem207、Problem210、Problem329 并查集类比Problem130、Problem200
  * 给你一个变量对数组 equations 和一个实数值数组 values 作为已知条件，
  * 其中 equations[i] = [Ai, Bi] 和 values[i] 共同表示等式 Ai / Bi = values[i] 。
  * 每个 Ai 或 Bi 是一个表示单个变量的字符串。

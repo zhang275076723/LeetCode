@@ -54,8 +54,7 @@ public class Problem11 {
 
     /**
      * 双指针
-     * 容纳的水 = 两端的最小值 * 宽度
-     * 每次移动高度较低的指针
+     * 容纳的水 = 两端中高度的较小值 * 宽度
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param height
@@ -67,6 +66,7 @@ public class Problem11 {
         int right = height.length - 1;
 
         while (left < right) {
+            //取两边高度中较小的值作为容器高度
             if (height[left] < height[right]) {
                 result = Math.max(result, height[left] * (right - left));
                 left++;

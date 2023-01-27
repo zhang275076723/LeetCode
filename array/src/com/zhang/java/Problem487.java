@@ -47,10 +47,13 @@ public class Problem487 {
                     k++;
                 }
 
+                //左指针右移
                 left++;
             }
 
+            //更新最大值
             result = Math.max(result, right - left + 1);
+            //右指针右移
             right++;
         }
 

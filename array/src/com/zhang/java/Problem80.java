@@ -28,42 +28,31 @@ public class Problem80 {
 
     /**
      * 双指针
-     * 第一个指针指向当前遍历的数组下标索引，第二个指针指向当前要插入的下标索引
+     * 第一个指针fast指向遍历的数组下标索引，第二个指针slow指向当前要插入的下标索引
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
      * @return
      */
     public int removeDuplicates(int[] nums) {
-        if (nums == null || nums.length == 0) {
+        if (nums == null) {
             return 0;
         }
 
-        if (nums.length == 1) {
-            return 1;
+        if (nums.length <= 2) {
+            return nums.length;
         }
 
-        int index = 1;
-        //与nums[i]相同元素的个数
-        int count = 1;
-        //遍历到nums[i]的前一个不同元素
-        int num = nums[0];
+        int slow = 2;
 
-        for (int i = 1; i < nums.length; i++) {
-            //当前元素和前一个元素不相同
-            if (num != nums[i]) {
-                nums[index] = nums[i];
-                num = nums[i];
-                count = 1;
-                index++;
-            } else if (num == nums[i] && count < 2) {
-                //当前元素和前一个元素相同，且相同次数不超过2次
-                nums[index] = nums[i];
-                count++;
-                index++;
+        for (int fast = 2; fast < nums.length; fast++) {
+            //当nums[slow−2]和nums[fast]相等时，当前元素nums[fast]不保留，此时nums[slow−2]、nums[slow−1]和nums[fast]都相等
+            if (nums[slow - 2] != nums[fast]) {
+                nums[slow] = nums[fast];
+                slow++;
             }
         }
 
-        return index;
+        return slow;
     }
 }

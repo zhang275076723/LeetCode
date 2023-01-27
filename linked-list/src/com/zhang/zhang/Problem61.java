@@ -40,6 +40,7 @@ public class Problem61 {
             return head;
         }
 
+        //链表长度
         int len = 0;
         ListNode node = head;
 

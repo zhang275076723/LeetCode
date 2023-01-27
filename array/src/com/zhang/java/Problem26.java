@@ -34,34 +34,30 @@ public class Problem26 {
 
     /**
      * 双指针
-     * 第一个指针指向当前遍历的数组下标索引，第二个指针指向当前要插入的下标索引
+     * 第一个指针fast指向遍历的数组下标索引，第二个指针slow指向当前要插入的下标索引
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
      * @return
      */
     public int removeDuplicates(int[] nums) {
-        if (nums == null || nums.length == 0) {
+        if (nums == null) {
             return 0;
         }
 
-        if (nums.length == 1) {
-            return 1;
+        if (nums.length <= 1) {
+            return nums.length;
         }
 
-        //与nums[i]不同的前一个元素
-        int num = nums[0];
-        //nums[i]要插入的索引下标
-        int index = 1;
+        int slow = 1;
 
-        for (int i = 1; i < nums.length; i++) {
-            if (num != nums[i]) {
-                nums[index] = nums[i];
-                num = nums[i];
-                index++;
+        for (int fast = 1; fast < nums.length; fast++) {
+            if (nums[slow - 1] != nums[fast]) {
+                nums[slow] = nums[fast];
+                slow++;
             }
         }
 
-        return index;
+        return slow;
     }
 }

@@ -28,7 +28,7 @@ public class Problem283 {
 
     /**
      * 双指针
-     * 第一个指针指向当前遍历的数组下标索引，第二个指针指向要交换的数组下标索引
+     * 第一个指针指向遍历的数组下标索引，第二个指针指向要交换的数组下标索引
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -42,6 +42,7 @@ public class Problem283 {
         int index = 0;
 
         for (int i = 0; i < nums.length; i++) {
+            //当前元素不为0时，进行交换
             if (nums[i] != 0) {
                 swap(nums, index, i);
                 index++;

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/5/28 14:58
  * @Author zsy
- * @Description 01背包、完全背包、多重背包
+ * @Description 01背包、完全背包、多重背包 类比Problem279、Problem322、Problem343、Problem416、Problem494、Problem518、Problem983、Offer14、Offer14_2
  */
 public class Knapsack {
     public static void main(String[] args) {

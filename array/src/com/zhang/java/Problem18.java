@@ -35,9 +35,9 @@ public class Problem18 {
     }
 
     /**
-     * 双指针
+     * 排序+双指针
      * 先排序，确定第一个和第二个数，左右指针分为指向剩下的两个数
-     * 时间复杂度O(n^3)，空间复杂度O(n)
+     * 时间复杂度O(n^3)，空间复杂度O(n) (归并排序的空间复杂度为O(n))
      *
      * @param nums
      * @param target
@@ -53,10 +53,10 @@ public class Problem18 {
         List<List<Integer>> result = new ArrayList<>();
 
         for (int i = 0; i < nums.length - 3; i++) {
-            //nums[i]和之后的三个元素之和大于target，说明后面没有满足要求的四数之和，直接跳出循环
-            //相加使用long，避免溢出
+            //nums[i]+nums[i+1]+nums[i+2]+nums[i+3]大于target，说明后面没有满足要求的四数之和，直接返回
+            //使用long，避免相加int溢出
             if ((long) nums[i] + nums[i + 1] + nums[i + 2] + nums[i + 3] > target) {
-                break;
+                return result;
             }
 
             //nums[i]去重
@@ -65,8 +65,8 @@ public class Problem18 {
             }
 
             for (int j = i + 1; j < nums.length - 2; j++) {
-                //nums[i]、nums[i]和之后的两个元素之和大于target，说明后面没有满足要求的四数之和，直接跳出循环
-                //相加使用long，避免溢出
+                //nums[i]+nums[j]+nums[j+1]+nums[j+2]大于target，说明后面没有满足要求的四数之和，直接跳出循环
+                //使用long，避免相加int溢出
                 if ((long) nums[i] + nums[j] + nums[j + 1] + nums[j + 2] > target) {
                     break;
                 }
@@ -82,7 +82,7 @@ public class Problem18 {
                 while (left < right) {
                     int sum = nums[i] + nums[j] + nums[left] + nums[right];
 
-                    //四数之和等于target
+                    //四数之和sum等于target，left右移，right左移
                     if (sum == target) {
                         List<Integer> list = new ArrayList<>();
                         list.add(nums[i]);
@@ -91,35 +91,23 @@ public class Problem18 {
                         list.add(nums[right]);
                         result.add(list);
 
-                        //nums[left]去重
-                        while (left < right && nums[left] == nums[left + 1]) {
-                            left++;
-                        }
-
-                        //nums[right]去重
-                        while (left < right && nums[right] == nums[right - 1]) {
-                            right--;
-                        }
-
                         left++;
                         right--;
                     } else if (sum < target) {
-                        //四数之和小于target
-
-                        //nums[left]去重
-                        while (left < right && nums[left] == nums[left + 1]) {
-                            left++;
-                        }
-
+                        //四数之和sum小于target，left右移
                         left++;
                     } else {
-                        //四数之和大于target
+                        //四数之和sum大于target，right左移
+                        right--;
+                    }
 
-                        //nums[right]去重
-                        while (left < right && nums[right] == nums[right - 1]) {
-                            right--;
-                        }
+                    //nums[left]去重
+                    while (left < right && left > j + 1 && nums[left] == nums[left - 1]) {
+                        left++;
+                    }
 
+                    //nums[right]去重
+                    while (left < right && right < nums.length - 1 && nums[right] == nums[right + 1]) {
                         right--;
                     }
                 }

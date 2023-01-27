@@ -53,7 +53,7 @@ public class Problem147 {
                 ListNode temp = hair;
 
                 //找到要插入的位置
-                while(temp.next.val<node.val){
+                while (temp.next.val < node.val) {
                     temp = temp.next;
                 }
 
@@ -63,7 +63,7 @@ public class Problem147 {
                 node.next = temp.next;
                 temp.next = node;
                 //更新node，指向下一个节点
-                node = pre;
+                node = pre.next;
             } else {
                 //当前节点插入在链表末尾
                 pre = node;

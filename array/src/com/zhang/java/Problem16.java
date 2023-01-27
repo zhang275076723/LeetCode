@@ -33,9 +33,9 @@ public class Problem16 {
     }
 
     /**
-     * 双指针
+     * 排序+双指针
      * 先排序，确定第一个元素，左右指针分别指向剩下的两个元素
-     * 时间复杂度O(n^2)，空间复杂度O(logn)
+     * 时间复杂度O(n^2)，空间复杂度O(logn) (快排的空间复杂度为O(logn))
      *
      * @param nums
      * @param target
@@ -48,7 +48,7 @@ public class Problem16 {
 
         quickSort(nums, 0, nums.length - 1);
 
-        int result = Integer.MAX_VALUE;
+        int result = nums[0] + nums[1] + nums[2];
 
         for (int i = 0; i < nums.length - 2; i++) {
             //nums[i]去重
@@ -62,33 +62,30 @@ public class Problem16 {
             while (left < right) {
                 int sum = nums[i] + nums[left] + nums[right];
 
-                //三数之和等于target，直接返回
+                //三数之和sum等于target，直接返回target
                 if (sum == target) {
                     return target;
-                }
-
-                //更新最接近target的result
-                if (Math.abs(sum - target) < Math.abs(result - target)) {
-                    result = sum;
-                }
-
-                //三数之和小于target
-                if (sum < target) {
-                    //nums[left]去重
-                    while (left < right && nums[left] == nums[left + 1]) {
-                        left++;
-                    }
-
+                } else if (sum < target) {
+                    //三数之和sum小于target，left右移
                     left++;
                 } else {
-                    //三数之和大于target
-
-                    //nums[right]去重
-                    while (left < right && nums[right] == nums[right - 1]) {
-                        right--;
-                    }
-
+                    //三数之和sum大于target，right左移
                     right--;
+                }
+
+                //nums[left]去重
+                while (left < right && left > i + 1 && nums[left] == nums[left - 1]) {
+                    left++;
+                }
+
+                //nums[right]去重
+                while (left < right && right < nums.length - 1 && nums[right] == nums[right + 1]) {
+                    right--;
+                }
+
+                //如果sum比result更接近target，更新result
+                if (Math.abs(sum - target) < Math.abs(result - target)) {
+                    result = sum;
                 }
             }
         }
@@ -97,13 +94,11 @@ public class Problem16 {
     }
 
     private void quickSort(int[] nums, int left, int right) {
-        if (left >= right) {
-            return;
+        if (left < right) {
+            int pivot = partition(nums, left, right);
+            quickSort(nums, left, pivot - 1);
+            quickSort(nums, pivot + 1, right);
         }
-
-        int pivot = partition(nums, left, right);
-        quickSort(nums, left, pivot - 1);
-        quickSort(nums, pivot + 1, right);
     }
 
     private int partition(int[] nums, int left, int right) {
@@ -113,13 +108,11 @@ public class Problem16 {
             while (left < right && nums[right] >= temp) {
                 right--;
             }
-
             nums[left] = nums[right];
 
             while (left < right && nums[left] <= temp) {
                 left++;
             }
-
             nums[right] = nums[left];
         }
 

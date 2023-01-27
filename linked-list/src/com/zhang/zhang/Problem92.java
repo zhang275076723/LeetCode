@@ -58,7 +58,7 @@ public class Problem92 {
         //要反转的最后一个节点的后节点
         ListNode next;
 
-        for (int i = 1; i < left; i++) {
+        for (int i = 0; i < left - 1; i++) {
             pre = pre.next;
         }
 
@@ -70,13 +70,16 @@ public class Problem92 {
         }
 
         next = last.next;
-        //反转的最后一个节点指向null
+
+        //断开链表
+        pre.next = null;
         last.next = null;
 
-        //反转部分链表连接
-        pre.next = reverse(first);
+        //反转断开的链表
+        ListNode tempHead = reverse(first);
 
         //重新连接回原链表
+        pre.next = tempHead;
         first.next = next;
 
         return hair.next;

@@ -104,7 +104,7 @@ public class Problem43 {
             return "0";
         }
 
-        //相乘结果的最大长度为m+n
+        //num1和num2相乘的结果数组
         int[] result = new int[num1.length() + num2.length()];
 
         for (int i = num1.length() - 1; i >= 0; i--) {

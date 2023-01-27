@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/7/9 8:42
  * @Author zsy
- * @Description 复制带随机指针的链表 同Offer35
+ * @Description 复制带随机指针的链表 节点复制类比Problem133 同Offer35
  * 给你一个长度为 n 的链表，每个节点包含一个额外增加的随机指针 random ，该指针可以指向链表中的任何节点或空节点。
  * 构造这个链表的 深拷贝。
  * 深拷贝应该正好由 n 个 全新 节点组成，其中每个新节点的值都设为其对应的原节点的值。
@@ -65,7 +65,7 @@ public class Problem138 {
             return null;
         }
 
-        //建立节点和新节点之间的映射
+        //节点和新节点之间的映射map
         Map<Node, Node> map = new HashMap<>();
         Node node = head;
 
@@ -79,9 +79,9 @@ public class Problem138 {
 
         //设置每个新节点的next和random
         while (node != null) {
-            Node tempNode = map.get(node);
-            tempNode.next = map.get(node.next);
-            tempNode.random = map.get(node.random);
+            Node copyNode = map.get(node);
+            copyNode.next = map.get(node.next);
+            copyNode.random = map.get(node.random);
             node = node.next;
         }
 
@@ -144,7 +144,7 @@ public class Problem138 {
         return newHead;
     }
 
-    static class Node {
+    private static class Node {
         int val;
         Node next;
         Node random;

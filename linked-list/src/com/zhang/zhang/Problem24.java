@@ -52,9 +52,11 @@ public class Problem24 {
         ListNode node = head;
 
         while (node != null && node.next != null) {
-            pre.next = node.next;
-            node.next = node.next.next;
-            pre.next.next = node;
+            //node节点的下一个节点
+            ListNode next = node.next;
+            node.next = next.next;
+            next.next = node;
+            pre.next = next;
 
             pre = node;
             node = node.next;
@@ -78,8 +80,8 @@ public class Problem24 {
 
         //head节点的下一个节点
         ListNode next = head.next;
-        //当前节点后面已经反转好的链表头
-        ListNode newHead = swapPairs(head.next.next);
+        //next节点后面已经反转好的链表头节点
+        ListNode newHead = swapPairs2(next.next);
 
         //head和node节点交换，并连接后面链表
         next.next = head;

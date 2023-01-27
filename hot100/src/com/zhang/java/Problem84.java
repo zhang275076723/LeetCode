@@ -105,7 +105,7 @@ public class Problem84 {
             stack.push(i);
         }
 
-        //栈不为空，说明栈中索引对应元素递增，需要分别计算对应面积
+        //栈不为空，说明栈中剩余索引对应元素递增，需要分别计算对应面积
         while (!stack.isEmpty()) {
             //矩形的高
             int h = heights[stack.pop()];

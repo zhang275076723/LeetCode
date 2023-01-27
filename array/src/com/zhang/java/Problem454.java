@@ -41,7 +41,7 @@ public class Problem454 {
 
     /**
      * 哈希表
-     * 先在前两个数组中计算num1+num2和对应的次数map映射，再在后两个数组中计算-(num3+num4)是否在map中
+     * 先在前两个数组中计算num1+num2和对应次数的map映射，然后在后两个数组中计算-(num3+num4)是否在map存在
      * 时间复杂度O(n^2)，空间复杂度O(n^2)
      *
      * @param nums1
@@ -55,6 +55,7 @@ public class Problem454 {
             return 0;
         }
 
+        //key：num1+num2之和，value：出现次数
         Map<Integer, Integer> map = new HashMap<>();
 
         for (int num1 : nums1) {
@@ -68,7 +69,9 @@ public class Problem454 {
         //从map集合中找num3和num4数组之和为-(num3 + num4)的元素
         for (int num3 : nums3) {
             for (int num4 : nums4) {
-                count = count + map.getOrDefault(-(num3 + num4), 0);
+                if (map.containsKey(-(num3 + num4))) {
+                    count = count + map.get(-(num3 + num4));
+                }
             }
         }
 

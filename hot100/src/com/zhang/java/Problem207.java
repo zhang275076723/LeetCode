@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2022/5/13 9:06
  * @Author zsy
- * @Description 课程表 华为机试题 拓扑排序类比Problem210、Problem329
+ * @Description 课程表 华为机试题 拓扑排序类比Problem210、Problem329 图类比Problem133、Problem210、Problem329、Problem399
  * 你这个学期必须选修 numCourses 门课程，记为 0 到 numCourses - 1 。
  * 在选修某些课程之前需要一些先修课程。
  * 先修课程按数组 prerequisites 给出，其中 prerequisites[i] = [ai, bi] ，
@@ -121,7 +121,7 @@ public class Problem207 {
                     //v入度减1
                     inDegree[v]--;
 
-                    //顶点v入度为0，则入队
+                    //邻接顶点v的入度为0，则入队
                     if (inDegree[v] == 0) {
                         queue.offer(v);
                     }
@@ -144,16 +144,14 @@ public class Problem207 {
             }
 
             //找u未被访问的邻接顶点v
-            if (edges[u][v] != 0 && visited[v] != 2) {
-                //邻接顶点v正在访问，说明有环，不存在拓扑排序
-                if (visited[v] == 1) {
-                    hasCircle = true;
-                    return;
-                }
-
+            if (edges[u][v] != 0) {
                 //邻接顶点v没有访问
                 if (visited[v] == 0) {
                     dfs(v, edges, visited);
+                } else if (visited[v] == 1) {
+                    //邻接顶点v正在访问，说明有环，不存在拓扑排序
+                    hasCircle = true;
+                    return;
                 }
             }
         }

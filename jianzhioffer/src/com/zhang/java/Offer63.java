@@ -28,9 +28,9 @@ public class Offer63 {
     /**
      * 动态规划
      * dp[i]：到prices[i]那天获取的最大利润
-     * dp[i] = dp[i-1]                         (prices[i] < minPrice)
-     * dp[i] = max(dp[i-1], price[i]-minPrice) (prices[i] >= minPrice)
-     * 时间复杂度(n)，空间复杂度O(n)
+     * dp[i] = dp[i-1]                          (prices[i] < minPrice)
+     * dp[i] = max(dp[i-1], prices[i]-minPrice) (prices[i] >= minPrice)
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param prices
      * @return

@@ -250,6 +250,7 @@ public class Problem130 {
      * 用数组的形式表示图
      */
     private static class UnionFind {
+        //并查集个数
         private int count;
         //虚拟节点，board中所有边界'O'相连的集合根节点都指向虚拟节点
         private final int dummyIndex;

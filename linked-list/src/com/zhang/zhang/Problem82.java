@@ -43,19 +43,23 @@ public class Problem82 {
         }
 
         //设置头结点，便于第一个节点的删除
-        ListNode hair = new ListNode(Integer.MAX_VALUE);
+        ListNode hair = new ListNode(Integer.MIN_VALUE);
         hair.next = head;
 
-        ListNode node = head;
         ListNode pre = hair;
+        ListNode node = head;
 
         while (node != null && node.next != null) {
+            //当前节点和当前节点的下一个节点相等时，找当前节点后面第一个和当前节点不同的节点
             if (node.val == node.next.val) {
-                while (node != null && pre.next.val == node.val) {
-                    node = node.next;
+                ListNode nextNode = node.next;
+
+                while (nextNode != null && node.val == nextNode.val) {
+                    nextNode = nextNode.next;
                 }
 
-                pre.next = node;
+                pre.next = nextNode;
+                node = nextNode;
             } else {
                 pre = node;
                 node = node.next;
@@ -77,11 +81,10 @@ public class Problem82 {
             return head;
         }
 
-        //当前节点和下一个节点相等，更新头结点
+        //当前节点和下一个节点相等时，找当前节点后面第一个和当前节点不同的节点
         if (head.val == head.next.val) {
             ListNode node = head;
 
-            //找到和head节点值不同的node节点
             while (node != null && head.val == node.val) {
                 node = node.next;
             }

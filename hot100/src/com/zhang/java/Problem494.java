@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/6/10 10:30
  * @Author zsy
- * @Description 目标和 动态规划类比Problem279、Problem322、Problem343、Problem416、Problem518、Offer14、Offer14_2
+ * @Description 目标和 动态规划类比Problem279、Problem322、Problem343、Problem416、Problem518、Problem983、Offer14、Offer14_2、Knapsack
  * 给你一个整数数组 nums 和一个整数 target 。
  * 向数组中的每个整数前添加 '+' 或 '-' ，然后串联起所有整数，可以构造一个 表达式 ：
  * 例如，nums = [2, 1] ，可以在 2 之前添加 '+' ，在 1 之前添加 '-' ，然后串联起来得到表达式 "+2-1" 。
@@ -56,6 +56,7 @@ public class Problem494 {
         }
 
         int sum = 0;
+
         for (int num : nums) {
             sum = sum + num;
         }
@@ -69,7 +70,7 @@ public class Problem494 {
         int neg = (sum - target) / 2;
         int[][] dp = new int[nums.length + 1][neg + 1];
 
-        //dp初始化
+        //dp初始化，nums[0]-nums[i-1]中和为0的方案数为1种
         for (int i = 0; i <= nums.length; i++) {
             dp[i][0] = 1;
         }
@@ -105,6 +106,7 @@ public class Problem494 {
         }
 
         int sum = 0;
+
         for (int num : nums) {
             sum = sum + num;
         }

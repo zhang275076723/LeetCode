@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2022/8/18 9:07
  * @Author zsy
- * @Description 矩阵中的最长递增路径 回溯+预处理类比Problem131、Problem132、Problem139、Problem140、Problem403 拓扑排序类比Problem207、Problem210
+ * @Description 矩阵中的最长递增路径 回溯+预处理类比Problem131、Problem132、Problem139、Problem140、Problem403 拓扑排序类比Problem207、Problem210 图类比Problem133、Problem207、Problem210、Problem399
  * 给定一个 m x n 整数矩阵 matrix ，找出其中 最长递增路径 的长度。
  * 对于每个单元格，你可以往上，下，左，右四个方向移动。
  * 你 不能 在 对角线 方向上移动或移动到 边界外（即不允许环绕）。
@@ -49,7 +49,7 @@ public class Problem329 {
      * @return
      */
     public int longestIncreasingPath(int[][] matrix) {
-        int maxLen = 0;
+        int maxLen = 1;
         int[][] dp = new int[matrix.length][matrix[0].length];
 
         for (int i = 0; i < matrix.length; i++) {
@@ -97,9 +97,9 @@ public class Problem329 {
 
         Queue<int[]> queue = new LinkedList<>();
 
+        //出度为0的节点入队
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
-                //出度为0的节点加入队列
                 if (outDegree[i][j] == 0) {
                     //arr[0]：当前行，arr[1]：当前列
                     queue.offer(new int[]{i, j});
@@ -107,6 +107,7 @@ public class Problem329 {
             }
         }
 
+        //最长递增路径的长度
         int maxLen = 0;
 
         while (!queue.isEmpty()) {

@@ -1,7 +1,7 @@
 package com.zhang.java;
 
 import java.lang.reflect.Array;
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * @Date 2022/11/4 11:26
@@ -38,11 +38,12 @@ public class Problem167 {
         int[] numbers = {2, 7, 11, 15};
         int target = 9;
         System.out.println(Arrays.toString(problem167.twoSum(numbers, target)));
+        System.out.println(Arrays.toString(problem167.twoSum2(numbers, target)));
     }
 
     /**
-     * 双指针
-     * 时间复杂度O(n)，空间复杂度O(1)
+     * 哈希表
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param numbers
      * @param target
@@ -53,13 +54,41 @@ public class Problem167 {
             return null;
         }
 
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < numbers.length; i++) {
+            if (map.containsKey(target - numbers[i])) {
+                return new int[]{i + 1, map.get(target - numbers[i]) + 1};
+            }
+
+            map.put(numbers[i], i);
+        }
+
+        return null;
+    }
+
+    /**
+     * 双指针
+     * 时间复杂度O(n)，空间复杂度O(1)
+     *
+     * @param numbers
+     * @param target
+     * @return
+     */
+    public int[] twoSum2(int[] numbers, int target) {
+        if (numbers == null || numbers.length < 2) {
+            return null;
+        }
+
         int left = 0;
         int right = numbers.length - 1;
 
         while (left < right) {
-            if (numbers[left] + numbers[right] == target) {
+            int sum = numbers[left] + numbers[right];
+
+            if (sum == target) {
                 return new int[]{left + 1, right + 1};
-            } else if (numbers[left] + numbers[right] < target) {
+            } else if (sum < target) {
                 left++;
             } else {
                 right--;

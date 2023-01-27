@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2022/4/16 10:12
  * @Author zsy
- * @Description 合并K个升序链表 字节面试题 类比Problem21、Problem23、Problem25、Problem148、Problem378
+ * @Description 合并K个升序链表 字节面试题 链表类比Problem21、Problem24、Problem25、Problem148、Problem378 归并排序类比Problem148、Problem315、Problem327、Problem493、Offer51
  * 给你一个链表数组，每个链表都已经按升序排列。
  * 请你将所有链表合并到一个升序链表中，返回合并后的链表。
  * <p>
@@ -71,7 +71,7 @@ public class Problem23 {
     }
 
     /**
-     * 分治合并
+     * 归并合并
      * 时间复杂度O((Σi=1 i=logk)(k/2^i)(2^i)*n) = O(kn*logk)，空间复杂度O(logk) (k为链表个数，n为每个链表最长长度)
      *
      * @param lists
@@ -148,39 +148,41 @@ public class Problem23 {
      * 非递归合并两个有序链表
      * 时间复杂度O(m+n)，空间复杂度O(1)
      *
-     * @param list1
-     * @param list2
+     * @param head1
+     * @param head2
      * @return
      */
-    private ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-        if (list1 == null) {
-            return list2;
+    private ListNode mergeTwoLists(ListNode head1, ListNode head2) {
+        if (head1 == null) {
+            return head2;
         }
 
-        if (list2 == null) {
-            return list1;
+        if (head2 == null) {
+            return head1;
         }
 
         //设置头指针，方便合并
         ListNode head = new ListNode();
         ListNode node = head;
+        ListNode node1 = head1;
+        ListNode node2 = head2;
 
-        while (list1 != null && list2 != null) {
-            if (list1.val < list2.val) {
-                node.next = list1;
-                list1 = list1.next;
+        while (node1 != null && node2 != null) {
+            if (node1.val < node2.val) {
+                node.next = node1;
+                node = node.next;
+                node1 = node1.next;
             } else {
-                node.next = list2;
-                list2 = list2.next;
+                node.next = node2;
+                node = node.next;
+                node2 = node2.next;
             }
-
-            node = node.next;
         }
 
-        if (list1 == null) {
-            node.next = list2;
+        if (node1 == null) {
+            node.next = node2;
         } else {
-            node.next = list1;
+            node.next = node1;
         }
 
         return head.next;

@@ -42,7 +42,7 @@ public class Problem307 {
     }
 
     /**
-     * 线段树，用数组表示线段树，适用于：多次求区间元素之和、区间元素的最大值，并且区间内元素多次修改的情况
+     * 线段树，用数组表示线段树，适用于：O(logn)时间内单点修改、区间修改、区间查询(区间元素之和、区间元素的最大值和最小值)
      */
     static class NumArray {
         //需要线段化的数组
@@ -110,8 +110,8 @@ public class Problem307 {
              *
              * @param nums      要建立线段树的数组
              * @param rootIndex 当前节点在线段树数组中的下标索引
-             * @param left      当前区间在nums数组中的左边界
-             * @param right     当前区间在nums数组中的右边界
+             * @param left      当前节点在nums数组中表示区间的左边界
+             * @param right     当前节点在nums数组中表示区间的右边界
              */
             private void buildSegmentTree(int[] nums, int rootIndex, int left, int right) {
                 //当前区间[left,right]长度为1，直接更新当前节点区间元素之和、区间元素的最大值

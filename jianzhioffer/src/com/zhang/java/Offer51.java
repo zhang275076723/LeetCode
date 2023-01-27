@@ -4,7 +4,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/31 17:17
  * @Author zsy
- * @Description 数组中的逆序对 类比Problem315、Problem327、Problem493
+ * @Description 数组中的逆序对 归并排序类比Problem23、Problem148、Problem315、Problem327、Problem493
  * 在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。
  * 输入一个数组，求出这个数组中的逆序对的总数。
  * <p>
@@ -14,11 +14,6 @@ package com.zhang.java;
  * 0 <= 数组长度 <= 50000
  */
 public class Offer51 {
-    /**
-     * 用于归并排序统计逆序对
-     */
-    private int count;
-
     public static void main(String[] args) {
         Offer51 offer51 = new Offer51();
         int[] nums = {7, 5, 6, 4};
@@ -65,21 +60,24 @@ public class Offer51 {
             return 0;
         }
 
-        mergeSort(nums, 0, nums.length - 1, new int[nums.length]);
-
-        return count;
+        return mergeSort(nums, 0, nums.length - 1, new int[nums.length]);
     }
 
-    public void mergeSort(int[] nums, int left, int right, int[] tempArr) {
+    public int mergeSort(int[] nums, int left, int right, int[] tempArr) {
         if (left < right) {
+            int count = 0;
             int mid = left + ((right - left) >> 1);
-            mergeSort(nums, left, mid, tempArr);
-            mergeSort(nums, mid + 1, right, tempArr);
-            merge(nums, left, mid, right, tempArr);
+            count = count + mergeSort(nums, left, mid, tempArr);
+            count = count + mergeSort(nums, mid + 1, right, tempArr);
+            count = count + merge(nums, left, mid, right, tempArr);
+            return count;
         }
+
+        return 0;
     }
 
-    public void merge(int[] nums, int left, int mid, int right, int[] tempArr) {
+    public int merge(int[] nums, int left, int mid, int right, int[] tempArr) {
+        int count = 0;
         int i = left;
         int j = mid + 1;
         int k = left;
@@ -115,5 +113,7 @@ public class Offer51 {
         for (k = left; k <= right; k++) {
             nums[k] = tempArr[k];
         }
+
+        return count;
     }
 }

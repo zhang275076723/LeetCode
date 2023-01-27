@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/14 9:58
  * @Author zsy
- * @Description 课程表 II 拓扑排序类比Problem207、Problem329
+ * @Description 课程表 II 拓扑排序类比Problem207、Problem329 图类比Problem133、Problem207、Problem329、Problem399
  * 现在你总共有 numCourses 门课需要选，记为 0 到 numCourses - 1。
  * 给你一个数组 prerequisites ，其中 prerequisites[i] = [ai, bi] ，表示在选修课程 ai 前 必须 先选修 bi 。
  * 例如，想要学习课程 0 ，你需要先完成课程 1 ，我们用一个匹配来表示：[0,1] 。
@@ -141,7 +141,7 @@ public class Problem210 {
             for (int v : edges.get(u)) {
                 inDegree[v]--;
 
-                //入度为0的顶点入队
+                //邻接顶点v的入度为0，则入队
                 if (inDegree[v] == 0) {
                     queue.offer(v);
                 }
@@ -165,11 +165,8 @@ public class Problem210 {
             //邻接顶点v没有访问
             if (visited[v] == 0) {
                 dfs(v, result, edges, visited);
-                continue;
-            }
-
-            //邻接顶点v正在访问，说明有环，不存在拓扑排序
-            if (visited[v] == 1) {
+            } else if (visited[v] == 1) {
+                //邻接顶点v正在访问，说明有环，不存在拓扑排序
                 hasCircle = true;
                 return;
             }

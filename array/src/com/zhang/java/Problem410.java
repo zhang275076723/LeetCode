@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/8 11:34
  * @Author zsy
- * @Description 分割数组的最大值 美团机试题 类比Problem4、Problem287、Problem378、problem658、Problem1482、FindMaxArrayMinAfterKMinus
+ * @Description 分割数组的最大值 美团机试题 二分查找类比Problem4、Problem287、Problem378、problem658、Problem1482、FindMaxArrayMinAfterKMinus
  * 给定一个非负整数数组 nums 和一个整数 m ，你需要将这个数组分成 m 个非空的连续子数组。
  * 设计一个算法使得这 m 个子数组各自和的最大值最小。
  * 输入：nums = [7,2,5,10,8], m = 2

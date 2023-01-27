@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/24 9:31
  * @Author zsy
- * @Description 翻转对 华为机试题 类比Problem315、Problem327、Offer51
+ * @Description 翻转对 华为机试题 归并排序类比Problem23、Problem148、Problem315、Problem327、Offer51
  * 给定一个数组 nums ，如果 i < j 且 nums[i] > 2*nums[j] 我们就将 (i, j) 称作一个重要翻转对。
  * 你需要返回给定数组中的重要翻转对的数量。
  * <p>
@@ -17,11 +17,6 @@ package com.zhang.java;
  * 输入数组中的所有数字都在32位整数的表示范围内。
  */
 public class Problem493 {
-    /**
-     * 用于归并排序统计翻转对
-     */
-    private int count = 0;
-
     public static void main(String[] args) {
         Problem493 problem493 = new Problem493();
         int[] nums = {1, 3, 2, 3, 1};
@@ -39,9 +34,9 @@ public class Problem493 {
     public int reversePairs(int[] nums) {
         int count = 0;
 
-        for (int i = 0; i < nums.length; i++) {
+        for (int i = 0; i < nums.length - 1; i++) {
             for (int j = i + 1; j < nums.length; j++) {
-                //保证nums[j]*2不会超过int范围
+                //long避免int溢出
                 if (nums[i] > (long) nums[j] * 2) {
                     count++;
                 }
@@ -65,21 +60,24 @@ public class Problem493 {
             return 0;
         }
 
-        mergeSort(nums, 0, nums.length - 1, new int[nums.length]);
-
-        return count;
+        return mergeSort(nums, 0, nums.length - 1, new int[nums.length]);
     }
 
-    private void mergeSort(int[] nums, int left, int right, int[] tempArr) {
+    private int mergeSort(int[] nums, int left, int right, int[] tempArr) {
         if (left < right) {
+            int count = 0;
             int mid = left + ((right - left) >> 1);
-            mergeSort(nums, left, mid, tempArr);
-            mergeSort(nums, mid + 1, right, tempArr);
-            merge(nums, left, mid, right, tempArr);
+            count = count + mergeSort(nums, left, mid, tempArr);
+            count = count + mergeSort(nums, mid + 1, right, tempArr);
+            count = count + merge(nums, left, mid, right, tempArr);
+            return count;
         }
+
+        return 0;
     }
 
-    private void merge(int[] nums, int left, int mid, int right, int[] tempArr) {
+    private int merge(int[] nums, int left, int mid, int right, int[] tempArr) {
+        int count = 0;
         int i = left;
         int j = mid + 1;
         int k = left;
@@ -126,5 +124,7 @@ public class Problem493 {
         for (k = left; k <= right; k++) {
             nums[k] = tempArr[k];
         }
+
+        return count;
     }
 }

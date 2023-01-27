@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/5/24 8:42
  * @Author zsy
- * @Description 零钱兑换 腾讯面试题 动态规划类比Problem279、Problem343、Problem416、Problem494、Problem518、Offer14、Offer14_2
+ * @Description 零钱兑换 腾讯面试题 动态规划类比Problem279、Problem343、Problem416、Problem494、Problem518、Problem983、Offer14、Offer14_2、Knapsack
  * 给你一个整数数组 coins ，表示不同面额的硬币；以及一个整数 amount ，表示总金额。
  * 计算并返回可以凑成总金额所需的 最少的硬币个数 。如果没有任何一种硬币组合能组成总金额，返回-1 。
  * 你可以认为每种硬币的数量是无限的。
@@ -39,12 +39,13 @@ public class Problem322 {
         System.out.println(problem322.coinChange(coins, amount));
         System.out.println(problem322.coinChange2(coins, amount));
         System.out.println(problem322.coinChange3(coins, amount));
+        System.out.println(problem322.coinChange4(coins, amount));
     }
 
     /**
      * 动态规划 完全背包
      * dp[i][j]：coins[0]-coins[i-1]凑成金额j所需的最少的硬币个数
-     * dp[i][j] = dp[i-1][j]                                               (coins[i-1] > j)
+     * dp[i][j] = dp[i-1][j]                                          (coins[i-1] > j)
      * dp[i][j = min(dp[i-1][j], dp[i][j-coins[i-1]] + 1)             (coins[i-1] <= j)
      * 时间复杂度O(n*amount)，空间复杂度O(n*amount) (n=coins.length)
      *
@@ -80,7 +81,7 @@ public class Problem322 {
     /**
      * 动态规划优化，使用滚动数组
      * dp[j]：coins[0]-coins[i-1]凑成金额j所需的最少的硬币个数
-     * dp[j] = dp[j]                                               (coins[i-1] > j)
+     * dp[j] = dp[j]                                       (coins[i-1] > j)
      * dp[j] = min(dp[j], dp[j-coins[i-1]] + 1)            (coins[i-1] <= j)
      * 时间复杂度O(n*amount)，空间复杂度O(amount) (n=coins.length)
      *
@@ -108,13 +109,42 @@ public class Problem322 {
     }
 
     /**
-     * 回溯+剪枝
+     * 动态规划
+     * dp[i]：凑成金额i所需的最少的硬币个数
+     * dp[i] = min(dp[i-coins[j]] + 1) (1 <= j <= coins.length)
+     * 时间复杂度O(n*amount)，空间复杂度O(amount) (n=coins.length)
      *
      * @param coins
      * @param amount
      * @return
      */
     public int coinChange3(int[] coins, int amount) {
+        //dp[0]=0，用于初始化
+        int[] dp = new int[amount + 1];
+
+        for (int i = 1; i <= amount; i++) {
+            //初始化为Integer.MAX_VALUE，表示当前金额i不能用硬币凑成
+            dp[i] = Integer.MAX_VALUE;
+
+            for (int j = 1; j <= coins.length; j++) {
+                //当前金额i减去coins[j-1]大于等于0，并且金额i-coins[j-1]能用硬币凑成
+                if (i - coins[j - 1] >= 0 && dp[i - coins[j - 1]] != Integer.MAX_VALUE) {
+                    dp[i] = Math.min(dp[i], dp[i - coins[j - 1]] + 1);
+                }
+            }
+        }
+
+        return dp[amount] == Integer.MAX_VALUE ? -1 : dp[amount];
+    }
+
+    /**
+     * 回溯+剪枝
+     *
+     * @param coins
+     * @param amount
+     * @return
+     */
+    public int coinChange4(int[] coins, int amount) {
         if (amount < 0) {
             return -1;
         }

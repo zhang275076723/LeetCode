@@ -76,9 +76,9 @@ public class Problem15 {
     }
 
     /**
-     * 双指针
+     * 排序+双指针
      * 先排序，确定第一个元素，左右指针分别指向剩下的两个元素
-     * 时间复杂度O(n^2)，空间复杂度O(logn)
+     * 时间复杂度O(n^2)，空间复杂度O(logn) (堆排序的空间复杂度为O(logn))
      *
      * @param nums
      * @return
@@ -94,9 +94,9 @@ public class Problem15 {
         List<List<Integer>> result = new ArrayList<>();
 
         for (int i = 0; i < nums.length - 2; i++) {
-            //当前元素大于0，和之后两个元素相加，三者之和肯定大于0，直接跳出循环
+            //当前元素大于0，和之后两个元素相加，三者之和肯定大于0，直接返回
             if (nums[i] > 0) {
-                break;
+                return result;
             }
 
             //nums[i]去重
@@ -110,7 +110,7 @@ public class Problem15 {
             while (left < right) {
                 int sum = nums[i] + nums[left] + nums[right];
 
-                //三数之和等于0
+                //三数之和sum等于0，left右移，right左移
                 if (sum == 0) {
                     ArrayList<Integer> list = new ArrayList<>();
                     list.add(nums[i]);
@@ -118,35 +118,23 @@ public class Problem15 {
                     list.add(nums[right]);
                     result.add(list);
 
-                    //nums[left]去重
-                    while (left < right && nums[left] == nums[left + 1]) {
-                        left++;
-                    }
-
-                    //nums[right]去重
-                    while (left < right && nums[right] == nums[right - 1]) {
-                        right--;
-                    }
-
                     left++;
                     right--;
                 } else if (sum < 0) {
-                    //三数之和小于0
-
-                    //nums[left]去重
-                    while (left < right && nums[left] == nums[left + 1]) {
-                        left++;
-                    }
-
+                    //三数之和sum小于0，left右移
                     left++;
                 } else {
-                    //三数之和大于0
+                    //三数之和sum大于0，right左移
+                    right--;
+                }
 
-                    //nums[right]去重
-                    while (left < right && nums[right] == nums[right - 1]) {
-                        right--;
-                    }
+                //nums[left]去重
+                while (left < right && left > i + 1 && nums[left] == nums[left - 1]) {
+                    left++;
+                }
 
+                //nums[right]去重
+                while (left < right && right < nums.length - 1 && nums[right] == nums[right + 1]) {
                     right--;
                 }
             }
@@ -172,6 +160,7 @@ public class Problem15 {
             int temp = nums[i];
             nums[i] = nums[0];
             nums[0] = temp;
+
             heapify(nums, 0, i);
         }
     }
@@ -185,25 +174,26 @@ public class Problem15 {
      * @param heapSize
      */
     public void heapify(int[] nums, int i, int heapSize) {
-        int maxIndex = i;
+        int index = i;
+        int leftIndex = i * 2 + 1;
+        int rightIndex = i * 2 + 2;
 
-        //比较左子节点
-        if (2 * i + 1 < heapSize && nums[2 * i + 1] > nums[maxIndex]) {
-            maxIndex = 2 * i + 1;
+
+        if (leftIndex < heapSize && nums[leftIndex] > nums[index]) {
+            index = leftIndex;
         }
 
-        //比较右子节点
-        if (2 * i + 2 < heapSize && nums[2 * i + 2] > nums[maxIndex]) {
-            maxIndex = 2 * i + 2;
+        if (rightIndex < heapSize && nums[rightIndex] > nums[index]) {
+            index = rightIndex;
         }
 
-        if (maxIndex != i) {
+        if (index != i) {
             int temp = nums[i];
-            nums[i] = nums[maxIndex];
-            nums[maxIndex] = temp;
+            nums[i] = nums[index];
+            nums[index] = temp;
 
             //继续向下整堆
-            heapify(nums, maxIndex, heapSize);
+            heapify(nums, index, heapSize);
         }
     }
 }

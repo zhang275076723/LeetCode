@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/12/7 09:16
  * @Author zsy
- * @Description 找到 K 个最接近的元素 类比Problem4、Problem287、Problem378、Problem410、Problem1482、FindMaxArrayMinAfterKMinus
+ * @Description 找到 K 个最接近的元素 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem1482、FindMaxArrayMinAfterKMinus
  * 给定一个 排序好 的数组 arr ，两个整数 k 和 x ，从数组中找到最靠近 x（两数之差最小）的 k 个数。
  * 返回的结果必须要是按升序排好的。
  * 整数 a 比整数 b 更接近 x 需要满足：
@@ -112,7 +112,7 @@ public class Problem658 {
     /**
      * 二分查找变形，看到有序数组，就要想到二分查找
      * 对[left,right]进行二分查找，每个元素都表示长度为k+1的区间左边界，left为数组下标索引0，right为数组数组下标索引n-k，
-     * 比较以mid为左边界的区间[mid,mid+k]，两个端点arr[mid]和arr[mid+k]哪个距离x远
+     * 比较以mid为左边界的区间[mid,mid+k]，两个端点arr[mid]和arr[mid+k]哪个距离x更近
      * 如果x-arr[mid]大于arr[mid+k]-x，则以mid+k为左边界的区间比以mid为左边界的区间更接近x，继续往mid右边寻找区间，left=mid+1；
      * 如果x-arr[mid]小于等于arr[mid+k]-x，则以mid为左边界的区间是最接近x区间，或以mid为左边界的区间比以mid+k为左边界的区间更接近x，继续往mid左边寻找区间，right=mid
      * 时间复杂度O(log(n-k))，空间复杂度O(1)
@@ -128,7 +128,7 @@ public class Problem658 {
         int right = arr.length - k;
         int mid;
 
-        //比较以mid为左边界的区间[mid,mid+k]，两个端点arr[mid]和arr[mid+k]哪个距离x远
+        //比较以mid为左边界的区间[mid,mid+k]，两个端点arr[mid]和arr[mid+k]哪个距离x更近
         while (left < right) {
             mid = left + ((right - left) >> 1);
 
@@ -143,6 +143,7 @@ public class Problem658 {
 
         List<Integer> list = new ArrayList<>();
 
+        //区间[left,mid+k-1]即为最接近x的k个数
         for (int i = left; i < left + k; i++) {
             list.add(arr[i]);
         }

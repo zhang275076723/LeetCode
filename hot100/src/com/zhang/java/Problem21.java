@@ -55,24 +55,26 @@ public class Problem21 {
         //设置头指针，方便合并
         ListNode head = new ListNode();
         ListNode node = head;
+        ListNode node1 = list1;
+        ListNode node2 = list2;
 
         //合并
-        while (list1 != null && list2 != null) {
-            if (list1.val < list2.val) {
-                node.next = list1;
-                list1 = list1.next;
+        while (node1 != null && node2 != null) {
+            if (node1.val < node2.val) {
+                node.next = node1;
+                node = node.next;
+                node1 = node1.next;
             } else {
-                node.next = list2;
-                list2 = list2.next;
+                node.next = node2;
+                node = node.next;
+                node2 = node2.next;
             }
-
-            node = node.next;
         }
 
-        if (list1 == null) {
-            node.next = list2;
+        if (node1 == null) {
+            node.next = node2;
         } else {
-            node.next = list1;
+            node.next = node1;
         }
 
         return head.next;
