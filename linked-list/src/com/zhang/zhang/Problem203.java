@@ -41,8 +41,8 @@ public class Problem203 {
             return null;
         }
 
-        //设置头结点，方便第一个节点的删除
-        ListNode hair = new ListNode(Integer.MAX_VALUE);
+        //设置头结点，方便处理
+        ListNode hair = new ListNode();
         hair.next = head;
 
         ListNode node = hair;

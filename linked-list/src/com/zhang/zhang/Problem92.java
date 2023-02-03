@@ -45,17 +45,17 @@ public class Problem92 {
             return head;
         }
 
-        //设置头结点，使原先头结点成为普通节点，避免特殊情况的考虑
-        ListNode hair = new ListNode(0);
+        //设置头结点，方便处理
+        ListNode hair = new ListNode();
         hair.next = head;
 
-        //要反转的第一个节点的前节点
+        //要反转的第一个节点的前一个节点
         ListNode pre = hair;
         //要反转的第一个节点
         ListNode first;
         //要反转的最后一个节点
         ListNode last;
-        //要反转的最后一个节点的后节点
+        //要反转的最后一个节点的后一个节点
         ListNode next;
 
         for (int i = 0; i < left - 1; i++) {

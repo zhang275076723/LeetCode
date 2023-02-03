@@ -130,23 +130,25 @@ public class Problem49 {
         }
     }
 
-    private void heapify(char[] chars, int index, int heapSize) {
-        int maxIndex = index;
-        int leftIndex = index * 2 + 1;
-        int rightIndex = index * 2 + 2;
+    private void heapify(char[] chars, int i, int heapSize) {
+        int index = i;
+        int leftIndex = i * 2 + 1;
+        int rightIndex = i * 2 + 2;
 
-        if (leftIndex < heapSize && chars[leftIndex] > chars[maxIndex]) {
-            maxIndex = leftIndex;
-        }
-        if (rightIndex < heapSize && chars[rightIndex] > chars[maxIndex]) {
-            maxIndex = rightIndex;
+        if (leftIndex < heapSize && chars[leftIndex] > chars[index]) {
+            index = leftIndex;
         }
 
-        if (maxIndex != index) {
-            char temp = chars[maxIndex];
-            chars[maxIndex] = chars[index];
+        if (rightIndex < heapSize && chars[rightIndex] > chars[index]) {
+            index = rightIndex;
+        }
+
+        if (index != i) {
+            char temp = chars[i];
+            chars[i] = chars[index];
             chars[index] = temp;
-            heapify(chars, maxIndex, heapSize);
+
+            heapify(chars, index, heapSize);
         }
     }
 }

@@ -42,7 +42,7 @@ public class Offer38 {
 
         List<String> list = new ArrayList<>();
 
-        backtrack(c, 0, new StringBuilder(), new boolean[s.length()], list);
+        backtrack(0, c, new StringBuilder(), new boolean[s.length()], list);
 
         String[] result = new String[list.size()];
 
@@ -54,13 +54,13 @@ public class Offer38 {
     }
 
     /**
-     * @param c       要全排列的字符串s
      * @param t       当前访问c的索引下标
+     * @param c       要全排列的字符串s
      * @param sb      用sb表示每个结果
      * @param visited 访问数组
      * @param result  结果集合
      */
-    private void backtrack(char[] c, int t, StringBuilder sb, boolean[] visited, List<String> result) {
+    private void backtrack(int t, char[] c, StringBuilder sb, boolean[] visited, List<String> result) {
         if (t == c.length) {
             result.add(sb.toString());
             return;
@@ -79,7 +79,7 @@ public class Offer38 {
             visited[i] = true;
             sb.append(c[i]);
 
-            backtrack(c, t + 1, sb, visited, result);
+            backtrack(t + 1, c, sb, visited, result);
 
             sb.delete(sb.length() - 1, sb.length());
             visited[i] = false;
@@ -98,33 +98,34 @@ public class Offer38 {
     private void merge(char[] c, int left, int mid, int right, char[] tempArr) {
         int i = left;
         int j = mid + 1;
-        int index = left;
+        int k = left;
 
         while (i <= mid && j <= right) {
             if (c[i] < c[j]) {
-                tempArr[index] = c[i];
+                tempArr[k] = c[i];
                 i++;
+                k++;
             } else {
-                tempArr[index] = c[j];
+                tempArr[k] = c[j];
                 j++;
+                k++;
             }
-            index++;
         }
 
         while (i <= mid) {
-            tempArr[index] = c[i];
+            tempArr[k] = c[i];
             i++;
-            index++;
+            k++;
         }
 
         while (j <= right) {
-            tempArr[index] = c[j];
+            tempArr[k] = c[j];
             j++;
-            index++;
+            k++;
         }
 
-        for (index = left; index <= right; index++) {
-            c[index] = tempArr[index];
+        for (k = left; k <= right; k++) {
+            c[k] = tempArr[k];
         }
     }
 }

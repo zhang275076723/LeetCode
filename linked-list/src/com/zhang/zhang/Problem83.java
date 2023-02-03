@@ -3,7 +3,7 @@ package com.zhang.zhang;
 /**
  * @Date 2022/6/21 11:42
  * @Author zsy
- * @Description 删除排序链表中的重复元素 类比Problem82
+ * @Description 删除排序链表中的重复元素 类比Problem82、Problem92、Problem206
  * 给定一个已排序的链表的头 head ， 删除所有重复的元素，使每个元素只出现一次 。
  * 返回 已排序的链表 。
  * <p>

@@ -54,13 +54,16 @@ public class Problem2 {
         //设置头结点，方便处理
         ListNode head = new ListNode();
         ListNode node = head;
+        ListNode node1 = l1;
+        ListNode node2 = l2;
+
         //进位
         int carry = 0;
         //当前位之和
         int sum;
 
-        while (l1 != null && l2 != null) {
-            sum = l1.val + l2.val + carry;
+        while (node1 != null && node2 != null) {
+            sum = node1.val + node2.val + carry;
 
             if (sum >= 10) {
                 sum = sum - 10;
@@ -71,12 +74,12 @@ public class Problem2 {
 
             node.next = new ListNode(sum);
             node = node.next;
-            l1 = l1.next;
-            l2 = l2.next;
+            node1 = node1.next;
+            node2 = node2.next;
         }
 
-        while (l1 != null) {
-            sum = l1.val + carry;
+        while (node1 != null) {
+            sum = node1.val + carry;
 
             if (sum >= 10) {
                 sum = sum - 10;
@@ -87,11 +90,11 @@ public class Problem2 {
 
             node.next = new ListNode(sum);
             node = node.next;
-            l1 = l1.next;
+            node1 = node1.next;
         }
 
-        while (l2 != null) {
-            sum = l2.val + carry;
+        while (node2 != null) {
+            sum = node2.val + carry;
 
             if (sum >= 10) {
                 sum = sum - 10;
@@ -102,7 +105,7 @@ public class Problem2 {
 
             node.next = new ListNode(sum);
             node = node.next;
-            l2 = l2.next;
+            node2 = node2.next;
         }
 
         //最后一位进位处理

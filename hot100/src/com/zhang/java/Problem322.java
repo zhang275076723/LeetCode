@@ -46,7 +46,7 @@ public class Problem322 {
      * 动态规划 完全背包
      * dp[i][j]：coins[0]-coins[i-1]凑成金额j所需的最少的硬币个数
      * dp[i][j] = dp[i-1][j]                                          (coins[i-1] > j)
-     * dp[i][j = min(dp[i-1][j], dp[i][j-coins[i-1]] + 1)             (coins[i-1] <= j)
+     * dp[i][j] = min(dp[i-1][j], dp[i][j-coins[i-1]] + 1)            (coins[i-1] <= j)
      * 时间复杂度O(n*amount)，空间复杂度O(n*amount) (n=coins.length)
      *
      * @param coins

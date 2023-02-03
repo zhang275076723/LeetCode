@@ -44,12 +44,13 @@ public class FindMaxArrayMinAfterKMinus {
             heapify(arr, 0, arr.length);
         }
 
+        //大根堆堆顶元素即为减去k次x之后的最大值
         return arr[0];
     }
 
     /**
      * 二分查找变形，使...最大值尽可能小，就要想到二分查找
-     * 对[left,right]进行二分查找，left为int最小值，right为int最大值，统计数组中元素都小于等于mid，减去x的次数count，
+     * 对[left,right]进行二分查找，left为arr最小值减去kx，right为arr最大值，统计数组中元素都小于等于mid，减去x的次数count，
      * 如果count大于k，则数组中元素减去x，执行k次之后的最大值在mid右边，left=mid+1；
      * 如果count小于等于mid，则数组中元素减去x，执行k次之后的最大值在mid或mid左边，right=mid
      * 时间复杂度O(n*log(right-left))=O(n)，空间复杂度O(1) (n = arr.length，二分查找的范围为int范围，log(right-left)为常数)
@@ -60,13 +61,21 @@ public class FindMaxArrayMinAfterKMinus {
      * @return
      */
     public int findMaxArrayMinAfterKMinus2(int[] arr, int k, int x) {
-        int left = Integer.MIN_VALUE;
-        int right = Integer.MAX_VALUE;
+        //数组中最小值减去kx
+        int left = Integer.MAX_VALUE;
+        //数组中最大值作为右边界
+        int right = arr[0];
         int mid;
 
+        for (int num : arr) {
+            left = Math.min(left, num);
+            right = Math.max(right, num);
+        }
+
+        left = left - k * x;
+
         while (left < right) {
-            //使用long，避免int溢出
-            mid = (int) (left + (((long) right - left) >> 1));
+            mid = left + ((right - left) >> 1);
 
             //数组中元素都小于等于mid，需要减去x的次数
             int count = 0;

@@ -144,7 +144,7 @@ public class Problem214 {
         int[] next = new int[p.length()];
         //当前字符串索引
         int i;
-        //当前字符串相同的最长前缀和后缀长度
+        //当前字符串相同的最长前缀和最长后缀的公共长度
         int j = 0;
 
         for (i = 1; i < p.length(); i++) {

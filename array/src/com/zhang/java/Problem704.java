@@ -80,14 +80,6 @@ public class Problem704 {
             return -1;
         }
 
-        if (left == right) {
-            if (nums[left] == target) {
-                return left;
-            }
-
-            return -1;
-        }
-
         int mid = left + ((right - left) >> 1);
 
         if (nums[mid] == target) {

@@ -61,8 +61,8 @@ public class Problem369 {
             node = node.next;
         }
 
-        //最高位有进位
-        if (node == null && carry != 0) {
+        //最高位有进位，创建新节点
+        if (carry != 0) {
             pre.next = new ListNode(carry);
         }
 

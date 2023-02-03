@@ -46,6 +46,7 @@ public class Problem48 {
     }
 
     /**
+     * 模拟
      * 每四个元素是一组，由外到内按照一圈一圈调整每一组的四个元素，不管怎么旋转，只是调整了这四个元素的位置
      * 矩阵四个角的元素：matrix[start][start]、matrix[start][end]、matrix[end][end]、matrix[end][start]
      * 要调整每组四个元素：matrix[start][start + j]、matrix[start + j][end]、matrix[end][end - j]、matrix[end - j][start]

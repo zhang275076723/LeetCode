@@ -45,7 +45,7 @@ public class Offer26 {
         }
 
         //判断B树是否是A树的子结构，或者B树是否是A树左子树的子结构，或者树是否是A树右子树的子结构
-        return contain(A, B) || isSubStructure(A.left, B) || isSubStructure(A.right, B);
+        return contains(A, B) || isSubStructure(A.left, B) || isSubStructure(A.right, B);
     }
 
     /**
@@ -130,7 +130,7 @@ public class Offer26 {
      * @param B
      * @return
      */
-    public boolean contain(TreeNode A, TreeNode B) {
+    public boolean contains(TreeNode A, TreeNode B) {
         //A树为空，B树为空，则说明B树是A树的子结构
         if (A == null && B == null) {
             return true;
@@ -152,7 +152,7 @@ public class Offer26 {
         }
 
         //判断B树的左子树是否是A树的左子树的子结构，并且判断B树的右子树是否是A树的右子树的子结构
-        return contain(A.left, B.left) && contain(A.right, B.right);
+        return contains(A.left, B.left) && contains(A.right, B.right);
     }
 
     private TreeNode buildTree(String[] data) {

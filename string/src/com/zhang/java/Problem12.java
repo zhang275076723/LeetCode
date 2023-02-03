@@ -64,6 +64,7 @@ public class Problem12 {
         int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
         StringBuilder sb = new StringBuilder();
 
+        //由大到小遍历数字
         for (int i = 0; i < values.length; i++) {
             while (num >= values[i]) {
                 num = num - values[i];

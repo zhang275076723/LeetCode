@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/4/4 16:36
  * @Author zsy
- * @Description 和为s的连续正数序列 滑动窗口类比Problem3、Problem76、Problem209、Problem239、Problem438、Problem567、Offer48、Offer59 前缀和类比Problem209、Problem437、Problem560
+ * @Description 和为s的连续正数序列 滑动窗口类比Problem3、Problem76、Problem209、Problem239、Problem438、Problem567、Offer48、Offer59 前缀和类比Problem209、Problem327、Problem437、Problem560、Problem862
  * 输入一个正整数 target ，输出所有和为 target 的连续正整数序列（至少含有两个数）。
  * 序列内的数字由小到大排列，不同序列按照首个数字从小到大排列。
  * 1 <= target <= 10^5
@@ -166,8 +166,8 @@ public class Offer57_2 {
     }
 
     /**
-     * 前缀和
-     * 看到连续子数组，想到滑动窗口和前缀和 (注意：滑动窗口不适合有负数的情况，有负数前缀和仍然可用)
+     * 前缀和 (注意：滑动窗口不适合有负数元素的情况，前缀和适合有负数元素的情况)
+     * 看到连续子数组，就要想到滑动窗口和前缀和
      * 时间复杂度O(target)，空间复杂度O(target)
      *
      * @param target
@@ -183,12 +183,12 @@ public class Offer57_2 {
         //List<int[]>适用于：arr[][]一维不确定，二维确定的情况
         //List<Integer>[]适用于：arr[][]一维确定，二维不确定的情况
         List<int[]> list = new ArrayList<>();
-        //当前前缀和
-        int sum = 0;
         //key：当前区间和，value：当前区间和的最后一个元素值
         Map<Integer, Integer> map = new HashMap<>();
         //用于1到k的连续序列之和为target的情况
         map.put(0, 0);
+        //当前前缀和
+        int sum = 0;
 
         for (int i = 1; i <= target / 2 + 1; i++) {
             sum = sum + i;
@@ -204,7 +204,7 @@ public class Offer57_2 {
                 list.add(temp);
             }
 
-            //将当前1到i的连续序列之和sum和最后一个元素i，加入map中
+            //1到i的连续序列之和sum和最后一个元素i，加入map中
             map.put(sum, i);
         }
 

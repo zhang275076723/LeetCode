@@ -52,12 +52,12 @@ public class Problem29 {
             return 0;
         }
 
-        //除法结果溢出，返回int表示的最大值
+        //特殊情况处理，除法结果溢出，返回int表示的最大值
         if (dividend == Integer.MIN_VALUE && divisor == -1) {
             return Integer.MAX_VALUE;
         }
 
-        //除法结果result相加时溢出，返回int表示的最小值
+        //特殊情况处理，被除数为int表示的最小值，除数为1，返回int表示的最小值
         if (dividend == Integer.MIN_VALUE && divisor == 1) {
             return Integer.MIN_VALUE;
         }
@@ -90,7 +90,7 @@ public class Problem29 {
             //判断bit*divisor是否大于等于dividend(因为dividend和divisor都是负数)，
             //如果大于等于，则result加上bit，dividend减去bit*divisor
             //(bit << 1) * divisor < 0，避免相乘时int溢出
-            while ((bit << 1) * divisor < 0 && (bit << 1) * divisor >= dividend) {
+            while ((bit << 1) * divisor < 0 && dividend <= (bit << 1) * divisor) {
                 bit = bit << 1;
 
                 //bit在int表示的范围之内最大值为2^30，如果再往左移一位，则溢出变为负数

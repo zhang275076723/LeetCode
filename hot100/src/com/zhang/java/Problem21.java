@@ -71,10 +71,10 @@ public class Problem21 {
             }
         }
 
-        if (node1 == null) {
-            node.next = node2;
-        } else {
+        if (node1 != null) {
             node.next = node1;
+        } else {
+            node.next = node2;
         }
 
         return head.next;

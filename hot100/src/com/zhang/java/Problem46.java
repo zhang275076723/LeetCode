@@ -55,15 +55,17 @@ public class Problem46 {
         }
 
         for (int i = 0; i < nums.length; i++) {
-            if (!visited[i]) {
-                list.add(nums[i]);
-                visited[i] = true;
-
-                backtrack(t + 1, nums, visited, result, list);
-
-                list.remove(list.size() - 1);
-                visited[i] = false;
+            if (visited[i]) {
+                continue;
             }
+
+            visited[i] = true;
+            list.add(nums[i]);
+
+            backtrack(t + 1, nums, visited, result, list);
+
+            list.remove(list.size() - 1);
+            visited[i] = false;
         }
     }
 }

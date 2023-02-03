@@ -31,7 +31,6 @@ public class Problem438 {
         String s = "cbaebabacd";
         String p = "abc";
         System.out.println(problem438.findAnagrams(s, p));
-        System.out.println(problem438.findAnagrams2(s, p));
     }
 
     /**
@@ -43,61 +42,11 @@ public class Problem438 {
      * @return
      */
     public List<Integer> findAnagrams(String s, String p) {
-        if (p.length() > s.length()) {
-            return new ArrayList<>();
-        }
-
-        List<Integer> result = new ArrayList<>();
-        //存放s中每个字母出现的次数
-        int[] sArr = new int[26];
-        //存放p中每个字母出现的次数
-        int[] pArr = new int[26];
-
-        for (char c : p.toCharArray()) {
-            pArr[c - 'a']++;
-        }
-
-        int left = 0;
-        int right = 0;
-
-        while (right < s.length()) {
-            //将右指针所指字符加入sArr
-            sArr[s.charAt(right) - 'a']++;
-
-            if (right - left + 1 == p.length()) {
-                //如果sArr和pArr相等，说明找到一个异位词
-                if (Arrays.equals(sArr, pArr)) {
-                    result.add(left);
-                }
-
-                //左指针所指字符从sArr删除
-                sArr[s.charAt(left) - 'a']--;
-                left++;
-            }
-
-            right++;
-        }
-
-        return result;
-    }
-
-    /**
-     * 滑动窗口，双指针
-     * 同findAnagrams()，这里存储字符使用的是hashMap，而不是数组
-     * 时间复杂度O(s.length*|C|)，空间复杂度O(|C|) (字符串仅包含小写字母，所以|C|=26)
-     *
-     * @param s
-     * @param p
-     * @return
-     */
-    public List<Integer> findAnagrams2(String s, String p) {
         if (s.length() < p.length()) {
             return new ArrayList<>();
         }
 
         List<Integer> list = new ArrayList<>();
-        int left = 0;
-        int right = 0;
         Map<Character, Integer> sMap = new HashMap<>();
         Map<Character, Integer> pMap = new HashMap<>();
 
@@ -105,10 +54,14 @@ public class Problem438 {
             pMap.put(c, pMap.getOrDefault(c, 0) + 1);
         }
 
+        int left = 0;
+        int right = 0;
+
         while (right < s.length()) {
             char c = s.charAt(right);
             sMap.put(c, sMap.getOrDefault(c, 0) + 1);
 
+            //当前窗口大小和p的长度相同时，才比较是否是p的异位词，并且left指针右移
             if (right - left + 1 == p.length()) {
                 if (isCover(sMap, pMap)) {
                     list.add(left);
@@ -125,9 +78,16 @@ public class Problem438 {
         return list;
     }
 
+    /**
+     * sMap中存在的字符能否覆盖pMap中存在的字符
+     *
+     * @param sMap
+     * @param pMap
+     * @return
+     */
     private boolean isCover(Map<Character, Integer> sMap, Map<Character, Integer> pMap) {
         for (Map.Entry<Character, Integer> entry : pMap.entrySet()) {
-            //注意Integer之间比较要使用equals，如果范围在[-128,127]之内能比较正确，其他范围比较失败
+            //Integer对象之间要比较是否相等，不能用==，而必须用equals，因为==比较的是地址是否相同
             if (!sMap.containsKey(entry.getKey()) || !sMap.get(entry.getKey()).equals(entry.getValue())) {
                 return false;
             }

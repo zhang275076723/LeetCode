@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/7/10 8:23
  * @Author zsy
- * @Description 对角线遍历 美团面试题 小红书面试题 类比Problem48、Problem54、Problem59、Offer29
+ * @Description 对角线遍历 美团面试题 小红书面试题 类比Problem48、Problem54、Problem59、Offer29 对角线处理类比Problem1001
  * 给你一个大小为 m x n 的矩阵 mat ，请以对角线遍历的顺序，用一个数组返回这个矩阵中的所有元素。
  * <p>
  * 输入：mat = [
@@ -48,6 +48,7 @@ public class Problem498 {
         int m = mat.length;
         int n = mat[0].length;
         int[] result = new int[m * n];
+        //result数组下标索引
         int index = 0;
 
         //共m+n-1个对角线，每行对角线行列之和

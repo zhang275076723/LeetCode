@@ -106,7 +106,6 @@ public class Problem40 {
         if (left < right) {
             //注意 >> 的运算优先级比 + 低，所以要添加括号
             int mid = left + ((right - left) >> 1);
-
             mergeSort(nums, left, mid, tempArr);
             mergeSort(nums, mid + 1, right, tempArr);
             merge(nums, left, mid, right, tempArr);
@@ -122,12 +121,12 @@ public class Problem40 {
             if (nums[i] < nums[j]) {
                 tempArr[k] = nums[i];
                 i++;
+                k++;
             } else {
                 tempArr[k] = nums[j];
                 j++;
+                k++;
             }
-
-            k++;
         }
 
         while (i <= mid) {

@@ -33,7 +33,7 @@ public class Problem445 {
 
     /**
      * 模拟
-     * 反转两个链表，再逐一相加
+     * 反转两个链表，再逐一相加，最后再反转回来
      * 时间复杂度O(n)，空间复杂度O(1) (非递归反转的空间复杂度O(1)，递归反转的空间复杂度O(n))
      *
      * @param l1
@@ -59,6 +59,7 @@ public class Problem445 {
 
         ListNode node1 = head1;
         ListNode node2 = head2;
+
         //当前位的进位
         int carry = 0;
         //当前位之和
@@ -115,7 +116,7 @@ public class Problem445 {
             node.next = new ListNode(carry);
         }
 
-        //之前反转了链表，所以需要再次反转，得到结果链表
+        //再次反转，得到结果链表
         return reverse(head.next);
     }
 

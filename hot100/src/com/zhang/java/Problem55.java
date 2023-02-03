@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/22 8:37
  * @Author zsy
- * @Description 跳跃游戏 类比Problem45、Problem403
+ * @Description 跳跃游戏 跳跃问题类比Problem45、Problem403、Problem1696
  * 给定一个非负整数数组 nums ，你最初位于数组的 第一个下标 。
  * 数组中的每个元素代表你在该位置可以跳跃的最大长度。
  * 判断你是否能够到达最后一个下标。

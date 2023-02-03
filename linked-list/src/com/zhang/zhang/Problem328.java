@@ -28,7 +28,7 @@ public class Problem328 {
     }
 
     /**
-     * 将奇数链表和偶数链表分开，之后再相连
+     * 奇数链表和偶数链表分开，奇数链表后面重新连接偶数链表
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param head
@@ -42,19 +42,19 @@ public class Problem328 {
         //奇数链表头
         ListNode oddHead = head;
         //偶数链表头
-        ListNode ovenHead = head.next;
+        ListNode evenHead = head.next;
         ListNode node = head;
 
         //断开奇偶链表
         while (node.next != null && node.next.next != null) {
             ListNode next = node.next;
-            node.next = node.next.next;
+            node.next = next.next;
             next.next = next.next.next;
             node = node.next;
         }
 
         //奇数链表后面链接偶数链表
-        node.next = ovenHead;
+        node.next = evenHead;
 
         return oddHead;
     }

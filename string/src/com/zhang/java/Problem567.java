@@ -56,7 +56,7 @@ public class Problem567 {
             char c = s2.charAt(right);
             s2Map.put(c, s2Map.getOrDefault(c, 0) + 1);
 
-            //判断当前字符串是否是s1的排列
+            //s2的当前窗口是否是s1的排列
             if (right - left + 1 == s1.length()) {
                 if (isCover(s1Map, s2Map)) {
                     return true;
@@ -70,11 +70,12 @@ public class Problem567 {
             right++;
         }
 
+        //遍历结束没有找到，即s2不存在s1的排序
         return false;
     }
 
     /**
-     * 判断s2Map是否能覆盖s1Map
+     * s2Map中存在的字符能否覆盖s1Map中存在的字符
      *
      * @param s1Map
      * @param s2Map
@@ -82,7 +83,7 @@ public class Problem567 {
      */
     private boolean isCover(Map<Character, Integer> s1Map, Map<Character, Integer> s2Map) {
         for (Map.Entry<Character, Integer> entry : s1Map.entrySet()) {
-            //注意Integer之间比较要使用equals，如果范围在[-128,127]之内能比较正确，其他范围比较失败
+            //Integer对象之间要比较是否相等，不能用==，而必须用equals，因为==比较的是地址是否相同
             if (!s2Map.containsKey(entry.getKey()) || !s2Map.get(entry.getKey()).equals(entry.getValue())) {
                 return false;
             }

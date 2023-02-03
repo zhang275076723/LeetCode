@@ -75,9 +75,10 @@ public class HuffmanEncode {
                 node.left = node1;
                 node.right = node2;
 
-                //将之前的两个节点从list集合中移除，并将新节点加入list集合
+                //之前的两个节点从list集合中移除
                 list.remove(0);
                 list.remove(0);
+                //新节点加入list集合
                 list.add(node);
             }
 

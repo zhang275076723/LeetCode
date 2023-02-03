@@ -59,9 +59,7 @@ public class Problem77 {
 
         for (int i = t; i <= n; i++) {
             list.add(i);
-
             backtrack(i + 1, n, k, result, list);
-
             list.remove(list.size() - 1);
         }
     }

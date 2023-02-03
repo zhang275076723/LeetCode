@@ -43,7 +43,7 @@ public class Problem90 {
 
         List<List<Integer>> result = new ArrayList<>();
 
-        //flag记录前一个元素的访问状态，0：前一个元素未添加，1：前一个元素已经添加
+        //flag标志位表示前一个元素的访问状态，0：前一个元素未访问，1：前一个元素已访问
         backtrack(0, nums, 0, new ArrayList<>(), result);
 
         return result;
@@ -58,8 +58,8 @@ public class Problem90 {
         //不添加当前元素
         backtrack(t + 1, nums, 0, list, result);
 
-        //当前元素和前一个元素相等，且前一个元素未被添加，则直接剪枝返回
-        if (t > 0 && nums[t - 1] == nums[t] && flag == 0) {
+        //去重，当前元素和前一个元素相等，且前一个元素未被添加，则当前元素不能添加，直接返回
+        if (t > 0 && flag == 0 && nums[t - 1] == nums[t]) {
             return;
         }
 

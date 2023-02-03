@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/9/25 8:34
  * @Author zsy
- * @Description 区间和的个数 阿里笔试题 归并排序类比Problem23、Problem148、Problem315、Problem493、Offer51 线段树类比Problem307、Problem308、Problem729、Problem731、Problem732
+ * @Description 区间和的个数 阿里笔试题 归并排序类比Problem23、Problem148、Problem315、Problem493、Offer51 前缀和类比Problem209、Problem437、Problem560、Problem862、Offer57_2 线段树类比Problem307、Problem308、Problem729、Problem731、Problem732
  * 给你一个整数数组 nums 以及两个整数 lower 和 upper 。
  * 求数组中，值位于范围 [lower, upper] （包含 lower 和 upper）之内的 区间和的个数 。
  * 区间和 S(i, j) 表示在 nums 中，位置从 i 到 j 的元素之和，包含 i 和 j (i ≤ j)。
@@ -78,7 +78,8 @@ public class Problem327 {
      * @return
      */
     public int countRangeSum2(int[] nums, int lower, int upper) {
-        //前缀和数组使用long，避免int溢出
+        //前缀和数组，preSum[i]：nums[0]-nums[i-1]之和
+        //使用long避免int溢出
         long[] preSum = new long[nums.length + 1];
 
         for (int i = 1; i < preSum.length; i++) {
@@ -102,7 +103,8 @@ public class Problem327 {
      * @return
      */
     public int countRangeSum3(int[] nums, int lower, int upper) {
-        //前缀和数组使用long，避免int溢出
+        //前缀和数组，preSum[i]：nums[0]-nums[i-1]之和
+        //使用long避免int溢出
         long[] preSum = new long[nums.length + 1];
 
         for (int i = 1; i < preSum.length; i++) {
@@ -180,7 +182,8 @@ public class Problem327 {
      * @return
      */
     public int countRangeSum4(int[] nums, int lower, int upper) {
-        //前缀和数组使用long，避免int溢出
+        //前缀和数组，preSum[i]：nums[0]-nums[i-1]之和
+        //使用long避免int溢出
         long[] preSum = new long[nums.length + 1];
 
         for (int i = 1; i < preSum.length; i++) {

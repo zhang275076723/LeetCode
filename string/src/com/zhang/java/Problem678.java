@@ -122,20 +122,21 @@ public class Problem678 {
             }
         }
 
-        //遍历完之后，看两个栈的情况
+        //s遍历完之后，看两个栈的情况
         //1、stack1和stack2都不为空，则需要用stack2中的'*'匹配stack1中的'('，必须保证'*'的索引大于'('的索引
         //2、stack1为空，stack2不为空，说明'*'有剩余，返回true
         //3、stack1不为空，stack2为空，说明还有未匹配的'('，返回false
         while (!stack1.isEmpty() && !stack2.isEmpty()) {
-            int c1 = stack1.pop();
-            int c2 = stack2.pop();
+            int index1 = stack1.pop();
+            int index2 = stack2.pop();
 
-            //stack1中的'('下标索引比stack2中的'*'下标索引大，说明存在"*("情况，无法匹配，返回false
-            if (c1 > c2) {
+            //stack1中的'('下标索引index1比stack2中的'*'下标索引index2大，说明存在情况"*("，无法匹配，返回false
+            if (index1 > index2) {
                 return false;
             }
         }
 
+        //双栈遍历之后，如果左括号栈为空，则是有效括号字符串，返回true；左括号栈不为空，则不是有效括号字符串，返回false
         return stack1.isEmpty();
     }
 

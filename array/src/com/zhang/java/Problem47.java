@@ -54,20 +54,22 @@ public class Problem47 {
         }
 
         for (int i = 0; i < nums.length; i++) {
-            //当前元素值和前一个元素值相同，且上一个元素没有被访问，说明本次和上次重复，直接剪枝
-            if (i > 0 && nums[i] == nums[i - 1] && !visited[i - 1]) {
+            if (visited[i]) {
                 continue;
             }
 
-            if (!visited[i]) {
-                list.add(nums[i]);
-                visited[i] = true;
-
-                backtrack(t + 1, nums, visited, list, result);
-
-                visited[i] = false;
-                list.remove(list.size() - 1);
+            //去重，当前元素和前一个元素相同，且上一个元素没有被访问，说明本次和上次重复，直接剪枝
+            if (i > 0 && !visited[i - 1] && nums[i] == nums[i - 1]) {
+                continue;
             }
+
+            visited[i] = true;
+            list.add(nums[i]);
+
+            backtrack(t + 1, nums, visited, list, result);
+
+            list.remove(list.size() - 1);
+            visited[i] = false;
         }
     }
 

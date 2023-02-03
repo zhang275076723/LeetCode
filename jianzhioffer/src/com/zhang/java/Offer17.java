@@ -70,7 +70,7 @@ public class Offer17 {
      */
     public void backtrack(int t, int n, StringBuilder sb, List<String> list) {
         if (t == n) {
-            //如果当前数为空，则不添加
+            //如果拼接的数为空，则不添加
             if (sb.length() != 0) {
                 list.add(sb.toString());
             }

@@ -47,9 +47,9 @@ public class Problem147 {
         ListNode node = head.next;
 
         while (node != null) {
-            //当前节点插入链表中间
+            //当前节点node插入在非链表末尾
             if (pre.val > node.val) {
-                //当前节点要插入的链表位置之前的节点
+                //当前节点node要插入的位置的前一个节点
                 ListNode temp = hair;
 
                 //找到要插入的位置
@@ -65,7 +65,7 @@ public class Problem147 {
                 //更新node，指向下一个节点
                 node = pre.next;
             } else {
-                //当前节点插入在链表末尾
+                //当前节点node插入在链表末尾
                 pre = node;
                 node = node.next;
             }

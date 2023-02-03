@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/29 08:43
  * @Author zsy
- * @Description 双调数组查找元素的下标索引 拼多多面试题、字节面试题 类比AscendAndDescendArrayFindMax
+ * @Description 双调数组查找元素的下标索引 拼多多面试题 字节面试题 类比AscendAndDescendArrayFindMax
  * 双调数组是指一个数组中的所有元素是先递增后递减(或先递减后递增)，在双调数组中找输入元素的下标索引。
  * 如果有多个相同的值，返回任意一个索引位置即可。
  * 未找到，返回-1。

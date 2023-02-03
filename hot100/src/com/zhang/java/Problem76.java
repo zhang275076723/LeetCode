@@ -48,9 +48,9 @@ public class Problem76 {
             return "";
         }
 
-        //sMap中存放s中每个字符对应的个数
+        //sMap中存放s中字符和对应的个数
         Map<Character, Integer> sMap = new HashMap<>();
-        //tMap中存放t中每个字符对应的个数
+        //tMap中存放t中字符的对应的个数
         Map<Character, Integer> tMap = new HashMap<>();
 
         for (char c : t.toCharArray()) {
@@ -62,34 +62,29 @@ public class Problem76 {
         int right = 0;
         //最小窗口指针
         int minLeft = -1;
-        //因为最大窗口大小为100000
-        int minRight = 100000;
+        //初始化最小最右指针口最大
+        int minRight = s.length();
 
         while (right < s.length()) {
             char c = s.charAt(right);
-
             //sMap中添加右指针元素
             sMap.put(c, sMap.getOrDefault(c, 0) + 1);
 
-            //当前窗口的大小>=t的大小时，才判断是否覆盖t
-            if (right - left + 1 >= t.length()) {
-                //判断当前窗口是否覆盖t，左指针右移
-                while (isCover(sMap, tMap)) {
-                    //更新窗口大小
-                    if (right - left < minRight - minLeft) {
-                        minLeft = left;
-                        minRight = right;
-                    }
-
-                    //sMap中删除左指针元素
-                    sMap.put(s.charAt(left), sMap.get(s.charAt(left)) - 1);
-
-                    //左指针右移
-                    left++;
+            //当前窗口的大小大于等于t的大小，并且当前窗口覆盖t时，left指针右移，并更新sMap和最小窗口
+            while (right - left + 1 >= t.length() && isCover(sMap, tMap)) {
+                //更新窗口大小
+                if (right - left < minRight - minLeft) {
+                    minLeft = left;
+                    minRight = right;
                 }
+
+                //sMap中左指针元素个数减1
+                sMap.put(s.charAt(left), sMap.get(s.charAt(left)) - 1);
+                //left指针右移
+                left++;
             }
 
-            //右指针右移
+            //right指针右移
             right++;
         }
 
@@ -97,7 +92,7 @@ public class Problem76 {
     }
 
     /**
-     * 判断sMap是否能够覆盖tMap
+     * sMap中存在的字符能否覆盖tMap中存在的字符
      * 时间复杂度O(C)，空间复杂度O(1)，C为字符集大小，即|C|=26
      *
      * @param sMap
@@ -107,7 +102,7 @@ public class Problem76 {
     private boolean isCover(Map<Character, Integer> sMap, Map<Character, Integer> tMap) {
         for (Map.Entry<Character, Integer> entry : tMap.entrySet()) {
             //sMap中没有tMap中的key，或者sMap中有tMap中的key，但value小于tMap中的value，则说明当前窗口不能覆盖t
-            //如果Integer之间要比较是否相等，不能用==，而必须用equals，因为==比较的是地址是否相同
+            //Integer对象之间要比较是否相等，不能用==，而必须用equals，因为==比较的是地址是否相同
             if (!sMap.containsKey(entry.getKey()) || sMap.get(entry.getKey()) < entry.getValue()) {
                 return false;
             }
