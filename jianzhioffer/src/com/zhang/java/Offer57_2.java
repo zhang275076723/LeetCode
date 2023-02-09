@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/4/4 16:36
  * @Author zsy
- * @Description 和为s的连续正数序列 滑动窗口类比Problem3、Problem76、Problem209、Problem239、Problem438、Problem567、Offer48、Offer59 前缀和类比Problem209、Problem327、Problem437、Problem560、Problem862
+ * @Description 和为s的连续正数序列 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem239、Problem438、Problem567、Offer48、Offer59 前缀和类比Problem209、Problem327、Problem437、Problem560、Problem862
  * 输入一个正整数 target ，输出所有和为 target 的连续正整数序列（至少含有两个数）。
  * 序列内的数字由小到大排列，不同序列按照首个数字从小到大排列。
  * 1 <= target <= 10^5

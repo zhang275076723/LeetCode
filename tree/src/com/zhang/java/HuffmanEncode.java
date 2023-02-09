@@ -34,7 +34,9 @@ public class HuffmanEncode {
         HuffmanTree(String str) {
             encodeMap = new HashMap<>();
             buildHuffmanTree(str);
+            //dfs建立encodeMap
             buildEncodeMap(root);
+            //bfs建立encodeMap
 //            buildEncodeMap();
             encode(str);
         }
@@ -68,6 +70,7 @@ public class HuffmanEncode {
                     }
                 });
 
+                //取出list集合中前2个元素，合并为一个huffman节点
                 HuffmanNode node1 = list.get(0);
                 HuffmanNode node2 = list.get(1);
                 HuffmanNode node = new HuffmanNode();

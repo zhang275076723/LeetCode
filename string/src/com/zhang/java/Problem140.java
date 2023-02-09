@@ -102,7 +102,7 @@ public class Problem140 {
 
         List<String> result = new ArrayList<>();
 
-        //s可以拆分
+        //s可以拆分为wordDict中单词才进行遍历
         if (dp[s.length()]) {
             //从后往前拆分，使用到dp数组和队列
             backtrack2(s.length(), new LinkedList<>(), s, dp, wordDictSet, result);

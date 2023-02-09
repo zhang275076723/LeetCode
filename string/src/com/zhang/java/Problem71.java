@@ -47,8 +47,9 @@ public class Problem71 {
     }
 
     /**
-     * 栈
-     * 遇到".."，栈顶元素出栈，即回到上级目录；遇到不是""或"."的情况，当前目录入栈
+     * 队列
+     * 遇到".."，队尾元素出队，即回到上级目录；遇到不是""或"."的情况，队尾元素入队，
+     * 遍历结束之后，依次从队首出队，得到简化路径
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param path
@@ -56,32 +57,32 @@ public class Problem71 {
      */
     public String simplifyPath(String path) {
         String[] names = path.split("/");
-        //保存路径的栈
-        Deque<String> stack = new LinkedList<>();
+        //保存路径的队列
+        Deque<String> queue = new LinkedList<>();
 
         for (String name : names) {
             //当前文件名为".."，则需要回退到上一级
             if ("..".equals(name)) {
-                if (!stack.isEmpty()) {
-                    stack.pollLast();
+                if (!queue.isEmpty()) {
+                    queue.pollLast();
                 }
             } else if ("".equals(name) || ".".equals(name)) {
                 //当前文件名为""或"."，则不需要进行操作
             } else {
                 //将当前文件名不为".."或""或"."，则将当前文件名加入栈中
-                stack.offerLast(name);
+                queue.offerLast(name);
             }
         }
 
-        //栈为空，即路径为"/"
-        if (stack.isEmpty()) {
+        //队列为空，路径为空，直接返回"/"
+        if (queue.isEmpty()) {
             return "/";
         }
 
         StringBuilder sb = new StringBuilder();
 
-        while (!stack.isEmpty()) {
-            sb.append("/").append(stack.pollFirst());
+        while (!queue.isEmpty()) {
+            sb.append("/").append(queue.pollFirst());
         }
 
         return sb.toString();

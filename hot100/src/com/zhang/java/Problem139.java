@@ -29,11 +29,6 @@ import java.util.*;
  * wordDict 中的所有字符串 互不相同
  */
 public class Problem139 {
-    /**
-     * 回溯中是否能由字典中单词拼出s
-     */
-    private boolean canBreak = false;
-
     public static void main(String[] args) {
         Problem139 problem139 = new Problem139();
 //        String s = "catsandog";

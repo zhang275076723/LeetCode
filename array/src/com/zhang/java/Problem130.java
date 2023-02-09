@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * @Date 2022/11/29 15:53
  * @Author zsy
- * @Description 被围绕的区域 标志位类比Problem73、Problem289 并查集类比Problem200、Problem399
+ * @Description 被围绕的区域 标志位类比Problem73、Problem289 并查集类比Problem200、Problem399、Problem695、Problem765、Problem827
  * 给你一个 m x n 的矩阵 board ，由若干字符 'X' 和 'O' ，
  * 找到所有被 'X' 围绕的区域，并将这些区域里所有的 'O' 用 'X' 填充。
  * <p>
@@ -198,33 +198,31 @@ public class Problem130 {
             }
         }
 
-        //遍历除矩阵最外圈的'O'，和相连的上下左右'O'进行合并，成为一个集合
+        //当前节点的上下左右四个位置
+        int[][] direction = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
+        //遍历除矩阵最外圈的节点
         for (int i = 1; i < board.length - 1; i++) {
             for (int j = 1; j < board[0].length - 1; j++) {
+                //当前节点为'O'时，和当前位置的上下左右'O'进行合并，成为一个连通分量
                 if (board[i][j] == 'O') {
-                    if (board[i - 1][j] == 'O') {
-                        unionFind.union(board[0].length * i + j, board[0].length * (i - 1) + j);
-                    }
+                    for (int k = 0; k < direction.length; k++) {
+                        int x = i + direction[k][0];
+                        int y = j + direction[k][1];
 
-                    if (board[i + 1][j] == 'O') {
-                        unionFind.union(board[0].length * i + j, board[0].length * (i + 1) + j);
-                    }
-
-                    if (board[i][j - 1] == 'O') {
-                        unionFind.union(board[0].length * i + j, board[0].length * i + j - 1);
-                    }
-
-                    if (board[i][j + 1] == 'O') {
-                        unionFind.union(board[0].length * i + j, board[0].length * i + j + 1);
+                        //(i,j)和(x,y)合并为一个连通分量
+                        if (board[x][y] == 'O') {
+                            unionFind.union(i * board[0].length + j, x * board[0].length + y);
+                        }
                     }
                 }
             }
         }
 
-        //将除矩阵外圈所有与dummyIndex不连通的'O'均置为'X'，即被'X'围绕的区域
+        //除矩阵外圈所有与dummyIndex不连通的'O'均置为'X'，即被'X'围绕的区域
         for (int i = 1; i < board.length - 1; i++) {
             for (int j = 1; j < board[0].length - 1; j++) {
-                if (board[i][j] == 'O' && !unionFind.isConnected(unionFind.dummyIndex, board[0].length * i + j)) {
+                if (board[i][j] == 'O' && !unionFind.isConnected(unionFind.dummyIndex, i * board[0].length + j)) {
                     board[i][j] = 'X';
                 }
             }
@@ -250,17 +248,20 @@ public class Problem130 {
      * 用数组的形式表示图
      */
     private static class UnionFind {
-        //并查集个数
+        //并查集中连通分量的个数
         private int count;
         //虚拟节点，board中所有边界'O'相连的集合根节点都指向虚拟节点
         private final int dummyIndex;
+        //节点的父节点索引下标数组，二维数组按照由左到右由上到下的顺序，从0开始存储
         private final int[] parent;
-        private final int[] rank;
+        //节点的权值数组(节点的高度)，只有一个节点的权值为1
+        private final int[] weight;
 
         public UnionFind(char[][] board) {
+            count = 0;
             //数组长度多申请1个，末尾节点作为为虚拟节点
             parent = new int[board.length * board[0].length + 1];
-            rank = new int[board.length * board[0].length + 1];
+            weight = new int[board.length * board[0].length + 1];
             dummyIndex = board.length * board[0].length;
             parent[dummyIndex] = dummyIndex;
 
@@ -269,6 +270,7 @@ public class Problem130 {
                     //当前节点为'O'时，才加入并查集中
                     if (board[i][j] == 'O') {
                         parent[board[0].length * i + j] = board[0].length * i + j;
+                        weight[board[0].length * i + j] = 1;
                         count++;
                     }
                 }
@@ -280,15 +282,16 @@ public class Problem130 {
             int rootJ = find(j);
 
             if (rootI != rootJ) {
-                if (rank[rootI] < rank[rootJ]) {
+                if (weight[rootI] < weight[rootJ]) {
                     parent[rootI] = rootJ;
-                } else if (rank[rootI] > rank[rootJ]) {
+                } else if (weight[rootI] > weight[rootJ]) {
                     parent[rootJ] = rootI;
                 } else {
                     parent[rootJ] = rootI;
-                    rank[rootI]++;
+                    weight[rootI]++;
                 }
 
+                //两个连通分量合并，并查集中连通分量的个数减1
                 count--;
             }
         }
@@ -296,7 +299,7 @@ public class Problem130 {
         public void unionDummy(int i) {
             int rootI = find(i);
             parent[rootI] = dummyIndex;
-            rank[dummyIndex] = Math.max(rank[dummyIndex], rank[rootI]);
+            weight[dummyIndex] = Math.max(weight[dummyIndex], weight[rootI]);
         }
 
         public int find(int i) {

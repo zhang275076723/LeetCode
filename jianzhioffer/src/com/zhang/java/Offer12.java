@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/14 16:48
  * @Author zsy
- * @Description 矩阵中的路径 类比problem200、Problem212 同Problem79
+ * @Description 矩阵中的路径 dfs类比Problem79、Problem200、Problem212、Problem695、Problem827 同Problem79
  * 给定一个m x n二维字符网格board和一个字符串单词word。
  * 如果word存在于网格中，返回true；否则，返回false。
  * 单词必须按照字母顺序，通过相邻的单元格内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。
@@ -40,7 +40,7 @@ public class Offer12 {
 
     /**
      * 回溯+剪枝
-     * 时间复杂度O(mn*4^l)，空间复杂度O(mn) (m = board.length, n = board[0].length, l = word.length())
+     * 时间复杂度O(mn*(4^l))，空间复杂度O(mn) (m = board.length, n = board[0].length, l = word.length())
      *
      * @param board
      * @param word
@@ -51,13 +51,11 @@ public class Offer12 {
             return false;
         }
 
-        boolean[][] visited = new boolean[board.length][board[0].length];
-
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 //第一个字符相等才开始查找
                 if (board[i][j] == word.charAt(0)) {
-                    boolean flag = backtrack(0, i, j, visited, board, word);
+                    boolean flag = backtrack(0, i, j, new boolean[board.length][board[0].length], board, word);
                     if (flag) {
                         return true;
                     }
@@ -74,8 +72,9 @@ public class Offer12 {
             return true;
         }
 
-        //不满足要求，直接剪枝，返回false
-        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || visited[i][j] || word.charAt(t) != board[i][j]) {
+        //当前位置越界，或当前位置已经被访问，或当前位置字符和word中第t个字符不同时，直接剪枝，返回false
+        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length ||
+                visited[i][j] || word.charAt(t) != board[i][j]) {
             return false;
         }
 

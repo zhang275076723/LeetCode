@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/6/17 9:06
  * @Author zsy
- * @Description 回文子串 类比Problem5、Problem9、Problem131、Problem132、Problem214、Problem234、Problem409、Problem516
+ * @Description 回文子串 回文类比Problem5、Problem9、Problem131、Problem132、Problem214、Problem234、Problem409、Problem516
  * 给你一个字符串 s ，请你统计并返回这个字符串中 回文子串 的数目。
  * 回文字符串 是正着读和倒过来读一样的字符串。
  * 子字符串 是字符串中的由连续字符组成的一个序列。
@@ -95,14 +95,14 @@ public class Problem647 {
         int count = 0;
         boolean[][] dp = new boolean[s.length()][s.length()];
 
+        //s[i]-s[i]是回文串
         for (int i = 0; i < s.length(); i++) {
-            //只有一个字符也是回文串
             dp[i][i] = true;
             count++;
         }
 
+        //用于s[i]-s[i+1]，即两个字符的情况
         for (int i = 1; i < s.length(); i++) {
-            //用于s[i]-s[i+1]，即两个字符的情况
             dp[i][i - 1] = true;
         }
 
@@ -110,6 +110,7 @@ public class Problem647 {
         for (int i = 2; i <= s.length(); i++) {
             //当前字符串起始字符索引
             for (int j = 0; j <= s.length() - i; j++) {
+                //表示的字符串s[j]-s[j+i-1]
                 if (s.charAt(j) == s.charAt(j + i - 1) && dp[j + 1][j + i - 2]) {
                     dp[j][j + i - 1] = true;
                     count++;

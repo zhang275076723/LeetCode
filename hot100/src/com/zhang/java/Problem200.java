@@ -1,14 +1,12 @@
 package com.zhang.java;
 
-import javafx.geometry.Pos;
-
 import java.util.LinkedList;
 import java.util.Queue;
 
 /**
  * @Date 2022/5/12 9:22
  * @Author zsy
- * @Description 岛屿数量 字节面试题 类比Problem79、Problem212、Offer12 并查集类比Problem130、Problem399
+ * @Description 岛屿数量 字节面试题 dfs类比Problem79、Problem212、Problem695、Problem827、Offer12 并查集类比Problem130、Problem399、Problem695、Problem765、Problem827
  * 给你一个由 '1'（陆地）和 '0'（水）组成的的二维网格，请你计算网格中岛屿的数量。
  * 岛屿总是被水包围，并且每座岛屿只能由水平方向和/或竖直方向上相邻的陆地连接形成。
  * 此外，你可以假设该网格的四条边均被水包围。
@@ -66,7 +64,7 @@ public class Problem200 {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 //对未被访问的'1'进行dfs
-                if (!visited[i][j] && grid[i][j] == '1') {
+                if (grid[i][j] == '1' && !visited[i][j]) {
                     dfs(i, j, grid, visited);
                     count++;
                 }
@@ -78,7 +76,7 @@ public class Problem200 {
 
     /**
      * bfs
-     * 时间复杂度O(mn)，空间复杂度O(min(m,n))
+     * 时间复杂度O(mn)，空间复杂度O(mn)
      *
      * @param grid
      * @return
@@ -93,8 +91,8 @@ public class Problem200 {
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
-                //对未被访问的'1'进行dfs
-                if (!visited[i][j] && grid[i][j] == '1') {
+                //对未被访问的'1'进行bfs
+                if (grid[i][j] == '1' && !visited[i][j]) {
                     bfs(i, j, grid, visited);
                     count++;
                 }
@@ -117,17 +115,23 @@ public class Problem200 {
         }
 
         UnionFind unionFind = new UnionFind(grid);
+        //当前节点的上下左右四个位置
+        int[][] direction = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
-                //当前节点为'1'时，和当前节点的下边和右边的'1'进行合并，成为一个集合
+                //当前节点为'1'时，和当前位置的上下左右'1'进行合并，成为一个连通分量
                 if (grid[i][j] == '1') {
-                    if (i + 1 < grid.length && grid[i + 1][j] == '1') {
-                        unionFind.union(grid[0].length * i + j, grid[0].length * (i + 1) + j);
-                    }
+                    for (int k = 0; k < direction.length; k++) {
+                        int x = i + direction[k][0];
+                        int y = j + direction[k][1];
 
-                    if (j + 1 < grid[0].length && grid[i][j + 1] == '1') {
-                        unionFind.union(grid[0].length * i + j, grid[0].length * i + j + 1);
+                        if (x < 0 || x >= grid.length || y < 0 || y >= grid[0].length || grid[x][y] != '1') {
+                            continue;
+                        }
+
+                        //(i,j)和(x,y)合并为一个连通分量
+                        unionFind.union(i * grid[0].length + j, x * grid[0].length + y);
                     }
                 }
             }
@@ -179,25 +183,17 @@ public class Problem200 {
      * 用数组的形式表示图
      */
     private static class UnionFind {
-        /**
-         * 并查集个数
-         */
+        //并查集中连通分量的个数
         private int count;
-
-        /**
-         * 节点的父节点下标索引数组，二维数组按照由左到右由上到下的顺序，从0开始存储
-         */
+        //节点的父节点索引下标数组，二维数组按照由左到右由上到下的顺序，从0开始存储
         private final int[] parent;
-
-        /**
-         * 节点的秩(节点的高度)数组，只有一个节点的秩为0
-         */
-        private final int[] rank;
+        //节点的权值数组(节点的高度)，只有一个节点的权值为1
+        private final int[] weight;
 
         public UnionFind(char[][] grid) {
             count = 0;
             parent = new int[grid.length * grid[0].length];
-            rank = new int[grid.length * grid[0].length];
+            weight = new int[grid.length * grid[0].length];
 
             for (int i = 0; i < grid.length; i++) {
                 for (int j = 0; j < grid[0].length; j++) {
@@ -205,7 +201,9 @@ public class Problem200 {
                     if (grid[i][j] == '1') {
                         //当前节点的父节点是它本身
                         parent[grid[0].length * i + j] = grid[0].length * i + j;
-                        //并查集个数加1
+                        //只有一个节点的权值为1
+                        weight[grid[0].length * i + j] = 1;
+                        //并查集中连通分量的个数加1
                         count++;
                     }
                 }
@@ -220,29 +218,29 @@ public class Problem200 {
          * @param j
          */
         public void union(int i, int j) {
-            //找到包含集合i、j的根节点
+            //找到包含i、j的连通分量的根节点
             int rootI = find(i);
             int rootJ = find(j);
 
             //i、j是两个集合，则进行合并，较小秩的根节点指向具有较大秩的根节点
             if (rootI != rootJ) {
-                if (rank[rootI] < rank[rootJ]) {
+                if (weight[rootI] < weight[rootJ]) {
                     parent[rootI] = rootJ;
-                } else if (rank[rootI] > rank[rootJ]) {
+                } else if (weight[rootI] > weight[rootJ]) {
                     parent[rootJ] = rootI;
                 } else {
                     //两个根节点秩相等，则其中任意一个根节点指向另一个根节点，被指向的根节点秩加1
                     parent[rootJ] = rootI;
-                    rank[rootI]++;
+                    weight[rootI]++;
                 }
 
-                //i、j两个集合合并之后，并查集个数减一
+                //i、j两个连通分量合并，并查集中连通分量的个数减1
                 count--;
             }
         }
 
         /**
-         * 路径压缩
+         * 路径压缩，返回当前节点的根节点
          * 使每个节点的父节点直接指向根节点，并不改变节点的秩
          *
          * @param i

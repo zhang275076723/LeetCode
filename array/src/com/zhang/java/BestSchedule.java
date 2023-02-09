@@ -53,6 +53,7 @@ public class BestSchedule {
     public double findBestSchedule(int n, int k, double[] work) {
         List<Integer>[] curMachineSchedule = new List[k];
 
+        //每个机器执行的任务list初始化
         for (int i = 0; i < k; i++) {
             curMachineSchedule[i] = new ArrayList<>();
         }
@@ -85,7 +86,7 @@ public class BestSchedule {
         }
 
         for (int i = 0; i < k; i++) {
-            //当前机器执行work[t]之后的执行时间大于等于bestTime，进行下一次循环，相当于剪枝
+            //当前机器i执行work[t]之后的执行时间大于等于bestTime，则不会存在更少的最佳调度时间，直接下次循环，相当于剪枝
             if (machines[i] + work[t] >= bestTime) {
                 continue;
             }

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/21 7:51
  * @Author zsy
- * @Description 滑动窗口最大值 字节面试题 华为面试题 单调队列类比Problem209、Problem862、Problem1696、Offer59 滑动窗口类比Problem3、Problem76、Problem209、Problem438、Problem567、Offer48、Offer57_2、Offer59 类比Offer59_2 同Offer59
+ * @Description 滑动窗口最大值 字节面试题 华为面试题 单调队列类比Problem209、Problem862、Problem1696、Offer59 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem438、Problem567、Offer48、Offer57_2、Offer59 类比Offer59_2 同Offer59
  * 给你一个整数数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。
  * 你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。
  * 返回 滑动窗口中的最大值 。
@@ -121,7 +121,7 @@ public class Problem239 {
 
     /**
      * 单调队列
-     * 单调递减队列存放nums数组中由大到小元素的索引下标
+     * 单调递减队列存放nums数组中由大到小元素的下标索引
      * 时间复杂度O(n)，空间复杂度O(k)
      *
      * @param nums
@@ -150,7 +150,7 @@ public class Problem239 {
 
         for (int i = k; i < nums.length; i++) {
             //列首元素索引下标超出当前滑动窗口范围，则出队
-            if (queue.peekFirst() <= i - k) {
+            while (!queue.isEmpty() && queue.peekFirst() <= i - k) {
                 queue.pollFirst();
             }
 

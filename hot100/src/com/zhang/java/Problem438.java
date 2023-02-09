@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/8 8:24
  * @Author zsy
- * @Description 找到字符串中所有字母异位词 字母异位词类比Problem49、Problem242 滑动窗口类比Problem3、Problem76、Problem209、Problem239、Problem567、Offer48、Offer57_2、Offer59
+ * @Description 找到字符串中所有字母异位词 字母异位词类比Problem49、Problem242 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem239、Problem567、Offer48、Offer57_2、Offer59
  * 给定两个字符串 s 和 p，找到 s 中所有 p 的 异位词 的子串，返回这些子串的起始索引。不考虑答案输出的顺序。
  * 异位词 指由相同字母重排列形成的字符串（包括相同的字符串）。
  * <p>
@@ -31,11 +31,13 @@ public class Problem438 {
         String s = "cbaebabacd";
         String p = "abc";
         System.out.println(problem438.findAnagrams(s, p));
+        System.out.println(problem438.findAnagrams2(s, p));
     }
 
     /**
      * 滑动窗口，双指针
-     * 时间复杂度O(s.length*|C|)，空间复杂度O(|C|) (字符串仅包含小写字母，所以|C|=26)
+     * 两个map分别存储s滑动窗口和p中字符对应出现次数
+     * 时间复杂度O(s.length()*|C|)，空间复杂度O(|C|) (字符串仅包含小写字母，所以|C|=26)
      *
      * @param s
      * @param p
@@ -46,7 +48,6 @@ public class Problem438 {
             return new ArrayList<>();
         }
 
-        List<Integer> list = new ArrayList<>();
         Map<Character, Integer> sMap = new HashMap<>();
         Map<Character, Integer> pMap = new HashMap<>();
 
@@ -54,6 +55,7 @@ public class Problem438 {
             pMap.put(c, pMap.getOrDefault(c, 0) + 1);
         }
 
+        List<Integer> list = new ArrayList<>();
         int left = 0;
         int right = 0;
 
@@ -69,6 +71,71 @@ public class Problem438 {
 
                 //左指针所指字符从sMap删除
                 sMap.put(s.charAt(left), sMap.get(s.charAt(left)) - 1);
+                left++;
+            }
+
+            right++;
+        }
+
+        return list;
+    }
+
+    /**
+     * 滑动窗口，双指针
+     * map存储s滑动窗口和p中字符对应出现次数之差diff，当diff等于0时，当前滑动窗口表示的字符串，即是p的一个异位词
+     * 时间复杂度O(s.length()+p.length())，空间复杂度O(|C|) (字符串仅包含小写字母，所以|C|=26)
+     *
+     * @param s
+     * @param p
+     * @return
+     */
+    public List<Integer> findAnagrams2(String s, String p) {
+        if (s.length() < p.length()) {
+            return new ArrayList<>();
+        }
+
+        //s滑动窗口和p中字符对应出现次数之差
+        int diff = p.length();
+        Map<Character, Integer> map = new HashMap<>();
+
+        for (char c : p.toCharArray()) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+
+        List<Integer> list = new ArrayList<>();
+        int left = 0;
+        int right = 0;
+
+        while (right < s.length()) {
+            char c = s.charAt(right);
+
+            //当前字符c不在map中，或当前字符c在map中，但出现次数小于等于0，diff加1
+            if (!map.containsKey(c) || map.get(c) <= 0) {
+                map.put(c, map.getOrDefault(c, 0) - 1);
+                diff++;
+            }else{
+                //当前字符c在map中，diff减1
+                map.put(c, map.getOrDefault(c, 0) - 1);
+                diff--;
+            }
+
+            //当前窗口大小和p的长度相同时，才看diff是否为0，是否是p的异位词，并且left指针右移
+            if (right - left + 1 == p.length()) {
+                //diff等于0，当前滑动窗口即是p的一个异位词
+                if (diff == 0) {
+                    list.add(left);
+                }
+
+                //滑动窗口左指针所指字符出现次数小于0，diff减1
+                if (map.get(s.charAt(left)) < 0) {
+                    map.put(s.charAt(left), map.get(s.charAt(left)) + 1);
+                    diff--;
+                }else{
+                    //滑动窗口左指针所指字符出现次数大于等于0，diff加1
+                    map.put(s.charAt(left), map.get(s.charAt(left)) + 1);
+                    diff++;
+                }
+
                 left++;
             }
 

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/27 9:17
  * @Author zsy
- * @Description 单词搜索 类比Problem200、Problem212 同Offer12
+ * @Description 单词搜索 dfs类比Problem200、Problem212、Problem695、Problem827 同Offer12
  * 给定一个 m x n 二维字符网格 board 和一个字符串单词 word 。
  * 如果 word 存在于网格中，返回 true ；否则，返回 false 。
  * 单词必须按照字母顺序，通过相邻的单元格内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。
@@ -61,13 +61,11 @@ public class Problem79 {
             return false;
         }
 
-        boolean[][] visited = new boolean[board.length][board[0].length];
-
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 //第一个字符相等才开始查找
                 if (board[i][j] == word.charAt(0)) {
-                    boolean flag = backtrack(0, i, j, visited, board, word);
+                    boolean flag = backtrack(0, i, j, new boolean[board.length][board[0].length], board, word);
                     if (flag) {
                         return true;
                     }
@@ -84,7 +82,7 @@ public class Problem79 {
             return true;
         }
 
-        //不满足要求，直接剪枝，返回false
+        //当前位置越界，或当前位置已经被访问，或当前位置字符和word中第t个字符不同时，直接剪枝，返回false
         if (i < 0 || i >= board.length || j < 0 || j >= board[0].length ||
                 visited[i][j] || word.charAt(t) != board[i][j]) {
             return false;

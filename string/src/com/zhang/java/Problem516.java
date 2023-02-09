@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/17 11:43
  * @Author zsy
- * @Description 最长回文子序列 类比Problem5、Problem9、Problem131、Problem132、Problem214、Problem234、Problem409、Problem647 动态规划类比Problem72、Problem97、Problem221、Problem1143
+ * @Description 最长回文子序列 回文类比Problem5、Problem9、Problem131、Problem132、Problem214、Problem234、Problem409、Problem647 动态规划类比Problem72、Problem97、Problem221、Problem1143
  * 给你一个字符串 s ，找出其中最长的回文子序列，并返回该序列的长度。
  * 子序列定义为：不改变剩余字符顺序的情况下，删除某些字符或者不删除任何字符形成的一个序列。
  * <p>
@@ -46,6 +46,7 @@ public class Problem516 {
 
         int[][] dp = new int[s.length()][s.length()];
 
+        //s[i]-s[i]的最长回文子序列长度为1
         for (int i = 0; i < s.length(); i++) {
             dp[i][i] = 1;
         }

@@ -22,14 +22,14 @@ import java.util.Arrays;
  */
 public class Problem977 {
     public static void main(String[] args) {
-        Problem977 p = new Problem977();
+        Problem977 problem977 = new Problem977();
         int[] nums = {-4, -1, 0, 3, 10};
-        System.out.println(Arrays.toString(p.sortedSquares(nums)));
+        System.out.println(Arrays.toString(problem977.sortedSquares(nums)));
     }
 
     /**
      * 双指针
-     * 每次从左右指针中找到最大平方数放到数组末尾
+     * 每次从左右指针中，即数组两边找到绝对值较大的数放到数组末尾
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums

@@ -21,8 +21,8 @@ package com.zhang.java;
  */
 public class Problem59 {
     public static void main(String[] args) {
-        Problem59 p = new Problem59();
-        int[][] matrix = p.generateMatrix(6);
+        Problem59 problem59 = new Problem59();
+        int[][] matrix = problem59.generateMatrix(6);
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
                 System.out.print(matrix[i][j] + " ");

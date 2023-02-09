@@ -7,7 +7,7 @@ import java.util.Deque;
 /**
  * @Date 2021/11/25 10:05
  * @Author zsy
- * @Description 长度最小的子数组 滑动窗口类比Problem3、Problem76、Problem239、Problem438、Problem567、Offer48、Offer57_2、Offer59 前缀和类比Problem327、Problem437、Problem560、Problem862、Offer57_2 单调队列类比Problem239、Problem862、Problem1696、Offer59
+ * @Description 长度最小的子数组 滑动窗口类比Problem3、Problem30、Problem76、Problem239、Problem438、Problem567、Offer48、Offer57_2、Offer59 前缀和类比Problem327、Problem437、Problem560、Problem862、Offer57_2 单调队列类比Problem239、Problem862、Problem1696、Offer59
  * 给定一个含有n个正整数的数组和一个正整数target
  * 找出该数组中满足其和 ≥ target的长度最小的连续子数组，并返回其长度。如果不存在符合条件的子数组，返回0
  * <p>
@@ -27,12 +27,12 @@ import java.util.Deque;
  */
 public class Problem209 {
     public static void main(String[] args) {
-        Problem209 p = new Problem209();
+        Problem209 problem209 = new Problem209();
         int[] nums = {2, 3, 1, 2, 4, 3};
-        System.out.println(p.minSubArrayLen(7, nums));
-        System.out.println(p.minSubArrayLen2(7, nums));
-        System.out.println(p.minSubArrayLen3(7, nums));
-        System.out.println(p.minSubArrayLen4(7, nums));
+        System.out.println(problem209.minSubArrayLen(7, nums));
+        System.out.println(problem209.minSubArrayLen2(7, nums));
+        System.out.println(problem209.minSubArrayLen3(7, nums));
+        System.out.println(problem209.minSubArrayLen4(7, nums));
     }
 
     /**

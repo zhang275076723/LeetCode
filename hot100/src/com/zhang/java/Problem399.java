@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/4 10:27
  * @Author zsy
- * @Description 除法求值 图类比Problem133、Problem207、Problem210、Problem329 并查集类比Problem130、Problem200
+ * @Description 除法求值 图类比Problem133、Problem207、Problem210、Problem329 并查集类比Problem130、Problem200、Problem695、Problem765、Problem827
  * 给你一个变量对数组 equations 和一个实数值数组 values 作为已知条件，
  * 其中 equations[i] = [Ai, Bi] 和 values[i] 共同表示等式 Ai / Bi = values[i] 。
  * 每个 Ai 或 Bi 是一个表示单个变量的字符串。
@@ -245,7 +245,7 @@ public class Problem399 {
             for (int i = 0; i < edges.length; i++) {
                 for (int j = 0; j < edges.length; j++) {
                     //只有在i-k和k-j存在路径时，才计算i-j的路径
-                    if (edges[i][k] > 0 && edges[k][j] > 0) {
+                    if (edges[i][k] != -1 && edges[k][j] != -1) {
                         edges[i][j] = edges[i][k] * edges[k][j];
                     }
                 }
@@ -305,10 +305,9 @@ public class Problem399 {
         }
 
         UnionFind unionFind = new UnionFind(map.size());
-        double[] result = new double[queries.size()];
 
         //创建并查集
-        for (int i = 0; i < values.length; i++) {
+        for (int i = 0; i < equations.size(); i++) {
             String str1 = equations.get(i).get(0);
             String str2 = equations.get(i).get(1);
             int u = map.get(str1);
@@ -316,6 +315,8 @@ public class Problem399 {
 
             unionFind.union(u, v, values[i]);
         }
+
+        double[] result = new double[queries.size()];
 
         //查询并查集
         for (int i = 0; i < queries.size(); i++) {
@@ -446,20 +447,12 @@ public class Problem399 {
      * bfs中队列存储的节点
      */
     private static class Pos {
-        /**
-         * 起始节点在map中的索引
-         */
-        int u;
-
-        /**
-         * 结束节点在map中的索引
-         */
-        int v;
-
-        /**
-         * u到v的结果值
-         */
-        double result;
+        //起始节点在map中的索引
+        private int u;
+        //结束节点在map中的索引
+        private int v;
+        //u到v的结果值
+        private double result;
 
         public Pos(int u, int v, double result) {
             this.u = u;
@@ -473,27 +466,19 @@ public class Problem399 {
      * 用数组的形式表示图
      */
     private static class UnionFind {
-        /**
-         * 并查集个数
-         */
+        //并查集中连通分量的个数
         private int count;
-
-        /**
-         * 节点的父节点下标索引数组，从0开始存储
-         */
+        //节点的父节点索引下标数组，从0开始存储
         private final int[] parent;
-
-        /**
-         * 节点的权值数组，当前节点除以根节点的值
-         */
+        //节点的权值数组，当前节点除以根节点的值
         private final double[] weight;
 
         public UnionFind(int n) {
+            count = n;
             parent = new int[n];
             weight = new double[n];
 
             for (int i = 0; i < n; i++) {
-                count = n;
                 //当前位置节点的父节点是它本身
                 parent[i] = i;
                 //当前位置节点的权值为1.0
@@ -525,13 +510,13 @@ public class Problem399 {
                 parent[rootI] = rootJ;
                 //更新节点i根节点的权值
                 weight[rootI] = weight[j] * value / weight[i];
-                //i、j两个集合合并之后，并查集个数减一
+                //i、j两个连通分量合并之后，并查集中连通分量的个数减1
                 count--;
             }
         }
 
         /**
-         * 路径压缩
+         * 路径压缩，返回当前节点的根节点
          * 使每个节点的父节点直接指向根节点，并更新每个节点的权值
          *
          * @param i

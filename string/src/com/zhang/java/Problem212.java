@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/8/28 11:58
  * @Author zsy
- * @Description 单词搜索 II 类比Problem79、Problem200、Offer12 前缀树类比Problem14、Problem208、Problem211
+ * @Description 单词搜索 II dfs类比Problem79、Problem200、Problem695、Problem827、Offer12 前缀树类比Problem14、Problem208、Problem211
  * 给定一个 m x n 二维字符网格 board 和一个单词（字符串）列表 words， 返回所有二维网格上的单词 。
  * 单词必须按照字母顺序，通过 相邻的单元格 内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。
  * 同一个单元格内的字母在一个单词中不允许被重复使用。
@@ -49,8 +49,8 @@ public class Problem212 {
 
     /**
      * 回溯+剪枝
-     * 时间复杂度O(mn*(4^l)*words.length)，空间复杂度O(words.length*l)
-     * (m = board.length, n = board[0].length, l = word.length())
+     * 时间复杂度O(kmn*(4^l))，空间复杂度O(mn+kl)
+     * (m = board.length, n = board[0].length, l = word.length(), k = words.length)
      *
      * @param board
      * @param words
@@ -58,7 +58,7 @@ public class Problem212 {
      */
     public List<String> findWords(char[][] board, String[] words) {
         List<String> list = new ArrayList<>();
-        //用于去重，当找到满足要求的word时，加入set，避免之后再次遍历得到相同的word，相当于剪枝
+        //用于去重，当找到满足要求的word时，加入set，停止对当前word的继续寻找，相当于剪枝
         Set<String> set = new HashSet<>();
 
         for (String word : words) {
@@ -75,9 +75,10 @@ public class Problem212 {
 
     /**
      * 回溯+剪枝+前缀树预处理
-     * 每次遍历都判断当前路径是否是words中任意单词的前缀，如果不是，则剪枝
-     * 时间复杂度O(mn*(4^l)*words.length)，空间复杂度O(words.length*l)
-     * (m = board.length, n = board[0].length, l = word.length())
+     * 将words中单词加入到前缀树中，每次遍历都判断当前路径是否是前缀树中单词的前缀，
+     * 如果是，则继续遍历；如果不是，则不可能遍历到前缀树中的单词，直接剪枝
+     * 时间复杂度O(mn*(4^l))，空间复杂度O(mn+kl)
+     * (m = board.length, n = board[0].length, l = word.length(), k = words.length)
      *
      * @param board
      * @param words
@@ -85,7 +86,7 @@ public class Problem212 {
      */
     public List<String> findWords2(char[][] board, String[] words) {
         List<String> list = new ArrayList<>();
-        //用于去重，当找到满足要求的word时，加入set，避免之后再次遍历得到相同的word，相当于剪枝
+        //用于去重，当找到满足要求的word时，加入set，之后再次遍历到set中存在的相同word时不加入set，相当于剪枝
         Set<String> set = new HashSet<>();
         //前缀树
         Trie trie = new Trie();
@@ -104,45 +105,46 @@ public class Problem212 {
         return list;
     }
 
-    private boolean backtrack(int t, int i, int j, char[][] board, String word,
-                              boolean[][] visited, List<String> list, Set<String> set) {
+    private void backtrack(int t, int i, int j, char[][] board, String word,
+                           boolean[][] visited, List<String> list, Set<String> set) {
+        //当前word已经查找到，则不继续对当前word的继续寻找，相当于剪枝
         if (set.contains(word)) {
-            return true;
+            return;
         }
 
         if (t == word.length()) {
             list.add(word);
             set.add(word);
-            return true;
+            return;
         }
 
+        //当前位置越界，或当前位置已经被访问，或当前位置字符和word中第t个字符不同时，直接返回
         if (i < 0 || i >= board.length || j < 0 || j >= board[0].length ||
                 visited[i][j] || word.charAt(t) != board[i][j]) {
-            return false;
+            return;
         }
 
         visited[i][j] = true;
 
         //往上下左右找
-        boolean flag = backtrack(t + 1, i - 1, j, board, word, visited, list, set) ||
-                backtrack(t + 1, i + 1, j, board, word, visited, list, set) ||
-                backtrack(t + 1, i, j - 1, board, word, visited, list, set) ||
-                backtrack(t + 1, i, j + 1, board, word, visited, list, set);
+        backtrack(t + 1, i - 1, j, board, word, visited, list, set);
+        backtrack(t + 1, i + 1, j, board, word, visited, list, set);
+        backtrack(t + 1, i, j - 1, board, word, visited, list, set);
+        backtrack(t + 1, i, j + 1, board, word, visited, list, set);
 
         visited[i][j] = false;
-
-        return flag;
     }
 
     private void backtrack2(int i, int j, char[][] board, StringBuilder sb,
                             Trie.TrieNode node, boolean[][] visited, List<String> list, Set<String> set) {
+        //当前位置越界，或当前位置已经被访问时，直接返回
         if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || visited[i][j]) {
             return;
         }
 
         node = node.children[board[i][j] - 'a'];
 
-        //当前节点不是前缀树节点，说明当前单词不是前缀树中单词的前缀，直接返回，相当于剪枝
+        //当前节点不是前缀树节点，则sb中保存的当前单词不是前缀树中单词的前缀，直接返回，相当于剪枝
         if (node == null) {
             return;
         }
@@ -150,7 +152,7 @@ public class Problem212 {
         visited[i][j] = true;
         sb.append(board[i][j]);
 
-        //当前单词是前缀树中的一个单词，且当前单词第一次被遍历到，才加入结果集合
+        //sb中保存的当前单词是前缀树中的一个单词，并且当前单词第一次被遍历到，才加入结果集合
         //注意：找到一个单词后，不能return，需要接着当前单词继续往后寻找
         if (node.isEnd && !set.contains(sb.toString())) {
             list.add(sb.toString());
@@ -185,6 +187,7 @@ public class Problem212 {
                 if (node.children[c - 'a'] == null) {
                     node.children[c - 'a'] = new TrieNode();
                 }
+
                 node = node.children[c - 'a'];
             }
 
