@@ -113,7 +113,7 @@ public class Problem140 {
 
     private void backtrack(int t, StringBuilder sb, String s, Set<String> wordDictSet, List<String> result) {
         if (t == s.length()) {
-            //删除末尾空格
+            //去除末尾空格
             result.add(sb.delete(sb.length() - 1, sb.length()).toString());
             return;
         }
@@ -136,7 +136,7 @@ public class Problem140 {
             for (String word : deque) {
                 sb.append(word).append(' ');
             }
-            //删除末尾空格
+            //去除末尾空格
             result.add(sb.delete(sb.length() - 1, sb.length()).toString());
             return;
         }

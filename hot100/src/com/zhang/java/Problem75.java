@@ -99,7 +99,7 @@ public class Problem75 {
                 k++;
             } else if (nums[k] == 2) {
                 //当前元素为2时，num[j]和nums[k]交换，指针j左移
-                swap(nums, k, j);
+                swap(nums, j, k);
                 j--;
             } else {
                 //当前元素为1时，k指针右移

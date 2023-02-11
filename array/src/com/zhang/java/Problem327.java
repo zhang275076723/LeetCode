@@ -31,7 +31,7 @@ public class Problem327 {
         int[] nums = {-2, 5, -1};
         int lower = -2;
         int upper = 2;
-//        System.out.println(problem327.countRangeSum(nums, lower, upper));
+        System.out.println(problem327.countRangeSum(nums, lower, upper));
         System.out.println(problem327.countRangeSum2(nums, lower, upper));
         System.out.println(problem327.countRangeSum3(nums, lower, upper));
         System.out.println(problem327.countRangeSum4(nums, lower, upper));

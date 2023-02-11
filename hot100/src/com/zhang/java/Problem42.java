@@ -44,10 +44,12 @@ public class Problem42 {
             int leftMax = height[i];
             int rightMax = height[i];
 
+            //找height[i]左边的最大值
             for (int j = 0; j < i; j++) {
                 leftMax = Math.max(leftMax, height[j]);
             }
 
+            //找height[i]右边的最大值
             for (int j = i + 1; j < height.length; j++) {
                 rightMax = Math.max(rightMax, height[j]);
             }
@@ -71,7 +73,6 @@ public class Problem42 {
      * @return
      */
     public int trap2(int[] height) {
-        int result = 0;
         int[] leftMax = new int[height.length];
         int[] rightMax = new int[height.length];
 
@@ -85,6 +86,8 @@ public class Problem42 {
         for (int i = rightMax.length - 2; i >= 0; i--) {
             rightMax[i] = Math.max(rightMax[i + 1], height[i]);
         }
+
+        int result = 0;
 
         for (int i = 0; i < height.length; i++) {
             result = result + Math.min(leftMax[i], rightMax[i]) - height[i];

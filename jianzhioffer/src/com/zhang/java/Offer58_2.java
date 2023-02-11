@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/5 9:50
  * @Author zsy
- * @Description 左旋转字符串 字节面试题 类比Problem61、Problem541、Offer58
+ * @Description 左旋转字符串 字节面试题 旋转问题类比Problem61 类比Problem58、Problem151、Problem186、Problem334、Problem541、Problem557、Offer58
  * 字符串的左旋转操作是把字符串前面的若干个字符转移到字符串的尾部。
  * 请定义一个函数实现字符串左旋转操作的功能。
  * 比如，输入字符串"abcdefg"和数字2，该函数将返回左旋转两位得到的结果"cdefgab"。
@@ -62,8 +62,9 @@ public class Offer58_2 {
     }
 
     /**
+     * 三次反转
      * 不使用额外的空间，只在本串上操作
-     * 时间复杂度O(n)，空间复杂度O(n) (如果s是可变长度，空间复杂度O(1))
+     * 时间复杂度O(n)，空间复杂度O(n) (如果s是可变长，空间复杂度O(1))
      *
      * @param s
      * @param n
@@ -91,11 +92,11 @@ public class Offer58_2 {
      * @param left
      * @param right
      */
-    public void reverse(StringBuilder sb, int left, int right) {
+    private void reverse(StringBuilder sb, int left, int right) {
         while (left < right) {
-            char temp = sb.charAt(left);
+            char c = sb.charAt(left);
             sb.setCharAt(left, sb.charAt(right));
-            sb.setCharAt(right, temp);
+            sb.setCharAt(right, c);
 
             left++;
             right--;

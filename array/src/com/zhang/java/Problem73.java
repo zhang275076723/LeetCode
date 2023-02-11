@@ -27,8 +27,8 @@ public class Problem73 {
                 {3, 4, 0, 2},
                 {1, 3, 1, 5}
         };
-        problem73.setZeroes(matrix);
-//        problem73.setZeroes2(matrix);
+//        problem73.setZeroes(matrix);
+        problem73.setZeroes2(matrix);
         System.out.println(Arrays.deepToString(matrix));
     }
 

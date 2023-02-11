@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/2 09:48
  * @Author zsy
- * @Description 最后一个单词的长度 类比Problem151、Offer58
+ * @Description 最后一个单词的长度 类比Problem151、Problem186、Problem344、Problem541、Problem557、Offer58、Offer58_2
  * 给你一个字符串 s，由若干单词组成，单词前后用一些空格字符隔开。
  * 返回字符串中 最后一个 单词的长度。
  * 单词 是指仅由字母组成、不包含任何空格字符的最大子字符串。
@@ -50,7 +50,7 @@ public class Problem58 {
             index--;
         }
 
-        //都为空格，直接返回0
+        //字符串s都为空格，直接返回0
         if (index == -1) {
             return 0;
         }
