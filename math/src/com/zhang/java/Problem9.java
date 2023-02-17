@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/1 17:13
  * @Author zsy
- * @Description 回文数 回文类比Problem5、Problem131、Problem132、Problem214、Problem234、Problem409、Problem516、Problem647
+ * @Description 回文数 回文类比Problem5、Problem125、Problem131、Problem132、Problem214、Problem234、Problem409、Problem516、Problem647、Problem680
  * 给你一个整数 x ，如果 x 是一个回文整数，返回 true ；否则，返回 false 。
  * 回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。
  * 例如，121 是回文，而 123 不是。
@@ -24,8 +24,8 @@ package com.zhang.java;
 public class Problem9 {
     public static void main(String[] args) {
         Problem9 problem9 = new Problem9();
-        System.out.println(problem9.isPalindrome(-121));
-        System.out.println(problem9.isPalindrome2(-121));
+        System.out.println(problem9.isPalindrome(121));
+        System.out.println(problem9.isPalindrome2(121));
     }
 
     /**
@@ -75,16 +75,12 @@ public class Problem9 {
 
         //x反转之后的值
         int reverse = 0;
-        //当前位的值
-        int cur;
         int num = x;
 
         while (num != 0) {
-            cur = num % 10;
-            num = num / 10;
-
             //回文数逆序不会溢出，不需要考虑溢出的情况
-            reverse = reverse * 10 + cur;
+            reverse = reverse * 10 + num % 10;
+            num = num / 10;
         }
 
         //判断反转之后是否和x相等

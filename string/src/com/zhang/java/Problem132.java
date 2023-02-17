@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/11 09:46
  * @Author zsy
- * @Description 分割回文串 II 腾讯机试题 回文类比Problem5、Problem9、Problem131、Problem214、Problem234、Problem409、Problem516、Problem647
+ * @Description 分割回文串 II 腾讯机试题 回文类比Problem5、Problem9、Problem125、Problem131、Problem214、Problem234、Problem409、Problem516、Problem647、Problem680
  * 给你一个字符串 s，请你将 s 分割成一些子串，使每个子串都是回文。
  * 返回符合要求的 最少分割次数 。
  * <p>
@@ -73,10 +73,11 @@ public class Problem132 {
             } else {
                 //s[0]-s[i]不是回文串
 
-                dp2[i] = Integer.MAX_VALUE;
+                //初始化分割s[0]-s[i]为回文串的最少分割次数为i
+                dp2[i] = i;
 
                 for (int j = 0; j < i; j++) {
-                    //s[j+1]-s[i]是回文串
+                    //s[j+1]-s[i]是回文串，则只需要分割s[0]-s[j]为回文子串的最少分割次数+1
                     if (dp1[j + 1][i]) {
                         dp2[i] = Math.min(dp2[i], dp2[j] + 1);
                     }

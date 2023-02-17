@@ -31,8 +31,6 @@ import java.util.*;
  * -1000 <= targetSum <= 1000
  */
 public class Problem112 {
-    private boolean flag = false;
-
     public static void main(String[] args) {
         Problem112 problem112 = new Problem112();
         String[] data = {"5", "4", "8", "11", "null", "13", "4", "7", "2", "null", "null", "null", "1"};
@@ -54,9 +52,7 @@ public class Problem112 {
             return false;
         }
 
-        dfs(root, targetSum, 0);
-
-        return flag;
+        return dfs(root, 0, targetSum);
     }
 
     /**
@@ -78,48 +74,41 @@ public class Problem112 {
         while (!queue.isEmpty()) {
             Pos pos = queue.poll();
 
+            //当前节点为叶节点，判断路径和是否等于targetSum
             if (pos.node.left == null && pos.node.right == null) {
-                if (pos.pathSum == targetSum) {
+                if (pos.sum == targetSum) {
                     return true;
                 }
+
                 continue;
             }
 
             if (pos.node.left != null) {
-                queue.offer(new Pos(pos.node.left, pos.pathSum + pos.node.left.val));
+                queue.offer(new Pos(pos.node.left, pos.sum + pos.node.left.val));
             }
 
             if (pos.node.right != null) {
-                queue.offer(new Pos(pos.node.right, pos.pathSum + pos.node.right.val));
+                queue.offer(new Pos(pos.node.right, pos.sum + pos.node.right.val));
             }
         }
 
         return false;
     }
 
-    private void dfs(TreeNode root, int targetSum, int curSum) {
+    private boolean dfs(TreeNode root, int sum, int targetSum) {
         if (root == null) {
-            return;
+            return false;
         }
 
-        //已经找到根节点到叶子节点的路径和为targetSum的路径，则返回
-        if (flag) {
-            return;
-        }
+        sum = sum + root.val;
 
-        curSum = curSum + root.val;
-
-        //到达叶节点，且路径和为targetSum
+        //当前节点为叶节点，判断路径和是否等于targetSum
         if (root.left == null && root.right == null) {
-            if (curSum == targetSum) {
-                flag = true;
-            }
-
-            return;
+            return sum == targetSum;
         }
 
-        dfs(root.left, targetSum, curSum);
-        dfs(root.right, targetSum, curSum);
+        //继续往左往右找路径总和为targetSum的路径
+        return dfs(root.left, sum, targetSum) || dfs(root.right, sum, targetSum);
     }
 
     private TreeNode buildTree(String[] data) {
@@ -160,11 +149,11 @@ public class Problem112 {
      */
     private static class Pos {
         TreeNode node;
-        int pathSum;
+        int sum;
 
-        Pos(TreeNode node, int pathSum) {
+        Pos(TreeNode node, int sum) {
             this.node = node;
-            this.pathSum = pathSum;
+            this.sum = sum;
         }
     }
 

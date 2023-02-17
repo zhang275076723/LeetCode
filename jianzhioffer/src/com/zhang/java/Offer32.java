@@ -21,7 +21,7 @@ public class Offer32 {
     }
 
     /**
-     * 层序遍历
+     * bfs
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root

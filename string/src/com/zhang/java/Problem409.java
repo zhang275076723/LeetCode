@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/11/12 09:36
  * @Author zsy
- * @Description 最长回文串 回文类比Problem5、Problem9、Problem131、Problem132、Problem214、Problem234、Problem516、Problem647
+ * @Description 最长回文串 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem516、Problem647、Problem680
  * 给定一个包含大写字母和小写字母的字符串 s ，返回 通过这些字母构造成的 最长的回文串 。
  * 在构造过程中，请注意 区分大小写 。比如 "Aa" 不能当做一个回文字符串。
  * <p>
@@ -29,8 +29,8 @@ public class Problem409 {
 
     /**
      * 哈希表
-     * 统计字符串s中每个字符出现的次数，偶数字符出现的次数加上奇数字符出现次数减1，
-     * 最后再根据字符是否出现了奇数次，觉得最后是否还需要加1，即得到最长回文串长度，
+     * 统计字符串s中每个字符出现的次数，
+     * 最长回文串长度包括出现次数为偶数的字符，和最多只能有一个出现次数为奇数的字符，其他出现次数为奇数的字符个数减1
      * 时间复杂度O(n)，空间复杂度O(1) (最多有128种不同的字符)
      *
      * @param s
@@ -49,19 +49,25 @@ public class Problem409 {
 
         //最长回文串的长度
         int len = 0;
-        //字符是否出现了奇数次
-        boolean oddSign = false;
+        //map中字符出现次数为奇数的个数
+        int oddCount = 0;
 
         for (int count : map.values()) {
             if (count % 2 == 0) {
                 len = len + count;
             } else {
-                len = len + count - 1;
-                oddSign = true;
+                oddCount++;
+
+                //回文最多只能有一个出现次数为奇数的字符
+                if (oddCount <= 1) {
+                    len = len + count;
+                } else {
+                    //其他出现次数为奇数的字符，只能拼接当前次数减1
+                    len = len + count - 1;
+                }
             }
         }
 
-        //字符出现了奇数次，则选一个奇数字符作为中间元素，长度要+1
-        return oddSign ? len + 1 : len;
+        return len;
     }
 }

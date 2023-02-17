@@ -38,100 +38,105 @@ public class Offer34 {
      * 时间复杂度O(n^2)，空间复杂度O(n) (将满足条件的路径复制到结果集合需要O(n))
      *
      * @param root
-     * @param target
+     * @param targetSum
      * @return
      */
-    public List<List<Integer>> pathSum(TreeNode root, int target) {
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
         if (root == null) {
             return new ArrayList<>();
         }
 
         List<List<Integer>> result = new ArrayList<>();
 
-        dfs(root, target, 0, new ArrayList<>(), result);
+        dfs(root, 0, targetSum, new ArrayList<>(), result);
 
         return result;
     }
 
     /**
      * bfs
+     * 使用哈希表存储当前节点的父节点，用于路径复原
      * 时间复杂度O(n^2)，空间复杂度O(n) (将满足条件的路径复制到结果集合需要O(n))
      *
      * @param root
-     * @param target
+     * @param targetSum
      * @return
      */
-    public List<List<Integer>> pathSum2(TreeNode root, int target) {
+    public List<List<Integer>> pathSum2(TreeNode root, int targetSum) {
         if (root == null) {
             return new ArrayList<>();
         }
 
         List<List<Integer>> result = new ArrayList<>();
         Queue<Pos> queue = new LinkedList<>();
-        //存放当前节点和当前节点的父节点，用于路径复原
-        Map<TreeNode, TreeNode> map = new HashMap<>();
         queue.offer(new Pos(root, root.val));
+
+        //存放当前节点的父节点，用于路径复原
+        Map<TreeNode, TreeNode> map = new HashMap<>();
         map.put(root, null);
 
         while (!queue.isEmpty()) {
             Pos pos = queue.poll();
 
-            if (pos.node.left == null && pos.node.right == null && pos.pathSum == target) {
+            //当前节点为叶节点，路径和等于targetSum，将路径加入结果集合
+            if (pos.node.left == null && pos.node.right == null && pos.sum == targetSum) {
                 result.add(getPath(pos.node, map));
             }
 
             if (pos.node.left != null) {
                 map.put(pos.node.left, pos.node);
-                queue.offer(new Pos(pos.node.left, pos.pathSum + pos.node.left.val));
+                queue.offer(new Pos(pos.node.left, pos.sum + pos.node.left.val));
             }
+
             if (pos.node.right != null) {
                 map.put(pos.node.right, pos.node);
-                queue.offer(new Pos(pos.node.right, pos.pathSum + pos.node.right.val));
+                queue.offer(new Pos(pos.node.right, pos.sum + pos.node.right.val));
             }
         }
 
         return result;
     }
 
-    /**
-     * 回溯，因为可能存在负数的情况，所以不能限界剪枝
-     *
-     * @param root   当前根节点
-     * @param target 目标路径和
-     * @param curSum 当前路径和
-     * @param path   当前路径
-     * @param result 满足要求的所有路径
-     */
-    public void dfs(TreeNode root, int target, int curSum, List<Integer> path, List<List<Integer>> result) {
+    private void dfs(TreeNode root, int sum, int targetSum, List<Integer> path, List<List<Integer>> result) {
         if (root == null) {
             return;
         }
 
-        curSum = curSum + root.val;
+        sum = sum + root.val;
         path.add(root.val);
 
-        //当前节点为叶节点，并且路径之和等于target，将path加入result集合中
+        //当前节点为叶节点，判断路径和是否等于targetSum
         if (root.left == null && root.right == null) {
-            if(curSum == target){
-                //将满足条件的路径复制到结果集合需要O(n)
+            if (sum == targetSum) {
+                //将路径和等于targetSum的路径复制到结果集合需要O(n)
                 result.add(new ArrayList<>(path));
             }
+
             path.remove(path.size() - 1);
             return;
         }
 
-        dfs(root.left, target, curSum, path, result);
-        dfs(root.right, target, curSum, path, result);
+        dfs(root.left, sum, targetSum, path, result);
+        dfs(root.right, sum, targetSum, path, result);
 
         path.remove(path.size() - 1);
     }
 
+    /**
+     * 获取根节点到当前节点的路径集合
+     * 时间复杂度O(n)，空间复杂度O(1)
+     *
+     * @param node
+     * @param map
+     * @return
+     */
     private List<Integer> getPath(TreeNode node, Map<TreeNode, TreeNode> map) {
+        //因为是从叶节点往根节点找，所以需要首添加
         LinkedList<Integer> list = new LinkedList<>();
 
         while (node != null) {
-            //因为是从node到根节点，所以要头添加
-            list.offerFirst(node.val);
+            //首添加
+            list.addFirst(node.val);
             node = map.get(node);
         }
 
@@ -176,15 +181,12 @@ public class Offer34 {
      */
     public static class Pos {
         TreeNode node;
+        //根节点到当前节点的路径和
+        int sum;
 
-        /**
-         * 根节点到当前节点的路径和
-         */
-        int pathSum;
-
-        Pos(TreeNode node, int pathSum) {
+        Pos(TreeNode node, int sum) {
             this.node = node;
-            this.pathSum = pathSum;
+            this.sum = sum;
         }
     }
 

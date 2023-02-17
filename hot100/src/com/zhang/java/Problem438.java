@@ -35,7 +35,7 @@ public class Problem438 {
     }
 
     /**
-     * 滑动窗口，双指针
+     * 滑动窗口，双指针，使用2个map
      * 两个map分别存储s滑动窗口和p中字符对应出现次数
      * 时间复杂度O(s.length()*|C|)，空间复杂度O(|C|) (字符串仅包含小写字母，所以|C|=26)
      *
@@ -81,7 +81,7 @@ public class Problem438 {
     }
 
     /**
-     * 滑动窗口，双指针
+     * 滑动窗口，双指针，使用1个map
      * map存储s滑动窗口和p中字符对应出现次数之差diff，当diff等于0时，当前滑动窗口表示的字符串，即是p的一个异位词
      * 时间复杂度O(s.length()+p.length())，空间复杂度O(|C|) (字符串仅包含小写字母，所以|C|=26)
      *
@@ -113,7 +113,7 @@ public class Problem438 {
             if (!map.containsKey(c) || map.get(c) <= 0) {
                 map.put(c, map.getOrDefault(c, 0) - 1);
                 diff++;
-            }else{
+            } else {
                 //当前字符c在map中，diff减1
                 map.put(c, map.getOrDefault(c, 0) - 1);
                 diff--;
@@ -130,7 +130,7 @@ public class Problem438 {
                 if (map.get(s.charAt(left)) < 0) {
                     map.put(s.charAt(left), map.get(s.charAt(left)) + 1);
                     diff--;
-                }else{
+                } else {
                     //滑动窗口左指针所指字符出现次数大于等于0，diff加1
                     map.put(s.charAt(left), map.get(s.charAt(left)) + 1);
                     diff++;

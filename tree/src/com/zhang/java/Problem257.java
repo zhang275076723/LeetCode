@@ -43,7 +43,7 @@ public class Problem257 {
 
         List<String> result = new ArrayList<>();
 
-        dfs(root, result, new StringBuilder());
+        dfs(root, new StringBuilder(), result);
 
         return result;
     }
@@ -68,6 +68,7 @@ public class Problem257 {
         while (!queue.isEmpty()) {
             Pos pos = queue.poll();
 
+            //当前节点为叶节点，路径加入结果集合
             if (pos.node.left == null && pos.node.right == null) {
                 result.add(pos.path);
                 continue;
@@ -85,11 +86,11 @@ public class Problem257 {
         return result;
     }
 
-    private void dfs(TreeNode root, List<String> result, StringBuilder path) {
+    private void dfs(TreeNode root, StringBuilder path, List<String> result) {
+        //当前节点为叶节点，路径加入结果集合
         if (root.left == null && root.right == null) {
-            //因为节点的值可能不止一位，所以需要记录原始长度，用于回溯删除
+            //节点的值可能不止一位，所以需要记录原始长度，用于回溯删除
             int start = path.length();
-
             path.append(root.val);
             //当前路径复制到结果集合需要O(n)
             result.add(path.toString());
@@ -104,11 +105,11 @@ public class Problem257 {
         path.append(root.val).append("->");
 
         if (root.left != null) {
-            dfs(root.left, result, path);
+            dfs(root.left, path, result);
         }
 
         if (root.right != null) {
-            dfs(root.right, result, path);
+            dfs(root.right, path, result);
         }
 
         path.delete(start, path.length());

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/4 10:27
  * @Author zsy
- * @Description 除法求值 图类比Problem133、Problem207、Problem210、Problem329 并查集类比Problem130、Problem200、Problem695、Problem765、Problem827
+ * @Description 除法求值 图类比Problem133、Problem207、Problem210、Problem329 图求最短路径类比Dijkstra 并查集类比Problem130、Problem200、Problem695、Problem765、Problem827
  * 给你一个变量对数组 equations 和一个实数值数组 values 作为已知条件，
  * 其中 equations[i] = [Ai, Bi] 和 values[i] 共同表示等式 Ai / Bi = values[i] 。
  * 每个 Ai 或 Bi 是一个表示单个变量的字符串。
@@ -207,7 +207,8 @@ public class Problem399 {
     }
 
     /**
-     * Floyd，计算任意两个节点之间的最近距离
+     * Floyd，计算任意两个节点之间的最短路径
+     * 注意：Floyd可以处理带负权值的图，而Dijkstra不能处理带负权值的图
      * 时间复杂度O(ML+N^3+QL)，空间复杂度O(NL+N^2) (M：边的数量，N：节点数量，Q：询问的数量，L：字符串的平均长度)
      *
      * @param equations

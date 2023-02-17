@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/28 9:15
  * @Author zsy
- * @Description 删除无效的括号 类比Problem20、Problem22、Problem32、Problem678 去重类比Problem40、Offer38
+ * @Description 删除无效的括号 括号类比Problem20、Problem22、Problem32、Problem678 去重类比Problem40、Offer38
  * 给你一个由若干括号和字母组成的字符串 s ，删除最小数量的无效括号，使得输入的字符串有效。
  * 返回所有可能的结果。答案可以按 任意顺序 返回。
  * <p>
@@ -149,6 +149,7 @@ public class Problem301 {
             if (isValid(str)) {
                 result.add(str);
             }
+
             return;
         }
 

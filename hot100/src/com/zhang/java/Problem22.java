@@ -9,7 +9,7 @@ import java.util.Queue;
 /**
  * @Date 2022/4/16 8:31
  * @Author zsy
- * @Description 括号生成 类比Problem20、Problem32、Problem301、Problem678
+ * @Description 括号生成 括号类比Problem20、Problem32、Problem301、Problem678
  * 数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。
  * <p>
  * 输入：n = 3

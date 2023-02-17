@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2022/3/15 21:39
  * @Author zsy
- * @Description 有效的括号字符串 类比Problem20、Problem22、Problem32、Problem301 类比Problem10、Offer19
+ * @Description 有效的括号字符串 括号类比Problem20、Problem22、Problem32、Problem301
  * 给定一个只包含三种字符的字符串：（，）和 *，写一个函数来检验这个字符串是否为有效字符串。
  * 有效字符串具有如下规则：
  * 1.任何左括号 (必须有相应的右括号 )。
@@ -31,56 +31,6 @@ public class Problem678 {
         String s = "(*())";
         System.out.println(problem678.checkValidString(s));
         System.out.println(problem678.checkValidString2(s));
-        System.out.println(problem678.checkValidString3(s));
-    }
-
-    /**
-     * 动态规划
-     * dp[i][j]：s[i]-s[j]是否为有效的括号字符串
-     * dp[i][j] = true                   (dp[i+1][j-1] == true && (s[i] == '(' || s[i] == '*') && (s[j] == ')' || s[j] == '*'))
-     * dp[i][j] = dp[i][k] && dp[k+1][j] (i <= k < j)
-     * 时间复杂度O(n^3)，空间复杂的O(n^2)
-     *
-     * @param s
-     * @return
-     */
-    public boolean checkValidString(String s) {
-        boolean[][] dp = new boolean[s.length()][s.length()];
-
-        //初始化*
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == '*') {
-                dp[i][i] = true;
-            }
-        }
-
-        //初始化()、(*、*)、**
-        for (int i = 1; i < s.length(); i++) {
-            char c1 = s.charAt(i - 1);
-            char c2 = s.charAt(i);
-            dp[i - 1][i] = (c1 == '(' || c1 == '*') && (c2 == ')' || c2 == '*');
-        }
-
-        for (int i = 2; i < s.length(); i++) {
-            for (int j = 0; j < s.length() - i; j++) {
-                char c1 = s.charAt(j);
-                char c2 = s.charAt(j + i);
-
-                if (dp[j + 1][j + i - 1] && (c1 == '(' || c1 == '*') && (c2 == ')' || c2 == '*')) {
-                    dp[j][j + i] = true;
-                    continue;
-                }
-
-                for (int k = j; k < j + i; k++) {
-                    if (dp[j][k] && dp[k + 1][j + i]) {
-                        dp[j][j + i] = true;
-                        break;
-                    }
-                }
-            }
-        }
-
-        return dp[0][s.length() - 1];
     }
 
     /**
@@ -91,7 +41,7 @@ public class Problem678 {
      * @param s
      * @return
      */
-    public boolean checkValidString2(String s) {
+    public boolean checkValidString(String s) {
         //存放'('的索引下标
         Stack<Integer> stack1 = new Stack<>();
         //存放'*'的索引下标
@@ -151,7 +101,7 @@ public class Problem678 {
      * @param s
      * @return
      */
-    public boolean checkValidString3(String s) {
+    public boolean checkValidString2(String s) {
         int min = 0;
         int max = 0;
 
