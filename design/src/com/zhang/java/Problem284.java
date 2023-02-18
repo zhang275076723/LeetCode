@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @Date 2023/1/4 19:51
  * @Author zsy
- * @Description 顶端迭代器 类比Problem173
+ * @Description 顶端迭代器 迭代器类比Problem173
  * 请你在设计一个迭代器，在集成现有迭代器拥有的 hasNext 和 next 操作的基础上，还额外支持 peek 操作。
  * 实现 PeekingIterator 类：
  * PeekingIterator(Iterator<int> nums) 使用指定整数迭代器 nums 初始化迭代器。

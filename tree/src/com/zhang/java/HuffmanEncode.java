@@ -97,6 +97,7 @@ public class HuffmanEncode {
         private void buildEncodeMap(HuffmanNode node) {
             if (node.left == null && node.right == null) {
                 encodeMap.put(node.key, node.code);
+                return;
             }
 
             if (node.left != null) {

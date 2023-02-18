@@ -54,7 +54,7 @@ public class Problem381 {
         //存储元素集合
         private final List<Integer> list;
 
-        //存储list集合中相同元素的下标索引set集合
+        //key：list集合元素，value：相同元素的在list集合中的下标索引set集合
         private final Map<Integer, Set<Integer>> map;
 
         //获取随机值

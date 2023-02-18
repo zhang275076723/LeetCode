@@ -53,7 +53,7 @@ public class Problem380 {
         //存储元素集合
         private final List<Integer> list;
 
-        //存储list集合中元素和对应在list集合中的下标索引
+        //key：list集合中元素，value：元素在list集合中的下标索引
         private final Map<Integer, Integer> map;
 
         //获取随机值

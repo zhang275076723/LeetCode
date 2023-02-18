@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/6/24 8:14
  * @Author zsy
- * @Description 字符串相乘 类比Problem29、Problem415
+ * @Description 字符串相乘 加减乘除类比Problem29、Problem415
  * 给定两个以字符串形式表示的非负整数 num1 和 num2，返回 num1 和 num2 的乘积，它们的乘积也表示为字符串形式。
  * 注意：不能使用任何内置的 BigInteger 库或直接将输入转换为整数。
  * <p>
@@ -108,8 +108,13 @@ public class Problem43 {
         int[] result = new int[num1.length() + num2.length()];
 
         for (int i = num1.length() - 1; i >= 0; i--) {
+            //num1[i]的值
+            int n1 = num1.charAt(i) - '0';
+
             for (int j = num2.length() - 1; j >= 0; j--) {
-                result[i + j + 1] = result[i + j + 1] + (num1.charAt(i) - '0') * (num2.charAt(j) - '0');
+                //num2[j]的值
+                int n2 = num2.charAt(j) - '0';
+                result[i + j + 1] = result[i + j + 1] + n1 * n2;
             }
         }
 

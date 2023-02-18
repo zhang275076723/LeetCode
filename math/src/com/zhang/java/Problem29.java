@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/1/5 12:14
  * @Author zsy
- * @Description 两数相除 Facebook面试题 美团面试题 类比Offer64、Offer65 加减乘除类比Problem43、Problem415
+ * @Description 两数相除 Facebook面试题 美团面试题 加减乘除类比Problem43、Problem415 类比Offer64、Offer65
  * 给定两个整数，被除数 dividend 和除数 divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。
  * 返回被除数 dividend 除以除数 divisor 得到的商。
  * 整数除法的结果应当截去（truncate）其小数部分，例如：truncate(8.345) = 8 以及 truncate(-2.7335) = -2
@@ -35,6 +35,7 @@ public class Problem29 {
      * 每次从bit为1开始找最大的能够减去divisor*bit的bit，dividend = dividend - (bit * divisor)，
      * 直至dividend小于divisor(dividend和divisor都是正数的情况)
      * 例如：60/8 ==> 60 = 8*4 + 8*2 + 8*1 + 4 ==> 60/8 = 7
+     * 注意：将dividend和divisor都转化为负数进行运算，得到结果之后再添加正负号
      * 时间复杂度O(log(dividend))=O(1)，空间复杂度O(1)
      *
      * @param dividend 被除数

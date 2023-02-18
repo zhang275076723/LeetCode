@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/8/28 11:58
  * @Author zsy
- * @Description 单词搜索 II dfs类比Problem79、Problem130、Problem200、Problem463、Problem695、Problem733、Problem827、Problem1034、Offer12 前缀树类比Problem14、Problem208、Problem211
+ * @Description 单词搜索 II dfs和bfs类比Problem79、Problem130、Problem200、Problem463、Problem695、Problem733、Problem827、Problem994、Problem1034、Problem1162、Offer12 前缀树类比Problem14、Problem208、Problem211
  * 给定一个 m x n 二维字符网格 board 和一个单词（字符串）列表 words， 返回所有二维网格上的单词 。
  * 单词必须按照字母顺序，通过 相邻的单元格 内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。
  * 同一个单元格内的字母在一个单词中不允许被重复使用。
@@ -91,6 +91,7 @@ public class Problem212 {
         //前缀树
         Trie trie = new Trie();
 
+        //words中单词加入前缀树
         for (String word : words) {
             trie.insert(word);
         }

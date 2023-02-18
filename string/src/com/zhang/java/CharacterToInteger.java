@@ -57,7 +57,7 @@ public class CharacterToInteger {
             } else if (c == '九') {
                 stack.push(9);
             } else {
-                //栈中小于num的元素之和
+                //当前单位：亿、万、千、百、十，表示的数
                 int num = 0;
 
                 if (c == '亿') {
@@ -80,11 +80,12 @@ public class CharacterToInteger {
                 //栈中小于num的元素之和
                 int sum = 0;
 
-                //栈顶小于num的所有元素出栈，并相加
+                //栈顶小于num的元素出栈，累加到sum中
                 while (!stack.isEmpty() && stack.peek() < num) {
                     sum = sum + stack.pop();
                 }
 
+                //当前单位和之前栈中数字所形成的值
                 stack.push(sum * num);
             }
         }
