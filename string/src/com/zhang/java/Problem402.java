@@ -102,11 +102,12 @@ public class Problem402 {
 
         for (int i = 0; i < num.length(); i++) {
             char c = num.charAt(i);
-            //栈顶元素值大于当前元素值，且栈不为空，且k大于0，
+            //栈顶元素值大于当前元素值，且栈不为空，且k大于0，则栈顶元素出栈，k减1
             while (!stack.isEmpty() && k > 0 && stack.peekLast() > c) {
                 stack.pollLast();
                 k--;
             }
+            //当前元素下标索引入栈
             stack.offerLast(c);
         }
 

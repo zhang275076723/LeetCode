@@ -93,7 +93,7 @@ public class Problem76 {
 
     /**
      * sMap中存在的字符能否覆盖tMap中存在的字符
-     * 时间复杂度O(C)，空间复杂度O(1)，C为字符集大小，即|C|=26
+     * 时间复杂度O(C)，空间复杂度O(1) (C为字符集大小，即|C|=26)
      *
      * @param sMap
      * @param tMap
@@ -102,7 +102,7 @@ public class Problem76 {
     private boolean isCover(Map<Character, Integer> sMap, Map<Character, Integer> tMap) {
         for (Map.Entry<Character, Integer> entry : tMap.entrySet()) {
             //sMap中没有tMap中的key，或者sMap中有tMap中的key，但value小于tMap中的value，则说明当前窗口不能覆盖t
-            //Integer对象之间要比较是否相等，不能用==，而必须用equals，因为==比较的是地址是否相同
+            //Integer和Integer之间比较只能使用equals()，不能使用==，==比较的是地址是否相等
             if (!sMap.containsKey(entry.getKey()) || sMap.get(entry.getKey()) < entry.getValue()) {
                 return false;
             }

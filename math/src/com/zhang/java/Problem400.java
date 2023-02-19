@@ -63,14 +63,29 @@ public class Problem400 {
         }
 
         //n所在的长度为numLength的起始数字
-        int startNum = (int) Math.pow(10, numLength - 1);
-        //从startNum开始开始的索引下标
+        int startNum = quickPow(10, numLength - 1);
+        //从startNum开始的下标索引
         int index = (int) (n - count - 1);
         //第几个数字startNum+i
         int i = index / numLength;
-        //startNum+i的第j个数字即为最后结果
+        //数字startNum+i的第j个数字即为最后结果
         int j = index % numLength;
 
         return String.valueOf(startNum + i).charAt(j) - '0';
+    }
+
+    private int quickPow(int a, int n) {
+        int result = 1;
+
+        while (n != 0) {
+            if ((n & 1) == 1) {
+                result = result * a;
+            }
+
+            a = a * a;
+            n = n >>> 1;
+        }
+
+        return result;
     }
 }

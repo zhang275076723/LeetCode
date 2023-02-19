@@ -83,7 +83,7 @@ public class Problem567 {
      */
     private boolean isCover(Map<Character, Integer> s1Map, Map<Character, Integer> s2Map) {
         for (Map.Entry<Character, Integer> entry : s1Map.entrySet()) {
-            //Integer对象之间要比较是否相等，不能用==，而必须用equals，因为==比较的是地址是否相同
+            //Integer和Integer之间比较只能使用equals()，不能使用==，==比较的是地址是否相等
             if (!s2Map.containsKey(entry.getKey()) || !s2Map.get(entry.getKey()).equals(entry.getValue())) {
                 return false;
             }

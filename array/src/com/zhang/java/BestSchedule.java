@@ -43,7 +43,7 @@ public class BestSchedule {
 
     /**
      * 回溯+剪枝
-     * 时间复杂度O(k^n)，空间复杂度O(n)
+     * 时间复杂度O(k^n)，空间复杂度O(n+k)
      *
      * @param n
      * @param k

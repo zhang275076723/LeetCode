@@ -37,7 +37,7 @@ public class Problem438 {
     /**
      * 滑动窗口，双指针，使用2个map
      * 两个map分别存储s滑动窗口和p中字符对应出现次数
-     * 时间复杂度O(s.length()*|C|)，空间复杂度O(|C|) (字符串仅包含小写字母，所以|C|=26)
+     * 时间复杂度O(p.length()+s.length()*|C|)，空间复杂度O(|C|) (字符串仅包含小写字母，所以|C|=26)
      *
      * @param s
      * @param p
@@ -65,7 +65,7 @@ public class Problem438 {
 
             //当前窗口大小和p的长度相同时，才比较是否是p的异位词，并且left指针右移
             if (right - left + 1 == p.length()) {
-                if (isCover(sMap, pMap)) {
+                if (isEqual(sMap, pMap)) {
                     list.add(left);
                 }
 
@@ -94,12 +94,13 @@ public class Problem438 {
             return new ArrayList<>();
         }
 
-        //s滑动窗口和p中字符对应出现次数之差
-        int diff = p.length();
+        //s滑动窗口和p中字符出现次数之差
+        int diff = 0;
         Map<Character, Integer> map = new HashMap<>();
 
         for (char c : p.toCharArray()) {
             map.put(c, map.getOrDefault(c, 0) + 1);
+            diff++;
         }
 
         List<Integer> list = new ArrayList<>();
@@ -115,7 +116,7 @@ public class Problem438 {
                 diff++;
             } else {
                 //当前字符c在map中，diff减1
-                map.put(c, map.getOrDefault(c, 0) - 1);
+                map.put(c, map.get(c) - 1);
                 diff--;
             }
 
@@ -146,15 +147,16 @@ public class Problem438 {
     }
 
     /**
-     * sMap中存在的字符能否覆盖pMap中存在的字符
+     * sMap中存在的字符及出现次数是否和pMap中存在的字符及出现次数相同
+     * 时间复杂度O(C)，空间复杂度O(1) (C为字符集大小，即|C|=26)
      *
      * @param sMap
      * @param pMap
      * @return
      */
-    private boolean isCover(Map<Character, Integer> sMap, Map<Character, Integer> pMap) {
+    private boolean isEqual(Map<Character, Integer> sMap, Map<Character, Integer> pMap) {
         for (Map.Entry<Character, Integer> entry : pMap.entrySet()) {
-            //Integer对象之间要比较是否相等，不能用==，而必须用equals，因为==比较的是地址是否相同
+            //Integer和Integer之间比较只能使用equals()，不能使用==，==比较的是地址是否相等
             if (!sMap.containsKey(entry.getKey()) || !sMap.get(entry.getKey()).equals(entry.getValue())) {
                 return false;
             }

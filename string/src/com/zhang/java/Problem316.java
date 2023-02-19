@@ -39,20 +39,19 @@ public class Problem316 {
             return s;
         }
 
-        //统计当前字符和出现的次数，用于去重和保证最小字典序
+        //统计s中字符和出现的次数，用于保证每个字符都出现
         Map<Character, Integer> map = new HashMap<>();
-
-        for (char c : s.toCharArray()) {
-            map.put(c, map.getOrDefault(c, 0) + 1);
-        }
-
         //访问数组
         boolean[] visited = new boolean[26];
         //单调递增栈
         Deque<Character> stack = new ArrayDeque<>();
 
         for (char c : s.toCharArray()) {
-            //当栈不为空，c未被访问，栈顶元素字典序大于c字典序，且栈顶元素在后面还有的情况下，才将栈顶元素出栈
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+
+        for (char c : s.toCharArray()) {
+            //栈不为空，当前字符c未被访问，栈顶元素字典序大于c字典序，且栈顶元素在后面还有的情况下，栈顶元素出栈
             while (!stack.isEmpty() && !visited[c - 'a'] && stack.peekLast() > c && map.get(stack.peekLast()) > 0) {
                 //栈顶元素出栈
                 char c2 = stack.pollLast();
@@ -60,14 +59,15 @@ public class Problem316 {
                 visited[c2 - 'a'] = false;
             }
 
-            //c未被添加到单调栈中，则进行添加
-            if (!visited[c - 'a']) {
-                visited[c - 'a'] = true;
+            //当前字符c已被访问，则字符c已入栈，字符c的个数减1
+            if (visited[c - 'a']) {
+                map.put(c, map.get(c) - 1);
+            } else {
+                //当期字符c未被访问，则字符c入栈，标记为已访问，字符c的个数减1
                 stack.offerLast(c);
+                visited[c - 'a'] = true;
+                map.put(c, map.get(c) - 1);
             }
-
-            //字符c的个数减1
-            map.put(c, map.get(c) - 1);
         }
 
         StringBuilder sb = new StringBuilder();

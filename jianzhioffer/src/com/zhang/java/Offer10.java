@@ -171,7 +171,7 @@ public class Offer10 {
     public int quickPow2(int a, int n) {
         int result = 1;
 
-        while (n > 0) {
+        while (n != 0) {
             //如果末位为1
             if ((n & 1) == 1) {
                 result = result * a;
