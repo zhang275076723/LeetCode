@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/30 15:53
  * @Author zsy
- * @Description 打家劫舍 III 类比Problem198、Problem213 dfs类比Problem104、Problem110、Problem111、Problem124、Problem543
+ * @Description 打家劫舍 III 类比Problem198、Problem213 dfs类比Problem104、Problem110、Problem111、Problem124、Problem543、Problem687
  * 小偷又发现了一个新的可行窃的地区。这个地区只有一个入口，我们称之为 root 。
  * 除了 root 之外，每栋房子有且只有一个“父“房子与之相连。
  * 一番侦察之后，聪明的小偷意识到“这个地方的所有房屋的排列类似于一棵二叉树”。
@@ -32,11 +32,10 @@ public class Problem337 {
     }
 
     /**
-     * 动态规划
-     * 从根节点开始能够盗取的最高金额为，
-     * 选根节点(不能选根节点的左右子节点) 和 不选根节点(可选可不选根节点的左右子节点)，两种情况的最大值
-     * result[0]：不选根节点的最大值
-     * result[1]；选节点的最大值
+     * dfs
+     * 得到根节点能够盗取的最高金额数组，选或不选根节点能够盗取的最高金额中的较大值，即为能够盗取的最高金额
+     * result[0]：不选当前节点能够够盗取的最高金额
+     * result[1]：选当前节点能够够盗取的最高金额
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -49,24 +48,32 @@ public class Problem337 {
 
         int[] result = dfs(root);
 
-        //选根节点或者不选根节点的最大值，即为所能盗窃的最高金额
+        //选或不选当前节点能够盗取的最高金额中的较大值，即为所能盗窃的最高金额
         return Math.max(result[0], result[1]);
     }
 
+    /**
+     * 得到当前节点能够盗取的最高金额数组
+     * result[0]：不选当前节点能够够盗取的最高金额
+     * result[1]：选当前节点能够够盗取的最高金额
+     *
+     * @param root
+     * @return
+     */
     private int[] dfs(TreeNode root) {
         if (root == null) {
             return new int[2];
         }
 
-        //以根节点左节点为根的最大值
-        int[] leftMax = dfs(root.left);
-        //以根节点右节点为根的最大值
-        int[] rightMax = dfs(root.right);
+        //当前节点左子树能够盗取的最高金额数组
+        int[] leftArr = dfs(root.left);
+        //当前节点右子树能够盗取的最高金额数组
+        int[] rightArr = dfs(root.right);
 
-        //不选根节点的最大值=选或不选左子树作为根节点的最大值+选或不选右子树作为根节点的最大值
-        int notSelected = Math.max(leftMax[0], leftMax[1]) + Math.max(rightMax[0], rightMax[1]);
-        //选根节点的最大值=当前根节点值+选左子树作为根节点的最大值+选右子树作为根节点的最大值
-        int selected = root.val + leftMax[0] + rightMax[0];
+        //不选当前节点能够盗取的最高金额：选或不选当前节点左子树能够盗取的最高金额中的较大值+选或不选当前节点右子树能够盗取的最高金额中的较大值
+        int notSelected = Math.max(leftArr[0], leftArr[1]) + Math.max(rightArr[0], rightArr[1]);
+        //选当前节点能够盗取的最高金额：当前节点值+选当前节点左子树能够盗取的最高金额中的较大值+选当前节点右子树能够盗取的最高金额中的较大值
+        int selected = root.val + leftArr[0] + rightArr[0];
 
         return new int[]{notSelected, selected};
     }

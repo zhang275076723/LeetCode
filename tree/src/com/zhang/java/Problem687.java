@@ -3,68 +3,68 @@ package com.zhang.java;
 import java.util.*;
 
 /**
- * @Date 2022/6/12 9:43
+ * @Date 2023/2/21 09:23
  * @Author zsy
- * @Description 二叉树的直径 dfs类比Problem104、Problem110、Problem111、Problem124、Problem337、Problem687
- * 给定一棵二叉树，你需要计算它的直径长度。一棵二叉树的直径长度是任意两个结点路径长度中的最大值。
- * 这条路径可能穿过也可能不穿过根结点。
+ * @Description 最长同值路径 dfs类比Problem104、Problem110、Problem111、Problem124、Problem337、Problem543
+ * 给定一个二叉树的 root ，返回 最长的路径的长度 ，这个路径中的 每个节点具有相同值 。
+ * 这条路径可以经过也可以不经过根节点。
+ * 两个节点之间的路径长度 由它们之间的边数表示。
  * <p>
- * 给定二叉树
- * <        1
- * <      / \
- * <     2   3
- * <    / \
- * <   4   5
- * 返回 3, 它的长度是路径 [4,2,1,3] 或者 [5,2,1,3]。
+ * 输入：root = [5,4,5,1,1,5]
+ * 输出：2
  * <p>
- * 注意：两结点之间的路径长度是以它们之间边的数目表示。
+ * 输入：root = [1,4,5,4,4,5]
+ * 输出：2
+ * <p>
+ * 树的节点数的范围是 [0, 10^4]
+ * -1000 <= Node.val <= 1000
+ * 树的深度将不超过 1000
  */
-public class Problem543 {
-    /**
-     * 二叉树的直径长度
-     */
+public class Problem687 {
+    //二叉树的最长同值路径长度
     private int diameter = 0;
 
     public static void main(String[] args) {
-        Problem543 problem543 = new Problem543();
-        String[] data = {"1", "2", "3", "4", "5"};
-        TreeNode root = problem543.buildTree(data);
-        System.out.println(problem543.diameterOfBinaryTree(root));
+        Problem687 problem687 = new Problem687();
+        String[] data = {"5", "4", "5", "1", "1", "5"};
+        TreeNode root = problem687.buildTree(data);
+        System.out.println(problem687.longestUnivaluePath(root));
     }
 
     /**
      * dfs
-     * 计算每一个节点的路径长度，更新二叉树的直径，并返回当前节点对父节点的路径长度，用于父节点更新二叉树的直径
+     * 计算每一个节点的最长同值路径长度，更新二叉树的最长同值路径长度，并返回当前节点对父节点的最长同值路径长度，
+     * 用于父节点更新二叉树的最长同值路径长度
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
      */
-    public int diameterOfBinaryTree(TreeNode root) {
+    public int longestUnivaluePath(TreeNode root) {
         if (root == null) {
             return 0;
         }
 
-        dfs(root);
+        dfs(root, root.val);
 
         return diameter;
     }
 
-    private int dfs(TreeNode root) {
+    private int dfs(TreeNode root, int preVal) {
         if (root == null) {
             return 0;
         }
 
-        //当前节点左子树的路径长度
-        int leftMax = dfs(root.left);
-        //当前节点右子树的路径长度
-        int rightMax = dfs(root.right);
+        //当前节点左子树的最长同值路径长度
+        int leftMax = dfs(root.left, root.val);
+        //当前节点左子树的最长同值路径长度
+        int rightMax = dfs(root.right, root.val);
 
-        //更新二叉树的直径长度
+        //更新二叉树的最长同值路径长度
         diameter = Math.max(diameter, leftMax + rightMax);
 
-        //返回当前节点对父节点的路径长度
-        return Math.max(leftMax, rightMax) + 1;
+        //返回当前节点对父节点的最长同值路径长度，当前节点值和父节点值不相同时，不构成同值路径，返回0
+        return root.val != preVal ? 0 : Math.max(leftMax, rightMax) + 1;
     }
 
     private TreeNode buildTree(String[] data) {

@@ -111,7 +111,7 @@ public class Problem322 {
     /**
      * 动态规划
      * dp[i]：凑成金额i所需的最少的硬币个数
-     * dp[i] = min(dp[i-coins[j]] + 1) (1 <= j <= coins.length)
+     * dp[i] = min(dp[i-coins[j]] + 1) (0 <= j < coins.length)
      * 时间复杂度O(n*amount)，空间复杂度O(amount) (n=coins.length)
      *
      * @param coins
@@ -126,10 +126,10 @@ public class Problem322 {
             //初始化为Integer.MAX_VALUE，表示当前金额i不能用硬币凑成
             dp[i] = Integer.MAX_VALUE;
 
-            for (int j = 1; j <= coins.length; j++) {
-                //当前金额i减去coins[j-1]大于等于0，并且金额i-coins[j-1]能用硬币凑成
-                if (i - coins[j - 1] >= 0 && dp[i - coins[j - 1]] != Integer.MAX_VALUE) {
-                    dp[i] = Math.min(dp[i], dp[i - coins[j - 1]] + 1);
+            for (int j = 0; j < coins.length; j++) {
+                //当前金额i减去coins[j]大于等于0，并且金额i-coins[j]能用硬币凑成
+                if (i - coins[j] >= 0 && dp[i - coins[j]] != Integer.MAX_VALUE) {
+                    dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
                 }
             }
         }

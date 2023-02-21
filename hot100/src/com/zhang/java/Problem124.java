@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/3 9:03
  * @Author zsy
- * @Description 二叉树中的最大路径和 字节面试题 dfs类比Problem104、Problem110、Problem111、Problem337、Problem543
+ * @Description 二叉树中的最大路径和 字节面试题 dfs类比Problem104、Problem110、Problem111、Problem337、Problem543、Problem687
  * 路径 被定义为一条从树中任意节点出发，沿父节点-子节点连接，达到任意节点的序列。
  * 同一个节点在一条路径序列中 至多出现一次 。
  * 该路径 至少包含一个 节点，且不一定经过根节点。
@@ -25,7 +25,7 @@ import java.util.*;
  */
 public class Problem124 {
     /**
-     * 最大路径节点值之和
+     * 最大路径和
      */
     private int max = Integer.MIN_VALUE;
 
@@ -38,7 +38,7 @@ public class Problem124 {
 
     /**
      * dfs
-     * 计算每一个节点的最大贡献，即为最大路径节点值之和
+     * 计算每一个节点的最大路径和，更新最大路径和，并返回当前节点对父节点的最大单侧路径和，用于当前节点父节点更新最大路径和
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -59,16 +59,16 @@ public class Problem124 {
             return 0;
         }
 
-        //当前节点左子树的最大路径长度，因为节点值存在负数，所以要取两者最大值，为0表示不选左子树路径
+        //当前节点左子树的最大单侧路径和，因为节点值存在负数，所以要取两者最大值，为0表示左子树的最大单侧路径和为负，不选左子树路径
         int leftMax = Math.max(0, dfs(root.left));
-        //当前节点右子树的最大路径长度，因为节点值存在负数，所以要取两者最大值，为0表示不选右子树路径
+        //当前节点右子树的最大单侧路径和，因为节点值存在负数，所以要取两者最大值，为0表示右子树的最大单侧路径和为负，不选右子树路径
         int rightMax = Math.max(0, dfs(root.right));
 
-        //更新最大路径节点值之和
+        //更新最大路径和
         max = Math.max(max, root.val + leftMax + rightMax);
 
-        //返回当前节点对父节点的最大贡献，供当前节点父节点使用
-        return root.val + Math.max(leftMax, rightMax);
+        //返回当前节点对父节点的最大单侧路径和，用于当前节点父节点更新最大路径和
+        return Math.max(leftMax, rightMax) + root.val;
     }
 
     private TreeNode buildTree(String[] data) {

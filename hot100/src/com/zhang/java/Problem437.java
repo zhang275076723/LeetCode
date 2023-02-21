@@ -102,10 +102,10 @@ public class Problem437 {
         sum = sum + root.val;
 
         if (sum == targetSum) {
+            //节点存在负值，所以不能剪枝，继续dfs
             count = count + 1;
         }
 
-        //节点存在负值，所以不能剪枝，继续dfs
         count = count + dfs(root.left, sum, targetSum);
         count = count + dfs(root.right, sum, targetSum);
 
@@ -130,6 +130,7 @@ public class Problem437 {
 
         //从前缀和哈希表中找路径和为curSum-targetSum的数量，即为路径和为targetSum的数量
         if (map.containsKey(sum - targetSum)) {
+            //节点存在负值，所以不能剪枝，继续dfs
             count = count + map.get(sum - targetSum);
         }
 

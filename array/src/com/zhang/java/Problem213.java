@@ -26,7 +26,7 @@ package com.zhang.java;
 public class Problem213 {
     public static void main(String[] args) {
         Problem213 problem213 = new Problem213();
-        int[] nums = {2, 3, 2};
+        int[] nums = {1, 2, 3, 1};
         System.out.println(problem213.rob(nums));
     }
 
@@ -34,8 +34,8 @@ public class Problem213 {
      * 动态规划
      * 相当于把原数组分成两个数组，一个是从[0,n-2]，另一个是从[1,n-1]，
      * 如果偷窃第一个房屋，则最后一个房屋不能偷窃；如果偷窃最后一个房屋，则第一个房屋不能偷窃
-     * dp[i]：偷窃到第i个房屋偷窃到的最高金额
-     * dp[i] = max(dp[i-1], dp[i-2] + nums[i-1])
+     * dp[i]：偷窃到第i个房屋，能够偷窃到的最高金额
+     * dp[i] = max(dp[i-2] + nums[i], dp[i-1])
      * 时间复杂度O(n)，空间复杂度O(n)/空间复杂度O(1)
      *
      * @param nums
@@ -57,7 +57,7 @@ public class Problem213 {
     }
 
     /**
-     * 时间复杂度O(n)，空间复杂度O(n)
+     * 时间复杂度O(end-start)，空间复杂度O(end-start)
      *
      * @param nums
      * @param start
@@ -65,20 +65,24 @@ public class Problem213 {
      * @return
      */
     private int robInRange(int[] nums, int start, int end) {
-        int[] dp = new int[end - start + 2];
-        dp[0] = 0;
-        dp[1] = nums[start];
-
-        for (int i = start + 1; i <= end; i++) {
-            dp[i - start + 1] = Math.max(dp[i - start], dp[i - start - 1] + nums[i]);
+        if (start == end) {
+            return nums[start];
         }
 
-        return dp[end - start + 1];
+        int[] dp = new int[end - start + 1];
+        dp[0] = nums[start];
+        dp[1] = Math.max(nums[start], nums[start + 1]);
+
+        for (int i = start + 2; i <= end; i++) {
+            dp[i - start] = Math.max(dp[i - start - 2] + nums[i], dp[i - start - 1]);
+        }
+
+        return dp[end - start];
     }
 
     /**
      * 使用滚动数组
-     * 时间复杂度O(n)，空间复杂度O(1)
+     * 时间复杂度O(end-start)，空间复杂度O(1)
      *
      * @param nums
      * @param start
@@ -86,12 +90,16 @@ public class Problem213 {
      * @return
      */
     private int robInRange2(int[] nums, int start, int end) {
-        //dp[i-2]
-        int p = 0;
-        //dp[i-1]
-        int q = nums[start];
+        if (start == end) {
+            return nums[start];
+        }
 
-        for (int i = start + 1; i <= end; i++) {
+        //dp[i-2]
+        int p = nums[start];
+        //dp[i-1]
+        int q = nums[start + 1];
+
+        for (int i = start + 2; i <= end; i++) {
             int temp = Math.max(p + nums[i], q);
             p = q;
             q = temp;
@@ -99,5 +107,4 @@ public class Problem213 {
 
         return q;
     }
-
 }

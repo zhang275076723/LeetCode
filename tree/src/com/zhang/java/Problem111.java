@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/9/13 15:44
  * @Author zsy
- * @Description 二叉树的最小深度 dfs类比Problem104、Problem110、Problem124、Problem337、Problem543
+ * @Description 二叉树的最小深度 dfs类比Problem104、Problem110、Problem124、Problem337、Problem543、Problem687
  * 给定一个二叉树，找出其最小深度。
  * 最小深度是从根节点到最近叶子节点的最短路径上的节点数量。
  * 说明：叶子节点是指没有子节点的节点。
@@ -46,21 +46,21 @@ public class Problem111 {
             return 1;
         }
 
-        //左节点为空
+        //左子树为空，只考虑右子树的最小深度
         if (root.left == null) {
             return minDepth(root.right) + 1;
         }
 
-        //右节点为空
+        //右子树为空，只考虑左子树的最小深度
         if (root.right == null) {
             return minDepth(root.left) + 1;
         }
 
-        int leftDepth = minDepth(root.left);
-        int rightDepth = minDepth(root.right);
+        int leftMinDepth = minDepth(root.left);
+        int rightMinDepth = minDepth(root.right);
 
         //左右节点都不为空，取左右子树的最小高度+1
-        return Math.min(leftDepth, rightDepth) + 1;
+        return Math.min(leftMinDepth, rightMinDepth) + 1;
     }
 
     /**
@@ -82,29 +82,33 @@ public class Problem111 {
         }
 
         //最小深度
-        int depth = Integer.MAX_VALUE;
-        Queue<Pos> queue = new LinkedList<>();
-        queue.offer(new Pos(root, 1));
+        int minDepth = 0;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
 
         while (!queue.isEmpty()) {
-            Pos pos = queue.poll();
+            minDepth++;
+            int size = queue.size();
 
-            //当前节点左右子树都为空，即找到一个叶节点，更新最小深度
-            if (pos.node.left == null && pos.node.right == null) {
-                depth = Math.min(depth, pos.depth);
-                continue;
-            }
+            //每次往下找一层
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
 
-            if (pos.node.left != null) {
-                queue.offer(new Pos(pos.node.left, pos.depth + 1));
-            }
+                if (node == null) {
+                    continue;
+                }
 
-            if (pos.node.right != null) {
-                queue.offer(new Pos(pos.node.right, pos.depth + 1));
+                //当前节点左右子树都为空，即找到叶节点，即为最小深度
+                if (node.left == null && node.right == null) {
+                    return minDepth;
+                }
+
+                queue.offer(node.left);
+                queue.offer(node.right);
             }
         }
 
-        return depth;
+        return minDepth;
     }
 
     private TreeNode buildTree(String[] data) {
@@ -156,19 +160,6 @@ public class Problem111 {
             this.val = val;
             this.left = left;
             this.right = right;
-        }
-    }
-
-    /**
-     * bfs节点
-     */
-    private static class Pos {
-        TreeNode node;
-        int depth;
-
-        Pos(TreeNode node, int depth) {
-            this.node = node;
-            this.depth = depth;
         }
     }
 }

@@ -47,7 +47,7 @@ public class Problem321 {
     /**
      * 单调栈
      * nums1中取出长度为x的最大数子序列，nums2中取出长度为k-x的最大数子序列，两个子序列合并，成为长度为k的最大数
-     * 时间复杂度O(k*(m+n+k^2))，空间复杂度O(n) (m=nums1.length, n=nums2.length) (临界结果数组需要O(k)，单调栈需要O(n))
+     * 时间复杂度O(k*(m+n+k^2))，空间复杂度O(k) (m=nums1.length, n=nums2.length) (临时最大数数组需要O(k))
      *
      * @param nums1
      * @param nums2
@@ -59,13 +59,15 @@ public class Problem321 {
 
         //保证nums1和nums2取的最大数子序列长度不会越界
         for (int i = Math.max(0, k - nums2.length); i <= Math.min(k, nums1.length); i++) {
+            //nums1取长度为i的最大值
             int[] result1 = getMaxKNumber(nums1, i);
+            //nums2取长度为k-i的最大值
             int[] result2 = getMaxKNumber(nums2, k - i);
             //result1和result2合并，得到最大数
             int[] tempResult = merge(result1, result2);
 
-            //如果最大数小于当前最大数，更新最大数
-            if (compare(result, 0, tempResult, 0) < 0) {
+            //临时最大数大于当前最大数，更新最大数
+            if (compare(tempResult, result, 0, 0) > 0) {
                 result = tempResult;
             }
         }
@@ -97,6 +99,7 @@ public class Problem321 {
         int count = nums.length - k;
 
         for (int i = 0; i < nums.length; i++) {
+            //栈不为空，要移除的元素个数count大于0，栈顶元素小于当前元素，则栈顶元素出栈，count减1
             while (!stack.isEmpty() && count > 0 && stack.peekLast() < nums[i]) {
                 stack.pollLast();
                 count--;
@@ -136,13 +139,15 @@ public class Problem321 {
             return nums1;
         }
 
+        //nums1和nums2拼接得到的最大数数组
         int[] result = new int[nums1.length + nums2.length];
         int i = 0;
         int j = 0;
         int k = 0;
 
         while (i < nums1.length && j < nums2.length) {
-            if (compare(nums1, i, nums2, j) >= 0) {
+            //从nums1[i]起始的数大于等于从nums2[j]起始的数，则拼接nums1[i]到最大数数组中
+            if (compare(nums1, nums2, i, j) >= 0) {
                 result[k] = nums1[i];
                 i++;
                 k++;
@@ -169,20 +174,20 @@ public class Problem321 {
     }
 
     /**
-     * 比较nums1[i]和nums2[j]的大小
-     * nums1[i]和nums2[j]不相等时，返回较大值
+     * 比较从nums1[i]起始的数和从nums2[j]起始的数的大小
+     * nums1[i]和nums2[j]不相等时，返回两数之差，即nums1[i]大，返回正数，nums2[j]大，返回负数
      * nums1[i]和nums2[j]相等时，继续往后判断
      * 时间复杂度O(m+n)，空间复杂度O(m+n) (m=nums1.length, n=nums2.length)
      *
      * @param nums1
-     * @param i
      * @param nums2
+     * @param i
      * @param j
      * @return
      */
-    private int compare(int[] nums1, int i, int[] nums2, int j) {
+    private int compare(int[] nums1, int[] nums2, int i, int j) {
         while (i < nums1.length && j < nums2.length) {
-            //nums1[i]和nums2[j]不相等，直接比较返回
+            //nums1[i]和nums2[j]不相等，直接返回两数之差
             if (nums1[i] != nums2[j]) {
                 return nums1[i] - nums2[j];
             }
@@ -191,11 +196,14 @@ public class Problem321 {
             j++;
         }
 
-        //i到达nums1末尾，nums2还有剩余，nums2大
-        if (i == nums1.length) {
+        //从nums1[i]起始的数和从nums2[j]起始的数相等，返回0
+        if (i == nums1.length && j == nums2.length) {
+            return 0;
+        } else if (i == nums1.length) {
+            //从nums1[i]起始的数比从nums2[j]起始的数小，返回-1
             return -1;
         } else {
-            //j到达nums2末尾，nums1还有剩余，nums1大
+            //从nums1[i]起始的数比从nums2[j]起始的数大，返回1
             return 1;
         }
     }
