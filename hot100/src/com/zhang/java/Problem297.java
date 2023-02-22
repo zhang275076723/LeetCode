@@ -61,7 +61,6 @@ public class Problem297 {
 
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
-
             if (node == null) {
                 sb.append("null,");
             } else {
@@ -76,7 +75,7 @@ public class Problem297 {
     }
 
     /**
-     * 层序遍历反序列化
+     * 层次遍历反序列化
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param data
@@ -98,7 +97,6 @@ public class Problem297 {
 
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
-
             if (!list.isEmpty()) {
                 String leftValue = list.remove(0);
                 if (!"null".equals(leftValue)) {

@@ -1,9 +1,6 @@
 package com.zhang.java;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Date 2022/11/12 11:37
@@ -49,6 +46,7 @@ public class Problem912 {
             int temp = nums[i];
             int j = i - 1;
 
+            //找到temp要插入的位置
             while (j >= 0 && nums[j] > temp) {
                 nums[j + 1] = nums[j];
                 j--;
@@ -102,46 +100,18 @@ public class Problem912 {
             //当前最小元素下标索引
             int index = i;
 
+            //找nums[i]后面比nums[i]小的最小值nums[index]
             for (int j = i + 1; j < nums.length; j++) {
-                if (nums[j] < nums[index]) {
+                if (nums[index] > nums[j]) {
                     index = j;
                 }
             }
 
+            //找到比nums[i]小的最小值nums[index]，两者进行交换
             if (index != i) {
                 int temp = nums[index];
                 nums[index] = nums[i];
                 nums[i] = temp;
-            }
-        }
-
-        return nums;
-    }
-
-    /**
-     * 希尔排序 不稳定
-     * 时间复杂度O(n^1.3)-O(n^2)，空间复杂度O(1)
-     *
-     * @param nums
-     * @return
-     */
-    public int[] sortArray4(int[] nums) {
-        //步长
-        for (int i = nums.length / 2; i > 0; i = i / 2) {
-            //当前步长的每组元素的起始元素下标索引
-            for (int j = 0; j < i; j++) {
-                //对每组元素进行插入排序
-                for (int m = j + i; m < nums.length; m = m + i) {
-                    int temp = nums[m];
-                    int n = m - i;
-
-                    while (n >= 0 && nums[n] > temp) {
-                        nums[n + i] = nums[n];
-                        n = n - i;
-                    }
-
-                    nums[n + i] = temp;
-                }
             }
         }
 
@@ -155,7 +125,7 @@ public class Problem912 {
      * @param nums
      * @return
      */
-    public int[] sortArray5(int[] nums) {
+    public int[] sortArray4(int[] nums) {
         quickSort(nums, 0, nums.length - 1);
 
         return nums;
@@ -168,7 +138,7 @@ public class Problem912 {
      * @param nums
      * @return
      */
-    public int[] sortArray6(int[] nums) {
+    public int[] sortArray5(int[] nums) {
         //建堆
         for (int i = nums.length / 2 - 1; i >= 0; i--) {
             heapify(nums, i, nums.length);
@@ -180,6 +150,7 @@ public class Problem912 {
             nums[0] = nums[i];
             nums[i] = temp;
 
+            //继续整堆，保持大根堆
             heapify(nums, 0, i);
         }
 
@@ -193,15 +164,46 @@ public class Problem912 {
      * @param nums
      * @return
      */
-    public int[] sortArray7(int[] nums) {
+    public int[] sortArray6(int[] nums) {
         mergeSort(nums, 0, nums.length - 1, new int[nums.length]);
 
         return nums;
     }
 
     /**
-     * 计数排序 稳定
-     * 时间复杂度O(n)，空间复杂度O(k) (k：数组中元素的范围)
+     * 希尔排序 不稳定
+     * 时间复杂度O(n^1.3)-O(n^2)，空间复杂度O(1)
+     *
+     * @param nums
+     * @return
+     */
+    public int[] sortArray7(int[] nums) {
+        //步长i
+        for (int i = nums.length / 2; i > 0; i = i / 2) {
+            //当前步长的每组元素的起始元素下标索引j
+            for (int j = 0; j < i; j++) {
+                //对每组元素(nums[j]、nums[j+i]、nums[j+i*2]...)进行插入排序
+                for (int m = j + i; m < nums.length; m = m + i) {
+                    int temp = nums[m];
+                    int n = m - i;
+
+                    ////找到temp要插入的位置
+                    while (n >= j && nums[n] > temp) {
+                        nums[n + i] = nums[n];
+                        n = n - i;
+                    }
+
+                    nums[n + i] = temp;
+                }
+            }
+        }
+
+        return nums;
+    }
+
+    /**
+     * 计数排序(只能对整数进行排序) 稳定
+     * 时间复杂度O(n)，空间复杂度O(max(nums)-min(nums))
      *
      * @param nums
      * @return
@@ -229,11 +231,12 @@ public class Problem912 {
 
         int[] result = new int[nums.length];
 
-        //从后往前排序数组，保证稳定性
+        //从后往前遍历原数组nums，确定每个nums[i]排序后在result中的下标索引，保证稳定性
         for (int i = nums.length - 1; i >= 0; i--) {
-            //当前元素在结果数组中的下标索引
+            //当前元素nums[i]在结果数组result中的下标索引
             int index = countArr[nums[i] - min] - 1;
             result[index] = nums[i];
+            //值为nums[i]的元素个数减1
             countArr[nums[i] - min]--;
         }
 
@@ -241,7 +244,8 @@ public class Problem912 {
     }
 
     /**
-     * 桶排序 稳定/不稳定，根据对每个桶使用的排序算法确定是否稳定
+     * 桶排序 稳定或不稳定，根据对每个桶使用的排序算法确定是否稳定
+     * 根据数组中元素范围分为多个桶，将数组中元素放到对应的桶中，对每个桶进行排序，最后把桶中数据拼接，得到排好序的数组
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param nums
@@ -273,7 +277,7 @@ public class Problem912 {
             buckets.get(index).add(num);
         }
 
-        //对每一个桶中元素使用排序算法进行排序
+        //对每一个桶中元素使用某种排序算法进行排序
         for (int i = 0; i < bucketCount; i++) {
             buckets.get(i).sort(new Comparator<Integer>() {
                 @Override
@@ -306,8 +310,9 @@ public class Problem912 {
     public int[] sortArray10(int[] nums) {
         int max = nums[0];
 
+        //找数组中最长元素的位数
         for (int num : nums) {
-            //因为存在负数，所以需要找数组中最长元素的位数
+            //因为存在负数，所以需要取绝对值
             max = Math.max(max, Math.abs(num));
         }
 
@@ -315,11 +320,14 @@ public class Problem912 {
         int len = 0;
 
         while (max != 0) {
-            len++;
             max = max / 10;
+            len++;
         }
 
-        //由低到高对数组中每一位进行排序
+        //数组中元素需要除的值，得到每一位的值
+        int bitCount = 1;
+
+        //由低到高对数组中每一位进行排序，排序之后重新赋值回原数组nums中
         for (int i = 0; i < len; i++) {
             List<List<Integer>> radix = new ArrayList<>();
 
@@ -329,21 +337,23 @@ public class Problem912 {
             }
 
             for (int num : nums) {
-                //当前元素由低到高第i位所在radix中的索引下标
-                int index = (num / (int) Math.pow(10, i)) % 10;
-                //因为存在负数，所以index要加9
-                index = index + 9;
+                //当前元素由低到高第i位所在radix中的索引下标，因为存在负数，所以index要加9
+                int index = (num / bitCount) % 10 + 9;
                 radix.get(index).add(num);
             }
 
             int index = 0;
 
+            //由低到高对数组中第i位排序之后，重新赋值回原数组nums中
             for (List<Integer> bucket : radix) {
                 for (int num : bucket) {
                     nums[index] = num;
                     index++;
                 }
             }
+
+            //bitCount乘10，表示对高1位进行排序
+            bitCount = bitCount * 10;
         }
 
         return nums;
@@ -358,6 +368,13 @@ public class Problem912 {
     }
 
     private int partition(int[] nums, int left, int right) {
+        //随机取一个元素作为划分基准，避免性能倒退为O(n^2)
+        int randomIndex = new Random().nextInt(right - left + 1) + left;
+
+        int value = nums[randomIndex];
+        nums[randomIndex] = nums[left];
+        nums[left] = value;
+
         int temp = nums[left];
 
         while (left < right) {
@@ -381,13 +398,15 @@ public class Problem912 {
 
     private void heapify(int[] nums, int i, int heapSize) {
         int index = i;
+        int leftIndex = i * 2 + 1;
+        int rightIndex = i * 2 + 2;
 
-        if (i * 2 + 1 < heapSize && nums[i * 2 + 1] >= nums[index]) {
-            index = i * 2 + 1;
+        if (leftIndex < heapSize && nums[leftIndex] >= nums[index]) {
+            index = leftIndex;
         }
 
-        if (i * 2 + 2 < heapSize && nums[i * 2 + 2] >= nums[index]) {
-            index = i * 2 + 2;
+        if (rightIndex < heapSize && nums[rightIndex] >= nums[index]) {
+            index = rightIndex;
         }
 
         if (i != index) {

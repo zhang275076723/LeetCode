@@ -18,8 +18,6 @@ import java.util.List;
  * 0 <= num < 2^31
  */
 public class Offer46 {
-    private int count = 0;
-
     public static void main(String[] args) {
         Offer46 offer46 = new Offer46();
         System.out.println(offer46.translateNum(12258));
@@ -104,31 +102,34 @@ public class Offer46 {
 
         List<String> list = new ArrayList<>();
 
-        backtrack(0, num + "", list, new StringBuilder());
+        int count = backtrack(0, num + "", list, new StringBuilder());
 
         System.out.println(list);
 
         return count;
     }
 
-    private void backtrack(int t, String num, List<String> list, StringBuilder sb) {
+    private int backtrack(int t, String num, List<String> list, StringBuilder sb) {
         //找到最后，表示找到，则返回
         if (t == num.length()) {
             list.add(sb.toString());
-            count++;
-            return;
+            return 1;
         }
+
+        int count = 0;
 
         //往后找一个字符
         sb.append((char) (num.charAt(t) - '0' + 'a'));
-        backtrack(t + 1, num, list, sb);
+        count = count + backtrack(t + 1, num, list, sb);
         sb.delete(sb.length() - 1, sb.length());
 
         //往后找两个字符，不能有前导0，且不能超过表示的字符'z'
         if (t + 2 <= num.length() && num.charAt(t) != '0' && Integer.parseInt(num.substring(t, t + 2)) < 26) {
             sb.append((char) (Integer.parseInt(num.substring(t, t + 2)) + 'a'));
-            backtrack(t + 2, num, list, sb);
+            count = count + backtrack(t + 2, num, list, sb);
             sb.delete(sb.length() - 1, sb.length());
         }
+
+        return count;
     }
 }

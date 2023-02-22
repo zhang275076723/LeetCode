@@ -124,9 +124,8 @@ public class Offer55 {
         while (!queue.isEmpty()) {
             int size = queue.size();
 
-            while (size > 0) {
+            for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
-                size--;
 
                 if (node.left != null) {
                     queue.offer(node.left);

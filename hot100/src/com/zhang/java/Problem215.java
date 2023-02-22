@@ -172,10 +172,10 @@ public class Problem215 {
      */
     private int partition(int[] nums, int left, int right) {
         //随机取一个元素作为划分基准，避免性能倒退为O(n^2)
-        int index = (int) (Math.random() * (right - left + 1)) + left;
+        int randomIndex = (int) (Math.random() * (right - left + 1)) + left;
 
-        int value = nums[index];
-        nums[index] = nums[left];
+        int value = nums[randomIndex];
+        nums[randomIndex] = nums[left];
         nums[left] = value;
 
         int temp = nums[left];
