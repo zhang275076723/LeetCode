@@ -56,11 +56,12 @@ public class Problem406 {
             return people;
         }
 
-        //people一维降序排序，二维升序排序
+        //people一维降序，二维升序排序
         quickSort(people, 0, people.length - 1);
 
         int[][] result = new int[people.length][2];
 
+        //根据按照一维降序，二维升序排序后的people数组，people[i]放在result结果数组的下标索引people[i][1]处
         for (int i = 0; i < people.length; i++) {
             //放在数组尾部
             if (people[i][1] >= i) {
@@ -102,7 +103,7 @@ public class Problem406 {
             return people;
         }
 
-        //people一维升序排序，二维降序排序
+        //people一维升序，二维降序排序
         Arrays.sort(people, new Comparator<int[]>() {
             @Override
             public int compare(int[] people1, int[] people2) {
