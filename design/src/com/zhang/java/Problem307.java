@@ -42,7 +42,8 @@ public class Problem307 {
     }
 
     /**
-     * 线段树，用数组表示线段树，适用于：O(logn)时间内单点修改、区间修改、区间查询(区间元素之和、区间元素的最大值和最小值)
+     * 线段树，用数组表示线段树
+     * 适用于：O(logn)时间内单点修改、区间修改、区间查询(区间元素之和、区间元素的最大值、区间元素的最小值)
      */
     static class NumArray {
         //线段树
@@ -64,8 +65,8 @@ public class Problem307 {
         }
 
         /**
-         * 线段树，适用于：多次求区间元素之和、区间元素的最大值，并且区间内元素多次修改的情况
-         * 注意：线段树的update()区间长度超过1是区间节点值加上value，update()区间长度为1是更新区间节点值为value
+         * 线段树
+         * 适用于：多次求区间元素之和、区间元素的最大值、区间元素的最小值，并且区间内元素多次修改的情况
          */
         private static class SegmentTree {
             /**
@@ -301,9 +302,9 @@ public class Problem307 {
                 }
 
                 //左区间[left,mid]元素的最小值
-                int leftValue = queryMaxValue(leftRootIndex, left, mid, queryLeft, queryRight);
+                int leftValue = queryMinValue(leftRootIndex, left, mid, queryLeft, queryRight);
                 //右区间[mid+1,right]元素的最小值
-                int rightValue = queryMaxValue(rightRootIndex, mid + 1, right, queryLeft, queryRight);
+                int rightValue = queryMinValue(rightRootIndex, mid + 1, right, queryLeft, queryRight);
 
                 //返回左右子节点区间元素的最小值中较小的值，即为查询区间[queryLeft,queryRight]元素的最小值
                 return Math.min(leftValue, rightValue);
@@ -346,8 +347,8 @@ public class Problem307 {
                 //将当前节点懒标记值向下传递给左右子节点，更新左右子节点表示的区间元素之和、区间元素的最大值、
                 //区间元素的最小值、懒标记值，并将当前节点的懒标记值置0
                 if (lazyValueArr[rootIndex] != 0) {
-                    sumValueArr[leftRootIndex] = sumValueArr[leftRootIndex] + lazyValueArr[rootIndex] * (mid - left + 1);
-                    sumValueArr[rightRootIndex] = sumValueArr[rightRootIndex] + lazyValueArr[rootIndex] * (right - mid);
+                    sumValueArr[leftRootIndex] = sumValueArr[leftRootIndex] + (mid - left + 1) * lazyValueArr[rootIndex];
+                    sumValueArr[rightRootIndex] = sumValueArr[rightRootIndex] + (right - mid) * lazyValueArr[rootIndex];
                     maxValueArr[leftRootIndex] = maxValueArr[leftRootIndex] + lazyValueArr[rootIndex];
                     maxValueArr[rightRootIndex] = maxValueArr[rightRootIndex] + lazyValueArr[rootIndex];
                     minValueArr[leftRootIndex] = minValueArr[leftRootIndex] + lazyValueArr[rootIndex];
@@ -405,8 +406,8 @@ public class Problem307 {
                 //将当前节点懒标记值向下传递给左右子节点，更新左右子节点表示的区间元素之和、区间元素的最大值、
                 //区间元素的最小值、懒标记值，并将当前节点的懒标记值置0
                 if (lazyValueArr[rootIndex] != 0) {
-                    sumValueArr[leftRootIndex] = sumValueArr[leftRootIndex] + lazyValueArr[rootIndex] * (mid - left + 1);
-                    sumValueArr[rightRootIndex] = sumValueArr[rightRootIndex] + lazyValueArr[rootIndex] * (right - mid);
+                    sumValueArr[leftRootIndex] = sumValueArr[leftRootIndex] + (mid - left + 1) * lazyValueArr[rootIndex];
+                    sumValueArr[rightRootIndex] = sumValueArr[rightRootIndex] + (right - mid) * lazyValueArr[rootIndex];
                     maxValueArr[leftRootIndex] = maxValueArr[leftRootIndex] + lazyValueArr[rootIndex];
                     maxValueArr[rightRootIndex] = maxValueArr[rightRootIndex] + lazyValueArr[rootIndex];
                     minValueArr[leftRootIndex] = minValueArr[leftRootIndex] + lazyValueArr[rootIndex];

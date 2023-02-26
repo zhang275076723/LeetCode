@@ -37,7 +37,8 @@ public class Problem303 {
     }
 
     /**
-     * 前缀和数组，适用于：多次求区间元素之和
+     * 前缀和数组
+     * 适用于：多次求区间元素之和
      * preSum[i]：nums[0]-nums[i-1]元素之和
      * preSum[i] = preSum[i-1] + nums[i-1]
      * 时间复杂度O(n)，空间复杂度O(n)
@@ -49,8 +50,8 @@ public class Problem303 {
         public NumArray(int[] nums) {
             preSum = new int[nums.length + 1];
 
-            for (int i = 0; i < nums.length; i++) {
-                preSum[i + 1] = preSum[i] + nums[i];
+            for (int i = 1; i <= nums.length; i++) {
+                preSum[i] = preSum[i - 1] + nums[i - 1];
             }
         }
 
