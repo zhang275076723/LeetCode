@@ -139,7 +139,8 @@ public class Problem209 {
     /**
      * 前缀和+单调队列
      * 单调递增队列存放前缀和数组中元素的索引下标
-     * 1、当前元素preSum[i]和队首元素preSum[j]之差大于等于k，则队首元素出队，更新子数组长度
+     * 1、当前元素preSum[i]和队首元素preSum[j]之差大于等于target，即[j+1,i]满足子数组长度大于等于target，
+     * 则队首元素出队，更新子数组长度
      * 2、当前元素preSum[i]不满足单调递增队列，队尾元素出队
      * 时间复杂度O(n)，空间复杂度O(n)
      *
@@ -161,7 +162,8 @@ public class Problem209 {
         int minLength = Integer.MAX_VALUE;
 
         for (int i = 0; i < preSum.length; i++) {
-            //preSum[i]和队首元素preSum[j]之差大于等于k，则队首元素出队，更新子数组长度
+            //preSum[i]和队首元素preSum[j]之差大于等于target，即[j+1,i]满足子数组长度大于等于target，
+            //则队首元素出队，更新子数组长度
             while (!queue.isEmpty() && preSum[i] - preSum[queue.peekFirst()] >= target) {
                 int j = queue.pollFirst();
                 minLength = Math.min(minLength, i - j);

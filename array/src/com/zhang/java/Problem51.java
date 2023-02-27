@@ -84,21 +84,19 @@ public class Problem51 {
 
             //当前皇后所在位置
             sb.append('Q');
+            position[t] = i;
 
             //当前皇后之后的'.'
             for (int j = i + 1; j < n; j++) {
                 sb.append('.');
             }
 
-            list.add(sb.toString());
-
-            position[t] = i;
-
+            //第0行到第t行共t+1个皇后不冲突，才继续往后查找
             if (!isConflict(t, position)) {
+                list.add(sb.toString());
                 backtrack(t + 1, n, list, result, position);
+                list.remove(list.size() - 1);
             }
-
-            list.remove(list.size() - 1);
         }
     }
 
@@ -154,8 +152,8 @@ public class Problem51 {
      */
     private boolean isConflict(int t, int[] position) {
         for (int i = 0; i < t; i++) {
-            //在同一行、同一列、同一斜线上，相互攻击
-            if (position[i] == position[t] || Math.abs(position[i] - position[t]) == Math.abs(i - t)) {
+            //两个皇后在同一行或同一列或同一斜线上，则会相互攻击，返回true
+            if (position[i] == position[t] || Math.abs(i - t) == Math.abs(position[i] - position[t])) {
                 return true;
             }
         }

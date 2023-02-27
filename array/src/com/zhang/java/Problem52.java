@@ -72,7 +72,7 @@ public class Problem52 {
      * @return
      */
     private int backtrack(int t, int n, int[] position) {
-        if (t == position.length) {
+        if (t == n) {
             return 1;
         }
 
@@ -81,7 +81,7 @@ public class Problem52 {
         for (int i = 0; i < n; i++) {
             position[t] = i;
 
-            //第0行到第t行共t+1个皇后是否冲突
+            //第0行到第t行共t+1个皇后不冲突，才继续往后查找
             if (!isConflict(t, position)) {
                 count = count + backtrack(t + 1, n, position);
             }
@@ -127,8 +127,8 @@ public class Problem52 {
      */
     private boolean isConflict(int t, int[] position) {
         for (int i = 0; i < t; i++) {
-            //在同一行、同一列、同一斜线上，相互攻击
-            if (position[i] == position[t] || Math.abs(position[i] - position[t]) == Math.abs(i - t)) {
+            //两个皇后在同一行或同一列或同一斜线上，则会相互攻击，返回true
+            if (position[i] == position[t] || Math.abs(i - t) == Math.abs(position[i] - position[t])) {
                 return true;
             }
         }
