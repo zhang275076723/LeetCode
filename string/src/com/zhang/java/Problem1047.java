@@ -1,5 +1,8 @@
 package com.zhang.java;
 
+import java.util.Deque;
+import java.util.LinkedList;
+
 /**
  * @Date 2022/11/17 10:51
  * @Author zsy
@@ -26,6 +29,7 @@ public class Problem1047 {
 
     /**
      * 栈
+     * 遍历字符串s，当前元素和栈顶元素相等时，即存在相邻重复元素，栈顶元素出队
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param s
@@ -36,15 +40,21 @@ public class Problem1047 {
             return s;
         }
 
-        StringBuilder sb = new StringBuilder();
+        Deque<Character> stack = new LinkedList<>();
 
         for (char c : s.toCharArray()) {
-            //当前元素和sb末尾元素相等时，即可以去除相同元素
-            if (sb.length() != 0 && sb.charAt(sb.length() - 1) == c) {
-                sb.delete(sb.length() - 1, sb.length());
+            //当前元素和栈顶元素相等时，即存在相邻重复元素，栈顶元素出队
+            if (!stack.isEmpty() && stack.peekLast() == c) {
+                stack.pollLast();
             } else {
-                sb.append(c);
+                stack.offerLast(c);
             }
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        while (!stack.isEmpty()) {
+            sb.append(stack.pollFirst());
         }
 
         return sb.toString();

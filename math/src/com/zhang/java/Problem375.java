@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/12/8 08:50
  * @Author zsy
- * @Description 猜数字大小 II 类比Problem312、Problem374、Problem312、Problem887
+ * @Description 猜数字大小 II 类比Problem312、Problem374、Problem887
  * 我们正在玩一个猜数游戏，游戏规则如下：
  * 我从 1 到 n 之间选择一个数字。
  * 你来猜我选了哪个数字。

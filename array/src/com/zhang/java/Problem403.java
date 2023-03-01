@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/9/26 8:32
  * @Author zsy
- * @Description 青蛙过河 华为面试题、微信面试题 跳跃问题类比Problem45、Problem55、Problem1306、Problem1345、Problem1696
+ * @Description 青蛙过河 华为面试题、微信面试题 跳跃问题类比Problem45、Problem55、Problem1306、Problem1345、Problem1696、Problem1871
  * 一只青蛙想要过河。
  * 假定河流被等分为若干个单元格，并且在每一个单元格内都有可能放有一块石子（也有可能没有）。
  * 青蛙可以跳上石子，但是不可以跳入水中。
@@ -73,12 +73,16 @@ public class Problem403 {
      * @return
      */
     public boolean canCross2(int[] stones) {
-        if (stones == null || stones.length < 2) {
+        if (stones == null || stones.length == 0) {
+            return false;
+        }
+
+        if (stones.length == 1) {
             return true;
         }
 
         boolean[][] dp = new boolean[stones.length][stones.length];
-        //起始石头stones[0]跳跃0步到达
+        //初始化，起始跳跃到石头stones[0]跳跃0步到达
         dp[0][0] = true;
 
         //当前石头stones[i]

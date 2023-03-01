@@ -45,12 +45,11 @@ public class Problem541 {
         StringBuilder sb = new StringBuilder(s);
 
         while (left < s.length()) {
-            right = Math.min(left + k - 1, s.length() - 1);
-
-            //反转字符
-            reverse(sb, left, right);
-
-            left = right + k + 1;
+            right = Math.min(left + k, s.length());
+            //反转s[left]-s[right-1]
+            reverse(sb, left, right - 1);
+            //左指针右移到right+k，表示s[right]-s[right+k-1]不反转
+            left = right + k;
         }
 
         return sb.toString();

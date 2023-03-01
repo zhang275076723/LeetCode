@@ -4,7 +4,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/22 9:19
  * @Author zsy
- * @Description 会议室 类比Problem56、Problem57、Problem228、Problem253、Problem406、Problem435、Problem436、Problem763、Problem986、Problem1288
+ * @Description 会议室 区间类比Problem56、Problem57、Problem228、Problem253、Problem406、Problem435、Problem436、Problem763、Problem986、Problem1288
  * 给定一个会议时间安排的数组 intervals ，
  * 每个会议时间都会包括开始和结束的时间 intervals[i] = [starti, endi] ，
  * 请你判断一个人是否能够参加这里面的全部会议。

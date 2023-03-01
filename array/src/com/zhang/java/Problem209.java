@@ -7,7 +7,7 @@ import java.util.Deque;
 /**
  * @Date 2021/11/25 10:05
  * @Author zsy
- * @Description 长度最小的子数组 滑动窗口类比Problem3、Problem30、Problem76、Problem239、Problem438、Problem567、Offer48、Offer57_2、Offer59 前缀和类比Problem327、Problem437、Problem560、Problem862、Offer57_2 单调队列类比Problem239、Problem862、Problem1696、Offer59
+ * @Description 长度最小的子数组 滑动窗口类比Problem3、Problem30、Problem76、Problem239、Problem438、Problem567、Offer48、Offer57_2、Offer59 前缀和类比Problem327、Problem437、Problem560、Problem862、Problem1871、Offer57_2 单调队列类比Problem239、Problem862、Problem1696、Offer59
  * 给定一个含有n个正整数的数组和一个正整数target
  * 找出该数组中满足其和 ≥ target的长度最小的连续子数组，并返回其长度。如果不存在符合条件的子数组，返回0
  * <p>

@@ -59,7 +59,7 @@ public class Offer60 {
     /**
      * 动态规划
      * dp[i][j]：掷i个骰子点数之和为j的数量
-     * dp[i][j] = dp[i-1][j-1] + dp[i-1][j-2] + dp[i-1][j-3] + dp[i-1][j-4] + dp[i-1][j-5] + dp[i-1][j-6]
+     * dp[i][j] = sum(dp[i-1][j-k]) (1<=k<=6)
      * 时间复杂度O(n^2)，空间复杂度O(n^2)
      *
      * @param n

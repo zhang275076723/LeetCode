@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @Date 2022/6/5 9:38
  * @Author zsy
- * @Description 根据身高重建队列 中国人寿机试题 类比Problem56、Problem57、Problem228、Problem252、Problem253、Problem435、Problem436、Problem763、Problem986、Problem1288
+ * @Description 根据身高重建队列 中国人寿机试题 区间类比Problem56、Problem57、Problem228、Problem252、Problem253、Problem435、Problem436、Problem763、Problem986、Problem1288
  * 假设有打乱顺序的一群人站成一个队列，数组 people 表示队列中一些人的属性（不一定按顺序）。
  * 每个 people[i] = [hi, ki] 表示第 i 个人的身高为 hi ，前面 正好 有 ki 个身高大于或等于 hi 的人。
  * 请你重新构造并返回输入数组 people 所表示的队列。

@@ -44,7 +44,7 @@ public class Problem557 {
             }
 
             sb.append(s.substring(left, right));
-            //翻转[left,right)字符串
+            //翻转[left,right-1]字符串
             reverse(sb, left, right - 1);
             //拼接' '
             sb.append(' ');

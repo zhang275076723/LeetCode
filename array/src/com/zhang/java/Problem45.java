@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/3 08:23
  * @Author zsy
- * @Description 跳跃游戏 II 华为机试题 跳跃问题类比problem55、Problem403、Problem1306、Problem1345、Problem1696
+ * @Description 跳跃游戏 II 华为机试题 跳跃问题类比problem55、Problem403、Problem1306、Problem1345、Problem1696、Problem1871
  * 给你一个非负整数数组 nums ，你最初位于数组的第一个位置。
  * 数组中的每个元素代表你在该位置可以跳跃的最大长度。
  * 你的目标是使用最少的跳跃次数到达数组的最后一个位置。
@@ -59,7 +59,8 @@ public class Problem45 {
     /**
      * 贪心
      * 使用两个变量，一个变量记录当前可以跳跃到的最远距离，另一个变量记录下次可以跳跃到的最远距离，
-     * 当前跳跃到的距离和当前可以跳跃的最远距离相等时，更新当前可以跳跃到的最远距离，跳跃到最后一个位置所需的最少跳跃次数加1
+     * 当前跳跃到的距离和当前能够跳跃的最远距离相等时，更新当前能够跳跃到的最远距离，最少跳跃次数加1，
+     * 当前能够跳跃的最远距离能够跳跃到最后一个位置时，返回所需的最少跳跃次数
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -78,13 +79,13 @@ public class Problem45 {
         int nextJumpDistance = 0;
 
         for (int i = 0; i < nums.length; i++) {
+            //当前能够跳跃到的最远距离能够跳跃到最后一个位置，返回count
+            if (curJumpDistance >= nums.length - 1) {
+                return count;
+            }
+
             //更新下次能够跳跃到的最远距离
             nextJumpDistance = Math.max(nextJumpDistance, i + nums[i]);
-
-            //下次能够跳跃到的最远距离能够跳跃到最后一个位置，返回count+1，加上本次额外的一次跳跃
-            if (nextJumpDistance >= nums.length - 1) {
-                return count + 1;
-            }
 
             //当前跳跃到的距离和当前能够跳跃的最远距离相等时，更新当前能够跳跃的最远距离，并更新最少跳跃次数
             if (i == curJumpDistance) {
