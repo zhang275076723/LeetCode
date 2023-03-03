@@ -34,7 +34,7 @@ public class Problem26 {
 
     /**
      * 双指针
-     * 第一个指针fast指向遍历的数组下标索引，第二个指针slow指向当前要插入的下标索引
+     * fast指针指向遍历数组的下标索引，slow指针指向当前要插入的下标索引
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -49,9 +49,11 @@ public class Problem26 {
             return nums.length;
         }
 
+        //慢指针，指向当前要插入的下标索引，用于判断nums[slow-1]和nums[fast]是否相等，即nums[fast]能否赋值到nums[slow]
         int slow = 1;
 
         for (int fast = 1; fast < nums.length; fast++) {
+            //nums[slow−1]和nums[fast]不相等，nums[slow]赋值为nums[fast]，slow指针右移
             if (nums[slow - 1] != nums[fast]) {
                 nums[slow] = nums[fast];
                 slow++;

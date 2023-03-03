@@ -28,7 +28,7 @@ public class Problem80 {
 
     /**
      * 双指针
-     * 第一个指针fast指向遍历的数组下标索引，第二个指针slow指向当前要插入的下标索引
+     * fast指针指向遍历数组的下标索引，slow指针指向当前要插入的下标索引
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -43,10 +43,12 @@ public class Problem80 {
             return nums.length;
         }
 
+        //慢指针，指向当前要插入的下标索引，用于判断nums[slow-2]和nums[fast]是否相等，即nums[fast]能否赋值到nums[slow]
         int slow = 2;
 
         for (int fast = 2; fast < nums.length; fast++) {
-            //当nums[slow−2]和nums[fast]相等时，当前元素nums[fast]不保留，此时nums[slow−2]、nums[slow−1]和nums[fast]都相等
+            //nums[slow−2]和nums[fast]不相等，即nums[slow−2]、nums[slow−1]、nums[fast]相等元素出现次数小于2次，
+            //nums[slow]赋值为nums[fast]，slow指针右移
             if (nums[slow - 2] != nums[fast]) {
                 nums[slow] = nums[fast];
                 slow++;
