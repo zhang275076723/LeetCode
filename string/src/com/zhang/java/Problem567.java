@@ -58,7 +58,7 @@ public class Problem567 {
 
             //s2的当前窗口是否是s1的排列
             if (right - left + 1 == s1.length()) {
-                if (isCover(s1Map, s2Map)) {
+                if (isEqual(s1Map, s2Map)) {
                     return true;
                 }
 
@@ -75,13 +75,13 @@ public class Problem567 {
     }
 
     /**
-     * s2Map中存在的字符能否覆盖s1Map中存在的字符
+     * s1Map和s2Map中存在的字符是否相等
      *
      * @param s1Map
      * @param s2Map
      * @return
      */
-    private boolean isCover(Map<Character, Integer> s1Map, Map<Character, Integer> s2Map) {
+    private boolean isEqual(Map<Character, Integer> s1Map, Map<Character, Integer> s2Map) {
         for (Map.Entry<Character, Integer> entry : s1Map.entrySet()) {
             //Integer和Integer之间比较只能使用equals()，不能使用==，==比较的是地址是否相等
             if (!s2Map.containsKey(entry.getKey()) || !s2Map.get(entry.getKey()).equals(entry.getValue())) {

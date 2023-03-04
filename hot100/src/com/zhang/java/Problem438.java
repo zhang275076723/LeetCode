@@ -71,6 +71,7 @@ public class Problem438 {
 
                 //左指针所指字符从sMap删除
                 sMap.put(s.charAt(left), sMap.get(s.charAt(left)) - 1);
+                //左指针右移
                 left++;
             }
 
@@ -127,13 +128,15 @@ public class Problem438 {
                     list.add(left);
                 }
 
+                char leftChar = s.charAt(left);
+
                 //滑动窗口左指针所指字符出现次数小于0，diff减1
-                if (map.get(s.charAt(left)) < 0) {
-                    map.put(s.charAt(left), map.get(s.charAt(left)) + 1);
+                if (map.get(leftChar) < 0) {
+                    map.put(leftChar, map.get(leftChar) + 1);
                     diff--;
                 } else {
                     //滑动窗口左指针所指字符出现次数大于等于0，diff加1
-                    map.put(s.charAt(left), map.get(s.charAt(left)) + 1);
+                    map.put(leftChar, map.get(leftChar) + 1);
                     diff++;
                 }
 
