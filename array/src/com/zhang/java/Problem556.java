@@ -37,7 +37,7 @@ public class Problem556 {
 
         int i = nums.length - 1;
 
-        //找最长递减序列
+        //从后往前找最长递减序列
         while (i > 0 && nums[i - 1] >= nums[i]) {
             i--;
         }

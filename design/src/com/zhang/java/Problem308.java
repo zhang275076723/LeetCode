@@ -68,11 +68,11 @@ public class Problem308 {
         }
 
         public void update(int row, int col, int val) {
-            segmentTree.update(0, 0, maxRowRight, 0, maxColRight, row, col, val);
+            segmentTree.update(0, 0, 0, maxRowRight, 0, maxColRight, row, col, val);
         }
 
         public int sumRegion(int row1, int col1, int row2, int col2) {
-            return segmentTree.query(0, 0, maxRowRight, 0, maxColRight, row1, col1, row2, col2);
+            return segmentTree.query(0, 0, 0, maxRowRight, 0, maxColRight, row1, row2, col1, col2);
         }
 
         /**
@@ -99,13 +99,13 @@ public class Problem308 {
                 valueArr = new int[matrix.length * 4][matrix[0].length * 4];
                 lazyValueArr = new int[matrix.length * 4][matrix[0].length * 4];
 
-                buildSegmentTree(matrix, 0, 0, matrix.length - 1, 0, matrix[0].length - 1);
+                buildSegmentTree(matrix, 0, 0, 0, matrix.length - 1, 0, matrix[0].length - 1);
             }
 
-            public void buildSegmentTree(int[][] matrix, int rowRootIndex,
-                                         int rowLeft, int rowRight, int colLeft, int colRight) {
+            private void buildSegmentTree(int[][] matrix, int rowRootIndex, int colRootIndex,
+                                          int rowLeft, int rowRight, int colLeft, int colRight) {
                 if (rowLeft == rowRight) {
-                    subBuildSegmentTree(matrix, rowRootIndex, 0, rowLeft, colLeft, colRight);
+                    subBuildSegmentTree(matrix, rowRootIndex, colRootIndex, rowLeft, colLeft, colRight);
                     return;
                 }
 
@@ -113,16 +113,16 @@ public class Problem308 {
                 int rowLeftRootIndex = rowRootIndex * 2 + 1;
                 int rowRightRootIndex = rowRootIndex * 2 + 2;
 
-                buildSegmentTree(matrix, rowLeftRootIndex, rowLeft, rowMid, colLeft, colRight);
-                buildSegmentTree(matrix, rowRightRootIndex, rowMid + 1, rowRight, colLeft, colRight);
+                buildSegmentTree(matrix, rowLeftRootIndex, colRootIndex, rowLeft, rowMid, colLeft, colRight);
+                buildSegmentTree(matrix, rowRightRootIndex, colRootIndex, rowMid + 1, rowRight, colLeft, colRight);
 
                 for (int j = 0; j < valueArr[0].length; j++) {
                     valueArr[rowRootIndex][j] = valueArr[rowLeftRootIndex][j] + valueArr[rowRightRootIndex][j];
                 }
             }
 
-            public void subBuildSegmentTree(int[][] matrix, int rowRootIndex, int colRootIndex,
-                                            int rowIndex, int colLeft, int colRight) {
+            private void subBuildSegmentTree(int[][] matrix, int rowRootIndex, int colRootIndex,
+                                             int rowIndex, int colLeft, int colRight) {
                 if (colLeft == colRight) {
                     valueArr[rowRootIndex][colRootIndex] = matrix[rowIndex][colLeft];
                     return;
@@ -138,28 +138,28 @@ public class Problem308 {
                 valueArr[rowRootIndex][colRootIndex] = valueArr[rowRootIndex][colLeftRootIndex] + valueArr[rowRootIndex][colRightRootIndex];
             }
 
-            public int query(int rowRootIndex, int rowLeft, int rowRight, int colLeft, int colRight,
-                             int queryRowLeft, int queryColLeft, int queryRowRight, int queryColRight) {
+            public int query(int rowRootIndex, int colRootIndex, int rowLeft, int rowRight, int colLeft, int colRight,
+                             int queryRowLeft, int queryRowRight, int queryColLeft, int queryColRight) {
                 if (rowLeft > queryRowRight || rowRight < queryRowLeft) {
                     return 0;
                 }
 
                 if (queryRowLeft <= rowLeft && rowRight <= queryRowRight) {
-                    return subQuery(rowRootIndex, 0, colLeft, colRight, queryColLeft, queryColRight);
+                    return subQuery(rowRootIndex, colRootIndex, colLeft, colRight, queryColLeft, queryColRight);
                 }
 
                 int rowMid = rowLeft + ((rowRight - rowLeft) >> 1);
                 int rowLeftRootIndex = rowRootIndex * 2 + 1;
                 int rowRightRootIndex = rowRootIndex * 2 + 2;
 
-                int leftValue = query(rowLeftRootIndex, rowLeft, rowMid, colLeft, colRight, queryRowLeft, queryColLeft, queryRowRight, queryColRight);
-                int rightValue = query(rowRightRootIndex, rowMid + 1, rowRight, colLeft, colRight, queryRowLeft, queryColLeft, queryRowRight, queryColRight);
+                int leftValue = query(rowLeftRootIndex, colRootIndex, rowLeft, rowMid, colLeft, colRight, queryRowLeft, queryRowRight, queryColLeft, queryColRight);
+                int rightValue = query(rowRightRootIndex, colRootIndex, rowMid + 1, rowRight, colLeft, colRight, queryRowLeft, queryRowRight, queryColLeft, queryColRight);
 
                 return leftValue + rightValue;
             }
 
-            public int subQuery(int rowRootIndex, int colRootIndex, int colLeft, int colRight,
-                                int queryColLeft, int queryColRight) {
+            private int subQuery(int rowRootIndex, int colRootIndex, int colLeft, int colRight,
+                                 int queryColLeft, int queryColRight) {
                 if (colLeft > queryColRight || colRight < queryColLeft) {
                     return 0;
                 }
@@ -187,14 +187,14 @@ public class Problem308 {
                 return leftValue + rightValue;
             }
 
-            public void update(int rowRootIndex, int rowLeft, int rowRight, int colLeft, int colRight,
-                               int updateRowLeft, int updateColLeft, int updateRowRight, int updateColRight, int value) {
+            public void update(int rowRootIndex, int colRootIndex, int rowLeft, int rowRight, int colLeft, int colRight,
+                               int updateRowLeft, int updateRowRight, int updateColLeft, int updateColRight, int value) {
                 if (rowLeft > updateRowRight || rowRight < updateRowLeft) {
                     return;
                 }
 
                 if (updateRowLeft <= rowLeft && rowRight <= updateRowRight) {
-                    subUpdate(rowRootIndex, 0, colLeft, colRight, updateColLeft, updateColRight, value);
+                    subUpdate(rowRootIndex, colRootIndex, colLeft, colRight, updateColLeft, updateColRight, value);
                     return;
                 }
 
@@ -202,16 +202,16 @@ public class Problem308 {
                 int rowLeftRootIndex = rowRootIndex * 2 + 1;
                 int rowRightRootIndex = rowRootIndex * 2 + 2;
 
-                update(rowLeftRootIndex, rowLeft, rowMid, colLeft, colRight, updateRowLeft, updateColLeft, updateRowRight, updateColRight, value);
-                update(rowRightRootIndex, rowMid + 1, rowRight, colLeft, colRight, updateRowLeft, updateColLeft, updateRowRight, updateColRight, value);
+                update(rowLeftRootIndex, colRootIndex, rowLeft, rowMid, colLeft, colRight, updateRowLeft, updateRowRight, updateColLeft, updateColRight, value);
+                update(rowRightRootIndex, colRootIndex, rowMid + 1, rowRight, colLeft, colRight, updateRowLeft, updateRowRight, updateColLeft, updateColRight, value);
 
                 for (int j = 0; j < valueArr[0].length; j++) {
                     valueArr[rowRootIndex][j] = valueArr[rowLeftRootIndex][j] + valueArr[rowRightRootIndex][j];
                 }
             }
 
-            public void subUpdate(int rowRootIndex, int colRootIndex, int colLeft, int colRight,
-                                  int updateColLeft, int updateColRight, int value) {
+            private void subUpdate(int rowRootIndex, int colRootIndex, int colLeft, int colRight,
+                                   int updateColLeft, int updateColRight, int value) {
                 if (colLeft > updateColRight || colRight < updateColLeft) {
                     return;
                 }
@@ -227,10 +227,10 @@ public class Problem308 {
                 int colRightRootIndex = colRootIndex * 2 + 2;
 
                 if (lazyValueArr[rowRootIndex][colRootIndex] != 0) {
-                    valueArr[rowRootIndex][colLeftRootIndex] = valueArr[rowRootIndex][colLeftRootIndex] + (colMid - colLeft + 1) * value;
-                    valueArr[rowRootIndex][colRightRootIndex] = valueArr[rowRootIndex][colRightRootIndex] + (colRight - colMid) * value;
-                    lazyValueArr[rowRootIndex][colLeftRootIndex] = lazyValueArr[rowRootIndex][colLeftRootIndex] + value;
-                    lazyValueArr[rowRootIndex][colRightRootIndex] = lazyValueArr[rowRootIndex][colRightRootIndex] + value;
+                    valueArr[rowRootIndex][colLeftRootIndex] = valueArr[rowRootIndex][colLeftRootIndex] + (colMid - colLeft + 1) * lazyValueArr[rowRootIndex][colRootIndex];
+                    valueArr[rowRootIndex][colRightRootIndex] = valueArr[rowRootIndex][colRightRootIndex] + (colRight - colMid) * lazyValueArr[rowRootIndex][colRootIndex];
+                    lazyValueArr[rowRootIndex][colLeftRootIndex] = lazyValueArr[rowRootIndex][colLeftRootIndex] + lazyValueArr[rowRootIndex][colRootIndex];
+                    lazyValueArr[rowRootIndex][colRightRootIndex] = lazyValueArr[rowRootIndex][colRightRootIndex] + lazyValueArr[rowRootIndex][colRootIndex];
 
                     lazyValueArr[rowRootIndex][colRootIndex] = 0;
                 }
@@ -241,14 +241,14 @@ public class Problem308 {
                 valueArr[rowRootIndex][colRootIndex] = valueArr[rowRootIndex][colLeftRootIndex] + valueArr[rowRootIndex][colRightRootIndex];
             }
 
-            public void update(int rowRootIndex, int rowLeft, int rowRight, int colLeft, int colRight,
+            public void update(int rowRootIndex, int colRootIndex, int rowLeft, int rowRight, int colLeft, int colRight,
                                int updateRowIndex, int updateColIndex, int value) {
                 if (rowLeft > updateRowIndex || rowRight < updateRowIndex) {
                     return;
                 }
 
                 if (rowLeft == rowRight) {
-                    subUpdate(rowRootIndex, 0, colLeft, colRight, updateColIndex, value);
+                    subUpdate(rowRootIndex, colRootIndex, colLeft, colRight, updateColIndex, value);
                     return;
                 }
 
@@ -256,16 +256,16 @@ public class Problem308 {
                 int rowLeftRootIndex = rowRootIndex * 2 + 1;
                 int rowRightRootIndex = rowRootIndex * 2 + 2;
 
-                update(rowLeftRootIndex, rowLeft, rowMid, colLeft, colRight, updateRowIndex, updateColIndex, value);
-                update(rowRightRootIndex, rowMid + 1, rowRight, colLeft, colRight, updateRowIndex, updateColIndex, value);
+                update(rowLeftRootIndex, colRootIndex, rowLeft, rowMid, colLeft, colRight, updateRowIndex, updateColIndex, value);
+                update(rowRightRootIndex, colRootIndex, rowMid + 1, rowRight, colLeft, colRight, updateRowIndex, updateColIndex, value);
 
                 for (int j = 0; j < valueArr[0].length; j++) {
                     valueArr[rowRootIndex][j] = valueArr[rowLeftRootIndex][j] + valueArr[rowRightRootIndex][j];
                 }
             }
 
-            public void subUpdate(int rowRootIndex, int colRootIndex, int colLeft, int colRight,
-                                  int updateColIndex, int value) {
+            private void subUpdate(int rowRootIndex, int colRootIndex, int colLeft, int colRight,
+                                   int updateColIndex, int value) {
                 if (colLeft > updateColIndex || colRight < updateColIndex) {
                     return;
                 }
@@ -313,7 +313,7 @@ public class Problem308 {
         }
 
         public int sumRegion(int row1, int col1, int row2, int col2) {
-            return segmentTree.query(segmentTree.root, row1, col1, row2, col2);
+            return segmentTree.query(segmentTree.root, row1, row2, col1, col2);
         }
 
         /**
@@ -333,7 +333,7 @@ public class Problem308 {
                 }
             }
 
-            public int query(SegmentTreeNode node, int queryRowLeft, int queryColLeft, int queryRowRight, int queryColRight) {
+            public int query(SegmentTreeNode node, int queryRowLeft, int queryRowRight, int queryColLeft, int queryColRight) {
                 if (node.rowLeftBound > queryRowRight || node.rowRightBound < queryRowLeft ||
                         node.colLeftBound > queryColRight || node.colRightBound < queryColLeft) {
                     return 0;
@@ -376,15 +376,15 @@ public class Problem308 {
                     node.lazyValue = 0;
                 }
 
-                int value1 = query(node.node1, queryRowLeft, queryColLeft, queryRowRight, queryColRight);
-                int value2 = query(node.node2, queryRowLeft, queryColLeft, queryRowRight, queryColRight);
-                int value3 = query(node.node3, queryRowLeft, queryColLeft, queryRowRight, queryColRight);
-                int value4 = query(node.node4, queryRowLeft, queryColLeft, queryRowRight, queryColRight);
+                int value1 = query(node.node1, queryRowLeft, queryRowRight, queryColLeft, queryColRight);
+                int value2 = query(node.node2, queryRowLeft, queryRowRight, queryColLeft, queryColRight);
+                int value3 = query(node.node3, queryRowLeft, queryRowRight, queryColLeft, queryColRight);
+                int value4 = query(node.node4, queryRowLeft, queryRowRight, queryColLeft, queryColRight);
 
                 return value1 + value2 + value3 + value4;
             }
 
-            public void update(SegmentTreeNode node, int updateRowLeft, int updateColLeft, int updateRowRight, int updateColRight, int value) {
+            public void update(SegmentTreeNode node, int updateRowLeft, int updateRowRight, int updateColLeft, int updateColRight, int value) {
                 if (node.rowLeftBound > updateRowRight || node.rowRightBound < updateRowLeft ||
                         node.colLeftBound > updateColRight || node.colRightBound < updateColLeft) {
                     return;
@@ -429,10 +429,10 @@ public class Problem308 {
                     node.lazyValue = 0;
                 }
 
-                update(node.node1, updateRowLeft, updateColLeft, updateRowRight, updateColRight, value);
-                update(node.node2, updateRowLeft, updateColLeft, updateRowRight, updateColRight, value);
-                update(node.node3, updateRowLeft, updateColLeft, updateRowRight, updateColRight, value);
-                update(node.node4, updateRowLeft, updateColLeft, updateRowRight, updateColRight, value);
+                update(node.node1, updateRowLeft, updateRowRight, updateColLeft, updateColRight, value);
+                update(node.node2, updateRowLeft, updateRowRight, updateColLeft, updateColRight, value);
+                update(node.node3, updateRowLeft, updateRowRight, updateColLeft, updateColRight, value);
+                update(node.node4, updateRowLeft, updateRowRight, updateColLeft, updateColRight, value);
 
                 node.value = node.node1.value + node.node2.value + node.node3.value + node.node4.value;
             }

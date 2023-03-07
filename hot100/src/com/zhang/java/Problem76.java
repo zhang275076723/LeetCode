@@ -57,7 +57,7 @@ public class Problem76 {
             tMap.put(c, tMap.getOrDefault(c, 0) + 1);
         }
 
-        //滑动窗口指针
+        //滑动窗口左右指针
         int left = 0;
         int right = 0;
         //最小窗口指针
@@ -72,7 +72,7 @@ public class Problem76 {
 
             //当前窗口的大小大于等于t的大小，并且当前窗口覆盖t时，left指针右移，并更新sMap和最小窗口
             while (right - left + 1 >= t.length() && isCover(sMap, tMap)) {
-                //更新窗口大小
+                //更新最小覆盖子串的窗口大小
                 if (right - left < minRight - minLeft) {
                     minLeft = left;
                     minRight = right;
