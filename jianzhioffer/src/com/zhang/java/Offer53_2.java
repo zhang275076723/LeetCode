@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/2 15:53
  * @Author zsy
- * @Description 0～n-1中缺失的数字 类比Problem33、Problem34、Problem81、Problem153、Problem154、Problem162、Problem852、Offer11、Offer53
+ * @Description 0～n-1中缺失的数字 类比Problem33、Problem34、Problem35、Problem81、Problem153、Problem154、Problem162、Problem852、Offer11、Offer53
  * 一个长度为n-1的递增排序数组中的所有数字都是唯一的，并且每个数字都在范围0～n-1之内。
  * 在范围0～n-1内的n个数字中有且只有一个数字不在该数组中，请找出这个数字。
  * <p>
@@ -37,13 +37,16 @@ public class Offer53_2 {
             //求mid时不使用(left + right) / 2，因为(left + right)有可能会溢出
             int mid = left + ((right - left) >> 1);
 
-            if (nums[mid] == mid) {
+            //nums[left]-nums[mid]中不存在缺失的数字，往右边找
+            if (nums[mid] <= mid) {
                 left = mid + 1;
             } else {
+                //nums[left]-nums[mid]中存在缺失的数字，往左边找
                 right = mid - 1;
             }
         }
 
+        //left即为0-(n-1)中缺失的数字
         return left;
     }
 }

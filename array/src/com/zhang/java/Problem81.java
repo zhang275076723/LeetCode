@@ -49,35 +49,40 @@ public class Problem81 {
         int mid;
 
         while (left <= right) {
-            //left和right两端去重
-            while (left < right && nums[left] == nums[left + 1]) {
+            //left去重
+            while (left + 1 <= right && nums[left] == nums[left + 1]) {
                 left++;
             }
 
-            while (left < right && nums[right] == nums[right - 1]) {
+            //right去重
+            while (left <= right - 1 && nums[right] == nums[right - 1]) {
                 right--;
             }
 
             mid = left + ((right - left) >> 1);
 
+            //nums[mid]和target相等，则找到，直接返回true
             if (nums[mid] == target) {
                 return true;
-            }
+            }else{
+                //nums[mid]和target不相等，则根据nums[left]-nums[mid]和nums[mid]-nums[right]哪边是单调的，
+                //单调部分再和target比较，判断往左找还是往右找
 
-            //nums[mid]-nums[right]单调递增
-            if (nums[mid] < nums[right]) {
-                if (nums[mid] < target && target <= nums[right]) {
-                    left = mid + 1;
+                //nums[mid]-nums[right]单调递增
+                if (nums[mid] < nums[right]) {
+                    if (nums[mid] < target && target <= nums[right]) {
+                        left = mid + 1;
+                    } else {
+                        right = mid - 1;
+                    }
                 } else {
-                    right = mid - 1;
-                }
-            } else {
-                //nums[left]-nums[mid]单调递增
+                    //nums[left]-nums[mid]单调递增
 
-                if (nums[left] <= target && target < nums[mid]) {
-                    right = mid - 1;
-                } else {
-                    left = mid + 1;
+                    if (nums[left] <= target && target < nums[mid]) {
+                        right = mid - 1;
+                    } else {
+                        left = mid + 1;
+                    }
                 }
             }
         }

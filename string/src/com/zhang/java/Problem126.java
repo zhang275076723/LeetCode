@@ -295,14 +295,14 @@ public class Problem126 {
                         //从前往后bfs，newWord已经遍历过，应该继续下次循环，但此时count1和遍历到newWord的路径长度一样，
                         //则word转换为newWord也是一条最短转换路径，也要加入convertMap，避免遗漏其他最短转换序列
                         if (direction == 1) {
-                            if (stepMap1.containsKey(newWord) && count1 == stepMap1.get(newWord)) {
+                            if (stepMap1.containsKey(newWord) && stepMap1.get(newWord) == count1) {
                                 List<String> list = convertMap.get(newWord);
                                 list.add(word);
                             }
                         } else {
                             //从后往前bfs，newWord已经遍历过，应该继续下次循环，但此时count2和遍历到newWord的路径长度一样，
                             //则newWord转换为word也是一条最短转换路径，也要加入convertMap，避免遗漏其他最短转换序列
-                            if (stepMap2.containsKey(newWord) && count2 == stepMap2.get(newWord)) {
+                            if (stepMap2.containsKey(newWord) && stepMap2.get(newWord) == count2) {
                                 //从后往前bfs，convertMap中有可能没有word，则需要将word放入convertMap中
                                 if (!convertMap.containsKey(word)) {
                                     convertMap.put(word, new ArrayList<>());

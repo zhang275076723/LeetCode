@@ -40,7 +40,8 @@ public class Problem54 {
     }
 
     /**
-     * 先从左到右遍历，再上到下，接着右到左，最后下到上
+     * 模拟
+     * 使用四个指针，分别限定矩阵的上下左右，每次遍历完一行或一列之后，指针移动
      * 时间复杂度O(mn)，空间复杂度O(1)
      *
      * @param matrix
@@ -52,43 +53,58 @@ public class Problem54 {
         }
 
         List<Integer> list = new ArrayList<>();
-
+        //上下左右四个指针，限定矩阵的上下左右
         int left = 0;
         int right = matrix[0].length - 1;
         int top = 0;
         int bottom = matrix.length - 1;
 
         while (list.size() < matrix.length * matrix[0].length) {
+            //先从左往右找
             for (int i = left; i <= right; i++) {
                 list.add(matrix[top][i]);
             }
+
+            //top指针下移
             top++;
 
+            //矩阵已经遍历结束，直接返回
             if (list.size() == matrix.length * matrix[0].length) {
-                break;
+                return list;
             }
 
+            //再从上往下找
             for (int i = top; i <= bottom; i++) {
                 list.add(matrix[i][right]);
             }
+
+            //right指针左移
             right--;
 
+            //矩阵已经遍历结束，直接返回
             if (list.size() == matrix.length * matrix[0].length) {
-                break;
+                return list;
             }
 
+            //接着从右往左找
             for (int i = right; i >= left; i--) {
                 list.add(matrix[bottom][i]);
             }
+
+            //bottom指针上移
             bottom--;
 
+            //矩阵已经遍历结束，直接返回
             if (list.size() == matrix.length * matrix[0].length) {
-                break;
+                return list;
             }
 
+            //最后从下往上找
             for (int i = bottom; i >= top; i--) {
                 list.add(matrix[i][left]);
             }
+
+            //left指针右移
             left++;
         }
 

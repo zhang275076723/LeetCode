@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/4/18 12:31
  * @Author zsy
- * @Description 在排序数组中查找元素的第一个和最后一个位置 类比Problem33、Problem34、Problem81、Problem153、Problem154、Problem162、Problem852、Offer11、Offer53_2 同Offer53
+ * @Description 在排序数组中查找元素的第一个和最后一个位置 类比Problem33、Problem35、Problem81、Problem153、Problem154、Problem162、Problem852、Offer11、Offer53_2 同Offer53
  * 在排序数组中查找元素的第一个和最后一个位置
  * 给定一个按照升序排列的整数数组 nums，和一个目标值 target。
  * 找出给定目标值在数组中的开始位置和结束位置。
@@ -46,29 +46,29 @@ public class Problem34 {
             return new int[]{-1, -1};
         }
 
+        //数组中第一个值为target的索引下标
+        int first = -1;
+        //数组中最后一个值为target的索引下标
+        int last = -1;
         int left = 0;
         int right = nums.length - 1;
         int mid;
-        //第一个target索引
-        int first = -1;
-        //最后个target索引
-        int last = -1;
 
         //找第一个值为target的索引下标first
         while (left <= right) {
             mid = left + ((right - left) >> 1);
 
-            if (nums[mid] > target) {
-                right = mid - 1;
-            } else if (nums[mid] < target) {
-                left = mid + 1;
-            } else {
+            if (nums[mid] == target) {
                 first = mid;
                 right = mid - 1;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
             }
         }
 
-        //target不存在，直接返回
+        //target不在数组中，直接返回
         if (first == -1) {
             return new int[]{-1, -1};
         }
@@ -81,12 +81,12 @@ public class Problem34 {
         while (left <= right) {
             mid = left + ((right - left) >> 1);
 
-            if (nums[mid] > target) {
-                right = mid - 1;
-            } else if (nums[mid] < target) {
-                left = mid + 1;
-            } else {
+            if (nums[mid] == target) {
                 last = mid;
+                left = mid + 1;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else {
                 left = mid + 1;
             }
         }

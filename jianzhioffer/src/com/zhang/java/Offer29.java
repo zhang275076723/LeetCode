@@ -38,6 +38,7 @@ public class Offer29 {
 
     /**
      * 模拟
+     * 使用四个指针，分别限定矩阵的上下左右，每次遍历完一行或一列之后，指针移动
      * 时间复杂度O(mn)，空间复杂度O(1)
      *
      * @param matrix
@@ -52,48 +53,64 @@ public class Offer29 {
             return new int[0];
         }
 
+        int[] result = new int[matrix.length * matrix[0].length];
+        int index = 0;
+        //上下左右四个指针，限定矩阵的上下左右
         int left = 0;
         int right = matrix[0].length - 1;
         int top = 0;
         int bottom = matrix.length - 1;
-        int index = 0;
-        int[] result = new int[matrix.length * matrix[0].length];
 
         while (index < result.length) {
+            //先从左往右找
             for (int i = left; i <= right; i++) {
                 result[index] = matrix[top][i];
                 index++;
             }
+
+            //top指针下移
             top++;
 
+            //矩阵已经遍历结束，直接返回
             if (index == result.length) {
-                break;
+                return result;
             }
 
+            //再从上往下找
             for (int i = top; i <= bottom; i++) {
                 result[index] = matrix[i][right];
                 index++;
             }
+
+            //right指针左移
             right--;
 
+            //矩阵已经遍历结束，直接返回
             if (index == result.length) {
-                break;
+                return result;
             }
 
+            //接着从右往左找
             for (int i = right; i >= left; i--) {
                 result[index] = matrix[bottom][i];
                 index++;
             }
+
+            //bottom指针上移
             bottom--;
 
+            //矩阵已经遍历结束，直接返回
             if (index == result.length) {
-                break;
+                return result;
             }
 
+            //最后从下往上找
             for (int i = bottom; i >= top; i--) {
                 result[index] = matrix[i][left];
                 index++;
             }
+
+            //left指针右移
             left++;
         }
 

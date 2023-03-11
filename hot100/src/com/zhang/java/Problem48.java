@@ -59,14 +59,14 @@ public class Problem48 {
             return;
         }
 
-        //由外到内一圈一圈调整，每组的四个元素，需要调整的圈数
+        //由外到内一圈一圈调整，需要调整的圈数
         for (int i = 0; i < matrix.length / 2; i++) {
-            //每组要调整的四个元素矩阵的左上元素
+            //每组要调整的四个元素矩阵的左上元素(start,start)
             int start = i;
-            //每组要调整的四个元素矩阵的右下元素
+            //每组要调整的四个元素矩阵的右下元素(end,end)
             int end = matrix.length - 1 - i;
 
-            //每轮需要调整的每四个元素的组数
+            //每轮需要调整的四个元素的组数
             for (int j = 0; j < end - start; j++) {
                 //顺时针调整这四个元素的位置
                 int temp = matrix[start][start + j];

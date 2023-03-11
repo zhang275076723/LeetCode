@@ -51,7 +51,7 @@ public class Problem498 {
         //result数组下标索引
         int index = 0;
 
-        //共m+n-1个对角线，每行对角线行列之和
+        //共m+n-1个对角线，每个对角线上元素的行列下标索引之和等于对角线索引
         for (int i = 0; i < m + n - 1; i++) {
             //从左下到右上遍历
             if (i % 2 == 0) {
@@ -61,9 +61,9 @@ public class Problem498 {
 
                 while (x >= 0 && y < n) {
                     result[index] = mat[x][y];
+                    index++;
                     x--;
                     y++;
-                    index++;
                 }
             } else {
                 //从右上到左下遍历
@@ -74,9 +74,9 @@ public class Problem498 {
 
                 while (x < m && y >= 0) {
                     result[index] = mat[x][y];
+                    index++;
                     x++;
                     y--;
-                    index++;
                 }
             }
         }

@@ -40,20 +40,21 @@ public class AscendAndDescendArrayFindTargetIndex {
         while (left <= right) {
             mid = left + ((right - left) >> 1);
 
+            //nums[mid]等于target，即找到target，直接返回mid
             if (nums[mid] == target) {
                 return mid;
             }
 
-            //只有一个元素，且mid+1超过右边界，则没有找到，返回-1
+            //[left,right]只有一个元素，即mid+1超过右边界，target不在[left,right]区间中，直接返回-1
             if (mid + 1 > right) {
                 return -1;
             }
 
-            //[left,mid+1]升序，二分查找判断target是否在[left,mid+1]区间中
+            //nums[left]-nums[mid+1]升序，二分查找判断target是否在[left,mid+1]区间中
             if (nums[mid] < nums[mid + 1]) {
                 index = binarySearch(nums, left, mid + 1, target, true);
 
-                //target在[left,mid+1]区间中
+                //index不为-1，即target在[left,mid+1]区间中，直接返回找到的下标索引index
                 if (index != -1) {
                     return index;
                 }
@@ -61,10 +62,10 @@ public class AscendAndDescendArrayFindTargetIndex {
                 //target不在[left,mid+1]区间中，继续往右找
                 left = mid + 2;
             } else {
-                //[mid,right]降序，二分查找判断target是否在[mid,right]区间中
+                //nums[mid]-nums[right]降序，二分查找判断target是否在[mid,right]区间中
                 index = binarySearch(nums, mid, right, target, false);
 
-                //target在[mid,right]区间中
+                //index不为-1，即target在[mid,right]区间中，直接返回找到的下标索引index
                 if (index != -1) {
                     return index;
                 }
@@ -78,7 +79,8 @@ public class AscendAndDescendArrayFindTargetIndex {
     }
 
     /**
-     * 二分查找target是否在nums数组的[left,right]区间内，根据isAscend标志位判断nums数组是升序还是降序
+     * 二分查找target是否在nums数组的[left,right]区间内，
+     * 根据isAscend标志位判断nums数组是升序还是降序
      *
      * @param nums
      * @param left
@@ -100,6 +102,7 @@ public class AscendAndDescendArrayFindTargetIndex {
                 if (isAscend) {
                     right = mid - 1;
                 } else {
+                    //降序数组，往右边找
                     left = mid + 1;
                 }
             } else {
@@ -107,6 +110,7 @@ public class AscendAndDescendArrayFindTargetIndex {
                 if (isAscend) {
                     left = mid + 1;
                 } else {
+                    //降序数组，往左边找
                     right = mid - 1;
                 }
             }

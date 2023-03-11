@@ -80,11 +80,11 @@ public class Problem162 {
         while (left < right) {
             mid = left + ((right - left) >> 1);
 
-            //当前元素小于下一个元素时，峰值在当前元素右边
+            //nums[mid]小于nums[mid+1]，峰值在nums[mid+1]-nums[right]
             if (nums[mid] < nums[mid + 1]) {
                 left = mid + 1;
             } else {
-                //当前元素大于等于下一个元素时，峰值在当前元素或当前元素左边
+                //nums[mid]大于nums[mid+1]，峰值在nums[left]-nums[mid]
                 right = mid;
             }
         }

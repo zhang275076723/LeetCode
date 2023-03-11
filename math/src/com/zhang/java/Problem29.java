@@ -31,11 +31,11 @@ public class Problem29 {
 
     /**
      * 快速乘思想
-     * 不使用乘除和mod，则使用加减法，使用位运算左移，相当于等2
-     * 每次从bit为1开始找最大的能够减去divisor*bit的bit，dividend = dividend - (bit * divisor)，
+     * 不使用乘除和mod，则使用加减法，使用位运算左移，相当于乘2
+     * dividend每次从减去1个divisor开始找最大的能够减去的最大divisor个数，即减去(1<<bit)个divisor，
      * 直至dividend小于divisor(dividend和divisor都是正数的情况)
      * 例如：60/8 ==> 60 = 8*4 + 8*2 + 8*1 + 4 ==> 60/8 = 7
-     * 注意：将dividend和divisor都转化为负数进行运算，得到结果之后再添加正负号
+     * 注意：将dividend和divisor都转化为负数进行运算，得到结果之后再添加正负号，进行统一的运算，避免特殊情况
      * 时间复杂度O(log(dividend))=O(1)，空间复杂度O(1)
      *
      * @param dividend 被除数
@@ -43,12 +43,12 @@ public class Problem29 {
      * @return
      */
     public int divide(int dividend, int divisor) {
-        //除数不能为0
+        //除数不能为0，如果为0，返回-1
         if (divisor == 0) {
             return -1;
         }
 
-        //被除数为0，除法结果为0
+        //被除数为0，除法结果为0，返回0
         if (dividend == 0) {
             return 0;
         }
@@ -82,28 +82,23 @@ public class Problem29 {
         //除法结果
         int result = 0;
 
-        //dividend每次从bit为1开始找最大的能够减去divisor*bit的bit，即dividend=bit*divisor+余数
-        //因为dividend和divisor都是负数，所以要保证dividend小于等于divisor
+        //dividend每次从减去1个divisor开始找最大的能够减去的最大divisor个数，即减去(1<<bit)个divisor
+        //因为dividend和divisor都是负数，所以要保证dividend始终小于等于divisor
         while (dividend <= divisor) {
-            //从1开始，每次左移一位，表示乘上2
-            int bit = 1;
+            //减去divisor的个数，(1<<bit)个
+            int bit = 0;
 
-            //判断bit*divisor是否大于等于dividend(因为dividend和divisor都是负数)，
-            //如果大于等于，则result加上bit，dividend减去bit*divisor
-            //(bit << 1) * divisor < 0，避免相乘时int溢出
-            while ((bit << 1) * divisor < 0 && dividend <= (bit << 1) * divisor) {
-                bit = bit << 1;
-
-                //bit在int表示的范围之内最大值为2^30，如果再往左移一位，则溢出变为负数
-                if (bit == (1 << 30)) {
-                    break;
-                }
+            //(bit + 1) <= 30：保证减去divisor的个数在int范围之内，不溢出
+            //divisor * (1 << (bit + 1)) < 0：保证divisor和减去divisor的个数相乘在int范围之内，不溢出
+            //找最大的能够减去的最大divisor个数
+            while ((bit + 1) <= 30 && divisor * (1 << (bit + 1)) < 0 && dividend <= divisor * (1 << (bit + 1))) {
+                bit++;
             }
 
-            //dividend减去bit*divisor
-            dividend = dividend - (bit * divisor);
-            //除法结果加上bit
-            result = result + bit;
+            //减去最大能够减去的(1<<bit)个divisor
+            dividend = dividend - divisor * (1 << bit);
+            //除法结果加上(1<<bit)
+            result = result + (1 << bit);
         }
 
         return sign == 1 ? result : -result;

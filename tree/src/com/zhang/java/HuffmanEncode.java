@@ -70,17 +70,13 @@ public class HuffmanEncode {
                     }
                 });
 
-                //取出list集合中前2个元素，合并为一个huffman节点
-                HuffmanNode node1 = list.get(0);
-                HuffmanNode node2 = list.get(1);
+                //list集合中权值较小的前2个节点从list中移除，合并为一个huffman节点，再重新放入list中
+                HuffmanNode node1 = list.remove(0);
+                HuffmanNode node2 = list.remove(0);
                 HuffmanNode node = new HuffmanNode();
                 node.weight = node1.weight + node2.weight;
                 node.left = node1;
                 node.right = node2;
-
-                //之前的两个节点从list集合中移除
-                list.remove(0);
-                list.remove(0);
                 //新节点加入list集合
                 list.add(node);
             }

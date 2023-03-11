@@ -57,10 +57,10 @@ public class Problem154 {
             if (nums[mid] == nums[right]) {
                 right--;
             } else if (nums[mid] < nums[right]) {
-                //nums[mid]-nums[right]单调递增，最小值在左边
+                //nums[mid]-nums[right]单调递增，最小值在nums[left]-nums[mid]
                 right = mid;
             } else {
-                //nums[left]-nums[mid]单调递增，最小值在右边
+                //nums[left]-nums[mid]单调递增，最小值在nums[mid+1]-nums[right]
                 left = mid + 1;
             }
         }

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/14 15:59
  * @Author zsy
- * @Description 旋转数组的最小数字 类比Problem33、Problem34、Problem81、Problem153、Problem162、Problem852、Offer53、Offer53_2 同Problem154
+ * @Description 旋转数组的最小数字 类比Problem33、Problem34、Problem35、Problem81、Problem153、Problem162、Problem852、Offer53、Offer53_2 同Problem154
  * 把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。
  * 给你一个可能存在重复元素值的数组numbers，它原来是一个升序排列的数组，并按上述情形进行了一次旋转。
  * 请返回旋转数组的最小元素。例如，数组[3,4,5,1,2] 为 [1,2,3,4,5] 的一次旋转，该数组的最小值为1。
@@ -45,15 +45,15 @@ public class Offer11 {
         while (left < right) {
             mid = left + ((right - left) >> 1);
 
-            if (numbers[mid] < numbers[right]) {
-                //mid值比right值小，说明右边有序，最小值在左边或当前位置
-                right = mid;
-            } else if (numbers[mid] > numbers[right]) {
-                //mid值比right值大，说明左边有序，最小值在右边
-                left = mid + 1;
-            } else {
-                //mid值等于right值，说明重复，right左移一位
+            //numbers[mid]和numbers[right]相等，右指针左移
+            if (numbers[mid] == numbers[right]) {
                 right--;
+            } else if (numbers[mid] < numbers[right]) {
+                ///nums[mid]-nums[right]单调递增，最小值在nums[left]-nums[mid]
+                right = mid;
+            } else {
+                //nums[left]-nums[mid]单调递增，最小值在nums[mid+1]-nums[right]
+                left = mid + 1;
             }
         }
 

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/1 16:41
  * @Author zsy
- * @Description 搜索插入位置 类比Problem33、Problem34、Problem81、Problem153、Problem154、Problem162、Problem852
+ * @Description 搜索插入位置 类比Problem33、Problem34、Problem81、Problem153、Problem154、Problem162、Problem852、Offer11、Offer53、Offer53_2
  * 给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
  * 请必须使用时间复杂度为 O(logn) 的算法。
  * <p>
@@ -41,24 +41,24 @@ public class Problem35 {
         int left = 0;
         int right = nums.length - 1;
         int mid;
-        int index = -1;
 
         while (left <= right) {
             mid = left + ((right - left) >> 1);
 
+            //找到，直接返回下标索引
             if (nums[mid] == target) {
                 return mid;
             } else if (nums[mid] > target) {
-                //nums[mid]大于target，往左找
+                //往左边找
                 right = mid - 1;
-                index = mid;
             } else {
-                //nums[mid]小于target，往右找
+                //往右边找
                 left = mid + 1;
-                index = mid + 1;
             }
         }
 
-        return index;
+        //left即为target顺序插入数组中的下标索引
+        //Arrays.binarySearch()中，如果返回负数，则为-(index+1)，index即为target顺序插入数组中的下标索引
+        return left;
     }
 }

@@ -64,19 +64,19 @@ public class Problem695 {
             return 0;
         }
 
-        int max = 0;
+        int maxArea = 0;
         boolean[][] visited = new boolean[grid.length][grid[0].length];
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 //对未被访问为1的节点进行dfs
                 if (grid[i][j] == 1 && !visited[i][j]) {
-                    max = Math.max(max, dfs(i, j, grid, visited));
+                    maxArea = Math.max(maxArea, dfs(i, j, grid, visited));
                 }
             }
         }
 
-        return max;
+        return maxArea;
     }
 
     /**
@@ -91,19 +91,19 @@ public class Problem695 {
             return 0;
         }
 
-        int max = 0;
+        int maxArea = 0;
         boolean[][] visited = new boolean[grid.length][grid[0].length];
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 //对未被访问为1的节点进行bfs
                 if (grid[i][j] == 1 && !visited[i][j]) {
-                    max = Math.max(max, bfs(i, j, grid, visited));
+                    maxArea = Math.max(maxArea, bfs(i, j, grid, visited));
                 }
             }
         }
 
-        return max;
+        return maxArea;
     }
 
     /**
@@ -142,14 +142,14 @@ public class Problem695 {
             }
         }
 
-        int max = 0;
+        int maxArea = 0;
 
         //并查集中连通分量的根节点面积中的最大值，即为岛屿的最大面积
         for (int area : unionFind.area) {
-            max = Math.max(max, area);
+            maxArea = Math.max(maxArea, area);
         }
 
-        return max;
+        return maxArea;
     }
 
     private int dfs(int i, int j, int[][] grid, boolean[][] visited) {
@@ -158,9 +158,9 @@ public class Problem695 {
             return 0;
         }
 
-        int area = 1;
         //当前位置已被访问
         visited[i][j] = true;
+        int area = 1;
 
         //往上下左右找
         area = area + dfs(i - 1, j, grid, visited);
@@ -241,7 +241,7 @@ public class Problem695 {
                 if (weight[rootI] < weight[rootJ]) {
                     parent[rootI] = rootJ;
                     //更新根节点的面积
-                    area[rootJ] = area[rootJ] + area[rootI];
+                    area[rootJ] = area[rootI] + area[rootJ];
                 } else if (weight[rootI] > weight[rootJ]) {
                     parent[rootJ] = rootI;
                     //更新根节点的面积

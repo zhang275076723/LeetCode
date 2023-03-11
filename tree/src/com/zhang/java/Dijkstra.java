@@ -52,11 +52,12 @@ public class Dijkstra {
 
         //每次选择path数组中未访问的最短路径节点v，通过节点v更新节点u能够达到的其他节点最短路径
         for (int i = 0; i < edges.length - 1; i++) {
-            //path数组中未访问的最短路径节点v
+            //初始化u到path数组中未访问的最短路径节点v
             int v = -1;
+            //初始化u到v的最短路径minPath
             int minPath = Integer.MAX_VALUE;
 
-            //找path数组中未访问的最短路径节点v
+            //找path数组中未访问的从u到v的最短路径节点v
             for (int j = 0; j < path.length; j++) {
                 if (!visited[j] && path[j] < minPath) {
                     v = j;
@@ -67,7 +68,7 @@ public class Dijkstra {
             //v节点已经访问
             visited[v] = true;
 
-            //通过节点v更新节点u能够达到的其他节点最短路径
+            //通过节点v更新节点u能够达到未访问节点的最短路径
             for (int j = 0; j < edges.length; j++) {
                 if (!visited[j] && edges[v][j] != -1) {
                     path[j] = Math.min(path[j], path[v] + edges[v][j]);

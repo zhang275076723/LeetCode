@@ -42,17 +42,15 @@ public class Problem74 {
      * @return
      */
     public boolean searchMatrix(int[][] matrix, int target) {
-        int m = matrix.length;
-        int n = matrix[0].length;
         int left = 0;
-        int right = m * n - 1;
+        int right = matrix.length * matrix[0].length - 1;
         int mid;
 
         while (left <= right) {
             mid = left + ((right - left) >> 1);
-            //mid在矩阵中的索引
-            int i = mid / n;
-            int j = mid % n;
+            //mid在矩阵中的索引下标
+            int i = mid / matrix[0].length;
+            int j = mid % matrix[0].length;
 
             if (matrix[i][j] == target) {
                 return true;

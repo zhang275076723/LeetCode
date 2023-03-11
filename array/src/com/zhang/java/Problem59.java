@@ -1,6 +1,8 @@
 package com.zhang.java;
 
 
+import java.util.Arrays;
+
 /**
  * @Date 2021/11/27 19:31
  * @Author zsy
@@ -29,49 +31,64 @@ public class Problem59 {
             }
             System.out.println();
         }
+        System.out.println(Arrays.deepToString(matrix));
     }
 
     /**
-     * 先左到右，再上到下，接着右到左，最后下到上
+     * 模拟
+     * 使用四个指针，分别限定矩阵的上下左右，每次遍历完一行或一列之后，指针移动
      * 时间复杂度O(n^2)，空间复杂度O(1)
      *
      * @param n
      * @return
      */
     public int[][] generateMatrix(int n) {
-        int[][] matrix = new int[n][n];
-        int count = 1;
+        int[][] result = new int[n][n];
+        //结果数组中元素的值
+        int value = 1;
         int left = 0;
         int right = n - 1;
         int top = 0;
         int bottom = n - 1;
 
-        while (count <= n * n) {
+        while (value <= n * n) {
+            //先从左往右找
             for (int i = left; i <= right; i++) {
-                matrix[top][i] = count;
-                count++;
+                result[top][i] = value;
+                value++;
             }
+
+            //top指针下移
             top++;
 
+            //再从上往下找
             for (int i = top; i <= bottom; i++) {
-                matrix[i][right] = count;
-                count++;
+                result[i][right] = value;
+                value++;
             }
+
+            //right指针左移
             right--;
 
+            //接着从右往左找
             for (int i = right; i >= left; i--) {
-                matrix[bottom][i] = count;
-                count++;
+                result[bottom][i] = value;
+                value++;
             }
+
+            //bottom指针上移
             bottom--;
 
+            //最后从下往上找
             for (int i = bottom; i >= top; i--) {
-                matrix[i][left] = count;
-                count++;
+                result[i][left] = value;
+                value++;
             }
+
+            //left指针右移
             left++;
         }
 
-        return matrix;
+        return result;
     }
 }

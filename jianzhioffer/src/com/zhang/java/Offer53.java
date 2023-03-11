@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/2 14:48
  * @Author zsy
- * @Description 在排序数组中查找数字 I 类比Problem33、Problem81、Problem153、Problem154、Problem162、Problem852、Offer11、Offer53_2 同Problem34
+ * @Description 在排序数组中查找数字 I 类比Problem33、Problem35、Problem81、Problem153、Problem154、Problem162、Problem852、Offer11、Offer53_2 同Problem34
  * 统计一个数字在排序数组中出现的次数。
  * <p>
  * 输入: nums = [5,7,7,8,8,10], target = 8
@@ -37,29 +37,29 @@ public class Offer53 {
             return 0;
         }
 
+        //数组中第一个值为target的索引下标
+        int first = -1;
+        //数组中最后一个值为target的索引下标
+        int last = -1;
         int left = 0;
         int right = nums.length - 1;
         int mid;
-        //第一个target索引
-        int first = -1;
-        //最后个target索引
-        int last = -1;
 
         //找第一个值为target的索引下标first
         while (left <= right) {
             mid = left + ((right - left) >> 1);
 
-            if (nums[mid] > target) {
-                right = mid - 1;
-            } else if (nums[mid] < target) {
-                left = mid + 1;
-            } else {
+            if (nums[mid] == target) {
                 first = mid;
                 right = mid - 1;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
             }
         }
 
-        //target不存在，直接返回0
+        //target不在数组中，直接返回
         if (first == -1) {
             return 0;
         }
@@ -72,12 +72,12 @@ public class Offer53 {
         while (left <= right) {
             mid = left + ((right - left) >> 1);
 
-            if (nums[mid] > target) {
-                right = mid - 1;
-            } else if (nums[mid] < target) {
-                left = mid + 1;
-            } else {
+            if (nums[mid] == target) {
                 last = mid;
+                left = mid + 1;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else {
                 left = mid + 1;
             }
         }
