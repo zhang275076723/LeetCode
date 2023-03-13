@@ -178,7 +178,6 @@ public class Problem15 {
         int leftIndex = i * 2 + 1;
         int rightIndex = i * 2 + 2;
 
-
         if (leftIndex < heapSize && nums[leftIndex] > nums[index]) {
             index = leftIndex;
         }

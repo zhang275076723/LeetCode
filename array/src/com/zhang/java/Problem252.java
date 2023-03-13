@@ -31,8 +31,9 @@ public class Problem252 {
     }
 
     /**
-     * 按照会议开始时间intervals[i][0]由小到大排序，end记录之前会议的结束时间，
-     * 如果当前会议的开始时间小于之前记录的会议结束时间，说明两个会议有重叠，返回false
+     * 按照会议开始时间intervals[i][0]由小到大排序，
+     * 如果当前会议的开始时间intervals[i][0]小于当前不重叠的区间最右边界end，则会议有重叠，返回false；
+     * 如果当前会议的开始时间intervals[i][0]大于等于当前不重叠的区间最右边界end，则会议没有重叠，更新end为intervals[i][1]
      * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
      * @param intervals
@@ -46,68 +47,70 @@ public class Problem252 {
         //按照会议开始时间intervals[i][0]由小到大排序
         mergeSort(intervals, 0, intervals.length - 1, new int[intervals.length][2]);
 
+        //当前不重叠的区间最右边界
         int end = intervals[0][1];
 
         for (int i = 1; i < intervals.length; i++) {
-            //当前会议开始时间小于end，说明两个会议时间相交
+            //当前会议的开始时间小于end，则会议有重叠，返回false
             if (intervals[i][0] < end) {
                 return false;
+            } else {
+                //当前会议的开始时间大于等于end，则会议没有重叠，更新end
+                end = intervals[i][1];
             }
-
-            end = intervals[i][1];
         }
 
         return true;
     }
 
     /**
-     * 按照intervals[i][0]由小到大排序
+     * 按照会议开始时间intervals[i][0]由小到大排序
      *
-     * @param intervals
+     * @param arr
      * @param left
      * @param right
      * @param tempArr
      */
-    private void mergeSort(int[][] intervals, int left, int right, int[][] tempArr) {
+    private void mergeSort(int[][] arr, int left, int right, int[][] tempArr) {
         if (left < right) {
             int mid = left + ((right - left) >> 1);
-            mergeSort(intervals, left, mid, tempArr);
-            mergeSort(intervals, mid + 1, right, tempArr);
-            merge(intervals, left, mid, right, tempArr);
+            mergeSort(arr, left, mid, tempArr);
+            mergeSort(arr, mid + 1, right, tempArr);
+            merge(arr, left, mid, right, tempArr);
         }
     }
 
-    private void merge(int[][] intervals, int left, int mid, int right, int[][] tempArr) {
+    private void merge(int[][] arr, int left, int mid, int right, int[][] tempArr) {
         int i = left;
         int j = mid + 1;
         int k = left;
 
         while (i <= mid && j <= right) {
-            if (intervals[i][0] < intervals[j][0]) {
-                tempArr[k] = intervals[i];
+            if (arr[i][0] < arr[j][0]) {
+                tempArr[k] = arr[i];
                 i++;
                 k++;
             } else {
-                tempArr[k] = intervals[j];
+                tempArr[k] = arr[j];
                 j++;
                 k++;
             }
         }
 
         while (i <= mid) {
-            tempArr[k] = intervals[i];
+            tempArr[k] = arr[i];
             i++;
             k++;
         }
 
         while (j <= right) {
-            tempArr[k] = intervals[j];
+            tempArr[k] = arr[j];
             j++;
             k++;
         }
 
         for (k = left; k <= right; k++) {
-            intervals[k] = tempArr[k];
+            arr[k] = tempArr[k];
         }
     }
 }

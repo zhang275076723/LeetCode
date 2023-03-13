@@ -44,8 +44,8 @@ public class Problem986 {
     }
 
     /**
-     * 双指针
-     * 两个指针分别指向两个数组中的区间，如果两个区间相交，则加入结果集合，指针后移；不存在相交，靠前的区间指针后移
+     * 双指针，类似归并排序中的合并操作
+     * 两个指针分别指向两个数组中的区间，如果两个区间相交，则相交部分区间加入结果集合，两个区间中右边界较小的指针后移
      * 时间复杂度O(m+n)，空间复杂度O(m+n)
      *
      * @param firstList
@@ -62,44 +62,38 @@ public class Problem986 {
         }
 
         List<int[]> list = new ArrayList<>();
+        //firstList区间指针
         int i = 0;
+        //secondList区间指针
         int j = 0;
 
         while (i < firstList.length && j < secondList.length) {
-            int firstLeft = firstList[i][0];
-            int firstRight = firstList[i][1];
-            int secondLeft = secondList[j][0];
-            int secondRight = secondList[j][1];
+            //firstList[i]区间左边界小于secondList[j]区间左边界
+            if (firstList[i][0] < secondList[j][0]) {
+                //secondList[j]区间左边界小于等于firstList[i]区间右边界，则两区间相交，相交部分区间加入结果集合
+                if (secondList[j][0] <= firstList[i][1]) {
+                    list.add(new int[]{secondList[j][0], Math.min(firstList[i][1], secondList[j][1])});
+                }
 
-            //两个区间不相交，firstList区间在左
-            if (firstRight < secondLeft) {
-                i++;
-            } else if (secondRight < firstLeft) {
-                //两个区间不相交，secondList区间在左
-
-                j++;
-            } else {
-                //两个区间相交
-
-                //firstList区间在前面
-                if (firstLeft <= secondLeft) {
-                    if (firstRight <= secondRight) {
-                        list.add(new int[]{secondLeft, firstRight});
-                        i++;
-                    } else {
-                        list.add(new int[]{secondLeft, secondRight});
-                        j++;
-                    }
+                //两个区间中右边界较小的指针后移
+                if (firstList[i][1] < secondList[j][1]) {
+                    i++;
                 } else {
-                    //secondList区间在前面
+                    j++;
+                }
+            } else {
+                //firstList[i]区间左边界大于等于secondList[j]区间左边界
 
-                    if (firstRight <= secondRight) {
-                        list.add(new int[]{firstLeft, firstRight});
-                        i++;
-                    } else {
-                        list.add(new int[]{firstLeft, secondRight});
-                        j++;
-                    }
+                //firstList[i]区间左边界小于等于secondList[j]区间右边界，则两区间相交，相交部分区间加入结果集合
+                if (firstList[i][0] <= secondList[j][1]) {
+                    list.add(new int[]{firstList[i][0], Math.min(firstList[i][1], secondList[j][1])});
+                }
+
+                //两个区间中右边界较小的指针后移
+                if (firstList[i][1] < secondList[j][1]) {
+                    i++;
+                } else {
+                    j++;
                 }
             }
         }

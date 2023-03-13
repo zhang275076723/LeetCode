@@ -24,7 +24,10 @@ public class Problem1288 {
     }
 
     /**
-     * 按照左区间intervals[i][0]由小到大排序，再按照intervals[i][1]由大到小排序，根据当前区间删除之后能够覆盖的范围
+     * 一维左区间intervals[i][0]由小到大排序，二维右区间intervals[i][1]由大到小排序，
+     * 如果已经遍历过的区间最右边界end大于等于当前区间右边界intervals[i][1]，则当前区间intervals[i]被覆盖，
+     * 被覆盖的区间个数count加1；
+     * 如果已经遍历过的区间最右边界end小于当前区间右边界intervals[i][1]，则更新end为当前区间右边界intervals[i][1]
      * 时间复杂度O(nlogn)，空间复杂度O(logn) (堆排序的空间复杂度为O(logn))
      *
      * @param intervals
@@ -35,24 +38,33 @@ public class Problem1288 {
             return 0;
         }
 
-        //左区间intervals[i][0]由小到大排序，再按照intervals[i][1]由大到小排序
+        //一维左区间intervals[i][0]由小到大排序，二维右区间intervals[i][1]由大到小排序
         heapSort(intervals);
 
+        //被覆盖的区间个数
         int count = intervals.length;
-        int right = intervals[0][1];
+        //已经遍历过的区间最右边界
+        int end = intervals[0][1];
 
         for (int i = 1; i < intervals.length; i++) {
-            //right大于等于当前区间右边界，则当前区间被覆盖，可以删除
-            if (right >= intervals[i][1]) {
-                count--;
+            //right大于等于当前区间右边界intervals[i][1]，则当前区间被覆盖，count加1
+            if (end >= intervals[i][1]) {
+                count++;
             } else {
-                right = intervals[i][1];
+                //更新end为当前区间右边界
+                end = intervals[i][1];
             }
         }
 
-        return count;
+        //区间个数减去被覆盖的区间个数，即为剩余区间个数
+        return intervals.length - count;
     }
 
+    /**
+     * 二维数组堆排，一维升序排序(由小到大)，二维降序排序(由大到小)
+     *
+     * @param arr
+     */
     private void heapSort(int[][] arr) {
         //建堆
         for (int i = arr.length / 2 - 1; i >= 0; i--) {
@@ -79,15 +91,17 @@ public class Problem1288 {
      */
     private void heapify(int[][] arr, int i, int heapSize) {
         int index = i;
+        int leftIndex = i * 2 + 1;
+        int rightIndex = i * 2 + 2;
 
-        if (2 * i + 1 < heapSize && (arr[2 * i + 1][0] > arr[index][0] ||
-                (arr[2 * i + 1][0] == arr[index][0] && arr[2 * i + 1][1] < arr[index][1]))) {
-            index = 2 * i + 1;
+        if (leftIndex < heapSize && (arr[leftIndex][0] > arr[index][0] ||
+                (arr[leftIndex][0] == arr[index][0] && arr[leftIndex][1] < arr[index][1]))) {
+            index = leftIndex;
         }
 
-        if (2 * i + 2 < heapSize && (arr[2 * i + 2][0] > arr[index][0] ||
-                (arr[2 * i + 2][0] == arr[index][0] && arr[2 * i + 2][1] < arr[index][1]))) {
-            index = 2 * i + 2;
+        if (rightIndex < heapSize && (arr[rightIndex][0] > arr[index][0] ||
+                (arr[rightIndex][0] == arr[index][0] && arr[rightIndex][1] < arr[index][1]))) {
+            index = rightIndex;
         }
 
         if (index != i) {

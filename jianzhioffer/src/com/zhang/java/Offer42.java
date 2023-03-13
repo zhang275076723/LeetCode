@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/25 20:48
  * @Author zsy
- * @Description 连续子数组的最大和 数组类比Problem152、Problem238、Problem416、Problem581、Offer66 同Problem53
+ * @Description 连续子数组的最大和 数组类比Problem135、Problem152、Problem238、Problem416、Problem581、Offer66 同Problem53
  * 输入一个整型数组，数组中的一个或连续多个整数组成一个子数组。求所有子数组的和的最大值。
  * 要求时间复杂度为O(n)。
  * <p>

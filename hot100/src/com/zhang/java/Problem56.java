@@ -32,7 +32,11 @@ public class Problem56 {
     }
 
     /**
-     * 按照左区间interval[i][0]由小到大排序，再合并相交区间
+     * 按照左区间interval[i][0]由小到大排序，
+     * 如果当前区间左边界intervals[i][0]小于等于要合并区间的右边界end，则当前区间可以合并，
+     * 更新end为intervals[i][1]和end中较大值；
+     * 如果当前区间左边界intervals[i][0]大于要合并区间的右边界end，则要合并区间[start,end]加入结果集合，
+     * 并重新赋值start为intervals[i][0]，end为intervals[i][1]
      * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
      * @param intervals
@@ -47,57 +51,64 @@ public class Problem56 {
         quickSort(intervals, 0, intervals.length - 1);
 
         List<int[]> list = new ArrayList<>();
+        //要合并区间的左边界
+        int start = intervals[0][0];
+        //要合并区间的右边界
+        int end = intervals[0][1];
 
-        for (int i = 0; i < intervals.length; i++) {
-            //当前区间左边界
-            int left = intervals[i][0];
-            //当前区间右边界
-            int right = intervals[i][1];
+        for (int i = 1; i < intervals.length; i++) {
+            //当前区间左边界intervals[i][0]小于等于要合并区间的右边界end，则当前区间可以合并，更新end
+            if (intervals[i][0] <= end) {
+                //更新end
+                end = Math.max(end, intervals[i][1]);
+            } else {
+                //当前区间左边界intervals[i][0]大于要合并区间的右边界end，则要合并区间[start,end]加入结果集合，并重新赋值要合并区间的左右边界
 
-            //找相交区间，更新右端点
-            while (i + 1 < intervals.length && intervals[i + 1][0] <= right) {
-                right = Math.max(right, intervals[i + 1][1]);
-                i++;
+                //要合并区间的区间加入结果集合list
+                list.add(new int[]{start, end});
+                //重新赋值要合并区间的左右边界
+                start = intervals[i][0];
+                end = intervals[i][1];
             }
-
-            //添加合并的区间
-            list.add(new int[]{left, right});
         }
+
+        //最后一个区间加入结果集合list
+        list.add(new int[]{start, end});
 
         return list.toArray(new int[list.size()][]);
     }
 
     /**
-     * 按照interval[i][0]排序
+     * 按照interval[i][0]由小到大排序
      *
-     * @param intervals
+     * @param arr
      * @param left
      * @param right
      */
-    private void quickSort(int[][] intervals, int left, int right) {
+    private void quickSort(int[][] arr, int left, int right) {
         if (left < right) {
-            int pivot = partition(intervals, left, right);
-            quickSort(intervals, left, pivot - 1);
-            quickSort(intervals, pivot + 1, right);
+            int pivot = partition(arr, left, right);
+            quickSort(arr, left, pivot - 1);
+            quickSort(arr, pivot + 1, right);
         }
     }
 
-    private int partition(int[][] intervals, int left, int right) {
-        int[] temp = intervals[left];
+    private int partition(int[][] arr, int left, int right) {
+        int[] temp = arr[left];
 
         while (left < right) {
-            while (left < right && intervals[right][0] >= temp[0]) {
+            while (left < right && arr[right][0] >= temp[0]) {
                 right--;
             }
-            intervals[left] = intervals[right];
+            arr[left] = arr[right];
 
-            while (left < right && intervals[left][0] <= temp[0]) {
+            while (left < right && arr[left][0] <= temp[0]) {
                 left++;
             }
-            intervals[right] = intervals[left];
+            arr[right] = arr[left];
         }
 
-        intervals[left] = temp;
+        arr[left] = temp;
 
         return left;
     }

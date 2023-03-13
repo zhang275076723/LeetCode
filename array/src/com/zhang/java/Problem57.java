@@ -43,7 +43,8 @@ public class Problem57 {
     }
 
     /**
-     * 先找到要插入区间newInterval在原区间数组中的位置，如果能进行合并则往右进行合并
+     * 比newInterval小，即在newInterval左边的区间先加入结果集合，
+     * 之后的区间如果和newInterval重叠，则重叠部分合并之后加入结果集合
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param intervals
@@ -59,29 +60,40 @@ public class Problem57 {
 
         int i = 0;
 
-        //newInterval之前的区间
+        //newInterval之前的区间，即区间右边界intervals[i][1]小于要插入的区间左边界newInterval[0]，这些区间加入结果集合list
         while (i < intervals.length && intervals[i][1] < newInterval[0]) {
             list.add(intervals[i]);
             i++;
         }
 
-        int left = newInterval[0];
-        int right = newInterval[1];
+        //要合并区间的左边界
+        int start;
+        //要合并区间的右边界
+        int end = newInterval[1];
 
-        //找到newInterval可以合并的区间
-        while (i < intervals.length && intervals[i][0] <= right) {
-            left = Math.min(left, intervals[i][0]);
-            right = Math.max(right, intervals[i][1]);
-            i++;
+        //newInterval后面还有区间，start为newInterval[0]、intervals[i][0]两者中较小值
+        if (i < intervals.length) {
+            start = Math.min(newInterval[0], intervals[i][0]);
+        } else {
+            //newInterval后面没有区间，start为intervals[i][0]
+            start = newInterval[0];
         }
 
-        list.add(new int[]{left, right});
-
-        //newInterval之后的区间
         while (i < intervals.length) {
-            list.add(intervals[i]);
+            //当前区间左边界intervals[i][0]小于等于要合并区间的右边界end，则当前区间可以合并，更新end
+            if (intervals[i][0] <= end) {
+                end = Math.max(end, intervals[i][1]);
+            } else {
+                //当前区间左边界intervals[i][0]大于要合并区间的右边界end，则要合并区间[start,end]加入结果集合，并重新赋值要合并区间的左右边界
+                list.add(new int[]{start, end});
+                start = intervals[i][0];
+                end = intervals[i][1];
+            }
+
             i++;
         }
+
+        list.add(new int[]{start, end});
 
         return list.toArray(new int[list.size()][]);
     }

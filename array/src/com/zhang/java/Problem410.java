@@ -36,8 +36,8 @@ public class Problem410 {
     /**
      * 二分查找变形，使...最大值尽可能小，就要想到二分查找
      * 对[left,right]进行二分查找，left为数组中最大值，right为数组元素之和，统计数组中子数组元素之和小于等于mid的元素个数count，
-     * 如果count大于k，则最小的子数组元素之在mid右边，left=mid+1；
-     * 如果count小于等于k，则最小的子数组元素之在mid或mid左边，right=mid
+     * 如果count大于k，则最小的子数组元素之和在mid右边，left=mid+1；
+     * 如果count小于等于k，则最小的子数组元素之和在mid或mid左边，right=mid
      * 时间复杂度O(n*log(right-left))，空间复杂度O(1) (n:nums长度，left:nums中最大值，right:nums元素之和)
      *
      * @param nums

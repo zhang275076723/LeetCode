@@ -67,8 +67,10 @@ public class Problem435 {
     }
 
     /**
-     * 按照左区间interval[i][0]由小到大排序，统计不重叠区间个数，
-     * 当存在重叠区间时，更新区间右边界为两者中最小值，保证距离下一个区间最远，尽可能和下一个区间不重叠
+     * 按照区间左边界interval[i][0]由小到大排序，
+     * 如果当前区间左边界intervals[i][0]小于当前不重叠区间中的最右边界end，则有重叠，
+     * 更新end为intervals[i][1]和end中较小值，需要移除移除的重叠区间个数count加1；
+     * 如果当前区间左边界intervals[i][0]大于等于当前不重叠区间中的最右边界end，则没有重叠，更新end为intervals[i][1]
      * 时间复杂度O(nlogn)，空间复杂度O(logn)
      *
      * @param intervals
@@ -78,54 +80,61 @@ public class Problem435 {
         //按照左区间intervals[i][0]由小到大排序
         heapSort(intervals);
 
-        //不重叠区间个数
-        int count = 1;
+        //需要移除的重叠区间个数
+        int count = 0;
+        //当前不重叠区间中的最右边界
         int end = intervals[0][1];
 
         for (int i = 1; i < intervals.length; i++) {
-            //当重叠时，取两者中最小值更新右边界，保证下一个区间和右边界不重叠
-            if (intervals[i][0] < end) {
-                end = Math.min(end, intervals[i][1]);
-            } else {
-                count++;
+            //当前区间和之前不重叠区间不重叠，更新不重叠区间的最右边界
+            if (intervals[i][0] >= end) {
                 end = intervals[i][1];
+            } else {
+                //当前区间和之前不重叠区间重叠，取之前不重叠区间中最右边的区间和当前区间两者右边界的较小值，
+                //作为新的不重叠区间中的最右边边界，即需要移除一个区间，count加1
+                end = Math.min(end, intervals[i][1]);
+                count++;
             }
         }
 
-        return intervals.length - count;
+        return count;
     }
 
-    private void heapSort(int[][] nums) {
-        for (int i = nums.length / 2 - 1; i >= 0; i--) {
-            heapify(nums, i, nums.length);
+    private void heapSort(int[][] arr) {
+        //建堆
+        for (int i = arr.length / 2 - 1; i >= 0; i--) {
+            heapify(arr, i, arr.length);
         }
 
-        for (int i = nums.length - 1; i > 0; i--) {
-            int[] temp = nums[0];
-            nums[0] = nums[i];
-            nums[i] = temp;
+        for (int i = arr.length - 1; i > 0; i--) {
+            int[] temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
 
-            heapify(nums, 0, i);
+            //整堆
+            heapify(arr, 0, i);
         }
     }
 
-    private void heapify(int[][] nums, int i, int heapSize) {
+    private void heapify(int[][] arr, int i, int heapSize) {
         int index = i;
+        int leftIndex = i * 2 + 1;
+        int rightIndex = i * 2 + 2;
 
-        if (2 * i + 1 < heapSize && nums[2 * i + 1][0] > nums[index][0]) {
-            index = 2 * i + 1;
+        if (leftIndex < heapSize && arr[leftIndex][0] > arr[index][0]) {
+            index = leftIndex;
         }
 
-        if (2 * i + 2 < heapSize && nums[2 * i + 2][0] > nums[index][0]) {
-            index = 2 * i + 2;
+        if (rightIndex < heapSize && arr[rightIndex][0] > arr[index][0]) {
+            index = rightIndex;
         }
 
         if (index != i) {
-            int[] temp = nums[i];
-            nums[i] = nums[index];
-            nums[index] = temp;
+            int[] temp = arr[i];
+            arr[i] = arr[index];
+            arr[index] = temp;
 
-            heapify(nums, index, heapSize);
+            heapify(arr, index, heapSize);
         }
     }
 }

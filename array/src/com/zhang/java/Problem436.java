@@ -41,7 +41,7 @@ public class Problem436 {
 
     /**
      * 暴力
-     * 对每个区间，找所有区间中左边界大于等于当前区间右边界，且距离当前区间右边界最近的区间下标索引
+     * 对每个区间，遍历所有区间，找左边界大于等于当前区间右边界，且距离当前区间右边界最近的区间下标索引
      * 时间复杂度O(n^2)，空间复杂度O(1)
      *
      * @param intervals
@@ -75,8 +75,8 @@ public class Problem436 {
     /**
      * 暴力优化，二分查找
      * 创建新的二维数组newIntervals，newIntervals[i][0]：区间左边界，newIntervals[i][1]：区间在intervals中的下标索引
-     * 按照newIntervals[i][0]对newIntervals由小到大排序，
-     * 对每个区间，二分查找newIntervals中左边界大于等于当前区间右边界，且距离当前区间右边界最近的区间下标索引
+     * 按照区间左边界newIntervals[i][0]对newIntervals由小到大排序，因为每个区间的左边界不同，对排好序的newIntervals，
+     * 每个intervals区间，对newIntervals二分查找大于等于当前区间右边界，且距离当前区间右边界最近区间的下标索引newIntervals[j][1]
      * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
      * @param intervals
@@ -91,8 +91,8 @@ public class Problem436 {
             newIntervals[i][1] = i;
         }
 
-        //根据newIntervals[0]由小到大排序
-        heapSort(newIntervals);
+        //按照区间左边界newIntervals[0]由小到大排序
+        mergeSort(newIntervals, 0, newIntervals.length - 1, new int[newIntervals.length][2]);
 
         int[] result = new int[intervals.length];
 
@@ -100,60 +100,73 @@ public class Problem436 {
             int left = 0;
             int right = intervals.length - 1;
             int mid;
-            //赋初值为-1，在没有找到大于等于当前区间右边界的区间时，赋值为-1
-            int target = -1;
+            //大于等于当前区间右边界intervals[i][1]，且距离intervals[i][1]最近区间的下标索引
+            //赋初值为-1，表示不存在大于等于当前区间右边界intervals[i][1]的区间
+            int index = -1;
 
+            //二分查找大于等于当前区间右边界intervals[i][1]，且距离intervals[i][1]最近区间的下标索引index
             while (left <= right) {
                 mid = left + ((right - left) >> 1);
 
+                //当前二分查找的区间左边界小于当前区间右边界，继续往右边找
                 if (newIntervals[mid][0] < intervals[i][1]) {
                     left = mid + 1;
                 } else {
-                    //newIntervals中左边界大于等于当前区间右边界，更新target
-                    target = newIntervals[mid][1];
+                    //当前二分查找的区间左边界大于等于当前区间右边界，更新index，继续往左边找，是否能找到更小的index
+                    index = newIntervals[mid][1];
                     right = mid - 1;
                 }
             }
 
-            result[i] = target;
+            result[i] = index;
         }
 
         return result;
     }
 
-    private void heapSort(int[][] arr) {
-        //建堆
-        for (int i = arr.length / 2 - 1; i >= 0; i--) {
-            heapify(arr, i, arr.length);
+    private void mergeSort(int[][] arr, int left, int right, int[][] tempArr) {
+        if (left >= right) {
+            return;
         }
 
-        //堆顶元素和最后一个元素交换，再整堆，得到升序数组
-        for (int i = arr.length - 1; i > 0; i--) {
-            int[] temp = arr[0];
-            arr[0] = arr[i];
-            arr[i] = temp;
+        int mid = left + ((right - left) >> 1);
 
-            heapify(arr, 0, i);
-        }
+        mergeSort(arr, left, mid, tempArr);
+        mergeSort(arr, mid + 1, right, tempArr);
+        merge(arr, left, mid, right, tempArr);
     }
 
-    private void heapify(int[][] arr, int i, int heapSize) {
-        int index = i;
+    private void merge(int[][] arr, int left, int mid, int right, int[][] tempArr) {
+        int i = left;
+        int j = mid + 1;
+        int k = left;
 
-        if (2 * i + 1 < heapSize && arr[2 * i + 1][0] > arr[index][0]) {
-            index = 2 * i + 1;
+        while (i <= mid && j <= right) {
+            if (arr[i][0] < arr[j][0]) {
+                tempArr[k] = arr[i];
+                i++;
+                k++;
+            } else {
+                tempArr[k] = arr[j];
+                j++;
+                k++;
+            }
         }
 
-        if (2 * i + 2 < heapSize && arr[2 * i + 2][0] > arr[index][0]) {
-            index = 2 * i + 2;
+        while (i <= mid) {
+            tempArr[k] = arr[i];
+            i++;
+            k++;
         }
 
-        if (index != i) {
-            int[] temp = arr[i];
-            arr[i] = arr[index];
-            arr[index] = temp;
+        while (j <= right) {
+            tempArr[k] = arr[j];
+            j++;
+            k++;
+        }
 
-            heapify(arr, index, heapSize);
+        for (k = left; k <= right; k++) {
+            arr[k] = tempArr[k];
         }
     }
 }

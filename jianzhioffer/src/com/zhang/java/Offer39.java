@@ -114,9 +114,9 @@ public class Offer39 {
 
     public void quickSort(int[] nums, int left, int right) {
         if (left < right) {
-            int partition = partition(nums, left, right);
-            quickSort(nums, left, partition - 1);
-            quickSort(nums, partition + 1, right);
+            int pivot = partition(nums, left, right);
+            quickSort(nums, left, pivot - 1);
+            quickSort(nums, pivot + 1, right);
         }
     }
 

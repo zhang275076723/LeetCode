@@ -43,7 +43,8 @@ public class Problem228 {
 
     /**
      * 模拟
-     * 从前往后遍历数组，当前元素和区间右边界相差1，可以汇总区间；否则，不能汇总
+     * 从前往后遍历数组，当前元素等于要加入区间的右边界加1，则当前元素可以和当前区间合并，end加1；
+     * 否则，不能合并，将之前的区间字符串加入结果集合list中，并更新要加入的区间左右边界
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -55,39 +56,43 @@ public class Problem228 {
         }
 
         List<String> list = new ArrayList<>();
-        //区间左边界
-        int left = nums[0];
-        //区间右边界
-        int right = nums[0];
+        //要加入的区间左边界
+        int start = nums[0];
+        //要加入区间的右边界
+        int end = nums[0];
 
         for (int i = 1; i < nums.length; i++) {
-            //当前元素和区间右边界相差1，可以汇总区间
-            if (nums[i] == right + 1) {
-                right = nums[i];
+            //当前元素等于要加入区间的右边界加1，则当前元素可以和当前区间合并，end加1
+            if (nums[i] == end + 1) {
+                end = end + 1;
             } else {
+                ///当前元素不等于要加入区间的右边界加1，将之前的区间字符串加入结果集合list中，并更新要加入的区间左右边界
+
                 StringBuilder sb = new StringBuilder();
 
-                if (left == right) {
-                    sb.append(left);
+                //区间只有一个元素
+                if (start == end) {
+                    sb.append(start);
                     list.add(sb.toString());
                 } else {
-                    sb.append(left).append("->").append(right);
+                    //区间元素个数大于1个
+                    sb.append(start).append("->").append(end);
                     list.add(sb.toString());
                 }
 
-                left = nums[i];
-                right = nums[i];
+                start = nums[i];
+                end = nums[i];
             }
         }
 
         //最后一个区间添加到结果集合
         StringBuilder sb = new StringBuilder();
 
-        if (left == right) {
-            sb.append(left);
+        if (start == end) {
+            sb.append(start);
             list.add(sb.toString());
         } else {
-            sb.append(left).append("->").append(right);
+            sb.append(start).append("->").append(end);
             list.add(sb.toString());
         }
 

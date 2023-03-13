@@ -60,11 +60,11 @@ public class Problem153 {
         while (left < right) {
             mid = left + ((right - left) >> 1);
 
-            //中间元素大于最右边元素时，说明最小元素在右边
+            //nums[mid]大于nums[right]，则最小元素在右边
             if (nums[mid] > nums[right]) {
                 left = mid + 1;
             } else {
-                //中间元素小于等于右边元素时，说明最小元素在左边或中间
+                //nums[mid]小于等于nums[right]，则最小元素在左边或mid
                 right = mid;
             }
         }

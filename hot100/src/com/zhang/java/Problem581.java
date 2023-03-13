@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/6/14 8:50
  * @Author zsy
- * @Description 最短无序连续子数组 数组类比Problem53、Problem152、Problem238、Problem416、Offer42、Offer66
+ * @Description 最短无序连续子数组 数组类比Problem53、Problem135、Problem152、Problem238、Problem416、Offer42、Offer66
  * 给你一个整数数组 nums ，你需要找出一个 连续子数组 ，如果对这个子数组进行升序排序，那么整个数组都会变为升序排序。
  * 请你找出符合题意的 最短 子数组，并输出它的长度。
  * <p>
@@ -122,23 +122,23 @@ public class Problem581 {
     }
 
     private void heapify(int[] nums, int i, int heapSize) {
-        int left = 2 * i + 1;
-        int right = 2 * i + 2;
-        int max = i;
+        int index = i;
+        int leftIndex = 2 * i + 1;
+        int rightIndex = 2 * i + 2;
 
-        if (left < heapSize && nums[max] < nums[left]) {
-            max = left;
+        if (leftIndex < heapSize && nums[leftIndex] > nums[index]) {
+            index = leftIndex;
         }
 
-        if (right < heapSize && nums[max] < nums[right]) {
-            max = right;
+        if (rightIndex < heapSize && nums[rightIndex] > nums[index]) {
+            index = rightIndex;
         }
 
-        if (max != i) {
+        if (index != i) {
             int temp = nums[i];
-            nums[i] = nums[max];
-            nums[max] = temp;
-            heapify(nums, max, heapSize);
+            nums[i] = nums[index];
+            nums[index] = temp;
+            heapify(nums, index, heapSize);
         }
     }
 }

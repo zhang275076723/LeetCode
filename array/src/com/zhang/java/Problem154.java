@@ -53,15 +53,15 @@ public class Problem154 {
         while (left < right) {
             mid = left + ((right - left) >> 1);
 
-            //nums[mid]和nums[right]相等，右指针左移
+            //nums[mid]和nums[right]相等，去重，右指针左移
             if (nums[mid] == nums[right]) {
                 right--;
-            } else if (nums[mid] < nums[right]) {
-                //nums[mid]-nums[right]单调递增，最小值在nums[left]-nums[mid]
-                right = mid;
-            } else {
-                //nums[left]-nums[mid]单调递增，最小值在nums[mid+1]-nums[right]
+            } else if (nums[mid] > nums[right]) {
+                //nums[mid]大于nums[right]，则最小元素在右边
                 left = mid + 1;
+            } else {
+                //nums[mid]小于nums[right]，则最小元素在左边或mid
+                right = mid;
             }
         }
 

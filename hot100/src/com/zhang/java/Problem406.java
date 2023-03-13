@@ -61,21 +61,21 @@ public class Problem406 {
 
         int[][] result = new int[people.length][2];
 
-        //根据按照一维降序，二维升序排序后的people数组，people[i]放在result结果数组的下标索引people[i][1]处
+        //people[i]放在result结果数组的下标索引people[i][1]处
         for (int i = 0; i < people.length; i++) {
-            //放在数组尾部
-            if (people[i][1] >= i) {
-                result[i] = people[i];
-            } else {
-                //people[i]要放在结果数组的索引下标
-                int index = people[i][1];
+            //people[i]放在result[index]
+            int index = people[i][1];
 
-                //当前索引位置到末尾的元素后移一位
+            //people[i]放在result中间，people[index]-people[i-1]往后移动一位
+            if (index < i) {
                 for (int j = i; j > index; j--) {
                     result[j] = result[j - 1];
                 }
 
                 result[index] = people[i];
+            } else {
+                //people[i]放在result尾部，即放在result[i]
+                result[i] = people[i];
             }
         }
 
@@ -136,36 +136,36 @@ public class Problem406 {
     /**
      * 二维数组快排，一维降序排序(由大到小)，二维升序排序(由小到大)
      *
-     * @param people
+     * @param arr
      * @param left
      * @param right
      */
-    private void quickSort(int[][] people, int left, int right) {
+    private void quickSort(int[][] arr, int left, int right) {
         if (left < right) {
-            int pivot = partition(people, left, right);
-            quickSort(people, left, pivot - 1);
-            quickSort(people, pivot + 1, right);
+            int pivot = partition(arr, left, right);
+            quickSort(arr, left, pivot - 1);
+            quickSort(arr, pivot + 1, right);
         }
     }
 
-    private int partition(int[][] people, int left, int right) {
-        int[] temp = people[left];
+    private int partition(int[][] arr, int left, int right) {
+        int[] temp = arr[left];
 
         while (left < right) {
-            while (left < right && (people[right][0] < temp[0] ||
-                    (people[right][0] == temp[0] && people[right][1] >= temp[1]))) {
+            while (left < right && (arr[right][0] < temp[0] ||
+                    (arr[right][0] == temp[0] && arr[right][1] >= temp[1]))) {
                 right--;
             }
-            people[left] = people[right];
+            arr[left] = arr[right];
 
-            while (left < right && (people[left][0] > temp[0] ||
-                    (people[left][0] == temp[0] && people[left][1] <= temp[1]))) {
+            while (left < right && (arr[left][0] > temp[0] ||
+                    (arr[left][0] == temp[0] && arr[left][1] <= temp[1]))) {
                 left++;
             }
-            people[right] = people[left];
+            arr[right] = arr[left];
         }
 
-        people[left] = temp;
+        arr[left] = temp;
 
         return left;
     }

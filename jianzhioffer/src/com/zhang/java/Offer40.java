@@ -199,29 +199,29 @@ public class Offer40 {
      * 时间复杂度O(logn)，空间复杂度O(logn)
      *
      * @param arr
-     * @param index
+     * @param i
      * @param heapSize
      */
-    private void heapify(int[] arr, int index, int heapSize) {
-        int maxIndex = index;
-        int leftIndex = 2 * index + 1;
-        int rightIndex = 2 * index + 2;
+    private void heapify(int[] arr, int i, int heapSize) {
+        int index = i;
+        int leftIndex = 2 * i + 1;
+        int rightIndex = 2 * i + 2;
 
-        if (leftIndex < heapSize && arr[leftIndex] > arr[maxIndex]) {
-            maxIndex = leftIndex;
+        if (leftIndex < heapSize && arr[leftIndex] > arr[index]) {
+            index = leftIndex;
         }
 
-        if (rightIndex < heapSize && arr[rightIndex] > arr[maxIndex]) {
-            maxIndex = rightIndex;
+        if (rightIndex < heapSize && arr[rightIndex] > arr[index]) {
+            index = rightIndex;
         }
 
-        if (maxIndex != index) {
+        if (index != i) {
             int temp = arr[index];
-            arr[index] = arr[maxIndex];
-            arr[maxIndex] = temp;
+            arr[index] = arr[i];
+            arr[i] = temp;
 
             //继续向下整堆
-            heapify(arr, maxIndex, heapSize);
+            heapify(arr, index, heapSize);
         }
     }
 
