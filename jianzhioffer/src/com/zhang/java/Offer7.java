@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/3/13 15:25
  * @Author zsy
- * @Description 重建二叉树 类比Problem106、Problem889、Problem1008、Offer33 同Problem105
+ * @Description 重建二叉树 分治法类比Problem95、Problem106、Problem108、Problem109、Problem449、Problem889、Problem1008、Offer33 同Problem105
  * 输入某二叉树的前序遍历和中序遍历的结果，请构建该二叉树并返回其根节点
  * 假设输入的前序遍历和中序遍历的结果中都不含重复的数字
  * <p>
@@ -27,7 +27,7 @@ public class Offer7 {
     }
 
     /**
-     * 分治
+     * 分治法
      * 1、通过【前序遍历列表】确定【根节点 (root)】和【中序遍历列表】中的【根节点索引 (inorderRootIndex)】
      * 2、将【前序遍历列表】的节点分割成【左节点的前序遍历列表】和【右节点的前序遍历列表】
      * 2、将【中序遍历列表】的节点分割成【左节点的中序遍历列表】和【右节点的中序遍历列表】
@@ -43,7 +43,7 @@ public class Offer7 {
             return null;
         }
 
-        //key：节点值，value：节点在中序遍历数组的索引下标，在O(1)确定前序遍历数组中元素在中序遍历数组中索引
+        //key：节点值，value：节点在中序遍历数组的索引下标，在O(1)确定前序遍历数组中元素在中序遍历数组的中下标索引
         Map<Integer, Integer> map = new HashMap<>();
 
         for (int i = 0; i < inorder.length; i++) {
@@ -56,42 +56,48 @@ public class Offer7 {
     }
 
     /**
-     * @param leftPreorder  前序遍历左指针
-     * @param rightPreorder 前序遍历右指针
-     * @param leftInorder   中序遍历左指针
-     * @param rightInorder  中序遍历右指针
+     * @param preorderLeft  前序遍历左指针
+     * @param preorderRight 前序遍历右指针
+     * @param inorderLeft   中序遍历左指针
+     * @param inorderRight  中序遍历右指针
      * @param preorder      前序遍历数组
      * @param inorder       中序遍历数组
      * @param map           中序遍历数组哈希，在O(1)时间找到中序遍历数组中的根节点索引
      * @return
      */
-    private TreeNode buildTree(int leftPreorder, int rightPreorder, int leftInorder, int rightInorder,
+    private TreeNode buildTree(int preorderLeft, int preorderRight, int inorderLeft, int inorderRight,
                                int[] preorder, int[] inorder, Map<Integer, Integer> map) {
-        if (leftPreorder > rightPreorder) {
+        if (preorderLeft > preorderRight) {
             return null;
         }
 
-        if (leftPreorder == rightPreorder) {
-            return new TreeNode(preorder[leftPreorder]);
+        if (preorderLeft == preorderRight) {
+            return new TreeNode(preorder[preorderLeft]);
         }
 
         //中序遍历数组中根节点索引
-        int inorderRootIndex = map.get(preorder[leftPreorder]);
+        int inorderRootIndex = map.get(preorder[preorderLeft]);
         //左子树长度
-        int leftLength = inorderRootIndex - leftInorder;
+        int leftLength = inorderRootIndex - inorderLeft;
 
-        TreeNode root = new TreeNode(preorder[leftPreorder]);
+        //根节点，前序遍历数组中第一个元素即为根节点
+        TreeNode root = new TreeNode(preorder[preorderLeft]);
 
-        root.left = buildTree(leftPreorder + 1, leftPreorder + leftLength,
-                leftInorder, inorderRootIndex - 1,
+        root.left = buildTree(preorderLeft + 1, preorderLeft + leftLength,
+                inorderLeft, inorderRootIndex - 1,
                 preorder, inorder, map);
-        root.right = buildTree(leftPreorder + leftLength + 1, rightPreorder,
-                inorderRootIndex + 1, rightInorder,
+        root.right = buildTree(preorderLeft + leftLength + 1, preorderRight,
+                inorderRootIndex + 1, inorderRight,
                 preorder, inorder, map);
 
         return root;
     }
 
+    /**
+     * 层次遍历输出
+     *
+     * @param root
+     */
     private void levelTraversal(TreeNode root) {
         if (root == null) {
             return;
@@ -103,6 +109,7 @@ public class Offer7 {
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
             System.out.println(node.val);
+
             if (node.left != null) {
                 queue.offer(node.left);
             }

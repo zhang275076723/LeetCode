@@ -6,7 +6,7 @@ import java.util.Stack;
 /**
  * @Date 2022/3/21 18:57
  * @Author zsy
- * @Description 二叉搜索树的后序遍历序列 类比Problem98、Problem105、Problem106、Problem145、Problem889、Problem1008、Offer7、Offer36
+ * @Description 二叉搜索树的后序遍历序列 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem449、Problem889、Problem1008、Offer7
  * 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历结果。
  * 如果是则返回 true，否则返回 false。假设输入的数组的任意两个数字都互不相同。
  * <p>
@@ -35,10 +35,9 @@ public class Offer33 {
     }
 
     /**
-     * 递归判断后序遍历数组是否是二叉搜索树
-     * 后序遍历：左右根
-     * 找到根节点，为后序遍历数组的最后一个元素，从左往右遍历数组找到第一个比根节点值大的元素到倒数第二个元素为根的右子树，
-     * 右子树节点值都要比根节点值大，再递归判断左子树和右子树是否是后序遍历二叉搜索树
+     * 分治法
+     * 二叉搜索树后序遍历数组中最后一个元素为当前根节点，从前往后遍历后序遍历数组，找第一个大于根节点的右子树节点下标索引，
+     * 将后序遍历数组分为左子树数组和右子树数组，递归判断左子树数组和右子树数组是否是二叉搜索树的后序遍历结果
      * 时间复杂度O(n)，空间复杂度O(n) (最差时间复杂度O(n^2))
      *
      * @param postorder
@@ -94,33 +93,35 @@ public class Offer33 {
     }
 
     /**
-     * 判断postorder中[left,right]是否是二叉搜索树的后序遍历
+     * 判断后序遍历数组postorder中[left,right]是否是二叉搜索树的后序遍历结果
      *
      * @param postorder 后序遍历数组
      * @param left      当前数组起始索引
      * @param right     当前数组末尾索引
      */
     public boolean dfs(int[] postorder, int left, int right) {
+        //当前区间为空，或只有一个元素，返回true，即当前后序遍历数组是二叉搜索树的后序遍历结果
         if (left >= right) {
             return true;
         }
 
-        //postorder数组中第一个比根节点值大的元素索引，即[rightIndex,right-1]都比根节点postorder[right]值要大
+        //后序遍历数组postorder中第一个大于根节点的右子树节点下标索引，即[rightIndex,right-1]都比根节点postorder[right]值要大
         int rightIndex = left;
 
-        //找第一个比根节点值大的元素索引
+        //找第一个大于根节点的右子树节点下标索引rightIndex
         while (rightIndex < right && postorder[rightIndex] < postorder[right]) {
             rightIndex++;
         }
 
-        //[rightIndex+1,right-1]为右子树的值，均比根节点值要大
-        for (int i = rightIndex + 1; i < right; i++) {
+        //后序遍历数组postorder中[rightIndex,right-1]为右子树的节点，如果存在小于根节点的值，
+        //则当前后序遍历数组不是二叉搜索树的后序遍历结果，返回false
+        for (int i = rightIndex; i < right; i++) {
             if (postorder[i] < postorder[right]) {
                 return false;
             }
         }
 
-        //递归判断左子树和右子树是否是后序遍历二叉搜索树
+        //递归判断左子数组和右子数组是否是二叉搜索树的后序遍历结果
         return dfs(postorder, left, rightIndex - 1) && dfs(postorder, rightIndex, right - 1);
     }
 }

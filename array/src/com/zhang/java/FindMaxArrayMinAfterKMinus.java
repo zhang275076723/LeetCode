@@ -97,23 +97,25 @@ public class FindMaxArrayMinAfterKMinus {
         return left;
     }
 
-    private void heapify(int[] arr, int index, int heapSize) {
-        int maxIndex = index;
+    private void heapify(int[] arr, int i, int heapSize) {
+        int index = i;
+        int leftIndex = i * 2 + 1;
+        int rightIndex = i * 2 + 2;
 
-        if (index * 2 + 1 < heapSize && arr[index * 2 + 1] > arr[maxIndex]) {
-            maxIndex = index * 2 + 1;
+        if (leftIndex < heapSize && arr[leftIndex] > arr[index]) {
+            index = leftIndex;
         }
 
-        if (index * 2 + 2 < heapSize && arr[index * 2 + 2] > arr[maxIndex]) {
-            maxIndex = index * 2 + 2;
+        if (rightIndex < heapSize && arr[rightIndex] > arr[index]) {
+            index = rightIndex;
         }
 
-        if (index != maxIndex) {
+        if (index != i) {
             int temp = arr[index];
-            arr[index] = arr[maxIndex];
-            arr[maxIndex] = temp;
+            arr[index] = arr[i];
+            arr[i] = temp;
 
-            heapify(arr, maxIndex, heapSize);
+            heapify(arr, index, heapSize);
         }
     }
 }

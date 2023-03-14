@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/9/1 9:19
  * @Author zsy
- * @Description 不同的二叉搜索树 II 二叉搜索树类比Problem96、Problem98、Problem99、Problem230、Offer33、Offer36
+ * @Description 不同的二叉搜索树 II 二叉搜索树类比Problem96、Problem98、Problem99、Problem230、Offer33、Offer36 分治法类比Problem105、Problem106、Problem108、Problem109、Problem449、Problem889、Problem1008、Offer7、Offer33
  * 给你一个整数 n ，请你生成并返回所有由 n 个节点组成且节点值从 1 到 n 互不相同的不同 二叉搜索树 。
  * 可以按 任意顺序 返回答案。
  * <p>
@@ -44,7 +44,8 @@ public class Problem95 {
     }
 
     /**
-     * 回溯+剪枝
+     * 分治法
+     * 确定1-n中哪个节点作为根节点，递归得到左子树集合和右子树集合，分别赋值为当前根节点的左右子树
      * 时间复杂度O(n*Cn)，空间复杂度O(n*Cn) (Cn为第n个卡特兰数)
      *
      * @param n

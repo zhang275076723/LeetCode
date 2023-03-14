@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/11 12:00
  * @Author zsy
- * @Description 有序链表转换二叉搜索树 类比Problem108
+ * @Description 有序链表转换二叉搜索树 分治法类比Problem95、Problem105、Problem106、Problem109、Problem449、Problem889、Problem1008、Offer7、Offer33
  * 给定一个单链表的头节点 head ，其中的元素 按升序排序 ，将其转换为高度平衡的二叉搜索树。
  * 本题中，一个高度平衡二叉树是指一个二叉树每个节点 的左右两个子树的高度差不超过 1。
  * <p>
@@ -27,6 +27,8 @@ public class Problem109 {
 
     /**
      * 分治法
+     * 高度平衡二叉搜索树，即需要每次从链表中间节点进行划分
+     * 根据快慢指针找到中间节点，即找到根节点，将链表分为左子链表和右子链表，递归对左子链表和右子链表建立二叉搜索树
      * 时间复杂度O(nlogn)，空间复杂度O(logn)
      *
      * @param head
@@ -50,25 +52,27 @@ public class Problem109 {
         }
 
         //slow节点的前驱节点
-        ListNode pre = head;
+        ListNode pre = null;
         ListNode slow = head;
         ListNode fast = head;
 
-        //双指针找中间节点作为根节点
+        //双指针找中间节点
         while (fast != null && fast.next != null) {
             pre = slow;
             slow = slow.next;
             fast = fast.next.next;
         }
 
-        //前半部分链表断开
-        pre.next = null;
         //后半部分链表头
         ListNode newHead = slow.next;
+        //前半部分链表断开
+        pre.next = null;
         //后半部分链表断开
         slow.next = null;
 
+        //链表中间节点作为根节点，保证构建的树是高度平衡二叉搜索树
         TreeNode root = new TreeNode(slow.val);
+
         root.left = buildTree(head);
         root.right = buildTree(newHead);
 

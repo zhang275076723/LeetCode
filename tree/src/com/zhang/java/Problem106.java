@@ -9,7 +9,7 @@ import java.util.Queue;
 /**
  * @Date 2022/8/19 9:23
  * @Author zsy
- * @Description 从中序与后序遍历序列构造二叉树 类比Problem105、Problem889、Problem1008、Offer7、Offer33
+ * @Description 从中序与后序遍历序列构造二叉树 分治法类比Problem95、Problem105、Problem108、Problem109、Problem449、Problem889、Problem1008、Offer7、Offer33
  * 给定两个整数数组 inorder 和 postorder ，
  * 其中 inorder 是二叉树的中序遍历，postorder 是同一棵树的后序遍历，请你构造并返回这颗 二叉树 。
  * <p>
@@ -37,9 +37,9 @@ public class Problem106 {
     }
 
     /**
-     * 分治
-     * 通过后序遍历数组中最后一个元素确定当前根节点，将中序遍历数组和后序遍历数组分为左子树数组和右子树数组，
-     * 递归确定左子树节点和右子树节点
+     * 分治法
+     * 后序遍历数组中最后一个元素为当前根节点，将中序遍历数组和后序遍历数组分为左子树数组和右子树数组，
+     * 递归对左子树数组和右子树数组建立二叉树
      * 时间复杂度O(n)，空间复杂度O(n) (哈希表需要O(n)空间，栈的深度平均为O(logn)，最差为O(n))
      *
      * @param inorder
@@ -51,7 +51,7 @@ public class Problem106 {
             return null;
         }
 
-        //在O(1)确定后序遍历数组中节点在中序遍历数组中的索引
+        //在O(1)确定后序遍历数组中节点在中序遍历数组中的下标索引
         Map<Integer, Integer> map = new HashMap<>();
 
         for (int i = 0; i < inorder.length; i++) {
@@ -63,33 +63,39 @@ public class Problem106 {
                 inorder, postorder, map);
     }
 
-    private TreeNode buildTree(int leftInorder, int rightInorder, int leftPostorder, int rightPostorder,
+    private TreeNode buildTree(int inorderLeft, int inorderRight, int postorderLeft, int postorderRight,
                                int[] inorder, int[] postorder, Map<Integer, Integer> map) {
-        if (leftInorder > rightInorder) {
+        if (inorderLeft > inorderRight) {
             return null;
         }
 
-        if (leftInorder == rightInorder) {
-            return new TreeNode(inorder[leftInorder]);
+        if (inorderLeft == inorderRight) {
+            return new TreeNode(inorder[inorderLeft]);
         }
 
         //中序遍历数组根节点索引
-        int inorderRootIndex = map.get(postorder[rightPostorder]);
+        int inorderRootIndex = map.get(postorder[postorderRight]);
         //左子树长度
-        int leftLength = inorderRootIndex - leftInorder;
+        int leftLength = inorderRootIndex - inorderLeft;
 
-        TreeNode root = new TreeNode(postorder[rightPostorder]);
+        //根节点，后序遍历数组中最后一个元素即为根节点
+        TreeNode root = new TreeNode(postorder[postorderRight]);
 
-        root.left = buildTree(leftInorder, inorderRootIndex - 1,
-                leftPostorder, leftPostorder + leftLength - 1,
+        root.left = buildTree(inorderLeft, inorderRootIndex - 1,
+                postorderLeft, postorderLeft + leftLength - 1,
                 inorder, postorder, map);
-        root.right = buildTree(inorderRootIndex + 1, rightInorder,
-                leftPostorder + leftLength, rightPostorder - 1,
+        root.right = buildTree(inorderRootIndex + 1, inorderRight,
+                postorderLeft + leftLength, postorderRight - 1,
                 inorder, postorder, map);
 
         return root;
     }
 
+    /**
+     * 层次遍历输出
+     *
+     * @param root
+     */
     private void levelTraversal(TreeNode root) {
         if (root == null) {
             return;

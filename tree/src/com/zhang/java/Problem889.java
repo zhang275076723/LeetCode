@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/9/15 8:25
  * @Author zsy
- * @Description 根据前序和后序遍历构造二叉树 类比Problem105、Problem106、Problem1008、Offer7、Offer33
+ * @Description 根据前序和后序遍历构造二叉树 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem449、Problem1008、Offer7、Offer33
  * 给定两个整数数组，preorder 和 postorder ，
  * 其中 preorder 是一个具有 无重复 值的二叉树的前序遍历，postorder 是同一棵树的后序遍历，重构并返回二叉树。
  * 如果存在多个答案，您可以返回其中 任何 一个。
@@ -34,9 +34,9 @@ public class Problem889 {
     }
 
     /**
-     * 分治
-     * 通过前序遍历数组中第一个元素确定根节点，前序遍历数组中第二个元素作为左子树的根节点，
-     * 在后序遍历数组中的位置确定左子树数组和右子树数组长度，递归确定左子树根节点和右子树根节点
+     * 分治法
+     * 前序遍历数组中第一个元素确定当前根节点，前序遍历数组中第二个元素作为左子树的根节点，
+     * 将前序遍历数组和后序遍历数组分为左子树数组和右子树数组，递归对左子树数组和右子树数组建立二叉树
      * 时间复杂度O(n)，空间复杂度O(n) (哈希表需要O(n)的空间，栈的深度平均为O(logn)，最差为O(n))
      * 注意：前序遍历和后序遍历是无法确定唯一一个二叉树，这里假定优先往左子树插入
      *
@@ -61,28 +61,29 @@ public class Problem889 {
                 preorder, postorder, map);
     }
 
-    private TreeNode buildTree(int leftPreorder, int rightPreorder, int leftPostorder, int rightPostOrder,
+    private TreeNode buildTree(int preorderLeft, int preorderRight, int postorderLeft, int postorderRight,
                                int[] preorder, int[] postorder, Map<Integer, Integer> map) {
-        if (leftPreorder > rightPreorder) {
+        if (preorderLeft > preorderRight) {
             return null;
         }
 
-        if (leftPreorder == rightPreorder) {
-            return new TreeNode(preorder[leftPreorder]);
+        if (preorderLeft == preorderRight) {
+            return new TreeNode(preorder[preorderLeft]);
         }
 
         //后序遍历数组中左子树根节点索引下标
-        int leftPostorderRootIndex = map.get(preorder[leftPreorder + 1]);
+        int postorderLeftRootIndex = map.get(preorder[preorderLeft + 1]);
         //左子树长度
-        int leftLength = leftPostorderRootIndex - leftPostorder + 1;
+        int leftLength = postorderLeftRootIndex - postorderLeft + 1;
 
-        TreeNode root = new TreeNode(preorder[leftPreorder]);
+        //根节点，前序遍历数组中第一个元素即为根节点
+        TreeNode root = new TreeNode(preorder[preorderLeft]);
 
-        root.left = buildTree(leftPreorder + 1, leftPreorder + leftLength,
-                leftPostorder, leftPostorderRootIndex,
+        root.left = buildTree(preorderLeft + 1, preorderLeft + leftLength,
+                postorderLeft, postorderLeftRootIndex,
                 preorder, postorder, map);
-        root.right = buildTree(leftPreorder + leftLength + 1, rightPreorder,
-                leftPostorderRootIndex + 1, rightPostOrder - 1,
+        root.right = buildTree(preorderLeft + leftLength + 1, preorderRight,
+                postorderLeftRootIndex + 1, postorderRight - 1,
                 preorder, postorder, map);
 
         return root;

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/11 11:14
  * @Author zsy
- * @Description 将有序数组转换为二叉搜索树 类比Problem109
+ * @Description 将有序数组转换为二叉搜索树 分治法类比Problem95、Problem105、Problem106、Problem109、Problem449、Problem889、Problem1008、Offer7、Offer33
  * 给你一个整数数组 nums ，其中元素已经按 升序 排列，请你将其转换为一棵 高度平衡 二叉搜索树。
  * 高度平衡 二叉树是一棵满足「每个节点的左右两个子树的高度差的绝对值不超过 1 」的二叉树。
  * <p>
@@ -28,6 +28,8 @@ public class Problem108 {
 
     /**
      * 分治法
+     * 高度平衡二叉搜索树，即需要每次从数组中间节点进行划分
+     * 数组中间节点即为根节点，将数组分为左子数组和右子数组，递归对左子数组和右子数组建立二叉搜索树
      * 时间复杂度O(n)，空间复杂度O(logn)
      *
      * @param nums
@@ -50,8 +52,8 @@ public class Problem108 {
             return new TreeNode(nums[left]);
         }
 
-        //中间节点作为根节点
         int mid = left + ((right - left) >> 1);
+        //数组中间节点作为根节点，保证构建的树是高度平衡二叉搜索树
         TreeNode root = new TreeNode(nums[mid]);
         root.left = buildTree(nums, left, mid - 1);
         root.right = buildTree(nums, mid + 1, right);
