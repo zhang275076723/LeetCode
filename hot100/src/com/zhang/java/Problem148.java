@@ -35,7 +35,7 @@ public class Problem148 {
 
     /**
      * 递归归并排序，自顶向下
-     * 利用快慢指针，找到中间链表节点，断链分为两个链表，然后递归进行合并
+     * 快慢指针找到链表中间节点，断开链表分为两个链表，进行递归合并
      * 时间复杂度O(nlogn)，空间复杂度O(logn)
      *
      * @param head
@@ -114,15 +114,26 @@ public class Problem148 {
         //快慢指针找中间节点
         ListNode fast = head;
         ListNode slow = head;
+        //slow指针的前驱指针，用于找中间节点
+        ListNode pre = null;
 
-        while (fast.next != null && fast.next.next != null) {
-            fast = fast.next.next;
+        while (fast != null && fast.next != null) {
+            pre = slow;
             slow = slow.next;
+            fast = fast.next.next;
         }
 
-        //断开链表，得到两个链表
-        ListNode head2 = slow.next;
-        slow.next = null;
+        //后半部分链表头
+        ListNode head2;
+
+        //根据fast指针是否为空，得到后半部分链表，并断开链表，分为两个链表
+        if (fast == null) {
+            head2 = slow;
+            pre.next = null;
+        } else {
+            head2 = slow.next;
+            slow.next = null;
+        }
 
         //前半部分链表归并排序
         head = mergeSort(head);

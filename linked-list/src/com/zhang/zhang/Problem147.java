@@ -43,12 +43,18 @@ public class Problem147 {
         ListNode hair = new ListNode();
         hair.next = head;
 
+        //node的前驱节点
         ListNode pre = head;
         ListNode node = head.next;
 
         while (node != null) {
-            //当前节点node插入在非链表末尾
-            if (pre.val > node.val) {
+            //当前节点node的值大于等于前驱节点pre的值，插在当前链表末尾
+            if (pre.val <= node.val) {
+                pre = node;
+                node = node.next;
+            } else {
+                //当前节点node的值小于前驱节点pre的值，插在当前链表非末尾
+
                 //当前节点node要插入的位置的前一个节点
                 ListNode temp = hair;
 
@@ -64,10 +70,6 @@ public class Problem147 {
                 temp.next = node;
                 //更新node，指向下一个节点
                 node = pre.next;
-            } else {
-                //当前节点node插入在链表末尾
-                pre = node;
-                node = node.next;
             }
         }
 

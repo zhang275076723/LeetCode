@@ -45,11 +45,12 @@ public class Problem143 {
         ListNode slow = head;
         ListNode fast = head;
 
-        while (fast.next != null && fast.next.next != null) {
+        while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
 
+        //后半部分链表头
         ListNode head2 = slow.next;
         //断开链表，分为两个链表
         slow.next = null;
@@ -57,7 +58,7 @@ public class Problem143 {
         //后半边链表反转
         head2 = reverse(head2);
 
-        //前半边链表和后半边链表合并
+        //前半部分链表和后半部分链表合并
         ListNode node1 = head;
         ListNode node2 = head2;
 

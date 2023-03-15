@@ -50,36 +50,36 @@ public class Problem31 {
         }
 
         //逆序的第一个下标索引
-        int j = nums.length - 1;
+        int i = nums.length - 1;
 
-        //找最长递减序列，必须是大于等于，不能是大于，需要包含两者相同的情况
-        while (j > 0 && nums[j - 1] >= nums[j]) {
-            j--;
+        //从后往前找最长递减序列，必须是大于等于，不能是大于，需要包含两者相同的情况
+        while (i > 0 && nums[i - 1] >= nums[i]) {
+            i--;
         }
 
-        //整个数组为逆序，即为最大值，下一个排列是最小值，直接反转数组
-        if (j == 0) {
+        //整个数组为逆序，即为最大值，下一个排列是最小值，反转整个数组，得到下一个排列
+        if (i == 0) {
             reverse(nums, 0, nums.length - 1);
             return;
         }
 
-        //翻转递减数组，使之成为递增数组
-        reverse(nums, j, nums.length - 1);
+        //翻转从后往前的最长递减数组，使之成为递增数组
+        reverse(nums, i, nums.length - 1);
 
-        //逆序数组之前的一个元素
-        int i = j - 1;
+        //从后往前的最长递减数组的前一个元素下标索引
+        int j = i - 1;
 
-        //找第一个比nums[i]大的元素交换
-        for (int k = j; k < nums.length; k++) {
-            if (nums[k] > nums[i]) {
-                swap(nums, i, k);
+        //从前往后找第一个比nums[j]大的元素进行交换，即得到下个一排列
+        for (int k = i; k < nums.length; k++) {
+            if (nums[j] < nums[k]) {
+                swap(nums, j, k);
                 return;
             }
         }
     }
 
     /**
-     * 反转数组
+     * 反转数组nums[i]-nums[j]
      *
      * @param nums
      * @param i
@@ -90,13 +90,14 @@ public class Problem31 {
             int temp = nums[i];
             nums[i] = nums[j];
             nums[j] = temp;
+
             i++;
             j--;
         }
     }
 
     /**
-     * 交换数组元素
+     * 交换数组元素nums[i]和nums[j]
      *
      * @param nums
      * @param i

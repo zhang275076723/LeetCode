@@ -26,8 +26,9 @@ public class Problem234 {
     }
 
     /**
-     * 快慢指针找到中间节点，断开链表并翻转前半部分链表，判断两个链表是否相等，即是否是回文链表
-     * 在并发环境下，函数运行时需要锁定其他线程或进程对链表的访问，因为在函数执行过程中链表会被修改
+     * 快慢指针找到中间节点，断开链表并翻转后半部分链表，判断两个链表中节点是否相等，
+     * 如果有节点不相等，则不是回文链表；如果都相等，则是回文链表
+     * 注意：在并发环境下，函数运行时需要锁定其他线程或进程对链表的访问，因为在函数执行过程中链表会被修改
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param head
@@ -40,35 +41,37 @@ public class Problem234 {
 
         ListNode slow = head;
         ListNode fast = head;
+        //slow指针的前驱指针，用于找中间节点
         ListNode pre = null;
 
         //快慢指针找到中间节点
-        while (fast.next != null && fast.next.next != null) {
+        while (fast != null && fast.next != null) {
             pre = slow;
             slow = slow.next;
             fast = fast.next.next;
         }
 
-        //得到的两个链表头结点
-        ListNode head1;
-        ListNode head2 = slow.next;
+        //后半部分链表头
+        ListNode head2;
 
-        //断开链表，根据fast决定前半部分链表是否包括slow所指向的节点
-        if (fast.next == null) {
+        //根据fast指针是否为空，得到后半部分链表，并断开链表，分为两个链表
+        if (fast == null) {
+            head2 = slow;
             pre.next = null;
         } else {
+            head2 = slow.next;
             slow.next = null;
         }
 
-        //反转前半部分链表
-        head1 = reverse(head);
+        //后半部分链表反转
+        head2 = reverse(head2);
 
-        ListNode node1 = head1;
+        ListNode node1 = head;
         ListNode node2 = head2;
 
-        //两链表中节点依次比较，判断是否是回文链表
+        //两个链表中节点依次比较，判断是否是回文链表
         while (node1 != null && node2 != null) {
-            //档两个链表当前节点值不同，则不是回文链表，返回false
+            //两个链表中当前节点值不同，则不是回文链表，返回false
             if (node1.val != node2.val) {
                 return false;
             }
@@ -77,9 +80,16 @@ public class Problem234 {
             node2 = node2.next;
         }
 
+        //链表遍历结束，则是回文链表，返回true
         return true;
     }
 
+    /**
+     * 非递归反转链表
+     *
+     * @param head
+     * @return
+     */
     private ListNode reverse(ListNode head) {
         if (head == null || head.next == null) {
             return head;
