@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/8 12:53
  * @Author zsy
- * @Description 二进制求和 类比Problem2、Problem66、Problem369、Problem415、Problem445
+ * @Description 二进制求和 类比Problem2、Problem66、Problem369、Problem415、Problem445、Problem989
  * 给你两个二进制字符串 a 和 b ，以二进制字符串的形式返回它们的和。
  * <p>
  * 输入:a = "11", b = "1"
@@ -25,8 +25,7 @@ public class Problem67 {
     }
 
     /**
-     * 模拟
-     * 由后往前遍历，相加
+     * 双指针，类似归并排序中的合并操作
      * 时间复杂度O(max(m,n))，空间复杂度O(Math.max(m,n)) (m=a.length(), n=b.length())
      *
      * @param a
@@ -48,47 +47,37 @@ public class Problem67 {
         int j = b.length() - 1;
         //当前位的进位
         int carry = 0;
+        //当前位之和
+        int cur;
 
         while (i >= 0 && j >= 0) {
-            int num = a.charAt(i) - '0' + b.charAt(j) - '0' + carry;
+            cur = (a.charAt(i) - '0') + (b.charAt(j) - '0') + carry;
+            carry = cur / 2;
+            cur = cur % 2;
 
-            if (num > 1) {
-                num = num - 2;
-                carry = 1;
-            } else {
-                carry = 0;
-            }
+            sb.append(cur);
 
-            sb.append(num);
             i--;
             j--;
         }
 
         while (i >= 0) {
-            int num = a.charAt(i) - '0' + carry;
+            cur = (a.charAt(i) - '0') + carry;
+            carry = cur / 2;
+            cur = cur % 2;
 
-            if (num > 1) {
-                num = num - 2;
-                carry = 1;
-            } else {
-                carry = 0;
-            }
+            sb.append(cur);
 
-            sb.append(num);
             i--;
         }
 
         while (j >= 0) {
-            int num = b.charAt(j) - '0' + carry;
+            cur = (b.charAt(j) - '0') + carry;
+            carry = cur / 2;
+            cur = cur % 2;
 
-            if (num > 1) {
-                num = num - 2;
-                carry = 1;
-            } else {
-                carry = 0;
-            }
+            sb.append(cur);
 
-            sb.append(num);
             j--;
         }
 

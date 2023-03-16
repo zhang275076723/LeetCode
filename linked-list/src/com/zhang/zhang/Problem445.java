@@ -3,7 +3,7 @@ package com.zhang.zhang;
 /**
  * @Date 2022/11/15 08:22
  * @Author zsy
- * @Description 两数相加 II 类比Problem2、Problem66、Problem67、Problem369、Problem415
+ * @Description 两数相加 II 类比Problem2、Problem66、Problem67、Problem369、Problem415、Problem989
  * 给你两个 非空 链表来代表两个非负整数。数字最高位位于链表开始位置。
  * 它们的每个节点只存储一位数字。将这两数相加会返回一个新的链表。
  * 你可以假设除了数字 0 之外，这两个数字都不会以零开头。
@@ -32,8 +32,8 @@ public class Problem445 {
     }
 
     /**
-     * 模拟
-     * 反转两个链表，再逐一相加，最后再反转回来
+     * 双指针，类似归并排序中的合并操作
+     * 反转两个链表，逐一相加，最后再反转结果链表，得到最终结果
      * 时间复杂度O(n)，空间复杂度O(1) (非递归反转的空间复杂度O(1)，递归反转的空间复杂度O(n))
      *
      * @param l1
@@ -63,18 +63,14 @@ public class Problem445 {
         //当前位的进位
         int carry = 0;
         //当前位之和
-        int sum;
+        int cur;
 
         while (node1 != null && node2 != null) {
-            sum = node1.val + node2.val + carry;
+            cur = node1.val + node2.val + carry;
+            carry = cur / 10;
+            cur = cur % 10;
 
-            if (sum > 9) {
-                carry = sum / 10;
-                node.next = new ListNode(sum % 10);
-            } else {
-                carry = 0;
-                node.next = new ListNode(sum);
-            }
+            node.next = new ListNode(cur);
 
             node1 = node1.next;
             node2 = node2.next;
@@ -82,30 +78,22 @@ public class Problem445 {
         }
 
         while (node1 != null) {
-            sum = node1.val + carry;
+            cur = node1.val + carry;
+            carry = cur / 10;
+            cur = cur % 10;
 
-            if (sum > 9) {
-                carry = sum / 10;
-                node.next = new ListNode(sum % 10);
-            } else {
-                carry = 0;
-                node.next = new ListNode(sum);
-            }
+            node.next = new ListNode(cur);
 
             node1 = node1.next;
             node = node.next;
         }
 
         while (node2 != null) {
-            sum = node2.val + carry;
+            cur = node2.val + carry;
+            carry = cur / 10;
+            cur = cur % 10;
 
-            if (sum > 9) {
-                carry = sum / 10;
-                node.next = new ListNode(sum % 10);
-            } else {
-                carry = 0;
-                node.next = new ListNode(sum);
-            }
+            node.next = new ListNode(cur);
 
             node2 = node2.next;
             node = node.next;

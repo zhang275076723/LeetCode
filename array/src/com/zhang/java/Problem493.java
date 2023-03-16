@@ -64,16 +64,16 @@ public class Problem493 {
     }
 
     private int mergeSort(int[] nums, int left, int right, int[] tempArr) {
-        if (left < right) {
-            int count = 0;
-            int mid = left + ((right - left) >> 1);
-            count = count + mergeSort(nums, left, mid, tempArr);
-            count = count + mergeSort(nums, mid + 1, right, tempArr);
-            count = count + merge(nums, left, mid, right, tempArr);
-            return count;
+        if (left >= right) {
+            return 0;
         }
 
-        return 0;
+        int count = 0;
+        int mid = left + ((right - left) >> 1);
+        count = count + mergeSort(nums, left, mid, tempArr);
+        count = count + mergeSort(nums, mid + 1, right, tempArr);
+        count = count + merge(nums, left, mid, right, tempArr);
+        return count;
     }
 
     private int merge(int[] nums, int left, int mid, int right, int[] tempArr) {
@@ -82,7 +82,7 @@ public class Problem493 {
         int j = mid + 1;
         int k = left;
 
-        //统计翻转对，不能在合并的时候统计
+        //统计翻转对，在合并之前统计
         while (i <= mid && j <= right) {
             //nums[i]-nums[mid]都大于2倍nums[j]，构成翻转对
             //使用long，避免nums[j]*2超过int范围
@@ -94,6 +94,7 @@ public class Problem493 {
             }
         }
 
+        //i、j重新赋值，进行合并
         i = left;
         j = mid + 1;
 

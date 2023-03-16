@@ -100,6 +100,7 @@ public class Problem43 {
             return null;
         }
 
+        //num1或num2为0，相乘结果为0
         if ("0".equals(num1) || "0".equals(num2)) {
             return "0";
         }
@@ -107,25 +108,30 @@ public class Problem43 {
         //num1和num2相乘的结果数组
         int[] result = new int[num1.length() + num2.length()];
 
-        for (int i = num1.length() - 1; i >= 0; i--) {
+        for (int i = 0; i < num1.length(); i++) {
             //num1[i]的值
             int n1 = num1.charAt(i) - '0';
 
-            for (int j = num2.length() - 1; j >= 0; j--) {
+            for (int j = 0; j < num2.length(); j++) {
                 //num2[j]的值
                 int n2 = num2.charAt(j) - '0';
                 result[i + j + 1] = result[i + j + 1] + n1 * n2;
             }
         }
 
+        //当前位进位
+        int carry = 0;
+
         //从后往前进位处理
         for (int i = result.length - 1; i > 0; i--) {
-            if (result[i] > 9) {
-                //进位
-                result[i - 1] = result[i - 1] + result[i] / 10;
-                //当前位
-                result[i] = result[i] % 10;
-            }
+            result[i] = result[i] + carry;
+            carry = result[i] / 10;
+            result[i] = result[i] % 10;
+        }
+
+        //最高位有进位
+        if (carry != 0) {
+            result[0] = carry;
         }
 
         StringBuilder sb = new StringBuilder();

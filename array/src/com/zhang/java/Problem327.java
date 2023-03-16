@@ -214,16 +214,16 @@ public class Problem327 {
     }
 
     private int mergeSort(long[] preSum, int left, int right, long[] tempArr, int lower, int upper) {
-        if (left < right) {
-            int count = 0;
-            int mid = left + ((right - left) >> 1);
-            count = count + mergeSort(preSum, left, mid, tempArr, lower, upper);
-            count = count + mergeSort(preSum, mid + 1, right, tempArr, lower, upper);
-            count = count + merge(preSum, left, mid, right, tempArr, lower, upper);
-            return count;
+        if (left >= right) {
+            return 0;
         }
 
-        return 0;
+        int count = 0;
+        int mid = left + ((right - left) >> 1);
+        count = count + mergeSort(preSum, left, mid, tempArr, lower, upper);
+        count = count + mergeSort(preSum, mid + 1, right, tempArr, lower, upper);
+        count = count + merge(preSum, left, mid, right, tempArr, lower, upper);
+        return count;
     }
 
     private int merge(long[] preSum, int left, int mid, int right, long[] tempArr, int lower, int upper) {
@@ -254,7 +254,7 @@ public class Problem327 {
             i++;
         }
 
-        //i重新赋值左边界left，用于归并排序[left,mid]和[mid+1，right+1]合并
+        //i重新赋值，preSum数组中[left,mid]和[mid+1，right]进行合并
         i = left;
 
         while (i <= mid && j <= right) {

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/6/19 9:30
  * @Author zsy
- * @Description 字符串相加 类比Problem2、Problem66、Problem67、Problem369、Problem445 加减乘除类比Problem29、Problem43
+ * @Description 字符串相加 类比Problem2、Problem66、Problem67、Problem369、Problem445、Problem989 加减乘除类比Problem29、Problem43
  * 给定两个字符串形式的非负整数 num1 和num2 ，计算它们的和并同样以字符串形式返回。
  * 你不能使用任何內建的用于处理大整数的库（比如 BigInteger）， 也不能直接将输入的字符串转换为整数形式。
  * <p>
@@ -29,8 +29,8 @@ public class Problem415 {
     }
 
     /**
-     * 双指针
-     * 从低位向高位相加和进行
+     * 双指针，类似归并排序中的合并操作
+     * 从低位向高位相加
      * 时间复杂度O(max(m,n))，空间复杂度O(max(m,n))
      *
      * @param num1
@@ -45,27 +45,36 @@ public class Problem415 {
         //当前位的进位
         int carry = 0;
         //当前位之和
-        int sum;
+        int cur;
 
         while (i >= 0 && j >= 0) {
-            sum = (num1.charAt(i) - '0') + (num2.charAt(j) - '0') + carry;
-            carry = sum / 10;
-            sb.append(sum % 10);
+            cur = (num1.charAt(i) - '0') + (num2.charAt(j) - '0') + carry;
+            carry = cur / 10;
+            cur = cur % 10;
+
+            sb.append(cur % 10);
+
             i--;
             j--;
         }
 
         while (i >= 0) {
-            sum = (num1.charAt(i) - '0') + carry;
-            carry = sum / 10;
-            sb.append(sum % 10);
+            cur = (num1.charAt(i) - '0') + carry;
+            carry = cur / 10;
+            cur = cur % 10;
+
+            sb.append(cur);
+
             i--;
         }
 
         while (j >= 0) {
-            sum  = (num2.charAt(j) - '0') + carry;
-            carry = sum / 10;
-            sb.append(sum % 10);
+            cur = (num2.charAt(j) - '0') + carry;
+            carry = cur / 10;
+            cur = cur % 10;
+
+            sb.append(cur);
+
             j--;
         }
 

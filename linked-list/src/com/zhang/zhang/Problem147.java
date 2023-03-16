@@ -55,7 +55,7 @@ public class Problem147 {
             } else {
                 //当前节点node的值小于前驱节点pre的值，插在当前链表非末尾
 
-                //当前节点node要插入的位置的前一个节点
+                //当前节点node要插入位置的前一个节点
                 ListNode temp = hair;
 
                 //找到要插入的位置

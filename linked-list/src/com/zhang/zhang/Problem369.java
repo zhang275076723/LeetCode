@@ -3,19 +3,26 @@ package com.zhang.zhang;
 /**
  * @Date 2022/5/19 19:19
  * @Author zsy
- * @Description 给单链表加一 七牛云面试题 类比Problem2、Problem66、Problem67、Problem415、Problem445
+ * @Description 给单链表加一 七牛云面试题 类比Problem2、Problem66、Problem67、Problem415、Problem445、Problem989
  * 用一个 非空 单链表来表示一个非负整数，然后将这个整数加一。
  * 你可以假设这个整数除了 0 本身，没有任何前导的 0。
  * 这个整数的各个数位按照 高位在链表头部、低位在链表尾部 的顺序排列。
  * <p>
  * 输入: [1,2,3]
  * 输出: [1,2,4]
+ * <p>
+ * 输入: head = [0]
+ * 输出: [1]
+ * <p>
+ * 链表中的节点数在 [1, 100] 的范围内。
+ * 0 <= Node.val <= 9
+ * 由链表表示的数字不包含前导零，除了零本身。
  */
 public class Problem369 {
     public static void main(String[] args) {
         Problem369 problem369 = new Problem369();
-        int[] data = {1, 9, 9};
-//        int[] data = {9, 9, 9};
+//        int[] data = {1, 9, 9};
+        int[] data = {9, 9, 9};
         ListNode head = problem369.buildList(data);
         head = problem369.plusOne(head);
         while (head != null) {
@@ -40,20 +47,18 @@ public class Problem369 {
         head = reverse(head);
 
         ListNode node = head;
+        //当前节点的前驱节点，用于最高位进位时添加节点
         ListNode pre = head;
-        //当前位进位
-        int carry = 0;
         node.val++;
+        int carry = 0;
 
         while (node != null) {
             node.val = node.val + carry;
+            carry = node.val / 10;
+            node.val = node.val % 10;
 
-            if (node.val > 9) {
-                carry = node.val / 10;
-                node.val = node.val % 10;
-            } else {
-                carry = 0;
-                //当前位进位为0，之后就不需要继续进行遍历
+            //当前位进位为0，则高位节点不需要修改
+            if (carry == 0) {
                 break;
             }
 
@@ -61,8 +66,8 @@ public class Problem369 {
             node = node.next;
         }
 
-        //最高位有进位，创建新节点
-        if (carry != 0) {
+        //当前节点为空，则说明最高位有进位，创建新节点
+        if (node == null) {
             pre.next = new ListNode(carry);
         }
 
