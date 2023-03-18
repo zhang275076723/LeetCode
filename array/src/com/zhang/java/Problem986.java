@@ -53,12 +53,8 @@ public class Problem986 {
      * @return
      */
     public int[][] intervalIntersection(int[][] firstList, int[][] secondList) {
-        if (firstList == null) {
-            return secondList;
-        }
-
-        if (secondList == null) {
-            return firstList;
+        if (firstList == null || secondList == null || firstList.length == 0 || secondList.length == 0) {
+            return new int[0][];
         }
 
         List<int[]> list = new ArrayList<>();

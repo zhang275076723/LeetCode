@@ -122,13 +122,13 @@ public class Problem204 {
         int count = 0;
 
         for (int i = 2; i < n; i++) {
-            //如果i是质数，则i的倍数表示的数都不是质数
+            //i是质数，则i的倍数表示的数都不是质数
             if (dp[i]) {
                 count++;
 
                 //从i*i开始遍历，因为i*2、i*3...在之前遍历2、3...时已经置为非质数false
                 for (int j = i; (long) i * j < n; j++) {
-                    //质数i的j倍不是质数
+                    //质数i的j倍表示的数都不是质数
                     dp[i * j] = false;
                 }
             }

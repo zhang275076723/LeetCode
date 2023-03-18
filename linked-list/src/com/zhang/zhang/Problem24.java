@@ -52,12 +52,13 @@ public class Problem24 {
         ListNode node = head;
 
         while (node != null && node.next != null) {
-            //node节点的下一个节点
-            ListNode next = node.next;
-            node.next = next.next;
-            next.next = node;
-            pre.next = next;
+            //node节点的下下个节点
+            ListNode next = node.next.next;
+            pre.next = node.next;
+            node.next.next = node;
+            node.next = next;
 
+            //更新pre、node节点指针
             pre = node;
             node = node.next;
         }
@@ -67,7 +68,7 @@ public class Problem24 {
 
     /**
      * 递归两两交换
-     * 当前节点指向之后的两两反转的节点，当前节点的下一个节点指向当前节点，当前节点的下一个节点作为头结点返回
+     * 当前节点指向后面已经两两反转好的链表头节点，当前节点的下一个节点指向当前节点，当前节点的下一个节点作为头结点返回
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param head
@@ -79,15 +80,15 @@ public class Problem24 {
         }
 
         //head节点的下一个节点
-        ListNode next = head.next;
-        //next节点后面已经反转好的链表头节点
-        ListNode newHead = swapPairs2(next.next);
+        ListNode nextNode = head.next;
+        //nextNode节点的后一个节点作为头结点已经反转好的链表头节点
+        ListNode head2 = swapPairs2(nextNode.next);
 
-        //head和node节点交换，并连接后面链表
-        next.next = head;
-        head.next = newHead;
+        //head和nextNode节点交换，并连接后面链表head2
+        nextNode.next = head;
+        head.next = head2;
 
-        return next;
+        return nextNode;
     }
 
     private ListNode buildList(int[] data) {

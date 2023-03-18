@@ -25,9 +25,9 @@ public class Problem1288 {
 
     /**
      * 一维左区间intervals[i][0]由小到大排序，二维右区间intervals[i][1]由大到小排序，
-     * 如果已经遍历过的区间最右边界end大于等于当前区间右边界intervals[i][1]，则当前区间intervals[i]被覆盖，
+     * 如果当前区间右边界intervals[i][1]小于等于已经遍历过的区间最右边界end，则当前区间intervals[i]被覆盖，
      * 被覆盖的区间个数count加1；
-     * 如果已经遍历过的区间最右边界end小于当前区间右边界intervals[i][1]，则更新end为当前区间右边界intervals[i][1]
+     * 如果当前区间右边界intervals[i][1]大于已经遍历过的区间最右边界end，则更新end为当前区间右边界intervals[i][1]
      * 时间复杂度O(nlogn)，空间复杂度O(logn) (堆排序的空间复杂度为O(logn))
      *
      * @param intervals
@@ -42,13 +42,13 @@ public class Problem1288 {
         heapSort(intervals);
 
         //被覆盖的区间个数
-        int count = intervals.length;
+        int count = 0;
         //已经遍历过的区间最右边界
         int end = intervals[0][1];
 
         for (int i = 1; i < intervals.length; i++) {
-            //right大于等于当前区间右边界intervals[i][1]，则当前区间被覆盖，count加1
-            if (end >= intervals[i][1]) {
+            //当前区间右边界intervals[i][1]小于等于end，则当前区间被覆盖，count加1
+            if (intervals[i][1] <= end) {
                 count++;
             } else {
                 //更新end为当前区间右边界

@@ -54,6 +54,7 @@ public class Problem47 {
         }
 
         for (int i = 0; i < nums.length; i++) {
+            //当前元素已被访问，直接进行下次循环
             if (visited[i]) {
                 continue;
             }

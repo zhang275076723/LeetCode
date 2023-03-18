@@ -39,7 +39,7 @@ public class Problem253 {
      * @return
      */
     public int minMeetingRooms(int[][] intervals) {
-        if (intervals == null || intervals.length == 0 || intervals[0].length == 0) {
+        if (intervals == null || intervals.length == 0) {
             return 0;
         }
 

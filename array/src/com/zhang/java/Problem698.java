@@ -1,5 +1,7 @@
 package com.zhang.java;
 
+import java.util.Arrays;
+
 /**
  * @Date 2022/9/14 8:37
  * @Author zsy
@@ -18,11 +20,6 @@ package com.zhang.java;
  * 每个元素的频率在 [1,4] 范围内
  */
 public class Problem698 {
-    /**
-     * 回溯+剪枝中判断是否可以分割
-     */
-    private boolean flag = false;
-
     public static void main(String[] args) {
         Problem698 problem698 = new Problem698();
         //(1,4,9) (4,4,6) (2,2,4,6)
@@ -34,7 +31,8 @@ public class Problem698 {
     }
 
     /**
-     * 回溯+剪枝
+     * 回溯+剪枝，难点在于由大到小排序后剪枝
+     * 数组中元素由大到小排序，判断当前元素能否放到其中一个桶中，如果可以，则继续判断下一个元素
      * 时间复杂度O(k^n)，空间复杂度O(k+n) (排序空间需要O(n)，递归栈深度O(k))
      *
      * @param nums
@@ -57,54 +55,69 @@ public class Problem698 {
             return false;
         }
 
-        //排序，便于分割等和子集和剪枝
+        //由大到小排序，先将大的元素放入桶中
         mergeSort(nums, 0, nums.length - 1, new int[nums.length]);
 
         int target = sum / k;
 
-        //最大的元素大于target，因为元素都大于0，所以不存在等k个相等的子集，返回false
-        if (nums[nums.length - 1] > target) {
+        //元素都大于0，最大的元素大于target，则不存在k个相等的子集，返回false
+        if (nums[0] > target) {
             return false;
         }
 
-        //从小到大排序之后从后往前遍历，先选择大的元素遍历回溯和剪枝
-        backtrack(nums.length - 1, new int[k], nums, target);
-
-        return flag;
+        //由大到小排序后从前往后遍历，先将大的元素放入桶中，便于回溯和剪枝
+        return backtrack(0, new int[k], nums, target);
     }
 
-    private void backtrack(int t, int[] bucket, int[] nums, int target) {
-        //nums已经遍历完，此时arr中每个元素都为target，存在k个相等的子集，返回true
-        if (t < 0) {
-            flag = true;
-            return;
+    private boolean backtrack(int t, int[] bucket, int[] nums, int target) {
+        //nums已经遍历完，此时bucket桶中每个元素都为target，存在k个相等的子集，返回true
+        if (t == nums.length) {
+            return true;
         }
 
         for (int i = 0; i < bucket.length; i++) {
-            if (flag) {
-                return;
+            //当前桶bucket[i]加上nums[t]大于target，则当前桶无法加上nums[t]，剪枝，直接进行下次循环
+            if (bucket[i] + nums[t] > target) {
+                continue;
             }
 
-            //当前bucket[i]加上nums[t]正好等于target，或者bucket[i]加上nums[t]和nums[0]小于等于target，才遍历前一个nums[t-1]
-            //bucket[i] + nums[t] + nums[0] <= target相当于剪枝，因为nums已经排序，加上最小的nums[0]超过target，则不存在合法分割
-            if (bucket[i] + nums[t] == target || (t > 0 && bucket[i] + nums[t] + nums[0] <= target)) {
-                bucket[i] = bucket[i] + nums[t];
-
-                //当前情况可以找到k个相等的子集，返回true
-                backtrack(t - 1, bucket, nums, target);
-
-                bucket[i] = bucket[i] - nums[t];
+            //当前桶bucket[i]和前一个桶bucket[i-1]相等，说明前一个桶已经考虑过nums[t]，则当前桶不需要再考虑nums[t]，
+            //剪枝，直接进行下次循环
+            if (i > 0 && bucket[i] == bucket[i - 1]) {
+                continue;
             }
+
+            bucket[i] = bucket[i] + nums[t];
+
+            //已经找到k个相等的子集，则返回true
+            if (backtrack(t + 1, bucket, nums, target)) {
+                return true;
+            }
+
+            bucket[i] = bucket[i] - nums[t];
         }
+
+        //遍历结束也没有找到k个相等的子集，则返回false
+        return false;
     }
 
+    /**
+     * 由大到小排序
+     *
+     * @param arr
+     * @param left
+     * @param right
+     * @param tempArr
+     */
     private void mergeSort(int[] arr, int left, int right, int[] tempArr) {
-        if (left < right) {
-            int mid = left + ((right - left) >> 1);
-            mergeSort(arr, left, mid, tempArr);
-            mergeSort(arr, mid + 1, right, tempArr);
-            merge(arr, left, mid, right, tempArr);
+        if (left >= right) {
+            return;
         }
+
+        int mid = left + ((right - left) >> 1);
+        mergeSort(arr, left, mid, tempArr);
+        mergeSort(arr, mid + 1, right, tempArr);
+        merge(arr, left, mid, right, tempArr);
     }
 
     private void merge(int[] arr, int left, int mid, int right, int[] tempArr) {
@@ -113,7 +126,7 @@ public class Problem698 {
         int k = left;
 
         while (i <= mid && j <= right) {
-            if (arr[i] < arr[j]) {
+            if (arr[i] > arr[j]) {
                 tempArr[k] = arr[i];
                 i++;
                 k++;

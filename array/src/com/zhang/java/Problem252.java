@@ -40,7 +40,7 @@ public class Problem252 {
      * @return
      */
     public boolean canAttendMeetings(int[][] intervals) {
-        if (intervals == null || intervals.length == 0 || intervals[0].length == 0) {
+        if (intervals == null || intervals.length == 0) {
             return true;
         }
 

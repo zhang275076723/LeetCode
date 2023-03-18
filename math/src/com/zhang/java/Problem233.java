@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/6 08:58
  * @Author zsy
- * @Description 数字 1 的个数 类比Problem400、Offer44 同Offer43
+ * @Description 数字 1 的个数 模拟类比Problem60、Problem400、Offer44 同Offer43
  * 给定一个整数 n，计算所有小于等于 n 的非负整数中数字 1 出现的个数。
  * <p>
  * 输入：n = 13

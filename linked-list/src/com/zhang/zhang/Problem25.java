@@ -44,7 +44,8 @@ public class Problem25 {
     }
 
     /**
-     * 模拟，找到每次要反转的k个节点，断开链表，反转，再重新连接回原链表
+     * 模拟
+     * 找到每次要反转的k个节点，断开链表，反转，再重新连接回原链表
      * 需要额外的指针保存子链表的第一个节点、最后一个节点、子链表第一个节点的前一个节点、子链表最后一个节点的后一个节点
      * 时间复杂度O(n)，空间复杂度O(1)
      *
@@ -61,21 +62,19 @@ public class Problem25 {
         ListNode hair = new ListNode();
         hair.next = head;
 
-        //遍历的当前节点
+        //当前遍历到节点
         ListNode node = head;
         //要反转的第一个节点的前一个节点
         ListNode pre = hair;
         //要反转的第一个节点
-        ListNode first;
+        ListNode firstNode = head;
         //要反转的最后一个节点
-        ListNode last;
+        ListNode lastNode;
         //要反转的最后一个节点的后一个节点
         ListNode next;
 
         while (node != null) {
-            first = node;
-
-            //k个一组进行反转，找到当前组最后一个节点
+            //k个一组反转链表，找到当前组最后一个节点lastNode
             for (int i = 0; i < k - 1; i++) {
                 node = node.next;
 
@@ -86,18 +85,20 @@ public class Problem25 {
             }
 
             //更新指针
-            last = node;
-            next = last.next;
+            lastNode = node;
+            next = lastNode.next;
 
-            //断开子链表
-            last.next = null;
+            //断开要反转的子链表
+            pre.next = null;
+            lastNode.next = null;
 
             //反转子链表，并重新连接回原链表
-            pre.next = reverse(first);
-            first.next = next;
+            pre.next = reverse(firstNode);
+            firstNode.next = next;
 
-            //更新指针
-            pre = first;
+            //更新节点指针
+            pre = firstNode;
+            firstNode = next;
             node = next;
         }
 

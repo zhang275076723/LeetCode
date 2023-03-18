@@ -61,27 +61,29 @@ public class Problem57 {
         int i = 0;
 
         //newInterval之前的区间，即区间右边界intervals[i][1]小于要插入的区间左边界newInterval[0]，这些区间加入结果集合list
-        while (i < intervals.length && intervals[i][1] < newInterval[0]) {
-            list.add(intervals[i]);
-            i++;
+        for (i = 0; i < intervals.length; i++) {
+            if (intervals[i][1] < newInterval[0]) {
+                list.add(intervals[i]);
+            } else {
+                break;
+            }
+        }
+
+        //要插入的区间是末尾区间，直接加入list，返回
+        if (i == intervals.length) {
+            list.add(newInterval);
+            return list.toArray(new int[list.size()][]);
         }
 
         //要合并区间的左边界
-        int start;
+        int start = newInterval[0];
         //要合并区间的右边界
         int end = newInterval[1];
-
-        //newInterval后面还有区间，start为newInterval[0]、intervals[i][0]两者中较小值
-        if (i < intervals.length) {
-            start = Math.min(newInterval[0], intervals[i][0]);
-        } else {
-            //newInterval后面没有区间，start为intervals[i][0]
-            start = newInterval[0];
-        }
 
         while (i < intervals.length) {
             //当前区间左边界intervals[i][0]小于等于要合并区间的右边界end，则当前区间可以合并，更新end
             if (intervals[i][0] <= end) {
+                start = Math.min(start, intervals[i][0]);
                 end = Math.max(end, intervals[i][1]);
             } else {
                 //当前区间左边界intervals[i][0]大于要合并区间的右边界end，则要合并区间[start,end]加入结果集合，并重新赋值要合并区间的左右边界

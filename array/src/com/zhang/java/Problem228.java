@@ -68,16 +68,12 @@ public class Problem228 {
             } else {
                 ///当前元素不等于要加入区间的右边界加1，将之前的区间字符串加入结果集合list中，并更新要加入的区间左右边界
 
-                StringBuilder sb = new StringBuilder();
-
                 //区间只有一个元素
                 if (start == end) {
-                    sb.append(start);
-                    list.add(sb.toString());
+                    list.add(start + "");
                 } else {
                     //区间元素个数大于1个
-                    sb.append(start).append("->").append(end);
-                    list.add(sb.toString());
+                    list.add(start + "->" + end);
                 }
 
                 start = nums[i];
@@ -86,14 +82,10 @@ public class Problem228 {
         }
 
         //最后一个区间添加到结果集合
-        StringBuilder sb = new StringBuilder();
-
         if (start == end) {
-            sb.append(start);
-            list.add(sb.toString());
+            list.add(start + "");
         } else {
-            sb.append(start).append("->").append(end);
-            list.add(sb.toString());
+            list.add(start + "->" + end);
         }
 
         return list;
