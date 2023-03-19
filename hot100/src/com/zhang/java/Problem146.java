@@ -85,7 +85,6 @@ public class Problem146 {
         public LRUCache(int capacity) {
             this.capacity = capacity;
             curSize = 0;
-            //缓存map，在O(1)找到当前节点
             cache = new HashMap<>(capacity);
             linkedList = new LinkedList();
         }
@@ -104,7 +103,8 @@ public class Problem146 {
             }
 
             Node node = cache.get(key);
-            linkedList.delete(node);
+            //node从链表尾移除，加入链表头，作为最新访问节点
+            linkedList.remove(node);
             linkedList.addFirst(node);
             return node.value;
         }
@@ -123,47 +123,32 @@ public class Problem146 {
                 Node node = cache.get(key);
                 //更新当前节点的value
                 node.value = value;
-                //当前节点放到链表的头，作为最新访问节点
-                linkedList.delete(node);
+                //node从链表尾移除，加入链表头，作为最新访问节点
+                linkedList.remove(node);
                 linkedList.addFirst(node);
             } else {
                 //当前节点不在缓存map中
+                //要加入cache和linkedList中的节点
+                Node node = new Node(key, value);
 
                 //缓存map已满，链表和缓存map中移除末尾节点，当前节点放到链表的头和缓存中，作为最新访问节点
                 if (curSize == capacity) {
+                    //末尾节点，即最近最久未访问的节点
                     Node deleteNode = linkedList.tail.pre;
-                    linkedList.delete(deleteNode);
+                    //deleteNode从链表中移除
+                    linkedList.remove(deleteNode);
+                    //deleteNode从cache中移除
                     cache.remove(deleteNode.key);
-
-                    Node node = new Node(key, value);
+                    //node加入链表头
                     linkedList.addFirst(node);
+                    //node加入cache
                     cache.put(key, node);
                 } else {
                     //缓存map未满，当前节点放到链表的头和缓存中，作为最新访问节点
-
-                    Node node = new Node(key, value);
-                    curSize++;
                     linkedList.addFirst(node);
                     cache.put(key, node);
+                    curSize++;
                 }
-            }
-        }
-
-        /**
-         * 双向链表节点
-         */
-        private static class Node {
-            public int key;
-            public int value;
-            public Node pre;
-            public Node next;
-
-            public Node() {
-            }
-
-            public Node(int key, int value) {
-                this.key = key;
-                this.value = value;
             }
         }
 
@@ -184,21 +169,39 @@ public class Problem146 {
             }
 
             public void addFirst(Node node) {
-                //头结点的下一个节点
-                Node next = head.next;
+                head.next.pre = node;
+                node.next = head.next;
                 head.next = node;
-                next.pre = node;
                 node.pre = head;
-                node.next = next;
             }
 
-            public void delete(Node node) {
-                Node pre = node.pre;
-                Node next = node.next;
-                pre.next = next;
-                next.pre = pre;
+            public void remove(Node node) {
+                //当前节点的前驱节点
+                Node preNode = node.pre;
+                //当前节点的后继节点
+                Node nextNode = node.next;
+                preNode.next = nextNode;
+                nextNode.pre = preNode;
                 node.pre = null;
                 node.next = null;
+            }
+        }
+
+        /**
+         * 双向链表节点，也是cache中存放的节点
+         */
+        private static class Node {
+            public int key;
+            public int value;
+            public Node pre;
+            public Node next;
+
+            public Node() {
+            }
+
+            public Node(int key, int value) {
+                this.key = key;
+                this.value = value;
             }
         }
     }

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/26 17:04
  * @Author zsy
- * @Description 1～n 整数中 1 出现的次数 类比Offer44、Problem400 同Problem233
+ * @Description 1～n 整数中 1 出现的次数 模拟类比Problem60、Problem400、Offer44 同Problem233
  * 输入一个整数 n ，求1～n这n个整数的十进制表示中1出现的次数。
  * 例如，输入12，1～12这些整数中包含1 的数字有1、10、11和12，1一共出现了5次。
  * <p>

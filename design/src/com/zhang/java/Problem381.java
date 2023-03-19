@@ -51,13 +51,13 @@ public class Problem381 {
      * 时间复杂度O(1)，空间复杂度O(n)
      */
     static class RandomizedCollection {
-        //存储元素集合
+        //存储元素的list集合
         private final List<Integer> list;
 
         //key：list集合元素，value：相同元素的在list集合中的下标索引set集合
         private final Map<Integer, Set<Integer>> map;
 
-        //获取随机值
+        //获取随机值，用于随机访问
         private final Random random;
 
         public RandomizedCollection() {
@@ -67,16 +67,18 @@ public class Problem381 {
         }
 
         public boolean insert(int val) {
-            //map中包含val，说明存在val，返回false
+            //map中已经存在val，返回false
             if (map.containsKey(val)) {
-                map.get(val).add(list.size());
+                Set<Integer> set = map.get(val);
+                set.add(list.size());
                 list.add(val);
 
                 return false;
             }
 
-            map.put(val, new HashSet<>());
-            map.get(val).add(list.size());
+            Set<Integer> set = new HashSet<>();
+            set.add(list.size());
+            map.put(val, set);
             list.add(val);
 
             return true;
@@ -87,20 +89,24 @@ public class Problem381 {
                 return false;
             }
 
-            //当前元素val在list集合中的下标索引
-            int index = map.get(val).iterator().next();
+            //存储list集合中相同val元素的下标索引set集合
+            Set<Integer> set = map.get(val);
+            //相同val元素的下标索引set集合中的某一个下标索引
+            int index = set.iterator().next();
             //list集合中最后一个元素的下标索引
             int lastValueIndex = list.size() - 1;
             //list集合中最后一个元素的值
             int lastValue = list.get(lastValueIndex);
-            //存储list集合中相同val元素的下标索引set集合
-            Set<Integer> set = map.get(val);
             //存储list集合中相同lastValue元素的下标索引set集合
             Set<Integer> lastValueSet = map.get(lastValue);
 
-            //val对应set删除val在list集合中的下标索引index，
-            //list集合中最后一个元素lastValue对应lastValueSet修改在list集合中的下标索引
+            //用list集合中最后一个元素替换当前元素，再删除最后一个元素，注意：要先set再remove
+            list.set(index, lastValue);
+            list.remove(lastValueIndex);
+
+            //index从相同val元素的下标索引set集合中删除，注意：要先从set中remove，再从lastValueSet中add和remove
             set.remove(index);
+            //index加入到lastValueSet中，list集合中最后一个元素的值lastValue从lastValueSet中删除
             lastValueSet.add(index);
             lastValueSet.remove(lastValueIndex);
 
@@ -108,10 +114,6 @@ public class Problem381 {
             if (set.isEmpty()) {
                 map.remove(val);
             }
-
-            //用list集合中最后一个元素替换当前元素，再删除最后一个元素
-            list.set(index, lastValue);
-            list.remove(list.size() - 1);
 
             return true;
         }

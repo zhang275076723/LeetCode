@@ -50,13 +50,13 @@ public class Problem380 {
      * 时间复杂度O(1)，空间复杂度O(n)
      */
     static class RandomizedSet {
-        //存储元素集合
+        //存储元素的list集合
         private final List<Integer> list;
 
         //key：list集合中元素，value：元素在list集合中的下标索引
         private final Map<Integer, Integer> map;
 
-        //获取随机值
+        //获取随机值，用于随机访问
         private final Random random;
 
         public RandomizedSet() {
@@ -66,6 +66,7 @@ public class Problem380 {
         }
 
         public boolean insert(int val) {
+            //map中已经存在val，则不能插入，直接返回false
             if (map.containsKey(val)) {
                 return false;
             }
@@ -77,22 +78,25 @@ public class Problem380 {
         }
 
         public boolean remove(int val) {
+            //map中没有val，则不能删除，直接返回false
             if (!map.containsKey(val)) {
                 return false;
             }
 
             //要删除元素在list集合中的下标索引
             int index = map.get(val);
+            //list集合中最后一个元素下标索引
+            int lastValueIndex = list.size() - 1;
             //list集合中最后一个元素
-            int lastValue = list.get(list.size() - 1);
+            int lastValue = list.get(lastValueIndex);
 
-            //map中移除当前元素，更新map中list集合中最后一个元素在list集合中的下标索引，必须先put再remove
+            //用list集合中最后一个元素替换当前元素，再删除最后一个元素，注意：要先set再remove
+            list.set(index, lastValue);
+            list.remove(lastValueIndex);
+
+            //map中移除当前元素，更新map中list集合中最后一个元素在list集合中的下标索引，注意：要先put再remove
             map.put(lastValue, index);
             map.remove(val);
-
-            //用list集合中最后一个元素替换当前元素，再删除最后一个元素
-            list.set(index, lastValue);
-            list.remove(list.size() - 1);
 
             return true;
         }

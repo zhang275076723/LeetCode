@@ -41,10 +41,15 @@ public class Problem284 {
         list.add(2);
         list.add(3);
         PeekingIterator peekingIterator = new PeekingIterator(list.iterator());
+        // 返回 1 ，指针移动到下一个元素 [1,2,3]
         System.out.println(peekingIterator.next());
+        // 返回 2 ，指针未发生移动 [1,2,3]
         System.out.println(peekingIterator.peek());
+        // 返回 2 ，指针移动到下一个元素 [1,2,3]
         System.out.println(peekingIterator.next());
+        // 返回 3 ，指针移动到下一个元素 [1,2,3]
         System.out.println(peekingIterator.next());
+        // 返回 False
         System.out.println(peekingIterator.hasNext());
     }
 
@@ -54,7 +59,7 @@ public class Problem284 {
     static class PeekingIterator implements Iterator<Integer> {
         //当前迭代器
         private final Iterator<Integer> iterator;
-        //当前迭代器指向的下一个元素，使用Integer，而不能使用int，因为Integer有null，用null表示末尾
+        //当前迭代器指向的下一个元素，只能使用Integer，不能使用int，因为Integer有null，用null表示末尾
         private Integer nextValue;
 
         public PeekingIterator(Iterator<Integer> iterator) {

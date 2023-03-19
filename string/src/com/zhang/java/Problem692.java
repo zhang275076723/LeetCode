@@ -8,7 +8,7 @@ import java.util.*;
  * @Description 前K个高频单词 微软面试题 类比Problem215、Problem347、Problem451、Offer40
  * 给定一个单词列表 words 和一个整数 k ，返回前 k 个出现次数最多的单词。
  * 返回的答案应该按单词出现频率由高到低排序。
- * 如果不同的单词有相同出现频率， 按 字典顺序 排序。
+ * 如果不同的单词有相同出现频率，按 字典顺序 排序。
  * <p>
  * 输入: words = ["i", "love", "leetcode", "i", "love", "coding"], k = 2
  * 输出: ["i", "love"]
@@ -57,7 +57,7 @@ public class Problem692 {
         Collections.sort(list, new Comparator<String>() {
             @Override
             public int compare(String s1, String s2) {
-                //Integer之间比较，不能使用==，而应该使用equals()
+                //Integer和Integer之间比较只能使用equals()，不能使用==，==比较的是地址是否相等
                 if (!map.get(s1).equals(map.get(s2))) {
                     return map.get(s2) - map.get(s1);
                 } else {
@@ -84,11 +84,11 @@ public class Problem692 {
             map.put(word, map.getOrDefault(word, 0) + 1);
         }
 
-        //小根堆，按照频率由小到大排序，按照字典顺序逆序排序
+        //小根堆，先按照频率由小到大排序，在频率相等的情况下，再按照字典顺序逆序排序
         PriorityQueue<Map.Entry<String, Integer>> priorityQueue = new PriorityQueue<>(new Comparator<Map.Entry<String, Integer>>() {
             @Override
             public int compare(Map.Entry<String, Integer> entry1, Map.Entry<String, Integer> entry2) {
-                //Integer之间比较，不能使用==，而应该使用equals()
+                //Integer和Integer之间比较只能使用equals()，不能使用==，==比较的是地址是否相等
                 if (!entry1.getValue().equals(entry2.getValue())) {
                     //频率由小到大排序
                     return entry1.getValue() - entry2.getValue();
@@ -111,7 +111,7 @@ public class Problem692 {
         LinkedList<String> list = new LinkedList<>();
 
         while (!priorityQueue.isEmpty()) {
-            //小根堆按照频率由小到大排序，按照字典顺序逆序排序，所以list首添加
+            //小根堆先按照频率由小到大排序，再按照字典顺序逆序排序，所以list首添加
             list.addFirst(priorityQueue.poll().getKey());
         }
 
