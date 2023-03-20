@@ -41,19 +41,16 @@ public class Problem470 {
      * @return
      */
     public int rand10() {
-        int random = Integer.MAX_VALUE;
-
         while (true) {
-            //生成的random，小于等于9，直接返回random+1作为随机数
+            int random = 0;
+
+            for (int i = 1; i <= 4; i++) {
+                random = (random << 1) + rand7Get0Or1();
+            }
+
+            //生成的random，小于等于9，直接返回random+1作为随机数；生成的random大于9，则需要重新生成
             if (random <= 9) {
                 return random + 1;
-            } else {
-                //生成的random大于9，则需要重新生成
-                random = 0;
-
-                for (int i = 1; i <= 4; i++) {
-                    random = (random << 1) + rand7Get0Or1();
-                }
             }
         }
     }

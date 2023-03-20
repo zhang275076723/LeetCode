@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/14 10:29
  * @Author zsy
- * @Description 有效的完全平方数 类比Problem69
+ * @Description 有效的完全平方数 二分查找和牛顿迭代类比Problem69
  * 给定一个 正整数 num ，编写一个函数，如果 num 是一个完全平方数，则返回 true ，否则返回 false 。
  * 进阶：不要 使用任何内置的库函数，如 sqrt 。
  * <p>
@@ -58,7 +58,7 @@ public class Problem367 {
         while (left <= right) {
             mid = left + ((right - left) >> 1);
 
-            //使用long，避免相乘int溢出
+            //使用long，避免mid*mid在int范围内溢出
             if ((long) mid * mid == num) {
                 return true;
             } else if ((long) mid * mid < num) {
@@ -75,32 +75,30 @@ public class Problem367 {
      * 牛顿迭代
      * 求y=x^2-C的零点
      * 在y=x^2-C确定一个初始点(x0,y0)，在此点做函数的切线，交x轴在函数上的点为(x1,y1)，
-     * 重复此过程直至两个切线与x轴的交点x0和x1，之间的差值小于10^(-6)或10^(-7)，则认为找到函数的零点，即开根号值
+     * 重复此过程直至两个切线与x轴的交点x0和x1，之间的差值小于10^(-6)或10^(-7)，则认为找到函数y=x^2-C的零点，即开根号值
      * 时间复杂度O(logn)，空间复杂度O(1)
      *
      * @param num
      * @return
      */
     public boolean isPerfectSquare3(int num) {
-        //初始值，y = x^2 + C，找零点
+        //初始值，y = x^2 - C，找零点
         int C = num;
-        //第一个切线与x轴交点
+        //当前节点横坐标，第一个切线与x轴交点
         double x0 = num;
-        //第二个切线与x轴交点
+        //函数y=x^2-C中(x0,y0)做该点切线与x轴交点横坐标，第二个切线与x轴交点
         double x1;
 
         while (true) {
             x1 = 0.5 * x0 + C / (2 * x0);
 
-            //x0和x1两者之差小于10^(-7)，则认为两者无线接近，找到了零点
-            if (Math.abs(x1 - x0) < 1e-6) {
-                break;
+            //x0和x1两者之差小于10^(-7)，则认为两者无线接近，找到了零点，即得到根号项num
+            if (Math.abs(x1 - x0) < 1e-7) {
+                //y = x^2 - C与x轴交点即为开根值，相乘判断num是否是完全平方数
+                return (int) x1 * (int) x1 == num;
             }
 
             x0 = x1;
         }
-
-        //y = x^2 + C与x轴交点即为开根值，相乘判断num是否是完全平方数
-        return (int) x1 * (int) x1 == num;
     }
 }

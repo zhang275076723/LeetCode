@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/9/1 9:24
  * @Author zsy
- * @Description 二叉搜索树中第K小的元素 字节面试题 类比Problem95、Problem96、Problem98、Problem99、Offer33、Offer36、Offer54 二分搜索树类比Problem4、Problem378、Problem440  线段树类比Problem307、Problem308、Problem327、Problem729、Problem731、Problem732
+ * @Description 二叉搜索树中第K小的元素 字节面试题 类比Problem95、Problem96、Problem98、Problem99、Problem671、Offer33、Offer36、Offer54 二分搜索树类比Problem4、Problem378、Problem440  线段树类比Problem307、Problem308、Problem327、Problem729、Problem731、Problem732
  * 给定一个二叉搜索树的根节点 root ，和一个整数 k ，
  * 请你设计一个算法查找其中第 k 个最小元素（从 1 开始计数）。
  * <p>
@@ -42,6 +42,8 @@ public class Problem230 {
             return -1;
         }
 
+        //中序遍历中当前遍历到的节点个数
+        int count = 0;
         Stack<TreeNode> stack = new Stack<>();
         TreeNode node = root;
 
@@ -51,10 +53,11 @@ public class Problem230 {
                 node = node.left;
             }
 
+            count++;
             node = stack.pop();
-            k--;
 
-            if (k == 0) {
+            //中序遍历中遍历到第k个节点，则直接返回节点值
+            if (count == k) {
                 return node.val;
             }
 
@@ -97,7 +100,7 @@ public class Problem230 {
          */
         private final Map<TreeNode, Integer> nodeMap;
 
-        MyTree(TreeNode root) {
+        public MyTree(TreeNode root) {
             this.root = root;
             this.nodeMap = new HashMap<>();
 
@@ -124,7 +127,6 @@ public class Problem230 {
                     node = node.left;
                 } else {
                     //往右子树找
-
                     k = k - leftNodecount - 1;
                     node = node.right;
                 }
@@ -141,15 +143,21 @@ public class Problem230 {
             return node.val;
         }
 
-        private int buildNodeMap(TreeNode node) {
-            if (node == null) {
+        /**
+         * 建立nodeMap
+         * 时间复杂度O(n)，空间复杂度O(n)
+         *
+         * @param root
+         * @return
+         */
+        private int buildNodeMap(TreeNode root) {
+            if (root == null) {
                 return 0;
             }
 
-            int leftCount = buildNodeMap(node.left);
-            int rightCount = buildNodeMap(node.right);
-
-            nodeMap.put(node, leftCount + rightCount + 1);
+            int leftCount = buildNodeMap(root.left);
+            int rightCount = buildNodeMap(root.right);
+            nodeMap.put(root, leftCount + rightCount + 1);
 
             return leftCount + rightCount + 1;
         }

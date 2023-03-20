@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/6/22 9:40
  * @Author zsy
- * @Description x 的平方根 类比Problem367
+ * @Description x 的平方根 二分查找和牛顿迭代类比Problem367
  * 给你一个非负整数 x ，计算并返回 x 的 算术平方根 。
  * 由于返回类型是整数，结果只保留 整数部分 ，小数部分将被 舍去 。
  * 注意：不允许使用任何内置指数函数和算符，例如 pow(x, 0.5) 或者 x ** 0.5 。
@@ -70,7 +70,7 @@ public class Problem69 {
         while (left <= right) {
             mid = left + ((right - left) >> 1);
 
-            //使用long，避免相乘int溢出
+            //使用long，避免mid*mid在int范围内溢出
             if ((long) mid * mid == x) {
                 return mid;
             } else if ((long) mid * mid < x) {
@@ -88,7 +88,7 @@ public class Problem69 {
      * 牛顿迭代
      * 求y=x^2-C的零点
      * 在y=x^2-C确定一个初始点(x0,y0)，在此点做函数的切线，交x轴在函数上的点为(x1,y1)，
-     * 重复此过程直至两个切线与x轴的交点x0和x1，之间的差值小于10^(-6)或10^(-7)，则认为找到函数的零点，即开根号值
+     * 重复此过程直至两个切线与x轴的交点x0和x1，之间的差值小于10^(-6)或10^(-7)，则认为找到了函数y=x^2-C的零点，即开根号值
      * 时间复杂度O(logx)，空间复杂度O(1)
      *
      * @param x
@@ -99,15 +99,17 @@ public class Problem69 {
             return 0;
         }
 
-        //初始值，y = x^2 + C，找零点
-        double C = x;
+        //初始值，y = x^2 - C，找零点
+        int C = x;
+        //当前节点横坐标，第一个切线与x轴交点
         double x0 = x;
+        //函数y=x^2-C中(x0,y0)做该点切线与x轴交点横坐标，第二个切线与x轴交点
         double x1;
 
         while (true) {
             x1 = 0.5 * x0 + C / (2 * x0);
 
-            //x0和x1两者之差小于10^(-7)，则认为两者无线接近，找到了零点
+            //x0和x1两者之差小于10^(-7)，则认为两者无线接近，找到了零点，即得到根号项x
             if (Math.abs(x1 - x0) < 1e-7) {
                 return (int) x1;
             }

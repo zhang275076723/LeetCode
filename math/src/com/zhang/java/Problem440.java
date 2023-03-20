@@ -22,9 +22,9 @@ public class Problem440 {
     private int count = 0;
 
     /**
-     * 回溯+剪枝中第k小元素的值
+     * 回溯+剪枝中第k小元素
      */
-    private int val;
+    private int num;
 
     public static void main(String[] args) {
         Problem440 problem440 = new Problem440();
@@ -56,7 +56,7 @@ public class Problem440 {
             backtrack(i, n, k);
         }
 
-        return val;
+        return num;
     }
 
     /**
@@ -146,7 +146,7 @@ public class Problem440 {
 
         if (count == k) {
             //t为long，避免乘10，int溢出
-            val = (int) t;
+            num = (int) t;
             return;
         }
 

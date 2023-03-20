@@ -114,6 +114,14 @@ public class Problem1137 {
         return result[0][0];
     }
 
+    /**
+     * 二维矩阵快速幂
+     * 时间复杂度O(logn)，空间复杂度O(1)
+     *
+     * @param a
+     * @param n
+     * @return
+     */
     private int[][] quickPow(int[][] a, int n) {
         int[][] result = new int[a.length][a.length];
 
@@ -133,7 +141,7 @@ public class Problem1137 {
         return result;
     }
 
-    private int[][] multiply(int[][] a, int b[][]) {
+    private int[][] multiply(int[][] a, int[][] b) {
         int[][] result = new int[a.length][b[0].length];
 
         for (int i = 0; i < a.length; i++) {

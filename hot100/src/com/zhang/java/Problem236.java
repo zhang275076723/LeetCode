@@ -94,20 +94,16 @@ public class Problem236 {
         //p和q一个在左子树一个在右子树，说明最近公共祖先为root
         if (left != null && right != null) {
             return root;
-        }
-
-        //p和q都在左子树，说明最近公共祖先为left
-        if (left != null) {
+        } else if (left != null) {
+            //p和q都在左子树，说明最近公共祖先为left
             return left;
-        }
-
-        //p和q都在右子树，说明最近公共祖先为right
-        if (right != null) {
+        } else if (right != null) {
+            //p和q都在右子树，说明最近公共祖先为right
             return right;
+        } else {
+            //p和q既不在左子树，也不在右子树，说明p和q没有公共祖先
+            return null;
         }
-
-        //p和q既不在左子树这里，也不在右子树这里
-        return null;
     }
 
     /**
