@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/6/14 8:50
  * @Author zsy
- * @Description 最短无序连续子数组 数组类比Problem53、Problem135、Problem152、Problem238、Problem416、Offer42、Offer66
+ * @Description 最短无序连续子数组 数组类比Problem53、Problem135、Problem152、Problem238、Problem416、Offer42、Offer66 两次遍历类比Problem32、Problem135
  * 给你一个整数数组 nums ，你需要找出一个 连续子数组 ，如果对这个子数组进行升序排序，那么整个数组都会变为升序排序。
  * 请你找出符合题意的 最短 子数组，并输出它的长度。
  * <p>
@@ -60,10 +60,9 @@ public class Problem581 {
     }
 
     /**
-     * 将数组分为三部分，左边部分和右边部分都是升序，
-     * 中间部分的最小值大于左边部分的最大值，中间部分的最大值小于右边部分的最小值
-     * 从前往后遍历，如果当前元素nums[i]小于nums[0]-nums[i-1]的最大值，则存在无序子数组，更新无序子数组右边界right；
-     * 从后往前遍历，如果当前元素nums[i]大于nums[i+1]-nums[nums.length-1]的最小值，则存在无序子数组，更新无序子数组左边界left
+     * 两次遍历
+     * 从前往后遍历，找右边界，如果当前元素nums[i]小于nums[0]-nums[i-1]的最大值，更新无序子数组右边界right；
+     * 从后往前遍历，找左边界，如果当前元素nums[i]大于nums[i+1]-nums[nums.length-1]的最小值，更新无序子数组左边界left
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums

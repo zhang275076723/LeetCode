@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/14 8:30
  * @Author zsy
- * @Description 正则表达式匹配 动态规划类比Problem32 同Offer19
+ * @Description 正则表达式匹配 动态规划类比Problem32、Problem44 同Offer19
  * 给你一个字符串 s 和一个字符规律 p，请你来实现一个支持 '.' 和 '*' 的正则表达式匹配。
  * '.' 匹配任意单个字符
  * '*' 匹配零个或多个前面的那一个元素
@@ -55,7 +55,6 @@ public class Problem10 {
     public boolean isMatch(String s, String p) {
         //dp[i][j]：s[0]-s[i-1]和p[0]-p[j-1]是否匹配
         boolean[][] dp = new boolean[s.length() + 1][p.length() + 1];
-
         //空串和空串匹配
         dp[0][0] = true;
 
@@ -65,7 +64,7 @@ public class Problem10 {
             if (p.charAt(j - 1) == '*') {
                 dp[0][j] = true;
             } else {
-                //p[j-1] != '*'，即之后所有p都不匹配
+                //p[j-1] != '*'，即之后所有p都不匹配，直接跳出循环
                 break;
             }
         }

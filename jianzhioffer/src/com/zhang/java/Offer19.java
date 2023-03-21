@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/23 11:37
  * @Author zsy
- * @Description 正则表达式匹配 动态规划类比Problem32 同Problem10
+ * @Description 正则表达式匹配 动态规划类比Problem32、Problem44 同Problem10
  * 请实现一个函数用来匹配包含'.'和'*'的正则表达式。
  * 模式中的字符'.'表示任意一个字符，而'*'表示它前面的一个字符可以出现任意次（含0次）。
  * 在本题中，匹配是指字符串的所有字符匹配整个模式。
@@ -65,7 +65,6 @@ public class Offer19 {
     public boolean isMatch(String s, String p) {
         //dp[i][j]：s[0]-s[i-1]和p[0]-p[j-1]是否匹配
         boolean[][] dp = new boolean[s.length() + 1][p.length() + 1];
-
         //空串和空串匹配
         dp[0][0] = true;
 
@@ -75,7 +74,7 @@ public class Offer19 {
             if (p.charAt(j - 1) == '*') {
                 dp[0][j] = true;
             } else {
-                //p[j-1] != '*'，即之后所有p都不匹配
+                //p[j-1] != '*'，即之后所有p都不匹配，直接跳出循环
                 break;
             }
         }

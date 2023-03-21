@@ -39,10 +39,10 @@ public class Problem72 {
 
     /**
      * 动态规划
-     * <p>
      * dp[i][j]：word1[0]-word1[i-1](word1前i个字母)转换成word2[0]-word2[j-1](word2前j个字母)所使用的最少操作数
      * dp[i][j] = dp[i-1][j-1]                                  (word1[i-1] == word2[j-1])
      * dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]) + 1 (word1[i-1] != word2[j-1])
+     * 时间复杂度O(mn)，空间复杂度O(mn)
      * <p>
      * word1[0]-word1[i]转换成word2[0]-word2[j]分为3种情况：
      * 1、word1[0]-word1[i-1]转换成word2[0]-word2[j-1]，消耗dp[i][j]，
@@ -51,8 +51,6 @@ public class Problem72 {
      * 再word1[0]-word1[i-1]转换成word2[0]-word2[j]，消耗dp[i][j+1]，共需要dp[i][j+1]+1
      * 3、word1[0]-word1[i]转换成word2[0]-word2[j-1]，消耗dp[i+1][j]，再添加word2[j]，
      * 转换成word2[0]-word2[j]，消耗1步，共需要dp[i+1][j]+1
-     * <p>
-     * 时间复杂度O(mn)，空间复杂度O(mn)
      *
      * @param word1
      * @param word2

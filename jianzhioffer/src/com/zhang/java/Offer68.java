@@ -147,7 +147,7 @@ public class Offer68 {
         return path;
     }
 
-    public TreeNode buildTree(String[] data) {
+    private TreeNode buildTree(String[] data) {
         if (data == null || data.length == 0) {
             return null;
         }

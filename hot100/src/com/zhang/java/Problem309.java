@@ -35,7 +35,7 @@ public class Problem309 {
      * dp[i][0] = max(dp[i-1][0], dp[i-1][2] - prices[i])
      * dp[i][1] = dp[i-1][0] + prices[i]
      * dp[i][2] = max(dp[i-1][1], dp[i-1][2])
-     * 最大利润 = max(dp[prices.length-1], dp[prices.length-1])
+     * 最大利润 = max(dp[prices.length-1][1], dp[prices.length-1][1])
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param prices
