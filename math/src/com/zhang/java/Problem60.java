@@ -111,11 +111,9 @@ public class Problem60 {
         for (int i = n - 1; i >= 0; i--) {
             //当前位在list中的下标索引
             int index = k / factorial[i];
-            //当前位的值
-            int num = list.get(index);
+            //当前位的值，并且当前位在list中的下标索引index从list中移除
+            int num = list.remove(index);
             sb.append(num);
-            //当前位在list中的下标索引index从list中移除
-            list.remove(index);
             //k减去在k之前的factorial[i]*index个全排列
             k = k - factorial[i] * index;
         }
