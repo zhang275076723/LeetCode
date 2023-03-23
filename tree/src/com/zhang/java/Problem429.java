@@ -52,9 +52,8 @@ public class Problem429 {
             for (int i = 0; i < size; i++) {
                 Node node = queue.poll();
                 list.add(node.val);
-                List<Node> childrenNodeList = node.children;
 
-                for (Node childrenNode : childrenNodeList) {
+                for (Node childrenNode : node.children) {
                     queue.offer(childrenNode);
                 }
             }

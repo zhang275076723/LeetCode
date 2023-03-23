@@ -51,7 +51,7 @@ public class Problem253 {
         //将当前会议的结束时间入小根堆
         priorityQueue.offer(intervals[0][1]);
 
-        for (int i = 1; i < intervals.length; ++i) {
+        for (int i = 1; i < intervals.length; i++) {
             //当前会议的开始时间大于等于小根堆堆顶的会议结束时间，则说明可以共享会议室，堆顶会议结束时间出堆，当前会议结束时间入堆
             if (intervals[i][0] >= priorityQueue.peek()) {
                 priorityQueue.poll();

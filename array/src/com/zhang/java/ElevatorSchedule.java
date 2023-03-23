@@ -120,10 +120,12 @@ public class ElevatorSchedule {
         for (int i = 1; i < floor.length; i++) {
             //电梯停在i+1楼比停在i楼，i+1层之下的乘客需要多爬n1+n2层，i+1层及至上的乘客需要少爬n3层
             if (n1 + n2 < n3) {
+                //更新乘客达到要去楼层所爬的楼层之和count，和电梯停的最佳楼层bestFloor
                 count = count + n1 + n2 - n3;
                 bestFloor = minFloor + i;
             }
 
+            //每次电梯往上停一层，更新n1、n2、n3
             n1 = n1 + n2;
             n2 = floor[i];
             n3 = n3 - n2;
