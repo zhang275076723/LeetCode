@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/4/29 15:57
  * @Author zsy
- * @Description 二叉树的中序遍历 字节面试题 类比Problem144、Problem145 中序遍历类比Problem173
+ * @Description 二叉树的中序遍历 字节面试题 类比Problem144、Problem145、Problem589、Problem590 中序遍历类比Problem173
  * 给定一个二叉树的根节点 root ，返回 它的 中序 遍历 。
  * <p>
  * 输入：root = [1,null,2,3]
@@ -61,16 +61,16 @@ public class Problem94 {
         }
 
         List<Integer> result = new ArrayList<>();
-        Deque<TreeNode> stack = new LinkedList<>();
+        Stack<TreeNode> stack = new Stack<>();
         TreeNode node = root;
 
         while (!stack.isEmpty() || node != null) {
             while (node != null) {
-                stack.offerLast(node);
+                stack.push(node);
                 node = node.left;
             }
 
-            node = stack.pollLast();
+            node = stack.pop();
             result.add(node.val);
             node = node.right;
         }

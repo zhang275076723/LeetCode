@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/26 8:15
  * @Author zsy
- * @Description 二叉树的前序遍历 类比Problem94、Problem145
+ * @Description 二叉树的前序遍历 类比Problem94、Problem145、Problem589、Problem590
  * 给你二叉树的根节点 root ，返回它节点值的 前序 遍历。
  * <p>
  * 输入：root = [1,null,2,3]
@@ -68,19 +68,19 @@ public class Problem144 {
         }
 
         List<Integer> list = new ArrayList<>();
-        Deque<TreeNode> stack = new LinkedList<>();
-        stack.offerLast(root);
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
 
         while (!stack.isEmpty()) {
-            TreeNode node = stack.pollLast();
+            TreeNode node = stack.pop();
             list.add(node.val);
 
             //先将右子树节点压入栈中，再将左子树节点压入栈中
             if (node.right != null) {
-                stack.offerLast(node.right);
+                stack.push(node.right);
             }
             if (node.left != null) {
-                stack.offerLast(node.left);
+                stack.push(node.left);
             }
         }
 
@@ -100,7 +100,7 @@ public class Problem144 {
         }
 
         List<Integer> list = new ArrayList<>();
-        Deque<TreeNode> stack = new LinkedList<>();
+        Stack<TreeNode> stack = new Stack<>();
         TreeNode node = root;
 
         while (!stack.isEmpty() || node != null) {

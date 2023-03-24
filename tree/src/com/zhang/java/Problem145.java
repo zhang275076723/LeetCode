@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/26 9:16
  * @Author zsy
- * @Description 二叉树的后序遍历 类比Problem94、Problem144、Offer33
+ * @Description 二叉树的后序遍历 类比Problem94、Problem144、Problem589、Problem590
  * 给你一棵二叉树的根节点 root ，返回其节点值的 后序遍历 。
  * <p>
  * 输入：root = [1,null,2,3]
@@ -63,23 +63,23 @@ public class Problem145 {
 
         //使用LinkedList便于首添加，首添加时间复杂度O(1)
         LinkedList<Integer> list = new LinkedList<>();
-        Deque<TreeNode> stack = new LinkedList<>();
-        stack.offerLast(root);
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
 
         while (!stack.isEmpty()) {
-            TreeNode node = stack.pollLast();
+            TreeNode node = stack.pop();
 
-            //首添加到结果集合
+            //首添加
             list.addFirst(node.val);
 
-            //先将左子树节点压入栈中
+            //先将左子节点压入栈中，出栈时会后遍历到左子节点，list首添加，左子节点在list集合前面
             if (node.left != null) {
-                stack.offerLast(node.left);
+                stack.push(node.left);
             }
 
-            //再将右子树节点压入栈中
+            //再将右子节点压入栈中，出栈时会先遍历到右子节点，list首添加，右子节点在list集合后面
             if (node.right != null) {
-                stack.offerLast(node.right);
+                stack.push(node.right);
             }
         }
 

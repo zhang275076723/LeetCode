@@ -1,6 +1,5 @@
 package com.zhang.java;
 
-import java.sql.Time;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;

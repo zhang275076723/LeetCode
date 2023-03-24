@@ -3,65 +3,91 @@ package com.zhang.java;
 import java.util.*;
 
 /**
- * @Date 2023/3/23 08:12
+ * @Date 2023/3/24 08:46
  * @Author zsy
- * @Description N 叉树的层序遍历 类比Problem102、Problem103、Problem107、Problem589、Problem590
- * 给定一个 N 叉树，返回其节点值的层序遍历。（即从左到右，逐层遍历）。
- * 树的序列化输入是用层序遍历，每组子节点都由 null 值分隔（参见示例）。
+ * @Description N 叉树的前序遍历 类比Problem94、Problem144、Problem145、Problem429、Problem590
+ * 给定一个 n 叉树的根节点 root ，返回 其节点值的 前序遍历 。
+ * n 叉树 在输入中按层序遍历进行序列化表示，每组子节点由空值 null 分隔（请参见示例）。
  * <p>
  * 输入：root = [1,null,3,2,4,null,5,6]
- * 输出：[[1],[3,2,4],[5,6]]
+ * 输出：[1,3,5,6,2,4]
  * <p>
  * 输入：root = [1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]
- * 输出：[[1],[2,3,4,5],[6,7,8,9,10],[11,12,13],[14]]
+ * 输出：[1,2,3,6,7,11,14,4,8,12,5,9,13,10]
  * <p>
- * 树的高度不会超过 1000
- * 树的节点总数在 [0, 10^4] 之间
+ * 节点总数在范围 [0, 10^4]内
+ * 0 <= Node.val <= 10^4
+ * n 叉树的高度小于或等于 1000
  */
-public class Problem429 {
+public class Problem589 {
     public static void main(String[] args) {
-        Problem429 problem429 = new Problem429();
+        Problem589 problem589 = new Problem589();
         String[] data = {"1", "null", "2", "3", "4", "5", "null", "null",
                 "6", "7", "null", "8", "null", "9", "10", "null", "null",
                 "11", "null", "12", "null", "13", "null", "null", "14"};
-        Node root = problem429.buildTree(data);
-        System.out.println(problem429.levelOrder(root));
+        Node root = problem589.buildTree(data);
+        System.out.println(problem589.preorder(root));
+        System.out.println(problem589.preorder2(root));
     }
 
     /**
-     * bfs
+     * 递归前序遍历
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
      */
-    public List<List<Integer>> levelOrder(Node root) {
+    public List<Integer> preorder(Node root) {
         if (root == null) {
             return new ArrayList<>();
         }
 
-        List<List<Integer>> result = new ArrayList<>();
-        Queue<Node> queue = new LinkedList<>();
-        queue.offer(root);
+        List<Integer> list = new ArrayList<>();
 
-        while (!queue.isEmpty()) {
-            List<Integer> list = new ArrayList<>();
-            //当前层元素的个数
-            int size = queue.size();
+        preorder(root, list);
 
-            for (int i = 0; i < size; i++) {
-                Node node = queue.poll();
-                list.add(node.val);
+        return list;
+    }
 
-                for (Node childNode : node.children) {
-                    queue.offer(childNode);
-                }
-            }
-
-            result.add(list);
+    /**
+     * 非递归前序遍历
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param root
+     * @return
+     */
+    public List<Integer> preorder2(Node root) {
+        if (root == null) {
+            return new ArrayList<>();
         }
 
-        return result;
+        List<Integer> list = new ArrayList<>();
+        Stack<Node> stack = new Stack<>();
+        stack.push(root);
+
+        while (!stack.isEmpty()) {
+            Node node = stack.pop();
+            list.add(node.val);
+
+            //当前节点node的子节点按照从右到左的顺序压入栈中
+            for (int i = node.children.size() - 1; i >= 0; i--) {
+                stack.push(node.children.get(i));
+            }
+        }
+
+        return list;
+    }
+
+    private void preorder(Node root, List<Integer> list) {
+        if (root == null) {
+            return;
+        }
+
+        list.add(root.val);
+
+        for (Node childNode : root.children) {
+            preorder(childNode, list);
+        }
     }
 
     /**
@@ -103,9 +129,6 @@ public class Problem429 {
         return root;
     }
 
-    /**
-     * N叉树节点
-     */
     static class Node {
         public int val;
         public List<Node> children;

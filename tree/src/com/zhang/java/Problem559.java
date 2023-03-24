@@ -3,29 +3,52 @@ package com.zhang.java;
 import java.util.*;
 
 /**
- * @Date 2023/3/23 08:12
+ * @Date 2023/3/24 09:55
  * @Author zsy
- * @Description N 叉树的层序遍历 类比Problem102、Problem103、Problem107、Problem589、Problem590
- * 给定一个 N 叉树，返回其节点值的层序遍历。（即从左到右，逐层遍历）。
- * 树的序列化输入是用层序遍历，每组子节点都由 null 值分隔（参见示例）。
+ * @Description N 叉树的最大深度 类比Problem104、Problem111
+ * 给定一个 N 叉树，找到其最大深度。
+ * 最大深度是指从根节点到最远叶子节点的最长路径上的节点总数。
+ * N 叉树输入按层序遍历序列化表示，每组子节点由空值分隔（请参见示例）。
  * <p>
  * 输入：root = [1,null,3,2,4,null,5,6]
- * 输出：[[1],[3,2,4],[5,6]]
+ * 输出：3
  * <p>
  * 输入：root = [1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]
- * 输出：[[1],[2,3,4,5],[6,7,8,9,10],[11,12,13],[14]]
+ * 输出：5
  * <p>
- * 树的高度不会超过 1000
- * 树的节点总数在 [0, 10^4] 之间
+ * 树的深度不会超过 1000 。
+ * 树的节点数目位于 [0, 10^4] 之间。
  */
-public class Problem429 {
+public class Problem559 {
     public static void main(String[] args) {
-        Problem429 problem429 = new Problem429();
+        Problem559 problem559 = new Problem559();
         String[] data = {"1", "null", "2", "3", "4", "5", "null", "null",
                 "6", "7", "null", "8", "null", "9", "10", "null", "null",
                 "11", "null", "12", "null", "13", "null", "null", "14"};
-        Node root = problem429.buildTree(data);
-        System.out.println(problem429.levelOrder(root));
+        Node root = problem559.buildTree(data);
+        System.out.println(problem559.maxDepth(root));
+        System.out.println(problem559.maxDepth2(root));
+    }
+
+    /**
+     * dfs
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param root
+     * @return
+     */
+    public int maxDepth(Node root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int maxDepth = 0;
+
+        for (Node childNode : root.children) {
+            maxDepth = Math.max(maxDepth, maxDepth(childNode));
+        }
+
+        return maxDepth + 1;
     }
 
     /**
@@ -35,33 +58,30 @@ public class Problem429 {
      * @param root
      * @return
      */
-    public List<List<Integer>> levelOrder(Node root) {
+    public int maxDepth2(Node root) {
         if (root == null) {
-            return new ArrayList<>();
+            return 0;
         }
 
-        List<List<Integer>> result = new ArrayList<>();
+        int maxDepth = 0;
         Queue<Node> queue = new LinkedList<>();
         queue.offer(root);
 
         while (!queue.isEmpty()) {
-            List<Integer> list = new ArrayList<>();
-            //当前层元素的个数
             int size = queue.size();
 
             for (int i = 0; i < size; i++) {
                 Node node = queue.poll();
-                list.add(node.val);
 
                 for (Node childNode : node.children) {
                     queue.offer(childNode);
                 }
             }
 
-            result.add(list);
+            maxDepth++;
         }
 
-        return result;
+        return maxDepth;
     }
 
     /**
@@ -103,9 +123,6 @@ public class Problem429 {
         return root;
     }
 
-    /**
-     * N叉树节点
-     */
     static class Node {
         public int val;
         public List<Node> children;
