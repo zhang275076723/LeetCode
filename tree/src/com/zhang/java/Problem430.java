@@ -1,5 +1,9 @@
 package com.zhang.java;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
 /**
  * @Date 2023/1/10 19:18
  * @Author zsy
@@ -81,7 +85,44 @@ public class Problem430 {
         node3.child = node7;
         node8.child = node11;
 
-        Node head = problem430.flatten(node1);
+//        Node head = problem430.flatten(node1);
+        Node head2 = problem430.flatten2(node1);
+    }
+
+    /**
+     * 前序遍历
+     * 根据前序遍历顺序，将节点放在集合中，再按照前序遍历顺序连接节点为链表
+     * 注意：将节点的child指针置空
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param head
+     * @return
+     */
+    public Node flatten(Node head) {
+        if (head == null) {
+            return null;
+        }
+
+        List<Node> list = new ArrayList<>();
+
+//        preorder(head, list);
+        preorder2(head, list);
+
+        //头结点，即head节点
+        Node node = list.remove(0);
+        node.child = null;
+
+        while (!list.isEmpty()) {
+            //node节点的下一个节点
+            Node nextNode = list.remove(0);
+            node.next = nextNode;
+            nextNode.prev = node;
+            //nextNode的child指针置空
+            nextNode.child = null;
+            node = nextNode;
+        }
+
+        return head;
     }
 
     /**
@@ -118,7 +159,7 @@ public class Problem430 {
      * @param head
      * @return
      */
-    public Node flatten(Node head) {
+    public Node flatten2(Node head) {
         if (head == null) {
             return null;
         }
@@ -135,16 +176,17 @@ public class Problem430 {
                     mostRightNode = mostRightNode.next;
                 }
 
-                //当前节点左子树的最右下节点的右指针next指向当前节点的右子树next
-                mostRightNode.next = node.next;
-                //当前节点node的右节点的前驱指针prev指向当前节点左子树的最右下节点
+
+                //当前节点node的右节点的前驱指针prev指向当前节点左子树的最右下节点mostRightNode
                 if (node.next != null) {
                     node.next.prev = mostRightNode;
                 }
+                //当前节点左子树的最右下节点mostRightNode的右指针next指向当前节点node的右子树next
+                mostRightNode.next = node.next;
+                //将当前节点node的左子树child作为右子树next
+                node.next = node.child;
                 //当前节点node的左节点的前驱指针prev指向当前节点node
                 node.child.prev = node;
-                //将当前节点的左子树child作为右子树next
-                node.next = node.child;
                 //当前节点的左子树为空，即child指向null
                 node.child = null;
             }
@@ -153,6 +195,54 @@ public class Problem430 {
         }
 
         return head;
+    }
+
+    /**
+     * 非递归前序遍历
+     *
+     * @param root
+     * @param list
+     */
+    private void preorder(Node root, List<Node> list) {
+        if (root == null) {
+            return;
+        }
+
+        Stack<Node> stack = new Stack<>();
+        Node node = root;
+
+        while (!stack.isEmpty() || node != null) {
+            while (node != null) {
+                list.add(node);
+                stack.push(node);
+                node = node.child;
+            }
+
+            node = stack.pop();
+            node = node.next;
+        }
+    }
+
+    private void preorder2(Node root, List<Node> list) {
+        if (root == null) {
+            return;
+        }
+
+        Stack<Node> stack = new Stack<>();
+        stack.push(root);
+
+        while (!stack.isEmpty()) {
+            Node node = stack.pop();
+            list.add(node);
+
+            //先将右子节点入栈，再将左子节点入栈
+            if (node.next != null) {
+                stack.push(node.next);
+            }
+            if (node.child != null) {
+                stack.push(node.child);
+            }
+        }
     }
 
     static class Node {

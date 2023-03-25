@@ -34,7 +34,7 @@ public class Problem114 {
 
     /**
      * 前序遍历
-     * 根据前序遍历，将节点放在集合中，再按照前序遍历顺序连接节点为链表
+     * 根据前序遍历顺序，将节点放在集合中，再按照前序遍历顺序连接节点为链表
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -49,11 +49,12 @@ public class Problem114 {
         preorder(root, list);
 //        preorder2(root, list);
 
+        //头结点，即root节点
         TreeNode node = list.remove(0);
-        TreeNode nextNode;
 
         while (!list.isEmpty()) {
-            nextNode = list.remove(0);
+            //node节点的下一个节点
+            TreeNode nextNode = list.remove(0);
             node.left = null;
             node.right = nextNode;
             node = nextNode;
