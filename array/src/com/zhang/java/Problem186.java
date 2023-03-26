@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/2/10 10:25
  * @Author zsy
- * @Description 反转字符串中的单词 II 类比Problem58、Problem151、Problem344、Problem541、Problem557、Offer58、Offer58_2
+ * @Description 反转字符串中的单词 II 旋转问题类比Problem61、Problem189、Offer58_2 类比Problem58、Problem151、Problem344、Problem541、Problem557、Offer58、Offer58_2
  * 给定一个字符串，逐个翻转字符串中的每个单词。
  * <p>
  * 输入: ["t","h","e"," ","s","k","y"," ","i","s"," ","b","l","u","e"]
@@ -51,9 +51,9 @@ public class Problem186 {
 
     private void reverse(char[] s, int left, int right) {
         while (left < right) {
-            char c = s[left];
+            char temp = s[left];
             s[left] = s[right];
-            s[right] = c;
+            s[right] = temp;
 
             left++;
             right--;
