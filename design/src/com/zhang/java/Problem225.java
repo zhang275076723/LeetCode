@@ -129,6 +129,7 @@ public class Problem225 {
             int size = queue.size();
             queue.offer(x);
 
+            //x入队之前的元素依次出队，再入队
             for (int i = 0; i < size; i++) {
                 queue.offer(queue.poll());
             }

@@ -33,7 +33,7 @@ public class Problem81 {
 
     /**
      * 二分查找变形，看到有序数组，就要想到二分查找
-     * 时间复杂度O(logn)，空间复杂度O(1)
+     * 平均时间复杂度O(logn)，最坏时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
      * @param target
@@ -55,7 +55,7 @@ public class Problem81 {
             }
 
             //right去重
-            while (left <= right - 1 && nums[right] == nums[right - 1]) {
+            while (left <= right - 1 && nums[right - 1] == nums[right]) {
                 right--;
             }
 
@@ -64,7 +64,7 @@ public class Problem81 {
             //nums[mid]和target相等，则找到，直接返回true
             if (nums[mid] == target) {
                 return true;
-            }else{
+            } else {
                 //nums[mid]和target不相等，则根据nums[left]-nums[mid]和nums[mid]-nums[right]哪边是单调的，
                 //单调部分再和target比较，判断往左找还是往右找
 

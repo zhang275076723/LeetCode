@@ -41,69 +41,12 @@ public class Problem88 {
         int[] nums2 = {2, 5, 6};
         int m = 3;
         int n = 3;
-//        problem88.merge(nums1, m, nums2, n);
-        problem88.merge2(nums1, m, nums2, n);
+        problem88.merge(nums1, m, nums2, n);
         System.out.println(Arrays.toString(nums1));
     }
 
     /**
-     * 暴力
-     * 将两个数组中元素放到新数组中，再重新放回nums1
-     * 时间复杂度O(m+n)，空间复杂度O(m+n)
-     *
-     * @param nums1
-     * @param m
-     * @param nums2
-     * @param n
-     */
-    public void merge(int[] nums1, int m, int[] nums2, int n) {
-        if (m == 0) {
-            for (int i = 0; i < n; i++) {
-                nums1[i] = nums2[i];
-            }
-            return;
-        }
-
-        if (n == 0) {
-            return;
-        }
-
-        int[] result = new int[m + n];
-        int i = 0;
-        int j = 0;
-        int k = 0;
-
-        while (i < m && j < n) {
-            if (nums1[i] < nums2[j]) {
-                result[k] = nums1[i];
-                i++;
-            } else {
-                result[k] = nums2[j];
-                j++;
-            }
-            k++;
-        }
-
-        while (i < m) {
-            result[k] = nums1[i];
-            i++;
-            k++;
-        }
-
-        while (j < n) {
-            result[k] = nums2[j];
-            j++;
-            k++;
-        }
-
-        for (k = 0; k < m + n; k++) {
-            nums1[k] = result[k];
-        }
-    }
-
-    /**
-     * 双指针
-     * 两个指针分别指向数组末尾，选择最大的元素放到num1尾部
+     * 类比归并排序
      * 时间复杂度O(m+n)，空间复杂度O(1)
      *
      * @param nums1
@@ -111,7 +54,7 @@ public class Problem88 {
      * @param nums2
      * @param n
      */
-    public void merge2(int[] nums1, int m, int[] nums2, int n) {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
         if (n == 0) {
             return;
         }
@@ -125,30 +68,25 @@ public class Problem88 {
 
         int i = m - 1;
         int j = n - 1;
-        int index = nums1.length - 1;
+        int k = nums1.length - 1;
 
         while (i >= 0 && j >= 0) {
             if (nums1[i] > nums2[j]) {
-                nums1[index] = nums1[i];
-                index--;
+                nums1[k] = nums1[i];
                 i--;
+                k--;
             } else {
-                nums1[index] = nums2[j];
-                index--;
+                nums1[k] = nums2[j];
                 j--;
+                k--;
             }
-        }
-
-        //nums2已结遍历结束，直接返回
-        if (j == -1) {
-            return;
         }
 
         //nums2没有遍历结束，将nums2剩余元素复制到nums1中
         while (j >= 0) {
-            nums1[index] = nums2[j];
-            index--;
+            nums1[k] = nums2[j];
             j--;
+            k--;
         }
     }
 }

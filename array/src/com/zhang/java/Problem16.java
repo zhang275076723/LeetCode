@@ -48,6 +48,7 @@ public class Problem16 {
 
         quickSort(nums, 0, nums.length - 1);
 
+        //最接近target的数组中三个元素之和
         int result = nums[0] + nums[1] + nums[2];
 
         for (int i = 0; i < nums.length - 2; i++) {
@@ -83,7 +84,7 @@ public class Problem16 {
                     right--;
                 }
 
-                //如果sum比result更接近target，更新result
+                //sum比result更接近target，更新result
                 if (Math.abs(sum - target) < Math.abs(result - target)) {
                     result = sum;
                 }

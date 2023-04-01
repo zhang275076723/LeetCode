@@ -83,12 +83,12 @@ public class Offer36 {
             return null;
         }
 
-        Stack<Node> stack = new Stack<>();
-        Node node = root;
         //头结点
         Node head = null;
-        //当前节点的前驱节点
+        //中序遍历过程中当前节点的前驱节点
         Node pre = null;
+        Stack<Node> stack = new Stack<>();
+        Node node = root;
 
         while (!stack.isEmpty() || node != null) {
             while (node != null) {

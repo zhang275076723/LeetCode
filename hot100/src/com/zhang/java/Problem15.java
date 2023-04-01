@@ -129,12 +129,12 @@ public class Problem15 {
                 }
 
                 //nums[left]去重
-                while (left < right && left > i + 1 && nums[left] == nums[left - 1]) {
+                while (left < right && left - 1 > i && nums[left] == nums[left - 1]) {
                     left++;
                 }
 
                 //nums[right]去重
-                while (left < right && right < nums.length - 1 && nums[right] == nums[right + 1]) {
+                while (left < right && right + 1 < nums.length && nums[right] == nums[right + 1]) {
                     right--;
                 }
             }
