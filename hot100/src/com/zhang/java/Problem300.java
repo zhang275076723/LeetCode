@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/27 11:43
  * @Author zsy
- * @Description 最长递增子序列 华为面试题、思科面试题 类比Problem139、Problem435 子序列和子数组类比Problem718、Problem1143
+ * @Description 最长递增子序列 华为面试题 思科面试题 类比Problem139、Problem435 子序列和子数组类比Problem718、Problem1143
  * 给你一个整数数组 nums ，找到其中最长严格递增子序列的长度。
  * 子序列 是由数组派生而来的序列，删除（或不删除）数组中的元素而不改变其余元素的顺序。
  * 例如，[3,6,2,7] 是数组 [0,3,1,6,2,2,7] 的子序列。
@@ -24,7 +24,8 @@ package com.zhang.java;
 public class Problem300 {
     public static void main(String[] args) {
         Problem300 problem300 = new Problem300();
-        int[] nums = {10, 9, 2, 5, 3, 7, 101, 18};
+//        int[] nums = {10, 9, 2, 5, 3, 7, 101, 18};
+        int[] nums = {0, 6, 7, 8, 4, 5, 9};
         System.out.println(problem300.lengthOfLIS(nums));
         System.out.println(problem300.lengthOfLIS2(nums));
     }
@@ -51,7 +52,7 @@ public class Problem300 {
         int maxLen = 1;
 
         for (int i = 0; i < nums.length; i++) {
-            //赋以nums[i]结尾的最长递增子序列长度为1
+            //初始化以nums[i]结尾的最长递增子序列长度为1
             dp[i] = 1;
 
             for (int j = 0; j < i; j++) {
@@ -96,34 +97,36 @@ public class Problem300 {
         }
 
         //严格递增数组
-        int[] result = new int[nums.length];
-        //严格递增数组的长度
+        int[] arr = new int[nums.length];
+        arr[0] = nums[0];
+        //初始化严格递增数组长度为1
         int maxLen = 1;
-        result[0] = nums[0];
 
         for (int i = 1; i < nums.length; i++) {
             //当前元素放到严格递增数组的尾部
-            if (nums[i] > result[maxLen - 1]) {
-                result[maxLen] = nums[i];
+            if (arr[maxLen - 1] < arr[i]) {
+                arr[maxLen] = nums[i];
                 maxLen++;
-            } else {
-                //当前元素替换严格递增数组中的元素
-                int left = 0;
-                int right = maxLen - 1;
-                int mid;
-
-                while (left < right) {
-                    mid = left + ((right - left) >> 1);
-
-                    if (nums[i] > result[mid]) {
-                        left = mid + 1;
-                    } else {
-                        right = mid;
-                    }
-                }
-
-                result[left] = nums[i];
+                continue;
             }
+
+            //当前元素替换严格递增数组中的元素
+            int left = 0;
+            int right = maxLen - 1;
+            int mid;
+
+            while (left < right) {
+                mid = left + ((right - left) >> 1);
+
+                if (arr[mid] < nums[i]) {
+                    left = mid + 1;
+                } else {
+                    right = mid;
+                }
+            }
+
+            //当前元素nums[i]替换arr[left]
+            arr[left] = nums[i];
         }
 
         return maxLen;

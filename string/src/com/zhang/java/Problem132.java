@@ -47,10 +47,12 @@ public class Problem132 {
         boolean[][] dp1 = new boolean[s.length()][s.length()];
 
         for (int i = 0; i < s.length(); i++) {
+            //只有一个字符也是回文串
             dp1[i][i] = true;
         }
 
         for (int i = 1; i < s.length(); i++) {
+            //用于s[i]-s[i+1]，即两个字符的情况
             dp1[i][i - 1] = true;
         }
 
@@ -70,17 +72,16 @@ public class Problem132 {
             //s[0]-s[i]是回文串，则分割s[0]-s[i]为回文子串的最少分割次数为0
             if (dp1[0][i]) {
                 dp2[i] = 0;
-            } else {
-                //s[0]-s[i]不是回文串
+                continue;
+            }
 
-                //初始化分割s[0]-s[i]为回文串的最少分割次数为i
-                dp2[i] = i;
+            //初始化分割s[0]-s[i]为回文串的最少分割次数为i
+            dp2[i] = i;
 
-                for (int j = 0; j < i; j++) {
-                    //s[j+1]-s[i]是回文串，则只需要分割s[0]-s[j]为回文子串的最少分割次数+1
-                    if (dp1[j + 1][i]) {
-                        dp2[i] = Math.min(dp2[i], dp2[j] + 1);
-                    }
+            for (int j = 0; j < i; j++) {
+                //s[j+1]-s[i]是回文串，则dp2[i]为分割s[0]-s[j]为回文子串的最少分割次数dp[j]+1中取最小值
+                if (dp1[j + 1][i]) {
+                    dp2[i] = Math.min(dp2[i], dp2[j] + 1);
                 }
             }
         }

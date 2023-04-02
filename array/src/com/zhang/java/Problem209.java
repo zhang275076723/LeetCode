@@ -228,9 +228,9 @@ public class Problem209 {
             if (nums[mid] == target) {
                 return mid;
             } else if (nums[mid] < target) {
-                right = mid + 1;
+                left = mid + 1;
             } else {
-                left = mid - 1;
+                right = mid - 1;
             }
         }
 
