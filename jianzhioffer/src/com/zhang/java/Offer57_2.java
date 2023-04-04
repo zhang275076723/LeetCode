@@ -193,15 +193,17 @@ public class Offer57_2 {
         for (int i = 1; i <= target / 2 + 1; i++) {
             sum = sum + i;
 
-            //map中key存在为pre-target的区间和，则map.get(sum-target)+1到i的连续序列之和为target
+            //map中key存在为pre-target的区间和，则index+1到i的连续序列之和为target
             if (map.containsKey(sum - target)) {
-                int[] temp = new int[i - map.get(sum - target)];
+                //和为target连续序列的起始元素的前一个元素
+                int index = map.get(sum - target);
+                int[] arr = new int[i - index];
 
-                for (int j = 0; j < temp.length; j++) {
-                    temp[j] = map.get(sum - target) + 1 + j;
+                for (int j = 0; j < arr.length; j++) {
+                    arr[j] = index + j + 1;
                 }
 
-                list.add(temp);
+                list.add(arr);
             }
 
             //1到i的连续序列之和sum和最后一个元素i，加入map中

@@ -3,11 +3,12 @@ package com.zhang.java;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.Random;
 
 /**
  * @Date 2022/5/15 8:30
  * @Author zsy
- * @Description 数组中的第K个最大元素 字节面试题 类比Problem347、Problem451、Problem692、Offer40
+ * @Description 数组中的第K个最大元素 字节面试题 类比Problem347、Problem451、Problem692、Problem703、Offer40
  * 给定整数数组 nums 和整数 k，请返回数组中第 k 个最大的元素。
  * 请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
  * <p>
@@ -65,7 +66,7 @@ public class Problem215 {
     }
 
     /**
-     * 大根堆
+     * 小根堆
      * 时间复杂度O(nlogn)，空间复杂度O(logn)
      *
      * @param nums
@@ -79,19 +80,22 @@ public class Problem215 {
 
         PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(nums.length, new Comparator<Integer>() {
             @Override
-            public int compare(Integer o1, Integer o2) {
-                return o2 - o1;
+            public int compare(Integer a, Integer b) {
+                return a - b;
             }
         });
 
-        //建大根堆
-        for (int i = 0; i < nums.length; i++) {
+        //建立大小为k的小根堆
+        for (int i = 0; i < k; i++) {
             priorityQueue.offer(nums[i]);
         }
 
-        //移除堆顶k-1个元素
-        for (int i = 1; i < k; i++) {
-            priorityQueue.poll();
+        //如果当前元素大于小根堆堆顶元素，则堆顶元素出堆，当前元素入堆
+        for (int i = k; i < nums.length; i++) {
+            if (nums[i] > priorityQueue.peek()) {
+                priorityQueue.poll();
+                priorityQueue.offer(nums[i]);
+            }
         }
 
         //当前堆顶即为第k大元素
@@ -99,7 +103,7 @@ public class Problem215 {
     }
 
     /**
-     * 手动实现大根堆
+     * 手动实现小根堆
      * 时间复杂度O(nlogn)，空间复杂度O(logn)
      *
      * @param nums
@@ -111,54 +115,28 @@ public class Problem215 {
             return Integer.MIN_VALUE;
         }
 
-        //建堆
-        for (int i = nums.length / 2 - 1; i >= 0; i--) {
-            heapify(nums, i, nums.length);
+        //小根堆数组
+        int[] arr = new int[k];
+
+        for (int i = 0; i < k; i++) {
+            arr[i] = nums[i];
         }
 
-        int heapSize = nums.length;
-
-        //移除堆顶k-1个元素
-        for (int i = 1; i < k; i++) {
-            int temp = nums[0];
-            nums[0] = nums[heapSize - 1];
-            nums[heapSize - 1] = temp;
-
-            heapSize--;
-            heapify(nums, 0, heapSize);
+        //建立小根堆
+        for (int i = arr.length / 2 - 1; i >= 0; i--) {
+            heapify(arr, i, arr.length);
         }
 
-        //当前堆顶即为第k大元素
-        return nums[0];
-    }
-
-    /**
-     * 大根堆整堆
-     * 时间复杂度O(logn)，空间复杂度O(logn)
-     *
-     * @param nums
-     * @param i
-     * @param heapSize
-     */
-    private void heapify(int[] nums, int i, int heapSize) {
-        int maxIndex = i;
-        int leftIndex = i * 2 + 1;
-        int rightIndex = i * 2 + 2;
-
-        if (leftIndex < heapSize && nums[leftIndex] > nums[maxIndex]) {
-            maxIndex = leftIndex;
-        }
-        if (rightIndex < heapSize && nums[rightIndex] > nums[maxIndex]) {
-            maxIndex = rightIndex;
+        //如果当前元素大于小根堆堆顶元素，则堆顶元素出堆，当前元素入堆
+        for (int i = k; i < nums.length; i++) {
+            if (nums[i] > arr[0]) {
+                arr[0] = nums[i];
+                heapify(arr, 0, arr.length);
+            }
         }
 
-        //继续向下整堆
-        if (maxIndex != i) {
-            int temp = nums[i];
-            nums[i] = nums[maxIndex];
-            nums[maxIndex] = temp;
-            heapify(nums, maxIndex, heapSize);
-        }
+        //小根堆堆顶元素即为第k大元素
+        return arr[0];
     }
 
     /**
@@ -195,5 +173,34 @@ public class Problem215 {
         nums[left] = temp;
 
         return left;
+    }
+
+    /**
+     * 小根堆整堆
+     * 时间复杂度O(logn)，空间复杂度O(logn)
+     *
+     * @param nums
+     * @param i
+     * @param heapSize
+     */
+    private void heapify(int[] nums, int i, int heapSize) {
+        int index = i;
+        int leftIndex = i * 2 + 1;
+        int rightIndex = i * 2 + 2;
+
+        if (leftIndex < heapSize && nums[leftIndex] < nums[index]) {
+            index = leftIndex;
+        }
+        if (rightIndex < heapSize && nums[rightIndex] < nums[index]) {
+            index = rightIndex;
+        }
+
+        //继续向下整堆
+        if (index != i) {
+            int temp = nums[i];
+            nums[i] = nums[index];
+            nums[index] = temp;
+            heapify(nums, index, heapSize);
+        }
     }
 }

@@ -41,7 +41,7 @@ public class Problem1696 {
      * 动态规划
      * dp[i]：跳跃到nums[i]得到的最大得分
      * dp[i] = max(dp[j] + nums[j]) (i-k < j < i)
-     * 时间复杂度O(n^2)，空间复杂度O(n)
+     * 时间复杂度O(nk)，空间复杂度O(n)
      *
      * @param nums
      * @param k
@@ -66,7 +66,7 @@ public class Problem1696 {
      * 动态规划+单调队列
      * dp[i]：跳跃到nums[i]得到的最大得分
      * 单调递减队列存放dp数组中元素的下标索引
-     * 1、队首元素dp[j]中的j小于i-k，则dp[j]不在当前dp[i]所要查询的dp[i-k]-dp[i-1]范围之内，队首元素出队
+     * 1、i减去队首元素dp[j]中的j大于k，则dp[j]不在当前dp[i]所要查询的dp[i-k]-dp[i-1]范围之内，队首元素出队
      * 2、当前dp[i]不满足单调递减队列，队尾元素出队，当前dp[i]入队
      * 时间复杂度O(n)，空间复杂度O(n)
      *
@@ -82,8 +82,8 @@ public class Problem1696 {
         queue.offerLast(0);
 
         for (int i = 1; i < nums.length; i++) {
-            //队首元素dp[j]中的j小于i-k，则dp[j]不在当前dp[i]所要查询的dp[i-k]-dp[i-1]范围之内，队首元素出队
-            while (!queue.isEmpty() && queue.peekFirst() < i - k) {
+            //i减去队首元素dp[j]中的j大于k，则dp[j]不在当前dp[i]所要查询的dp[i-k]-dp[i-1]范围之内，队首元素出队
+            while (!queue.isEmpty() && i - queue.peekFirst() > k) {
                 queue.pollFirst();
             }
 

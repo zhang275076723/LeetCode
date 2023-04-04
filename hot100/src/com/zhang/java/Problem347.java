@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/2 10:09
  * @Author zsy
- * @Description 前 K 个高频元素 华为机试题、腾讯机试题、字节面试题 类比Problem215、Problem451、Problem692、Offer40
+ * @Description 前 K 个高频元素 华为机试题、腾讯机试题、字节面试题 类比Problem215、Problem451、Problem692、Problem703、Offer40
  * 给你一个整数数组 nums 和一个整数 k ，请你返回其中出现频率前 k 高的元素。你可以按 任意顺序 返回答案。
  * <p>
  * 输入: nums = [1,1,1,2,2,3], k = 2
@@ -134,7 +134,7 @@ public class Problem347 {
     }
 
     /**
-     * 手动实现小根堆，同topKFrequent2(int[] nums, int k)
+     * 手动实现小根堆
      * 时间复杂度O(nlogk)，空间复杂度O(n)，哈希表大小为O(n)，堆大小为O(k)
      *
      * @param nums
@@ -227,28 +227,28 @@ public class Problem347 {
      * 时间复杂度O(logn)，空间复杂度O(1)
      *
      * @param arr
-     * @param index
+     * @param i
      * @param heapSize
      */
-    private void heapify(int[][] arr, int index, int heapSize) {
-        int minIndex = index;
-        int leftIndex = 2 * index + 1;
-        int rightIndex = 2 * index + 2;
+    private void heapify(int[][] arr, int i, int heapSize) {
+        int index = i;
+        int leftIndex = 2 * i + 1;
+        int rightIndex = 2 * i + 2;
 
-        if (leftIndex < heapSize && arr[leftIndex][1] < arr[minIndex][1]) {
-            minIndex = leftIndex;
+        if (leftIndex < heapSize && arr[leftIndex][1] < arr[index][1]) {
+            index = leftIndex;
         }
 
-        if (rightIndex < heapSize && arr[rightIndex][1] < arr[minIndex][1]) {
-            minIndex = rightIndex;
+        if (rightIndex < heapSize && arr[rightIndex][1] < arr[index][1]) {
+            index = rightIndex;
         }
 
-        if (minIndex != index) {
-            int[] temp = arr[index];
-            arr[index] = arr[minIndex];
-            arr[minIndex] = temp;
+        if (index != i) {
+            int[] temp = arr[i];
+            arr[i] = arr[index];
+            arr[index] = temp;
 
-            heapify(arr, minIndex, heapSize);
+            heapify(arr, index, heapSize);
         }
     }
 }
