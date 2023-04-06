@@ -133,14 +133,14 @@ public class Problem1206 {
             }
 
             //获取要插入跳表的跳表节点高度
-            int level = getHeight();
+            int nodeLevel = getHeight();
             //更新跳表的高度
-            this.level = Math.max(this.level, level);
+            level = Math.max(level, nodeLevel);
             //要插入跳表的跳表节点
-            SkiplistNode addNode = new SkiplistNode(num, level);
+            SkiplistNode addNode = new SkiplistNode(num, nodeLevel);
 
             //从第一层开始，addNode加入到每一层有序链表中
-            for (int i = 0; i < level; i++) {
+            for (int i = 0; i < nodeLevel; i++) {
                 addNode.next[i] = path[i].next[i];
                 path[i].next[i] = addNode;
             }
@@ -217,7 +217,9 @@ public class Problem1206 {
         private static class SkiplistNode {
             //当前跳表节点的值
             private int val;
-            //不同层次高度中当前跳表节指向下一个跳表节点的指针数组，next数组的长度为当前跳表节的高度
+            //当前跳表节在不同层中的下一个跳表节点数组，next数组的长度为当前跳表节的高度
+            //next[1]：当前跳表节在第2层中的下一个跳表节点
+            //next[4]：当前跳表节在第5层中的下一个跳表节点
             private SkiplistNode[] next;
 
             public SkiplistNode(int val, int level) {
