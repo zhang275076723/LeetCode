@@ -87,7 +87,7 @@ public class Problem219 {
         int right = 0;
 
         while (right < nums.length) {
-            //窗口中存在相等的nums[right]，两个元素的索引下标小于等于k，返回true
+            //滑动窗口中已经存在nums[right]，并且两个元素的索引下标小于等于k，返回true
             if (set.contains(nums[right])) {
                 return true;
             }
@@ -96,7 +96,7 @@ public class Problem219 {
             set.add(nums[right]);
             right++;
 
-            //始终保持窗口大小不超过k，当窗口大小大于k时，nums[left]从set中移除，左指针右移
+            //始终保持滑动窗口大小不超过k，当滑动窗口大小大于k时，nums[left]从set中移除，左指针右移
             if (right - left > k) {
                 set.remove(nums[left]);
                 left++;

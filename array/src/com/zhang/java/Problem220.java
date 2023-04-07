@@ -44,23 +44,25 @@ public class Problem220 {
      * @return
      */
     public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
-        //TreeSet中才有ceiling()，TreeSet添加删除时间复杂度O(logn)
+        //TreeSet中才有ceiling()，TreeSet添加、删除、查找的时间复杂度都为O(logn)
         TreeSet<Integer> set = new TreeSet<>();
         int left = 0;
         int right = 0;
 
         while (right < nums.length) {
-            //找set中大于等于nums[right]-t的最小元素
+            //通过TreeSet在O(logn)快速找到，set中大于等于nums[right]-t的最小元素
             Integer num = set.ceiling(nums[right] - t);
 
-            //num存在，并且nums[right]和num之差的绝对值小于等于t，返回true
+            //num存在，并且nums[right]和num差的绝对值小于等于t，返回true
             if (num != null && Math.abs(nums[right] - num) <= t) {
                 return true;
             }
 
+            //nums[right]加入set，右指针右移
             set.add(nums[right]);
             right++;
 
+            //始终保持滑动窗口大小不超过k，当滑动窗口大小大于k时，nums[left]从set中移除，左指针右移
             if (right - left > k) {
                 set.remove(nums[left]);
                 left++;
