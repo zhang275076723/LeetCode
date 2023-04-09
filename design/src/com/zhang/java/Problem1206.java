@@ -185,6 +185,7 @@ public class Problem1206 {
             //从第一层到deleteNode的最高层，将deleteNode从当前层中删除
             for (int i = 0; i < deleteNode.next.length; i++) {
                 update[i].next[i] = deleteNode.next[i];
+                //也可以写成update[i].next[i] = update[i].next[i].next[i];
             }
 
             //更新跳表的高度，由跳表的高度开始往下遍历，判断当前层头结点的下一个节点是否为空，如果为空，跳表高度减1

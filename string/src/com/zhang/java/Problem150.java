@@ -58,6 +58,7 @@ public class Problem150 {
 
         for (String str : tokens) {
             if ("+".equals(str)) {
+                //先出栈的元素为num2，后出栈的元素为num1
                 int num2 = stack.pop();
                 int num1 = stack.pop();
                 stack.push(num1 + num2);

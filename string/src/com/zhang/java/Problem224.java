@@ -34,11 +34,12 @@ public class Problem224 {
         System.out.println(problem224.calculate2(s));
         System.out.println(problem224.calculate3(s));
 
-//        String[] tokens = {"10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"};
-        String[] tokens = {"3", "5", "2", "/", "+"};
+        String[] tokens = {"10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"};
         String infix = problem224.suffixToInfix(tokens);
         String[] suffix = problem224.infixToSuffix(infix);
+        //(((10*(6/((9+3)*(-11))))+17)+5)
         System.out.println(infix);
+        //[10, 6, 9, 3, +, 0, 11, -, *, /, *, 17, +, 5, +]
         System.out.println(Arrays.toString(suffix));
     }
 
@@ -100,7 +101,8 @@ public class Problem224 {
                     numStack.offerLast(0);
                     opsStack.offerLast(c);
                 } else {
-                    //如果操作符栈顶运算符优先级大于等于当前运算符优先级时，操作符栈顶运算符出栈，数字栈出栈，进行运算，再将运算结果重新入数字栈
+                    //如果操作符栈顶运算符优先级大于等于当前运算符优先级，则操作符栈顶运算符出栈，数字栈出栈，
+                    //进行运算，再将运算结果重新入数字栈
                     while (!opsStack.isEmpty() && getPriority(opsStack.peekLast()) >= getPriority(c)) {
                         int num = operation(numStack, opsStack);
                         numStack.offerLast(num);
@@ -176,7 +178,7 @@ public class Problem224 {
     }
 
     /**
-     * 中缀表达式s转换为后缀表达式(逆波兰式)，然后再求结果
+     * 中缀表达式s转换为后缀表达式(逆波兰式)，然后根据后缀表达式求结果
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param s
@@ -184,12 +186,13 @@ public class Problem224 {
      */
     public int calculate3(String s) {
         Stack<Integer> stack = new Stack<>();
-        String[] token = infixToSuffix(s);
+        String[] suffix = infixToSuffix(s);
 
-        for (int i = 0; i < token.length; i++) {
-            String str = token[i];
+        for (int i = 0; i < suffix.length; i++) {
+            String str = suffix[i];
 
             if ("+".equals(str)) {
+                //先出栈的元素为num2，后出栈的元素为num1
                 int num2 = stack.pop();
                 int num1 = stack.pop();
                 stack.push(num1 + num2);
@@ -197,6 +200,14 @@ public class Problem224 {
                 int num2 = stack.pop();
                 int num1 = stack.pop();
                 stack.push(num1 - num2);
+            } else if ("*".equals(str)) {
+                int num2 = stack.pop();
+                int num1 = stack.pop();
+                stack.push(num1 * num2);
+            } else if ("/".equals(str)) {
+                int num2 = stack.pop();
+                int num1 = stack.pop();
+                stack.push(num1 / num2);
             } else {
                 stack.push(Integer.parseInt(str));
             }
@@ -213,6 +224,7 @@ public class Problem224 {
      * @return
      */
     private int operation(Deque<Integer> numStack, Deque<Character> opsStack) {
+        //先出栈的元素为num2，后出栈的元素为num1
         int num2 = numStack.pollLast();
         int num1 = numStack.pollLast();
         char c = opsStack.pollLast();
@@ -261,9 +273,10 @@ public class Problem224 {
      * @return
      */
     private String[] infixToSuffix(String s) {
+        //后缀表达式集合
         List<String> list = new ArrayList<>();
+        //操作符栈
         Stack<Character> stack = new Stack<>();
-        int num = 0;
 
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
@@ -275,30 +288,31 @@ public class Problem224 {
 
             //数字
             if (c >= '0' && c <= '9') {
-                num = num * 10 + (c - '0');
-                //当前是数字的最后一位
-                if (i == s.length() - 1 || (s.charAt(i + 1) < '0' || s.charAt(i + 1) > '9')) {
-                    list.add(num + "");
-                    num = 0;
+                int num = c - '0';
+                while (i + 1 < s.length() && s.charAt(i + 1) >= '0' && s.charAt(i + 1) <= '9') {
+                    num = num * 10 + s.charAt(i + 1) - '0';
+                    i++;
                 }
+                list.add(num + "");
             } else if (c == '(') {
                 //左括号
                 stack.push(c);
             } else if (c == ')') {
-                //右括号
+                //右括号，栈中左括号之前的所有运算符加入后缀表达式集合list中
                 while (!stack.isEmpty() && stack.peek() != '(') {
                     list.add(stack.pop() + "");
                 }
                 //左括号出栈
                 stack.pop();
             } else {
-                //负号，转换为0-num
-                if ((i == 0 && c == '-') ||
-                        (s.charAt(i - 1) == '(' && c == '-')) {
+                //运算符，+-*/
+
+                //首位为'-'或存在"(-"这种情况，转换为0-num，即0加入后缀表达式集合list中，运算符c入栈
+                if ((i == 0 && c == '-') || (s.charAt(i - 1) == '(' && c == '-')) {
                     list.add("0");
                     stack.push(c);
                 } else {
-                    //运算符，将栈顶元素运算符优先级大于等于当前运算符优先级的符号输出
+                    //如果栈顶元素运算符优先级大于等于当前运算符优先级，则栈顶元素出栈，加入后缀表达式集合list中
                     while (!stack.isEmpty() && (getPriority(stack.peek()) >= getPriority(c))) {
                         list.add(stack.pop() + "");
                     }
@@ -307,30 +321,32 @@ public class Problem224 {
             }
         }
 
-        //栈中剩余元素输出
+        //栈中剩余操作符出栈，加入后缀表达式集合中
         while (!stack.isEmpty()) {
             list.add(stack.pop() + "");
         }
 
-        return list.toArray(new String[0]);
+        //后缀表达式集合转换为后缀表示式数组
+        return list.toArray(new String[list.size()]);
     }
 
     /**
      * 后缀表达式转换为中缀表达式
      * 1、如果遇到数字，则直接入栈
-     * 2、遇到符号，则出栈两个数进行拼接，再入栈
+     * 2、遇到符号，则出栈两个数进行拼接，结果重新入栈
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param token
      * @return
      */
-    private String suffixToInfix(String[] token) {
+    private String suffixToInfix(String[] suffix) {
         Stack<String> stack = new Stack<>();
 
-        for (int i = 0; i < token.length; i++) {
-            String str = token[i];
+        for (int i = 0; i < suffix.length; i++) {
+            String str = suffix[i];
 
             if ("+".equals(str)) {
+                //先出栈的元素为num2，后出栈的元素为num1
                 String num2 = stack.pop();
                 String num1 = stack.pop();
 
@@ -342,6 +358,7 @@ public class Problem224 {
                     num2 = "(" + num2 + ")";
                 }
 
+                //结果重新入栈
                 stack.push("(" + num1 + "+" + num2 + ")");
             } else if ("-".equals(str)) {
                 String num2 = stack.pop();

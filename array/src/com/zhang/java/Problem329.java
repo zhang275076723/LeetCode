@@ -54,8 +54,7 @@ public class Problem329 {
 
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
-                backtrack(i, j, matrix, dp);
-                maxLen = Math.max(maxLen, dp[i][j]);
+                maxLen = Math.max(maxLen, backtrack(i, j, matrix, dp));
             }
         }
 
@@ -155,36 +154,44 @@ public class Problem329 {
         return maxLen;
     }
 
-    private void backtrack(int i, int j, int[][] matrix, int[][] dp) {
-        //matrix[i][j]超过数组范围，或已经找到以matrix[i][j]起始的最长递增路径长度，直接返回
+    /**
+     * 返回以matrix[i][j]开始的最长递增路径的长度
+     *
+     * @param i
+     * @param j
+     * @param matrix
+     * @param dp
+     * @return
+     */
+    private int backtrack(int i, int j, int[][] matrix, int[][] dp) {
+        //matrix[i][j]超过数组范围，或已经找到以matrix[i][j]开始的最长递增路径长度，直接返回
         if (i < 0 || i >= matrix.length || j < 0 || j >= matrix[0].length || dp[i][j] != 0) {
-            return;
+            return dp[i][j];
         }
 
+        //以matrix[i][j]开始的最长递增路径长度，赋初值为1
         dp[i][j] = 1;
 
         //往上找
         if (i - 1 >= 0 && matrix[i][j] < matrix[i - 1][j]) {
-            backtrack(i - 1, j, matrix, dp);
-            dp[i][j] = Math.max(dp[i][j], dp[i - 1][j] + 1);
+            dp[i][j] = Math.max(dp[i][j], backtrack(i - 1, j, matrix, dp) + 1);
         }
 
         //往下找
         if (i + 1 < matrix.length && matrix[i][j] < matrix[i + 1][j]) {
-            backtrack(i + 1, j, matrix, dp);
-            dp[i][j] = Math.max(dp[i][j], dp[i + 1][j] + 1);
+            dp[i][j] = Math.max(dp[i][j], backtrack(i + 1, j, matrix, dp) + 1);
         }
 
         //往左找
         if (j - 1 >= 0 && matrix[i][j] < matrix[i][j - 1]) {
-            backtrack(i, j - 1, matrix, dp);
-            dp[i][j] = Math.max(dp[i][j], dp[i][j - 1] + 1);
+            dp[i][j] = Math.max(dp[i][j], backtrack(i, j - 1, matrix, dp) + 1);
         }
 
         //往右找
         if (j + 1 < matrix[0].length && matrix[i][j] < matrix[i][j + 1]) {
-            backtrack(i, j + 1, matrix, dp);
-            dp[i][j] = Math.max(dp[i][j], dp[i][j + 1] + 1);
+            dp[i][j] = Math.max(dp[i][j], backtrack(i, j + 1, matrix, dp) + 1);
         }
+
+        return dp[i][j];
     }
 }

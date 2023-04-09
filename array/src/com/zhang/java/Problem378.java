@@ -48,7 +48,7 @@ public class Problem378 {
      * @return
      */
     public int kthSmallest(int[][] matrix, int k) {
-        //小根堆，按照arr[0]由小到大排序
+        //小根堆
         Queue<int[]> priorityQueue = new PriorityQueue<>(matrix.length, new Comparator<int[]>() {
             @Override
             public int compare(int[] arr1, int[] arr2) {
