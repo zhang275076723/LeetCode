@@ -62,7 +62,7 @@ public class Offer47 {
         }
 
         int[][] dp = new int[grid.length][grid[0].length];
-
+        //dp[0][0]初始化
         dp[0][0] = grid[0][0];
 
         for (int i = 1; i < grid.length; i++) {

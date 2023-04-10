@@ -23,11 +23,6 @@ import java.util.Queue;
  * 0 <= k <= 20
  */
 public class Offer13 {
-    /**
-     * dfs能够达到的格子数量
-     */
-    private int count = 0;
-
     public static void main(String[] args) {
         Offer13 offer13 = new Offer13();
         System.out.println(offer13.movingCount(16, 8, 4));
@@ -50,9 +45,7 @@ public class Offer13 {
             return 1;
         }
 
-        backtrack(0, 0, m, n, k, new boolean[m][n]);
-
-        return count;
+        return backtrack(0, 0, m, n, k, new boolean[m][n]);
     }
 
     /**
@@ -76,22 +69,22 @@ public class Offer13 {
         Queue<int[]> queue = new LinkedList<>();
         boolean[][] visited = new boolean[m][n];
         queue.offer(new int[]{0, 0});
-        visited[0][0] = true;
 
         while (!queue.isEmpty()) {
             int[] arr = queue.poll();
+
+            //当前节点超过矩阵范围，或者当前节点已被访问，或者当前节点行列坐标数位之和大于k，则不合法，直接进行下次循环
+            if (arr[0] < 0 || arr[0] >= m || arr[1] < 0 || arr[1] >= n || visited[arr[0]][arr[1]] ||
+                    getNumSum(arr[0], arr[1]) > k) {
+                continue;
+            }
+
+            visited[arr[0]][arr[1]] = true;
             count++;
 
-            //因为从(0,0)开始往右下角走，所以只需要考虑向下和向右的情况
-            if (arr[0] + 1 < m && !visited[arr[0] + 1][arr[1]] && getNumSum(arr[0] + 1, arr[1]) <= k) {
-                queue.offer(new int[]{arr[0] + 1, arr[1]});
-                visited[arr[0] + 1][arr[1]] = true;
-            }
-
-            if (arr[1] + 1 < n && !visited[arr[0]][arr[1] + 1] && getNumSum(arr[0], arr[1] + 1) <= k) {
-                queue.offer(new int[]{arr[0], arr[1] + 1});
-                visited[arr[0]][arr[1] + 1] = true;
-            }
+            //因为从(0,0)开始往右下角走，所以只需要考虑向下和向右这两种情况
+            queue.offer(new int[]{arr[0] + 1, arr[1]});
+            queue.offer(new int[]{arr[0], arr[1] + 1});
         }
 
         return count;
@@ -106,27 +99,30 @@ public class Offer13 {
      * @param visited 方格访问数组
      * @return
      */
-    public void backtrack(int i, int j, int m, int n, int k, boolean[][] visited) {
+    private int backtrack(int i, int j, int m, int n, int k, boolean[][] visited) {
+        //当前节点超过矩阵范围，或者当前节点已被访问，或者当前节点行列坐标数位之和大于k，则不合法，直接返回0
         if (i < 0 || i >= m || j < 0 || j >= n || visited[i][j] || getNumSum(i, j) > k) {
-            return;
+            return 0;
         }
 
+        int count = 1;
         visited[i][j] = true;
-        count++;
 
-        //因为从(0,0)开始往右下角走，所以只需要考虑向下和向右的情况
-        backtrack(i + 1, j, m, n, k, visited);
-        backtrack(i, j + 1, m, n, k, visited);
+        //因为从(0,0)开始往右下角走，所以只需要考虑向下和向右这两种情况
+        count = count + backtrack(i + 1, j, m, n, k, visited);
+        count = count + backtrack(i, j + 1, m, n, k, visited);
+
+        return count;
     }
 
     /**
-     * 计算两个数的每位之和
+     * 计算m、n两数的每位之和
      *
      * @param m
      * @param n
      * @return
      */
-    public int getNumSum(int m, int n) {
+    private int getNumSum(int m, int n) {
         int sum = 0;
 
         while (m != 0) {

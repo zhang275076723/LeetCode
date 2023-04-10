@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/11/12 10:54
  * @Author zsy
- * @Description 丢失的数字 原地哈希类比Problem41、Problem287、Problem448、Offer3
+ * @Description 丢失的数字 原地哈希类比Problem41、Problem287、Problem442、Problem448、Offer3
  * 给定一个包含 [0, n] 中 n 个数的数组 nums ，找出 [0, n] 这个范围内没有出现在数组中的那个数。
  * <p>
  * 输入：nums = [3,0,1]
