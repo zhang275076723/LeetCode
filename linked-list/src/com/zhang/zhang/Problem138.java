@@ -106,9 +106,9 @@ public class Problem138 {
 
         //链表每个节点复制为2个相同节点
         while (node != null) {
-            Node tempNode = new Node(node.val);
-            tempNode.next = node.next;
-            node.next = tempNode;
+            Node copyNode = new Node(node.val);
+            copyNode.next = node.next;
+            node.next = copyNode;
             node = node.next.next;
         }
 
@@ -116,32 +116,33 @@ public class Problem138 {
 
         //设置每个新节点的random
         while (node != null) {
-            if (node.random != null) {
-                node.next.random = node.random.next;
+            Node copyNode = node.next;
+            if (node.random == null) {
+                copyNode.random = null;
             } else {
-                node.next.random = null;
+                copyNode.random = node.random.next;
             }
 
             node = node.next.next;
         }
 
         node = head;
-        Node newHead = head.next;
-        Node newNode = newHead;
+        Node copyNode = node.next;
+        Node copyNodeHead = node.next;
 
         //设置每个新节点的next，将链表拆分为两个链表，得到拷贝链表
-        while (newNode != null) {
+        while (node != null) {
             node.next = node.next.next;
 
-            if (newNode.next != null) {
-                newNode.next = newNode.next.next;
+            if (node.next != null) {
+                copyNode.next = node.next.next;
             }
 
             node = node.next;
-            newNode = newNode.next;
+            copyNode = copyNode.next;
         }
 
-        return newHead;
+        return copyNodeHead;
     }
 
     private static class Node {
