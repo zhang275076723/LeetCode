@@ -75,8 +75,8 @@ public class Problem132 {
                 continue;
             }
 
-            //初始化分割s[0]-s[i]为回文串的最少分割次数为i
-            dp2[i] = i;
+            //初始化分割s[0]-s[i]为回文串的最少分割次数为i-1
+            dp2[i] = i - 1;
 
             for (int j = 0; j < i; j++) {
                 //s[j+1]-s[i]是回文串，则dp2[i]为分割s[0]-s[j]为回文子串的最少分割次数dp[j]+1中取最小值

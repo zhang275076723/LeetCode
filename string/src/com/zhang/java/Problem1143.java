@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/6/29 11:56
  * @Author zsy
- * @Description 最长公共子序列 Google面试题 子序列和子数组类比Problem300、Problem718 动态规划类比Problem72、Problem97、Problem221、Problem516
+ * @Description 最长公共子序列 Google面试题 子序列和子数组类比Problem300、Problem718 动态规划类比Problem72、Problem97、Problem221、Problem392、Problem516
  * 给定两个字符串 text1 和 text2，返回这两个字符串的最长 公共子序列 的长度。
  * 如果不存在 公共子序列 ，返回 0 。
  * 一个字符串的 子序列 是指这样一个新的字符串：
@@ -82,14 +82,6 @@ public class Problem1143 {
     public int longestCommonSubsequence(String text1, String text2, String[][] position) {
         //dp[i][j]：表示x1...xi和y1...yj的最长公共子序列LCS的长度
         int[][] dp = new int[text1.length() + 1][text2.length() + 1];
-
-        for (int i = 0; i <= text1.length(); i++) {
-            dp[i][0] = 0;
-        }
-
-        for (int i = 0; i <= text2.length(); i++) {
-            dp[0][i] = 0;
-        }
 
         for (int i = 1; i <= text1.length(); i++) {
             for (int j = 1; j <= text2.length(); j++) {

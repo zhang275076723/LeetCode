@@ -104,6 +104,7 @@ public class Problem199 {
             list.add(root.val);
         }
 
+        //右视图，先遍历右子树，再遍历左子树；如果是左视图，则先遍历左子树，再遍历右子树
         dfs(root.right, list, depth + 1);
         dfs(root.left, list, depth + 1);
     }

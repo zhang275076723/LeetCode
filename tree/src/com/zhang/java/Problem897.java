@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/3/25 08:45
  * @Author zsy
- * @Description 递增顺序搜索树 二叉树和链表之间转化类比Problem114、Problem430、Offer36
+ * @Description 递增顺序搜索树 二叉树和链表之间转换类比Problem114、Problem116、Problem117、Problem430、Offer36
  * 给你一棵二叉搜索树的 root ，请你 按中序遍历 将其重新排列为一棵递增顺序搜索树，
  * 使树中最左边的节点成为树的根节点，并且每个节点没有左子节点，只有一个右子节点。
  * <p>
