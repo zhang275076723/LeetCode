@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/9/9 8:43
  * @Author zsy
- * @Description 分割数组为连续子序列 类比Problem460、Problem621、Offer61
+ * @Description 分割数组为连续子序列 类比Problem460、Problem621、Offer61 分割类比Problem725
  * 给你一个按升序排序的整数数组 num（可能包含重复数字），
  * 请你将它们分割成一个或多个长度至少为 3 的子序列，其中每个子序列都由连续整数组成。
  * 如果可以完成上述分割，则返回 true ；否则，返回 false 。
@@ -52,11 +52,11 @@ public class Problem659 {
             return false;
         }
 
-        //key：连续子序列的结尾元素，value：以key结尾的连续子序列的长度小根堆
+        //key：连续子序列的结尾元素，value：以key结尾的连续子序列长度的小根堆
         Map<Integer, Queue<Integer>> map = new HashMap<>();
 
         for (int num : nums) {
-            //map中存在以num-1结尾的连续子序列的长度小根堆，取出小根堆中长度最小的连续子序列，放入长度+1的小根堆中
+            //map中存在以num-1结尾的连续子序列长度的小根堆，取出小根堆中长度最小的连续子序列，放入长度+1的小根堆中
             if (map.containsKey(num - 1)) {
                 Queue<Integer> queue = map.get(num - 1);
                 //取出小根堆中长度最小的连续子序列
@@ -84,7 +84,7 @@ public class Problem659 {
                     map.put(num, nextQueue);
                 }
             } else {
-                //map中不存在以num-1结尾的连续子序列的长度小根堆
+                //map中不存在以num-1结尾的连续子序列长度的小根堆
 
                 //map中存在以num结尾的连续子序列的长度小根堆
                 if (map.containsKey(num)) {
@@ -105,7 +105,7 @@ public class Problem659 {
             }
         }
 
-        //判断哈希表中小根堆是否存在长度小于3的连续子序列
+        //判断哈希表中小根堆是否存在长度小于3的连续子序列，如果存在，直接返回false
         for (Map.Entry<Integer, Queue<Integer>> entry : map.entrySet()) {
             if (entry.getValue().peek() < 3) {
                 return false;

@@ -62,9 +62,9 @@ public class Problem86 {
 
         //大于等于x的链表末尾指向null，避免指向之前链表其他节点
         node2.next = null;
-
+        //两个链表相连
         node1.next = head2.next;
-
+        //返回小于x的链表头结点的下一个节点，即为排好序的链表
         return head1.next;
     }
 

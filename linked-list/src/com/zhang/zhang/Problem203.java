@@ -3,7 +3,7 @@ package com.zhang.zhang;
 /**
  * @Date 2022/11/7 09:45
  * @Author zsy
- * @Description 移除链表元素
+ * @Description 移除链表元素 同Offer18
  * 给你一个链表的头节点 head 和一个整数 val ，请你删除链表中所有满足 Node.val == val 的节点，并返回 新的头节点 。
  * <p>
  * 输入：head = [1,2,6,3,4,5,6], val = 6

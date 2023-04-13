@@ -39,6 +39,7 @@ public class Problem876 {
             return head;
         }
 
+        //快慢指针
         ListNode fast = head;
         ListNode slow = head;
 

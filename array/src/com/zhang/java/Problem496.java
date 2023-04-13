@@ -8,7 +8,7 @@ import java.util.Stack;
 /**
  * @Date 2022/11/17 16:57
  * @Author zsy
- * @Description 下一个更大元素 I 类比Problem503、Problem556 单调栈类比Problem42、Problem84、Problem316、Problem321、Problem402、Problem503、Problem739
+ * @Description 下一个更大元素 I 类比Problem503、Problem556 单调栈类比Problem42、Problem84、Problem316、Problem321、Problem402、Problem503、Problem739、Problem1019
  * nums1 中数字 x 的 下一个更大元素 是指 x 在 nums2 中对应位置 右侧 的 第一个 比 x 大的元素。
  * 给你两个 没有重复元素 的数组 nums1 和 nums2 ，下标从 0 开始计数，其中nums1 是 nums2 的子集。
  * 对于每个 0 <= i < nums1.length ，找出满足 nums1[i] == nums2[j] 的下标 j ，并且在 nums2 确定 nums2[j] 的 下一个更大元素。
