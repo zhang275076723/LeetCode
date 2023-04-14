@@ -85,6 +85,7 @@ public class Problem429 {
         while (!queue.isEmpty()) {
             Node node = queue.poll();
             List<Node> children = new ArrayList<>();
+            node.children = children;
 
             while (!list.isEmpty()) {
                 String nodeValue = list.remove(0);
@@ -96,8 +97,6 @@ public class Problem429 {
                 children.add(childNode);
                 queue.offer(childNode);
             }
-
-            node.children = children;
         }
 
         return root;

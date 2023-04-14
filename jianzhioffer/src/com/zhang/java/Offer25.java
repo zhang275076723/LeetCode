@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/19 11:19
  * @Author zsy
- * @Description 合并两个排序的链表 类比Offer24 同Problem21
+ * @Description 合并两个排序的链表 类比Problem1669、Offer24 同Problem21
  * 输入两个递增排序的链表，合并这两个链表并使新链表中的节点仍然是递增排序的
  * <p>
  * 输入：1->2->4, 1->3->4

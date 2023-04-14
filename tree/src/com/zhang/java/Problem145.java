@@ -68,7 +68,6 @@ public class Problem145 {
 
         while (!stack.isEmpty()) {
             TreeNode node = stack.pop();
-
             //首添加
             list.addFirst(node.val);
 

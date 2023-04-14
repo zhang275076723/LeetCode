@@ -78,6 +78,7 @@ public class Problem559 {
                 }
             }
 
+            //当前层遍历完，树的深度加1
             maxDepth++;
         }
 
@@ -105,6 +106,7 @@ public class Problem559 {
         while (!queue.isEmpty()) {
             Node node = queue.poll();
             List<Node> children = new ArrayList<>();
+            node.children = children;
 
             while (!list.isEmpty()) {
                 String nodeValue = list.remove(0);
@@ -116,8 +118,6 @@ public class Problem559 {
                 children.add(childNode);
                 queue.offer(childNode);
             }
-
-            node.children = children;
         }
 
         return root;

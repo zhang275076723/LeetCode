@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/18 15:17
  * @Author zsy
- * @Description 删除链表的节点 类比Problem19、Problem237、Offer22
+ * @Description 删除链表的节点 类比Problem19、Problem237、Offer22 同Problem203
  * 给定单向链表的头指针和一个要删除的节点的值，定义一个函数删除该节点。
  * 返回删除后的链表的头节点。链表中节点的值互不相同
  * <p>
@@ -40,6 +40,7 @@ public class Offer18 {
 
     /**
      * 非递归删除某一节点
+     * 保存当前节点的前一个节点，用于删除当前节点
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param head
@@ -51,24 +52,21 @@ public class Offer18 {
             return null;
         }
 
-        if (head.val == val) {
-            return head.next;
-        }
+        //设置头结点，方便处理
+        ListNode hair = new ListNode();
+        hair.next = head;
 
-        ListNode pre = head;
-        ListNode node = head.next;
+        ListNode node = hair;
 
-        while (node != null) {
-            if (node.val == val) {
-                pre.next = node.next;
-                return head;
+        while (node.next != null) {
+            if (node.next.val == val) {
+                node.next = node.next.next;
+            } else {
+                node = node.next;
             }
-
-            pre = node;
-            node = node.next;
         }
 
-        return head;
+        return hair.next;
     }
 
     /**

@@ -185,7 +185,7 @@ public class Offer57_2 {
         List<int[]> list = new ArrayList<>();
         //key：当前区间和，value：当前区间和的最后一个元素值
         Map<Integer, Integer> map = new HashMap<>();
-        //用于1到k的连续序列之和为target的情况
+        //初始化，0到0的连续序列之和0作为key，最后一个元素0作为value，加入map中
         map.put(0, 0);
         //当前前缀和
         int sum = 0;
@@ -193,20 +193,20 @@ public class Offer57_2 {
         for (int i = 1; i <= target / 2 + 1; i++) {
             sum = sum + i;
 
-            //map中key存在为pre-target的区间和，则index+1到i的连续序列之和为target
+            //map中key存在为pre-target的区间和，则num+1到i的连续序列之和为target
             if (map.containsKey(sum - target)) {
                 //和为target连续序列的起始元素的前一个元素
-                int index = map.get(sum - target);
-                int[] arr = new int[i - index];
+                int num = map.get(sum - target);
+                int[] arr = new int[i - num];
 
                 for (int j = 0; j < arr.length; j++) {
-                    arr[j] = index + j + 1;
+                    arr[j] = num + j + 1;
                 }
 
                 list.add(arr);
             }
 
-            //1到i的连续序列之和sum和最后一个元素i，加入map中
+            //1到i的连续序列之和sum作为key，最后一个元素i作为value，加入map中
             map.put(sum, i);
         }
 

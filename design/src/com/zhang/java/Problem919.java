@@ -128,6 +128,7 @@ public class Problem919 {
         private int count;
 
         /**
+         * 统计完全二叉树中节点个数，统计个数可以使用Problem222中O((logn)^2)的方法
          * 时间复杂度O(n)，空间复杂度O(n)
          *
          * @param root
