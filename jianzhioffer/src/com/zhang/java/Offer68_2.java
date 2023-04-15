@@ -78,27 +78,27 @@ public class Offer68_2 {
             return null;
         }
 
-        //p或q等于root，说明p或q最近公共祖先为root
+        //最近公共祖先为p或q
         if (root == p || root == q) {
             return root;
         }
 
-        //p或q是否在左子树
+        //root左子树中p或q的最近公共祖先
         TreeNode left = lowestCommonAncestor2(root.left, p, q);
-        //p或q是否在右子树
+        //root右子树中p或q的最近公共祖先
         TreeNode right = lowestCommonAncestor2(root.right, p, q);
 
-        //p和q一个在左子树一个在右子树，说明最近公共祖先为root
+        //p和q的最近公共祖先一个在root左子树一个在root右子树，说明最近公共祖先为root
         if (left != null && right != null) {
             return root;
         } else if (left != null) {
-            //p和q都在左子树，说明最近公共祖先为left
+            //p和q的最近公共祖先都在root左子树，说明最近公共祖先为left
             return left;
         } else if (right != null) {
-            //p和q都在右子树，说明最近公共祖先为right
+            //p和q的最近公共祖先都在root右子树，说明最近公共祖先为right
             return right;
         } else {
-            //p和q既不在左子树，也不在右子树，说明p和q没有公共祖先
+            //p和q的最近公共祖先不在root左子树也不在root右子树，说明p和q没有公共祖先，返回null
             return null;
         }
     }

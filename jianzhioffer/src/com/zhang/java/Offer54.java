@@ -79,8 +79,8 @@ public class Offer54 {
             }
 
             node = stack.pop();
-
             count++;
+
             if (count == k) {
                 return node.val;
             }

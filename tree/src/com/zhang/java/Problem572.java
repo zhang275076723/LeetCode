@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/4/9 10:42
  * @Author zsy
- * @Description 另一棵树的子树 类比Problem1367、Offer26、Offer27、Offer28
+ * @Description 另一棵树的子树 类比Problem100、Problem101、Problem1367、Offer26、Offer27、Offer28
  * 给你两棵二叉树 root 和 subRoot 。
  * 检验 root 中是否包含和 subRoot 具有相同结构和节点值的子树。
  * 如果存在，返回 true ；否则，返回 false 。

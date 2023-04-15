@@ -95,13 +95,11 @@ public class Problem257 {
             //当前路径复制到结果集合需要O(n)
             result.add(path.toString());
             path.delete(start, path.length());
-
             return;
         }
 
         //记录当前长度，用于回溯删除
         int start = path.length();
-
         path.append(root.val).append("->");
 
         if (root.left != null) {

@@ -74,7 +74,7 @@ public class Problem437 {
             return 0;
         }
 
-        //前缀和哈希表：key，根节点到当前节点路径和，使用long避免相加时int溢出；value，满足路径前缀和key的个数
+        //前缀和哈希表：key，根节点到当前节点路径和，使用long避免相加时int溢出；value，当前路径前缀和key的个数
         Map<Long, Integer> map = new HashMap<>();
         //用于只有一个节点，即根节点值满足为targetSum的情况
         map.put(0L, 1);
@@ -103,7 +103,7 @@ public class Problem437 {
 
         if (sum == targetSum) {
             //节点存在负值，所以不能剪枝，继续dfs
-            count = count + 1;
+            count++;
         }
 
         count = count + dfs(root.left, sum, targetSum);

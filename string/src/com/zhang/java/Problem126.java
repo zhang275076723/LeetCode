@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/2/13 08:28
  * @Author zsy
- * @Description 单词接龙 II Amazon面试题 双向bfs类比Problem127、Problem1345
+ * @Description 单词接龙 II Amazon面试题 双向bfs类比Problem127、Problem1345 保存父节点类比Problem113、Problem863、Offer34
  * 按字典 wordList 完成从单词 beginWord 到单词 endWord 转化，
  * 一个表示此过程的 转换序列 是形式上像 beginWord -> s1 -> s2 -> ... -> sk 这样的单词序列，并满足：
  * 每对相邻的单词之间仅有单个字母不同。

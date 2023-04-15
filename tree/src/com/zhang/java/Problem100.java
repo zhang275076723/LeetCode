@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/9/1 11:15
  * @Author zsy
- * @Description 相同的树 类比Problem101、Problem226、Offer26、Offer27、Offer28
+ * @Description 相同的树 类比Problem101、Problem226、Problem572、Problem1367、Offer26、Offer27、Offer28
  * 给你两棵二叉树的根节点 p 和 q ，编写一个函数来检验这两棵树是否相同。
  * 如果两个树在结构上相同，并且节点具有相同的值，则认为它们是相同的。
  * <p>

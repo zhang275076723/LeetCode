@@ -31,12 +31,13 @@ public class Problem671 {
         String[] data = {"1", "1", "3", "1", "2", "3", "4"};
         TreeNode root = problem671.buildTree(data);
         System.out.println(problem671.findSecondMinimumValue(root));
+        System.out.println(problem671.findSecondMinimumValue2(root));
     }
 
     /**
-     * 非递归前序遍历
-     * 根节点的值即为当前树节点的最小值，找比根节点值大的所有节点中值最小的节点，即为第二小节点，如果没有找到返回-1
-     * 时间复杂度O(n)，空间复杂度O(1)
+     * dfs，非递归前序遍历
+     * 根节点的值即为当前树节点的最小值(类似败者树)，找比根节点值大的所有节点中值最小的节点，即为第二小节点，如果没有找到返回-1
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
      * @return
@@ -55,7 +56,7 @@ public class Problem671 {
 
         while (!stack.isEmpty() || node != null) {
             while (node != null) {
-                //当前节点值大于根节点值，更新第二小节点值
+                //当前节点值大于根节点值，存在第二小节点值，更新第二小节点值
                 if (node.val > root.val) {
                     flag = true;
                     secondMinValue = Math.min(secondMinValue, node.val);
@@ -66,6 +67,46 @@ public class Problem671 {
 
             node = stack.pop();
             node = node.right;
+        }
+
+        //如果不存在第二小节点的值，返回-1
+        return flag ? secondMinValue : -1;
+    }
+
+    /**
+     * bfs
+     * 根节点的值即为当前树节点的最小值(类似败者树)，找比根节点值大的所有节点中值最小的节点，即为第二小节点，如果没有找到返回-1
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param root
+     * @return
+     */
+    public int findSecondMinimumValue2(TreeNode root) {
+        if (root == null) {
+            return -1;
+        }
+
+        //第二小节点值
+        int secondMinValue = Integer.MAX_VALUE;
+        //是否存在第二小节点的值
+        boolean flag = false;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            //当前节点值大于根节点值，存在第二小节点值，更新第二小节点值
+            if (node.val > root.val) {
+                flag = true;
+                secondMinValue = Math.min(secondMinValue, node.val);
+            }
+            //左右子树入队
+            if (node.left != null) {
+                queue.offer(node.left);
+            }
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
         }
 
         //如果不存在第二小节点的值，返回-1

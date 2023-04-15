@@ -97,6 +97,7 @@ public class Problem230 {
 
         /**
          * 记录以当前节点为根节点的树中所有节点个数map
+         * key：当前节点为根节点的树，value：树中节点个数
          */
         private final Map<TreeNode, Integer> nodeMap;
 
