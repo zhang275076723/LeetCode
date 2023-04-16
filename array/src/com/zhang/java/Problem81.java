@@ -70,17 +70,21 @@ public class Problem81 {
 
                 //nums[mid]-nums[right]单调递增
                 if (nums[mid] < nums[right]) {
+                    //target在nums[mid+1]-nums[right]之中
                     if (nums[mid] < target && target <= nums[right]) {
                         left = mid + 1;
                     } else {
+                        //target在nums[left]-nums[mid-1]之中
                         right = mid - 1;
                     }
                 } else {
                     //nums[left]-nums[mid]单调递增
 
+                    //target在nums[left]-nums[mid-1]之中
                     if (nums[left] <= target && target < nums[mid]) {
                         right = mid - 1;
                     } else {
+                        //target在nums[mid+1]-nums[right]之中
                         left = mid + 1;
                     }
                 }

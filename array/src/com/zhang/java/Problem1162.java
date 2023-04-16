@@ -125,7 +125,7 @@ public class Problem1162 {
             maxDistance++;
         }
 
-        //返回maxDistance减1，即得到为0的节点到最近为1的节点的距离中的最大距离
+        //返回maxDistance减1，因为将最远的0加入到队列时得到最大距离，此时还需要遍历当前最远的0节点，额外多遍历了一次
         return maxDistance - 1;
     }
 
@@ -138,6 +138,7 @@ public class Problem1162 {
 
         while (!queue.isEmpty()) {
             int size = queue.size();
+
             for (int k = 0; k < size; k++) {
                 int[] arr = queue.poll();
 

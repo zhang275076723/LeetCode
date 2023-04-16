@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/14 9:58
  * @Author zsy
- * @Description 课程表 II 拓扑排序类比Problem207、Problem329 图类比Problem133、Problem207、Problem329、Problem399
+ * @Description 课程表 II 拓扑排序类比Problem207、Problem329 图类比Problem133、Problem207、Problem329、Problem399、Problem785、Problem863
  * 现在你总共有 numCourses 门课需要选，记为 0 到 numCourses - 1。
  * 给你一个数组 prerequisites ，其中 prerequisites[i] = [ai, bi] ，表示在选修课程 ai 前 必须 先选修 bi 。
  * 例如，想要学习课程 0 ，你需要先完成课程 1 ，我们用一个匹配来表示：[0,1] 。
@@ -61,7 +61,7 @@ public class Problem210 {
      * @return
      */
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        //集合表示的邻接矩阵
+        //集合表示的邻接表
         List<List<Integer>> edges = new ArrayList<>();
         //访问数组，0-未访问，1-正在访问，2-已访问
         int[] visited = new int[numCourses];
@@ -105,7 +105,7 @@ public class Problem210 {
      * @return
      */
     public int[] findOrder2(int numCourses, int[][] prerequisites) {
-        //集合表示的邻接矩阵
+        //集合表示的邻接表
         List<List<Integer>> edges = new ArrayList<>();
         //入度数组
         int[] inDegree = new int[numCourses];

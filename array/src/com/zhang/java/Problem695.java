@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2023/2/9 09:05
  * @Author zsy
- * @Description 岛屿的最大面积 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem733、Problem827、Problem994、Problem1034、Problem1162、Offer12 并查集类比Problem130、Problem200、Problem399、Problem765、Problem827
+ * @Description 岛屿的最大面积 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem733、Problem827、Problem994、Problem1034、Problem1162、Offer12 并查集类比Problem130、Problem200、Problem399、Problem765、Problem785、Problem827
  * 给你一个大小为 m x n 的二进制矩阵 grid 。
  * 岛屿 是由一些相邻的 1 (代表土地) 构成的组合，这里的「相邻」要求两个 1 必须在 水平或者竖直的四个方向上 相邻。
  * 你可以假设 grid 的四个边缘都被 0（代表水）包围着。
