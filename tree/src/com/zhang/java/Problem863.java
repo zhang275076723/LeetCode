@@ -52,15 +52,15 @@ public class Problem863 {
 
         List<Integer> list = new ArrayList<>();
         //保存当前节点和父节点之间的映射关系，通过哈希表可以实现从当前节点向父节点路径查找，key：当前节点，value：父节点
-        Map<TreeNode, TreeNode> map = new HashMap<>();
+        Map<TreeNode, TreeNode> parentMap = new HashMap<>();
         //初始化，root的父节点为空
-        map.put(root, null);
+        parentMap.put(root, null);
 
         //得到每个节点的父节点map
-        buildMap(root, map);
+        buildParentMap(root, parentMap);
 
         //从target节点开始往子节点和父节点找距离target节点为k的节点值加入list中
-        dfs(target, null, 0, k, map, list);
+        dfs(target, null, 0, k, parentMap, list);
 
         return list;
     }
@@ -68,11 +68,7 @@ public class Problem863 {
     /**
      * 树转换为图，通过dfs或bfs找距离target节点为k的节点
      * 时间复杂度O(n)，空间复杂度O(n)
-     *    0
-     *   1
-     *    2
-     *     3
-     *      4
+     *
      * @param root
      * @param target
      * @param k
@@ -99,25 +95,25 @@ public class Problem863 {
      * 得到每个节点的父节点map，用于从当前节点向父节点路径查找
      *
      * @param root
-     * @param map
+     * @param parentMap
      */
-    private void buildMap(TreeNode root, Map<TreeNode, TreeNode> map) {
+    private void buildParentMap(TreeNode root, Map<TreeNode, TreeNode> parentMap) {
         if (root == null) {
             return;
         }
 
         //左子节点不为空，则左子节点的父节点为当前节点，加入map中
         if (root.left != null) {
-            map.put(root.left, root);
+            parentMap.put(root.left, root);
         }
 
         //右子节点不为空，则右子节点的父节点为当前节点，加入map中
         if (root.right != null) {
-            map.put(root.right, root);
+            parentMap.put(root.right, root);
         }
 
-        buildMap(root.right, map);
-        buildMap(root.left, map);
+        buildParentMap(root.right, parentMap);
+        buildParentMap(root.left, parentMap);
     }
 
     /**

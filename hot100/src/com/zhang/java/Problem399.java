@@ -482,7 +482,7 @@ public class Problem399 {
             for (int i = 0; i < n; i++) {
                 //当前位置节点的父节点是它本身
                 parent[i] = i;
-                //当前位置节点的权值为1.0
+                //当前位置节点的权值为1.0，因为当前节点除以根节点的值，即为当前节点除以当前节点的值
                 weight[i] = 1.0;
             }
         }
@@ -552,10 +552,10 @@ public class Problem399 {
             //i和j连通，返回节点i到根节点的权值weight[i]/节点j到根节点的权值weight[j]，即为i/j
             if (rootI == rootJ) {
                 return weight[i] / weight[j];
+            } else {
+                //i和j不连通，返回-1.0
+                return -1.0;
             }
-
-            //i和j不连通，返回-1.0
-            return -1.0;
         }
     }
 }

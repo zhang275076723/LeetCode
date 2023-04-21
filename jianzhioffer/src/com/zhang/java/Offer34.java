@@ -6,7 +6,7 @@ import java.util.*;
 /**
  * @Date 2022/3/22 18:13
  * @Author zsy
- * @Description 二叉树中和为某一值的路径 同Problem113
+ * @Description 二叉树中和为某一值的路径 保存父节点类比Problem126、Problem863 同Problem113
  * 给你二叉树的根节点 root 和一个整数目标和 targetSum ，
  * 找出所有 从根节点到叶子节点 路径总和等于给定目标和的路径。叶子节点是指没有子节点的节点。
  * 注意：节点val值可能为负，targetSum可能为负

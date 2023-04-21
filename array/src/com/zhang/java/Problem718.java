@@ -177,22 +177,17 @@ public class Problem718 {
         }
 
         int max = 0;
-        int curMax;
 
         //nums1开始索引为0，nums2开始位索引从nums2.length-1到0
         for (int j = nums2.length - 1; j >= 0; j--) {
-            curMax = maxLength(nums1, nums2, 0, j);
-            if (curMax > max) {
-                max = curMax;
-            }
+            int curMax = maxLength(nums1, nums2, 0, j);
+            max = Math.max(max, curMax);
         }
 
         //nums1开始位置从1到nums1.length-1，nums2开始位索引为0
         for (int i = 0; i < nums1.length; i++) {
-            curMax = maxLength(nums1, nums2, i, 0);
-            if (curMax > max) {
-                max = curMax;
-            }
+            int curMax = maxLength(nums1, nums2, i, 0);
+            max = Math.max(max, curMax);
         }
 
         return max;
@@ -218,12 +213,10 @@ public class Problem718 {
                 curMax = 0;
             }
 
-            if (curMax > max) {
-                max = curMax;
-            }
-
+            //i、j指针后移
             i++;
             j++;
+            max = Math.max(max, curMax);
         }
 
         return max;

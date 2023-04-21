@@ -73,9 +73,9 @@ public class Problem70 {
         int q = 1;
 
         for (int i = 2; i <= n; i++) {
-            int temp = p + q;
-            p = q;
-            q = temp;
+            int temp = q;
+            q = p + q;
+            p = temp;
         }
 
         return q;
@@ -103,8 +103,8 @@ public class Problem70 {
 
     /**
      * 矩阵快速幂
-     * [ f(n) ]         [1 1] ^ (n-2)       [f(2)]
-     * [f(n-1)]    =    [1 0]          *    [f(1)]
+     * [ f(n) ]         [1 1] ^ (n-1)       [f(1)]
+     * [f(n-1)]    =    [1 0]          *    [f(0)]
      * 时间复杂度O(logn)，空间复杂的O(1）
      *
      * @param n
@@ -115,11 +115,11 @@ public class Problem70 {
             return n;
         }
 
-        int[][] a = {{1, 1}, {1, 0}};
+        int[][] result = {{1, 1}, {1, 0}};
 
-        int[][] result = quickPow(a, n - 2);
+        result = quickPow(result, n - 1);
 
-        result = multiply(result, new int[][]{{2}, {1}});
+        result = multiply(result, new int[][]{{1}, {1}});
 
         return result[0][0];
     }
@@ -142,13 +142,13 @@ public class Problem70 {
             result[i][i] = 1;
         }
 
-        while (n > 0) {
+        while (n != 0) {
             if ((n & 1) != 0) {
                 result = multiply(result, a);
             }
 
             a = multiply(a, a);
-            n = n >> 1;
+            n = n >>> 1;
         }
 
         return result;
@@ -157,8 +157,8 @@ public class Problem70 {
     private int[][] multiply(int[][] a, int[][] b) {
         int[][] result = new int[a.length][b[0].length];
 
-        for (int i = 0; i < result.length; i++) {
-            for (int j = 0; j < result[0].length; j++) {
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < b[0].length; j++) {
                 for (int k = 0; k < a[0].length; k++) {
                     //使用long，避免int相乘溢出
                     result[i][j] = (int) (result[i][j] + (long) a[i][k] * b[k][j]);

@@ -53,35 +53,33 @@ public class Problem93 {
     private void backtrack(int t, String s, List<String> result, List<String> list) {
         //当找到4个ip段，且已经遍历到末尾时，即找到一个合法ip
         if (list.size() == 4) {
-            if (t == s.length()) {
-                StringBuilder sb = new StringBuilder();
-
-                for (String num : list) {
-                    sb.append(num).append('.');
-                }
-
-                //删除最后一个'.'
-                sb.delete(sb.length() - 1, sb.length());
-                result.add(sb.toString());
-            }
-
-            return;
-        }
-
-        for (int i = t; i < s.length(); i++) {
-            //当前已经存在4个ip段，直接返回
-            if (list.size() == 4) {
+            //当前没有遍历到末尾，直接返回
+            if (t < s.length()) {
                 return;
             }
 
-            //ip段的长度不能超过3
-            if (i >= t + 3) {
+            //拼接list中的4个ip段
+            StringBuilder sb = new StringBuilder();
+
+            for (String segment : list) {
+                sb.append(segment).append('.');
+            }
+
+            //删除最后一个'.'
+            sb.delete(sb.length() - 1, sb.length());
+            result.add(sb.toString());
+            return;
+        }
+
+        for (int i = t; i <= t + 2; i++) {
+            //当前ip段已经超过字符串s长度，直接返回
+            if (i >= s.length()) {
                 return;
             }
 
             int segment = getIpSegment(s, t, i);
 
-            //当前ip段不是一个合法的ip段，则直接返回
+            //当前ip段不是一个合法的ip段，直接返回
             if (segment == -1) {
                 return;
             }

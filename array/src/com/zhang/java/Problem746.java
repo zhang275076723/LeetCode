@@ -34,11 +34,12 @@ public class Problem746 {
         Problem746 problem746 = new Problem746();
         int[] cost = {1, 100, 1, 1, 1, 100, 1, 1, 100, 1};
         System.out.println(problem746.minCostClimbingStairs(cost));
+        System.out.println(problem746.minCostClimbingStairs2(cost));
     }
 
     /**
      * 动态规划
-     * dp[i]：到达cost[i]对应台阶所需的最低费用
+     * dp[i]：到达cost[i]对应台阶支付的最低费用
      * dp[i] = mid(dp[i-1]+cost[i-1],dp[i-2]+cost[i-2])
      * 时间复杂度O(n)，空间复杂度O(n)
      *
@@ -47,6 +48,7 @@ public class Problem746 {
      */
     public int minCostClimbingStairs(int[] cost) {
         int[] dp = new int[cost.length];
+        //初始化，起始站在下标索引为0或1的位置上支付的最低费用为0
         dp[0] = 0;
         dp[1] = 0;
 
@@ -69,9 +71,9 @@ public class Problem746 {
         int q = 0;
 
         for (int i = 2; i < cost.length; i++) {
-            int temp = Math.min(p + cost[i - 2], q + cost[i - 1]);
-            p = q;
-            q = temp;
+            int temp = q;
+            q = Math.min(p + cost[i - 2], q + cost[i - 1]);
+            p = temp;
         }
 
         return Math.min(p + cost[cost.length - 2], q + cost[cost.length - 1]);

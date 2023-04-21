@@ -41,20 +41,22 @@ public class Problem42 {
         int result = 0;
 
         for (int i = 0; i < height.length; i++) {
-            int leftMax = height[i];
-            int rightMax = height[i];
+            //height[0]-height[i]的最大高度
+            int leftMaxHeight = height[i];
+            //height[i]-height[height.length-1]的最大高度
+            int rightMaxHeight = height[i];
 
             //找height[i]左边的最大值
             for (int j = 0; j < i; j++) {
-                leftMax = Math.max(leftMax, height[j]);
+                leftMaxHeight = Math.max(leftMaxHeight, height[j]);
             }
 
             //找height[i]右边的最大值
             for (int j = i + 1; j < height.length; j++) {
-                rightMax = Math.max(rightMax, height[j]);
+                rightMaxHeight = Math.max(rightMaxHeight, height[j]);
             }
 
-            result = result + Math.min(leftMax, rightMax) - height[i];
+            result = result + Math.min(leftMaxHeight, rightMaxHeight) - height[i];
         }
 
         return result;
@@ -63,8 +65,8 @@ public class Problem42 {
     /**
      * 动态规划，按列求雨水
      * 暴力每个位置都需要遍历一遍才能够找到最大和最小值，而动态规划在O(1)就能找到最大最小值
-     * leftMax[i]：索引下标i及其左边的最大值
-     * rightMax[i]：索引下标i及其右边的最大值
+     * leftMax[i]：height[0]-height[i]中的最大值
+     * rightMax[i]：height[i]-height[height.length-1]中的最大值
      * leftMax[i] = max(height[i], leftMax[i-1])
      * rightMax[i] = max(height[i], rightMax[i+1])
      * 时间复杂度O(n)，空间复杂度O(n)
@@ -75,7 +77,7 @@ public class Problem42 {
     public int trap2(int[] height) {
         int[] leftMax = new int[height.length];
         int[] rightMax = new int[height.length];
-
+        //leftMax、rightMax初始化
         leftMax[0] = height[0];
         rightMax[height.length - 1] = height[height.length - 1];
 
@@ -109,9 +111,9 @@ public class Problem42 {
         int left = 0;
         //右指针
         int right = height.length - 1;
-        //左指针左边的最大值
+        //height[0]-height[left]中的最大值
         int leftMax = 0;
-        //右指针右边的最大值
+        //height[right]-height[height.length-1]中的最大值
         int rightMax = 0;
 
         while (left < right) {

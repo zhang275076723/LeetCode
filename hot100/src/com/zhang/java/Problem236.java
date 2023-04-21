@@ -86,9 +86,9 @@ public class Problem236 {
             return root;
         }
 
-        //root左子树中p或q的最近公共祖先
+        //root左子树中找p或q的最近公共祖先
         TreeNode left = lowestCommonAncestor2(root.left, p, q);
-        //root右子树中p或q的最近公共祖先
+        //root右子树中找p或q的最近公共祖先
         TreeNode right = lowestCommonAncestor2(root.right, p, q);
 
         //p和q的最近公共祖先一个在root左子树一个在root右子树，说明最近公共祖先为root
