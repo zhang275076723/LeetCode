@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/15 12:22
  * @Author zsy
- * @Description 合并两个有序链表 类比Problem23、Problem24、Problem25、Problem92、Problem206、Problem1669 同Offer25
+ * @Description 合并两个有序链表 字节面试题 类比Problem23、Problem24、Problem25、Problem92、Problem206、Problem1669 同Offer25
  * 将两个升序链表合并为一个新的 升序 链表并返回。
  * 新链表是通过拼接给定的两个链表的所有节点组成的。
  * <p>

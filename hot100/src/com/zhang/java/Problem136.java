@@ -16,6 +16,10 @@ import java.util.Map;
  * <p>
  * 输入: [4,1,2,1,2]
  * 输出: 4
+ * <p>
+ * 1 <= nums.length <= 3 * 104
+ * -3 * 104 <= nums[i] <= 3 * 104
+ * 除了某个元素只出现一次以外，其余每个元素均出现两次。
  */
 public class Problem136 {
     public static void main(String[] args) {

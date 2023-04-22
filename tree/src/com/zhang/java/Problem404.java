@@ -39,6 +39,7 @@ public class Problem404 {
             return 0;
         }
 
+        //根节点的父节点假定为root，不能为null，避免空指针异常
         return dfs(root, root);
     }
 
@@ -78,7 +79,7 @@ public class Problem404 {
 
     /**
      * @param root
-     * @param pre  root节点的前驱节点
+     * @param pre  root节点的父节点
      * @return
      */
     private int dfs(TreeNode root, TreeNode pre) {

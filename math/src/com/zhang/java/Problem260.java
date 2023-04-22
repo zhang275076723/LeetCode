@@ -81,7 +81,7 @@ public class Problem260 {
         int bit = 1;
 
         //找异或结果中不相同，即为1的一位
-        while ((result & bit) == 0) {
+        while ((result & bit) != 1) {
             bit = bit << 1;
         }
 
