@@ -197,7 +197,7 @@ public class Problem91 {
             sb.delete(sb.length() - 1, sb.length());
         }
 
-        //往后找两个字符，不能有前导0，且不能超过26，表示的字符'z'
+        //往后找两个字符，不能有前导0，且不能超过26
         if (t + 2 <= s.length() && s.charAt(t) != '0' && Integer.parseInt(s.substring(t, t + 2)) <= 26) {
             sb.append((char) (Integer.parseInt(s.substring(t, t + 2)) - 1 + 'a'));
             count = count + backtrack(t + 2, s, list, sb);
