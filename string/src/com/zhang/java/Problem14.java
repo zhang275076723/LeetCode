@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/7/1 9:24
  * @Author zsy
- * @Description 最长公共前缀 类比Problem208、Problem211、Problem212
+ * @Description 最长公共前缀 小米机试题 前缀树类比Problem208、Problem211、Problem212
  * 编写一个函数来查找字符串数组中的最长公共前缀。
  * 如果不存在公共前缀，返回空字符串 ""。
  * <p>
@@ -32,7 +32,7 @@ public class Problem14 {
 
     /**
      * 横向比较，从两个字符串找出其最长公共前缀，将当前最长公共前缀与第三个字符串找最长公共前缀，直至遍历结束
-     * 时间复杂度O(m*n)，空间复杂度O(n) (m = strs.length, n = min(strs[i]))
+     * 时间复杂度O(mn)，空间复杂度O(n) (m = strs.length, n = min(strs[i]))
      *
      * @param strs
      * @return
@@ -46,9 +46,10 @@ public class Problem14 {
             return strs[0];
         }
 
-        String s = findPrefix(strs[0], strs[1]);
+        String s = strs[0];
 
-        for (int i = 2; i < strs.length; i++) {
+        //两两找最长公共前缀
+        for (int i = 1; i < strs.length; i++) {
             s = findPrefix(s, strs[i]);
         }
 
@@ -57,7 +58,7 @@ public class Problem14 {
 
     /**
      * 纵向比较，判断所有字符串的每一个下标索引对应的值是否相等
-     * 时间复杂度O(m*n)，空间复杂度O(1) (m = strs.length, n = min(strs[i]))
+     * 时间复杂度O(mn)，空间复杂度O(1) (m = strs.length, n = min(strs[i]))
      *
      * @param strs
      * @return
@@ -78,18 +79,23 @@ public class Problem14 {
             minLength = Math.min(minLength, strs[i].length());
         }
 
-        for (int i = 0; i < minLength; i++) {
-            char c = strs[0].charAt(i);
+        //最长公共前缀的下标索引
+        int index = 0;
 
-            for (int j = 0; j < strs.length; j++) {
-                //字符串strs[j]的索引下标i对应的字符和c不相同，说明已经找到了最长公共前缀
-                if (c != strs[j].charAt(i)) {
-                    return strs[0].substring(0, i);
+        while (index < minLength) {
+            char c = strs[0].charAt(index);
+
+            for (String str : strs) {
+                //当前字符串str的索引下标index对应的字符和c不相同，说明已经找到了最长公共前缀
+                if (c != str.charAt(index)) {
+                    return strs[0].substring(0, index);
                 }
             }
+
+            index++;
         }
 
-        return strs[0].substring(0, minLength);
+        return strs[0].substring(0, index);
     }
 
     /**
@@ -117,8 +123,7 @@ public class Problem14 {
         int index = 0;
         Trie.TrieNode node = trie.root;
 
-        //找前缀树中第一个分叉之前的所有元素，即为最长公共前缀
-        //当前节点必须不是尾节点，保证空串""也能够找到最长公共前缀
+        //找前缀树中第一个分叉或第一个为尾节点的节点，则根节点到当前节点即为最长公共前缀
         while (node.children.size() == 1 && !node.isEnd) {
             char c = strs[0].charAt(index);
             node = node.children.get(c);
@@ -129,7 +134,8 @@ public class Problem14 {
     }
 
     /**
-     * str1和str2的最长公共前缀
+     * 找str1和str2的最长公共前缀
+     * 时间复杂度O(min(m,n))，空间复杂度O(1)
      *
      * @param str1
      * @param str2
@@ -138,7 +144,12 @@ public class Problem14 {
     private String findPrefix(String str1, String str2) {
         int index = 0;
 
-        while (index < str1.length() && index < str2.length() && str1.charAt(index) == str2.charAt(index)) {
+        while (index < str1.length() && index < str2.length()) {
+            //str1和str2的当前字符不相等，则找到了str1和str2的最长公共前缀
+            if (str1.charAt(index) != str2.charAt(index)) {
+                return str1.substring(0, index);
+            }
+
             index++;
         }
 
@@ -193,7 +204,7 @@ public class Problem14 {
              */
             private boolean isEnd;
 
-            TrieNode() {
+            public TrieNode() {
                 this.children = new HashMap<>();
                 this.isEnd = false;
             }

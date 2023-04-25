@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/10/28 11:05
  * @Author zsy
- * @Description 添加与搜索单词 - 数据结构设计 类比Problem14、Problem208、Problem212
+ * @Description 添加与搜索单词 - 数据结构设计 前缀树类比Problem14、Problem208、Problem212
  * 请你设计一个数据结构，支持 添加新单词 和 查找字符串是否与任何先前添加的字符串匹配 。
  * 实现词典类 WordDictionary ：
  * WordDictionary() 初始化词典对象
@@ -95,6 +95,7 @@ public class Problem211 {
                     }
                 }
 
+                //当前节点包含的所有字符都不满足要求，返回false
                 return false;
             } else {
                 //当前字符为普通字符，从当前节点继续遍历
@@ -111,7 +112,7 @@ public class Problem211 {
 
             private boolean isEnd;
 
-            TrieNode() {
+            public TrieNode() {
                 children = new HashMap<>();
                 isEnd = false;
             }
