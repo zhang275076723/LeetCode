@@ -77,10 +77,10 @@ public class Problem350 {
         Arrays.sort(nums1);
         Arrays.sort(nums2);
 
-        int i = 0;
-        int j = 0;
         //存放重叠元素的list集合
         List<Integer> list = new ArrayList<>();
+        int i = 0;
+        int j = 0;
 
         while (i < nums1.length && j < nums2.length) {
             if (nums1[i] < nums2[j]) {
