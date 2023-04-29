@@ -31,7 +31,6 @@ public class Offer18 {
         node4.next = null;
         ListNode head = offer18.deleteNode(node1, 5);
 //        ListNode head = offer18.deleteNode2(node1, 5);
-//        ListNode head = offer18.deleteNode3(node1, node2);
         while (head != null) {
             System.out.println(head.val);
             head = head.next;
@@ -59,11 +58,13 @@ public class Offer18 {
         ListNode node = hair;
 
         while (node.next != null) {
+            //找到要删除的节点
             if (node.next.val == val) {
                 node.next = node.next.next;
-            } else {
-                node = node.next;
+                break;
             }
+
+            node = node.next;
         }
 
         return hair.next;
@@ -94,6 +95,9 @@ public class Offer18 {
     public static class ListNode {
         int val;
         ListNode next;
+
+        ListNode() {
+        }
 
         ListNode(int x) {
             val = x;
