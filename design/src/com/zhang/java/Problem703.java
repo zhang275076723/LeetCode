@@ -67,6 +67,7 @@ public class Problem703 {
          */
         public KthLargest(int k, int[] nums) {
             this.k = k;
+            //小根堆
             queue = new PriorityQueue<>(k, new Comparator<Integer>() {
                 @Override
                 public int compare(Integer a, Integer b) {

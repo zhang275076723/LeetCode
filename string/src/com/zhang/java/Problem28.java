@@ -68,7 +68,7 @@ public class Problem28 {
     }
 
     /**
-     * 获取next数组
+     * 获取字符串s的next数组
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param s
@@ -79,11 +79,11 @@ public class Problem28 {
         int j = 0;
 
         for (int i = 1; i < s.length(); i++) {
-            while (j > 0 && s.charAt(j) != s.charAt(i)) {
+            while (j > 0 && s.charAt(i) != s.charAt(j)) {
                 j = next[j - 1];
             }
 
-            if (s.charAt(j) == s.charAt(i)) {
+            if (s.charAt(i) == s.charAt(j)) {
                 j++;
             }
 

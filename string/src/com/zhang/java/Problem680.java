@@ -25,6 +25,47 @@ public class Problem680 {
         Problem680 problem680 = new Problem680();
         String s = "abdda";
         System.out.println(problem680.validPalindrome(s));
+        System.out.println(problem680.validPalindrome2(s));
+    }
+
+    /**
+     * 暴力
+     * 每次删除一个字符，判断当前删除之后的字符串是否是回文串
+     * 时间复杂度O(n^2)，空间复杂度O(n)
+     *
+     * @param s
+     * @return
+     */
+    public boolean validPalindrome(String s) {
+        if (s == null || s.length() == 0) {
+            return false;
+        }
+
+        for (int i = 0; i < s.length(); i++) {
+            //删除一个字符之后的字符串
+            String s2 = s.substring(0, i) + s.substring(i + 1, s.length());
+
+            int left = 0;
+            int right = s2.length() - 1;
+            //s2是否是回文串标志
+            boolean flag = true;
+
+            //判断当前删除之后的字符串s2是否是回文串
+            while (left < right) {
+                if (s2.charAt(left) != s2.charAt(right)) {
+                    flag = false;
+                    break;
+                }
+                left++;
+                right--;
+            }
+
+            if (flag) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -36,7 +77,11 @@ public class Problem680 {
      * @param s
      * @return
      */
-    public boolean validPalindrome(String s) {
+    public boolean validPalindrome2(String s) {
+        if (s == null || s.length() == 0) {
+            return false;
+        }
+
         int left = 0;
         int right = s.length() - 1;
 
@@ -44,7 +89,7 @@ public class Problem680 {
             //s[left]和s[right]不相等，则需要删除左指针或右指针字符，
             //即判断s[left+1]-s[right]或s[left]-s[right-1]是否是回文串，如果有一个是回文串，则s删除一个字符是回文串
             if (s.charAt(left) != s.charAt(right)) {
-                return isValid(s, left + 1, right) || isValid(s, left, right - 1);
+                return isValid(s, left, right - 1) || isValid(s, left + 1, right);
             } else {
                 left++;
                 right--;
@@ -64,13 +109,12 @@ public class Problem680 {
      * @return
      */
     private boolean isValid(String s, int left, int right) {
-        while (left <= right) {
-            if (s.charAt(left) == s.charAt(right)) {
-                left++;
-                right--;
-            } else {
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right)) {
                 return false;
             }
+            left++;
+            right--;
         }
 
         return true;

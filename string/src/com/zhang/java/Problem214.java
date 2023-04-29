@@ -26,7 +26,7 @@ public class Problem214 {
 
     /**
      * 暴力
-     * 找以s[0]开始的最长回文串，反转s剩下的字符串再拼接s，得到最短回文串
+     * 从s[0]开始找最长回文串，反转s种不是回文串的剩下字符串，再拼接s，得到最短回文串
      * 时间复杂度O(n^2)，空间复杂度O(1)
      *
      * @param s
@@ -37,23 +37,24 @@ public class Problem214 {
             return "";
         }
 
-        //从后往前找以s[0]开头的最长回文串
+        //从后往前找从s[0]开头的最长回文串
         for (int i = s.length() - 1; i >= 0; i--) {
             int left = 0;
             int right = i;
+            //s[0]-s[i]是否是回文串标志
             boolean flag = true;
 
             while (left <= right) {
-                if (s.charAt(left) == s.charAt(right)) {
-                    left++;
-                    right--;
-                } else {
+                if (s.charAt(left) != s.charAt(right)) {
                     flag = false;
                     break;
+                } else {
+                    left++;
+                    right--;
                 }
             }
 
-            //s[0]-s[i]能构成回文串
+            //s[0]-s[i]是回文串
             if (flag) {
                 //反转s[i+1]-s[s.length()-1]，拼接上s，得到最短回文串
                 return new StringBuilder().append(s.substring(i + 1, s.length())).reverse().append(s).toString();
@@ -140,27 +141,28 @@ public class Problem214 {
     }
 
     /**
-     * 得到字符串p的next数组
-     * 当指向字符串p的指针j与主串指针i所指的元素不相同，即匹配失败时，字符串p的指针j重新指向next[j-1]
+     * 获取字符串s的next数组
+     * 当指向字符串s的指针j与主串指针i所指的元素不相同，即匹配失败时，字符串s的指针j重新指向next[j-1]
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
-     * @param p
+     * @param s
      * @return
      */
-    private int[] getNext(String p) {
-        int[] next = new int[p.length()];
+    private int[] getNext(String s) {
+        int[] next = new int[s.length()];
         //当前字符串索引
         int i;
         //当前字符串相同的最长前缀和最长后缀的公共长度
         int j = 0;
 
-        for (i = 1; i < p.length(); i++) {
-            //当p[i]和p[j]不相等时，j指针右移
-            while (j > 0 && p.charAt(i) != p.charAt(j)) {
+        for (i = 1; i < s.length(); i++) {
+            //当s[i]和s[j]不相等时，j指针右移
+            while (j > 0 && s.charAt(i) != s.charAt(j)) {
                 j = next[j - 1];
             }
 
-            //当前前缀相等，j后移
-            if (p.charAt(i) == p.charAt(j)) {
+            //当前前缀相等，j指针后移
+            if (s.charAt(i) == s.charAt(j)) {
                 j++;
             }
 

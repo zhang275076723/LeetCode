@@ -80,12 +80,12 @@ public class Problem75 {
         int k;
 
         //起始元素为0，i右移
-        while (i <= j && nums[i] == 0) {
+        while (i < j && nums[i] == 0) {
             i++;
         }
 
         //末尾元素为2，j左移
-        while (i <= j && nums[j] == 2) {
+        while (i < j && nums[j] == 2) {
             j--;
         }
 
