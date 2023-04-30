@@ -134,35 +134,13 @@ public class Problem707 {
                     return;
                 }
 
-                //首添加
-                if (index == 0) {
-                    Node node = new Node(value);
-                    node.pre = head;
-                    node.next = head.next;
-                    head.next.pre = node;
-                    head.next = node;
-                    curSize++;
-                    return;
-                }
-
-                //尾添加
-                if (index == curSize) {
-                    Node node = new Node(value);
-                    node.pre = tail.pre;
-                    node.next = tail;
-                    tail.pre.next = node;
-                    tail.pre = node;
-                    curSize++;
-                    return;
-                }
-
-                //链表中间节点添加
                 //要添加节点的前驱节点
                 Node preNode = head;
                 for (int i = 0; i < index; i++) {
                     preNode = preNode.next;
                 }
 
+                //要添加的节点
                 Node node = new Node(value);
                 node.pre = preNode;
                 node.next = preNode.next;

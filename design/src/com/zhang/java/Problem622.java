@@ -63,10 +63,8 @@ public class Problem622 {
      * 数组+首尾指针实现循环队列
      */
     static class MyCircularQueue {
-        //队列数组
+        //循环队列数组，使用一个冗余位置判断队列满还是空，实际能存放的大小为arr.length-1
         private final int[] arr;
-        //队列容量，使用一个冗余位置判断队列满还是空，实际能存放的大小为capacity-1
-        private final int capacity;
         //队首指针，指向队列中第一个元素下标索引
         private int front;
         //队尾指针，指向队列中最后一个元素下一个位置的下标索引
@@ -74,8 +72,7 @@ public class Problem622 {
 
         public MyCircularQueue(int k) {
             //多申请一个长度，用于判断队列满还是空
-            capacity = k + 1;
-            arr = new int[capacity];
+            arr = new int[k + 1];
             front = 0;
             rear = 0;
         }
@@ -88,7 +85,7 @@ public class Problem622 {
 
             arr[rear] = value;
             //队尾指针后移
-            rear = (rear + 1) % capacity;
+            rear = (rear + 1) % arr.length;
             return true;
         }
 
@@ -99,7 +96,7 @@ public class Problem622 {
             }
 
             //队首指针后移
-            front = (front + 1) % capacity;
+            front = (front + 1) % arr.length;
             return true;
         }
 
@@ -118,7 +115,7 @@ public class Problem622 {
                 return -1;
             }
 
-            return arr[(rear - 1 + capacity) % capacity];
+            return arr[(rear + arr.length - 1) % arr.length];
         }
 
         public boolean isEmpty() {
@@ -127,7 +124,7 @@ public class Problem622 {
 
         public boolean isFull() {
             //尾指针加1追上首指针，则队列满了
-            return (rear + 1) % capacity == front;
+            return (rear + 1) % arr.length == front;
         }
     }
 
@@ -219,19 +216,18 @@ public class Problem622 {
                 tail.pre = node;
             }
 
-            public int removeFirst() {
+            public void removeFirst() {
                 //链表为空，直接返回-1
                 if (head.next == tail) {
-                    return -1;
+                    return;
                 }
 
                 //头结点的下一个节点，即要删除的节点
-                Node nextNode = head.next;
-                nextNode.next.pre = head;
-                head.next = nextNode.next;
-                nextNode.pre = null;
-                nextNode.next = null;
-                return nextNode.value;
+                Node node = head.next;
+                node.next.pre = head;
+                head.next = node.next;
+                node.pre = null;
+                node.next = null;
             }
 
             /**

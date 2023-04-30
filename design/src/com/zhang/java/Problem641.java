@@ -66,10 +66,8 @@ public class Problem641 {
      * 数组+首尾指针实现双向循环队列
      */
     static class MyCircularDeque {
-        //队列数组
+        //双向循环队列数组，使用一个冗余位置判断队列满还是空，实际能存放的大小为arr.length-1
         private final int[] arr;
-        //队列容量，使用一个冗余位置判断队列满还是空，实际能存放的大小为capacity-1
-        private final int capacity;
         //队首指针，指向队列中第一个元素下标索引
         private int front;
         //队尾指针，指向队列中最后一个元素下一个位置的下标索引
@@ -77,8 +75,7 @@ public class Problem641 {
 
         public MyCircularDeque(int k) {
             //多申请一个长度，用于判断队列满还是空
-            capacity = k + 1;
-            arr = new int[capacity];
+            arr = new int[k + 1];
             front = 0;
             rear = 0;
         }
@@ -90,7 +87,7 @@ public class Problem641 {
             }
 
             //首指针左移
-            front = (front - 1 + capacity) % capacity;
+            front = (front + arr.length - 1) % arr.length;
             arr[front] = value;
             return true;
         }
@@ -103,7 +100,7 @@ public class Problem641 {
 
             arr[rear] = value;
             //尾指针后移
-            rear = (rear + 1) % capacity;
+            rear = (rear + 1) % arr.length;
             return true;
         }
 
@@ -114,7 +111,7 @@ public class Problem641 {
             }
 
             //首指针后移
-            front = (front + 1) % capacity;
+            front = (front + 1) % arr.length;
             return true;
         }
 
@@ -125,7 +122,7 @@ public class Problem641 {
             }
 
             //尾指针左移
-            rear = (rear - 1 + capacity) % capacity;
+            rear = (rear + arr.length - 1) % arr.length;
             return true;
         }
 
@@ -144,7 +141,7 @@ public class Problem641 {
                 return -1;
             }
 
-            return arr[(rear - 1 + capacity) % capacity];
+            return arr[(rear + arr.length - 1) % arr.length];
         }
 
         public boolean isEmpty() {
@@ -153,7 +150,7 @@ public class Problem641 {
 
         public boolean isFull() {
             //尾指针加1追上首指针，则队列满了
-            return (rear + 1) % capacity == front;
+            return (rear + 1) % arr.length == front;
         }
     }
 
@@ -275,34 +272,32 @@ public class Problem641 {
                 tail.pre = node;
             }
 
-            public int removeFirst() {
+            public void removeFirst() {
                 //链表为空，直接返回-1
                 if (head.next == tail) {
-                    return -1;
+                    return;
                 }
 
                 //头结点的下一个节点，即要删除的节点
-                Node nextNode = head.next;
-                nextNode.next.pre = head;
-                head.next = nextNode.next;
-                nextNode.pre = null;
-                nextNode.next = null;
-                return nextNode.value;
+                Node node = head.next;
+                node.next.pre = head;
+                head.next = node.next;
+                node.pre = null;
+                node.next = null;
             }
 
-            public int removeLast() {
+            public void removeLast() {
                 //链表为空，直接返回-1
                 if (head.next == tail) {
-                    return -1;
+                    return;
                 }
 
                 //尾节点的前驱节点，即要删除的节点
-                Node preNode = tail.pre;
-                preNode.pre.next = tail;
-                tail.pre = preNode.pre;
-                preNode.pre = null;
-                preNode.next = null;
-                return preNode.value;
+                Node node = tail.pre;
+                node.pre.next = tail;
+                tail.pre = node.pre;
+                node.pre = null;
+                node.next = null;
             }
 
             /**
