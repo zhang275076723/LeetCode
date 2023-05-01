@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/8/29 9:53
  * @Author zsy
- * @Description 最接近的三数之和 类比Problem1、Problem15、Problem18、Problem167、Problem454、Offer57
+ * @Description 最接近的三数之和 类比Problem1、Problem15、Problem18、Problem167、Problem454、Problem611、Offer57
  * 给你一个长度为 n 的整数数组 nums 和 一个目标值 target。
  * 请你从 nums 中选出三个整数，使它们的和与 target 最接近。
  * 返回这三个数的和。
@@ -26,8 +26,8 @@ public class Problem16 {
     public static void main(String[] args) {
         Problem16 problem16 = new Problem16();
 //        int[] nums = {-1, 2, 1, -4};
-        int[] nums = {-1000, -5, -5, -5, -5, -5, -5, -1, -1, -1};
 //        int target = 1;
+        int[] nums = {-1000, -5, -5, -5, -5, -5, -5, -1, -1, -1};
         int target = -14;
         System.out.println(problem16.threeSumClosest(nums, target));
     }
