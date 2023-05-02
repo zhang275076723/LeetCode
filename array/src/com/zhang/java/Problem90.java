@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/11/9 08:38
  * @Author zsy
- * @Description 子集 II 回溯+剪枝类比Problem17、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem97、Problem216、Problem377、Offer17、Offer38
+ * @Description 子集 II 回溯+剪枝类比Problem17、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem97、Problem216、Problem377、Problem679、Offer17、Offer38
  * 给你一个整数数组 nums ，其中可能包含重复元素，请你返回该数组所有可能的子集（幂集）。
  * 解集 不能 包含重复的子集。返回的解集中，子集可以按 任意顺序 排列。
  * <p>

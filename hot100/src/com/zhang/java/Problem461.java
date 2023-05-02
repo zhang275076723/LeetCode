@@ -43,7 +43,7 @@ public class Problem461 {
             //+的优先级高于&，所以需要添加括号
             count = count + (z & 1);
             //计算n二进制表示中1的个数，必须使用无符号右移
-            z = z >> 1;
+            z = z >>> 1;
         }
 
         return count;

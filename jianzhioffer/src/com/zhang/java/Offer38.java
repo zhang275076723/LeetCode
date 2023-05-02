@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/3/24 12:09
  * @Author zsy
- * @Description 字符串的排列 回溯+剪枝类比Problem17、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem90、Problem97、Problem216、Problem377、Offer17
+ * @Description 字符串的排列 回溯+剪枝类比Problem17、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem90、Problem97、Problem216、Problem377、Problem679、Offer17
  * 输入一个字符串，打印出该字符串中字符的所有排列。
  * 你可以以任意顺序返回这个字符串数组，但里面不能有重复元素。
  * <p>

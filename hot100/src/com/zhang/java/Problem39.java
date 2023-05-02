@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/4/19 8:45
  * @Author zsy
- * @Description 组合总和 回溯+剪枝类比Problem17、Problem40、Problem46、Problem47、Problem77、Problem78、Problem90、Problem97、Problem216、Problem377、Offer17、Offer38
+ * @Description 组合总和 回溯+剪枝类比Problem17、Problem40、Problem46、Problem47、Problem77、Problem78、Problem90、Problem97、Problem216、Problem377、Problem679、Offer17、Offer38
  * 给你一个 无重复元素 的整数数组 candidates 和一个目标整数 target ，
  * 找出 candidates 中可以使数字和为目标数 target 的 所有 不同组合 ，并以列表形式返回。
  * 你可以按 任意顺序 返回这些组合。

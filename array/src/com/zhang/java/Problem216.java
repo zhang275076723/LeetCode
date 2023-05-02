@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/3/23 08:51
  * @Author zsy
- * @Description 组合总和 III 回溯+剪枝类比Problem17、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem90、Problem97、Problem377、Offer17、Offer38
+ * @Description 组合总和 III 回溯+剪枝类比Problem17、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem90、Problem97、Problem377、Problem679、Offer17、Offer38
  * 找出所有相加之和为 n 的 k 个数的组合，且满足下列条件：
  * 只使用数字1到9
  * 每个数字 最多使用一次
