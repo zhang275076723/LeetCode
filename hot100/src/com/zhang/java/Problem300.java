@@ -106,8 +106,8 @@ public class Problem300 {
         int maxLen = 1;
 
         for (int i = 1; i < nums.length; i++) {
-            //当前元素放到严格递增数组的尾部
-            if (arr[maxLen - 1] < arr[i]) {
+            //当前元素nums[i]大于严格递增数组末尾元素，则nums[i]作为严格递增数组新的末尾元素
+            if (arr[maxLen - 1] < nums[i]) {
                 arr[maxLen] = nums[i];
                 maxLen++;
                 continue;

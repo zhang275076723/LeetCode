@@ -6,7 +6,7 @@ import java.util.Stack;
 /**
  * @Date 2023/4/13 09:07
  * @Author zsy
- * @Description 链表中的下一个更大节点 单调栈类比Problem42、Problem84、Problem316、Problem321、Problem402、Problem496、Problem503、Problem739
+ * @Description 链表中的下一个更大节点 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem739、Offer33
  * 给定一个长度为 n 的链表 head
  * 对于列表中的每个节点，查找下一个 更大节点 的值。
  * 也就是说，对于每个节点，找到它旁边的第一个节点的值，这个节点的值 严格大于 它的值。

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/10/31 08:40
  * @Author zsy
- * @Description 找出字符串中第一个匹配项的下标 类比Problem214
+ * @Description 找出字符串中第一个匹配项的下标 kmp类比Problem214
  * 给你两个字符串 haystack 和 needle ，请你在 haystack 字符串中找出 needle 字符串的第一个匹配项的下标（下标从 0 开始）。
  * 如果needle 不是 haystack 的一部分，则返回 -1 。
  * <p>

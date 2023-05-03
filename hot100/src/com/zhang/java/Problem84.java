@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2022/4/28 9:35
  * @Author zsy
- * @Description 柱状图中最大的矩形 类比Problem11、Problem85 单调栈类比Problem42、Problem316、Problem321、Problem402、Problem496、Problem503、Problem739、Problem1019
+ * @Description 柱状图中最大的矩形 类比Problem11、Problem85 单调栈类比Problem42、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem739、Problem1019、Offer33
  * 给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。
  * 求在该柱状图中，能够勾勒出来的矩形的最大面积。
  * <p>
@@ -29,7 +29,7 @@ public class Problem84 {
 
     /**
      * 暴力，双指针
-     * 当前位置的最大面积：当前位置为高，往左右找第一个小于当前高的位置为宽
+     * 以heights[i]为矩形的高的最大面积：当前位置为高，往左右找第一个小于当前高的位置为宽
      * 时间复杂度O(n^2)，空间复杂度O(1)
      *
      * @param heights
@@ -41,14 +41,12 @@ public class Problem84 {
         }
 
         int max = 0;
-        //当前位置的左边索引
-        int left;
-        //当前位置的右边索引
-        int right;
 
         for (int i = 0; i < heights.length; i++) {
-            left = i;
-            right = i;
+            //以heights[i]为矩形的高，矩形的左边界
+            int left = i;
+            //以heights[i]为矩形的高，矩形的右边界
+            int right = i;
 
             while (left - 1 >= 0 && heights[left - 1] >= heights[i]) {
                 left--;

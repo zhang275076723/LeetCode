@@ -42,7 +42,7 @@ public class Problem221 {
 
     /**
      * 动态规划
-     * dp[i][j]：以matrix[i][j]为右下角构成的最大正方形边长
+     * dp[i][j]：以matrix[i][j]为右下角构成最大正方形的边长
      * dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]) + 1 (matrix[i][j] == 1)
      * dp[i][j] = 0                                             (matrix[i][j] == 0)
      * 时间复杂度O(mn)，空间复杂度O(mn) (m为matrix的行，n为matrix的列)
@@ -51,7 +51,7 @@ public class Problem221 {
      * @return
      */
     public int maximalSquare(char[][] matrix) {
-        //当前正方形的最大边长
+        //正方形的最大边长
         int maxLen = 0;
         int[][] dp = new int[matrix.length + 1][matrix[0].length + 1];
 

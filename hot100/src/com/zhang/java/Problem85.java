@@ -124,9 +124,11 @@ public class Problem85 {
 
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
+                //matrix[i][j]为'1'，当前位置的高加1
                 if (matrix[i][j] == '1') {
-                    heights[j] = heights[j] + 1;
+                    heights[j]++;
                 } else {
+                    //matrix[i][j]为'0'，当前位置的高为0
                     heights[j] = 0;
                 }
             }
@@ -139,7 +141,7 @@ public class Problem85 {
 
     /**
      * 单调栈
-     * 计算最大矩形面积
+     * 计算heights中的最大矩形面积
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param heights

@@ -70,8 +70,8 @@ public class Problem680 {
 
     /**
      * 双指针
-     * s[left]和s[right]不相等，则需要删除左指针或右指针字符，
-     * 即判断s[left+1]-s[right]或s[left]-s[right-1]是否是回文串，如果有一个是回文串，则s删除一个字符是回文串
+     * left指向首，right指向尾，s[left]和s[right]不相等，则需要删除左指针或右指针字符，
+     * 判断s[left+1]-s[right]或s[left]-s[right-1]是否是回文串，如果有一个是回文串，则s删除一个字符是回文串
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param s

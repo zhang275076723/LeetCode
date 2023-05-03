@@ -90,7 +90,7 @@ public class Problem226 {
     }
 
     /**
-     * dfs，层序遍历
+     * bfs，层序遍历
      * 时间复杂度O(n)，平均空间复杂度O(logn)，最坏空间复杂度O(n)
      *
      * @param root

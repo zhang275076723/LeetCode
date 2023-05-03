@@ -6,7 +6,7 @@ import java.util.Stack;
 /**
  * @Date 2022/3/21 18:57
  * @Author zsy
- * @Description 二叉搜索树的后序遍历序列 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem449、Problem889、Problem1008、Offer7
+ * @Description 二叉搜索树的后序遍历序列 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem255、Problem449、Problem889、Problem1008、Offer7 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem739、Problem1019
  * 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历结果。
  * 如果是则返回 true，否则返回 false。假设输入的数组的任意两个数字都互不相同。
  * <p>
@@ -52,13 +52,11 @@ public class Offer33 {
     }
 
     /**
-     * 单调栈 (不理解)
-     * 后序遍历：左右根， 逆序后序遍历：根右左
-     * 单调递增栈存储当前节点的父节点，逆序遍历后序遍历数组，
-     * 1、stack.peek() < postorder[i]，则postorder[i]是stack.peek()的右子节点，postorder[i]入栈
-     * 判断postorder[i]是否小于parent，如果不小于，则不是后序遍历，返回false
-     * 2、stack.peek() < postorder[i]，则postorder[i]是栈中某个节点的左子节点，栈中元素出栈，赋值给当前parent，
-     * 判断postorder[i]是否小于parent，如果不小于，则不是后序遍历，返回false
+     * 单调栈
+     * 后序遍历：左右根，逆序后序遍历：根右左
+     * 逆序遍历postorder，如果当前节点的值大于父节点的值，则postorder不是二叉搜索树的后序遍历结果，返回false，
+     * 如果当前节点的值不满足单调递增栈，则当前遍历到了左子树，栈中节点出栈，更新父节点
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param postorder
      * @return
@@ -70,25 +68,25 @@ public class Offer33 {
 
         //单调递增栈
         Stack<Integer> stack = new Stack<>();
+        //当前遍历到节点的父节点，初始化根节点的父节点为int最大值，因为从后往前遍历postorder，所以父节点的值大于当前节点的值
         int parent = Integer.MAX_VALUE;
 
         for (int i = postorder.length - 1; i >= 0; i--) {
-            int value = postorder[i];
-
-            //栈顶元素 > value 时，value是栈中最小元素的左子节点
-            while (!stack.empty() && stack.peek() > value) {
-                parent = stack.pop();
-            }
-
-            //value是左子树的值，如果大于parent，则不是二叉搜索树
-            if (value > parent) {
+            //当前节点的值大于父节点的值，则不是二叉搜索树，返回false
+            if (postorder[i] > parent) {
                 return false;
             }
 
-            //栈顶元素 < value，value是栈顶元素的右子节点，value入栈
-            stack.push(value);
+            //不满足单调递增栈，则当前遍历到了左子树，栈中节点出栈，更新父节点
+            while (!stack.empty() && postorder[stack.peek()] > postorder[i]) {
+                parent = postorder[stack.pop()];
+            }
+
+            //当前节点入栈，继续遍历右子树节点
+            stack.push(i);
         }
 
+        //遍历结束，则是二叉搜索树，返回true
         return true;
     }
 
@@ -108,13 +106,13 @@ public class Offer33 {
         //后序遍历数组postorder中第一个大于根节点的右子树节点下标索引，即[rightIndex,right-1]都比根节点postorder[right]值要大
         int rightIndex = left;
 
-        //找第一个大于根节点的右子树节点下标索引rightIndex
+        //从左往右遍历找第一个大于根节点的右子树节点下标索引rightIndex
         while (rightIndex < right && postorder[rightIndex] < postorder[right]) {
             rightIndex++;
         }
 
         //后序遍历数组postorder中[rightIndex,right-1]为右子树的节点，如果存在小于根节点的值，
-        //则当前后序遍历数组不是二叉搜索树的后序遍历结果，返回false
+        //则后序遍历数组不是二叉搜索树的后序遍历结果，返回false
         for (int i = rightIndex; i < right; i++) {
             if (postorder[i] < postorder[right]) {
                 return false;

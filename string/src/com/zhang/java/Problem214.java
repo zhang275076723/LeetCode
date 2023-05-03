@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/17 11:42
  * @Author zsy
- * @Description 最短回文串 网易机试题 美团机试题 华为面试题 字节面试题 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem234、Problem409、Problem516、Problem647、Problem680 kmp类比Problem28
+ * @Description 最短回文串 网易机试题 美团机试题 华为面试题 字节面试题 kmp类比Problem28 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem234、Problem409、Problem516、Problem647、Problem680
  * 给定一个字符串 s，你可以通过在字符串前面添加字符将其转换为回文串。
  * 找到并返回可以用这种方式转换的最短回文串。
  * <p>
