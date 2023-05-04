@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/9/1 9:19
  * @Author zsy
- * @Description 不同的二叉搜索树 II 二叉搜索树类比Problem96、Problem98、Problem99、Problem230、Offer33、Offer36 分治法类比Problem105、Problem106、Problem108、Problem109、Problem255、Problem449、Problem889、Problem1008、Offer7、Offer33
+ * @Description 不同的二叉搜索树 II 二叉搜索树类比Problem96、Problem98、Problem99、Problem230、Offer33、Offer36 分治法类比Problem105、Problem106、Problem108、Problem109、Problem255、Problem395、Problem449、Problem889、Problem1008、Offer7、Offer33
  * 给你一个整数 n ，请你生成并返回所有由 n 个节点组成且节点值从 1 到 n 互不相同的不同 二叉搜索树 。
  * 可以按 任意顺序 返回答案。
  * <p>
@@ -56,10 +56,10 @@ public class Problem95 {
             return new ArrayList<>();
         }
 
-        return backtrack(1, n);
+        return dfs(1, n);
     }
 
-    private List<TreeNode> backtrack(int left, int right) {
+    private List<TreeNode> dfs(int left, int right) {
         //没有节点，null放入集合中返回
         if (left > right) {
             List<TreeNode> list = new ArrayList<>();
@@ -79,9 +79,9 @@ public class Problem95 {
         //[start,end]选择一个数作为根节点
         for (int i = left; i <= right; i++) {
             //[start,i-1]作为左子树集合
-            List<TreeNode> leftNodes = backtrack(left, i - 1);
+            List<TreeNode> leftNodes = dfs(left, i - 1);
             //[i+1,end]作为右子树集合
-            List<TreeNode> rightNodes = backtrack(i + 1, right);
+            List<TreeNode> rightNodes = dfs(i + 1, right);
 
             for (TreeNode leftNode : leftNodes) {
                 for (TreeNode rightNode : rightNodes) {

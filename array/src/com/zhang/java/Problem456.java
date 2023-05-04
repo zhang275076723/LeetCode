@@ -121,7 +121,7 @@ public class Problem456 {
 
         //单调递减栈，作为132模式中的3
         Stack<Integer> stack = new Stack<>();
-        //从后往前遍历中当前的最大元素，作为132模式中的2
+        //从后往前遍历中当前的最大元素，作为132模式中的2，初始化为int最小值
         int max = Integer.MIN_VALUE;
 
         for (int i = nums.length - 1; i >= 0; i--) {

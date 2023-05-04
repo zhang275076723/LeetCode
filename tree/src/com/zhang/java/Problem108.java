@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/11 11:14
  * @Author zsy
- * @Description 将有序数组转换为二叉搜索树 分治法类比Problem95、Problem105、Problem106、Problem109、Problem255、Problem449、Problem889、Problem1008、Offer7、Offer33
+ * @Description 将有序数组转换为二叉搜索树 分治法类比Problem95、Problem105、Problem106、Problem109、Problem255、Problem395、Problem449、Problem889、Problem1008、Offer7、Offer33
  * 给你一个整数数组 nums ，其中元素已经按 升序 排列，请你将其转换为一棵 高度平衡 二叉搜索树。
  * 高度平衡 二叉树是一棵满足「每个节点的左右两个子树的高度差的绝对值不超过 1 」的二叉树。
  * <p>

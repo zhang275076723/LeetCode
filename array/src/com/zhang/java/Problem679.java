@@ -128,12 +128,15 @@ public class Problem679 {
                         return true;
                     }
 
+                    //删除之前添加的运算结果
                     list.remove(list.size() - 1);
                 }
 
+                //添加之前删除的第2个要进行运算的数
                 list.add(j, num2);
             }
 
+            //添加之前删除的第1个要进行运算的数
             list.add(i, num1);
         }
 
@@ -189,15 +192,21 @@ public class Problem679 {
 
                     backtrack2(list, opsList, result);
 
+                    //删除之前添加的运算表达式
                     opsList.remove(opsList.size() - 1);
+                    //删除之前添加的运算结果
                     list.remove(list.size() - 1);
                 }
 
+                //添加之前删除的第2个要进行运算的表达式
                 opsList.add(j, ops2);
+                //添加之前删除的第1个要进行运算的数
                 list.add(j, num2);
             }
 
+            //添加之前删除的第1个要进行运算的表达式
             opsList.add(i, ops1);
+            //添加之前删除的第1个要进行运算的数
             list.add(i, num1);
         }
     }
