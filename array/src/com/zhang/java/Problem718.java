@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/6/30 11:20
  * @Author zsy
- * @Description 最长重复子数组 子序列和子数组类比Problem53、Problem300、Problem673、Problem674、Problem1143
+ * @Description 最长重复子数组 子序列和子数组类比Problem53、Problem115、Problem300、Problem392、Problem673、Problem674、Problem1143
  * 给两个整数数组 nums1 和 nums2 ，返回 两个数组中 公共的 、长度最长的子数组的长度 。
  * <p>
  * 输入：nums1 = [1,2,3,2,1], nums2 = [3,2,1,4,7]

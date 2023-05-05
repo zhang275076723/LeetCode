@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/24 9:42
  * @Author zsy
- * @Description 编辑距离 字节面试题 七牛云面试题 动态规划类比Problem97、Problem132、Problem139、Problem221、Problem516、Problem1143
+ * @Description 编辑距离 字节面试题 七牛云面试题 动态规划类比Problem97、Problem115、Problem132、Problem139、Problem221、Problem516、Problem1143
  * 给你两个单词 word1 和 word2， 请返回将 word1 转换成 word2 所使用的最少操作数 。
  * 你可以对一个单词进行如下三种操作：
  * 插入一个字符
@@ -79,8 +79,10 @@ public class Problem72 {
         }
 
         for (int i = 1; i <= word1.length(); i++) {
+            char c1 = word1.charAt(i - 1);
             for (int j = 1; j <= word2.length(); j++) {
-                if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+                char c2 = word2.charAt(j - 1);
+                if (c1 == c2) {
                     dp[i][j] = dp[i - 1][j - 1];
                 } else {
                     //取3种情况的最小值+1,，即为所需的最少操作数
