@@ -22,7 +22,26 @@ public class Problem796 {
         Problem796 problem796 = new Problem796();
         String s = "abcde";
         String goal = "cdeab";
+        System.out.println(problem796.rotateString2(s, goal));
         System.out.println(problem796.rotateString(s, goal));
+    }
+
+    /**
+     * s拼接s，得到的新字符串str，str中包含了s旋转的各种情况，
+     * 如果str中包含goal，则goal可以由s旋转得到
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param s
+     * @param goal
+     * @return
+     */
+    public boolean rotateString(String s, String goal) {
+        //s和goal的长度不同，则goal不能由s旋转得到，返回false
+        if (s.length() != goal.length()) {
+            return false;
+        }
+
+        return (s + s).contains(goal);
     }
 
     /**
@@ -35,7 +54,7 @@ public class Problem796 {
      * @param goal
      * @return
      */
-    public boolean rotateString(String s, String goal) {
+    public boolean rotateString2(String s, String goal) {
         //s和goal的长度不同，则goal不能由s旋转得到，返回false
         if (s.length() != goal.length()) {
             return false;

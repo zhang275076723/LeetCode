@@ -129,10 +129,8 @@ public class Problem1008 {
 
         //根节点，前序遍历数组中第一个元素即为根节点
         TreeNode root = new TreeNode(preorder[left]);
-
         root.left = buildTree(preorder, left + 1, rightRootIndex - 1);
         root.right = buildTree(preorder, rightRootIndex, right);
-
         return root;
     }
 
