@@ -42,7 +42,7 @@ public class Problem495 {
      * 模拟
      * 如果两次攻击之间的时间intervalTime大于中毒持续时间duration，则中毒总时间加上duration；
      * 如果两次攻击之间的时间intervalTime小于等于中毒持续时间duration，则中毒总时间加上两次攻击之间的时间intervalTime，
-     * 最后，还需要加上duration
+     * 最后，还需要加上最后一次攻击的中毒时间duration
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param timeSeries

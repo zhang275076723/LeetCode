@@ -43,11 +43,14 @@ public class Problem1047 {
         Deque<Character> stack = new LinkedList<>();
 
         for (char c : s.toCharArray()) {
-            //当前元素和栈顶元素相等时，即存在相邻重复元素，栈顶元素出队
-            if (!stack.isEmpty() && stack.peekLast() == c) {
-                stack.pollLast();
-            } else {
+            //栈为空，当前元素c入栈
+            if (stack.isEmpty()) {
                 stack.offerLast(c);
+            } else {
+                //当前元素c和栈顶元素相等，即存在相邻重复元素，栈顶元素出栈
+                if (stack.peekLast() == c) {
+                    stack.pollLast();
+                }
             }
         }
 

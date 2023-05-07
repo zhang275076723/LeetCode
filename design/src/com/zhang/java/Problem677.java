@@ -68,6 +68,7 @@ public class Problem677 {
             //字符串中每个节点在前缀树中需要加上的值
             int addValue = val - map.getOrDefault(key, 0);
             trie.insert(key, addValue);
+            //将key和val加入map
             map.put(key, val);
         }
 
@@ -78,9 +79,7 @@ public class Problem677 {
          * @return
          */
         public int sum(String prefix) {
-            //找到当前字符串的最后一个节点
-            Trie.TrieNode trieNode = trie.search(prefix);
-            return trieNode == null ? 0 : trieNode.sum;
+            return trie.search(prefix);
         }
 
         private static class Trie {
@@ -91,13 +90,14 @@ public class Problem677 {
             }
 
             /**
-             * 当前字符串加入前缀树，字符串中每个节点值加上val
+             * 当前字符串加入前缀树，字符串中每个节点值加上addValue
              *
              * @param word
              * @param value
              */
-            public void insert(String word, int value) {
+            public void insert(String word, int addValue) {
                 TrieNode node = root;
+                node.sum = node.sum + addValue;
 
                 for (char c : word.toCharArray()) {
                     if (!node.children.containsKey(c)) {
@@ -105,30 +105,30 @@ public class Problem677 {
                     }
 
                     node = node.children.get(c);
-                    node.sum = node.sum + value;
+                    node.sum = node.sum + addValue;
                 }
 
                 node.isEnd = true;
             }
 
             /**
-             * 找到当前字符串的最后一个节点，如果不存在返回null
+             * 返回前缀树中以word作为前缀的所有单词之和，如果不存在返回0
              *
              * @param word
              * @return
              */
-            public TrieNode search(String word) {
+            public int search(String word) {
                 TrieNode node = root;
 
                 for (char c : word.toCharArray()) {
                     if (!node.children.containsKey(c)) {
-                        return null;
+                        return 0;
                     }
 
                     node = node.children.get(c);
                 }
 
-                return node;
+                return node.sum;
             }
 
             private static class TrieNode {

@@ -51,8 +51,8 @@ public class Problem316 {
         }
 
         for (char c : s.toCharArray()) {
-            //栈不为空，当前字符c未被访问，栈顶元素字典序大于c字典序，且栈顶元素在后面还有的情况下，栈顶元素出栈
-            while (!stack.isEmpty() && !visited[c - 'a'] && stack.peekLast() > c && map.get(stack.peekLast()) > 0) {
+            //栈不为空，栈顶元素字典序大于当前字符c字典序，字符c未被访问，且栈顶元素在后面还有的情况下，栈顶元素出栈
+            while (!stack.isEmpty() && stack.peekLast() > c && !visited[c - 'a'] && map.get(stack.peekLast()) > 0) {
                 //栈顶元素出栈
                 char c2 = stack.pollLast();
                 //当前元素未访问

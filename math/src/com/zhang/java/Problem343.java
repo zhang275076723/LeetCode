@@ -57,8 +57,12 @@ public class Problem343 {
      * @return
      */
     public int integerBreak2(int n) {
-        if (n <= 3) {
-            return n - 1;
+        if (n == 2) {
+            return 1;
+        }
+
+        if (n == 3) {
+            return 2;
         }
 
         //尽可能拆分为3的和

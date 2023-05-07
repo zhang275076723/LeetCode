@@ -35,9 +35,9 @@ public class Problem863 {
     }
 
     /**
-     * dfs
-     * 哈希表保存当前节点和父节点之间的映射关系，通过哈希表可以实现从当前节点向父节点查找，
-     * 从target节点往子节点和父节点找距离为k的节点，使用前驱节点，用于剪枝，避免重复查找
+     * 哈希表+dfs
+     * 哈希表保存当前节点和父节点之间的映射关系，通过哈希表可以从当前节点找到父节点，
+     * 从target节点往子节点和父节点dfs找距离为k的节点，使用前驱节点，用于剪枝，避免重复查找
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -66,6 +66,7 @@ public class Problem863 {
     }
 
     /**
+     * 图的dfs或bfs
      * 树转换为图，通过dfs或bfs找距离target节点为k的节点
      * 时间复杂度O(n)，空间复杂度O(n)
      *
@@ -82,10 +83,10 @@ public class Problem863 {
         //通过树建立邻接表形表的有向图
         buildGraph(root, edges);
 
-//        //图的dfs查找
+//        //图的dfs
 //        dfs(target, 0, k, new HashSet<>(), edges, list);
 
-        //图的bfs查找
+        //图的bfs
         bfs(target, k, edges, list);
 
         return list;
@@ -102,18 +103,17 @@ public class Problem863 {
             return;
         }
 
-        //左子节点不为空，则左子节点的父节点为当前节点，加入map中
+        //左子节点不为空，则左子节点的父节点为当前节点，加入map中，继续往左子树找
         if (root.left != null) {
             parentMap.put(root.left, root);
+            buildParentMap(root.right, parentMap);
         }
 
-        //右子节点不为空，则右子节点的父节点为当前节点，加入map中
+        //右子节点不为空，则右子节点的父节点为当前节点，加入map中，继续往右子树找
         if (root.right != null) {
             parentMap.put(root.right, root);
+            buildParentMap(root.left, parentMap);
         }
-
-        buildParentMap(root.right, parentMap);
-        buildParentMap(root.left, parentMap);
     }
 
     /**
@@ -131,9 +131,10 @@ public class Problem863 {
             return;
         }
 
-        //找到距离target节点为k的节点值，加入list集合中
+        //找到距离target节点为k的节点值，加入list集合中，直接返回
         if (distance == k) {
             list.add(root.val);
+            return;
         }
 
         //root父节点不为前驱节点pre，则说明root到root父节点这条路径没有被遍历，可以往父节点找，用于剪枝，避免重复查找
@@ -171,6 +172,7 @@ public class Problem863 {
 
         if (distance == k) {
             list.add(node.val);
+            return;
         }
 
         //设置当前节点已访问
@@ -215,8 +217,8 @@ public class Problem863 {
             //当前层元素的个数
             int size = queue.size();
 
-            //k等于bfs扩展的次数，则已经找到了距离target节点为k的节点，加入list集合中
-            if (k == count) {
+            //bfs扩展的次数count等于k，则找到了距离target节点为k的所有节点，都在queue中，加入list集合中，直接返回
+            if (count == k) {
                 while (!queue.isEmpty()) {
                     TreeNode node = queue.poll();
                     list.add(node.val);
@@ -268,12 +270,13 @@ public class Problem863 {
                 edges.put(root.left, new ArrayList<>());
             }
 
-            //当前节点到左子节点的边加入邻接表
-            List<TreeNode> list = edges.get(root);
-            list.add(root.left);
-            //左子节点到当前节点的边加入邻接表
-            List<TreeNode> leftNodeList = edges.get(root.left);
-            leftNodeList.add(root);
+            //当前节点的邻接表中加入左子节点
+            edges.get(root).add(root.left);
+            //左子节点的邻接表中加入当前节点
+            edges.get(root.left).add(root);
+
+            //继续往左子树建图
+            buildGraph(root.left, edges);
         }
 
         //右子节点不为空，当前节点和右子节点则存在边，加入邻接表中
@@ -283,16 +286,14 @@ public class Problem863 {
                 edges.put(root.right, new ArrayList<>());
             }
 
-            //当前节点到右子节点的边加入邻接表
-            List<TreeNode> list = edges.get(root);
-            list.add(root.right);
-            //右子节点到当前节点的边加入邻接表
-            List<TreeNode> rightNodeList = edges.get(root.right);
-            rightNodeList.add(root);
-        }
+            //当前节点的邻接表中加入右子节点
+            edges.get(root).add(root.right);
+            //右子节点的邻接表中加入当前节点
+            edges.get(root.right).add(root);
 
-        buildGraph(root.left, edges);
-        buildGraph(root.right, edges);
+            //继续往右子树建图
+            buildGraph(root.right, edges);
+        }
     }
 
     private TreeNode buildTree(String[] data) {

@@ -179,11 +179,11 @@ public class Problem130 {
         //边界'O'和dummyIndex合并为一个集合，dummyIndex作为根节点
         for (int i = 0; i < board.length; i++) {
             if (board[i][0] == 'O') {
-                unionFind.unionDummy(board[0].length * i);
+                unionFind.unionDummy(i * board[0].length);
             }
 
             if (board[i][board[0].length - 1] == 'O') {
-                unionFind.unionDummy(board[0].length * i + board[0].length - 1);
+                unionFind.unionDummy(i * board[0].length + board[0].length - 1);
             }
         }
 
@@ -194,7 +194,7 @@ public class Problem130 {
             }
 
             if (board[board.length - 1][j] == 'O') {
-                unionFind.unionDummy(board[0].length * (board.length - 1) + j);
+                unionFind.unionDummy((board.length - 1) * board[0].length + j);
             }
         }
 
