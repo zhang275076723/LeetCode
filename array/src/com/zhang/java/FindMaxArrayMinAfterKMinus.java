@@ -61,7 +61,7 @@ public class FindMaxArrayMinAfterKMinus {
      * @return
      */
     public int findMaxArrayMinAfterKMinus2(int[] arr, int k, int x) {
-        //数组中最小值减去kx
+        //数组中最小值减去kx作为左边界
         int left = Integer.MAX_VALUE;
         //数组中最大值作为右边界
         int right = arr[0];

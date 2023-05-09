@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/1/5 12:14
  * @Author zsy
- * @Description 两数相除 Facebook面试题 美团面试题 加减乘除类比Problem43、Problem415 类比Problem371、Offer64、Offer65
+ * @Description 两数相除 Facebook面试题 美团面试题 加减乘除类比Problem43、Problem415、BigNumberSubtract 类比Problem371、Offer64、Offer65
  * 给定两个整数，被除数 dividend 和除数 divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。
  * 返回被除数 dividend 除以除数 divisor 得到的商。
  * 整数除法的结果应当截去（truncate）其小数部分，例如：truncate(8.345) = 8 以及 truncate(-2.7335) = -2

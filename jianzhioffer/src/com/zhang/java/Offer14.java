@@ -28,8 +28,8 @@ public class Offer14 {
 
     /**
      * 动态规划
-     * dp[i]：长度为i的绳子，剪成x段，所有子段长度的最大乘积
-     * dp[i] = max(dp[i-j]*j, (i-j)*j) (1 < j < i)
+     * dp[i]：长度为i的绳子，至少剪成2段，所有子段长度的最大乘积
+     * dp[i] = max(j*dp[i-j], j*(i-j)) (1 < j < i)
      * 先减掉长度为j的子段，剩余部分不剪，乘积为j*(i-j)；剩余部分要剪，乘积为j*dp[i-j]
      * 时间复杂度O(n^2)，空间复杂的O(n)
      *
@@ -45,8 +45,9 @@ public class Offer14 {
         for (int i = 2; i <= n; i++) {
             //减掉长度为j的一段
             for (int j = 1; j < i; j++) {
-                //dp[i - j] * j：绳子剪为至少3段，(i - j) * j：绳子剪为2段
-                dp[i] = Math.max(dp[i], Math.max(dp[i - j] * j, (i - j) * j));
+                //j * dp[i - j]：绳子剪为长度为j和之和为(i-j)的最大乘积的字段，至少为3段，
+                //j * (i - j)：绳子剪为长度为j和(i-j)的2段
+                dp[i] = Math.max(dp[i], Math.max(j * dp[i - j], j * (i - j)));
             }
         }
 

@@ -39,7 +39,9 @@ public class Problem343 {
 
         for (int i = 2; i <= n; i++) {
             for (int j = 1; j < i; j++) {
-                dp[i] = Math.max(dp[i], Math.max(dp[i - j] * j, (i - j) * j));
+                //j * dp[i - j]：绳子剪为长度为j和之和为(i-j)的最大乘积的字段，至少为3段，
+                //j * (i - j)：绳子剪为长度为j和(i-j)的2段
+                dp[i] = Math.max(dp[i], Math.max(j * dp[i - j], j * (i - j)));
             }
         }
 

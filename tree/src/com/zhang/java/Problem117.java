@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/4/12 08:46
  * @Author zsy
- * @Description 填充每个节点的下一个右侧节点指针 II 二叉树和链表之间转换类比Problem114、Problem116、Problem430、Problem897、Offer36
+ * @Description 填充每个节点的下一个右侧节点指针 II 二叉树和链表之间的转换类比Problem114、Problem116、Problem426、Problem430、Problem897、Offer36
  * 给定一个二叉树：
  * struct Node {
  * int val;
@@ -20,7 +20,7 @@ import java.util.*;
  * 输出：[1,#,2,3,#,4,5,7,#]
  * <            1 --> null
  * <        /      \
- * <       3   -->  2 --> null
+ * <       2   -->  3 --> null
  * <     /  \         \
  * <    4 -> 5   -->   7 --> null
  * 解释：给定二叉树如图 A 所示，你的函数应该填充它的每个 next 指针，以指向其下一个右侧节点，如图 B 所示。序列化输出按层序遍历顺序（由 next 指针连接），'#' 表示每层的末尾。
@@ -64,7 +64,7 @@ public class Problem117 {
                 if (i != size - 1) {
                     node.next = queue.peek();
                 }
-                //左右非空节点入队
+                //左右非空子节点入队
                 if (node.left != null) {
                     queue.offer(node.left);
                 }

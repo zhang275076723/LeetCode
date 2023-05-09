@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/20 11:41
  * @Author zsy
- * @Description 搜索旋转排序数组 II 类比Problem33、Problem34、Problem35、Problem153、Problem154、Problem162、Problem852、Offer11、Offer53、Offer53_2
+ * @Description 搜索旋转排序数组 II 类比Problem33、Problem34、Problem35、Problem153、Problem154、Problem162、Problem852、Offer11、Offer53、Offer53_2、Interview_10_03
  * 已知存在一个按非降序排列的整数数组 nums ，数组中的值不必互不相同。
  * 在传递给函数之前，nums 在预先未知的某个下标 k（0 <= k < nums.length）上进行了 旋转 ，
  * 使数组变为 [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]（下标 从 0 开始 计数）。
@@ -49,16 +49,6 @@ public class Problem81 {
         int mid;
 
         while (left <= right) {
-            //left去重
-            while (left + 1 <= right && nums[left] == nums[left + 1]) {
-                left++;
-            }
-
-            //right去重
-            while (left <= right - 1 && nums[right - 1] == nums[right]) {
-                right--;
-            }
-
             mid = left + ((right - left) >> 1);
 
             //nums[mid]和target相等，则找到，直接返回true
@@ -70,23 +60,26 @@ public class Problem81 {
 
                 //nums[mid]-nums[right]单调递增
                 if (nums[mid] < nums[right]) {
-                    //target在nums[mid+1]-nums[right]之中
+                    //target在nums[mid+1]-nums[right]之中，往右边找
                     if (nums[mid] < target && target <= nums[right]) {
                         left = mid + 1;
                     } else {
-                        //target在nums[left]-nums[mid-1]之中
+                        //target在nums[left]-nums[mid-1]之中，往左边找
                         right = mid - 1;
                     }
-                } else {
+                } else if (nums[mid] > nums[right]) {
                     //nums[left]-nums[mid]单调递增
 
-                    //target在nums[left]-nums[mid-1]之中
+                    //target在nums[left]-nums[mid-1]之中，往左边找
                     if (nums[left] <= target && target < nums[mid]) {
                         right = mid - 1;
                     } else {
-                        //target在nums[mid+1]-nums[right]之中
+                        //target在nums[mid+1]-nums[right]之中，往右边找
                         left = mid + 1;
                     }
+                } else {
+                    //nums[mid]和nums[right]相等，去重，右指针左移
+                    right--;
                 }
             }
         }

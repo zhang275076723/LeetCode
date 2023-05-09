@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/30 08:12
  * @Author zsy
- * @Description 山脉数组的峰顶索引 类比Problem33、Problem34、Problem35、Problem81、Problem153、Problem154、Problem162、Offer11、Offer53、Offer53_2 同AscendAndDescendArrayFindMaxIndex
+ * @Description 山脉数组的峰顶索引 类比Problem33、Problem34、Problem35、Problem81、Problem153、Problem154、Problem162、Offer11、Offer53、Offer53_2、Interview_10_03 同AscendAndDescendArrayFindMaxIndex
  * 符合下列属性的数组 arr 称为 山脉数组 ：
  * arr.length >= 3
  * 存在 i（0 < i < arr.length - 1）使得：

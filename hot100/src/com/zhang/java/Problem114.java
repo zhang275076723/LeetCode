@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/2 9:42
  * @Author zsy
- * @Description 二叉树展开为链表 二叉树和链表之间转换类比Problem116、Problem117、Problem430、Problem897、Offer36
+ * @Description 二叉树展开为链表 二叉树和链表之间的转换类比Problem116、Problem117、Problem426、Problem430、Problem897、Offer36
  * 给你二叉树的根结点 root ，请你将它展开为一个单链表：
  * 展开后的单链表应该同样使用 TreeNode ，其中 right 子指针指向链表中下一个结点，而左子指针始终为 null 。
  * 展开后的单链表应该与二叉树 先序遍历 顺序相同。

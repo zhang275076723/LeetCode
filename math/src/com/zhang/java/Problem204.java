@@ -111,10 +111,10 @@ public class Problem204 {
             return 0;
         }
 
-        //dp[i]是否是质数
+        //dp[i]：数字i是否是质数
         boolean[] dp = new boolean[n];
 
-        //初始化每个数都是质数
+        //dp初始化，每个数都是质数
         for (int i = 2; i < n; i++) {
             dp[i] = true;
         }

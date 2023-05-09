@@ -65,11 +65,11 @@ public class Problem188 {
                 //对于第1次买入，需要特殊处理
                 if (j == 0) {
                     dp[i][j][0] = Math.max(dp[i - 1][j][0], -prices[i]);
+                    dp[i][j][1] = Math.max(dp[i - 1][j][1], dp[i - 1][j][0] + prices[i]);
                 } else {
                     dp[i][j][0] = Math.max(dp[i - 1][j][0], dp[i - 1][j - 1][1] - prices[i]);
+                    dp[i][j][1] = Math.max(dp[i - 1][j][1], dp[i - 1][j][0] + prices[i]);
                 }
-
-                dp[i][j][1] = Math.max(dp[i - 1][j][1], dp[i - 1][j][0] + prices[i]);
             }
         }
 
@@ -106,11 +106,11 @@ public class Problem188 {
             for (int j = 0; j < k; j++) {
                 if (j == 0) {
                     dp[j][0] = Math.max(temp[j][0], -prices[i]);
+                    dp[j][1] = Math.max(temp[j][1], temp[j][0] + prices[i]);
                 } else {
                     dp[j][0] = Math.max(temp[j][0], temp[j - 1][1] - prices[i]);
+                    dp[j][1] = Math.max(temp[j][1], temp[j][0] + prices[i]);
                 }
-
-                dp[j][1] = Math.max(temp[j][1], temp[j][0] + prices[i]);
             }
         }
 

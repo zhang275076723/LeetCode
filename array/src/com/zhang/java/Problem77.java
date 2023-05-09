@@ -52,6 +52,7 @@ public class Problem77 {
     }
 
     private void backtrack(int t, int n, int k, List<List<Integer>> result, List<Integer> list) {
+        //list中元素个数为k个，即找到了一个k个元素的组合
         if (list.size() == k) {
             result.add(new ArrayList<>(list));
             return;

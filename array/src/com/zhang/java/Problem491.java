@@ -28,7 +28,7 @@ public class Problem491 {
     }
 
     /**
-     * 回溯+剪枝，难点在于如何去重(不建议使用set去重，因为数组顺序不能变，所以不能排序再去重)
+     * 回溯+剪枝，难点在于如何去重(不建议使用set去重，因为数组顺序不能变，所以不能先排序再去重)
      * 时间复杂度O(n*2^n)，空间复杂度O(n) (共有2^n种状态，每种状态需要O(n)复制到结果集合中)
      *
      * @param nums
@@ -49,6 +49,7 @@ public class Problem491 {
 
     private void backtrack(int t, int[] nums, int last, List<Integer> list, List<List<Integer>> result) {
         if (t == nums.length) {
+            //递增子序列中至少有2个元素
             if (list.size() >= 2) {
                 result.add(new ArrayList<>(list));
             }

@@ -71,7 +71,7 @@ public class Problem271 {
 
         /**
          * 先拼接当前字符串，再拼接分隔符
-         * 例如：["abcfe","uv","hij"]编码为abcfe#uv#hij#
+         * 例如：["abcfe","uv","hij"]编码为abcfe#uv#hij
          * 时间复杂度O(n)，空间复杂度O(n)
          *
          * @param strs
@@ -88,12 +88,13 @@ public class Problem271 {
                 sb.append(str).append(DELIMITER);
             }
 
-            return sb.toString();
+            //去除末尾分隔符'#'
+            return sb.delete(sb.length() - 1, sb.length()).toString();
         }
 
         /**
          * 遍历编码后的字符串，根据分隔符得到每个字符串
-         * 例如：abcfe#uv#hij#解码为["abcfe","uv","hij"]
+         * 例如：abcfe#uv#hij解码为["abcfe","uv","hij"]
          * 时间复杂度O(n)，空间复杂度O(1)
          *
          * @param s

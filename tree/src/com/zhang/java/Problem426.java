@@ -3,25 +3,42 @@ package com.zhang.java;
 import java.util.*;
 
 /**
- * @Date 2022/3/23 10:03
+ * @Date 2023/5/8 09:51
  * @Author zsy
- * @Description 二叉搜索树与双向链表 二叉树和链表之间的转换类比Problem114、Problem116、Problem117、Problem430、Problem897 同Problem426 二叉搜索树类比Problem95、Problem96、Problem98、Problem99、Problem230、Offer33
- * 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的循环双向链表。
- * 要求不能创建任何新的节点，只能调整树中节点指针的指向。
- * 我们希望将这个二叉搜索树转化为双向循环链表。链表中的每个节点都有一个前驱和后继指针。
- * 对于双向循环链表，第一个节点的前驱是最后一个节点，最后一个节点的后继是第一个节点。
- * 下图展示了上面的二叉搜索树转化成的链表。“head” 表示指向链表中有最小元素的节点。
- * 特别地，我们希望可以就地完成转换操作。
+ * @Description 将二叉搜索树转化为排序的双向链表 二叉树和链表之间的转换类比Problem114、Problem116、Problem117、Problem430、Problem897 同Offer36
+ * 将一个 二叉搜索树 就地转化为一个 已排序的双向循环链表 。
+ * 对于双向循环列表，你可以将左右孩子指针作为双向循环链表的前驱和后继指针，
+ * 第一个节点的前驱是最后一个节点，最后一个节点的后继是第一个节点。
+ * 特别地，我们希望可以 就地 完成转换操作。
  * 当转化完成以后，树中节点的左指针需要指向前驱，树中节点的右指针需要指向后继。
- * 还需要返回链表中的第一个节点的指针。
+ * 还需要返回链表中最小元素的指针。
+ * <p>
+ * 输入：root = [4,2,5,1,3]
+ * 输出：[1,2,3,4,5]
+ * 解释：下图显示了转化后的二叉搜索树，实线表示后继关系，虚线表示前驱关系。
+ * <p>
+ * 输入：root = [2,1,3]
+ * 输出：[1,2,3]
+ * <p>
+ * 输入：root = []
+ * 输出：[]
+ * 解释：输入是空树，所以输出也是空链表。
+ * <p>
+ * 输入：root = [1]
+ * 输出：[1]
+ * <p>
+ * -1000 <= Node.val <= 1000
+ * Node.left.val < Node.val < Node.right.val
+ * Node.val 的所有值都是独一无二的
+ * 0 <= Number of Nodes <= 2000
  */
-public class Offer36 {
+public class Problem426 {
     public static void main(String[] args) {
-        Offer36 offer36 = new Offer36();
+        Problem426 problem426 = new Problem426();
         String[] data = {"4", "2", "5", "1", "3"};
-        Node root = offer36.buildTree(data);
-//        Node head = offer36.treeToDoublyList(root);
-        Node head = offer36.treeToDoublyList2(root);
+        Node root = problem426.buildTree(data);
+//        Node head = problem426.treeToDoublyList(root);
+        Node head = problem426.treeToDoublyList2(root);
     }
 
     /**
