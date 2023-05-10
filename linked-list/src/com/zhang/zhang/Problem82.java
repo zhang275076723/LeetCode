@@ -52,6 +52,7 @@ public class Problem82 {
         while (node != null && node.next != null) {
             //当前节点和当前节点的下一个节点相等时，找当前节点后面第一个和当前节点不同的节点
             if (node.val == node.next.val) {
+                //和node值相等的最后一个节点的下一个节点
                 ListNode nextNode = node.next;
 
                 while (nextNode != null && node.val == nextNode.val) {
@@ -83,6 +84,7 @@ public class Problem82 {
 
         //当前节点和下一个节点相等时，找当前节点后面第一个和当前节点不同的节点
         if (head.val == head.next.val) {
+            //和head值相等的最后一个节点的下一个节点
             ListNode node = head.next;
 
             while (node != null && head.val == node.val) {

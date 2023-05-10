@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/9 08:43
  * @Author zsy
- * @Description 字符串相减 大数减法 加减乘除类比Problem29、Problem43、Problem415
+ * @Description 字符串相减 字节面试题 加减乘除类比Problem29、Problem43、Problem415
  * 给定两个字符串形式的非负整数 num1 和num2 ，计算它们的差。
  * <p>
  * 输入：num1 = "11", num2 = "123"
@@ -113,9 +113,9 @@ public class BigNumberSubtract {
         //num1和num2相减结果
         String result = sb.reverse().toString();
 
-        //删除前导0
         int index = 0;
 
+        //删除前导0
         while (index < result.length() && result.charAt(index) == '0') {
             index++;
         }

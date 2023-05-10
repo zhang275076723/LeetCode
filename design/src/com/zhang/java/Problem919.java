@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/4/7 09:38
  * @Author zsy
- * @Description 完全二叉树插入器 类比Problem222、Problem958
+ * @Description 完全二叉树插入器 完全二叉树类比Problem222、Problem958
  * 完全二叉树 是每一层（除最后一层外）都是完全填充（即，节点数达到最大）的，并且所有的节点都尽可能地集中在左侧。
  * 设计一种算法，将一个新节点插入到一个完整的二叉树中，并在插入后保持其完整。
  * 实现 CBTInserter 类:
@@ -37,6 +37,7 @@ public class Problem919 {
         String[] data = {"1", "2"};
         TreeNode root = problem919.buildTree(data);
         CBTInserter cBTInserter = new CBTInserter(root);
+//        CBTInserter2 cBTInserter = new CBTInserter2(root);
         // 返回 1
         cBTInserter.insert(3);
         // 返回 2

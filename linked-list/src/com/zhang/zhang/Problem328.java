@@ -3,7 +3,7 @@ package com.zhang.zhang;
 /**
  * @Date 2022/11/7 09:57
  * @Author zsy
- * @Description 奇偶链表 字节面试题 类比Problem143
+ * @Description 奇偶链表 字节面试题 类比Problem143、SortOddEvenList
  * 给定单链表的头节点 head ，将所有索引为奇数的节点和索引为偶数的节点分别组合在一起，然后返回重新排序的列表。
  * 第一个节点的索引被认为是 奇数 ， 第二个节点的索引为 偶数 ，以此类推。
  * 请注意，偶数组和奇数组内部的相对顺序应该与输入时保持一致。

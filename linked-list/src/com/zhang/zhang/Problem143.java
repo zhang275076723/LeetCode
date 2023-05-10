@@ -4,7 +4,7 @@ package com.zhang.zhang;
 /**
  * @Date 2022/4/20 17:24
  * @Author zsy
- * @Description 重排链表 字节面试题 类比Problem61、Problem92、Problem147、Problem148、Problem206、Problem234、Problem328
+ * @Description 重排链表 字节面试题 类比Problem61、Problem92、Problem147、Problem148、Problem206、Problem234、Problem328、Problem876、SortOddEvenList
  * 给定一个单链表 L 的头节点 head ，单链表 L 表示为：L0 → L1 → … → Ln - 1 → Ln
  * 请将其重新排列后变为：L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
  * 不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
@@ -21,7 +21,7 @@ package com.zhang.zhang;
 public class Problem143 {
     public static void main(String[] args) {
         Problem143 problem143 = new Problem143();
-        int[] data = {1, 2, 3, 4, 5};
+        int[] data = {1, 2, 3, 4};
         ListNode head = problem143.buildList(data);
         problem143.reorderList(head);
         while (head != null) {
@@ -31,8 +31,10 @@ public class Problem143 {
     }
 
     /**
-     * 快慢指针找到中间位置，断开形成两个链表，反转后半部分链表，合并前半边链表和后半边链表
-     * 时间复杂度O(n)，空间复杂度O(1)
+     * 1、快慢指针找到中间位置，断开形成两个链表
+     * 2、反转后半部分链表
+     * 3、合并前半边链表和后半边链表
+     * 时间复杂度O(n)，空间复杂度O(1) (非递归反转链表的空间复杂度为O(1))
      *
      * @param head
      */
@@ -45,7 +47,8 @@ public class Problem143 {
         ListNode slow = head;
         ListNode fast = head;
 
-        while (fast != null && fast.next != null) {
+        //1、快慢指针找到中间位置，断开形成两个链表
+        while (fast.next != null && fast.next.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
@@ -55,7 +58,7 @@ public class Problem143 {
         //断开链表，分为两个链表
         slow.next = null;
 
-        //后半边链表反转
+        //2、反转后半部分链表
         head2 = reverse(head2);
 
         //前半部分链表和后半部分链表合并
