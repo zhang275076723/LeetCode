@@ -49,6 +49,7 @@ public class Problem1696 {
      */
     public int maxResult(int[] nums, int k) {
         int[] dp = new int[nums.length];
+        //dp初始化，开始能够跳跃到nums[0]
         dp[0] = nums[0];
 
         for (int i = 1; i < nums.length; i++) {

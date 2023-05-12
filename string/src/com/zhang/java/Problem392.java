@@ -60,8 +60,8 @@ public class Problem392 {
     /**
      * 动态规划
      * dp[i][j]：从t[i]开始往后第一次出现字符'a'+j的下标索引
-     * dp[i][j] == i          (t[i] == 'a'+j)
-     * dp[i][j] == dp[i+1][j] (t[i] != 'a'+j)
+     * dp[i][j] = i          (t[i] == 'a'+j)
+     * dp[i][j] = dp[i+1][j] (t[i] != 'a'+j)
      * 时间复杂度O(n*|Σ|+m)=O(m+n)，空间复杂度O(n*|Σ|)=O(n) (m=s.length()，n=t.length()，|Σ|=26，只包含小写字母)
      *
      * @param s

@@ -34,7 +34,7 @@ public class Offer31 {
     }
 
     /**
-     * 模拟
+     * 栈
      * 每次入栈pushed[i]，判断栈顶元素是否和popped[j]相同，如果相同，则出栈
      * 时间复杂度O(n)，空间复杂度O(n)
      *

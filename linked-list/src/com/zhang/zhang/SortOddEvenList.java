@@ -2,7 +2,7 @@ package com.zhang.zhang;
 
 
 /**
- * @Date 2023/5/9 08:55
+ * @Date 2023/5/10 08:55
  * @Author zsy
  * @Description 排序奇升偶降链表 字节面试题 类比Problem21、Problem143、Problem206、Problem328
  * 给定一个奇数位升序，偶数位降序的链表，将其重新排序，实现链表从小到大。

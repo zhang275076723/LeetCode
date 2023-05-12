@@ -28,6 +28,7 @@ public class Offer66 {
      * 动态规划
      * left[i]：a[0]-a[i-1]所有元素乘积
      * right[i]：a[i+1]-a[a.length-1]所有元素乘积
+     * result[i] = left[i] * right[i]
      * 时间复杂度O(n)，空间复杂的O(n)
      *
      * @param a

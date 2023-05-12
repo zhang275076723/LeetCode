@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/30 08:12
  * @Author zsy
- * @Description 山脉数组的峰顶索引 类比Problem33、Problem34、Problem35、Problem81、Problem153、Problem154、Problem162、Offer11、Offer53、Offer53_2、Interview_10_03 同AscendAndDescendArrayFindMaxIndex
+ * @Description 山脉数组的峰顶索引 双调数组找最大值 山脉类比Problem845、Problem941、Problem1095 类比Problem33、Problem34、Problem35、Problem81、Problem153、Problem154、Problem162、Problem1095、Offer11、Offer53、Offer53_2、Interview_10_03
  * 符合下列属性的数组 arr 称为 山脉数组 ：
  * arr.length >= 3
  * 存在 i（0 < i < arr.length - 1）使得：
@@ -48,7 +48,8 @@ public class Problem852 {
      * @return
      */
     public int peakIndexInMountainArray(int[] arr) {
-        if (arr == null || arr.length == 0) {
+        //长度至少为3才能构成山脉数组
+        if (arr == null || arr.length < 3) {
             return -1;
         }
 
@@ -59,6 +60,7 @@ public class Problem852 {
             }
         }
 
+        //没有找到峰值，返回-1
         return -1;
     }
 
@@ -70,7 +72,8 @@ public class Problem852 {
      * @return
      */
     public int peakIndexInMountainArray2(int[] arr) {
-        if (arr == null || arr.length == 0) {
+        //长度至少为3才能构成山脉数组
+        if (arr == null || arr.length < 3) {
             return -1;
         }
 
@@ -81,11 +84,11 @@ public class Problem852 {
         while (left < right) {
             mid = left + ((right - left) >> 1);
 
-            //arr[mid]小于arr[mid+1]，峰值在nums[mid+1]-nums[right]
+            //arr[mid]小于arr[mid+1]，峰值在arr[mid+1]-arr[right]
             if (arr[mid] < arr[mid + 1]) {
                 left = mid + 1;
             } else {
-                //arr[mid]大于arr[mid+1]，峰值在nums[left]-nums[mid]
+                //arr[mid]大于arr[mid+1]，峰值在arr[left]-arr[mid]
                 right = mid;
             }
         }
