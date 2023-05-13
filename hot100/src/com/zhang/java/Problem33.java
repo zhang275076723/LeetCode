@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/18 8:21
  * @Author zsy
- * @Description 搜索旋转排序数组 类比Problem34、Problem35、Problem81、Problem153、Problem154、Problem162、Problem852、Problem1095、Offer11、Offer53、Offer53_2、Interview_10_03
+ * @Description 搜索旋转排序数组 类比Problem34、Problem35、Problem81、Problem153、Problem154、Problem162、Problem852、Problem1095、Offer11、Offer53、Offer53_2、Interview_10_03、Interview_10_05
  * 整数数组 nums 按升序排列，数组中的值 互不相同 。
  * 在传递给函数之前，nums 在预先未知的某个下标 k（0 <= k < nums.length）上进行了 旋转，
  * 使数组变为 [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]（下标 从 0 开始 计数）。

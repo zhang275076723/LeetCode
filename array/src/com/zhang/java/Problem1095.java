@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/11 08:58
  * @Author zsy
- * @Description 山脉数组中查找目标值 双调数组查找目标元素 拼多多面试题 字节面试题 山脉类比Problem845、Problem852、Problem941 类比Problem33、Problem34、Problem35、Problem81、Problem153、Problem154、Problem162、Problem852、Offer11、Offer53、Offer53_2、Interview_10_03
+ * @Description 山脉数组中查找目标值 双调数组查找目标元素 拼多多面试题 字节面试题 山脉类比Problem845、Problem852、Problem941 类比Problem33、Problem34、Problem35、Problem81、Problem153、Problem154、Problem162、Problem852、Offer11、Offer53、Offer53_2、Interview_10_03、Interview_10_05
  * 给你一个 山脉数组 mountainArr，请你返回能够使得 mountainArr.get(index) 等于 target 最小 的下标 index 值。
  * 如果不存在这样的下标 index，就请返回 -1。
  * 何为山脉数组？如果数组 A 是一个山脉数组的话，那它满足如下条件：
@@ -38,8 +38,8 @@ public class Problem1095 {
     /**
      * 二分查找变形，看到有序数组，就要想到二分查找
      * 1、找到山脉数组的山顶下标索引
-     * 2、左边山底到山顶递增数组进行二分查找，如果找到target，则返回target下标索引，如果没有找到target，则进行第3步
-     * 3、山顶的下一个元素到右边山底进行二分查找，如果找到target，则返回target下标索引，如果没有找到target，则返回-1
+     * 2、左边山底到山顶递增数组进行二分查找target，如果找到，则返回target下标索引，如果没有找到，则进行第3步
+     * 3、山顶的下一个元素到右边山底进行二分查找target，如果找到，则返回target下标索引，如果没有找到，则返回-1
      * 时间复杂度O(logn)，空间复杂度O(1)
      *
      * @param target
@@ -56,6 +56,7 @@ public class Problem1095 {
         int right = arr.length - 1;
         int mid;
 
+        //1、找到山脉数组的山顶下标索引
         while (left < right) {
             mid = left + ((right - left) >> 1);
 
@@ -71,10 +72,10 @@ public class Problem1095 {
         //山顶元素下标索引
         int peekIndex = left;
 
-        //arr[0]-arr[peekIndex]递增数组进行二分查找target
+        //2、左边山底到山顶递增数组进行二分查找target，arr[0]-arr[peekIndex]递增数组进行二分查找target
         int index = binarySearch(arr, 0, peekIndex, target, true);
 
-        //arr[0]-arr[peekIndex]递增数组找到了target，直接返回target下标索引
+        //3、山顶的下一个元素到右边山底进行二分查找target，arr[0]-arr[peekIndex]递增数组找到了target，直接返回target下标索引
         if (index != -1) {
             return index;
         }

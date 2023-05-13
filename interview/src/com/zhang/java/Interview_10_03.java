@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/8 10:52
  * @Author zsy
- * @Description 搜索旋转数组 快手面试题 汤商面试题 类比Problem33、Problem34、Problem35、Problem81、Problem153、Problem154、Problem162、Problem852、Problem1095、Offer11、Offer53、Offer53_2
+ * @Description 搜索旋转数组 快手面试题 汤商面试题 类比Problem33、Problem34、Problem35、Problem81、Problem153、Problem154、Problem162、Problem852、Problem1095、Offer11、Offer53、Offer53_2、Interview_10_05
  * 搜索旋转数组。给定一个排序后的数组，包含n个整数，但这个数组已被旋转过很多次了，次数不详。
  * 请编写代码找出数组中的某个元素，假设数组元素原先是按升序排列的。
  * 若有多个相同元素，返回索引值最小的一个。

@@ -6,7 +6,7 @@ import java.util.Stack;
 /**
  * @Date 2023/5/3 08:43
  * @Author zsy
- * @Description 132 模式 双指针类比Problem15、Problem16、Problem18、Problem611 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem496、Problem503、Problem739、Problem1019、Offer33
+ * @Description 132 模式 双指针类比Problem15、Problem16、Problem18、Problem611 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem496、Problem503、Problem739、Problem1019、Offer33、IntervalMinMultiplyIntervalSumMax
  * 给你一个整数数组 nums ，数组中共有 n 个整数。
  * 132 模式的子序列 由三个整数 nums[i]、nums[j] 和 nums[k] 组成，并同时满足：i < j < k 和 nums[i] < nums[k] < nums[j] 。
  * 如果 nums 中存在 132 模式的子序列 ，返回 true ；否则，返回 false 。
@@ -66,7 +66,8 @@ public class Problem456 {
     /**
      * 双指针
      * 每次确定nums[j]，往nums[j]左边找小于nums[j]的最小值nums[i]，往nums[j]右边找小于nums[j]的最大值nums[k]，
-     * 如果能够找到nums[i]和nums[k]，则存在132模式的子序列，返回true；否则，返回false
+     * 如果存在nums[i]和nums[k]，满足nums[i]小于nums[k]，nums[k]小于nums[j]，则存在132模式的子序列，返回true；
+     * 否则，返回false
      * 时间复杂度O(n^2)，空间复杂度O(1)
      *
      * @param nums
