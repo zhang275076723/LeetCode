@@ -34,7 +34,7 @@ public class BestSchedule {
         //List<Integer>[]适用于：arr[][]一维确定，二维不确定的情况
         bestSchedule.bestMachineSchedule = new List[k];
 
-        System.out.println(bestSchedule.findBestSchedule(n, k, work));
+        System.out.println(bestSchedule.find(n, k, work));
 
         for (int i = 0; i < bestSchedule.bestMachineSchedule.length; i++) {
             System.out.println("机器" + i + ":" + bestSchedule.bestMachineSchedule[i]);
@@ -50,7 +50,7 @@ public class BestSchedule {
      * @param work
      * @return
      */
-    public double findBestSchedule(int n, int k, double[] work) {
+    public double find(int n, int k, double[] work) {
         List<Integer>[] curMachineSchedule = new List[k];
 
         //每个机器执行的任务list初始化

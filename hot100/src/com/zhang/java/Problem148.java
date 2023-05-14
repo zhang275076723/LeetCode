@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/9 9:20
  * @Author zsy
- * @Description 排序链表 链表类比Problem23、Problem143、Problem147 归并排序类比Problem23、Problem315、Problem327、Problem493、Offer51
+ * @Description 排序链表 链表类比Problem23、Problem143、Problem147 归并排序类比Problem23、Problem315、Problem327、Problem493、Offer51、CalculateSmallSum
  * 给你链表的头结点 head ，请将其按 升序 排列并返回 排序后的链表 。
  * <p>
  * 输入：head = [4,2,1,3]

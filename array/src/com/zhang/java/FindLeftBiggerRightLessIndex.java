@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/5/11 08:14
  * @Author zsy
- * @Description 字节面试题 动态规划类比Problem135、Problem152、Problem238、Problem845
+ * @Description 比左边元素都大同时比右边元素都小的元素下标索引 字节面试题 动态规划类比Problem135、Problem152、Problem238、Problem845
  * 求数组中比左边元素都大同时比右边元素都小的元素，返回这些元素的下标索引。
  * <p>
  * 输入：nums = [2, 3, 1, 8, 9, 20, 12]

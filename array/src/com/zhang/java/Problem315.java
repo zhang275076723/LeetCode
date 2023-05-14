@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/9/11 8:12
  * @Author zsy
- * @Description 计算右侧小于当前元素的个数 华为机试题 归并排序类比Problem23、Problem148、Problem327、Problem493、Offer51
+ * @Description 计算右侧小于当前元素的个数 华为机试题 归并排序类比Problem23、Problem148、Problem327、Problem493、Offer51、CalculateSmallSum
  * 给你一个整数数组 nums ，按要求返回一个新数组 counts 。
  * 数组 counts 有该性质： counts[i] 的值是 nums[i] 右侧小于 nums[i] 的元素的数量。
  * <p>

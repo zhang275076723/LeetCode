@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/13 08:28
  * @Author zsy
- * @Description 圆环回原点问题 字节面试题 类比Problem403、Offer62
+ * @Description 圆环回原点问题 字节面试题 类比Problem70、Problem403、Offer62
  * 圆环上有10个点，编号为0~9。从0点出发，每次可以逆时针和顺时针走一步，问走n步回到0点共有多少种走法。
  * <p>
  * 输入: 2

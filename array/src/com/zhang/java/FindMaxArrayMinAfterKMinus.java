@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/4 21:27
  * @Author zsy
- * @Description 找数组执行k次减x之后的尽可能小的最大值 网易机试题 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem658、Problem1482
+ * @Description 找数组执行k次减x之后的尽可能小的最大值 网易机试题 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem658、Problem1482、CutWood
  * 一个数组中选一个数减去x，执行k次之后，返回数组中尽可能小的最大值
  * <p>
  * 输入：arr = [1,0,7], k = 2, x = 3
@@ -18,8 +18,8 @@ public class FindMaxArrayMinAfterKMinus {
         int[] arr = {1, 0, 7};
         int k = 2;
         int x = 3;
-//        System.out.println(findMaxArrayMinAfterKMinus.findMaxArrayMinAfterKMinus(arr, k, x));
-        System.out.println(findMaxArrayMinAfterKMinus.findMaxArrayMinAfterKMinus2(arr, k, x));
+//        System.out.println(findMaxArrayMinAfterKMinus.find(arr, k, x));
+        System.out.println(findMaxArrayMinAfterKMinus.find2(arr, k, x));
     }
 
     /**
@@ -32,7 +32,7 @@ public class FindMaxArrayMinAfterKMinus {
      * @param x
      * @return
      */
-    public int findMaxArrayMinAfterKMinus(int[] arr, int k, int x) {
+    public int find(int[] arr, int k, int x) {
         //建堆，大根堆
         for (int i = arr.length / 2 - 1; i >= 0; i--) {
             heapify(arr, i, arr.length);
@@ -60,7 +60,7 @@ public class FindMaxArrayMinAfterKMinus {
      * @param x
      * @return
      */
-    public int findMaxArrayMinAfterKMinus2(int[] arr, int k, int x) {
+    public int find2(int[] arr, int k, int x) {
         //数组中最小值减去kx作为左边界
         int left = Integer.MAX_VALUE;
         //数组中最大值作为右边界

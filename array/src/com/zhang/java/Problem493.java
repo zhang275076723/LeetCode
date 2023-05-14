@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/24 9:31
  * @Author zsy
- * @Description 翻转对 华为机试题 归并排序类比Problem23、Problem148、Problem315、Problem327、Offer51
+ * @Description 翻转对 华为机试题 归并排序类比Problem23、Problem148、Problem315、Problem327、Offer51、CalculateSmallSum
  * 给定一个数组 nums ，如果 i < j 且 nums[i] > 2*nums[j] 我们就将 (i, j) 称作一个重要翻转对。
  * 你需要返回给定数组中的重要翻转对的数量。
  * <p>
