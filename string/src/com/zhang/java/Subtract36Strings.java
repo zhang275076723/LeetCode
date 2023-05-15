@@ -1,24 +1,27 @@
 package com.zhang.java;
 
 /**
- * @Date 2023/5/9 08:43
+ * @Date 2023/5/15 09:17
  * @Author zsy
- * @Description 字符串相减 大数减法 字节面试题 加减乘除类比Problem29、Problem43、Problem415、Add36Strings、Subtract36Strings
- * 给定两个字符串形式的非负整数 num1 和num2 ，计算它们的差。
+ * @Description 36进制减法 字节面试题 进制类比Problem12、Problem13、Problem168、Problem171、Add36Strings 加减乘除类比Problem29、Problem43、Problem415、Add36Strings、BigNumberSubtract
+ * 36进制由0-9，a-z，共36个字符表示。
+ * 要求按照减法规则计算出任意两个36进制正整数的差。
  * <p>
- * 输入：num1 = "11", num2 = "123"
- * 输出："-112"
+ * 输入：num1 = "48", num2 = "2x"
+ * 输出："1b"
+ * 解释：
+ * 48=36*4+8=152
+ * 2x=36*2+33=105
+ * 152-105=47(即为36进制中的1b)
  * <p>
- * num1 和num2 都只会包含数字 0-9
- * num1 和num2 都不包含任何前导零
- * 你不能使用任何內建 BigInteger 库
+ * 要求：不允许使用先将36进制数字整体转为10进制，相减后再转回为36进制的做法
  */
-public class BigNumberSubtract {
+public class Subtract36Strings {
     public static void main(String[] args) {
-        BigNumberSubtract bigNumberSubtract = new BigNumberSubtract();
-        String num1 = "11";
-        String num2 = "123";
-        System.out.println(bigNumberSubtract.sub(num1, num2));
+        Subtract36Strings subtract36Strings = new Subtract36Strings();
+        String num1 = "48";
+        String num2 = "2x";
+        System.out.println(subtract36Strings.sub(num1, num2));
     }
 
     /**
@@ -79,17 +82,40 @@ public class BigNumberSubtract {
         int cur;
 
         while (i >= 0 && j >= 0) {
-            //当前位相减结果，有可能为负数
-            cur = (num1.charAt(i) - '0') - borrow - (num2.charAt(j) - '0');
+            //num1当前字符c1
+            char c1 = num1.charAt(i);
+            //num2当前字符c2
+            char c2 = num2.charAt(j);
+
+            if (c1 >= '0' && c1 <= '9') {
+                cur = c1 - '0';
+            } else {
+                cur = c1 - 'a' + 10;
+            }
+
+            if (c2 >= '0' && c2 <= '9') {
+                cur = cur - (c2 - '0');
+            } else {
+                cur = cur - (c2 - 'a' + 10);
+            }
+
+            //减去借位borrow
+            cur = cur - borrow;
 
             //当前位小于0，则需要向高位借1位
             if (cur < 0) {
+                cur = cur + 36;
                 borrow = 1;
-                cur = cur + 10;
-                sb.append(cur);
             } else {
                 borrow = 0;
+            }
+
+            //当前位相加之和小于10，直接拼接cur
+            if (cur < 10) {
                 sb.append(cur);
+            } else {
+                //当前位相加之和大于等于10，拼接36进制中的a-z
+                sb.append((char) (cur + 'a' - 10));
             }
 
             i--;
@@ -97,16 +123,30 @@ public class BigNumberSubtract {
         }
 
         while (i >= 0) {
-            cur = (num1.charAt(i) - '0') - borrow;
+            char c = num1.charAt(i);
+
+            if (c >= '0' && c <= '9') {
+                cur = c - '0';
+            } else {
+                cur = c - 'a' + 10;
+            }
+
+            cur = cur - borrow;
 
             //当前位小于0，则需要向高位借1位
             if (cur < 0) {
+                cur = cur + 36;
                 borrow = 1;
-                cur = cur + 10;
-                sb.append(cur);
             } else {
                 borrow = 0;
+            }
+
+            //当前位相加之和小于10，直接拼接cur
+            if (cur < 10) {
                 sb.append(cur);
+            } else {
+                //当前位相加之和大于等于10，拼接36进制中的a-z
+                sb.append((char) (cur + 'a' - 10));
             }
 
             i--;
