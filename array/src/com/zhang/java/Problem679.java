@@ -91,7 +91,7 @@ public class Problem679 {
     private boolean backtrack(List<Double> list) {
         //当list中只剩1个数时，则得到了4个数的运算结果
         if (list.size() == 1) {
-            //因为是实数运算，所以得到的结果和24之间的误差小于10^6，则认为得到的结果就是24
+            //因为是实数运算，所以得到的结果和24之间的误差小于10^(-6)，则认为得到的结果就是24
             return Math.abs(list.get(0) - 24) < 1e-6;
         }
 
@@ -116,7 +116,7 @@ public class Problem679 {
                         list.add(num1 * num2);
                     } else {
                         //除法
-                        //实数运算和0比较必须通过差值比较，num2和0之间的误差小于10^6，则认为num2为0，0不能做除数
+                        //实数运算和0比较必须通过差值比较，num2和0之间的误差小于10^(-6)，则认为num2为0，0不能做除数
                         if (Math.abs(num2) < 1e-6) {
                             continue;
                         }
@@ -147,7 +147,7 @@ public class Problem679 {
     private void backtrack2(List<Double> list, List<String> opsList, Set<String> result) {
         //当list中只剩1个数时，则得到了4个数的运算结果
         if (list.size() == 1) {
-            //因为是实数运算，所以得到的结果和24之间的误差小于10^6，则认为得到的结果就是24
+            //因为是实数运算，所以得到的结果和24之间的误差小于10^(-6)，则认为得到的结果就是24
             if (Math.abs(list.get(0) - 24) < 1e-6) {
                 result.add(opsList.get(0));
             }
@@ -182,7 +182,7 @@ public class Problem679 {
                         opsList.add("(" + ops1 + "*" + ops2 + ")");
                     } else {
                         //除法
-                        //实数运算和0比较必须通过差值比较，num2和0之间的误差小于10^6，则认为num2为0，0不能做除数
+                        //实数运算和0比较必须通过差值比较，num2和0之间的误差小于10^(-6)，则认为num2为0，0不能做除数
                         if (Math.abs(num2) < 1e-6) {
                             continue;
                         }
