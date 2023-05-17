@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2023/5/13 09:14
  * @Author zsy
- * @Description 求区间最小数乘区间和的最大值 字节面试题 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem739、Problem1019、Offer33
+ * @Description 求区间最小数乘区间和的最大值 字节面试题 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem739、Problem1019、Offer33、DoubleStackSort
  * 给定一个数组，要求选出一个区间, 使得该区间是所有区间中经过如下计算的值最大的一个：区间中的最小数 * 区间所有数的和。
  * 数组中的元素都是非负数。
  * 输入两行，第一行n表示数组长度，第二行为数组序列。输出最大值。
@@ -79,7 +79,7 @@ public class IntervalMinMultiplyIntervalSumMax {
 
         //最大的区间最小值和区间和乘积
         int result = 0;
-        //单调递增栈
+        //单调递增栈，用于求区间的最小元素
         Stack<Integer> stack = new Stack<>();
 
         for (int i = 0; i < arr.length; i++) {

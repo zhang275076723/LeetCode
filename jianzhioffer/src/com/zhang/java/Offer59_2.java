@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * @Date 2022/4/6 11:17
  * @Author zsy
- * @Description 队列的最大值 类比Problem155、Problem225、Problem232、Problem239、Problem295、Problem716、Offer9、Offer30、Offer31、Offer41、Offer59
+ * @Description 队列的最大值 单调队列类比Problem209、Problem239、Problem862、Problem1696、Offer59 类比Problem155、Problem225、Problem232、Problem239、Problem295、Problem716、Offer9、Offer30、Offer31、Offer41、Offer59
  * 请定义一个队列并实现函数 max_value 得到队列里的最大值，
  * 要求函数 max_value、push_back 和 pop_front 的均摊时间复杂度都是O(1)。
  * 若队列为空，pop_front 和 max_value 需要返回 -1
@@ -78,7 +78,7 @@ public class Offer59_2 {
 
             int value = queue.poll();
 
-            //Integer和int比较可以使用==
+            //Integer和int比较可以使用==，但Integer和Integer对象比较不能使用==
             if (maxQueue.peekFirst() == value) {
                 maxQueue.pollFirst();
             }

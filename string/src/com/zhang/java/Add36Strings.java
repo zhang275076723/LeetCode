@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/14 09:45
  * @Author zsy
- * @Description 36进制加法 字节面试题 进制类比Problem12、Problem13、Problem168、Problem171 加减乘除类比Problem29、Problem43、Problem415、BigNumberSubtract
+ * @Description 36进制加法 字节面试题 进制类比Problem12、Problem13、Problem168、Problem171、Subtract36Strings 加减乘除类比Problem29、Problem43、Problem415、BigNumberSubtract、Subtract36Strings
  * 36进制由0-9，a-z，共36个字符表示。
  * 要求按照加法规则计算出任意两个36进制正整数的和。
  * <p>
@@ -78,7 +78,7 @@ public class Add36Strings {
                 sb.append(cur);
             } else {
                 //当前位相加之和大于等于10，拼接36进制中的a-z
-                sb.append((char) ('a' + cur - 10));
+                sb.append((char) (cur + 'a' - 10));
             }
 
             i--;

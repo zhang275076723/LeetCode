@@ -6,7 +6,7 @@ import java.util.Deque;
 /**
  * @Date 2023/2/3 08:30
  * @Author zsy
- * @Description 和至少为 K 的最短子数组 前缀和类比Problem209、Problem327、Problem437、Problem560、Problem1871、Offer57_2 单调队列类比Problem209、Problem239、Problem1696、Offer59
+ * @Description 和至少为 K 的最短子数组 前缀和类比Problem209、Problem327、Problem437、Problem560、Problem1871、Offer57_2 单调队列类比Problem209、Problem239、Problem1696、Offer59、Offer59_2
  * 给你一个整数数组 nums 和一个整数 k ，找出 nums 中和至少为 k 的 最短非空子数组 ，并返回该子数组的长度。
  * 如果不存在这样的 子数组 ，返回 -1 。
  * 子数组 是数组中 连续 的一部分。

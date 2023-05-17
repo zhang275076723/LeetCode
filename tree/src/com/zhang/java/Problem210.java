@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/14 9:58
  * @Author zsy
- * @Description 课程表 II 拓扑排序类比Problem207、Problem329 图类比Problem133、Problem207、Problem329、Problem399、Problem785、Problem863
+ * @Description 课程表 II 拓扑排序类比Problem207、Problem329、IsCircleDependency 图类比Problem133、Problem207、Problem329、Problem399、Problem785、Problem863
  * 现在你总共有 numCourses 门课需要选，记为 0 到 numCourses - 1。
  * 给你一个数组 prerequisites ，其中 prerequisites[i] = [ai, bi] ，表示在选修课程 ai 前 必须 先选修 bi 。
  * 例如，想要学习课程 0 ，你需要先完成课程 1 ，我们用一个匹配来表示：[0,1] 。
@@ -51,7 +51,7 @@ public class Problem210 {
     }
 
     /**
-     * dfs，判断图中是否有拓扑排序
+     * dfs，计算图的拓扑排序
      * 本质：找出度为0的节点，出度为0的节点在拓扑排序中一定排在后面
      * 拓扑排序：有向无环图所有顶点进行排序，使图中任意一对顶点u、v，边<u,v>在排序中u出现在v之前
      * 时间复杂度O(m+n)，空间复杂度O(m+n)，m为课程数，n为先修课程的要求数
@@ -80,14 +80,14 @@ public class Problem210 {
         index = numCourses - 1;
 
         for (int i = 0; i < numCourses; i++) {
-            //从未访问的顶点开始dfs
-            if (visited[i] == 0) {
-                dfs(i, result, edges, visited);
-            }
-
             //有环说明不存在拓扑排序，返回空数组
             if (hasCircle) {
                 return new int[0];
+            }
+
+            //从未访问的顶点开始dfs
+            if (visited[i] == 0) {
+                dfs(i, result, edges, visited);
             }
         }
 
@@ -153,6 +153,10 @@ public class Problem210 {
     }
 
     private void dfs(int u, int[] result, List<List<Integer>> edges, int[] visited) {
+        if (hasCircle) {
+            return;
+        }
+
         //当前顶点u正在访问
         visited[u] = 1;
 
@@ -169,14 +173,16 @@ public class Problem210 {
                 //邻接顶点v正在访问，说明有环，不存在拓扑排序
                 hasCircle = true;
                 return;
+            } else if (visited[v] == 2) {
+                //邻接顶点v已经访问过，直接进行下次循环
+                continue;
             }
         }
-
-        //当前顶点u已经访问
-        visited[u] = 2;
 
         //拓扑排序数组赋值
         result[index] = u;
         index--;
+        //当前顶点u已经访问
+        visited[u] = 2;
     }
 }
