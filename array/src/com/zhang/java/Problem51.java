@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @Date 2022/8/8 8:57
  * @Author zsy
- * @Description N 皇后 类比Problem52、Problem1001
+ * @Description N 皇后 类比Problem36、Problem37、Problem52、Problem1001
  * 按照国际象棋的规则，皇后可以攻击与之处在同一行或同一列或同一斜线上的棋子。
  * n 皇后问题 研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。
  * 给你一个整数 n ，返回所有不同的 n 皇后问题 的解决方案。
@@ -56,7 +56,7 @@ public class Problem51 {
      */
     public List<List<String>> solveNQueens2(int n) {
         List<List<String>> result = new ArrayList<>();
-        //皇后影响的行set
+        //皇后影响的列set
         Set<Integer> columnSet = new HashSet<>();
         //皇后影响的左上右下对角线set
         Set<Integer> diagSet = new HashSet<>();

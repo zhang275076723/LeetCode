@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/8/8 7:57
  * @Author zsy
- * @Description N皇后 II 类比Problem51、Problem1001
+ * @Description N皇后 II 类比Problem36、Problem37、Problem51、Problem1001
  * n 皇后问题 研究的是如何将 n 个皇后放置在 n × n 的棋盘上，并且使皇后彼此之间不能相互攻击。
  * 给你一个整数 n ，返回 n 皇后问题 不同的解决方案的数量。
  * <p>
@@ -55,7 +55,7 @@ public class Problem52 {
             return 1;
         }
 
-        //皇后影响的行set
+        //皇后影响的列set
         Set<Integer> columnSet = new HashSet<>();
         //皇后影响的左上右下对角线set
         Set<Integer> diagSet = new HashSet<>();
