@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/2/21 09:23
  * @Author zsy
- * @Description 最长同值路径 dfs类比Problem104、Problem110、Problem111、Problem124、Problem337、Problem543
+ * @Description 最长同值路径 dfs类比Problem104、Problem110、Problem111、Problem124、Problem337、Problem543、Problem1373
  * 给定一个二叉树的 root ，返回 最长的路径的长度 ，这个路径中的 每个节点具有相同值 。
  * 这条路径可以经过也可以不经过根节点。
  * 两个节点之间的路径长度 由它们之间的边数表示。
@@ -21,7 +21,9 @@ import java.util.*;
  * 树的深度将不超过 1000
  */
 public class Problem687 {
-    //二叉树的最长同值路径长度
+    /**
+     * 二叉树的最长同值路径长度
+     */
     private int diameter = 0;
 
     public static void main(String[] args) {
@@ -45,7 +47,8 @@ public class Problem687 {
             return 0;
         }
 
-        dfs(root, root.val);
+        //根节点的父节点假设为int最小值
+        dfs(root, Integer.MIN_VALUE);
 
         return diameter;
     }
@@ -64,7 +67,7 @@ public class Problem687 {
         diameter = Math.max(diameter, leftMax + rightMax);
 
         //返回当前节点对父节点的最长同值路径长度，当前节点值和父节点值不相同时，不构成同值路径，返回0
-        return root.val != preVal ? 0 : Math.max(leftMax, rightMax) + 1;
+        return root.val == preVal ? Math.max(leftMax, rightMax) + 1 : 0;
     }
 
     private TreeNode buildTree(String[] data) {
