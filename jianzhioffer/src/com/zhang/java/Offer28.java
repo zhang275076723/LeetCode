@@ -60,14 +60,17 @@ public class Offer28 {
             TreeNode leftNode = queue.poll();
             TreeNode rightNode = queue.poll();
 
+            //当前节点左右子树都为空，则对称，继续下次循环
             if (leftNode == null && rightNode == null) {
                 continue;
             }
 
+            //当前节点只有一个子树为空或左右节点值不一样，则不对称，返回false
             if (leftNode == null || rightNode == null || leftNode.val != rightNode.val) {
                 return false;
             }
 
+            //按照对称的顺序添加子节点
             queue.offer(leftNode.left);
             queue.offer(rightNode.right);
             queue.offer(leftNode.right);
@@ -85,14 +88,17 @@ public class Offer28 {
      * @return
      */
     private boolean dfs(TreeNode leftNode, TreeNode rightNode) {
+        //左右子树都为空，则是对称二叉树，返回true
         if (leftNode == null && rightNode == null) {
             return true;
         }
 
+        //左右子树有一个不为空，或者左右子树节点不相等，则不是对称二叉树，返回false
         if (leftNode == null || rightNode == null || leftNode.val != rightNode.val) {
             return false;
         }
 
+        //递归判断左子树的左子树和右子树的右子树是否是对称二叉树，左子树的右子树和右子树的左子树是否是对称二叉树
         return dfs(leftNode.left, rightNode.right) && dfs(leftNode.right, rightNode.left);
     }
 

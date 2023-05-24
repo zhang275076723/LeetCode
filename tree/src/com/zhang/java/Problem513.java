@@ -49,8 +49,8 @@ public class Problem513 {
             return 0;
         }
 
-        //最左下叶节点的值
-        int mostLeftValue = 0;
+        //最左下叶节点的值，初始化为根节点的值
+        int mostLeftValue = root.val;
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
 
@@ -88,6 +88,9 @@ public class Problem513 {
         if (root == null) {
             return 0;
         }
+
+        //最左下叶节点的值，初始化为根节点的值
+        mostLeftValue = root.val;
 
         //根节点为第0层
         dfs(root, 0);

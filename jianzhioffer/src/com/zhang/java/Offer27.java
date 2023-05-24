@@ -38,6 +38,7 @@ public class Offer27 {
             return null;
         }
 
+        //翻转当前节点的左右子节点
         TreeNode tempNode = root.left;
         root.left = root.right;
         root.right = tempNode;
@@ -66,6 +67,7 @@ public class Offer27 {
         while (!stack.empty()) {
             TreeNode node = stack.pop();
 
+            //翻转当前节点的左右子节点
             TreeNode tempNode = node.left;
             node.left = node.right;
             node.right = tempNode;
@@ -98,6 +100,8 @@ public class Offer27 {
 
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
+
+            //翻转当前节点的左右子节点
             TreeNode tempNode = node.left;
             node.left = node.right;
             node.right = tempNode;

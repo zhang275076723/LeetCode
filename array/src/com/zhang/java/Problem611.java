@@ -28,7 +28,7 @@ public class Problem611 {
 
     /**
      * 排序+双指针
-     * 先排序，从大到小每次确定最长的一条边nums[i]，判断nums[left]+nums[right]和nums[i]大小关系，
+     * 先排序，从大到小每次确定三角形中最长的一条边nums[i]，判断nums[left]+nums[right]和nums[i]大小关系，
      * nums[left]+nums[right]>nums[i]，则nums[left]-nums[right-1]+nums[right]都大于nums[i]，
      * 有right-left个满足要求的三角形，right--
      * nums[left]+nums[right]<=nums[i]，则left++
@@ -46,8 +46,9 @@ public class Problem611 {
 
         int count = 0;
 
-        //从大到小每次确定最长的一条边nums[i]
+        //从大到小每次确定三角形中最长的一条边nums[i]
         for (int i = nums.length - 1; i >= 2; i--) {
+            //三角形的另外两条边nums[left]、nums[right]
             int left = 0;
             int right = i - 1;
 

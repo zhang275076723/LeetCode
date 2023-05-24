@@ -62,12 +62,13 @@ public class Offer24 {
             return head;
         }
 
-        ListNode node = reverseList2(head.next);
+        //反转后的链表头
+        ListNode newHead = reverseList2(head.next);
 
         head.next.next = head;
         head.next = null;
 
-        return node;
+        return newHead;
     }
 
     private ListNode buildLinkedList(int[] data) {
