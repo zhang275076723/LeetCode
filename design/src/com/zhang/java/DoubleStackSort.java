@@ -3,7 +3,7 @@ package com.zhang.java;
 import java.util.Stack;
 
 /**
- * @Date 2023/5/17 12:24
+ * @Date 2023/5/17 09:24
  * @Author zsy
  * @Description 双栈排序 字节面试题 美团面试题 猿辅导面试题 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem739、Problem1019、Offer33、IntervalMinMultiplyIntervalSumMax
  * 给定一个乱序的栈，允许额外使用一个栈来辅助操作，设计算法将其升序排列。
@@ -38,7 +38,7 @@ public class DoubleStackSort {
             //原始栈顶元素
             int value = stack.pop();
 
-            //不满足单调递增栈，单调栈中大于value依次出栈，入原始栈
+            //不满足单调递增栈，单调栈中大于value的元素依次出栈，入原始栈
             while (!resultStack.isEmpty() && resultStack.peek() > value) {
                 stack.push(resultStack.pop());
             }

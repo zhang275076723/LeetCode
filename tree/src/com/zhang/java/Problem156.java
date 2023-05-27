@@ -34,7 +34,6 @@ public class Problem156 {
         TreeNode root = problem156.buildTree(data);
 //        root = problem156.upsideDownBinaryTree(root);
         root = problem156.upsideDownBinaryTree2(root);
-        int a = 3;
     }
 
     /**

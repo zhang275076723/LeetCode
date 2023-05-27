@@ -102,16 +102,14 @@ public class Problem1206 {
                 while (node.next[i] != null && node.next[i].value < target) {
                     node = node.next[i];
                 }
+
+                //当前层的下一个节点等于target，则说明跳表中存在target，返回true
+                if (node.next[i] != null && node.next[i].value == target) {
+                    return true;
+                }
             }
 
-            //第一层中，当前节点的下一个节点不为空，且当前节点的下一个节点等于target，
-            //则说明跳表中找到target，查找成功，返回true
-            if (node.next[0] != null && node.next[0].value == target) {
-                return true;
-            }
-
-            //第一层中，当前节点的下一个节点为空，或者当前节点的下一个节点不等于target，
-            //则说明跳表中没有target，查找失败，返回false
+            //从跳表高层往低层都没有找target，则说明跳表中没有target，返回false
             return false;
         }
 
@@ -123,6 +121,7 @@ public class Problem1206 {
          */
         public void add(int num) {
             //从跳表高层往低层每层中的遍历节点路径数组update，确保插入到每一层的链表有序
+            //这里是maxLevel，而不是level，因为新增节点的高度有可能会大于当前跳表的高度
             //redis中还记录了update数组中跳表节点在当前层中距离跳表头节点的距离数组rank
             Node[] update = new Node[maxLevel];
 
@@ -148,8 +147,8 @@ public class Problem1206 {
             //要插入跳表的跳表节点
             Node addNode = new Node(num, nodeLevel);
 
-            //从第一层开始，addNode加入到每一层有序链表中
-            for (int i = 0; i < nodeLevel; i++) {
+            //从addNode的最高层第开始往第一层，addNode加入到每一层有序链表中
+            for (int i = nodeLevel - 1; i >= 0; i--) {
                 addNode.next[i] = update[i].next[i];
                 update[i].next[i] = addNode;
             }
@@ -166,10 +165,10 @@ public class Problem1206 {
         public boolean erase(int num) {
             //从跳表高层往低层每层中的遍历节点路径数组update，确保插入到每一层的链表有序
             //redis中还记录了update数组中跳表节点在当前层中距离跳表头节点的距离数组rank
-            Node[] update = new Node[maxLevel];
+            Node[] update = new Node[level];
 
             //路径数组update赋初值为head
-            for (int i = 0; i < maxLevel; i++) {
+            for (int i = 0; i < level; i++) {
                 update[i] = head;
             }
 
@@ -183,21 +182,23 @@ public class Problem1206 {
                 update[i] = node;
             }
 
-            //要删除的节点，即为第一层中node节点的下一个节点
-            //也写成Node deleteNode = update[0].next[0];
-            Node deleteNode = node.next[0];
+            //要删除的节点，即为第一层中update数组中的下一个节点
+            //也写成Node deleteNode = node.next[0];
+            Node deleteNode = update[0].next[0];
 
             //deleteNode为空，或deleteNode节点值不等于num，则num不在跳表中，则返回false
             if (deleteNode == null || deleteNode.value != num) {
                 return false;
             }
 
-            //从第一层到deleteNode的最高层，将deleteNode从当前层中删除
-            for (int i = 0; i < deleteNode.next.length; i++) {
-                update[i].next[i] = deleteNode.next[i];
+            //从deleteNode的最高层第开始往第一层，将deleteNode从当前层中删除
+            for (int i = deleteNode.next.length - 1; i >= 0; i--) {
+                //也写成update[i].next[i] = deleteNode.next[i];
+                update[i].next[i] = update[i].next[i].next[i];
             }
 
-            //更新跳表的高度，由跳表的高度开始往下遍历，判断当前层头结点的下一个节点是否为空，如果为空，跳表高度减1
+            //更新跳表的高度，由当前跳表的高度开始往下遍历，如果当前层头结点的下一个节点为空，
+            //则说明当前层之前只有要删除的deleteNode节点，跳表高度减1
             while (level > 0 && head.next[level - 1] == null) {
                 level--;
             }

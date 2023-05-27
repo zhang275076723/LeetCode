@@ -71,6 +71,7 @@ public class Problem887 {
 
         //楼层从2楼开始往上递增
         for (int i = 2; i <= n; i++) {
+            //鸡蛋从2个开始往上递增
             for (int j = 2; j <= k; j++) {
                 //赋初值为最大值，则可以取到扔鸡蛋的最佳楼层m
                 dp[i][j] = Integer.MAX_VALUE;
