@@ -108,6 +108,7 @@ public class Problem32 {
         int left = 0;
         int right = 0;
 
+        //从前往后遍历，始终保持left>=right
         for (int i = 0; i < s.length(); i++) {
             if (s.charAt(i) == '(') {
                 left++;
@@ -127,6 +128,7 @@ public class Problem32 {
         left = 0;
         right = 0;
 
+        //从后往前遍历，始终保持left<=right
         for (int i = s.length() - 1; i >= 0; i--) {
             if (s.charAt(i) == '(') {
                 left++;

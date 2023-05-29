@@ -61,12 +61,13 @@ public class Problem91 {
             return 0;
         }
 
-        //存在前导0，则不存在解码方法
+        //存在前导0，则不存在解码方法，直接返回0
         if (s.charAt(0) == '0') {
             return 0;
         }
 
         int[] dp = new int[s.length() + 1];
+        //dp初始化，没有数字或只有一个数字，翻译成字符串的方案数为1
         dp[0] = 1;
         dp[1] = 1;
 
@@ -78,21 +79,24 @@ public class Problem91 {
             //c2和c组成的数字
             int num = (c2 - '0') * 10 + (c - '0');
 
-            //两个字符都不为0
-            if (c != '0' && c2 != '0') {
+            //c和c2都为0
+            if (c == '0' && c2 == '0') {
+                dp[i] = 0;
+            } else if (c == '0' && c2 != '0') {
+                //c2不为0，c为0
+                if (num <= 26) {
+                    dp[i] = dp[i - 2];
+                }
+            } else if (c != '0' && c2 == '0') {
+                //c不为0，c2为0
+                dp[i] = dp[i - 1];
+            } else {
+                //c和c2都不为0
                 if (num <= 26) {
                     dp[i] = dp[i - 1] + dp[i - 2];
                 } else {
                     dp[i] = dp[i - 1];
                 }
-            } else if (c2 != '0') {
-                //c2不为0，c为0
-                if (num <= 26) {
-                    dp[i] = dp[i - 2];
-                }
-            } else if (c != '0') {
-                //c不为0，c2为0
-                dp[i] = dp[i - 1];
             }
         }
 
@@ -111,7 +115,7 @@ public class Problem91 {
             return 0;
         }
 
-        //存在前导0，则不存在解码方法
+        //存在前导0，则不存在解码方法，直接返回0
         if (s.charAt(0) == '0') {
             return 0;
         }
@@ -127,8 +131,25 @@ public class Problem91 {
             //c2和c组成的数字
             int num = (c2 - '0') * 10 + (c - '0');
 
-            //两个字符都不为0
-            if (c != '0' && c2 != '0') {
+            //c和c2都为0
+            if (c == '0' && c2 == '0') {
+                p = q;
+                q = 0;
+            } else if (c == '0' && c2 != '0') {
+                //c2不为0，c为0
+                if (num <= 26) {
+                    int temp = q;
+                    q = p;
+                    p = temp;
+                } else {
+                    p = q;
+                    q = 0;
+                }
+            } else if (c != '0' && c2 =='0') {
+                //c不为0，c2为0
+                p = q;
+            } else {
+                //c和c2都不为0
                 if (num <= 26) {
                     int temp = p + q;
                     p = q;
@@ -136,23 +157,6 @@ public class Problem91 {
                 } else {
                     p = q;
                 }
-            } else if (c2 != '0') {
-                //c2不为0，c为0
-                if (num <= 26) {
-                    int temp = p;
-                    p = q;
-                    q = temp;
-                } else {
-                    p = q;
-                    q = 0;
-                }
-            } else if (c != '0') {
-                //c不为0，c2为0
-                p = q;
-            } else {
-                //c和c2都为0
-                p = q;
-                q = 0;
             }
         }
 
@@ -168,7 +172,7 @@ public class Problem91 {
             return 0;
         }
 
-        //存在前导0，则不存在解码方法
+        //存在前导0，则不存在解码方法，直接返回0
         if (s.charAt(0) == '0') {
             return 0;
         }

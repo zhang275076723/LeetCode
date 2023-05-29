@@ -40,7 +40,7 @@ public class IntervalMinMultiplyIntervalSumMax {
      * @return
      */
     public int find(int[] arr) {
-        //最大的区间最小值和区间和乘积
+        //区间最小值和区间和乘积的最大值
         int result = 0;
 
         //区间起始下标索引i
@@ -77,7 +77,7 @@ public class IntervalMinMultiplyIntervalSumMax {
             preSum[i] = preSum[i - 1] + arr[i - 1];
         }
 
-        //最大的区间最小值和区间和乘积
+        //区间最小值和区间和乘积的最大值
         int result = 0;
         //单调递增栈，用于求区间的最小元素
         Stack<Integer> stack = new Stack<>();
@@ -108,7 +108,7 @@ public class IntervalMinMultiplyIntervalSumMax {
             stack.push(i);
         }
 
-        //栈中元素都满足单调递增栈
+        //栈中还剩有元素，栈中元素都满足单调递增栈
         while (!stack.isEmpty()) {
             //区间[left,right]中最小元素
             int min = arr[stack.pop()];

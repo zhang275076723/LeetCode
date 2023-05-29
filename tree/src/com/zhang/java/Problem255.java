@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2023/5/3 08:05
  * @Author zsy
- * @Description 验证前序遍历序列二叉搜索树 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem395、Problem449、Problem889、Problem1008、Offer7、Offer33 单调栈类比Problem42、Problem84、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem739、Problem1019、Offer33、DoubleStackSort、IntervalMinMultiplyIntervalSumMax
+ * @Description 验证前序遍历序列二叉搜索树 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem395、Problem449、Problem617、Problem889、Problem1008、Offer7、Offer33 单调栈类比Problem42、Problem84、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem739、Problem1019、Offer33、DoubleStackSort、IntervalMinMultiplyIntervalSumMax
  * 给定一个整数数组，你需要验证它是否是一个二叉搜索树正确的先序遍历序列。
  * 你可以假定该序列中的数都是不相同的。
  * <p>

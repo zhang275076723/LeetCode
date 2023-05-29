@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/2 08:44
  * @Author zsy
- * @Description 最长递增子序列的个数 子序列和子数组类比Problem53、Problem115、Problem300、Problem392、Problem674、Problem718、Problem1143
+ * @Description 最长递增子序列的个数 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
  * 给定一个未排序的整数数组 nums ，返回最长递增子序列的个数 。
  * 注意 这个数列必须是 严格 递增的。
  * <p>
@@ -43,7 +43,7 @@ public class Problem673 {
         }
 
         //最长递增子序列的长度
-        int max = 1;
+        int maxLen = 1;
         int[] dp1 = new int[nums.length];
         int[] dp2 = new int[nums.length];
         //初始化，以nums[0]结尾的最长递增子序列的长度为1
@@ -68,13 +68,15 @@ public class Problem673 {
                         //则以nums[i]结尾的最长递增子序列的个数为以nums[j]结尾的最长递增子序列的个数
                         dp2[i] = dp2[j];
                     }
+
                     //更新以nums[i]结尾的最长递增子序列的长度
+                    //注意：dp1，即nums[i]结尾的最长递增子序列的长度，只能在dp2更新之后再更新
                     dp1[i] = Math.max(dp1[i], dp1[j] + 1);
                 }
             }
 
             //更新最长递增子序列长度
-            max = Math.max(max, dp1[i]);
+            maxLen = Math.max(maxLen, dp1[i]);
         }
 
         //最长递增子序列的个数
@@ -82,7 +84,7 @@ public class Problem673 {
 
         for (int i = 0; i < nums.length; i++) {
             //以nums[i]结尾的最长递增子序列是最长递增子序列，则count加上以nums[i]结尾的最长递增子序列的个数
-            if (dp1[i] == max) {
+            if (dp1[i] == maxLen) {
                 count = count + dp2[i];
             }
         }

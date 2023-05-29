@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/14 16:58
  * @Author zsy
- * @Description 最大连续1的个数 滑动窗口类比Problem487、Problem1004
+ * @Description 最大连续1的个数 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem438、Problem487、Problem567、Problem1004、Offer48、Offer57_2、Offer59
  * 给定一个二进制数组 nums ， 计算其中最大连续 1 的个数。
  * <p>
  * 输入：nums = [1,1,0,1,1,1]
@@ -40,6 +40,7 @@ public class Problem485 {
                 right++;
                 left = right;
             } else {
+                //当前元素为1，则更新最大连续1的个数
                 result = Math.max(result, right - left + 1);
                 right++;
             }

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/4 08:04
  * @Author zsy
- * @Description 至少有 K 个重复字符的最长子串 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem255、Problem449、Problem889、Problem1008、Offer7、Offer33
+ * @Description 至少有 K 个重复字符的最长子串 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem255、Problem449、Problem617、Problem889、Problem1008、Offer7、Offer33
  * 给你一个字符串 s 和一个整数 k ，请你找出 s 中的最长子串，要求该子串中的每一字符出现次数都不少于 k 。
  * 返回这一子串的长度。
  * <p>

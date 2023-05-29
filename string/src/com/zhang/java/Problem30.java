@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/2/6 11:42
  * @Author zsy
- * @Description 串联所有单词的子串 滑动窗口类比Problem3、Problem76、Problem209、Problem239、Problem438、Problem567、Offer48、Offer57_2、Offer59
+ * @Description 串联所有单词的子串 滑动窗口类比Problem3、Problem76、Problem209、Problem219、Problem220、Problem239、Problem438、Problem485、Problem487、Problem567、Problem1004、Offer48、Offer57_2、Offer59
  * 给定一个字符串 s 和一个字符串数组 words。 words 中所有字符串 长度相同。
  * s 中的 串联子串 是指一个包含 words 中所有字符串以任意顺序排列连接起来的子串。
  * 例如，如果 words = ["ab","cd","ef"]，
@@ -52,8 +52,8 @@ public class Problem30 {
 
     /**
      * 暴力
-     * wordsMap存放words中字符串和出现次数，遍历字符串s，将每个字符串放入sMap中，
-     * 判断wordsMap和sMap字符串和和出现次数是否相等，如果相等，则从s[i]开始的字符串是words的串联子串
+     * wordsMap存放words中单词出现次数，遍历字符串s，将s中每个单词放入sMap中，
+     * 判断wordsMap和sMap中单词出现次数是否相等，如果相等，则从s[i]开始的字符串是words的串联子串
      * 时间复杂度O(s.length()*wordCont*wordLen)，空间复杂度O(wordCont*wordLen)
      * (wordCont：words中单词数量，wordLen：words中每个单词长度)
      *
@@ -183,6 +183,7 @@ public class Problem30 {
      * @return
      */
     private boolean isEqual(Map<String, Integer> sMap, Map<String, Integer> wordsMap) {
+        //只能遍历wordsMap中的Entry，因为sMap中有可能存在key，但对应value为0的情况
         for (Map.Entry<String, Integer> entry : wordsMap.entrySet()) {
             //Integer和Integer之间比较只能使用equals()，不能使用==，==比较的是地址是否相等
             if (!sMap.containsKey(entry.getKey()) || !sMap.get(entry.getKey()).equals(entry.getValue())) {

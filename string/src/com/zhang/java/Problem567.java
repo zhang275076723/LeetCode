@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/9/22 10:38
  * @Author zsy
- * @Description 字符串的排列 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem239、Problem438、Offer48、Offer57_2、Offer59
+ * @Description 字符串的排列 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem438、Problem485、Problem487、Problem1004、Offer48、Offer57_2、Offer59
  * 给你两个字符串 s1 和 s2 ，写一个函数来判断 s2 是否包含 s1 的排列。
  * 如果是，返回 true ；否则，返回 false 。
  * 换句话说，s1 的排列之一是 s2 的 子串 。
@@ -82,6 +82,7 @@ public class Problem567 {
      * @return
      */
     private boolean isEqual(Map<Character, Integer> s1Map, Map<Character, Integer> s2Map) {
+        //只能遍历s1Map中的Entry，因为s2Map中有可能存在key，但对应value为0的情况
         for (Map.Entry<Character, Integer> entry : s1Map.entrySet()) {
             //Integer和Integer之间比较只能使用equals()，不能使用==，==比较的是地址是否相等
             if (!s2Map.containsKey(entry.getKey()) || !s2Map.get(entry.getKey()).equals(entry.getValue())) {

@@ -44,6 +44,7 @@ public class Problem135 {
     public int candy(int[] ratings) {
         int[] dp1 = new int[ratings.length];
         int[] dp2 = new int[ratings.length];
+        //dp1和dp2初始化，从左往右遍历时，第一个孩子分一个糖果，从右往左遍历时，最后一个孩子分一个糖果
         dp1[0] = 1;
         dp2[ratings.length - 1] = 1;
 

@@ -48,7 +48,7 @@ public class Problem409 {
         }
 
         //最长回文串的长度
-        int len = 0;
+        int length = 0;
         //map中字符出现次数为奇数的标志位
         boolean oddFlag = false;
 
@@ -56,14 +56,14 @@ public class Problem409 {
         for (int count : map.values()) {
             //当前字符出现次数为偶数，则都可以统计为回文串
             if (count % 2 == 0) {
-                len = len + count;
+                length = length + count;
             } else {
                 //当前字符出现次数为奇数，则需要判断是否是第一次出现次数为奇数，如果是则都可以统计为回文串，加上当前字符出现次数，
                 //如果不是第一次出现，则加上当前字符出现次数减1
                 if (oddFlag) {
-                    len = len + count - 1;
+                    length = length + count - 1;
                 } else {
-                    len = len + count;
+                    length = length + count;
                 }
 
                 //设置已经出现了次数为奇数的字符
@@ -71,6 +71,6 @@ public class Problem409 {
             }
         }
 
-        return len;
+        return length;
     }
 }

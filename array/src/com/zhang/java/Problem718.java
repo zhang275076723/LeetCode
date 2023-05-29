@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/6/30 11:20
  * @Author zsy
- * @Description 最长重复子数组 子序列和子数组类比Problem53、Problem115、Problem300、Problem392、Problem673、Problem674、Problem1143
+ * @Description 最长重复子数组 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem862、Problem1143、Offer42、Offer57_2
  * 给两个整数数组 nums1 和 nums2 ，返回 两个数组中 公共的 、长度最长的子数组的长度 。
  * <p>
  * 输入：nums1 = [1,2,3,2,1], nums2 = [3,2,1,4,7]
@@ -40,7 +40,8 @@ public class Problem718 {
             return 0;
         }
 
-        int max = 0;
+        //两个数组中公共最长的子数组长度
+        int maxLen = 0;
 
         for (int i = 0; i < nums1.length; i++) {
             for (int j = 0; j < nums2.length; j++) {
@@ -54,13 +55,13 @@ public class Problem718 {
                     curMax++;
                 }
 
-                if (curMax > max) {
-                    max = curMax;
+                if (curMax > maxLen) {
+                    maxLen = curMax;
                 }
             }
         }
 
-        return max;
+        return maxLen;
     }
 
     /**
@@ -79,7 +80,8 @@ public class Problem718 {
             return 0;
         }
 
-        int max = 0;
+        //两个数组中公共最长的子数组长度
+        int maxLen = 0;
         int[][] dp = new int[nums1.length + 1][nums2.length + 1];
 
         for (int i = 1; i <= nums1.length; i++) {
@@ -88,11 +90,11 @@ public class Problem718 {
                     dp[i][j] = dp[i - 1][j - 1] + 1;
                 }
 
-                max = Math.max(max, dp[i][j]);
+                maxLen = Math.max(maxLen, dp[i][j]);
             }
         }
 
-        return max;
+        return maxLen;
     }
 
     /**
@@ -108,7 +110,8 @@ public class Problem718 {
             return 0;
         }
 
-        int max = 0;
+        //两个数组中公共最长的子数组长度
+        int maxLen = 0;
         int[] dp = new int[nums2.length + 1];
 
         for (int i = 1; i <= nums1.length; i++) {
@@ -119,11 +122,11 @@ public class Problem718 {
                     dp[j] = 0;
                 }
 
-                max = Math.max(max, dp[j]);
+                maxLen = Math.max(maxLen, dp[j]);
             }
         }
 
-        return max;
+        return maxLen;
     }
 
     /**
@@ -176,21 +179,22 @@ public class Problem718 {
             return 0;
         }
 
-        int max = 0;
+        //两个数组中公共最长的子数组长度
+        int maxLen = 0;
 
         //nums1开始索引为0，nums2开始位索引从nums2.length-1到0
         for (int j = nums2.length - 1; j >= 0; j--) {
             int curMax = maxLength(nums1, nums2, 0, j);
-            max = Math.max(max, curMax);
+            maxLen = Math.max(maxLen, curMax);
         }
 
         //nums1开始位置从1到nums1.length-1，nums2开始位索引为0
         for (int i = 0; i < nums1.length; i++) {
             int curMax = maxLength(nums1, nums2, i, 0);
-            max = Math.max(max, curMax);
+            maxLen = Math.max(maxLen, curMax);
         }
 
-        return max;
+        return maxLen;
     }
 
     /**

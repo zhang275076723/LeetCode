@@ -5,7 +5,7 @@ import java.util.TreeSet;
 /**
  * @Date 2023/3/22 10:23
  * @Author zsy
- * @Description 存在重复元素 III 类比Problem217、Problem219
+ * @Description 存在重复元素 III 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem239、Problem438、Problem485、Problem487、Problem567、Problem1004、Offer48、Offer57_2、Offer59
  * 给你一个整数数组 nums 和两个整数 k 和 t 。
  * 请你判断是否存在 两个不同下标 i 和 j，使得 abs(nums[i] - nums[j]) <= t ，同时又满足 abs(i - j) <= k 。
  * 如果存在则返回 true，不存在返回 false。
@@ -34,7 +34,7 @@ public class Problem220 {
     }
 
     /**
-     * 滑动窗口+有序集合
+     * 滑动窗口，双指针+有序集合
      * 滑动窗口保证数组中两个元素下标索引不超过k，有序集合保证O(logk)得到大于nums[i]-t的最小元素
      * 时间复杂度O(nlogk)，空间复杂度O(k)
      *
@@ -44,13 +44,16 @@ public class Problem220 {
      * @return
      */
     public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
-        //TreeSet中才有ceiling()，TreeSet添加、删除、查找的时间复杂度都为O(logn)
+        //TreeSet中才有ceiling()、floor()，TreeSet添加、删除、查找的时间复杂度都为O(logn)
+        //ceiling(x)：返回树中大于等于x的最小元素，如果不存在返回null
+        //floor(x)：返回树中小于等于x的最大元素，如果不存在返回null
         TreeSet<Integer> set = new TreeSet<>();
         int left = 0;
         int right = 0;
 
         while (right < nums.length) {
             //通过TreeSet在O(logn)快速找到，set中大于等于nums[right]-t的最小元素
+            //也可以写成Integer num = set.floor(nums[right] + t);
             Integer num = set.ceiling(nums[right] - t);
 
             //num存在，并且nums[right]和num差的绝对值小于等于t，返回true

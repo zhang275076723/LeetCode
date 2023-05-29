@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/2/28 11:41
  * @Author zsy
- * @Description 跳跃游戏 VII 跳跃问题类比Problem45、Problem55、Problem403、Problem1306、Problem1345、Problem1696 前缀和类比Problem209、Problem327、Problem437、Problem560、Problem862、Offer57_2
+ * @Description 跳跃游戏 VII 跳跃问题类比Problem45、Problem55、Problem403、Problem1306、Problem1345、Problem1696 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem525、Problem560、Problem862、Offer57_2
  * 给你一个下标从 0 开始的二进制字符串 s 和两个整数 minJump 和 maxJump 。
  * 一开始，你在下标 0 处，且该位置的值一定为 '0' 。
  * 当同时满足如下条件时，你可以从下标 i 移动到下标 j 处：
@@ -38,7 +38,7 @@ public class Problem1871 {
     /**
      * 动态规划
      * dp[i]：能否到达s[i]
-     * dp[i] = s[i] == '0' && any(dp[i-maxJump]-dp[i-minJump])
+     * dp[i] = s[i] == '0' && (dp[i-maxJump]-dp[i-minJump]中任意一个dp为true)
      * 时间复杂度O(n*(maxJump-minJump))，空间复杂度O(n)
      *
      * @param s
@@ -109,8 +109,8 @@ public class Problem1871 {
                 //preSum左右指针
                 int left = Math.max(0, i - maxJump);
                 int right = Math.max(-1, i - minJump);
-                //preSum[right+1]-preSum[left]大于0，则s[i-maxJump]-s[i-minJump]至少有一个为0，即s[i]可达
-                if (preSum[right + 1] - preSum[left] > 0) {
+                //preSum[right+1]-preSum[left]不为0，则s[i-maxJump]-s[i-minJump]至少有一个为0，即s[i]可达
+                if (preSum[right + 1] - preSum[left] != 0) {
                     dp[i] = true;
                 }
             }

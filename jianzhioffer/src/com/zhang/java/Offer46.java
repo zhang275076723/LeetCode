@@ -28,8 +28,8 @@ public class Offer46 {
     /**
      * 动态规划
      * dp[i]：以num[i-1]结束的数字，翻译成字符串的方案数
-     * dp[i] = dp[i-1] + dp[i-2] ((数字：nums[i-1]-nums[i]) < 26，且没有前导0)
-     * dp[i] = dp[i-1] ((数字：nums[i-1] + nums[i]) >= 26)
+     * dp[i] = dp[i-1] + dp[i-2] (nums[i-2] != '0'，且(数字：nums[i-2]-nums[i-1]) < 26)
+     * dp[i] = dp[i-1]           (nums[i-2] == '0'，或(数字：nums[i-2]-nums[i-1]) >= 26)
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param num
@@ -42,12 +42,20 @@ public class Offer46 {
 
         String str = String.valueOf(num);
         int[] dp = new int[str.length() + 1];
+        //dp初始化，没有数字或只有一个数字，翻译成字符串的方案数为1
         dp[0] = 1;
         dp[1] = 1;
 
         for (int i = 2; i <= str.length(); i++) {
-            //str[i-2]-str[i-1]不存在前导0，且小于26
-            if (str.charAt(i - 2) != '0' && Integer.parseInt(str.substring(i - 2, i)) < 26) {
+            //当前字符
+            char c = str.charAt(i - 1);
+            //字符c的前一个字符
+            char c2 = str.charAt(i - 2);
+            //c2和c组成的数字
+            int number = (c2 - '0') * 10 + (c - '0');
+
+            //不存在前导0，且number小于26
+            if (c2 != '0' && number < 26) {
                 dp[i] = dp[i - 1] + dp[i - 2];
             } else {
                 dp[i] = dp[i - 1];
@@ -74,8 +82,15 @@ public class Offer46 {
         int q = 1;
 
         for (int i = 2; i <= str.length(); i++) {
-            //str[i-2]-str[i-1]不存在前导0，且小于26
-            if (str.charAt(i - 2) != '0' && Integer.parseInt(str.substring(i - 2, i)) < 26) {
+            //当前字符
+            char c = str.charAt(i - 1);
+            //字符c的前一个字符
+            char c2 = str.charAt(i - 2);
+            //c2和c组成的数字
+            int number = (c2 - '0') * 10 + (c - '0');
+
+            //不存在前导0，且number小于26
+            if (c2 != '0' && number < 26) {
                 int temp = q;
                 q = p + q;
                 p = temp;
@@ -123,7 +138,7 @@ public class Offer46 {
         count = count + backtrack(t + 1, num, list, sb);
         sb.delete(sb.length() - 1, sb.length());
 
-        //往后找两个字符，不能有前导0，且不能超过表示的字符'z'
+        //往后找两个字符，不能有前导0，且num[t]-num[t+1]于26
         if (t + 2 <= num.length() && num.charAt(t) != '0' && Integer.parseInt(num.substring(t, t + 2)) < 26) {
             sb.append((char) (Integer.parseInt(num.substring(t, t + 2)) + 'a'));
             count = count + backtrack(t + 2, num, list, sb);

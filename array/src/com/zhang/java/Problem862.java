@@ -6,7 +6,7 @@ import java.util.Deque;
 /**
  * @Date 2023/2/3 08:30
  * @Author zsy
- * @Description 和至少为 K 的最短子数组 前缀和类比Problem209、Problem327、Problem437、Problem560、Problem1871、Offer57_2 单调队列类比Problem209、Problem239、Problem1696、Offer59、Offer59_2
+ * @Description 和至少为 K 的最短子数组 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem525、Problem560、Problem1871、Offer57_2 单调队列类比Problem209、Problem239、Problem1696、Offer59、Offer59_2 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem1143、Offer42、Offer57_2
  * 给你一个整数数组 nums 和一个整数 k ，找出 nums 中和至少为 k 的 最短非空子数组 ，并返回该子数组的长度。
  * 如果不存在这样的 子数组 ，返回 -1 。
  * 子数组 是数组中 连续 的一部分。
@@ -67,7 +67,7 @@ public class Problem862 {
     /**
      * 前缀和+单调队列
      * 单调递增队列存放前缀和数组中元素的下标索引
-     * 1、当前元素preSum[i]和队首元素preSum[j]之差大于等于k，即[j+1,i]满足子数组长度大于等于k，
+     * 1、当前元素preSum[i]和队首元素preSum[j]之差大于等于k，即nums[j]-nums[i-1]元素之和大于等于k，
      * 则队首元素出队，更新子数组长度
      * 2、当前元素preSum[i]不满足单调递增队列，队尾元素出队，当前元素preSum[i]入队
      * 时间复杂度O(n)，空间复杂度O(n)
@@ -90,7 +90,7 @@ public class Problem862 {
         int minLength = Integer.MAX_VALUE;
 
         for (int i = 0; i < preSum.length; i++) {
-            //preSum[i]和队首元素preSum[j]之差大于等于k，即[j+1,i]满足子数组长度大于等于k，
+            //preSum[i]和队首元素preSum[j]之差大于等于k，即nums[j]-nums[i-1]元素之和大于等于k，
             //则队首元素出队，更新子数组长度
             while (!queue.isEmpty() && preSum[i] - preSum[queue.peekFirst()] >= k) {
                 int j = queue.pollFirst();

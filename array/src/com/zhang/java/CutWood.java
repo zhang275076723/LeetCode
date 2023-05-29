@@ -86,7 +86,7 @@ public class CutWood {
 
         while (left < right) {
             //注意需要加1，让二分往右偏移，因为左移右移条件中是left=mid，
-            //如果二分是mid = left + ((right - left) >> 1)，则是往左偏移，无法跳出left<right循环条件
+            //如果二分是mid = left + ((right - left) >> 1)，则mid是往左偏移，无法跳出left<right循环条件
             mid = left + ((right - left) >> 1) + 1;
             //截出长度为mid的木块数量
             int count = 0;

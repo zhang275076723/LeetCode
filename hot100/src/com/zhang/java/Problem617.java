@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/15 8:28
  * @Author zsy
- * @Description 合并二叉树 类比Offer68_2
+ * @Description 合并二叉树 类比Offer68_2 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem255、Problem395、Problem449、Problem889、Problem1008、Offer7、Offer33
  * 给你两棵二叉树： root1 和 root2 。
  * 想象一下，当你将其中一棵覆盖到另一棵之上时，两棵树上的一些节点将会重叠（而另一些不会）。
  * 你需要将这两棵树合并成一棵新二叉树。
@@ -37,7 +37,7 @@ public class Problem617 {
     }
 
     /**
-     * 前序遍历，不修改原二叉树
+     * 分治法
      * 时间复杂度O(min(m,n))，空间复杂度O(min(m,n)) (m,n分别为二叉树的节点个数)
      *
      * @param root1
@@ -66,7 +66,7 @@ public class Problem617 {
     }
 
     /**
-     * 层序遍历，返回的树中会有root1中的节点
+     * bfs
      * 时间复杂度O(min(m,n))，空间复杂度O(min(m,n))
      *
      * @param root1
@@ -86,14 +86,14 @@ public class Problem617 {
             return root1;
         }
 
-        //存放合并之后的节点
-        Queue<TreeNode> queue = new LinkedList<>();
-        //存放root1节点
-        Queue<TreeNode> queue1 = new LinkedList<>();
-        //存放root2节点
-        Queue<TreeNode> queue2 = new LinkedList<>();
-
+        //根节点
         TreeNode root = new TreeNode(root1.val + root2.val);
+        //存放合并之后树中节点
+        Queue<TreeNode> queue = new LinkedList<>();
+        //存放root1树中节点
+        Queue<TreeNode> queue1 = new LinkedList<>();
+        //存放root2树中节点
+        Queue<TreeNode> queue2 = new LinkedList<>();
         queue.offer(root);
         queue1.offer(root1);
         queue2.offer(root2);
@@ -103,6 +103,7 @@ public class Problem617 {
             TreeNode node1 = queue1.poll();
             TreeNode node2 = queue2.poll();
 
+            //node1和node2的左子树都不为空
             if (node1.left != null && node2.left != null) {
                 TreeNode leftNode = new TreeNode(node1.left.val + node2.left.val);
                 node.left = leftNode;
@@ -110,11 +111,14 @@ public class Problem617 {
                 queue1.offer(node1.left);
                 queue2.offer(node2.left);
             } else if (node1.left != null) {
+                //node1的左子树不为空，node节点的左子树为node1节点的左子树
                 node.left = node1.left;
             } else if (node2.left != null) {
+                //node2的左子树不为空，node节点的左子树为node2节点的左子树
                 node.left = node2.left;
             }
 
+            //node1和node2的右子树都不为空
             if (node1.right != null && node2.right != null) {
                 TreeNode rightNode = new TreeNode(node1.right.val + node2.right.val);
                 node.right = rightNode;
@@ -122,8 +126,10 @@ public class Problem617 {
                 queue1.offer(node1.right);
                 queue2.offer(node2.right);
             } else if (node1.right != null) {
+                //node1的右子树不为空，node节点的右子树为node1节点的右子树
                 node.right = node1.right;
             } else if (node2.right != null) {
+                //node2的右子树不为空，node节点的右子树为node2节点的右子树
                 node.right = node2.right;
             }
         }

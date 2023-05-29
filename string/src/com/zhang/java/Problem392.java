@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/4/12 09:10
  * @Author zsy
- * @Description 判断子序列 子序列和子数组类比Problem53、Problem115、Problem300、Problem673、Problem674、Problem718、Problem1143
+ * @Description 判断子序列 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
  * 给定字符串 s 和 t ，判断 s 是否为 t 的子序列。
  * 字符串的一个子序列是原始字符串删除一些（也可以不删除）字符而不改变剩余字符相对位置形成的新字符串。
  * （例如，"ace"是"abcde"的一个子序列，而"aec"不是）。

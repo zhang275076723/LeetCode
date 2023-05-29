@@ -81,7 +81,7 @@ public class Problem1095 {
         }
 
         //arr[peekIndex+1]-arr[arr.length-1]递减数组进行二分查找target
-        index = binarySearch(arr, peekIndex, arr.length - 1, target, false);
+        index = binarySearch(arr, peekIndex + 1, arr.length - 1, target, false);
 
         return index;
     }
