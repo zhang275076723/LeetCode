@@ -111,7 +111,7 @@ public class Problem658 {
 
     /**
      * 二分查找变形，看到有序数组，就要想到二分查找
-     * 对[left,right]进行二分查找，每个元素都表示长度为k+1的区间左边界，left为数组下标索引0，right为数组数组下标索引n-k，
+     * 对[left,right]进行二分查找，每个元素都表示长度为k+1区间的左边界，left为数组下标索引0，right为数组数组下标索引n-k，
      * 比较以mid为左边界的区间[mid,mid+k]，两个端点arr[mid]和arr[mid+k]哪个距离x更近
      * 如果x-arr[mid]大于arr[mid+k]-x，则以mid+k为左边界的区间比以mid为左边界的区间更接近x，继续往mid右边寻找区间，left=mid+1；
      * 如果x-arr[mid]小于等于arr[mid+k]-x，则以mid为左边界的区间是最接近x区间，或以mid为左边界的区间比以mid+k为左边界的区间更接近x，继续往mid左边寻找区间，right=mid
@@ -123,7 +123,7 @@ public class Problem658 {
      * @return
      */
     public List<Integer> findClosestElements3(int[] arr, int k, int x) {
-        //[left,right]都表示的是长度为k+1的区间左边界
+        //[left,right]都表示的是长度为k+1区间的左边界
         int left = 0;
         int right = arr.length - k;
         int mid;

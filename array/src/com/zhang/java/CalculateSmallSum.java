@@ -52,9 +52,8 @@ public class CalculateSmallSum {
 
     /**
      * 归并排序
-     * 在合并时，如果左边数组当前元素arr[i]小于等于右边数组当前元素arr[j]，
-     * 则左边数组当前元素都小于等于右边数组当前元素到末尾元素，
-     * 需要加上右边数组当前位置到末尾个arr[i]，作为右边数组当前元素到末尾元素的小和
+     * 在合并时，如果左边数组当前元素arr[i]小于等于右边数组当前元素arr[j]，则arr[i]小于等于arr[j]到末尾元素，
+     * arr[j]到末尾元素的小和都需要加上arr[i]
      * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
      * @param arr
@@ -88,6 +87,8 @@ public class CalculateSmallSum {
         int k = left;
 
         while (i <= mid && j <= right) {
+            //左边数组当前元素arr[i]小于等于右边数组当前元素arr[j]，则arr[i]小于等于arr[j]到末尾元素，
+            //arr[j]到末尾元素的小和都需要加上arr[i]
             if (arr[i] <= arr[j]) {
                 sum = sum + (long) (right - j + 1) * arr[i];
                 tempArr[k] = arr[i];

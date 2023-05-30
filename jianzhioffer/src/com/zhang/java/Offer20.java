@@ -87,6 +87,7 @@ public class Offer20 {
             } else if ((c == '+' || c == '-') && (i == 0 || s.charAt(i - 1) == 'e' || s.charAt(i - 1) == 'E')) {
                 //出现'+'/'-'，则要么出现在第一位，要么出现在'e'/'E'的后一位
             } else {
+                //其余的都是不合法的情况，直接返回false
                 return false;
             }
         }

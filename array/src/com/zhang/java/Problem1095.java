@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/11 08:58
  * @Author zsy
- * @Description 山脉数组中查找目标值 双调数组查找目标元素 拼多多面试题 字节面试题 山脉类比Problem845、Problem852、Problem941 类比Problem33、Problem34、Problem35、Problem81、Problem153、Problem154、Problem162、Problem852、Offer11、Offer53、Offer53_2、Interview_10_03、Interview_10_05
+ * @Description 山脉数组中查找目标值 双调数组查找目标元素 拼多多面试题 字节面试题 山脉类比Problem845、Problem852、Problem941 类比Problem33、Problem34、Problem35、Problem81、Problem153、Problem154、Problem162、Problem540、Problem852、Offer11、Offer53、Offer53_2、Interview_10_03、Interview_10_05
  * 给你一个 山脉数组 mountainArr，请你返回能够使得 mountainArr.get(index) 等于 target 最小 的下标 index 值。
  * 如果不存在这样的下标 index，就请返回 -1。
  * 何为山脉数组？如果数组 A 是一个山脉数组的话，那它满足如下条件：
@@ -58,6 +58,7 @@ public class Problem1095 {
 
         //1、找到山脉数组的山顶下标索引
         while (left < right) {
+            //mid往左偏，所以nums[mid]和nums[mid + 1]才能比较
             mid = left + ((right - left) >> 1);
 
             //山顶元素在mid右边

@@ -116,7 +116,7 @@ public class Problem169 {
 
         //摩尔投票
         int vote = 0;
-        int result = 0;
+        int result = -1;
 
         for (int num : nums) {
             if (vote == 0) {

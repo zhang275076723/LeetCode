@@ -4,8 +4,8 @@ package com.zhang.java;
  * @Date 2023/5/14 09:14
  * @Author zsy
  * @Description 木头切割问题 字节面试题 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem658、Problem1482、FindMaxArrayMinAfterKMinus
- * 给定长度为n的数组，每个元素代表一个木头的长度，木头可以任意截断，从这堆木头中截出至少k个相同长度为m的木块。
- * 求m的最大值。
+ * 给定长度为n的数组，每个元素代表一个木头的长度，木头可以任意截断，
+ * 从这堆木头中截出至少k个相同长度的木块，每个木块长度为m，求m的最大值。
  * <p>
  * 输入：arr = [4,7,2,10,5], k = 5
  * 输出：4
@@ -28,8 +28,8 @@ public class CutWood {
 
     /**
      * 暴力
-     * len从1开始到maxLen，判断能否截出k个长度为len的木块，得到m的最大值
-     * 时间复杂度O(n*maxLen)，空间复杂度O(1) (maxLen:max(arr[i]))
+     * m的范围为[1,maxLen]，m从小到大遍历，判断能否截出k个长度为m的木块
+     * 时间复杂度O(n*maxLen)，空间复杂度O(1) (maxLen为数组中的最大值)
      *
      * @param arr
      * @param k
@@ -65,9 +65,9 @@ public class CutWood {
     /**
      * 二分查找变形，使...尽可能大，就要想到二分查找
      * 对[left,right]进行二分查找，left为1，right为数组中最大值，统计数组中能够截出长度为mid的木块数量count，
-     * 如果count大于等于k，则能够截出k个长度为m的木块最大值在mid或mid右边，left=mid；
-     * 如果count小于k，则能够截出k个长度为m的木块最大值在mid左边，right=mid-1
-     * 时间复杂度O(n*log(maxLen))，空间复杂度O(1) (maxLen:max(arr[i]))
+     * 如果count大于等于k，则能够截出k个长度为m的木块的最大值在mid或mid右边，left=mid；
+     * 如果count小于k，则能够截出k个长度为m的木块的最大值在mid左边，right=mid-1
+     * 时间复杂度O(n*log(maxLen))，空间复杂度O(1) (maxLen为数组中的最大值)
      *
      * @param arr
      * @param k
@@ -85,8 +85,8 @@ public class CutWood {
         }
 
         while (left < right) {
-            //注意需要加1，让二分往右偏移，因为左移右移条件中是left=mid，
-            //如果二分是mid = left + ((right - left) >> 1)，则mid是往左偏移，无法跳出left<right循环条件
+            //因为要求分割木块长度的最大值m，所以需要加1，让mid往右偏移
+            //如果二分是mid = left + ((right - left) >> 1)，则mid是往左偏移，左移右移条件无法跳出left<right循环
             mid = left + ((right - left) >> 1) + 1;
             //截出长度为mid的木块数量
             int count = 0;

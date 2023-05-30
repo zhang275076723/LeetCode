@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/30 08:12
  * @Author zsy
- * @Description 山脉数组的峰顶索引 双调数组找最大值 山脉类比Problem845、Problem941、Problem1095 类比Problem33、Problem34、Problem35、Problem81、Problem153、Problem154、Problem162、Problem1095、Offer11、Offer53、Offer53_2、Interview_10_03、Interview_10_05
+ * @Description 山脉数组的峰顶索引 双调数组找最大值 山脉类比Problem845、Problem941、Problem1095 类比Problem33、Problem34、Problem35、Problem81、Problem153、Problem154、Problem162、Problem540、Problem1095、Offer11、Offer53、Offer53_2、Interview_10_03、Interview_10_05
  * 符合下列属性的数组 arr 称为 山脉数组 ：
  * arr.length >= 3
  * 存在 i（0 < i < arr.length - 1）使得：
@@ -82,6 +82,7 @@ public class Problem852 {
         int mid;
 
         while (left < right) {
+            //mid往左偏，所以nums[mid]和nums[mid + 1]才能比较
             mid = left + ((right - left) >> 1);
 
             //arr[mid]小于arr[mid+1]，峰值在arr[mid+1]-arr[right]

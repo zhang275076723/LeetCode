@@ -67,11 +67,12 @@ public class Problem120 {
      * @return
      */
     public int minimumTotal(List<List<Integer>> triangle) {
-        int[][] dp = new int[triangle.size()][triangle.size()];
+        int n = triangle.size();
+        int[][] dp = new int[n][n];
         //dp[0][0]初始化，从第0行第0列到第0行第0列的最小路径和
         dp[0][0] = triangle.get(0).get(0);
 
-        for (int i = 1; i < triangle.size(); i++) {
+        for (int i = 1; i < n; i++) {
             //当前第i行第0列只能由第i-1行第0列转换
             dp[i][0] = dp[i - 1][0] + triangle.get(i).get(0);
 
@@ -84,11 +85,11 @@ public class Problem120 {
             dp[i][i] = dp[i - 1][i - 1] + triangle.get(i).get(i);
         }
 
-        int result = dp[triangle.size() - 1][0];
+        int result = dp[n - 1][0];
 
         //最后一行中的最小值即为自顶向下的最小路径和
-        for (int j = 0; j < triangle.size(); j++) {
-            result = Math.min(result, dp[triangle.size() - 1][j]);
+        for (int j = 0; j < n; j++) {
+            result = Math.min(result, dp[n - 1][j]);
         }
 
         return result;
@@ -102,11 +103,12 @@ public class Problem120 {
      * @return
      */
     public int minimumTotal2(List<List<Integer>> triangle) {
-        int[] dp = new int[triangle.size()];
+        int n = triangle.size();
+        int[] dp = new int[n];
         //dp[0][0]初始化，从第0行第0列到第0行第0列的最小路径和
         dp[0] = triangle.get(0).get(0);
 
-        for (int i = 1; i < triangle.size(); i++) {
+        for (int i = 1; i < n; i++) {
             //从后往前遍历，避免当前行dp影响上一行dp
 
             //当前第i行第i列只能由第i-1行第i-1列转换
@@ -124,7 +126,7 @@ public class Problem120 {
         int result = dp[0];
 
         //最后一行中的最小值即为自顶向下的最小路径和
-        for (int i = 0; i < triangle.size(); i++) {
+        for (int i = 0; i < n; i++) {
             result = Math.min(result, dp[i]);
         }
 
@@ -141,14 +143,15 @@ public class Problem120 {
      * @return
      */
     public int minimumTotal3(List<List<Integer>> triangle) {
-        int[][] dp = new int[triangle.size()][triangle.size()];
+        int n = triangle.size();
+        int[][] dp = new int[n][n];
 
-        //最底层dp[triangle.size()-1][j]初始化
-        for (int j = 0; j < triangle.size(); j++) {
-            dp[triangle.size() - 1][j] = triangle.get(triangle.size() - 1).get(j);
+        //最底层dp[n-1][j]初始化
+        for (int j = 0; j < n; j++) {
+            dp[n - 1][j] = triangle.get(n - 1).get(j);
         }
 
-        for (int i = triangle.size() - 2; i >= 0; i--) {
+        for (int i = n - 2; i >= 0; i--) {
             for (int j = 0; j <= i; j++) {
                 dp[i][j] = Math.min(dp[i + 1][j], dp[i + 1][j + 1]) + triangle.get(i).get(j);
             }
@@ -165,14 +168,15 @@ public class Problem120 {
      * @return
      */
     public int minimumTotal4(List<List<Integer>> triangle) {
-        int[] dp = new int[triangle.size()];
+        int n = triangle.size();
+        int[] dp = new int[n];
 
-        //最底层dp[triangle.size()-1][j]初始化
-        for (int i = 0; i < triangle.size(); i++) {
-            dp[i] = triangle.get(triangle.size() - 1).get(i);
+        //最底层dp[n-1][j]初始化
+        for (int i = 0; i < n; i++) {
+            dp[i] = triangle.get(n - 1).get(i);
         }
 
-        for (int i = triangle.size() - 2; i >= 0; i--) {
+        for (int i = n - 2; i >= 0; i--) {
             for (int j = 0; j <= i; j++) {
                 dp[j] = Math.min(dp[j], dp[j + 1]) + triangle.get(i).get(j);
             }
