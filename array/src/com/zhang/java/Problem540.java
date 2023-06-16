@@ -94,8 +94,8 @@ public class Problem540 {
         while (left < right) {
             //mid往左偏，所以nums[mid]和nums[mid + 1]才能比较
             mid = left + ((right - left) >> 1);
-            //如果mid为奇数，让mid减1变为偶数，
 
+            //如果mid为奇数，让mid减1变为偶数，
             //保证当nums[mid]和nums[mid+1]相等时，下标索引小于等于mid+1的元素都出现2次
             if (mid % 2 == 1) {
                 mid--;
