@@ -106,13 +106,13 @@ public class Problem863 {
         //左子节点不为空，则左子节点的父节点为当前节点，加入map中，继续往左子树找
         if (root.left != null) {
             parentMap.put(root.left, root);
-            buildParentMap(root.right, parentMap);
+            buildParentMap(root.left, parentMap);
         }
 
         //右子节点不为空，则右子节点的父节点为当前节点，加入map中，继续往右子树找
         if (root.right != null) {
             parentMap.put(root.right, root);
-            buildParentMap(root.left, parentMap);
+            buildParentMap(root.right, parentMap);
         }
     }
 

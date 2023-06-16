@@ -143,6 +143,7 @@ public class Problem271 {
             StringBuilder sb = new StringBuilder();
 
             for (String str : strs) {
+                //当前字符串的长度
                 int len = str.length();
                 //4字节的字符串长度数组
                 byte[] arr = new byte[4];
@@ -179,6 +180,7 @@ public class Problem271 {
             while (index < s.length()) {
                 //4字节的字符串长度数组
                 byte[] arr = s.substring(index, index + 4).getBytes();
+                //当前字符串的长度
                 int len = 0;
                 index = index + 4;
 
