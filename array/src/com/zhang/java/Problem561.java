@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/22 11:21
  * @Author zsy
- * @Description 数组拆分
+ * @Description 数组拆分 类比Problem717
  * 给定长度为 2n 的整数数组 nums ，你的任务是将这些数分成 n 对,
  * 例如 (a1, b1), (a2, b2), ..., (an, bn) ，使得从 1 到 n 的 min(ai, bi) 总和最大。
  * 返回该 最大总和 。
@@ -33,7 +33,7 @@ public class Problem561 {
 
     /**
      * 贪心
-     * 先按照由小到大排序，由小到大每两个元素作为一组，排序后数组奇数位元素之和即为每组最小值的最大之和
+     * 先按照由小到大排序，由小到大每两个相邻元素作为一组，排序后数组奇数位元素之和即为每组最小值之和的最大值
      * 时间复杂度O(nlogn)，空间复杂度O(logn)
      *
      * @param nums
@@ -44,7 +44,7 @@ public class Problem561 {
 
         int result = 0;
 
-        //选奇数位的元素之和
+        //选奇数位的元素之和，即为每组最小值之和的最大值
         for (int i = 0; i < nums.length; i = i + 2) {
             result = result + nums[i];
         }

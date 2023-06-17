@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/6 08:30
  * @Author zsy
- * @Description 迭代压缩字符串 类比Problem38、Problem271、Problem394、Problem443
+ * @Description 迭代压缩字符串 类比Problem271、Problem394、Problem443
  * 对于一个压缩字符串，设计一个数据结构，它支持如下两种操作： next 和 hasNext。
  * 给定的压缩字符串格式为：每个字母后面紧跟一个正整数，这个整数表示该字母在解压后的字符串里连续出现的次数。
  * next() - 如果压缩字符串仍然有字母未被解压，则返回下一个字母，否则返回一个空格。
