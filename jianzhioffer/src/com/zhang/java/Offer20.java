@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/18 16:37
  * @Author zsy
- * @Description 表示数值的字符串
+ * @Description 表示数值的字符串 同Problem65
  * 请实现一个函数用来判断字符串是否表示数值（包括整数和小数）
  * 字符串 s 仅含英文字母（大写和小写），数字（0-9），加号 '+' ，减号 '-' ，空格 ' ' 或者点 '.'
  * <p>
@@ -40,9 +40,11 @@ public class Offer20 {
     }
 
     /**
+     * 模拟
+     * 使用三个标志位
      * '.'正确出现的情况：在e和E之前，且只能出现一次
      * 'e'/'E'正确出现的情况：e和E之前有数字，之后有整数，且只能出现一次
-     * '+'/'-'正确出现的情况：在开头或e和E的后一位
+     * '+'/'-'正确出现的情况：出现在开头，或出现在e/E的后一位
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param s
@@ -76,15 +78,16 @@ public class Offer20 {
 
                 dotFlag = true;
             } else if (c == 'e' || c == 'E') {
-                //出现'e'/'E'时，如果之前出现过'e'/'E'或没有出现数字，则不合法
+                //出现'e'/'E'时，如果之前出现过'e'/'E'或之前没有出现数字，则不合法
                 if (eFlag || !numFlag) {
                     return false;
                 }
 
                 eFlag = true;
-                //出现'e'/'E'之后，将numFlag置位false，因为'e'/'E'之后必须出现数字
+                //出现'e'/'E'之后，将numFlag置为false，因为'e'/'E'之后必须出现数字
                 numFlag = false;
-            } else if ((c == '+' || c == '-') && (i == 0 || s.charAt(i - 1) == 'e' || s.charAt(i - 1) == 'E')) {
+            } else if ((c == '+' || c == '-') &&
+                    (i == 0 || s.charAt(i - 1) == 'e' || s.charAt(i - 1) == 'E')) {
                 //出现'+'/'-'，则要么出现在第一位，要么出现在'e'/'E'的后一位
             } else {
                 //其余的都是不合法的情况，直接返回false
@@ -92,7 +95,7 @@ public class Offer20 {
             }
         }
 
-        //判断是否为数字，则必须包含数字
+        //遍历完成之后判断是否有数字
         return numFlag;
     }
 }
