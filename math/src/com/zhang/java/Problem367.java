@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/14 10:29
  * @Author zsy
- * @Description 有效的完全平方数 二分查找和牛顿迭代类比Problem69
+ * @Description 有效的完全平方数 类比Problem69、Problem441
  * 给定一个 正整数 num ，编写一个函数，如果 num 是一个完全平方数，则返回 true ，否则返回 false 。
  * 进阶：不要 使用任何内置的库函数，如 sqrt 。
  * <p>

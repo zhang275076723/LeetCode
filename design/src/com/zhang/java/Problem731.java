@@ -101,7 +101,7 @@ public class Problem731 {
         private final SegmentTree segmentTree;
 
         public MyCalendarTwo2() {
-            //根节点区间为[0,10^9-1]
+            //根节点区间为[0,10^9-1)，因为start、end中end是开区间
             segmentTree = new SegmentTree(0, (int) 1e9 - 1);
         }
 

@@ -40,8 +40,11 @@ public class Problem304 {
                 {1, 0, 3, 0, 5}
         };
         NumMatrix numMatrix = new NumMatrix(matrix);
+        //8
         System.out.println(numMatrix.sumRegion(2, 1, 4, 3));
+        //11
         System.out.println(numMatrix.sumRegion(1, 1, 2, 2));
+        //12
         System.out.println(numMatrix.sumRegion(1, 2, 2, 4));
     }
 

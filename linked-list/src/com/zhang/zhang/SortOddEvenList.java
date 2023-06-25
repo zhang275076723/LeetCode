@@ -19,9 +19,9 @@ public class SortOddEvenList {
     }
 
     /**
-     * 1、拆分奇偶链表
-     * 2、反转偶链表
-     * 3、合并两个有序链表
+     * 1、拆分奇偶链表 (Problem328)
+     * 2、反转偶链表 (Problem206)
+     * 3、合并两个有序链表 (Problem21)
      * 时间复杂度O(n)，空间复杂度O(n) (递归反转链表的空间复杂度为O(n))
      *
      * @param head
