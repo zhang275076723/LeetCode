@@ -29,7 +29,7 @@ public class Problem242 {
 
     /**
      * 排序
-     * 时间复杂度O(nlong)，空间复杂度O(logn)
+     * 时间复杂度O(nlogn)，空间复杂度O(logn)
      *
      * @param s
      * @param t
