@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/6/25 09:54
  * @Author zsy
- * @Description 平方数之和 双指针类比Problem15、Problem16、Problem18、Problem456、Problem611
+ * @Description 平方数之和 双指针类比Problem15、Problem16、Problem18、Problem456、Problem532、Problem611
  * 给定一个非负整数 c ，你要判断是否存在两个整数 a 和 b，使得 a^2 + b^2 = c 。
  * <p>
  * 输入：c = 5

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/1 08:26
  * @Author zsy
- * @Description 有效三角形的个数 双指针类比Problem15、Problem16、Problem18、Problem456、Problem633
+ * @Description 有效三角形的个数 双指针类比Problem15、Problem16、Problem18、Problem456、Problem532、Problem633
  * 给定一个包含非负整数的数组 nums ，返回其中可以组成三角形三条边的三元组个数。
  * <p>
  * 输入: nums = [2,2,3,4]

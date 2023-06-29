@@ -57,6 +57,7 @@ public class Problem404 {
 
         int count = 0;
         Queue<Pos> queue = new LinkedList<>();
+        //根节点的前驱节点为root，避免pos.pre.left空指针异常
         queue.offer(new Pos(root, root));
 
         while (!queue.isEmpty()) {

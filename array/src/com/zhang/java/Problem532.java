@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/6/26 08:38
  * @Author zsy
- * @Description 数组中的k-diff数对 类比Problem220
+ * @Description 数组中的k-diff数对 类比Problem220 双指针类比Problem15、Problem16、Problem18、Problem456、Problem611、Problem633
  * 给你一个整数数组 nums 和一个整数 k，请你在数组中找出 不同的 k-diff 数对，并返回不同的 k-diff 数对 的数目。
  * k-diff 数对定义为一个整数对 (nums[i], nums[j]) ，并满足下述全部条件：
  * 0 <= i, j < nums.length
@@ -142,7 +142,7 @@ public class Problem532 {
     }
 
     /**
-     * 排序+双指针
+     * 排序+双指针(滑动窗口)
      * 先按照由小到大排序，如果nums[right]-nums[left]等于k，则找到一个diff，left++；
      * 如果nums[right]-nums[left]大于k，left++；如果nums[right]-nums[left]小于k，right++
      * 时间复杂度O(nlogn)，空间复杂度O(logn) (递归堆排序的空间复杂度为O(logn))
@@ -160,26 +160,22 @@ public class Problem532 {
         int right = 1;
 
         while (right < nums.length) {
-            //去重，nums[i]和nums[i-1]相等，直接进行下次循环
-            while (left > 0 && left < nums.length && nums[left] == nums[left - 1]) {
-                left++;
-            }
-
-            //始终保持右指针right大于左指针left
-            while (left >= right) {
-                right++;
-            }
-
-            if (right >= nums.length) {
-                break;
-            }
-
             if (nums[right] - nums[left] == k) {
                 count++;
                 left++;
             } else if (nums[right] - nums[left] > k) {
                 left++;
             } else {
+                right++;
+            }
+
+            //nums[left]去重，nums[i]和nums[i-1]相等，直接进行下次循环
+            while (left > 0 && left < nums.length && nums[left] == nums[left - 1]) {
+                left++;
+            }
+
+            //始终保持右指针right大于左指针left
+            while (left >= right) {
                 right++;
             }
         }

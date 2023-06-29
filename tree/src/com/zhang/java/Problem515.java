@@ -3,38 +3,27 @@ package com.zhang.java;
 import java.util.*;
 
 /**
- * @Date 2023/4/15 08:25
+ * @Date 2023/6/29 08:50
  * @Author zsy
- * @Description 找树左下角的值 类比Problem404、Problem515、Problem637、Problem662
- * 给定一个二叉树的 根节点 root，请找出该二叉树的 最底层 最左边 节点的值。
- * 假设二叉树中至少有一个节点。
+ * @Description 在每个树行中找最大值 类比Problem513、Problem637、Problem662
+ * 给定一棵二叉树的根节点 root ，请找出该二叉树中每一层的最大值。
  * <p>
- * 输入: root = [2,1,3]
- * 输出: 1
+ * 输入: root = [1,3,2,5,3,null,9]
+ * 输出: [1,3,9]
  * <p>
- * 输入: [1,2,3,4,null,5,6,null,null,7]
- * 输出: 7
+ * 输入: root = [1,2,3]
+ * 输出: [1,3]
  * <p>
- * 二叉树的节点个数的范围是 [1,10^4]
+ * 二叉树的节点个数的范围是 [0,10^4]
  * -2^31 <= Node.val <= 2^31 - 1
  */
-public class Problem513 {
-    /**
-     * dfs的最左下叶节点的值
-     */
-    private int mostLeftValue;
-
-    /**
-     * dfs当前遍历到的最大层数，用于每次获取当前层的一个节点，即每层的最左节点，根节点为第0层
-     */
-    private int maxLevel = -1;
-
+public class Problem515 {
     public static void main(String[] args) {
-        Problem513 problem513 = new Problem513();
-        String[] data = {"1", "2", "3", "4", "null", "5", "6", "null", "null", "7"};
-        TreeNode root = problem513.buildTree(data);
-        System.out.println(problem513.findBottomLeftValue(root));
-        System.out.println(problem513.findBottomLeftValue2(root));
+        Problem515 problem515 = new Problem515();
+        String[] data = {"1", "3", "2", "5", "3", "null", "9"};
+        TreeNode root = problem515.buildTree(data);
+        System.out.println(problem515.largestValues(root));
+        System.out.println(problem515.largestValues2(root));
     }
 
     /**
@@ -44,27 +33,24 @@ public class Problem513 {
      * @param root
      * @return
      */
-    public int findBottomLeftValue(TreeNode root) {
+    public List<Integer> largestValues(TreeNode root) {
         if (root == null) {
-            return 0;
+            return new ArrayList<>();
         }
 
-        //最左下叶节点的值，初始化为根节点的值
-        int mostLeftValue = root.val;
+        List<Integer> list = new ArrayList<>();
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
 
         while (!queue.isEmpty()) {
-            //当前层节点的个数
             int size = queue.size();
+            //二叉树当前层的最大值
+            int max = queue.peek().val;
 
             for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
-                //每次保存当前层中第一个节点，则bfs遍历完之后就能得到最左下叶节点的值
-                if (i == 0) {
-                    mostLeftValue = node.val;
-                }
-                //左右子树入队
+                max = Math.max(max, node.val);
+
                 if (node.left != null) {
                     queue.offer(node.left);
                 }
@@ -72,9 +58,11 @@ public class Problem513 {
                     queue.offer(node.right);
                 }
             }
+
+            list.add(max);
         }
 
-        return mostLeftValue;
+        return list;
     }
 
     /**
@@ -84,37 +72,36 @@ public class Problem513 {
      * @param root
      * @return
      */
-    public int findBottomLeftValue2(TreeNode root) {
+    public List<Integer> largestValues2(TreeNode root) {
         if (root == null) {
-            return 0;
+            return new ArrayList<>();
         }
 
-        //最左下叶节点的值，初始化为根节点的值
-        mostLeftValue = root.val;
+        List<Integer> list = new ArrayList<>();
 
         //根节点为第0层
-        dfs(root, 0);
+        dfs(root, 0, list);
 
-        return mostLeftValue;
+        return list;
     }
 
-    /**
-     * @param root
-     * @param level 当前层数(从0层开始)
-     */
-    private void dfs(TreeNode root, int level) {
+    private void dfs(TreeNode root, int level, List<Integer> list) {
         if (root == null) {
             return;
         }
 
-        //当前遍历到层数大于最大层数，则访问到新的一层，更新最左节点值和最大层数
-        if (maxLevel < level) {
-            mostLeftValue = root.val;
-            maxLevel = level;
+        //当前节点是当前层遍历到的第一个节点，当前节点作为当前层的最大节点
+        if (list.size() == level) {
+            list.add(root.val);
+        } else {
+            //当前节点的值大于list中保存的当前层中的最大值，更新当前层的最大值
+            if (list.get(level) < root.val) {
+                list.set(level, root.val);
+            }
         }
 
-        dfs(root.left, level + 1);
-        dfs(root.right, level + 1);
+        dfs(root.left, level + 1, list);
+        dfs(root.right, level + 1, list);
     }
 
     private TreeNode buildTree(String[] data) {
