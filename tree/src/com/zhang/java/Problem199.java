@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/20 16:00
  * @Author zsy
- * @Description 二叉树的右视图 字节面试题 类比Problem102
+ * @Description 二叉树的右视图 字节面试题 类比Problem513、Problem515、Problem637、Problem662
  * 给定一个二叉树的 根节点 root，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。
  * <p>
  * 输入: [1,2,3,null,5,null,4]
@@ -51,17 +51,17 @@ public class Problem199 {
             for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
 
+                //如果是左视图，则是当前层中第一个元素，即i==0的情况
+                if (i == size - 1) {
+                    list.add(node.val);
+                }
+
                 if (node.left != null) {
                     queue.offer(node.left);
                 }
 
                 if (node.right != null) {
                     queue.offer(node.right);
-                }
-
-                //如果是左视图，则是当前层中第一个元素，即i==0的情况
-                if (i == size - 1) {
-                    list.add(node.val);
                 }
             }
         }
@@ -70,7 +70,7 @@ public class Problem199 {
     }
 
     /**
-     * dfs
+     * dfs(逆序前序遍历)
      * 先遍历根节点，再遍历右子树，最后遍历左子树，保证每行首次都访问最右边节点
      * 时间复杂度O(n)，空间复杂度O(n)
      *
@@ -84,6 +84,7 @@ public class Problem199 {
 
         List<Integer> list = new ArrayList<>();
 
+        //根节点为第0层
         dfs(root, list, 0);
 
         return list;
@@ -92,21 +93,21 @@ public class Problem199 {
     /**
      * @param root  当前节点
      * @param list  结果集合
-     * @param depth 当前节点的深度
+     * @param depth 当前节点的层数(从0层开始)
      */
-    private void dfs(TreeNode root, List<Integer> list, int depth) {
+    private void dfs(TreeNode root, List<Integer> list, int level) {
         if (root == null) {
             return;
         }
 
-        //如果当前节点所在的深度正好和list集合大小相等，则说明当前节点是当前深度最右边节点
-        if (depth == list.size()) {
+        //当前节点的层数等于list大小，则说明当前节点是当前层的右视图节点，加入list中
+        if (level == list.size()) {
             list.add(root.val);
         }
 
-        //右视图，先遍历右子树，再遍历左子树；如果是左视图，则先遍历左子树，再遍历右子树
-        dfs(root.right, list, depth + 1);
-        dfs(root.left, list, depth + 1);
+        //右视图(逆序前序遍历)，先遍历右子树，再遍历左子树；如果是左视图(前序遍历)，则先遍历左子树，再遍历右子树
+        dfs(root.right, list, level + 1);
+        dfs(root.left, list, level + 1);
     }
 
     private TreeNode buildTree(String[] data) {
