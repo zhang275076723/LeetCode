@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/1/6 12:49
  * @Author zsy
- * @Description 链表随机节点 搜狗面试题 类比Problem398、Problem528
+ * @Description 链表随机节点 搜狗面试题 蓄水池抽样类比Problem398、Problem497、Problem528
  * 给你一个单链表，随机选择链表的一个节点，并返回相应的节点值。每个节点 被选中的概率一样 。
  * 实现 Solution 类：
  * Solution(ListNode head) 使用整数数组初始化对象。
@@ -95,7 +95,7 @@ public class Problem382 {
          * 遍历到的当前节点，已经遍历的节点个数为count，链表一共有k个节点，
          * 选择当前节点的概率为1/k = (1/count)*(count/(count+1))*((count+1)/(count+2))*...*((k-1)/k)
          * (1/count：选择第count个节点，count/(count+1)：不选第count+1个节点，...，(k-1)/k:不选第k个节点，
-         * 即得到选择第k个节点的概率为1/k)
+         * 即选择第k个节点的概率为1/k
          * 时间复杂度O(n)，空间复杂度O(1)
          *
          * @return

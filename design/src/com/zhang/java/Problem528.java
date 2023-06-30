@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * @Date 2023/5/8 09:13
  * @Author zsy
- * @Description 按权重随机选择 类比Problem382、Problem398
+ * @Description 按权重随机选择 蓄水池抽样类比Problem382、Problem398、Problem497 前缀和+二分查找类比Problem497
  * 给你一个 下标从 0 开始 的正整数数组 w ，其中 w[i] 代表第 i 个下标的权重。
  * 请你实现一个函数 pickIndex ，它可以 随机地 从范围 [0, w.length - 1] 内（含 0 和 w.length - 1）选出并返回一个下标。
  * 选取下标 i 的 概率 为 w[i] / sum(w) 。
@@ -49,7 +49,9 @@ import java.util.Random;
  */
 public class Problem528 {
     public static void main(String[] args) {
-        Solution solution = new Solution(new int[]{1, 3});
+        int[] w = {1, 3};
+//        Solution solution = new Solution(w);
+        Solution2 solution = new Solution2(w);
         // 返回 1，返回下标 1，返回该下标概率为 3/4 。
         System.out.println(solution.pickIndex());
         // 返回 1
@@ -63,19 +65,57 @@ public class Problem528 {
     }
 
     /**
-     * 前缀和+二分查找
+     * 蓄水池抽样，从n个元素中随机等概率的抽取k个元素，n未知
+     * 时间换空间，适用于nums数组很大，无法将nums元素下标索引全部保存到内存中的情况
      */
     static class Solution {
-        //前缀和数组，preSum[i]：w[0]-w[i-1]之和
-        private final int[] preSum;
-        //概率权值数组
         private final int[] w;
-        //概率总权值，即preSum[w.length]
-        private final int n;
         private final Random random;
 
         public Solution(int[] w) {
             this.w = w;
+            random = new Random();
+        }
+
+        /**
+         * 遍历到当前数组下标索引为k，w[0]-w[k]权值之和为sum(k)，数组总长度为n
+         * 选择当前数组下标索引的概率为w[k]/sum(n) = (w[k]/sum(k))*(sum(k)/sum(k+1))*(sum(k+1)/sum(k+2))*...*(sum(n-1)/sum(n))
+         * (w[k]/sum(k)：选择下标索引为k，sum(k)/sum(k+1)：不选择下标索引为k+1，...，sum(n-1)/sum(n):不选择下标索引为n，
+         * 即选择下标索引为k的概率为w[k]/sum(n)
+         * 时间复杂度O(n)，空间复杂度O(1)
+         *
+         * @return
+         */
+        public int pickIndex() {
+            //根据权值随机选到的下标索引
+            int index = 0;
+            //当前权值之和
+            int sum = 0;
+
+            for (int i = 0; i < w.length; i++) {
+                sum = sum + w[i];
+
+                //[0,sum-1]的随机值小于当前权值，则选择当前下标索引
+                if (random.nextInt(sum) < w[i]) {
+                    index = i;
+                }
+            }
+
+            return index;
+        }
+    }
+
+    /**
+     * 前缀和+二分查找
+     */
+    static class Solution2 {
+        //前缀和权值数组，preSum[i]：w[0]-w[i-1]之和
+        private final int[] preSum;
+        //权值总和，即preSum[w.length]
+        private final int n;
+        private final Random random;
+
+        public Solution2(int[] w) {
             preSum = new int[w.length + 1];
             random = new Random();
 
@@ -87,7 +127,7 @@ public class Problem528 {
         }
 
         /**
-         * 根据二分查找确定1-n中随机数在preSum中的下标索引
+         * 二分查找确定1-n的随机数在preSum中的下标索引
          * 时间复杂度O(logn)，空间复杂度O(1)
          *
          * @return
@@ -114,6 +154,7 @@ public class Problem528 {
             }
 
             //preSum[0]为0，所以需要减1，得到w数组的下标索引
+            //正常情况下需要返回left，因为减1，返回left-1
             return left - 1;
         }
     }

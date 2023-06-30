@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/1/6 11:52
  * @Author zsy
- * @Description 随机数索引 类比Problem382、Problem528
+ * @Description 随机数索引 蓄水池抽样类比Problem382、Problem497、Problem528
  * 给你一个可能含有 重复元素 的整数数组 nums ，请你随机输出给定的目标数字 target 的索引。
  * 你可以假设给定的数字一定存在于数组中。
  * 实现 Solution 类：
@@ -86,10 +86,10 @@ public class Problem398 {
         }
 
         /**
-         * 遍历到当前元素，值为target的个数为count，一共有k个target，
+         * 遍历到当前元素，已经遍历值为target的个数为count，一共有k个target，
          * 选择当前元素的概率为1/k = (1/count)*(count/(count+1))*((count+1)/(count+2))*...*((k-1)/k)
          * (1/count：选择第count个节点，count/(count+1)：不选第count+1个节点，...，(k-1)/k:不选第k个节点，
-         * 即得到选择第k个节点的概率为1/k)
+         * 即选择第k个节点的概率为1/k
          * 时间复杂度O(n)，空间复杂度O(1)
          *
          * @param target
