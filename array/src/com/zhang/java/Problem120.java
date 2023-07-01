@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/4/26 09:47
  * @Author zsy
- * @Description 三角形最小路径和 字节面试题 微软面试题
+ * @Description 三角形最小路径和 字节面试题 微软面试题 类比Problem118、Problem119
  * 给定一个三角形 triangle ，找出自顶向下的最小路径和。
  * 每一步只能移动到下一行中相邻的结点上。
  * 相邻的结点 在这里指的是 下标 与 上一层结点下标 相同或者等于 上一层结点下标 + 1 的两个结点。

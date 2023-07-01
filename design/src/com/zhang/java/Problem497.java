@@ -43,9 +43,7 @@ import java.util.Random;
  */
 public class Problem497 {
     public static void main(String[] args) {
-//        int[][] rects = {{-2, -2, 1, 1}, {2, 2, 4, 6}};
-        int[][] rects = {{82918473, -57180867, 82918476, -57180863}, {83793579, 18088559, 83793580, 18088560},
-                {66574245, 26243152, 66574246, 26243153}, {72983930, 11921716, 72983934, 11921720}};
+        int[][] rects = {{-2, -2, 1, 1}, {2, 2, 4, 6}};
 //        Solution solution = new Solution(rects);
         Solution2 solution = new Solution2(rects);
         // 返回 [1, -2]
@@ -116,9 +114,9 @@ public class Problem497 {
      */
     static class Solution2 {
         private final int[][] rects;
-        //前缀和权值数组，preSum[i]：rects[0]-rects[i-1]面积之和
+        //前缀和面积数组，preSum[i]：rects[0]-rects[i-1]面积之和
         private final int[] preSum;
-        //权值面积总和，即preSum[rects.length]
+        //矩阵面积总和，即preSum[rects.length]
         private final int n;
         private final Random random;
 
@@ -154,7 +152,7 @@ public class Problem497 {
             int x2 = rects[index][2];
             int y2 = rects[index][3];
 
-            //返回当前矩阵中的随机节点
+            //返回当前矩阵中的整数点
             return new int[]{random.nextInt(x2 - x1 + 1) + x1, random.nextInt(y2 - y1 + 1) + y1};
         }
 
