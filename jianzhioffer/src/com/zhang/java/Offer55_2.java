@@ -16,6 +16,9 @@ import java.util.*;
  * 0 <= 树的结点个数 <= 10000
  */
 public class Offer55_2 {
+    /**
+     * 当前二叉树是否是平衡二叉树
+     */
     private boolean isBalanced = true;
 
     public static void main(String[] args) {
@@ -56,13 +59,14 @@ public class Offer55_2 {
         int leftHeight = getHeight(root.left);
         int rightHeight = getHeight(root.right);
 
-        //当前节点左子树的高度和右子树的高度之差超过1，则不是平衡二叉树
+        //当前节点左右子树高度之差超过1，则不是平衡二叉树
         if (Math.abs(leftHeight - rightHeight) > 1) {
             isBalanced = false;
         }
 
         return Math.max(leftHeight, rightHeight) + 1;
     }
+
     private TreeNode buildTree(String[] data) {
         if (data == null || data.length == 0) {
             return null;

@@ -70,7 +70,7 @@ public class Problem109 {
         //后半部分链表断开
         slow.next = null;
 
-        //链表中间节点作为根节点，保证构建的树是高度平衡二叉搜索树
+        //链表中间节点，即slow节点作为根节点，保证构建的树是高度平衡二叉搜索树
         TreeNode root = new TreeNode(slow.val);
 
         root.left = buildTree(head);

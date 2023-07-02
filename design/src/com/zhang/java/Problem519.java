@@ -8,7 +8,7 @@ import java.util.Random;
 /**
  * @Date 2023/7/1 08:59
  * @Author zsy
- * @Description 随机翻转矩阵
+ * @Description 随机翻转矩阵 类比Problem384、Random1_100
  * 给你一个 m x n 的二元矩阵 matrix ，且所有值被初始化为 0 。
  * 请你设计一个算法，随机选取一个满足 matrix[i][j] == 0 的下标 (i, j) ，并将它的值变为 1 。
  * 所有满足 matrix[i][j] == 0 的下标 (i, j) 被选取的概率应当均等。
@@ -52,9 +52,13 @@ public class Problem519 {
 
     /**
      * 哈希表
+     * 每次交换当前元素和末尾元素的下标索引，保证下次随机选择的元素连续
+     * 注意：不能使用下标数组，m*n空间太大，会溢出
      */
     static class Solution {
         //存放元素和元素二维坐标转换为一维坐标下标索引的映射关系
+        //如果map中不存在某个元素，则表示当前元素index存放为翻转的元素一维下标索引为index
+        //例如：key=1，value=3，表示下标索引1存放未翻转的元素一维下标索引为3
         private final Map<Integer, Integer> map;
         //矩阵行
         private final int m;

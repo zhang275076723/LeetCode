@@ -53,7 +53,7 @@ public class Problem108 {
         }
 
         int mid = left + ((right - left) >> 1);
-        //数组中间节点作为根节点，保证构建的树是高度平衡二叉搜索树
+        //数组中间节点，即nums[mid]作为根节点，保证构建的树是高度平衡二叉搜索树
         TreeNode root = new TreeNode(nums[mid]);
 
         root.left = buildTree(nums, left, mid - 1);
