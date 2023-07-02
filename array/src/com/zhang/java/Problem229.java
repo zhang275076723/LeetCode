@@ -74,16 +74,16 @@ public class Problem229 {
             return new ArrayList<>();
         }
 
-        //摩尔投票
+        //摩尔投票，统计result1和result2抵消之后出现的次数
         int vote1 = 0;
         int vote2 = 0;
         int result1 = -1;
         int result2 = -1;
 
         for (int num : nums) {
-            if (vote1 > 0 && result1 == num) {
+            if (result1 == num && vote1 > 0) {
                 vote1++;
-            } else if (vote2 > 0 && result2 == num) {
+            } else if (result2 == num && vote2 > 0) {
                 vote2++;
             } else {
                 if (vote1 == 0) {
