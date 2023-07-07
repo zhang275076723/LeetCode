@@ -34,7 +34,7 @@ public class Offer39 {
      * @return
      */
     public int majorityElement(int[] nums) {
-        //摩尔投票
+        //摩尔投票，统计result抵消之后出现的次数
         int vote = 0;
         int result = -1;
 
