@@ -98,8 +98,9 @@ public class Problem436 {
 
         for (int i = 0; i < intervals.length; i++) {
             int left = 0;
-            int right = intervals.length - 1;
+            int right = newIntervals.length - 1;
             int mid;
+            int target = intervals[i][1];
             //大于等于当前区间右边界intervals[i][1]，且距离intervals[i][1]最近区间的下标索引
             //赋初值为-1，表示不存在大于等于当前区间右边界intervals[i][1]的区间
             int index = -1;
@@ -109,7 +110,7 @@ public class Problem436 {
                 mid = left + ((right - left) >> 1);
 
                 //当前二分查找的区间左边界小于当前区间右边界，继续往右边找
-                if (newIntervals[mid][0] < intervals[i][1]) {
+                if (newIntervals[mid][0] < target) {
                     left = mid + 1;
                 } else {
                     //当前二分查找的区间左边界大于等于当前区间右边界，更新index，继续往左边找，是否能找到更小的index

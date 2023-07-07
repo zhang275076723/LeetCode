@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/5/28 08:00
  * @Author zsy
- * @Description 和等于 k 的最长子数组长度 前缀和类比Problem209、Problem327、Problem437、Problem525、Problem560、Problem862、Problem1871、Offer57_2 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
+ * @Description 和等于 k 的最长子数组长度 前缀和类比Problem209、Problem327、Problem437、Problem525、Problem560、Problem862、Problem1171、Problem1871、Offer57_2 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
  * 给定一个数组 nums 和一个目标值 k，找到和等于 k 的最长连续子数组长度。
  * 如果不存在任意一个符合要求的子数组，则返回 0。
  * <p>

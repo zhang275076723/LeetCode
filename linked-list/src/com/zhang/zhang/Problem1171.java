@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/4/14 08:24
  * @Author zsy
- * @Description 从链表中删去总和值为零的连续节点 字节面试题
+ * @Description 从链表中删去总和值为零的连续节点 字节面试题 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem525、Problem560、Problem862、Problem1871、Offer57_2
  * 给你一个链表的头节点 head，请你编写代码，反复删去链表中由 总和 值为 0 的连续节点组成的序列，直到不存在这样的序列为止。
  * 删除完毕后，请你返回最终结果链表的头节点。
  * 你可以返回任何满足题目要求的答案。
@@ -28,7 +28,8 @@ import java.util.Map;
 public class Problem1171 {
     public static void main(String[] args) {
         Problem1171 problem1171 = new Problem1171();
-        int[] data = {1, 3, 2, -3, -2, 5, 5, -5, 1};
+//        int[] data = {1, 3, 2, -3, -2, 5, 5, -5, 1};
+        int[] data = {1, 2, -3, 3, 1};
         ListNode head = problem1171.buildList(data);
         head = problem1171.removeZeroSumSublists(head);
     }
@@ -53,11 +54,12 @@ public class Problem1171 {
         hair.next = head;
         //从头结点开始遍历，保证从头结点开始的子链表存在和为0的情况
         ListNode node = hair;
-        //前缀和作为key，当前节点作为value
+        //key：当前前缀和，value：当前节点
         Map<Integer, ListNode> map = new HashMap<>();
         int sum = 0;
 
         //从头结点到每个节点的前缀和作为key，当前节点作为value，加入哈希表中
+        //如果遇到相同前缀和，则用最后一个节点覆盖前一个节点
         while (node != null) {
             sum = sum + node.val;
             map.put(sum, node);

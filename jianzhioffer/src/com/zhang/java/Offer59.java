@@ -28,9 +28,10 @@ public class Offer59 {
     public static void main(String[] args) {
         Offer59 offer59 = new Offer59();
         int[] nums = {1, 3, -1, -3, 5, 3, 6, 7};
-        System.out.println(Arrays.toString(offer59.maxSlidingWindow(nums, 3)));
-        System.out.println(Arrays.toString(offer59.maxSlidingWindow2(nums, 3)));
-        System.out.println(Arrays.toString(offer59.maxSlidingWindow3(nums, 3)));
+        int k = 3;
+        System.out.println(Arrays.toString(offer59.maxSlidingWindow(nums, k)));
+        System.out.println(Arrays.toString(offer59.maxSlidingWindow2(nums, k)));
+        System.out.println(Arrays.toString(offer59.maxSlidingWindow3(nums, k)));
     }
 
     /**

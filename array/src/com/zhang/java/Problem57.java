@@ -43,8 +43,10 @@ public class Problem57 {
     }
 
     /**
-     * 比newInterval小，即在newInterval左边的区间先加入结果集合，
-     * 之后的区间如果和newInterval重叠，则重叠部分合并之后加入结果集合
+     * 分三段处理
+     * 第一段：小于newIntervals的区间直接加入结果集合
+     * 第二段：和newIntervals相交的区间，合并之后再加入结果集合
+     * 第三段：大于newIntervals的区间直接加入结果集合
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param intervals
@@ -60,42 +62,30 @@ public class Problem57 {
 
         int i = 0;
 
-        //newInterval之前的区间，即区间右边界intervals[i][1]小于要插入的区间左边界newInterval[0]，这些区间加入结果集合list
-        for (i = 0; i < intervals.length; i++) {
-            if (intervals[i][1] < newInterval[0]) {
-                list.add(intervals[i]);
-            } else {
-                break;
-            }
+        //第一段：小于newIntervals的区间直接加入结果集合
+        while (i < intervals.length && intervals[i][1] < newInterval[0]) {
+            list.add(intervals[i]);
+            i++;
         }
 
-        //要插入的区间是末尾区间，直接加入list，返回
-        if (i == intervals.length) {
-            list.add(newInterval);
-            return list.toArray(new int[list.size()][]);
-        }
-
-        //要合并区间的左边界
+        //和newIntervals相交区间的左右边界
         int start = newInterval[0];
-        //要合并区间的右边界
         int end = newInterval[1];
 
-        while (i < intervals.length) {
-            //当前区间左边界intervals[i][0]小于等于要合并区间的右边界end，则当前区间可以合并，更新end
-            if (intervals[i][0] <= end) {
-                start = Math.min(start, intervals[i][0]);
-                end = Math.max(end, intervals[i][1]);
-            } else {
-                //当前区间左边界intervals[i][0]大于要合并区间的右边界end，则要合并区间[start,end]加入结果集合，并重新赋值要合并区间的左右边界
-                list.add(new int[]{start, end});
-                start = intervals[i][0];
-                end = intervals[i][1];
-            }
-
+        //第二段：和newIntervals相交的区间，合并之后再加入结果集合
+        while (i < intervals.length && intervals[i][0] <= end) {
+            start = Math.min(start, intervals[i][0]);
+            end = Math.max(end, intervals[i][1]);
             i++;
         }
 
         list.add(new int[]{start, end});
+
+        //第三段：大于newIntervals的区间直接加入结果集合
+        while (i < intervals.length) {
+            list.add(intervals[i]);
+            i++;
+        }
 
         return list.toArray(new int[list.size()][]);
     }

@@ -71,7 +71,7 @@ public class Problem435 {
      * 如果当前区间左边界intervals[i][0]小于当前不重叠区间中的最右边界end，则有重叠，
      * 更新end为intervals[i][1]和end中较小值，需要移除移除的重叠区间个数count加1；
      * 如果当前区间左边界intervals[i][0]大于等于当前不重叠区间中的最右边界end，则没有重叠，更新end为intervals[i][1]
-     * 时间复杂度O(nlogn)，空间复杂度O(logn)
+     * 时间复杂度O(nlogn)，空间复杂度O(logn) (递归堆排序的空间复杂度O(logn))
      *
      * @param intervals
      * @return
@@ -87,7 +87,7 @@ public class Problem435 {
 
         for (int i = 1; i < intervals.length; i++) {
             //当前区间和之前不重叠区间不重叠，更新不重叠区间的最右边界
-            if (intervals[i][0] >= end) {
+            if (end <= intervals[i][0]) {
                 end = intervals[i][1];
             } else {
                 //当前区间和之前不重叠区间重叠，取之前不重叠区间中最右边的区间和当前区间两者右边界的较小值，

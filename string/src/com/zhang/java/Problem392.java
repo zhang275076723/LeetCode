@@ -33,28 +33,38 @@ public class Problem392 {
     /**
      * 双指针
      * 遍历字符串t，如果s[i]==s[j]，则i指针右移，最后判断i是否遍历到字符串s末尾，即i是否等于s.length()
-     * 时间复杂度O(m+n)，空间复杂度O(1)
+     * 时间复杂度O(n)，空间复杂度O(1) (n=t.length())
      *
      * @param s
      * @param t
      * @return
      */
     public boolean isSubsequence(String s, String t) {
-        int i = 0;
-        int j = 0;
-
-        while (i < s.length() && j < t.length()) {
-            char c1 = s.charAt(i);
-            char c2 = t.charAt(j);
-
-            if (c1 == c2) {
-                i++;
-            }
-
-            j++;
+        if (s.length() == 0) {
+            return true;
         }
 
-        return i == s.length();
+        if (s.length() > t.length()) {
+            return false;
+        }
+
+        //s的索引下标
+        int index = 0;
+
+        for (int i = 0; i < t.length(); i++) {
+            //s[index]和t[i]相等，index后移
+            if (s.charAt(index) == t.charAt(i)) {
+                index++;
+            }
+
+            //index已经遍历完，则s是t的子序列，返回true
+            if (index == s.length()) {
+                return true;
+            }
+        }
+
+        //遍历结束，则s不是t的子序列，返回false
+        return false;
     }
 
     /**

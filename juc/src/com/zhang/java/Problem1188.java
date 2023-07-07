@@ -142,7 +142,7 @@ public class Problem1188 {
                 while (size == capacity) {
                     producer.await();
                 }
-                queue.addLast(element);
+                queue.offerLast(element);
                 size++;
                 System.out.println(Thread.currentThread().getName() + ":生产" + element);
                 //通知消费者消费
@@ -161,7 +161,7 @@ public class Problem1188 {
                 while (size == 0) {
                     consumer.await();
                 }
-                element = queue.removeFirst();
+                element = queue.pollFirst();
                 size--;
                 System.out.println(Thread.currentThread().getName() + ":消费" + element);
                 //通知生产者生产
