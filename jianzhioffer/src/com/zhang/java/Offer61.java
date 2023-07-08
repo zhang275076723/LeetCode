@@ -41,11 +41,12 @@ public class Offer61 {
         mergeSort(nums, 0, nums.length - 1, new int[nums.length]);
 
         for (int i = 0; i < nums.length; i++) {
+            //统计大小王个数
             if (nums[i] == 0) {
                 joker++;
             } else {
-                //有两张一样的牌，则不能构成顺子
-                if (i != nums.length - 1 && nums[i] == nums[i + 1]) {
+                //当前牌和前一个牌相同，则不能构成顺子
+                if (i != 0 && nums[i - 1] == nums[i]) {
                     return false;
                 }
             }

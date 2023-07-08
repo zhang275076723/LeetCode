@@ -46,20 +46,20 @@ public class ElevatorSchedule {
 
         //电梯停的最佳楼层
         int bestFloor = minFloor;
-        //电梯停下后乘客达到要去楼层所爬的楼层之和
+        //最佳楼层所需爬的楼层数量
         int minCount = Integer.MAX_VALUE;
 
         for (int i = minFloor; i <= maxFloor; i++) {
             //电梯停在第i层，所需爬的楼层数量
-            int tempSum = 0;
+            int tempCount = 0;
 
             for (int j = 0; j < person.length; j++) {
-                tempSum = tempSum + Math.abs(i - person[j]);
+                tempCount = tempCount + Math.abs(i - person[j]);
             }
 
-            //更新电梯停下的最佳楼层和所需的最少爬楼梯数
-            if (tempSum < minCount) {
-                minCount = tempSum;
+            //电梯停在第i层所需爬的楼层数量小于当前最佳楼层所需爬的楼层数量，则更新最佳楼层和最佳楼层所需爬的楼层数量
+            if (tempCount < minCount) {
+                minCount = tempCount;
                 bestFloor = i;
             }
         }
@@ -93,7 +93,7 @@ public class ElevatorSchedule {
             maxFloor = Math.max(maxFloor, floor);
         }
 
-        //floor[i]：到达到第i+minFloor层的人数
+        //floor[i]：要去第i+minFloor层的人数
         int[] floor = new int[maxFloor - minFloor + 1];
 
         for (int i = 0; i < person.length; i++) {
@@ -102,7 +102,9 @@ public class ElevatorSchedule {
 
         //电梯停的最佳楼层
         int bestFloor = minFloor;
-        //电梯停在某一层后，乘客达到要去楼层所爬的楼层之和
+        //最佳楼层所需爬的楼层数量
+        int bestCount;
+        //电梯停在某一层后，乘客达到要去楼层所需爬的楼层之和
         int count = 0;
         //要去i楼以下的乘客数量
         int n1 = 0;
@@ -117,12 +119,16 @@ public class ElevatorSchedule {
             n3 = n3 + floor[i];
         }
 
+        bestCount = count;
+
         for (int i = 1; i < floor.length; i++) {
-            //电梯停在i+1楼比停在i楼，i+1层之下的乘客需要多爬n1+n2层，i+1层及至上的乘客需要少爬n3层
-            if (n1 + n2 < n3) {
-                //更新乘客达到要去楼层所爬的楼层之和count，和电梯停的最佳楼层bestFloor
-                count = count + n1 + n2 - n3;
+            //电梯停在i+1楼和停在i楼相比，i+1层之下的乘客需要多爬n1+n2层，i+1层及以上的乘客需要少爬n3层
+            count = count + n1 + n2 - n3;
+
+            //电梯停在i+1楼比当前最佳楼层所需爬的楼层数量要少，则更新最佳楼层和最佳楼层所需爬的楼层数量
+            if (count < bestCount) {
                 bestFloor = minFloor + i;
+                bestCount = count;
             }
 
             //每次电梯往上停一层，更新n1、n2、n3

@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/3/30 10:41
  * @Author zsy
- * @Description 第一个只出现一次的字符 同Problem387
+ * @Description 第一个只出现一次的字符 类比Problem383 同Problem387
  * 在字符串 s 中找出第一个只出现一次的字符。
  * 如果没有，返回一个单空格。 s 只包含小写字母。
  * <p>
@@ -28,7 +28,7 @@ public class Offer50 {
 
     /**
      * 计数数组
-     * 时间复杂度O(n)，空间复杂度O(Σ) (|Σ| = 26，s只包含小写字母，共26个字符)
+     * 时间复杂度O(n)，空间复杂度O(|Σ|) (|Σ| = 26，s只包含小写字母，共26个字符)
      *
      * @param s
      * @return
@@ -53,7 +53,7 @@ public class Offer50 {
 
     /**
      * 哈希表
-     * 时间复杂度O(n)，空间复杂度O(Σ) (|Σ| = 26，s只包含小写字母，共26个字符)
+     * 时间复杂度O(n)，空间复杂度O(|Σ|) (|Σ| = 26，s只包含小写字母，共26个字符)
      *
      * @param s
      * @return
@@ -67,7 +67,7 @@ public class Offer50 {
 
         for (char c : s.toCharArray()) {
             //Integer之间的比较不能使用==，而应该使用equals()；Integer和int的比较，可以使用==，自动拆箱
-            if (map.get(c).equals(1)) {
+            if (map.get(c) == 1) {
                 return c;
             }
         }
@@ -78,8 +78,9 @@ public class Offer50 {
 
     /**
      * 哈希表优化
-     * 在查找第一个只出现一次的字符时，不遍历字符串s，而最多只需要遍历26次哈希表，因为s只包含小写字母，在字符串很长的情况下可以提升性能
-     * 时间复杂度O(n)，空间复杂度O(Σ) (|Σ| = 26，s只包含小写字母，共26个字符)
+     * 不需要遍历字符串s，最多只需要遍历26次哈希表，因为s只包含小写字母，在字符串很长的情况下可以提升性能
+     * key：当前字符，value：当前字符第一次出现的下标索引，如果出现多次，则不是只出现一次的字符，赋值为-1
+     * 时间复杂度O(n)，空间复杂度O(|Σ|) (|Σ| = 26，s只包含小写字母，共26个字符)
      *
      * @param s
      * @return
@@ -88,26 +89,25 @@ public class Offer50 {
         Map<Character, Integer> map = new HashMap<>();
 
         for (int i = 0; i < s.length(); i++) {
+            //当前字符之前出现过，则不是只出现一次的字符，赋值为-1
             if (map.containsKey(s.charAt(i))) {
-                //-1表示该字符出现多次，即不可能为只出现一次的字符
                 map.put(s.charAt(i), -1);
             } else {
-                //存放该字符第一次出现的下标索引
+                //当前字符第一次出现，存放当前字符的下标索引
                 map.put(s.charAt(i), i);
             }
         }
 
         int index = s.length();
 
-        //遍历map而不是遍历字符串s，找最小的索引，即为第一个只出现一次的字符，在字符串s较长的情况下，遍历map最多只需要遍历26次
         for (Map.Entry<Character, Integer> entry : map.entrySet()) {
             //Integer之间的比较不能使用==，而应该使用equals()；Integer和int的比较，可以使用==，自动拆箱
-            if (!entry.getValue().equals(-1)) {
+            if (entry.getValue() != -1) {
                 index = Math.min(index, entry.getValue());
             }
         }
 
-        //返回空格表示没有找到
+        //遍历完map没有找到只出现一次的字符，则返回' '；找到，则返回只出现一次的字符
         return index == s.length() ? ' ' : s.charAt(index);
     }
 }
