@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/7/27 7:34
  * @Author zsy
- * @Description 颠倒二进制位 类比Problem191、Problem338、Problem461、Offer15
+ * @Description 颠倒二进制位 类比Problem191、Problem201、Problem461、Offer15
  * 颠倒给定的 32 位无符号整数的二进制位。
  * 请注意，在某些语言（如 Java）中，没有无符号整数类型。
  * 在这种情况下，输入和输出都将被指定为有符号整数类型，并且不应影响您的实现，

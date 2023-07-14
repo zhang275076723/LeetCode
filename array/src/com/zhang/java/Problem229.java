@@ -99,10 +99,11 @@ public class Problem229 {
             }
         }
 
+        //票数重新赋值为0，统计result1和result2出现的次数是否超过n/3次
         vote1 = 0;
         vote2 = 0;
 
-        //统计result1和result2出现的次数
+        //统计result1和result2出现的次数是否超过n/3次
         for (int num : nums) {
             if (result1 == num) {
                 vote1++;

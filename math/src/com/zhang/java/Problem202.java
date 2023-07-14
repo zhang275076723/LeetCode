@@ -31,7 +31,7 @@ public class Problem202 {
     public static void main(String[] args) {
         Problem202 problem202 = new Problem202();
         int n = 2;
-        System.out.println(problem202.isHappy(n));
+        System.out.println(problem202.isHappy(19));
         System.out.println(problem202.isHappy2(n));
     }
 
@@ -53,18 +53,23 @@ public class Problem202 {
         }
 
         Set<Integer> set = new HashSet<>();
+        set.add(n);
 
-        while (n != 1) {
-            set.add(n);
+        while (true) {
             n = nextNum(n);
+
+            //n为1，则是快乐数，返回true
+            if (n == 1) {
+                return true;
+            }
 
             //set中已经存在n，则不是快乐数
             if (set.contains(n)) {
                 return false;
             }
-        }
 
-        return true;
+            set.add(n);
+        }
     }
 
     /**
@@ -92,12 +97,13 @@ public class Problem202 {
             slow = nextNum(slow);
             fast = nextNum(nextNum(fast));
 
-            //存在环，即不是快乐数
+            //存在环，即快慢指针两数相等，则不是快乐数，返回false
             if (slow == fast) {
                 return false;
             }
         }
 
+        //不存在环，即最后回到1，则是快乐数，返回true
         return true;
     }
 

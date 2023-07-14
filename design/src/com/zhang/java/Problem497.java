@@ -104,7 +104,7 @@ public class Problem497 {
             int x2 = rects[index][2];
             int y2 = rects[index][3];
 
-            //返回当前矩阵中的随机节点
+            //返回当前矩阵中的随机整数节点
             return new int[]{random.nextInt(x2 - x1 + 1) + x1, random.nextInt(y2 - y1 + 1) + y1};
         }
     }
@@ -152,7 +152,7 @@ public class Problem497 {
             int x2 = rects[index][2];
             int y2 = rects[index][3];
 
-            //返回当前矩阵中的整数点
+            //返回当前矩阵中的随机整数节点
             return new int[]{random.nextInt(x2 - x1 + 1) + x1, random.nextInt(y2 - y1 + 1) + y1};
         }
 
