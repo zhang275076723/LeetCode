@@ -1,14 +1,11 @@
 package com.zhang.java;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.PriorityQueue;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @Date 2022/3/25 9:04
  * @Author zsy
- * @Description 最小的k个数 字节面试题 类比Problem215、Problem347、Problem451、Problem692、Problem703
+ * @Description 最小的k个数 字节面试题 类比Problem215、Problem347、Problem451、Problem692、Problem703、Problem973
  * 输入整数数组 arr ，找出其中最小的 k 个数。
  * 例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。
  * 0 <= k <= arr.length <= 10000
@@ -56,8 +53,8 @@ public class Offer40 {
             if (pivot + 1 < k) {
                 left = pivot + 1;
                 pivot = randomizedPartition(arr, left, right);
-                //基准pivot在前k小元素之后
             } else if (pivot + 1 > k) {
+                //基准pivot在前k小元素之后
                 right = pivot - 1;
                 pivot = randomizedPartition(arr, left, right);
             }
@@ -80,29 +77,25 @@ public class Offer40 {
         }
 
         //大根堆
-        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(k, new Comparator<Integer>() {
+        Queue<Integer> queue = new PriorityQueue<>(k, new Comparator<Integer>() {
             @Override
             public int compare(Integer o1, Integer o2) {
                 return o2 - o1;
             }
         });
 
-        for (int i = 0; i < k; i++) {
-            priorityQueue.offer(arr[i]);
-        }
-
-        for (int i = k; i < arr.length; i++) {
-            //大根堆堆顶元素大于当前元素，则堆顶元素出堆，当前元素入堆
-            if (priorityQueue.peek() > arr[i]) {
-                priorityQueue.poll();
-                priorityQueue.offer(arr[i]);
+        for (int i = 0; i < arr.length; i++) {
+            queue.offer(arr[i]);
+            //大根堆大小超过k时，堆顶元素出堆，保证大根堆中保存最小的k个数
+            if (queue.size() > k) {
+                queue.poll();
             }
         }
 
         int[] result = new int[k];
 
         for (int i = 0; i < k; i++) {
-            result[i] = priorityQueue.poll();
+            result[i] = queue.poll();
         }
 
         return result;
@@ -122,6 +115,7 @@ public class Offer40 {
             return new int[0];
         }
 
+        //大小为k的大根堆
         int[] result = new int[k];
 
         for (int i = 0; i < k; i++) {
@@ -134,7 +128,7 @@ public class Offer40 {
         }
 
         for (int i = k; i < arr.length; i++) {
-            //当前元素小于大堆顶元素，说明堆顶元素不是前k小元素，替换堆顶元素，再进行整堆
+            //当前元素小于大根堆堆顶元素，说明堆顶元素不是前k小元素，替换堆顶元素，再进行整堆
             if (arr[i] < result[0]) {
                 result[0] = arr[i];
                 heapify(result, 0, k);
