@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/9/8 9:36
  * @Author zsy
- * @Description 前K个高频单词 微软面试题 类比Problem215、Problem347、Problem451、Problem703、Offer40
+ * @Description 前K个高频单词 微软面试题 类比Problem215、Problem347、Problem451、Problem703、Problem973、Offer40
  * 给定一个单词列表 words 和一个整数 k ，返回前 k 个出现次数最多的单词。
  * 返回的答案应该按单词出现频率由高到低排序。
  * 如果不同的单词有相同出现频率，按 字典顺序 排序。
@@ -57,7 +57,7 @@ public class Problem692 {
         Collections.sort(list, new Comparator<String>() {
             @Override
             public int compare(String s1, String s2) {
-                //Integer和Integer之间比较只能使用equals()，不能使用==，==比较的是地址是否相等
+                //Integer和Integer之间比较会自动装箱，只能使用equals()，不能使用==，==比较的是地址是否相等
                 if (!map.get(s1).equals(map.get(s2))) {
                     return map.get(s2) - map.get(s1);
                 } else {
@@ -85,10 +85,10 @@ public class Problem692 {
         }
 
         //小根堆，先按照频率由小到大排序，在频率相等的情况下，再按照字典顺序逆序排序
-        PriorityQueue<Map.Entry<String, Integer>> priorityQueue = new PriorityQueue<>(new Comparator<Map.Entry<String, Integer>>() {
+        Queue<Map.Entry<String, Integer>> queue = new PriorityQueue<>(new Comparator<Map.Entry<String, Integer>>() {
             @Override
             public int compare(Map.Entry<String, Integer> entry1, Map.Entry<String, Integer> entry2) {
-                //Integer和Integer之间比较只能使用equals()，不能使用==，==比较的是地址是否相等
+                //Integer和Integer之间比较会自动装箱，只能使用equals()，不能使用==，==比较的是地址是否相等
                 if (!entry1.getValue().equals(entry2.getValue())) {
                     //频率由小到大排序
                     return entry1.getValue() - entry2.getValue();
@@ -100,19 +100,20 @@ public class Problem692 {
         });
 
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
-            priorityQueue.offer(entry);
+            queue.offer(entry);
 
             //当小根堆大小超过k时，堆顶元素出堆
-            if (priorityQueue.size() > k) {
-                priorityQueue.poll();
+            if (queue.size() > k) {
+                queue.poll();
             }
         }
 
         LinkedList<String> list = new LinkedList<>();
 
-        while (!priorityQueue.isEmpty()) {
+        while (!queue.isEmpty()) {
+            Map.Entry<String,Integer> entry = queue.poll();
             //小根堆先按照频率由小到大排序，再按照字典顺序逆序排序，所以list首添加
-            list.addFirst(priorityQueue.poll().getKey());
+            list.addFirst(entry.getKey());
         }
 
         return list;

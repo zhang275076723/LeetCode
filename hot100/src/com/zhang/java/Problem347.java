@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/2 10:09
  * @Author zsy
- * @Description 前 K 个高频元素 华为机试题、腾讯机试题、字节面试题 类比Problem215、Problem451、Problem692、Problem703、Offer40
+ * @Description 前 K 个高频元素 华为机试题 腾讯机试题 字节面试题 类比Problem215、Problem451、Problem692、Problem703、Problem973、Offer40
  * 给你一个整数数组 nums 和一个整数 k ，请你返回其中出现频率前 k 高的元素。你可以按 任意顺序 返回答案。
  * <p>
  * 输入: nums = [1,1,1,2,2,3], k = 2
@@ -23,9 +23,10 @@ public class Problem347 {
         Problem347 problem347 = new Problem347();
 //        int[] nums = {1, 1, 1, 2, 2, 3};
         int[] nums = {4, 1, -1, 2, -1, 2, 3};
-        System.out.println(Arrays.toString(problem347.topKFrequent(nums, 2)));
-        System.out.println(Arrays.toString(problem347.topKFrequent2(nums, 2)));
-        System.out.println(Arrays.toString(problem347.topKFrequent3(nums, 2)));
+        int k = 2;
+        System.out.println(Arrays.toString(problem347.topKFrequent(nums, k)));
+        System.out.println(Arrays.toString(problem347.topKFrequent2(nums, k)));
+        System.out.println(Arrays.toString(problem347.topKFrequent3(nums, k)));
     }
 
     /**
@@ -50,7 +51,7 @@ public class Problem347 {
             map.put(num, map.getOrDefault(num, 0) + 1);
         }
 
-        //出现次数数组，result[i][0]：当前元素，result[i][1]：出现次数
+        //出现次数数组，arr[i][0]：当前元素，arr[i][1]：出现次数
         int[][] arr = new int[map.size()][2];
         int index = 0;
 
@@ -118,7 +119,7 @@ public class Problem347 {
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
             priorityQueue.offer(new int[]{entry.getKey(), entry.getValue()});
 
-            //小根堆中元素个数超过k个，则移除小根堆堆顶元素
+            //小根堆大小超过k时，堆顶元素出堆，保证小根堆中保存前k个高频单词
             if (priorityQueue.size() > k) {
                 priorityQueue.poll();
             }
@@ -135,7 +136,7 @@ public class Problem347 {
 
     /**
      * 手动实现小根堆
-     * 时间复杂度O(nlogk)，空间复杂度O(n)，哈希表大小为O(n)，堆大小为O(k)
+     * 时间复杂度O(nlogk)，空间复杂度O(n) (哈希表大小为O(n)，堆大小为O(k))
      *
      * @param nums
      * @param k
@@ -169,7 +170,7 @@ public class Problem347 {
                     }
                 }
             } else {
-                //当前元素频率大于小根堆堆顶元素频率，替换堆顶元素，再进行整堆
+                //当前元素频率大于小根堆堆顶元素频率，说明堆顶元素不是前k个高频单词，替换堆顶元素，再进行整堆
                 if (arr[0][1] < entry.getValue()) {
                     arr[0] = new int[]{entry.getKey(), entry.getValue()};
                     heapify(arr, 0, k);
@@ -199,9 +200,9 @@ public class Problem347 {
         //随机取一个元素作为划分基准，避免性能倒退为O(n^2)
         int randomIndex = (int) (Math.random() * (right - left + 1)) + left;
 
-        int[] value = arr[randomIndex];
-        arr[randomIndex] = arr[left];
-        arr[left] = value;
+        int[] value = arr[left];
+        arr[left] = arr[randomIndex];
+        arr[randomIndex] = value;
 
         int[] temp = arr[left];
 

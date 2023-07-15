@@ -185,7 +185,7 @@ public class Problem30 {
     private boolean isEqual(Map<String, Integer> sMap, Map<String, Integer> wordsMap) {
         //只能遍历wordsMap中的Entry，因为sMap中有可能存在key，但对应value为0的情况
         for (Map.Entry<String, Integer> entry : wordsMap.entrySet()) {
-            //Integer和Integer之间比较只能使用equals()，不能使用==，==比较的是地址是否相等
+            //Integer和Integer之间比较会自动装箱，只能使用equals()，不能使用==，==比较的是地址是否相等
             if (!sMap.containsKey(entry.getKey()) || !sMap.get(entry.getKey()).equals(entry.getValue())) {
                 return false;
             }

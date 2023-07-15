@@ -3,12 +3,13 @@ package com.zhang.java;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Random;
 
 /**
  * @Date 2022/5/15 8:30
  * @Author zsy
- * @Description 数组中的第K个最大元素 字节面试题 类比Problem347、Problem451、Problem692、Problem703、Offer40
+ * @Description 数组中的第K个最大元素 字节面试题 类比Problem347、Problem451、Problem692、Problem703、Problem973、Offer40
  * 给定整数数组 nums 和整数 k，请返回数组中第 k 个最大的元素。
  * 请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
  * <p>
@@ -67,7 +68,7 @@ public class Problem215 {
 
     /**
      * 小根堆
-     * 时间复杂度O(nlogn)，空间复杂度O(logn)
+     * 时间复杂度O(nlogn)，空间复杂度O(k)
      *
      * @param nums
      * @param k
@@ -78,33 +79,29 @@ public class Problem215 {
             return Integer.MIN_VALUE;
         }
 
-        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(nums.length, new Comparator<Integer>() {
+        Queue<Integer> queue = new PriorityQueue<>(nums.length, new Comparator<Integer>() {
             @Override
             public int compare(Integer a, Integer b) {
                 return a - b;
             }
         });
 
-        //建立大小为k的小根堆
-        for (int i = 0; i < k; i++) {
-            priorityQueue.offer(nums[i]);
-        }
 
-        //如果当前元素大于小根堆堆顶元素，则堆顶元素出堆，当前元素入堆
-        for (int i = k; i < nums.length; i++) {
-            if (nums[i] > priorityQueue.peek()) {
-                priorityQueue.poll();
-                priorityQueue.offer(nums[i]);
+        for (int i = 0; i < nums.length; i++) {
+            queue.offer(nums[i]);
+            //小根堆大小超过k时，堆顶元素出堆，保证小根堆中保存最大的k个数
+            if (queue.size() > k) {
+                queue.poll();
             }
         }
 
-        //当前堆顶即为第k大元素
-        return priorityQueue.poll();
+        //当前小根堆堆顶元素即为第k大元素
+        return queue.peek();
     }
 
     /**
      * 手动实现小根堆
-     * 时间复杂度O(nlogn)，空间复杂度O(logn)
+     * 时间复杂度O(nlogn)，空间复杂度O(k)
      *
      * @param nums
      * @param k
@@ -127,8 +124,8 @@ public class Problem215 {
             heapify(arr, i, arr.length);
         }
 
-        //如果当前元素大于小根堆堆顶元素，则堆顶元素出堆，当前元素入堆
         for (int i = k; i < nums.length; i++) {
+            //当前元素大于小根堆堆顶元素，说明堆顶元素不是前k大元素，替换堆顶元素，再进行整堆
             if (nums[i] > arr[0]) {
                 arr[0] = nums[i];
                 heapify(arr, 0, arr.length);
@@ -191,6 +188,7 @@ public class Problem215 {
         if (leftIndex < heapSize && nums[leftIndex] < nums[index]) {
             index = leftIndex;
         }
+
         if (rightIndex < heapSize && nums[rightIndex] < nums[index]) {
             index = rightIndex;
         }
