@@ -59,15 +59,14 @@ public class Problem316 {
                 visited[c2 - 'a'] = false;
             }
 
-            //当前字符c已被访问，则字符c已入栈，字符c的个数减1
-            if (visited[c - 'a']) {
-                map.put(c, map.get(c) - 1);
-            } else {
-                //当期字符c未被访问，则字符c入栈，标记为已访问，字符c的个数减1
+            //当前字符c未被访问，则字符c入栈，标记为已访问
+            if (!visited[c - 'a']) {
                 stack.offerLast(c);
                 visited[c - 'a'] = true;
-                map.put(c, map.get(c) - 1);
             }
+
+            //当前字符c的个数减1
+            map.put(c, map.get(c) - 1);
         }
 
         StringBuilder sb = new StringBuilder();

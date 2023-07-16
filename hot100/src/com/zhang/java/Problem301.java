@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/28 9:15
  * @Author zsy
- * @Description 删除无效的括号 括号类比Problem20、Problem22、Problem32、Problem678 去重类比Problem40、Offer38
+ * @Description 删除无效的括号 中山大学机试题 括号类比Problem20、Problem22、Problem32、Problem678 回溯+剪枝类比Problem17、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem89、Problem90、Problem97、Problem216、Problem377、Problem491、Problem679、Problem698、Offer17、Offer38
  * 给你一个由若干括号和字母组成的字符串 s ，删除最小数量的无效括号，使得输入的字符串有效。
  * 返回所有可能的结果。答案可以按 任意顺序 返回。
  * <p>
@@ -140,33 +140,36 @@ public class Problem301 {
      * @param t      当前字符串的起始索引
      * @param left   要删除的左括号数量
      * @param right  要删除的右括号数量
-     * @param str    当前字符串
+     * @param s      当前字符串
      * @param result 删除最少无效括号之后的有效字符串结果集合
      */
-    private void backtrack(int t, int left, int right, String str, List<String> result) {
-        //如果要删除的左括号和右括号都为0，则找到要删除的最少无效括号数量，直接返回
-        if (left == 0 && right == 0) {
-            if (isValid(str)) {
-                result.add(str);
-            }
-
+    private void backtrack(int t, int left, int right, String s, List<String> result) {
+        if (left < 0 || right < 0) {
             return;
         }
 
-        for (int i = t; i < str.length(); i++) {
+        //要删除的左括号和右括号都为0，则找到要删除的最少无效括号数量，判断当前字符串是否是有效字符串，并返回
+        if (left == 0 && right == 0) {
+            if (isValid(s)) {
+                result.add(s);
+            }
+            return;
+        }
+
+        for (int i = t; i < s.length(); i++) {
             //去重，本次的括号和上次的括号相同，说明本次删除括号的情况和上次删除括号的情况一样，进行下次循环
-            if (i > t && str.charAt(i) == str.charAt(i - 1)) {
+            if (i > t && s.charAt(i) == s.charAt(i - 1)) {
                 continue;
             }
 
             //删除一个左括号
-            if (left > 0 && str.charAt(i) == '(') {
-                backtrack(i, left - 1, right, str.substring(0, i) + str.substring(i + 1), result);
+            if (s.charAt(i) == '(') {
+                backtrack(i, left - 1, right, s.substring(0, i) + s.substring(i + 1), result);
             }
 
             //删除一个右括号
-            if (right > 0 && str.charAt(i) == ')') {
-                backtrack(i, left, right - 1, str.substring(0, i) + str.substring(i + 1), result);
+            if (s.charAt(i) == ')') {
+                backtrack(i, left, right - 1, s.substring(0, i) + s.substring(i + 1), result);
             }
         }
     }
@@ -188,10 +191,10 @@ public class Problem301 {
             if (c == '(') {
                 count++;
             } else if (c == ')') {
-                if (count > 0) {
-                    count--;
-                } else {
-                    //不存在可以匹配的'('，直接返回false
+                count--;
+
+                //count小于0，则说明不是有效的字符串，直接返回false
+                if (count < 0) {
                     return false;
                 }
             }

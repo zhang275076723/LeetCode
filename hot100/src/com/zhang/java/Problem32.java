@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/17 11:19
  * @Author zsy
- * @Description 最长有效括号 字节面试题 括号类比Problem20、Problem22、Problem301、Problem678 动态规划类比Problem10、Problem44、Offer19 两次遍历类比Problem135、Problem581
+ * @Description 最长有效括号 字节面试题 括号类比Problem20、Problem22、Problem301、Problem678 两次遍历类比Problem135、Problem581 动态规划类比Problem10、Problem44、Offer19
  * 给你一个只包含 '(' 和 ')' 的字符串，找出最长有效（格式正确且连续）括号子串的长度。
  * <p>
  * 输入：s = "(()"

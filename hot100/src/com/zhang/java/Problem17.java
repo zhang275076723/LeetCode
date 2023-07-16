@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/4/15 9:42
  * @Author zsy
- * @Description 电话号码的字母组合 回溯+剪枝类比Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem89、Problem90、Problem97、Problem216、Problem377、Problem491、Problem679、Problem698、Offer17、Offer38
+ * @Description 电话号码的字母组合 回溯+剪枝类比Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem89、Problem90、Problem97、Problem216、Problem301、Problem377、Problem491、Problem679、Problem698、Offer17、Offer38
  * 给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。答案可以按 任意顺序 返回。
  * 给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
  * 输入：digits = "23"
@@ -29,7 +29,7 @@ public class Problem17 {
     }
 
     /**
-     * 回溯
+     * 回溯+剪枝
      * 时间复杂度O(3^n)-O(4^n)，空间复杂度O(n)
      *
      * @param digits

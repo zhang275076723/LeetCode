@@ -60,11 +60,11 @@ public class Problem321 {
         //保证nums1和nums2取的最大数子序列长度不会越界
         for (int i = Math.max(0, k - nums2.length); i <= Math.min(k, nums1.length); i++) {
             //nums1取长度为i的最大值
-            int[] result1 = getMaxKNumber(nums1, i);
+            int[] temp1 = getMaxKNumber(nums1, i);
             //nums2取长度为k-i的最大值
-            int[] result2 = getMaxKNumber(nums2, k - i);
+            int[] temp2 = getMaxKNumber(nums2, k - i);
             //result1和result2合并，得到最大数
-            int[] tempResult = merge(result1, result2);
+            int[] tempResult = merge(temp1, temp2);
 
             //临时最大数大于当前最大数，更新最大数
             if (compare(tempResult, result, 0, 0) > 0) {
@@ -125,7 +125,7 @@ public class Problem321 {
 
     /**
      * 合并两个数组得到最大值数组，保证两个数组中元素在原数组中相对顺序不变
-     * 时间复杂度O((m+n)^2)，空间复杂度O(1) (m=nums1.length, n=nums2.length)
+     * 时间复杂度O((m+n)*min(m,n))，空间复杂度O(1) (m=nums1.length, n=nums2.length)
      *
      * @param nums1
      * @param nums2
@@ -175,9 +175,9 @@ public class Problem321 {
 
     /**
      * 比较从nums1[i]起始的数和从nums2[j]起始的数的大小
-     * nums1[i]和nums2[j]不相等时，返回两数之差，即nums1[i]大，返回正数，nums2[j]大，返回负数
+     * nums1[i]和nums2[j]不相等时，返回两数之差，根据正负值判断nums1[i]和nums2[j]的大小关系，nums1[i]大，返回正数，nums2[j]大，返回负数
      * nums1[i]和nums2[j]相等时，继续往后判断
-     * 时间复杂度O(m+n)，空间复杂度O(m+n) (m=nums1.length, n=nums2.length)
+     * 时间复杂度O(min(m,n))，空间复杂度O(1) (m=nums1.length, n=nums2.length)
      *
      * @param nums1
      * @param nums2
