@@ -29,9 +29,9 @@ public class BestSchedule {
         int n = 10;
         int k = 4;
         double[] work = {1.0, 4.3, 10.3, 2.4, 5.3, 3.1, 4.9, 2.1, 8.4, 5.9};
-        //List<List<Integer>>适用于：arr[][]一维和二维都不确定的情况
-        //List<int[]>适用于：arr[][]一维不确定，二维确定的情况
-        //List<Integer>[]适用于：arr[][]一维确定，二维不确定的情况
+        //List<List<Integer>>适用于：arr[][]一维和二维长度都不确定的情况
+        //List<int[]>适用于：arr[][]一维长度不确定，二维长度确定的情况
+        //List<Integer>[]适用于：arr[][]一维长度确定，二维长度不确定的情况
         bestSchedule.bestMachineSchedule = new List[k];
 
         System.out.println(bestSchedule.find(n, k, work));
