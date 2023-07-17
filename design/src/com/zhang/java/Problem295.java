@@ -152,7 +152,7 @@ public class Problem295 {
          * @param num
          */
         public void addNum(int num) {
-            if (maxQueue.isEmpty() || num < maxQueue.peek()) {
+            if (maxQueue.isEmpty() || num <= maxQueue.peek()) {
                 maxQueue.offer(num);
                 if (maxQueue.size() > minQueue.size() + 1) {
                     minQueue.offer(maxQueue.poll());
