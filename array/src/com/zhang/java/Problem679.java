@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @Date 2023/5/2 08:14
  * @Author zsy
- * @Description 24 点游戏 字节面试题 华为面试题 阿里面试题 微软面试题 网易面试题 回溯+剪枝类比Problem17、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem89、Problem90、Problem97、Problem216、Problem301、Problem377、Problem491、Problem698、Offer17、Offer38
+ * @Description 24 点游戏 字节面试题 华为面试题 阿里面试题 微软面试题 网易面试题 回溯+剪枝类比Problem17、Problem22、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem89、Problem90、Problem97、Problem216、Problem301、Problem377、Problem491、Problem698、Offer17、Offer38
  * 给定一个长度为4的整数数组 cards 。你有 4 张卡片，每张卡片上都包含一个范围在 [1,9] 的数字。
  * 您应该使用运算符 ['+', '-', '*', '/'] 和括号 '(' 和 ')' 将这些卡片上的数字排列成数学表达式，以获得值24。
  * 你须遵守以下规则:

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/6/18 11:50
  * @Author zsy
- * @Description 格雷编码 模拟类比Problem38 回溯+剪枝类比Problem17、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem90、Problem97、Problem216、Problem301、Problem377、Problem491、Problem679、Problem698、Offer17、Offer38
+ * @Description 格雷编码 模拟类比Problem38 回溯+剪枝类比Problem17、Problem22、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem90、Problem97、Problem216、Problem301、Problem377、Problem491、Problem679、Problem698、Offer17、Offer38
  * n 位格雷码序列 是一个由 2^n 个整数组成的序列，其中：
  * 每个整数都在范围 [0, 2^n - 1] 内（含 0 和 2^n - 1）
  * 第一个整数是 0
