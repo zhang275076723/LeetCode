@@ -69,6 +69,12 @@ public class Offer14_2 {
         }
     }
 
+    /**
+     *
+     * @param a 使用long，避免int相乘溢出
+     * @param n
+     * @return
+     */
     private long quickPow(long a, int n) {
         //int可能溢出，所以使用long
         long result = 1;
