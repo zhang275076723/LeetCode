@@ -114,9 +114,10 @@ public class Problem138 {
 
         node = head;
 
-        //设置每个新节点的random
+        //设置每个新节点的random指针
         while (node != null) {
             Node copyNode = node.next;
+
             if (node.random == null) {
                 copyNode.random = null;
             } else {
@@ -127,22 +128,21 @@ public class Problem138 {
         }
 
         node = head;
-        Node copyNode = node.next;
-        Node copyNodeHead = node.next;
+        Node copyHead = node.next;
 
         //设置每个新节点的next，将链表拆分为两个链表，得到拷贝链表
         while (node != null) {
-            node.next = node.next.next;
+            Node copyNode = node.next;
+            node.next = copyNode.next;
 
-            if (node.next != null) {
-                copyNode.next = node.next.next;
+            if (copyNode.next != null) {
+                copyNode.next = copyNode.next.next;
             }
 
             node = node.next;
-            copyNode = copyNode.next;
         }
 
-        return copyNodeHead;
+        return copyHead;
     }
 
     private static class Node {

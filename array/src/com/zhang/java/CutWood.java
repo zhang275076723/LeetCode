@@ -85,8 +85,7 @@ public class CutWood {
         }
 
         while (left < right) {
-            //因为要求分割木块长度的最大值m，所以需要加1，让mid往右偏移
-            //如果二分是mid = left + ((right - left) >> 1)，则mid是往左偏移，左移右移条件无法跳出left<right循环
+            //二分往右偏移，因为转移条件是right=mid-1，如果转移条件是left=mid+1，则二分要往左边偏移
             mid = left + ((right - left) >> 1) + 1;
             //截出长度为mid的木块数量
             int count = 0;

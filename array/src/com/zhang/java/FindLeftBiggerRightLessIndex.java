@@ -22,8 +22,8 @@ public class FindLeftBiggerRightLessIndex {
 
     /**
      * 动态规划
-     * left[i]：nums[0]-nums[i-1]的最大值
-     * right[i]：nums[i+1]-nums[nums.length-1]的最小值
+     * left[i]：nums[i]左边，即nums[0]-nums[i-1]的最大值
+     * right[i]：nums[i]右边，即nums[i+1]-nums[nums.length-1]的最小值
      * left[i] = max(left[i-1],nums[i-1])
      * right[i] = min(right[i+1],nums[i+1])
      * 时间复杂度O(n)，空间复杂的O(n)

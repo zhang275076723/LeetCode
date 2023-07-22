@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/7/12 8:42
  * @Author zsy
- * @Description 零钱兑换 II 动态规划类比Problem279、Problem322、Problem343、Problem377、Problem416、Problem494、Problem983、Offer14、Offer14_2、Knapsack
+ * @Description 零钱兑换 II 动态规划类比Problem279、Problem322、Problem343、Problem377、Problem416、Problem494、Problem983、Offer14、Offer14_2、CircleBackToOrigin、Knapsack
  * 给你一个整数数组 coins 表示不同面额的硬币，另给一个整数 amount 表示总金额。
  * 请你计算并返回可以凑成总金额的硬币组合数。如果任何硬币组合都无法凑出总金额，返回 0 。
  * 假设每一种面额的硬币有无限个。
@@ -128,25 +128,25 @@ public class Problem518 {
     }
 
     /**
-     * @param index  当前遍历到的硬币索引下标
+     * @param t  当前遍历到的硬币索引下标
      * @param amount 当前要凑成的金额
      * @param coins  不同面额的硬币数组
      */
-    private void backtrack(int index, int amount, int[] coins) {
-        //找到凑成原先amount的硬币组合，直接剪枝
+    private void backtrack(int t, int amount, int[] coins) {
+        //找到凑成amount的硬币组合，直接返回
         if (amount == 0) {
             count++;
             return;
         }
 
         //硬币种类已经全部遍历结束
-        if (index == coins.length) {
+        if (t == coins.length) {
             return;
         }
 
-        //coin[index]硬币数量取0-到amount / coins[index]个
-        for (int i = 0; i <= amount / coins[index]; i++) {
-            backtrack(index + 1, amount - i * coins[index], coins);
+        //coin[index]硬币数量取0-amount/coins[t]个
+        for (int i = 0; i <= amount / coins[t]; i++) {
+            backtrack(t + 1, amount - i * coins[t], coins);
         }
     }
 }

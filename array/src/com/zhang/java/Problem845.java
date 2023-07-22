@@ -109,7 +109,7 @@ public class Problem845 {
                     right++;
                 }
 
-                //找到了山顶，继续往右找右边山底
+                //找到了山顶，如果右边元素比山顶元素小，则继续往右找右边山底
                 if (right + 1 < arr.length && arr[right] > arr[right + 1]) {
                     while (right + 1 < arr.length && arr[right] > arr[right + 1]) {
                         right++;
@@ -119,7 +119,7 @@ public class Problem845 {
                     max = Math.max(max, right - left + 1);
                 }
 
-                //更新左边山底下标索引
+                //更新左边山底下标索引，当前元素arr[right]作为左边山底
                 left = right;
             } else {
                 //当前不能元素作为左边山底，更新左右山底下标索引

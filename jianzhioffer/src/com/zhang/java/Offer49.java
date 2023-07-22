@@ -43,33 +43,34 @@ public class Offer49 {
             return 1;
         }
 
-        int[] ugly = new int[n];
-        ugly[0] = 1;
+        int[] dp = new int[n];
+        dp[0] = 1;
 
-        //i、j、k分别指向当前丑数数组的下标索引
+        //i、j、k分别指向当前丑数数组的下标索引，即乘以2、3、5的丑数下标索引
         int i = 0;
         int j = 0;
         int k = 0;
 
         for (int m = 1; m < n; m++) {
             //三个指针对应元素乘上相应的2、3、5，得到的值中最小值即为当前丑数
-            int curUgly = Math.min(ugly[i] * 2, Math.min(ugly[j] * 3, ugly[k] * 5));
-            ugly[m] = curUgly;
+            dp[m] = Math.min(dp[i] * 2, Math.min(dp[j] * 3, dp[k] * 5));
 
-            //指针后移
-            if (curUgly == ugly[i] * 2) {
+            //i指针后移
+            if (dp[m] == dp[i] * 2) {
                 i++;
             }
 
-            if (curUgly == ugly[j] * 3) {
+            //j指针后移
+            if (dp[m] == dp[j] * 3) {
                 j++;
             }
 
-            if (curUgly == ugly[k] * 5) {
+            //k指针后移
+            if (dp[m] == dp[k] * 5) {
                 k++;
             }
         }
 
-        return ugly[n - 1];
+        return dp[n - 1];
     }
 }

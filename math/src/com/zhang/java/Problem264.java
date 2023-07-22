@@ -45,7 +45,7 @@ public class Problem264 {
         int[] dp = new int[n];
         dp[0] = 1;
 
-        //i、j、k分别指向当前丑数数组的下标索引
+        //i、j、k分别指向当前丑数数组的下标索引，即乘以2、3、5的丑数下标索引
         int i = 0;
         int j = 0;
         int k = 0;

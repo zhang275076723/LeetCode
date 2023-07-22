@@ -65,23 +65,20 @@ public class Problem69 {
         int left = 0;
         int right = x;
         int mid;
-        int result = 0;
 
-        while (left <= right) {
-            mid = left + ((right - left) >> 1);
+        while (left < right) {
+            //二分往右偏移，因为转移条件是right=mid-1，如果转移条件是left=mid+1，则二分要往左边偏移
+            mid = left + ((right - left) >> 1) + 1;
 
             //使用long，避免mid*mid在int范围内溢出
-            if ((long) mid * mid == x) {
-                return mid;
-            } else if ((long) mid * mid < x) {
-                result = mid;
-                left = mid + 1;
-            } else {
+            if ((long) mid * mid > x) {
                 right = mid - 1;
+            } else {
+                left = mid;
             }
         }
 
-        return result;
+        return left;
     }
 
     /**

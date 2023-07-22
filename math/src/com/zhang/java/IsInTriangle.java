@@ -15,30 +15,30 @@ package com.zhang.java;
 public class IsInTriangle {
     public static void main(String[] args) {
         IsInTriangle isInTriangle = new IsInTriangle();
-        Point p1 = new Point(-1, 0.0);
-        Point p2 = new Point(1.5, 3.5);
-        Point p3 = new Point(2.73, -3.12);
-        Point p = new Point(1.23, 0.23);
-        System.out.println(isInTriangle.isInTriangle(p1, p2, p3, p));
-        System.out.println(isInTriangle.isInTriangle2(p1, p2, p3, p));
+        Point A = new Point(-1, 0.0);
+        Point B = new Point(1.5, 3.5);
+        Point C = new Point(2.73, -3.12);
+        Point O = new Point(1.23, 0.23);
+        System.out.println(isInTriangle.isInTriangle(A, B, C, O));
+        System.out.println(isInTriangle.isInTriangle2(A, B, C, O));
     }
 
     /**
      * 一个点在三角形内部，则三角形面积等于该点将三角形分成的三个小三角形面试之和
-     * 三角形面积公式：S=(p*(p-a)*(p-b)*(p-c))^(1/2) (p=(a+b+c)/2，a、b、c为三角形三边长度)
+     * 三角形面积公式：S=(p*(p-a)*(p-b)*(p-c))^(1/2) (p=(a+b+c)/2，a、b、c为三角形的边长)
      * 时间复杂度O(1)，空间复杂度O(1)
      *
-     * @param p1
-     * @param p2
-     * @param p3
-     * @param p
+     * @param A
+     * @param B
+     * @param C
+     * @param O
      * @return
      */
-    public boolean isInTriangle(Point p1, Point p2, Point p3, Point p) {
-        double s = getTriangleArea(p1, p2, p3);
-        double s1 = getTriangleArea(p1, p2, p);
-        double s2 = getTriangleArea(p2, p3, p);
-        double s3 = getTriangleArea(p3, p1, p);
+    public boolean isInTriangle(Point A, Point B, Point C, Point O) {
+        double s = getTriangleArea(A, B, C);
+        double s1 = getTriangleArea(A, B, O);
+        double s2 = getTriangleArea(B, C, O);
+        double s3 = getTriangleArea(C, A, O);
         //因为double有精度问题，所以两者误差在10^(-5)认为两者相等
         return Math.abs(s - (s1 + s2 + s3)) < 1e-5;
     }
@@ -50,31 +50,37 @@ public class IsInTriangle {
      * 点O(x,y)对于一个三角形的任意一条边AB向量叉乘AO×AB都大于0或都小于0，即点O在三角形内
      * 时间复杂度O(1)，空间复杂度O(1)
      *
-     * @param p1
-     * @param p2
-     * @param p3
-     * @param p
+     * @param A
+     * @param B
+     * @param C
+     * @param O
      * @return
      */
-    public boolean isInTriangle2(Point p1, Point p2, Point p3, Point p) {
-        //三角形3条边和O进行叉乘结果大于0的次数，如果小于0，则次数减1
+    public boolean isInTriangle2(Point A, Point B, Point C, Point O) {
+        //O和三角形3条边进行叉乘结果大于0的次数，如果小于0，则次数减1
         int count = 0;
+        //AO×AB结果
+        double product1 = product(A, B, O);
+        //BO×BC结果
+        double product2 = product(B, C, O);
+        //CO×CA结果
+        double product3 = product(C, A, O);
 
-        if (product(p1, p2, p) > 0) {
+        if (product1 > 0) {
             count++;
-        } else {
+        } else if (product1 < 0) {
             count--;
         }
 
-        if (product(p2, p3, p) > 0) {
+        if (product2 > 0) {
             count++;
-        } else {
+        } else if (product2 < 0) {
             count--;
         }
 
-        if (product(p3, p1, p) > 0) {
+        if (product3 > 0) {
             count++;
-        } else {
+        } else if (product3 < 0) {
             count--;
         }
 
@@ -83,18 +89,18 @@ public class IsInTriangle {
     }
 
     /**
-     * 获取三角形的面积
-     * 三角形面积公式：S=(p*(p-a)*(p-b)*(p-c))^(1/2) (p=(a+b+c)/2，a、b、c为三角形三边长度)
+     * 根据三角形三边得到三角形面积
+     * 三角形面积公式：S=(p*(p-a)*(p-b)*(p-c))^(1/2) (p=(a+b+c)/2，a、b、c为三角形的边长)
      *
-     * @param p1
-     * @param p2
-     * @param p3
+     * @param A
+     * @param B
+     * @param C
      * @return
      */
-    private Double getTriangleArea(Point p1, Point p2, Point p3) {
-        double a = Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
-        double b = Math.sqrt(Math.pow(p2.x - p3.x, 2) + Math.pow(p2.y - p3.y, 2));
-        double c = Math.sqrt(Math.pow(p3.x - p1.x, 2) + Math.pow(p3.y - p1.y, 2));
+    private Double getTriangleArea(Point A, Point B, Point C) {
+        double a = Math.sqrt(Math.pow(A.x - B.x, 2) + Math.pow(A.y - B.y, 2));
+        double b = Math.sqrt(Math.pow(B.x - C.x, 2) + Math.pow(B.y - C.y, 2));
+        double c = Math.sqrt(Math.pow(C.x - A.x, 2) + Math.pow(C.y - A.y, 2));
         double p = (a + b + c) / 2;
         return Math.sqrt(p * (p - a) * (p - b) * (p - c));
     }

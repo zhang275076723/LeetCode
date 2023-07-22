@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/6/10 10:30
  * @Author zsy
- * @Description 目标和 动态规划类比Problem279、Problem322、Problem343、Problem377、Problem416、Problem518、Problem983、Offer14、Offer14_2、Knapsack
+ * @Description 目标和 动态规划类比Problem279、Problem322、Problem343、Problem377、Problem416、Problem518、Problem983、Offer14、Offer14_2、CircleBackToOrigin、Knapsack
  * 给你一个整数数组 nums 和一个整数 target 。
  * 向数组中的每个整数前添加 '+' 或 '-' ，然后串联起所有整数，可以构造一个 表达式 ：
  * 例如，nums = [2, 1] ，可以在 2 之前添加 '+' ，在 1 之前添加 '-' ，然后串联起来得到表达式 "+2-1" 。
@@ -29,8 +29,10 @@ package com.zhang.java;
 public class Problem494 {
     public static void main(String[] args) {
         Problem494 problem494 = new Problem494();
-        int[] nums = {1, 1, 1, 1, 1};
-        int target = 3;
+//        int[] nums = {1, 1, 1, 1, 1};
+//        int target = 3;
+        int[] nums = {1, 0};
+        int target = 1;
         System.out.println(problem494.findTargetSumWays(nums, target));
         System.out.println(problem494.findTargetSumWays2(nums, target));
         System.out.println(problem494.findTargetSumWays3(nums, target));
@@ -69,11 +71,8 @@ public class Problem494 {
         //数组中负数之和
         int neg = (sum - target) / 2;
         int[][] dp = new int[nums.length + 1][neg + 1];
-
-        //dp初始化，nums[0]-nums[i-1]中和为0的方案数为1种
-        for (int i = 0; i <= nums.length; i++) {
-            dp[i][0] = 1;
-        }
+        //dp初始化，空数组和为0的方案数为1种
+        dp[0][0] = 1;
 
         for (int i = 1; i <= nums.length; i++) {
             for (int j = 0; j <= neg; j++) {
@@ -119,6 +118,7 @@ public class Problem494 {
         //数组中负数之和
         int neg = (sum - target) / 2;
         int[] dp = new int[neg + 1];
+        //dp初始化，空数组和为0的方案数为1种
         dp[0] = 1;
 
         for (int i = 1; i <= nums.length; i++) {

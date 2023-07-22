@@ -94,8 +94,7 @@ public class Problem133 {
 
         //节点和新节点之间的映射map
         Map<Node, Node> map = new HashMap<>();
-        Node copyNode = new Node(node.val);
-        map.put(node, copyNode);
+        map.put(node, new Node(node.val));
 
         Queue<Node> queue = new LinkedList<>();
         queue.offer(node);
@@ -103,7 +102,7 @@ public class Problem133 {
         while (!queue.isEmpty()) {
             Node tempNode = queue.poll();
             //当前节点的复制节点
-            Node tempCopyNode = map.get(tempNode);
+            Node copyNode = map.get(tempNode);
 
             //遍历当前节点tempNode的neighbors节点，对tempCopyNode的neighbors进行赋值
             for (Node neighborNode : tempNode.neighbors) {
@@ -114,11 +113,11 @@ public class Problem133 {
                 }
 
                 Node copyNeighborNode = map.get(neighborNode);
-                tempCopyNode.neighbors.add(copyNeighborNode);
+                copyNode.neighbors.add(copyNeighborNode);
             }
         }
 
-        return copyNode;
+        return map.get(node);
     }
 
     private Node dfs(Node node, Map<Node, Node> map) {

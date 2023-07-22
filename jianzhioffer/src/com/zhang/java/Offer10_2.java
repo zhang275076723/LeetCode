@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/14 15:12
  * @Author zsy
- * @Description 青蛙跳台阶问题 类比Problem509、Problem746、Problem1137、Offer10、Offer46 同Problem70
+ * @Description 青蛙跳台阶问题 类比Problem509、Problem746、Problem1137、Offer10、Offer46 记忆化搜索类比Problem62、Problem70、Problem329、Problem509、Problem1340、Offer10 同Problem70
  * 一只青蛙一次可以跳上1级台阶，也可以跳上2级台阶。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
  * 总跳法 = 1次跳上1级台阶和剩余n-1级台阶的跳法 + 1次跳上2级台阶和剩余n-2级台阶的跳法
  * <p>
@@ -30,7 +30,7 @@ public class Offer10_2 {
     }
 
     /**
-     * 递归+记忆数组
+     * 递归+记忆化搜索
      * 时间复杂度O(n)，空间复杂的O(n)
      *
      * @param n
@@ -45,7 +45,9 @@ public class Offer10_2 {
         dp[0] = 1;
         dp[1] = 1;
 
-        return dfs(n, dp);
+        dfs(n, dp);
+
+        return dp[n];
     }
 
     /**
@@ -118,14 +120,15 @@ public class Offer10_2 {
         return result[0][0];
     }
 
-    private int dfs(int n, int[] dp) {
+    private void dfs(int n, int[] dp) {
         if (dp[n] != 0) {
-            return dp[n];
+            return;
         }
 
-        dp[n] = (dfs(n - 1, dp) + dfs(n - 2, dp)) % MOD;
+        dfs(n - 1, dp);
+        dfs(n - 2, dp);
 
-        return dp[n];
+        dp[n] = (dp[n - 1] + dp[n - 2]) % MOD;
     }
 
     private int[][] quickPow(int[][] a, int n) {

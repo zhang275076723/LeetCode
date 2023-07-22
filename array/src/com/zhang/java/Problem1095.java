@@ -76,12 +76,12 @@ public class Problem1095 {
         //2、左边山底到山顶递增数组进行二分查找target，arr[0]-arr[peekIndex]递增数组进行二分查找target
         int index = binarySearch(arr, 0, peekIndex, target, true);
 
-        //3、山顶的下一个元素到右边山底进行二分查找target，arr[0]-arr[peekIndex]递增数组找到了target，直接返回target下标索引
+        //arr[0]-arr[peekIndex]递增数组找到了target，直接返回target下标索引
         if (index != -1) {
             return index;
         }
 
-        //arr[peekIndex+1]-arr[arr.length-1]递减数组进行二分查找target
+        //3、山顶的下一个元素到右边山底进行二分查找target，arr[peekIndex+1]-arr[arr.length-1]递减数组进行二分查找target
         index = binarySearch(arr, peekIndex + 1, arr.length - 1, target, false);
 
         return index;

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/3 08:23
  * @Author zsy
- * @Description 跳跃游戏 II 华为机试题 跳跃问题类比problem55、Problem403、Problem1306、Problem1345、Problem1696、Problem1871
+ * @Description 跳跃游戏 II 华为机试题 跳跃问题类比problem55、Problem403、Problem1306、Problem1340、Problem1345、Problem1696、Problem1871
  * 给你一个非负整数数组 nums ，你最初位于数组的第一个位置。
  * 数组中的每个元素代表你在该位置可以跳跃的最大长度。
  * 你的目标是使用最少的跳跃次数到达数组的最后一个位置。

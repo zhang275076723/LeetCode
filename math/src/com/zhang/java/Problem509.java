@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/27 13:41
  * @Author zsy
- * @Description 斐波那契数 类比Problem70、Problem746、Problem1137、Offer10_2、Offer46 同Offer10
+ * @Description 斐波那契数 类比Problem70、Problem746、Problem1137、Offer10、Offer10_2、Offer46 记忆化搜索类比Problem62、Problem70、Problem329、Problem1340、Offer10、Offer10_2
  * 斐波那契数 （通常用 F(n) 表示）形成的序列称为 斐波那契数列 。
  * 该数列由 0 和 1 开始，后面的每一项数字都是前面两项数字的和。也就是：
  * F(0) = 0，F(1) = 1
@@ -30,6 +30,29 @@ public class Problem509 {
         System.out.println(problem509.fib(5));
         System.out.println(problem509.fib2(5));
         System.out.println(problem509.fib3(5));
+        System.out.println(problem509.fib4(5));
+    }
+
+    /**
+     * 递归+记忆化搜索
+     * dp[i]：F(i)所表示的斐波那契数
+     * 时间复杂度O(n)，空间复杂的O(n)
+     *
+     * @param n
+     * @return
+     */
+    public int fib(int n) {
+        if (n == 0 || n == 1) {
+            return n;
+        }
+
+        int[] dp = new int[n + 1];
+        dp[0] = 0;
+        dp[1] = 1;
+
+        dfs(n, dp);
+
+        return dp[n];
     }
 
     /**
@@ -41,7 +64,7 @@ public class Problem509 {
      * @param n
      * @return
      */
-    public int fib(int n) {
+    public int fib2(int n) {
         if (n == 0 || n == 1) {
             return n;
         }
@@ -64,7 +87,7 @@ public class Problem509 {
      * @param n
      * @return
      */
-    public int fib2(int n) {
+    public int fib3(int n) {
         if (n == 0 || n == 1) {
             return n;
         }
@@ -90,7 +113,7 @@ public class Problem509 {
      * @param n
      * @return
      */
-    public int fib3(int n) {
+    public int fib4(int n) {
         if (n == 0 || n == 1) {
             return n;
         }
@@ -100,6 +123,17 @@ public class Problem509 {
         result = multiply(result, new int[][]{{1}, {0}});
 
         return result[0][0];
+    }
+
+    private void dfs(int n, int[] dp) {
+        if (n == 0 || dp[n] != 0) {
+            return;
+        }
+
+        dfs(n - 1, dp);
+        dfs(n - 2, dp);
+
+        dp[n] = dp[n - 1] + dp[n - 2];
     }
 
     private int[][] quickPow(int[][] a, int n) {

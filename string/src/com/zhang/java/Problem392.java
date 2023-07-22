@@ -48,7 +48,7 @@ public class Problem392 {
             return false;
         }
 
-        //s的索引下标
+        //字符串s的下标索引
         int index = 0;
 
         for (int i = 0; i < t.length(); i++) {
@@ -102,7 +102,7 @@ public class Problem392 {
             }
         }
 
-        //字符串t当前遍历到的下标索引
+        //字符串t的下标索引
         int index = 0;
 
         for (int i = 0; i < s.length(); i++) {

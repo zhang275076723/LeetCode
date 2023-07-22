@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/1/21 10:29
  * @Author zsy
- * @Description 最低票价 动态规划类比Problem279、Problem322、Problem343、Problem377、Problem416、Problem494、Problem518、Offer14、Offer14_2、Knapsack
+ * @Description 最低票价 动态规划类比Problem279、Problem322、Problem343、Problem377、Problem416、Problem494、Problem518、Offer14、Offer14_2、CircleBackToOrigin、Knapsack
  * 在一个火车旅行很受欢迎的国度，你提前一年计划了一些火车旅行。
  * 在接下来的一年里，你要旅行的日子将以一个名为 days 的数组给出。每一项是一个从 1 到 365 的整数。
  * 火车票有 三种不同的销售方式 ：
@@ -50,7 +50,7 @@ public class Problem983 {
      * 动态规划
      * dp[i]：到days[i]那天，旅行需要的最低消费
      * dp[i] = min(dp[i-1]+costs[0], dp[i-7]+costs[1], dp[i-30]+costs[2])
-     * 时间复杂度O(n)，空间复杂度O(days[days.length-1]) (n=days.length)
+     * 时间复杂度O(lastDay)，空间复杂度O(lastDay) (lastDay=days[days.length-1])
      *
      * @param days
      * @param costs

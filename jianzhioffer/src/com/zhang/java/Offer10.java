@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/13 21:31
  * @Author zsy
- * @Description 斐波那契数列 字节面试题 类比Problem70、Problem746、Problem1137、Offer10_2、Offer46 同Problem509
+ * @Description 斐波那契数列 字节面试题 类比Problem70、Problem509、Problem746、Problem1137、Offer10_2、Offer46 记忆化搜索类比Problem62、Problem70、Problem329、Problem509、Problem1340、Offer10_2
  * 写一个函数，输入 n ，求斐波那契（Fibonacci）数列的第 n 项（即 F(N)）。
  * 斐波那契数列的定义如下：
  * F(0) = 0,   F(1) = 1
@@ -31,7 +31,7 @@ public class Offer10 {
     }
 
     /**
-     * 递归+记忆数组
+     * 递归+记忆化搜索
      * 时间复杂度O(n)，空间复杂的O(n)
      *
      * @param n
@@ -46,7 +46,9 @@ public class Offer10 {
         dp[0] = 0;
         dp[1] = 1;
 
-        return dfs(n, dp);
+        dfs(n, dp);
+
+        return dp[n];
     }
 
     /**
@@ -129,14 +131,15 @@ public class Offer10 {
         return result[0][0];
     }
 
-    private int dfs(int n, int[] dp) {
-        if (dp[n] != 0 || n == 0) {
-            return dp[n];
+    private void dfs(int n, int[] dp) {
+        if (n == 0 || dp[n] != 0) {
+            return;
         }
 
-        dp[n] = (dfs(n - 1, dp) + dfs(n - 2, dp)) % MOD;
+        dfs(n - 1, dp);
+        dfs(n - 2, dp);
 
-        return dp[n];
+        dp[n] = (dp[n - 1] + dp[n - 2]) % MOD;
     }
 
     /**

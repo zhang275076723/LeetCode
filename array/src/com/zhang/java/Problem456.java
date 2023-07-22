@@ -136,10 +136,9 @@ public class Problem456 {
                 return true;
             }
 
-            //当前元素不满足单调递减栈，栈中元素出栈，更新当前的最大元素max，作为132模式中的2
+            //当前元素不满足单调递减栈，栈中元素出栈，作为132模式中的2
             while (!stack.isEmpty() && nums[stack.peek()] < nums[i]) {
-                int index = stack.pop();
-                max = Math.max(max, nums[index]);
+                max = nums[stack.pop()];
             }
 
             //当前元素入栈

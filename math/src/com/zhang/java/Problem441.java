@@ -54,7 +54,7 @@ public class Problem441 {
         int mid;
 
         while (left < right) {
-            //二分往右偏移
+            //二分往右偏移，因为转移条件是right=mid-1，如果转移条件是left=mid+1，则二分要往左边偏移
             mid = left + ((right - left) >> 1) + 1;
             //mid行放满共有几个硬币
             //使用long，避免int溢出

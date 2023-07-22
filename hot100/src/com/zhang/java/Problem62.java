@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/23 10:01
  * @Author zsy
- * @Description 不同路径 类比Problem63、Problem64、Offer13
+ * @Description 不同路径 类比Problem63、Problem64、Offer13 记忆化搜索类比Problem70、Problem329、Problem509、Problem1340、Offer10、Offer10_2
  * 一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。
  * 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。
  * 问总共有多少条不同的路径？
@@ -54,9 +54,12 @@ public class Problem62 {
 
         int[][] dp = new int[m][n];
 
+        //dp初始化
         for (int i = 0; i < m; i++) {
             dp[i][0] = 1;
         }
+
+        //dp初始化
         for (int j = 0; j < n; j++) {
             dp[0][j] = 1;
         }
@@ -85,6 +88,7 @@ public class Problem62 {
 
         int[] dp = new int[n];
 
+        //dp初始化
         for (int i = 0; i < n; i++) {
             dp[i] = 1;
         }
@@ -99,7 +103,8 @@ public class Problem62 {
     }
 
     /**
-     * 递归+记忆数组，相当于自下而上的动态规划
+     * 递归+记忆化搜索(相当于自下而上的动态规划)
+     * 时间复杂度O(mn)，空间复杂度O(mn)
      *
      * @param m
      * @param n
@@ -111,16 +116,21 @@ public class Problem62 {
         }
 
         //保存从(1,1)到(m,n)的不同路径数量
-        int[][] memory = new int[m][n];
+        int[][] dp = new int[m][n];
 
+        //dp初始化
         for (int i = 0; i < m; i++) {
-            memory[i][0] = 1;
-        }
-        for (int j = 0; j < n; j++) {
-            memory[0][j] = 1;
+            dp[i][0] = 1;
         }
 
-        return dfs(m - 1, n - 1, memory);
+        //dp初始化
+        for (int j = 0; j < n; j++) {
+            dp[0][j] = 1;
+        }
+
+        dfs(m - 1, n - 1, dp);
+
+        return dp[m - 1][n - 1];
     }
 
     /**
@@ -143,11 +153,14 @@ public class Problem62 {
         return (int) result;
     }
 
-    private int dfs(int m, int n, int[][] memory) {
-        if (memory[m][n] == 0) {
-            memory[m][n] = dfs(m - 1, n, memory) + dfs(m, n - 1, memory);
+    private void dfs(int m, int n, int[][] dp) {
+        if (dp[m][n] != 0) {
+            return;
         }
 
-        return memory[m][n];
+        dfs(m - 1, n, dp);
+        dfs(m, n - 1, dp);
+
+        dp[m][n] = dp[m - 1][n] + dp[m][n - 1];
     }
 }

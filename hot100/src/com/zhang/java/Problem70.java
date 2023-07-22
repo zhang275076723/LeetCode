@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/23 11:45
  * @Author zsy
- * @Description 爬楼梯 类比Problem509、Problem746、Problem1137、Offer10、Offer46、CircleBackToOrigin 同Offer10_2
+ * @Description 爬楼梯 类比Problem509、Problem746、Problem1137、Offer10、Offer46、CircleBackToOrigin 记忆化搜索类比Problem62、Problem329、Problem509、Problem1340、Offer10、Offer10_2 同Offer10_2
  * 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
  * 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
  * <p>
@@ -82,7 +82,8 @@ public class Problem70 {
     }
 
     /**
-     * 递归+记忆数组
+     * 递归+记忆化搜索
+     * dp[i]：从第1阶爬到第n阶台阶的不同方法数
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param n
@@ -94,11 +95,12 @@ public class Problem70 {
         }
 
         int[] dp = new int[n + 1];
-
         dp[1] = 1;
         dp[2] = 2;
 
-        return dfs(n, dp);
+        dfs(n, dp);
+
+        return dp[n];
     }
 
     /**
@@ -124,14 +126,15 @@ public class Problem70 {
         return result[0][0];
     }
 
-    private int dfs(int n, int[] dp) {
+    private void dfs(int n, int[] dp) {
         if (dp[n] != 0) {
-            return dp[n];
+            return;
         }
 
-        dp[n] = dfs(n - 1, dp) + dfs(n - 2, dp);
+        dfs(n - 1, dp);
+        dfs(n - 2, dp);
 
-        return dp[n];
+        dp[n] = dp[n - 1] + dp[n - 2];
     }
 
     private int[][] quickPow(int[][] a, int n) {
@@ -143,7 +146,7 @@ public class Problem70 {
         }
 
         while (n != 0) {
-            if ((n & 1) != 0) {
+            if ((n & 1) == 1) {
                 result = multiply(result, a);
             }
 
