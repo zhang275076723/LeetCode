@@ -109,17 +109,18 @@ public class Problem289 {
                 //当前细胞周围8个细胞的存活细胞数量
                 int aliveCount = 0;
 
-                //找周围活细胞数量
+                //找board[i][j]周围活细胞数量
                 for (int k = 0; k < direction.length; k++) {
-                    //周围的细胞不在范围内，进行下次循环
-                    if (i + direction[k][0] < 0 || i + direction[k][0] >= board.length ||
-                            j + direction[k][1] < 0 || j + direction[k][1] >= board[0].length) {
+                    int x = i + direction[k][0];
+                    int y = j + direction[k][1];
+
+                    //周围的细胞不在矩阵范围内，直接进行下次循环
+                    if (x < 0 || x >= board.length || y < 0 || y >= board[0].length) {
                         continue;
                     }
 
-                    //周围细胞本来就是活细胞，包括一直是活细胞，和由活细胞变死细胞
-                    if (board[i + direction[k][0]][j + direction[k][1]] == 1 ||
-                            board[i + direction[k][0]][j + direction[k][1]] == 3) {
+                    //周围细胞本来就是活细胞，或者由活细胞变死细胞，则统计活细胞的数量加1
+                    if (board[x][y] == 1 || board[x][y] == 3) {
                         aliveCount++;
                     }
                 }

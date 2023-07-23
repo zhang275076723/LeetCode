@@ -258,21 +258,18 @@ public class Problem130 {
         private final int[] weight;
 
         public UnionFind(char[][] board) {
-            count = 0;
+            count = board.length * board[0].length + 1;
             //数组长度多申请1个，末尾节点作为为虚拟节点
             parent = new int[board.length * board[0].length + 1];
             weight = new int[board.length * board[0].length + 1];
             dummyIndex = board.length * board[0].length;
             parent[dummyIndex] = dummyIndex;
+            weight[dummyIndex] = 1;
 
             for (int i = 0; i < board.length; i++) {
                 for (int j = 0; j < board[0].length; j++) {
-                    //当前节点为'O'时，才加入并查集中
-                    if (board[i][j] == 'O') {
-                        parent[board[0].length * i + j] = board[0].length * i + j;
-                        weight[board[0].length * i + j] = 1;
-                        count++;
-                    }
+                    parent[i * board[0].length + j] = i * board[0].length + j;
+                    weight[i * board[0].length + j] = 1;
                 }
             }
         }

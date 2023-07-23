@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/3 08:23
  * @Author zsy
- * @Description 跳跃游戏 II 华为机试题 跳跃问题类比problem55、Problem403、Problem1306、Problem1340、Problem1345、Problem1696、Problem1871
+ * @Description 跳跃游戏 II 华为机试题 类比Problem763 跳跃问题类比problem55、Problem403、Problem1306、Problem1340、Problem1345、Problem1696、Problem1871
  * 给你一个非负整数数组 nums ，你最初位于数组的第一个位置。
  * 数组中的每个元素代表你在该位置可以跳跃的最大长度。
  * 你的目标是使用最少的跳跃次数到达数组的最后一个位置。
@@ -43,11 +43,12 @@ public class Problem45 {
         int[] dp = new int[nums.length];
 
         for (int i = 1; i < nums.length; i++) {
+            //初始化nums[i]不可达
             dp[i] = Integer.MAX_VALUE;
 
             for (int j = 0; j < i; j++) {
-                //当从nums[j]可以跳到nums[i]时，才更新dp[i]
-                if (j + nums[j] >= i) {
+                //nums[j]可达，并且nums[j]可以跳到nums[i]，才更新dp[i]
+                if (dp[j] != Integer.MAX_VALUE && j + nums[j] >= i) {
                     dp[i] = Math.min(dp[i], dp[j] + 1);
                 }
             }

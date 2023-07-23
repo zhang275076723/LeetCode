@@ -106,7 +106,7 @@ public class Problem1871 {
 
             //s[i]为0，才可达
             if (c == '0') {
-                //preSum左右指针
+                //preSum左右指针，right指针赋值-1，保证preSum[right+1]包括dp[right]
                 int left = Math.max(0, i - maxJump);
                 int right = Math.max(-1, i - minJump);
                 //preSum[right+1]-preSum[left]不为0，则s[i-maxJump]-s[i-minJump]至少有一个为0，即s[i]可达

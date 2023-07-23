@@ -55,7 +55,7 @@ public class Problem1306 {
             return false;
         }
 
-        return dfs(arr, start, new boolean[arr.length]);
+        return dfs(start, arr, new boolean[arr.length]);
     }
 
     /**
@@ -96,19 +96,19 @@ public class Problem1306 {
         return false;
     }
 
-    private boolean dfs(int[] arr, int start, boolean[] visited) {
-        if (start < 0 || start >= arr.length || visited[start]) {
+    private boolean dfs(int t, int[] arr, boolean[] visited) {
+        if (t < 0 || t >= arr.length || visited[t]) {
             return false;
         }
 
         //当前位置为0，即可以跳跃到值为0的位置
-        if (arr[start] == 0) {
+        if (arr[t] == 0) {
             return true;
         }
 
-        visited[start] = true;
+        visited[t] = true;
 
-        //从当前位置，往前跳跃arr[start]步，或往后跳跃arr[start]步，看哪种能够跳跃到值为0的位置
-        return dfs(arr, start - arr[start], visited) || dfs(arr, start + arr[start], visited);
+        //从当前位置，往前跳跃arr[t]步，或往后跳跃arr[t]步，看哪种情况能够跳跃到值为0的位置
+        return dfs(t - arr[t], arr, visited) || dfs(t + arr[t], arr, visited);
     }
 }

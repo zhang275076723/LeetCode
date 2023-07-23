@@ -97,10 +97,11 @@ public class Problem1345 {
                     List<Integer> list = map.get(arr[index]);
 
                     for (int j = 0; j < list.size(); j++) {
-                        //和index值相同的下标索引
-                        int tempIndex = list.get(j);
-                        if (!visited[tempIndex]) {
-                            queue.offer(tempIndex);
+                        //和index同值的下标索引
+                        int sameValueIndex = list.get(j);
+                        //将所有未访问和index同值的下标索引加入queue
+                        if (!visited[sameValueIndex]) {
+                            queue.offer(sameValueIndex);
                         }
                     }
 
@@ -201,9 +202,9 @@ public class Problem1345 {
                     List<Integer> list = map.get(arr[index]);
 
                     for (int j = 0; j < list.size(); j++) {
-                        //和index值相同的下标索引
+                        //和index同值的下标索引
                         int sameValueIndex = list.get(j);
-                        //sameValueIndex在visited1中未被访问，才加入queue1，并在visited1设置为已访问
+                        //将所有未访问和index同值的下标索引加入queue，并在visited1设置为已访问
                         if (!visited1[sameValueIndex]) {
                             queue1.offer(sameValueIndex);
                             visited1[sameValueIndex] = true;

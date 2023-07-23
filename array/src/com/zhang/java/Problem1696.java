@@ -53,6 +53,7 @@ public class Problem1696 {
         dp[0] = nums[0];
 
         for (int i = 1; i < nums.length; i++) {
+            //初始化nums[i]为int最小值，因为nums数组中元素有负数，不能初始化为0
             dp[i] = Integer.MIN_VALUE;
 
             for (int j = Math.max(0, i - k); j < i; j++) {

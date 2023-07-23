@@ -74,12 +74,12 @@ public class Problem73 {
      */
     public void setZeroes2(int[][] matrix) {
         boolean rowFlag = false;
-        boolean columnFlag = false;
+        boolean colFlag = false;
 
-        //遍历首列，如果存在0，则将列标志位columnFlag置为true，表示当前列最后都要置为0
+        //遍历首列，如果存在0，则将列标志位colFlag置为true，表示当前列最后都要置为0
         for (int i = 0; i < matrix.length; i++) {
             if (matrix[i][0] == 0) {
-                columnFlag = true;
+                colFlag = true;
                 break;
             }
         }
@@ -121,14 +121,14 @@ public class Problem73 {
             }
         }
 
-        //根据rowFlag和columnFlag，判断首行和首列是否需要赋值为0
+        //根据rowFlag和colFlag，判断首行和首列是否需要赋值为0
         if (rowFlag) {
             for (int j = 0; j < matrix[0].length; j++) {
                 matrix[0][j] = 0;
             }
         }
 
-        if (columnFlag) {
+        if (colFlag) {
             for (int i = 0; i < matrix.length; i++) {
                 matrix[i][0] = 0;
             }
