@@ -170,6 +170,7 @@ public class Problem532 {
             }
 
             //nums[left]去重，nums[i]和nums[i-1]相等，直接进行下次循环
+            //因为找到left和right时，是left++，所以left去重，如果是right++，则需要right去重
             while (left > 0 && left < nums.length && nums[left] == nums[left - 1]) {
                 left++;
             }
