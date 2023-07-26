@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/4 9:58
  * @Author zsy
- * @Description 单词拆分 类比Problem72、Problem132、Problem140、Problem300
+ * @Description 单词拆分 类比Problem140、Problem300 动态规划类比Problem72、Problem97、Problem115、Problem132、Problem221、Problem392、Problem516、Problem1143、Problem1312
  * 给你一个字符串 s 和一个字符串列表 wordDict 作为字典。
  * 请你判断是否可以利用字典中出现的单词拼接出 s 。
  * 注意：不要求字典中出现的单词全部都使用，并且字典中的单词可以重复使用。

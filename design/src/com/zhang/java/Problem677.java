@@ -50,7 +50,7 @@ public class Problem677 {
     static class MapSum {
         //前缀树
         private final Trie trie;
-        //字符串key和整数value的映射map
+        //key：字符串key，value：key在前缀树中表示的值
         private final Map<String, Integer> map;
 
         public MapSum() {

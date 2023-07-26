@@ -75,6 +75,7 @@ public class Problem494 {
         dp[0][0] = 1;
 
         for (int i = 1; i <= nums.length; i++) {
+            //注意从0开始遍历，因为nums[i-1]可能为0
             for (int j = 0; j <= neg; j++) {
                 if (nums[i - 1] > j) {
                     dp[i][j] = dp[i - 1][j];
@@ -123,6 +124,7 @@ public class Problem494 {
 
         for (int i = 1; i <= nums.length; i++) {
             //当前dp[j]会使用到前面的dp，所以逆序遍历
+            //注意从0开始遍历，因为nums[i-1]可能为0
             for (int j = neg; j >= 0; j--) {
                 if (nums[i - 1] <= j) {
                     dp[j] = dp[j] + dp[j - nums[i - 1]];

@@ -71,9 +71,9 @@ public class Problem1150 {
             return false;
         }
 
-        //数组中第一个target的下标索引
+        //数组中第一个值为target的下标索引
         int first = -1;
-        //数组中最后一个target的下标索引
+        //数组中最后一个值为target的下标索引
         int last = -1;
         int left = 0;
         int right = nums.length - 1;

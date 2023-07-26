@@ -51,25 +51,25 @@ public class Problem941 {
             return false;
         }
 
-        //左边山底下标索引
-        int left = 0;
+        //arr数组下标索引
+        int index = 0;
 
         //当前元素小于下一个元素，则当前元素作为左边山底，往右找山顶
-        while (left + 1 < arr.length && arr[left] < arr[left + 1]) {
-            left++;
+        while (index + 1 < arr.length && arr[index] < arr[index + 1]) {
+            index++;
         }
 
-        //不存在右边山底，即数组为单调递增的，不是山脉数组
-        if (left == arr.length - 1) {
+        //不存在右边山底，即数组为单调递增的，不是山脉数组，直接返回false
+        if (index == arr.length - 1) {
             return false;
         }
 
         //找到山顶元素之后，继续找右边山底，如果右边山底为末尾元素，则是山脉数组
-        while (left + 1 < arr.length && arr[left] > arr[left + 1]) {
-            left++;
+        while (index + 1 < arr.length && arr[index] > arr[index + 1]) {
+            index++;
         }
 
-        //右边山底为末尾元素，则是山脉数组
-        return left == arr.length - 1;
+        //右边山底为数组末尾元素，则是山脉数组
+        return index == arr.length - 1;
     }
 }

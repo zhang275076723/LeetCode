@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * @Date 2022/11/29 15:53
  * @Author zsy
- * @Description 被围绕的区域 标志位类比Problem73、Problem289 dfs和bfs类比Problem79、Problem200、Problem212、Problem463、Problem695、Problem733、Problem827、Problem994、Problem1034、Problem1162、Offer12 并查集类比Problem200、Problem399、Problem695、Problem765、Problem785、Problem827
+ * @Description 被围绕的区域 标志位类比Problem73、Problem289 dfs和bfs类比Problem79、Problem200、Problem212、Problem463、Problem547、Problem695、Problem733、Problem827、Problem994、Problem1034、Problem1162、Offer12 并查集类比Problem200、Problem399、Problem547、Problem695、Problem765、Problem785、Problem827
  * 给你一个 m x n 的矩阵 board ，由若干字符 'X' 和 'O' ，
  * 找到所有被 'X' 围绕的区域，并将这些区域里所有的 'O' 用 'X' 填充。
  * <p>
@@ -258,7 +258,7 @@ public class Problem130 {
         private final int[] weight;
 
         public UnionFind(char[][] board) {
-            count = board.length * board[0].length + 1;
+            count = 0;
             //数组长度多申请1个，末尾节点作为为虚拟节点
             parent = new int[board.length * board[0].length + 1];
             weight = new int[board.length * board[0].length + 1];
@@ -268,8 +268,12 @@ public class Problem130 {
 
             for (int i = 0; i < board.length; i++) {
                 for (int j = 0; j < board[0].length; j++) {
-                    parent[i * board[0].length + j] = i * board[0].length + j;
-                    weight[i * board[0].length + j] = 1;
+                    //当前节点为'O'时，才加入并查集中
+                    if (board[i][j] == 'O') {
+                        parent[board[0].length * i + j] = board[0].length * i + j;
+                        weight[board[0].length * i + j] = 1;
+                        count++;
+                    }
                 }
             }
         }

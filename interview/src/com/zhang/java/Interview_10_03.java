@@ -33,8 +33,8 @@ public class Interview_10_03 {
      * @return
      */
     public int search(int[] arr, int target) {
-        //target在arr中的最小下标索引，初始化为int最大值，表示没有找到target
-        int result = Integer.MAX_VALUE;
+        //target在arr中的最小下标索引，初始化为-1，表示没有找到target
+        int result = -1;
         int left = 0;
         int right = arr.length - 1;
         int mid;
@@ -78,7 +78,6 @@ public class Interview_10_03 {
             }
         }
 
-        //如果没有找到target，则返回-1
-        return result == Integer.MAX_VALUE ? -1 : result;
+        return result;
     }
 }

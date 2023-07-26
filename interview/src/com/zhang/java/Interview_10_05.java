@@ -25,7 +25,8 @@ public class Interview_10_05 {
 
     /**
      * 二分查找变形，看到有序数组，就要想到二分查找
-     * 时间复杂度O(logn)，空间复杂度O(1)
+     * 注意：当不满足二分查找条件时，退化为线性查找
+     * 时间复杂度O(mlogn)，空间复杂度O(1) (n：words数组的长度，m：字符串s的长度)
      *
      * @param words
      * @param s
@@ -43,9 +44,16 @@ public class Interview_10_05 {
         while (left <= right) {
             mid = left + ((right - left) >> 1);
 
-            //当words[mid]为""时，往左找不为""的下标索引mid
-            while (left < mid && "".equals(words[mid])) {
-                mid--;
+            //当words[mid]为""，即不满足二分查找条件时，退化为线性查找，words[left]和s进行比较
+            if ("".equals(words[mid])) {
+                //words[left]和s相等，则直接返回left
+                if (words[left].equals(s)) {
+                    return left;
+                } else {
+                    //words[left]和s不相等，left右移，直接进行下次循环
+                    left++;
+                    continue;
+                }
             }
 
             //找到s，直接返回mid
@@ -60,6 +68,7 @@ public class Interview_10_05 {
             }
         }
 
+        //没有找到，返回-1
         return -1;
     }
 }

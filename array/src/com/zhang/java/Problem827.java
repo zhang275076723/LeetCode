@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/2/9 12:40
  * @Author zsy
- * @Description 最大人工岛 华为机试题 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem695、Problem733、Problem994、Problem1034、Problem1162、Offer12 并查集类比Problem130、Problem200、Problem399、Problem695、Problem785、Problem765
+ * @Description 最大人工岛 华为机试题 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem547、Problem695、Problem733、Problem994、Problem1034、Problem1162、Offer12 并查集类比Problem130、Problem200、Problem399、Problem547、Problem695、Problem765、Problem785
  * 给你一个大小为 n x n 二进制矩阵 grid 。最多 只能将一格 0 变成 1 。
  * 返回执行此操作后，grid 中最大的岛屿面积是多少？
  * 岛屿 由一组上、下、左、右四个方向相连的 1 形成。
@@ -62,12 +62,14 @@ public class Problem827 {
             return 0;
         }
 
+        //初始化最大面积为最大岛屿面积，避免没有0可以合并的情况
         int maxArea = 0;
-        //key：当前岛屿的唯一标识，岛屿最左上元素(i*grid[0].length+j+1)，value：岛屿面积
+        //key：当前岛屿的唯一标识，岛屿的最左上元素(i*grid[0].length+j+1)，value：岛屿面积
         Map<Integer, Integer> map = new HashMap<>();
-        //访问数组，0：未访问，大于0的数：已访问，当前节点属于的岛屿标记
+        //访问数组，0：未访问，大于0的数：已访问，当前节点属于哪个岛屿，即岛屿的唯一标识
         int[][] visited = new int[grid.length][grid[0].length];
 
+        //从左往右、从上往下遍历，保证先遍历到岛屿的最左上元素，保证map中key是岛屿的最左上元素
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 //对未被访问为1的节点进行dfs，得到每个岛屿面积，放入map中
@@ -76,7 +78,7 @@ public class Problem827 {
                     int key = i * grid[0].length + j + 1;
                     int area = dfs(i, j, key, grid, visited);
                     map.put(key, area);
-                    //更新最大岛屿面积
+                    //更新最大面积
                     maxArea = Math.max(maxArea, area);
                 }
             }
@@ -91,7 +93,7 @@ public class Problem827 {
                 if (grid[i][j] == 0) {
                     //当前节点(i,j)由0变为1之后，面积为1
                     int area = 1;
-                    //存储岛屿标记set，避免当前为0的节点两个方向上可以连通的岛屿是同一个岛屿
+                    //存储岛屿的唯一标识set，避免当前为0的节点两个方向上可以连通的岛屿是同一个岛屿
                     Set<Integer> set = new HashSet<>();
 
                     for (int k = 0; k < direction.length; k++) {
@@ -137,12 +139,14 @@ public class Problem827 {
             return 0;
         }
 
+        //初始化最大面积为最大岛屿面积，避免没有0可以合并的情况
         int maxArea = 0;
-        //key：当前岛屿的唯一标识，岛屿最左上元素(i*grid[0].length+j+1)，value：岛屿面积
+        //key：当前岛屿的唯一标识，岛屿的最左上元素(i*grid[0].length+j+1)，value：岛屿面积
         Map<Integer, Integer> map = new HashMap<>();
-        //访问数组，0：未访问，大于0的数：已访问，当前节点属于的岛屿标记
+        //访问数组，0：未访问，大于0的数：已访问，当前节点属于哪个岛屿，即岛屿的唯一标识
         int[][] visited = new int[grid.length][grid[0].length];
 
+        //从左往右、从上往下遍历，保证先遍历到岛屿的最左上元素，保证map中key是岛屿的最左上元素
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 //对未被访问为1的节点进行bfs，得到每个岛屿面积，放入map中
@@ -150,7 +154,7 @@ public class Problem827 {
                     int key = i * grid[0].length + j + 1;
                     int area = bfs(i, j, key, grid, visited);
                     map.put(key, area);
-                    //更新最大岛屿面积
+                    //更新最大面积
                     maxArea = Math.max(maxArea, area);
                 }
             }
@@ -165,7 +169,7 @@ public class Problem827 {
                 if (grid[i][j] == 0) {
                     //当前节点(i,j)由0变为1之后，面积为1
                     int area = 1;
-                    //存储岛屿标记set，避免当前为0的节点两个方向上可以连通的岛屿是同一个岛屿
+                    //存储岛屿的唯一标识set，避免当前为0的节点两个方向上可以连通的岛屿是同一个岛屿
                     Set<Integer> set = new HashSet<>();
 
                     for (int k = 0; k < direction.length; k++) {
@@ -211,7 +215,6 @@ public class Problem827 {
             return 0;
         }
 
-        int maxArea = 0;
         UnionFind unionFind = new UnionFind(grid);
         //当前节点的上下左右四个位置
         int[][] direction = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
@@ -232,15 +235,16 @@ public class Problem827 {
                         //(i,j)和(x,y)合并为一个连通分量
                         unionFind.union(i * grid[0].length + j, x * grid[0].length + y);
                     }
-
-                    //注意：必须使用unionFind.find找(x,y)的根节点，不能使用unionFind.parent找(x,y)的根节点，
-                    //有可能(x,y)的父节点还没有指向当前连通分量的根节点
-                    int rootIndex = unionFind.find(i * grid[0].length + j);
-
-                    //更新最大岛屿面积
-                    maxArea = Math.max(maxArea, unionFind.area[rootIndex]);
                 }
             }
+        }
+
+        //初始化最大面积为最大岛屿面积，避免没有0可以合并的情况
+        int maxArea = 0;
+
+        //并查集中连通分量的根节点面积中的最大值，即为岛屿的最大面积
+        for (int area : unionFind.area) {
+            maxArea = Math.max(maxArea, area);
         }
 
         for (int i = 0; i < grid.length; i++) {
@@ -355,10 +359,10 @@ public class Problem827 {
                 for (int j = 0; j < grid[0].length; j++) {
                     //当前节点为'1'时，才加入并查集中
                     if (grid[i][j] == 1) {
-                        count++;
                         parent[i * grid[0].length + j] = i * grid[0].length + j;
                         weight[i * grid[0].length + j] = 1;
                         area[i * grid[0].length + j] = 1;
+                        count++;
                     }
                 }
             }
@@ -371,16 +375,20 @@ public class Problem827 {
             if (rootI != rootJ) {
                 if (weight[rootI] < weight[rootJ]) {
                     parent[rootI] = rootJ;
+                    //更新根节点的面积
                     area[rootJ] = area[rootI] + area[rootJ];
                 } else if (weight[rootI] > weight[rootJ]) {
                     parent[rootJ] = rootI;
+                    //更新根节点的面积
                     area[rootI] = area[rootI] + area[rootJ];
                 } else {
                     parent[rootJ] = rootI;
                     weight[rootI]++;
+                    //更新根节点的面积
                     area[rootI] = area[rootI] + area[rootJ];
                 }
 
+                //i、j两个连通分量合并，并查集中连通分量的个数减1
                 count--;
             }
         }

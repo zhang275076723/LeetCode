@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2023/2/15 08:10
  * @Author zsy
- * @Description 腐烂的橘子 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem695、Problem733、Problem827、Problem1034、Problem1162、Offer12
+ * @Description 腐烂的橘子 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem547、Problem695、Problem733、Problem827、Problem1034、Problem1162、Offer12
  * 在给定的 m x n 网格 grid 中，每个单元格可以有以下三个值之一：
  * 值 0 代表空单元格；
  * 值 1 代表新鲜橘子；
@@ -74,7 +74,7 @@ public class Problem994 {
             }
         }
 
-        //矩阵中新鲜的橘子全部腐烂，需要的时间
+        //矩阵中新鲜的橘子全部腐烂需要的时间
         int time = 0;
         int[][] direction = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 

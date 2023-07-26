@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/8/24 11:16
  * @Author zsy
- * @Description 单词拆分 II 小米面试题 类比Problem139
+ * @Description 单词拆分 II 小米面试题 类比Problem139 动态规划预处理类比Problem131
  * 给定一个字符串 s 和一个字符串字典 wordDict ，在字符串 s 中增加空格来构建一个句子，使得句子中所有的单词都在词典中。
  * 以任意顺序 返回所有这些可能的句子。
  * 注意：词典中的同一个单词可能在分段中被重复使用多次。

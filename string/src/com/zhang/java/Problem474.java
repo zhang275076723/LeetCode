@@ -53,7 +53,7 @@ public class Problem474 {
             //strs[i-1]中1的数量
             int oneCount = strs[i - 1].length() - zeroCount;
 
-            //注意从0开始遍历
+            //注意从0开始遍历，因为strs中0和1的数量可能为0
             for (int j = 0; j <= m; j++) {
                 for (int k = 0; k <= n; k++) {
                     //j或k的数量小于strs[i-1]中0或1的数量，则不能选strs[i-1]
@@ -92,7 +92,7 @@ public class Problem474 {
             int oneCount = strs[i - 1].length() - zeroCount;
 
             //当前dp[j][k]会使用到前面的dp，所以逆序遍历
-            //注意要遍历到0
+            //注意要遍历到0，因为strs中0和1的数量可能为0
             for (int j = m; j >= 0; j--) {
                 for (int k = n; k >= 0; k--) {
                     if (j >= zeroCount && k >= oneCount) {

@@ -92,7 +92,7 @@ public class Problem540 {
         int mid;
 
         while (left < right) {
-            //mid往左偏，所以nums[mid]和nums[mid + 1]才能比较
+            //mid往左偏，所以nums[mid]和nums[mid+1]才能比较
             mid = left + ((right - left) >> 1);
 
             //如果mid为奇数，让mid减1变为偶数，
