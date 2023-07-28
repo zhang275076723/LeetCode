@@ -35,7 +35,7 @@ public class Problem74 {
     /**
      * 类比二分查找
      * 将二维数组看成一维从小到大的数组，按照二分查找，找target
-     * 时间复杂度O(logmn)，空间复杂度O(1)
+     * 时间复杂度O(log(mn))，空间复杂度O(1)
      *
      * @param matrix
      * @param target

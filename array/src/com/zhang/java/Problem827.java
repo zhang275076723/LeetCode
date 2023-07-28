@@ -253,7 +253,7 @@ public class Problem827 {
                 if (grid[i][j] == 0) {
                     //当前节点(i,j)由0变为1之后，面积为1
                     int area = 1;
-                    //存储岛屿标记set，避免当前为0的节点两个方向上可以连通的岛屿是同一个岛屿
+                    //存储岛屿的唯一标识set，避免当前为0的节点两个方向上可以连通的岛屿是同一个岛屿
                     Set<Integer> set = new HashSet<>();
 
                     for (int k = 0; k < direction.length; k++) {
@@ -265,9 +265,9 @@ public class Problem827 {
                             continue;
                         }
 
-                        //当前节点(x,y)的根节点下标索引
+                        //当前节点(x,y)根节点的下标索引
                         //注意：必须使用unionFind.find找(x,y)的根节点，不能使用unionFind.parent找(x,y)的根节点，
-                        //有可能(x,y)的父节点还没有指向当前连通分量的根节点
+                        //因为有可能(x,y)没有进行路径压缩，unionFind.parent并没有指向当前连通分量的根节点
                         int rootIndex = unionFind.find(x * grid[0].length + y);
 
                         //(x,y)所在岛屿没有添加到set中，岛屿面积累加到area中

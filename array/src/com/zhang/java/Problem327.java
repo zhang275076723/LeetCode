@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/9/25 8:34
  * @Author zsy
- * @Description 区间和的个数 阿里机试题 归并排序类比Problem23、Problem148、Problem315、Problem493、Offer51、CalculateSmallSum 前缀和类比Problem209、Problem325、Problem437、Problem525、Problem560、Problem862、Problem1171、Problem1871、Offer57_2 线段树类比Problem307、Problem308、Problem729、Problem731、Problem732
+ * @Description 区间和的个数 阿里机试题 归并排序类比Problem23、Problem148、Problem315、Problem493、Offer51、CalculateSmallSum 前缀和类比Problem209、Problem325、Problem437、Problem523、Problem525、Problem560、Problem862、Problem1171、Problem1871、Offer57_2 线段树类比Problem307、Problem308、Problem729、Problem731、Problem732
  * 给你一个整数数组 nums 以及两个整数 lower 和 upper 。
  * 求数组中，值位于范围 [lower, upper] （包含 lower 和 upper）之内的 区间和的个数 。
  * 区间和 S(i, j) 表示在 nums 中，位置从 i 到 j 的元素之和，包含 i 和 j (i ≤ j)。
@@ -66,7 +66,7 @@ public class Problem327 {
     }
 
     /**
-     * 归并排序+前缀和
+     * 前缀和+归并排序
      * 前缀和数组进行归并排序，求在[lower,upper]区间范围内的前缀和之差，前缀和排序只影响统计的先后顺序，不影响最终结果，
      * 在合并时，如果左区间preSum[i]，右区间的左指针元素preSum[l]和右指针元素preSum[r]，
      * 满足preSum[l]-preSum[i]>=lower && preSum[r-1]-preSum[i]<=upper，则[l,r)都满足区间和在[lower,upper]之间

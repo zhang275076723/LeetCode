@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/5/28 08:41
  * @Author zsy
- * @Description 连续数组 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem560、Problem862、Problem1171、Problem1871、Offer57_2 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
+ * @Description 连续数组 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem523、Problem560、Problem862、Problem1171、Problem1871、Offer57_2 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
  * 给定一个二进制数组 nums , 找到含有相同数量的 0 和 1 的最长连续子数组，并返回该子数组的长度。
  * <p>
  * 输入: nums = [0,1]
@@ -65,7 +65,7 @@ public class Problem525 {
     }
 
     /**
-     * 前缀和
+     * 前缀和+哈希表
      * 看到连续子数组，就要想到滑动窗口和前缀和
      * 时间复杂度O(n)，空间复杂度O(n)
      *
@@ -81,7 +81,7 @@ public class Problem525 {
         int maxLen = 0;
         //key：当前区间和(遇到1，前缀和加1，遇到0，前缀和减1)，value：首次出现当前区间和的最后一个元素的下标索引
         Map<Integer, Integer> map = new HashMap<>();
-        //初始化，区间和为0，即不存在元素的区间和的最后一个元素的下标索引为-1
+        //初始化，不添加任何元素的前缀和为0，最后一个元素的下标索引为-1
         map.put(0, -1);
         int preSum = 0;
 
