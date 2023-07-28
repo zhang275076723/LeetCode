@@ -56,25 +56,25 @@ public class Problem1171 {
         ListNode node = hair;
         //key：当前前缀和，value：当前节点
         Map<Integer, ListNode> map = new HashMap<>();
-        int sum = 0;
+        int preSum = 0;
 
         //从头结点到每个节点的前缀和作为key，当前节点作为value，加入哈希表中
         //如果遇到相同前缀和，则用最后一个节点覆盖前一个节点
         while (node != null) {
-            sum = sum + node.val;
-            map.put(sum, node);
+            preSum = preSum + node.val;
+            map.put(preSum, node);
             node = node.next;
         }
 
         node = hair;
-        sum = 0;
+        preSum = 0;
 
         while (node != null) {
-            sum = sum + node.val;
+            preSum = preSum + node.val;
             //map中存在当前前缀和，则当前节点的下一个节点到哈希表中当前前缀和映射的节点的和为0
-            if (map.containsKey(sum)) {
+            if (map.containsKey(preSum)) {
                 //更新当前节点的next指针指向哈希表中当前前缀和映射的节点的next节点
-                ListNode nextNode = map.get(sum);
+                ListNode nextNode = map.get(preSum);
                 node.next = nextNode.next;
             }
             node = node.next;

@@ -162,7 +162,7 @@ public class Problem209 {
         int minLength = Integer.MAX_VALUE;
 
         for (int i = 0; i < preSum.length; i++) {
-            //preSum[i]和队首元素preSum[j]之差大于等于target，即[j+1,i]满足子数组长度大于等于target，
+            //preSum[i]和队首元素preSum[j]之差大于等于target，即nums[j]-nums[i-1]元素之和大于等于target，
             //则队首元素出队，更新子数组长度
             while (!queue.isEmpty() && preSum[i] - preSum[queue.peekFirst()] >= target) {
                 int j = queue.pollFirst();
