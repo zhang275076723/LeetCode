@@ -39,7 +39,7 @@ import java.util.Map;
  * lfu.get(3);      // 返回 3 // cache=[3,4], cnt(4)=1, cnt(3)=3
  * lfu.get(4);      // 返回 4 // cache=[3,4], cnt(4)=2, cnt(3)=3
  * <p>
- * 0 <= capacity <= 10^4
+ * 1 <= capacity <= 10^4
  * 0 <= key <= 10^5
  * 0 <= value <= 10^9
  * 最多调用 2 * 10^5 次 get 和 put 方法
@@ -81,7 +81,8 @@ public class Problem460 {
         //当前缓存容量
         private int curSize;
 
-        //当前缓存中访问频率最少的节点频率
+        //当前缓存中访问频率最少的节点频率，
+        //当前容量等于最大容量时，移除节点通过minFrequency对应的链表中移除节点
         private int minFrequency;
 
         //缓存map，在O(1)找到当前缓存节点，key为缓存关键字，value为数据节点
@@ -120,7 +121,7 @@ public class Problem460 {
             //当前频率链表为空，从frequencyCache中移除，更新minFrequency
             if (linkedList.head.next == linkedList.tail) {
                 frequencyCache.remove(node.frequency);
-                if (minFrequency == node.frequency) {
+                if (node.frequency == minFrequency) {
                     minFrequency++;
                 }
             }
@@ -133,9 +134,9 @@ public class Problem460 {
                 frequencyCache.put(node.frequency, new LinkedList());
             }
 
-            LinkedList newLinkedList = frequencyCache.get(node.frequency);
+            LinkedList nextLinkedList = frequencyCache.get(node.frequency);
             //当前节点放到新的访问频率链表头结点
-            newLinkedList.addFirst(node);
+            nextLinkedList.addFirst(node);
 
             return node.value;
         }
@@ -150,11 +151,6 @@ public class Problem460 {
          * @param value
          */
         public void put(int key, int value) {
-            //容量为空，直接返回
-            if (capacity == 0) {
-                return;
-            }
-
             //当前节点在缓存map中
             if (cache.containsKey(key)) {
                 Node node = cache.get(key);
@@ -166,7 +162,7 @@ public class Problem460 {
                 //当前频率链表为空，从frequencyCache中移除，更新minFrequency
                 if (linkedList.head.next == linkedList.tail) {
                     frequencyCache.remove(node.frequency);
-                    if (minFrequency == node.frequency) {
+                    if (node.frequency == minFrequency) {
                         minFrequency++;
                     }
                 }
@@ -179,9 +175,9 @@ public class Problem460 {
                     frequencyCache.put(node.frequency, new LinkedList());
                 }
 
-                LinkedList newLinkedList = frequencyCache.get(node.frequency);
+                LinkedList nextLinkedList = frequencyCache.get(node.frequency);
                 //当前节点放到新的访问频率链表头结点
-                newLinkedList.addFirst(node);
+                nextLinkedList.addFirst(node);
             } else {
                 //当前节点不在缓存map中
                 //要加入cache和linkedList中的节点
@@ -208,9 +204,9 @@ public class Problem460 {
                         frequencyCache.put(1, new LinkedList());
                     }
 
-                    LinkedList newLinkedList = frequencyCache.get(1);
+                    LinkedList nextLinkedList = frequencyCache.get(1);
                     //当前节点放到访问频率为1的链表头结点
-                    newLinkedList.addFirst(node);
+                    nextLinkedList.addFirst(node);
 
                     //当前节点加入cache，设置minFrequency为1
                     cache.put(key, node);
@@ -239,9 +235,9 @@ public class Problem460 {
          * 使用频率相等的数据节点链表
          */
         private static class LinkedList {
-            //头结点，避免非空判断
+            //链表头结点，避免非空判断
             public Node head;
-            //尾结点，避免非空判断
+            //链表尾结点，避免非空判断
             public Node tail;
 
             LinkedList() {
@@ -252,10 +248,11 @@ public class Problem460 {
             }
 
             public void addFirst(Node node) {
-                head.next.pre = node;
-                node.next = head.next;
-                head.next = node;
+                Node nextNode = head.next;
                 node.pre = head;
+                node.next = nextNode;
+                head.next = node;
+                nextNode.pre = node;
             }
 
             public void remove(Node node) {

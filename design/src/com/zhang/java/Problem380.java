@@ -90,11 +90,13 @@ public class Problem380 {
             //list集合中最后一个元素
             int lastValue = list.get(lastValueIndex);
 
-            //用list集合中最后一个元素替换当前元素，再删除最后一个元素，注意：要先set再remove
+            //用list集合中最后一个元素替换当前元素，再删除最后一个元素
+            //注意：要先set再remove
             list.set(index, lastValue);
             list.remove(lastValueIndex);
 
-            //map中移除当前元素，更新map中list集合中最后一个元素在list集合中的下标索引，注意：要先put再remove
+            //map中移除当前元素，更新map中list集合中最后一个元素在list集合中的下标索引
+            //注意：要先put再remove
             map.put(lastValue, index);
             map.remove(val);
 

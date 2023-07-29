@@ -156,9 +156,9 @@ public class Problem146 {
          * 双向链表
          */
         private static class LinkedList {
-            //设置链表头尾空节点，在添加节点和删除节点时，不需要进行非空判断
+            //链表头结点，避免非空判断
             public Node head;
-
+            //链表尾结点，避免非空判断
             public Node tail;
 
             LinkedList() {
@@ -169,10 +169,11 @@ public class Problem146 {
             }
 
             public void addFirst(Node node) {
-                head.next.pre = node;
-                node.next = head.next;
-                head.next = node;
+                Node nextNode = head.next;
                 node.pre = head;
+                node.next = nextNode;
+                head.next = node;
+                nextNode.pre = node;
             }
 
             public void remove(Node node) {
