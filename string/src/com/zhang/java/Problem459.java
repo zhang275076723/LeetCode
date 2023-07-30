@@ -33,7 +33,7 @@ public class Problem459 {
 
     /**
      * 暴力
-     * 如果s由子串s[0]-s[i]重复多次构成，则s[j] = s[j-(i+1)] (i < j < s.length())
+     * 如果s由子串s[0]-s[i]重复多次构成，则s[j] = s[j%(i+1)] (i < j < s.length())
      * 时间复杂度O(n^2)，空间复杂度O(1)
      *
      * @param s
@@ -55,8 +55,8 @@ public class Problem459 {
             boolean flag = true;
 
             for (int j = i + 1; j < s.length(); j++) {
-                //s[j]不等于s[j-(i+1)]，则子串s[0]-s[i]重复多次不能构成s
-                if (s.charAt(j) != s.charAt(j - i - 1)) {
+                //s[j]不等于s[j%(i+1)]，则子串s[0]-s[i]重复多次不能构成s
+                if (s.charAt(j) != s.charAt(j % (i + 1))) {
                     flag = false;
                     break;
                 }
@@ -86,6 +86,7 @@ public class Problem459 {
         }
 
         //s拼接s，再去除首尾字符，得到的新字符串str，str中包含了s旋转的各种情况
+        //注意：去除首尾字符得到的字符串str，保证首元素起始和末尾元素截止的字符串不包含s，避免str误判是否包含s
         String str = (s + s).substring(1, (s + s).length() - 1);
         //如果s通过旋转能够得到s，等价于str中包含s，则s由重复的子字符串构成
         return str.contains(s);

@@ -58,9 +58,10 @@ public class Problem686 {
 
         //sb拼接count次a之后，最多再拼接2次a
         for (int i = 0; i <= 2; i++) {
-            //模式串指针
+            //模式串b指针
             int n = 0;
 
+            //主串sb指针
             for (int m = 0; m < sb.length(); m++) {
                 //当前字符不匹配，n指针通过next数组前移
                 while (n > 0 && sb.charAt(m) != b.charAt(n)) {
