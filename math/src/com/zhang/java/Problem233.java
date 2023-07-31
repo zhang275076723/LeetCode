@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/6 08:58
  * @Author zsy
- * @Description 数字 1 的个数 模拟类比Problem60、Problem400、Offer44 同Offer43
+ * @Description 数字 1 的个数 模拟类比Problem172、Problem60、Problem400、Offer44 同Offer43
  * 给定一个整数 n，计算所有小于等于 n 的非负整数中数字 1 出现的个数。
  * <p>
  * 输入：n = 13
@@ -41,7 +41,7 @@ public class Problem233 {
         }
 
         //1出现的次数
-        int result = 0;
+        int count = 0;
         //当前剩余数字
         int num = n;
         //当前位低位所能表示数字的个数
@@ -56,13 +56,13 @@ public class Problem233 {
         while (num != 0) {
             if (cur == 0) {
                 //当前cur为0，高位值0到high-1，共high种取值，乘上低位0到9..9，共lowCount种取值
-                result = result + high * lowCount;
+                count = count + high * lowCount;
             } else if (cur == 1) {
                 //当前cur为1，高位先取0到high-1，共high种取值，乘上低位0到9..9，共lowCount种取值；再加上高位取high，乘上低位取0到low
-                result = result + high * lowCount + low + 1;
+                count = count + high * lowCount + low + 1;
             } else {
                 //当前cur大于1，高位取0-high，共high+1种取值，乘上低位0到9..9，共lowCount种取值
-                result = result + (high + 1) * lowCount;
+                count = count + (high + 1) * lowCount;
             }
 
             lowCount = lowCount * 10;
@@ -72,6 +72,6 @@ public class Problem233 {
             high = high / 10;
         }
 
-        return result;
+        return count;
     }
 }

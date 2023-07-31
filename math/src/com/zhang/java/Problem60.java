@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/3/18 08:14
  * @Author zsy
- * @Description 排列序列 全排列类比Problem46、Problem47 模拟类比Problem233、Problem400、Offer43、Offer44
+ * @Description 排列序列 全排列类比Problem46、Problem47 模拟类比Problem172、Problem233、Problem400、Offer43、Offer44
  * 给出集合 [1,2,3,...,n]，其所有元素共有 n! 种排列。
  * 按大小顺序列出所有排列情况，并一一标记，当 n = 3 时, 所有排列如下：
  * "123"
