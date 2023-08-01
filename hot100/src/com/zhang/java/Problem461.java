@@ -65,6 +65,7 @@ public class Problem461 {
         int z = x ^ y;
 
         while (z != 0) {
+            //将z表示的二进制中的最低位的1置为0
             z = z & (z - 1);
             count++;
         }

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/26 17:04
  * @Author zsy
- * @Description 1～n 整数中 1 出现的次数 模拟类比Problem60、Problem400、Offer44 同Problem233
+ * @Description 1～n 整数中 1 出现的次数 模拟类比Problem60、Problem172、Problem400、Offer44 同Problem233
  * 输入一个整数 n ，求1～n这n个整数的十进制表示中1出现的次数。
  * 例如，输入12，1～12这些整数中包含1 的数字有1、10、11和12，1一共出现了5次。
  * <p>
@@ -41,7 +41,7 @@ public class Offer43 {
         }
 
         //1出现的次数
-        int result = 0;
+        int count = 0;
         //当前剩余数字
         int num = n;
         //当前位低位所能表示数字的个数
@@ -56,13 +56,13 @@ public class Offer43 {
         while (num != 0) {
             if (cur == 0) {
                 //当前cur为0，高位值0到high-1，共high种取值，乘上低位0到9..9，共lowCount种取值
-                result = result + high * lowCount;
+                count = count + high * lowCount;
             } else if (cur == 1) {
                 //当前cur为1，高位先取0到high-1，共high种取值，乘上低位0到9..9，共lowCount种取值；再加上高位取high，乘上低位取0到low
-                result = result + high * lowCount + low + 1;
+                count = count + high * lowCount + low + 1;
             } else {
                 //当前cur大于1，高位取0-high，共high+1种取值，乘上低位0到9..9，共lowCount种取值
-                result = result + (high + 1) * lowCount;
+                count = count + (high + 1) * lowCount;
             }
 
             lowCount = lowCount * 10;
@@ -72,6 +72,6 @@ public class Offer43 {
             high = high / 10;
         }
 
-        return result;
+        return count;
     }
 }

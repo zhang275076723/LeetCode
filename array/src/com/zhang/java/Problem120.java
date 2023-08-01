@@ -109,7 +109,7 @@ public class Problem120 {
         dp[0] = triangle.get(0).get(0);
 
         for (int i = 1; i < n; i++) {
-            //从后往前遍历，避免当前行dp影响上一行dp
+            //注意：只能从后往前遍历，避免当前行dp影响上一行dp
 
             //当前第i行第i列只能由第i-1行第i-1列转换
             dp[i] = dp[i - 1] + triangle.get(i).get(i);
@@ -177,6 +177,7 @@ public class Problem120 {
         }
 
         for (int i = n - 2; i >= 0; i--) {
+            //注意：只能从前往后遍历，避免当前行dp影响下一行dp
             for (int j = 0; j <= i; j++) {
                 dp[j] = Math.min(dp[j], dp[j + 1]) + triangle.get(i).get(j);
             }

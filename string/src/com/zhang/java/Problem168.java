@@ -48,7 +48,7 @@ public class Problem168 {
         while (columnNumber != 0) {
             //因为A对应1，所以每次要先减1
             columnNumber--;
-            sb.append((char) ((columnNumber % 26) + 'A'));
+            sb.append((char) (columnNumber % 26 + 'A'));
             columnNumber = columnNumber / 26;
         }
 

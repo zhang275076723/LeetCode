@@ -56,7 +56,7 @@ public class Problem109 {
         ListNode slow = head;
         ListNode fast = head;
 
-        //双指针找中间节点
+        //快慢指针找中间节点
         while (fast != null && fast.next != null) {
             pre = slow;
             slow = slow.next;
