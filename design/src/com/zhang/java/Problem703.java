@@ -107,7 +107,7 @@ public class Problem703 {
     static class KthLargest2 {
         //小根堆数组
         private final int[] arr;
-        //小根堆大小
+        //小根堆的最大大小
         private final int k;
         //当前小根堆大小
         private int curSize;
@@ -121,24 +121,23 @@ public class Problem703 {
         public KthLargest2(int k, int[] nums) {
             this.k = k;
             curSize = 0;
-            arr = new int[k];
+            //多申请一个长度，方便添加元素整堆
+            arr = new int[k + 1];
 
-            //小根堆arr中放入k和nums数组大小中较小值个元素
-            for (int i = 0; i < Math.min(k, nums.length); i++) {
-                arr[i] = nums[i];
+            for (int i = 0; i < nums.length; i++) {
+                arr[curSize] = nums[i];
                 curSize++;
-            }
 
-            //建立大小为curSize的小根堆
-            for (int i = curSize / 2 - 1; i >= 0; i--) {
-                heapify(arr, i, curSize);
-            }
+                //重新建堆
+                for (int j = curSize / 2 - 1; j >= 0; j--) {
+                    heapify(arr, j, curSize);
+                }
 
-            //如果当前元素大于小根堆堆顶元素，则堆顶元素出堆，当前元素入堆
-            for (int i = k; i < nums.length; i++) {
-                if (nums[i] > arr[0]) {
-                    arr[0] = nums[i];
-                    heapify(arr, 0, k);
+                //小根堆中元素个数大于堆的最大大小，堆顶元素出堆，重新整堆
+                if (curSize > k) {
+                    arr[0] = arr[curSize - 1];
+                    curSize--;
+                    heapify(arr, 0, curSize);
                 }
             }
         }
@@ -150,24 +149,24 @@ public class Problem703 {
          * @return
          */
         public int add(int val) {
-            //当前小根堆大小小于k，则当前元素入堆，再重新建小根堆
+            arr[curSize] = val;
+            curSize++;
+
+            //小根堆中元素个数小于堆的最大大小，则不存在第k大元素，直接返回-1
             if (curSize < k) {
-                arr[curSize] = val;
-                curSize++;
-
-                //建立大小为curSize的小根堆
-                for (int i = curSize / 2 - 1; i >= 0; i--) {
-                    heapify(arr, i, curSize);
-                }
-
-                //小根堆堆顶元素即为第k大元素
-                return arr[0];
+                return -1;
             }
 
-            //如果当前元素大于小根堆堆顶元素，则堆顶元素出堆，当前元素入堆
-            if (val > arr[0]) {
-                arr[0] = val;
-                heapify(arr, 0, k);
+            //重新建堆
+            for (int i = curSize / 2 - 1; i >= 0; i--) {
+                heapify(arr, i, curSize);
+            }
+
+            //小根堆中元素个数大于堆的最大大小，堆顶元素出堆，重新整堆
+            if (curSize > k) {
+                arr[0] = arr[curSize - 1];
+                curSize--;
+                heapify(arr, 0, curSize);
             }
 
             //小根堆堆顶元素即为第k大元素

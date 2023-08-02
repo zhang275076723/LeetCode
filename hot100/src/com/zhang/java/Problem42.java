@@ -112,9 +112,9 @@ public class Problem42 {
         //右指针
         int right = height.length - 1;
         //height[0]-height[left]中的最大值
-        int leftMax = 0;
+        int leftMax = height[0];
         //height[right]-height[height.length-1]中的最大值
-        int rightMax = 0;
+        int rightMax = height[height.length - 1];
 
         while (left < right) {
             //更新两边的最大高度

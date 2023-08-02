@@ -39,23 +39,21 @@ public class Problem275 {
      * @return
      */
     public int hIndex(int[] citations) {
-        //初始化h指数为0
-        int result = 0;
-        int left = 1;
+        int left = 0;
         int right = citations.length;
         int mid;
 
-        while (left <= right) {
-            mid = left + ((right - left) >> 1);
+        while (left < right) {
+            //二分往右偏移，因为转移条件是right=mid-1，如果转移条件是left=mid+1，则二分要往左边偏移
+            mid = left + ((right - left) >> 1) + 1;
 
             if (citations[citations.length - mid] >= mid) {
-                result = mid;
-                left = mid + 1;
+                left = mid;
             } else {
                 right = mid - 1;
             }
         }
 
-        return result;
+        return left;
     }
 }
