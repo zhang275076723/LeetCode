@@ -82,7 +82,7 @@ public class Problem852 {
         int mid;
 
         while (left < right) {
-            //mid往左偏，所以nums[mid]和nums[mid + 1]才能比较
+            //mid往左偏移，nums[mid+1]不会越界
             mid = left + ((right - left) >> 1);
 
             //arr[mid]小于arr[mid+1]，峰值在arr[mid+1]-arr[right]

@@ -58,7 +58,7 @@ public class Problem1095 {
 
         //1、找到山脉数组的山顶下标索引
         while (left < right) {
-            //mid往左偏，所以nums[mid]和nums[mid + 1]才能比较
+            //mid往左偏移，nums[mid+1]不会越界
             mid = left + ((right - left) >> 1);
 
             //山顶元素在mid右边

@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @Date 2023/3/22 09:13
  * @Author zsy
- * @Description 存在重复元素 II 大疆机试题 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem220、Problem239、Problem438、Problem485、Problem487、Problem567、Problem1004、Offer48、Offer57_2、Offer59
+ * @Description 存在重复元素 II 大疆机试题 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem567、Problem1004、Offer48、Offer57_2、Offer59
  * 给你一个整数数组 nums 和一个整数 k ，判断数组中是否存在两个 不同的索引 i 和 j ，
  * 满足 nums[i] == nums[j] 且 abs(i - j) <= k 。
  * 如果存在，返回 true ；否则，返回 false 。

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/4/4 16:36
  * @Author zsy
- * @Description 和为s的连续正数序列 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem438、Problem485、Problem487、Problem567、Problem1004、Offer48、Offer59 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem523、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1871 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42
+ * @Description 和为s的连续正数序列 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem567、Problem1004、Offer48、Offer59 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem523、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1871 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42
  * 输入一个正整数 target ，输出所有和为 target 的连续正整数序列（至少含有两个数）。
  * 序列内的数字由小到大排列，不同序列按照首个数字从小到大排列。
  * 1 <= target <= 10^5
@@ -185,7 +185,7 @@ public class Offer57_2 {
         List<int[]> list = new ArrayList<>();
         //key：当前区间和，value：当前区间和的最后一个元素值
         Map<Integer, Integer> map = new HashMap<>();
-        //初始化，不添加任何元素的前缀和为0，前缀和为0的最后一个元素为0
+        //初始化，不添加任何元素的前缀和为0，不添加任何元素前缀和为0的最后一个元素为0
         map.put(0, 0);
         //当前前缀和
         int preSum = 0;

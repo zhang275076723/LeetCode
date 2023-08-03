@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/2/6 11:42
  * @Author zsy
- * @Description 串联所有单词的子串 滑动窗口类比Problem3、Problem76、Problem209、Problem219、Problem220、Problem239、Problem438、Problem485、Problem487、Problem567、Problem1004、Offer48、Offer57_2、Offer59
+ * @Description 串联所有单词的子串 滑动窗口类比Problem3、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem567、Problem1004、Offer48、Offer57_2、Offer59
  * 给定一个字符串 s 和一个字符串数组 words。 words 中所有字符串 长度相同。
  * s 中的 串联子串 是指一个包含 words 中所有字符串以任意顺序排列连接起来的子串。
  * 例如，如果 words = ["ab","cd","ef"]，

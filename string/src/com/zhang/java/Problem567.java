@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/9/22 10:38
  * @Author zsy
- * @Description 字符串的排列 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem438、Problem485、Problem487、Problem1004、Offer48、Offer57_2、Offer59
+ * @Description 字符串的排列 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem1004、Offer48、Offer57_2、Offer59
  * 给你两个字符串 s1 和 s2 ，写一个函数来判断 s2 是否包含 s1 的排列。
  * 如果是，返回 true ；否则，返回 false 。
  * 换句话说，s1 的排列之一是 s2 的 子串 。

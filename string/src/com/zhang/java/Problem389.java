@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/11/17 09:07
  * @Author zsy
- * @Description 找不同 位运算类比Problem136、Problem137、Problem260、Offer56、Offer56_2、Offer65
+ * @Description 找不同 哈希表类比Problem242、Problem383、Problem387、Problem554、Problem763、Offer50 位运算类比Problem136、Problem137、Problem260、Offer56、Offer56_2、Offer65
  * 给定两个字符串 s 和 t ，它们只包含小写字母。
  * 字符串 t 由字符串 s 随机重排，然后在随机位置添加一个字母。
  * 请找出在 t 中被添加的字母。

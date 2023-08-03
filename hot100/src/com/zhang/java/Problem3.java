@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/4/12 8:59
  * @Author zsy
- * @Description 无重复字符的最长子串 滑动窗口类比Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem438、Problem485、Problem487、Problem567、Problem1004、Offer48、Offer57_2、Offer59 同Offer48
+ * @Description 无重复字符的最长子串 滑动窗口类比Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem567、Problem1004、Offer48、Offer57_2、Offer59 同Offer48
  * 给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。
  * <p>
  * 输入: s = "abcabcbb"
@@ -37,7 +37,7 @@ public class Problem3 {
     /**
      * 动态规划
      * dp[i]：以s[i]结尾的最长不含重复字符的子串长度
-     * j为s[i]之前相同字符的索引下标
+     * j为s[i]之前相同字符的下标索引
      * dp[i] = dp[i-1] + 1 (i-j > dp[i-1]，说明s[j]不在以s[i-1]结尾的最长子串中)
      * dp[i] = i-j         (i-j <= dp[i-1]，说明s[j]在以s[i-1]结尾的最长子串中)
      * 时间复杂度O(n)，空间复杂度O(n)
@@ -50,7 +50,7 @@ public class Problem3 {
             return 0;
         }
 
-        //当前字符在字符串中上次出现的索引下标
+        //当前字符在字符串中上次出现的下标索引
         Map<Character, Integer> map = new HashMap<>();
         int[] dp = new int[s.length()];
         int max = 1;
@@ -73,7 +73,7 @@ public class Problem3 {
             }
 
             max = Math.max(max, dp[i]);
-            //更新当前字符c上次出现的索引下标
+            //更新当前字符c上次出现的下标索引
             map.put(c, i);
         }
 
@@ -82,8 +82,8 @@ public class Problem3 {
 
     /**
      * 动态规划优化，使用滚动数组
-     * 使用哈希表，在O(1)时间内找到s[i]之前相同字符的索引下标
-     * 时间复杂度O(n)，空间复杂度O(|Σ|)，|Σ|=128，ascii码
+     * 使用哈希表，在O(1)时间内找到s[i]之前相同字符的下标索引
+     * 时间复杂度O(n)，空间复杂度O(|Σ|) (|Σ|=128，ascii码)
      *
      * @param s
      * @return
@@ -93,7 +93,7 @@ public class Problem3 {
             return 0;
         }
 
-        //当前字符在字符串中上次出现的索引下标
+        //当前字符在字符串中上次出现的下标索引
         Map<Character, Integer> map = new HashMap<>();
         //初始化，第一个字符放入map中
         map.put(s.charAt(0), 0);
@@ -114,7 +114,7 @@ public class Problem3 {
             }
 
             max = Math.max(max, dp);
-            //更新当前字符c上次出现的索引下标
+            //更新当前字符c上次出现的下标索引
             map.put(c, i);
         }
 
@@ -123,7 +123,7 @@ public class Problem3 {
 
     /**
      * 滑动窗口，双指针
-     * 时间复杂度O(n)，空间复杂度O(|Σ|)，|Σ|=128，ascii码
+     * 时间复杂度O(n)，空间复杂度O(|Σ|) (|Σ|=128，ascii码)
      *
      * @param s
      * @return
@@ -136,7 +136,7 @@ public class Problem3 {
         int max = 1;
         int left = 0;
         int right = 0;
-        //当前字符在字符串中上次出现的索引下标
+        //key：当前字符，value：在左右指针表示的字符串中当前字符上次出现的下标索引
         Map<Character, Integer> map = new HashMap<>();
 
         while (right < s.length()) {
@@ -149,7 +149,7 @@ public class Problem3 {
                 left = index + 1;
             }
 
-            //更新当前字符c上次出现的索引下标
+            //更新当前字符c上次出现的下标索引
             map.put(c, right);
             max = Math.max(max, right - left + 1);
             //右指针右移

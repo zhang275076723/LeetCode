@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * @Date 2022/11/19 17:20
  * @Author zsy
- * @Description 划分字母区间 美团机试题 哈希表类比Problem554 类比Problem45 区间类比Problem56、Problem57、Problem228、Problem252、Problem253、Problem406、Problem435、Problem436、Problem986、Problem1288
+ * @Description 划分字母区间 美团机试题 哈希表类比Problem242、Problem383、Problem387、Problem389、Problem554、Offer50 区间类比Problem56、Problem57、Problem228、Problem252、Problem253、Problem406、Problem435、Problem436、Problem986、Problem1288
  * 字符串 S 由小写字母组成。我们要把这个字符串划分为尽可能多的片段，同一字母最多出现在一个片段中。
  * 返回一个表示每个字符串片段的长度的列表。
  * <p>
