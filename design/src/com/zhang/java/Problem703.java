@@ -121,22 +121,22 @@ public class Problem703 {
         public KthLargest2(int k, int[] nums) {
             this.k = k;
             curSize = 0;
-            //多申请一个长度，方便添加元素整堆
-            arr = new int[k + 1];
+            arr = new int[k];
 
-            for (int i = 0; i < nums.length; i++) {
-                arr[curSize] = nums[i];
+            for (int i = 0; i < Math.min(k, nums.length); i++) {
+                arr[i] = nums[i];
                 curSize++;
+            }
 
-                //重新建堆
-                for (int j = curSize / 2 - 1; j >= 0; j--) {
-                    heapify(arr, j, curSize);
-                }
+            //建立大小为curSize的小根堆
+            for (int i = curSize / 2 - 1; i >= 0; i--) {
+                heapify(arr, i, curSize);
+            }
 
-                //小根堆中元素个数大于堆的最大大小，堆顶元素出堆，重新整堆
-                if (curSize > k) {
-                    arr[0] = arr[curSize - 1];
-                    curSize--;
+            //nums[k]-nums[nums.length-1]的元素依次入小根堆堆，并整堆
+            for (int i = k; i < nums.length; i++) {
+                if (nums[i] > arr[0]) {
+                    arr[0] = nums[i];
                     heapify(arr, 0, curSize);
                 }
             }
@@ -149,28 +149,29 @@ public class Problem703 {
          * @return
          */
         public int add(int val) {
-            arr[curSize] = val;
-            curSize++;
-
-            //小根堆中元素个数小于堆的最大大小，则不存在第k大元素，直接返回-1
-            if (curSize < k) {
+            //添加当前元素val之后，小根堆中仍不满k个元素，不存在第k大，直接返回-1
+            if (curSize + 1 < k) {
                 return -1;
-            }
+            } else if (curSize + 1 == k) {
+                //添加当前元素val之后，小根堆中正好k个元素，建堆，堆顶元素即为第k大元素
+                arr[curSize] = val;
+                curSize++;
 
-            //重新建堆
-            for (int i = curSize / 2 - 1; i >= 0; i--) {
-                heapify(arr, i, curSize);
-            }
+                //建立大小为curSize的小根堆
+                for (int i = curSize / 2 - 1; i >= 0; i--) {
+                    heapify(arr, i, curSize);
+                }
 
-            //小根堆中元素个数大于堆的最大大小，堆顶元素出堆，重新整堆
-            if (curSize > k) {
-                arr[0] = arr[curSize - 1];
-                curSize--;
-                heapify(arr, 0, curSize);
-            }
+                return arr[0];
+            } else {
+                //小根堆中已经有k个元素，如果堆顶元素小于当前元素val，则堆顶元素替换为val，重新整堆，堆顶元素即为第k大元素
+                if (arr[0] < val) {
+                    arr[0] = val;
+                    heapify(arr, 0, curSize);
+                }
 
-            //小根堆堆顶元素即为第k大元素
-            return arr[0];
+                return arr[0];
+            }
         }
 
         private void heapify(int[] arr, int i, int heapSize) {

@@ -104,7 +104,7 @@ public class Problem69 {
         double x1;
 
         while (true) {
-            x1 = 0.5 * x0 + C / (2 * x0);
+            x1 = x0 / 2 + C / (2 * x0);
 
             //x0和x1两者之差小于10^(-7)，则认为两者无线接近，找到了零点，即得到根号项x
             if (Math.abs(x1 - x0) < 1e-7) {

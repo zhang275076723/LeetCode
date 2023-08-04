@@ -82,7 +82,7 @@ public class Problem36 {
         //列中包含的字符set
         List<Set<Character>> colList = new ArrayList<>();
         //3x3格子中包含的字符set
-        List<Set<Character>> subBoxesList = new ArrayList<>();
+        List<Set<Character>> blockList = new ArrayList<>();
 
         for (int i = 0; i < board.length; i++) {
             rowList.add(new HashSet<>());
@@ -94,28 +94,28 @@ public class Problem36 {
 
         for (int i = 0; i < board.length / 3; i++) {
             for (int j = 0; j < board[0].length / 3; j++) {
-                subBoxesList.add(new HashSet<>());
+                blockList.add(new HashSet<>());
             }
         }
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 char c = board[i][j];
+
                 if (c != '.') {
-                    //当前行或当前列已经包含字符c，则不是有效的数独，直接返回false
-                    if (rowList.get(i).contains(c) || colList.get(j).contains(c)) {
-                        return false;
-                    }
-
-                    //当前3x3格子内已经包含字符c，则不是有效的数独，直接返回false
-                    if (subBoxesList.get(i / 3 * 3 + j / 3).contains(c)) {
-                        return false;
-                    }
-
-                    rowList.get(i).add(c);
-                    colList.get(j).add(c);
-                    subBoxesList.get(i / 3 * 3 + j / 3).add(c);
+                    continue;
                 }
+
+                //当前行或当前列或当前3x3格子内已经包含字符c，则不是有效的数独，直接返回false
+                if (rowList.get(i).contains(c) || colList.get(j).contains(c) ||
+                        blockList.get(i / 3 * 3 + j / 3).contains(c)) {
+                    return false;
+                }
+
+                //当前字符c加入行、列、3x3格子set中
+                rowList.get(i).add(c);
+                colList.get(j).add(c);
+                blockList.get(i / 3 * 3 + j / 3).add(c);
             }
         }
 

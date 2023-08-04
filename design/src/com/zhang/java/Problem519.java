@@ -52,12 +52,12 @@ public class Problem519 {
 
     /**
      * 哈希表
-     * 每次交换当前元素和末尾元素的下标索引，保证下次随机选择的元素连续
+     * 核心思想：随机选择一个元素，当前元素指向末尾元素的下标索引，即删除末尾元素，保证下次随机选择的元素连续
      * 注意：不能使用下标数组，m*n空间太大，会溢出
      */
     static class Solution {
         //存放元素和元素二维坐标转换为一维坐标下标索引的映射关系
-        //如果map中不存在某个元素，则表示当前元素index存放为翻转的元素一维下标索引为index
+        //如果map中不存在某个元素，则表示当前元素index存放未翻转的元素一维下标索引为index
         //例如：key=1，value=3，表示下标索引1存放未翻转的元素一维下标索引为3
         private final Map<Integer, Integer> map;
         //矩阵行
@@ -78,21 +78,21 @@ public class Problem519 {
         }
 
         /**
-         * 随机选择一个元素，交换当前元素和末尾元素的下标索引，保证下次随机选择的元素连续
+         * 随机选择一个元素，当前元素指向末尾元素的下标索引，即删除末尾元素，保证下次随机选择的元素连续
          * 时间复杂度O(1)，空间复杂度O(1)
          *
          * @return
          */
         public int[] flip() {
-            //[0-total-1]的随机值
-            int num = random.nextInt(total);
-            //当前元素对应的下标索引
-            int index = map.getOrDefault(num, num);
+            //获取[0,total-1]的随机值
+            int randomNum = random.nextInt(total);
+            //当前元素对应的下标索引，如果map中不存在randomNum，则表示randomNum对应的下标索引就是randomNum本身
+            int index = map.getOrDefault(randomNum, randomNum);
             //未翻转的元素数量减1
             total--;
 
-            //交换当前元素和末尾元素的下标索引
-            map.put(num, map.getOrDefault(total, total));
+            //当前元素指向末尾元素的下标索引，即删除末尾元素
+            map.put(randomNum, map.getOrDefault(total, total));
 
             //一维坐标转化为二维坐标
             return new int[]{index / n, index % n};

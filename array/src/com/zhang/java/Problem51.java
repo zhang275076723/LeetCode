@@ -41,7 +41,7 @@ public class Problem51 {
     public List<List<String>> solveNQueens(int n) {
         List<List<String>> result = new ArrayList<>();
 
-        backtrack(0, n, new ArrayList<>(), result, new int[n]);
+        backtrack(0, n, new int[n], result);
 
         return result;
     }
@@ -57,50 +57,57 @@ public class Problem51 {
     public List<List<String>> solveNQueens2(int n) {
         List<List<String>> result = new ArrayList<>();
         //皇后影响的列set
-        Set<Integer> columnSet = new HashSet<>();
+        Set<Integer> colSet = new HashSet<>();
         //皇后影响的左上右下对角线set
         Set<Integer> diagSet = new HashSet<>();
         //皇后影响的左下右上对角线set
         Set<Integer> antiDiagSet = new HashSet<>();
 
-        backtrack2(0, n, columnSet, diagSet, antiDiagSet, new ArrayList<>(), result);
+        backtrack2(0, n, colSet, diagSet, antiDiagSet, new ArrayList<>(), result);
 
         return result;
     }
 
-    private void backtrack(int t, int n, List<String> list, List<List<String>> result, int[] position) {
+    private void backtrack(int t, int n, int[] position, List<List<String>> result) {
         if (t == n) {
-            result.add(new ArrayList<>(list));
+            List<String> list = new ArrayList<>();
+
+            for (int i = 0; i < n; i++) {
+                StringBuilder sb = new StringBuilder();
+
+                //当前皇后之前的'.'
+                for (int j = 0; j < position[i]; j++) {
+                    sb.append('.');
+                }
+
+                //当前皇后所在位置
+                sb.append('Q');
+
+                //当前皇后之后的'.'
+                for (int j = position[i] + 1; j < n; j++) {
+                    sb.append('.');
+                }
+
+                list.add(sb.toString());
+            }
+
+            result.add(list);
             return;
         }
 
         for (int i = 0; i < n; i++) {
-            StringBuilder sb = new StringBuilder();
-
-            //当前皇后之前的'.'
-            for (int j = 0; j < i; j++) {
-                sb.append('.');
-            }
-
-            //当前皇后所在位置
-            sb.append('Q');
             position[t] = i;
-
-            //当前皇后之后的'.'
-            for (int j = i + 1; j < n; j++) {
-                sb.append('.');
-            }
 
             //第0行到第t行共t+1个皇后不冲突，才继续往后查找
             if (!isConflict(t, position)) {
-                list.add(sb.toString());
-                backtrack(t + 1, n, list, result, position);
-                list.remove(list.size() - 1);
+                backtrack(t + 1, n, position, result);
             }
+
+            position[t] = -1;
         }
     }
 
-    private void backtrack2(int t, int n, Set<Integer> columnSet, Set<Integer> diagSet, Set<Integer> antiDiagSet,
+    private void backtrack2(int t, int n, Set<Integer> colSet, Set<Integer> diagSet, Set<Integer> antiDiagSet,
                             List<String> list, List<List<String>> result) {
         if (t == n) {
             result.add(new ArrayList<>(list));
@@ -109,7 +116,7 @@ public class Problem51 {
 
         //判断(t,i)放置皇后是否冲突
         for (int i = 0; i < n; i++) {
-            if (columnSet.contains(i) || diagSet.contains(i - t + n - 1) || antiDiagSet.contains(t + i)) {
+            if (colSet.contains(i) || diagSet.contains(i - t + n - 1) || antiDiagSet.contains(t + i)) {
                 continue;
             }
 
@@ -130,15 +137,15 @@ public class Problem51 {
 
             list.add(sb.toString());
             //当前皇后影响的行(可以省略)、列、左上右下对角线、左下右上对角线，加入set中
-            columnSet.add(i);
+            colSet.add(i);
             diagSet.add(i - t + n - 1);
             antiDiagSet.add(t + i);
 
-            backtrack2(t + 1, n, columnSet, diagSet, antiDiagSet, list, result);
+            backtrack2(t + 1, n, colSet, diagSet, antiDiagSet, list, result);
 
             antiDiagSet.remove(t + i);
             diagSet.remove(i - t + n - 1);
-            columnSet.remove(i);
+            colSet.remove(i);
             list.remove(list.size() - 1);
         }
     }

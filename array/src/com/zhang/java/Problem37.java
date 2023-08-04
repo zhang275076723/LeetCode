@@ -72,7 +72,7 @@ public class Problem37 {
         //列中包含的字符set
         List<Set<Character>> colList = new ArrayList<>();
         //3x3格子中包含的字符set
-        List<Set<Character>> subBoxesList = new ArrayList<>();
+        List<Set<Character>> blockList = new ArrayList<>();
 
         for (int i = 0; i < board.length; i++) {
             rowList.add(new HashSet<>());
@@ -84,7 +84,7 @@ public class Problem37 {
 
         for (int i = 0; i < board.length / 3; i++) {
             for (int j = 0; j < board[0].length / 3; j++) {
-                subBoxesList.add(new HashSet<>());
+                blockList.add(new HashSet<>());
             }
         }
 
@@ -94,49 +94,62 @@ public class Problem37 {
                 if (c != '.') {
                     rowList.get(i).add(c);
                     colList.get(j).add(c);
-                    subBoxesList.get(i / 3 * 3 + j / 3).add(c);
+                    blockList.get(i / 3 * 3 + j / 3).add(c);
                 }
             }
         }
 
         //从左上角(0,0)开始遍历
-        backtrack(0, 0, board, rowList, colList, subBoxesList);
+        backtrack(0, 0, board, rowList, colList, blockList);
     }
 
+    /**
+     * 按照从左往右，从上往下回溯遍历
+     *
+     * @param i
+     * @param j
+     * @param board
+     * @param rowList
+     * @param colList
+     * @param blockList
+     * @return
+     */
     private boolean backtrack(int i, int j, char[][] board,
                               List<Set<Character>> rowList,
                               List<Set<Character>> colList,
-                              List<Set<Character>> subBoxesList) {
-        //已经遍历完当前行
+                              List<Set<Character>> blockList) {
+        //已经遍历完当前行，判断是否还有下一行
         if (j == board[0].length) {
-            //已经遍历完最后一行，则直接返回true
-            if (i == board.length - 1) {
-                return true;
+            //还有下一行，继续往下一行遍历
+            if (i < board.length - 1) {
+                return backtrack(i + 1, 0, board, rowList, colList, blockList);
             } else {
-                //还有下一行，继续往下一行遍历
-                return backtrack(i + 1, 0, board, rowList, colList, subBoxesList);
+                //已经遍历完最后一行，则直接返回true
+                return true;
             }
         }
 
-        if (board[i][j] == '.') {
+        //当前位置已经有数字，继续往下一个位置遍历
+        if (board[i][j] != '.') {
+            return backtrack(i, j + 1, board, rowList, colList, blockList);
+        } else {
             for (char num = '1'; num <= '9'; num++) {
-                //当前行或当前列或已经包含num，则不满足数独，直接考虑下一个字符
-                if (rowList.get(i).contains(num) ||
-                        colList.get(j).contains(num) ||
-                        subBoxesList.get(i / 3 * 3 + j / 3).contains(num)) {
+                //当前行或当前列或已经包含num，则不满足数独，直接进行下次循环
+                if (rowList.get(i).contains(num) || colList.get(j).contains(num) ||
+                        blockList.get(i / 3 * 3 + j / 3).contains(num)) {
                     continue;
                 }
 
                 board[i][j] = num;
                 rowList.get(i).add(num);
                 colList.get(j).add(num);
-                subBoxesList.get(i / 3 * 3 + j / 3).add(num);
+                blockList.get(i / 3 * 3 + j / 3).add(num);
 
-                if (backtrack(i, j + 1, board, rowList, colList, subBoxesList)) {
+                if (backtrack(i, j + 1, board, rowList, colList, blockList)) {
                     return true;
                 }
 
-                subBoxesList.get(i / 3 * 3 + j / 3).remove(num);
+                blockList.get(i / 3 * 3 + j / 3).remove(num);
                 colList.get(j).remove(num);
                 rowList.get(i).remove(num);
                 board[i][j] = '.';
@@ -144,9 +157,6 @@ public class Problem37 {
 
             //当前位置遍历了'1'-'9'，都不满足数独，则返回false
             return false;
-        } else {
-            //当前位置已经有数字，继续往下一个位置遍历
-            return backtrack(i, j + 1, board, rowList, colList, subBoxesList);
         }
     }
 }

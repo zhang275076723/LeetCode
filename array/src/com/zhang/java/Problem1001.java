@@ -63,32 +63,31 @@ public class Problem1001 {
         //key：灯照亮的行，value：灯照亮当前行的次数
         Map<Integer, Integer> rowMap = new HashMap<>();
         //灯照亮的列，value：灯照亮当前列的次数
-        Map<Integer, Integer> columnMap = new HashMap<>();
+        Map<Integer, Integer> colMap = new HashMap<>();
         //灯照亮的对角线(左上右下对角线(j-i+n-1))，value：灯照亮当前左上右下对角线的次数
         Map<Integer, Integer> diagMap = new HashMap<>();
         //灯照亮的反对角线(左下右上对角线(i+j))，value：灯照亮当前左下右上对角线的次数
         Map<Integer, Integer> antiDiagMap = new HashMap<>();
 
         //遍历每盏灯，确定每盏灯照亮的行、列、对角线(上右下对角线)、反对角线(左下右上对角线)的个数
-        for (int[] arr : lamps) {
-            int i = arr[0];
-            int j = arr[1];
+        for (int i = 0; i < queries.length; i++) {
+            int x = queries[i][0];
+            int y = queries[i][1];
 
             //lightSet中已经存在当前灯，则当前灯照亮的行、列、对角线、反对角线已经加入相应map中，直接进行下次循环
-            if (lightSet.contains((long) i * n + j)) {
+            if (lightSet.contains((long) x * n + y)) {
                 continue;
             }
 
             //当前灯加入lightSet中
-            lightSet.add((long) i * n + j);
+            lightSet.add((long) x * n + y);
 
             //当前灯照亮的行、列、对角线、反对角线加入对应map中
-            rowMap.put(i, rowMap.getOrDefault(i, 0) + 1);
-            columnMap.put(j, columnMap.getOrDefault(j, 0) + 1);
-            diagMap.put(j - i + n - 1, diagMap.getOrDefault(j - i + n - 1, 0) + 1);
-            antiDiagMap.put(i + j, antiDiagMap.getOrDefault(i + j, 0) + 1);
+            rowMap.put(x, rowMap.getOrDefault(x, 0) + 1);
+            colMap.put(y, colMap.getOrDefault(y, 0) + 1);
+            diagMap.put(y - x + n - 1, diagMap.getOrDefault(y - x + n - 1, 0) + 1);
+            antiDiagMap.put(x + y, antiDiagMap.getOrDefault(x + y, 0) + 1);
         }
-
 
         int[] result = new int[queries.length];
         //当前位置周围9个相邻位置(包含当前位置本身)
@@ -99,57 +98,56 @@ public class Problem1001 {
             int x = queries[i][0];
             int y = queries[i][1];
 
-            //当前位置(x,y)被照亮，不管是行、列、对角线、反对角线，只要有一个满足要求，就能被照亮
-            if (rowMap.containsKey(x) || columnMap.containsKey(y) ||
-                    diagMap.containsKey(y - x + n - 1) || antiDiagMap.containsKey(x + y)) {
-                result[i] = 1;
+            //当前位置(x,y)未被照亮，则当前位置(x,y)周围的9个位置都不存在灯，直接进行下次循环
+            if (!rowMap.containsKey(x) && !colMap.containsKey(y) &&
+                    !diagMap.containsKey(x + y) && !antiDiagMap.containsKey(y - x + n - 1)) {
+                continue;
+            }
 
-                //当前位置(x,y)被照亮，关闭当前位置(x,y)周围9个位置存在的灯，
-                //如果当前位置(x,y)没被照亮，则周围9个位置肯定不存在灯
-                for (int[] arr : direction) {
-                    //当前位置(x,y)周围的9个位置(x2,y2)
-                    int x2 = x + arr[0];
-                    int y2 = y + arr[1];
+            result[i] = 1;
 
-                    //位置(x2,y2)不在网格之内，进行下次循环
-                    if (x2 < 0 || x2 >= n || y2 < 0 || y2 >= n) {
-                        continue;
-                    }
+            //当前位置(x,y)被照亮，关闭当前位置(x,y)周围9个位置存在的灯(x2,y2)，
+            //并且关闭灯(x2,y2)照亮的行、列、对角线、反对角线
+            for (int k = 0; k < direction.length; k++) {
+                //当前位置(x,y)周围的9个位置(x2,y2)
+                int x2 = x + direction[k][0];
+                int y2 = y + direction[k][1];
 
-                    //位置(x2,y2)是灯，灯(x2,y2)从lightSet中移除，
-                    //并且关闭灯(x2,y2)照亮的行、列、左上右下对角线(y2-x2+n-1)、左下右上对角线(i+j)
-                    if (lightSet.contains((long) x2 * n + y2)) {
-                        //灯(x2,y2)从set中移除
-                        lightSet.remove((long) x2 * n + y2);
+                //位置(x2,y2)不在网格之内，或者位置(x2,y2)不是灯，直接进行下次循环
+                if (x2 < 0 || x2 >= n || y2 < 0 || y2 >= n ||
+                        !lightSet.contains((long) x2 * n + y2)) {
+                    continue;
+                }
 
-                        //关闭灯(x2,y2)照亮的行
-                        rowMap.put(x2, rowMap.get(x2) - 1);
-                        //关闭灯(x2,y2)照亮的行之后，对应行的照亮次数为0，从map中移除
-                        if (rowMap.get(x2) == 0) {
-                            rowMap.remove(x2);
-                        }
+                //灯(x2,y2)从set中移除
+                lightSet.remove((long) x2 * n + y2);
 
-                        //关闭灯(x2,y2)照亮的列
-                        columnMap.put(y2, columnMap.get(y2) - 1);
-                        //关闭灯(x2,y2)照亮的列之后，对应列的照亮次数为0，从map中移除
-                        if (columnMap.get(y2) == 0) {
-                            columnMap.remove(y2);
-                        }
+                //关闭灯(x2,y2)照亮的行
+                rowMap.put(x2, rowMap.get(x2) - 1);
+                //关闭灯(x2,y2)照亮的行之后，对应行的照亮次数为0，从map中移除
+                if (rowMap.get(x2) == 0) {
+                    rowMap.remove(x2);
+                }
 
-                        //关闭灯(x2,y2)照亮的对角线(y2-x2+n-1)
-                        diagMap.put(y2 - x2 + n - 1, diagMap.get(y2 - x2 + n - 1) - 1);
-                        //关闭灯(x2,y2)照亮的对角线之后，对应对角线的照亮次数为0，从map中移除
-                        if (diagMap.get(y2 - x2 + n - 1) == 0) {
-                            diagMap.remove(y2 - x2 + n - 1);
-                        }
+                //关闭灯(x2,y2)照亮的列
+                colMap.put(y2, colMap.get(y2) - 1);
+                //关闭灯(x2,y2)照亮的列之后，对应列的照亮次数为0，从map中移除
+                if (colMap.get(y2) == 0) {
+                    colMap.remove(y2);
+                }
 
-                        //关闭灯(x2,y2)照亮的反对角线(i+j)
-                        antiDiagMap.put(x2 + y2, antiDiagMap.get(x2 + y2) - 1);
-                        //关闭灯(x2,y2)照亮的反对角线(i+j)，对应反对角线的照亮次数为0，从map中移除
-                        if (antiDiagMap.get(x2 + y2) == 0) {
-                            antiDiagMap.remove(x2 + y2);
-                        }
-                    }
+                //关闭灯(x2,y2)照亮的对角线(y2-x2+n-1)
+                diagMap.put(y2 - x2 + n - 1, diagMap.get(y2 - x2 + n - 1) - 1);
+                //关闭灯(x2,y2)照亮的对角线之后，对应对角线的照亮次数为0，从map中移除
+                if (diagMap.get(y2 - x2 + n - 1) == 0) {
+                    diagMap.remove(y2 - x2 + n - 1);
+                }
+
+                //关闭灯(x2,y2)照亮的反对角线(i+j)
+                antiDiagMap.put(x2 + y2, antiDiagMap.get(x2 + y2) - 1);
+                //关闭灯(x2,y2)照亮的反对角线(i+j)，对应反对角线的照亮次数为0，从map中移除
+                if (antiDiagMap.get(x2 + y2) == 0) {
+                    antiDiagMap.remove(x2 + y2);
                 }
             }
         }
