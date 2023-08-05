@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2022/3/16 16:06
  * @Author zsy
- * @Description 机器人的运动范围 类比Problem62、Problem63、Problem64
+ * @Description 机器人的运动范围 类比Problem62、Problem63、Problem64、Problem980
  * 地上有一个m行n列的方格，从坐标 [0,0] 到坐标 [m-1,n-1] 。
  * 一个机器人从坐标 [0, 0] 的格子开始移动，它每次可以向左、右、上、下移动一格（不能移动到方格外），
  * 也不能进入行坐标和列坐标的数位之和大于k的格子。
@@ -31,8 +31,8 @@ public class Offer13 {
 
     /**
      * dfs
-     * 注意：机器人只能一步一步走，中间不能跳跃，有可能(i,j)满足小于位数之和小于k，
-     * 但(i-1,j)和(i,j-1)无法到达，所以导致(i,j)无法到达
+     * 注意：机器人只能一步一步走，中间不能跳跃，有可能(i,j)满足行坐标和列坐标的数位之和小于等于k，
+     * 但(i,j)相邻的四个位置(i-1,j)、(i+1,j)、(i,j-1)、(i,j+1)却无法到达，所以(i,j)无法到达
      * 时间复杂度O(mn)，空间复杂的O(mn)
      *
      * @param m
@@ -45,13 +45,13 @@ public class Offer13 {
             return 1;
         }
 
-        return backtrack(0, 0, m, n, k, new boolean[m][n]);
+        return dfs(0, 0, m, n, k, new boolean[m][n]);
     }
 
     /**
      * bfs
-     * 注意：机器人只能一步一步走，中间不能跳跃，
-     * 有可能存在情况，(i,j)满足小于位数之和小于k，但(i-1,j)和(i,j-1)无法到达，所以从(i-1,j)或(i,j-1)无法到达(i,j)
+     * 注意：机器人只能一步一步走，中间不能跳跃，有可能(i,j)满足行坐标和列坐标的数位之和小于等于k，
+     * 但(i,j)相邻的四个位置(i-1,j)、(i+1,j)、(i,j-1)、(i,j+1)却无法到达，所以(i,j)无法到达
      * 时间复杂度O(mn)，空间复杂的O(mn)
      *
      * @param m
@@ -73,7 +73,7 @@ public class Offer13 {
         while (!queue.isEmpty()) {
             int[] arr = queue.poll();
 
-            //当前节点超过矩阵范围，或者当前节点已被访问，或者当前节点行列坐标数位之和大于k，则不合法，直接进行下次循环
+            //当前节点超过矩阵范围，或者当前节点已被访问，或者当前节点行列坐标的数位之和大于k，则不合法，直接进行下次循环
             if (arr[0] < 0 || arr[0] >= m || arr[1] < 0 || arr[1] >= n || visited[arr[0]][arr[1]] ||
                     getNumSum(arr[0], arr[1]) > k) {
                 continue;
@@ -99,8 +99,8 @@ public class Offer13 {
      * @param visited 方格访问数组
      * @return
      */
-    private int backtrack(int i, int j, int m, int n, int k, boolean[][] visited) {
-        //当前节点超过矩阵范围，或者当前节点已被访问，或者当前节点行列坐标数位之和大于k，则不合法，直接返回0
+    private int dfs(int i, int j, int m, int n, int k, boolean[][] visited) {
+        //当前节点超过矩阵范围，或者当前节点已被访问，或者当前节点行列坐标的数位之和大于k，则不合法，直接返回0
         if (i < 0 || i >= m || j < 0 || j >= n || visited[i][j] || getNumSum(i, j) > k) {
             return 0;
         }
@@ -109,30 +109,30 @@ public class Offer13 {
         visited[i][j] = true;
 
         //因为从(0,0)开始往右下角走，所以只需要考虑向下和向右这两种情况
-        count = count + backtrack(i + 1, j, m, n, k, visited);
-        count = count + backtrack(i, j + 1, m, n, k, visited);
+        count = count + dfs(i + 1, j, m, n, k, visited);
+        count = count + dfs(i, j + 1, m, n, k, visited);
 
         return count;
     }
 
     /**
-     * 计算m、n两数的每位之和
+     * 计算i、j两数的每位之和
      *
-     * @param m
-     * @param n
+     * @param i
+     * @param j
      * @return
      */
-    private int getNumSum(int m, int n) {
+    private int getNumSum(int i, int j) {
         int sum = 0;
 
-        while (m != 0) {
-            sum = sum + m % 10;
-            m = m / 10;
+        while (i != 0) {
+            sum = sum + i % 10;
+            i = i / 10;
         }
 
-        while (n != 0) {
-            sum = sum + n % 10;
-            n = n / 10;
+        while (j != 0) {
+            sum = sum + j % 10;
+            j = j / 10;
         }
 
         return sum;

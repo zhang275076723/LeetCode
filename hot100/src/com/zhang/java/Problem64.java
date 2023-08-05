@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/23 11:12
  * @Author zsy
- * @Description 最小路径和 类比Problem62、Problem63、Offer47
+ * @Description 最小路径和 类比Problem62、Problem63、Problem980、Offer47 记忆化搜索类比Problem62、Problem63、Problem70、Problem329、Problem509、Problem1340、Offer10、Offer10_2
  * 给定一个包含非负整数的 m x n 网格 grid ，
  * 请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。
  * 说明：每次只能向下或者向右移动一步。
@@ -21,11 +21,6 @@ package com.zhang.java;
  * 0 <= grid[i][j] <= 100
  */
 public class Problem64 {
-    /**
-     * 回溯使用的最小路径和
-     */
-    private int minSum = Integer.MAX_VALUE;
-
     public static void main(String[] args) {
         Problem64 problem64 = new Problem64();
         int[][] grid = {{1, 3, 1}, {1, 5, 1}, {4, 2, 1}};
@@ -44,27 +39,27 @@ public class Problem64 {
      * @return
      */
     public int minPathSum(int[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
-        int[][] dp = new int[m][n];
+        int[][] dp = new int[grid.length][grid[0].length];
         //dp[0][0]初始化
         dp[0][0] = grid[0][0];
 
-        for (int i = 1; i < m; i++) {
+        //dp初始化
+        for (int i = 1; i < grid.length; i++) {
             dp[i][0] = dp[i - 1][0] + grid[i][0];
         }
 
-        for (int j = 1; j < n; j++) {
+        //dp初始化
+        for (int j = 1; j < grid[0].length; j++) {
             dp[0][j] = dp[0][j - 1] + grid[0][j];
         }
 
-        for (int i = 1; i < m; i++) {
-            for (int j = 1; j < n; j++) {
+        for (int i = 1; i < grid.length; i++) {
+            for (int j = 1; j < grid[0].length; j++) {
                 dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];
             }
         }
 
-        return dp[m - 1][n - 1];
+        return dp[grid.length - 1][grid[0].length - 1];
     }
 
     /**
@@ -76,52 +71,69 @@ public class Problem64 {
      * @return
      */
     public int minPathSum2(int[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
-
-        for (int i = 1; i < m; i++) {
+        //dp初始化
+        for (int i = 1; i < grid.length; i++) {
             grid[i][0] = grid[i - 1][0] + grid[i][0];
         }
-        for (int j = 1; j < n; j++) {
+
+        //dp初始化
+        for (int j = 1; j < grid[0].length; j++) {
             grid[0][j] = grid[0][j - 1] + grid[0][j];
         }
 
-        for (int i = 1; i < m; i++) {
-            for (int j = 1; j < n; j++) {
+        for (int i = 1; i < grid.length; i++) {
+            for (int j = 1; j < grid[0].length; j++) {
                 grid[i][j] = Math.min(grid[i - 1][j], grid[i][j - 1]) + grid[i][j];
             }
         }
 
-        return grid[m - 1][n - 1];
+        return grid[grid.length - 1][grid[0].length - 1];
     }
 
     /**
-     * 回溯+剪枝
-     * 时间复杂度O((m+n)*C(m+n-2,m-1))，空间复杂度O(m+n)
+     * 递归+记忆化搜索(相当于自下而上的动态规划)
+     * dp[i][j]：grid[0][0]到grid[i][j]的最小路径和
+     * 时间复杂度O(mn)，空间复杂度O(mn)
      *
      * @param grid
      * @return
      */
     public int minPathSum3(int[][] grid) {
-        backtrack(grid, 0, 0, 0);
+        int[][] dp = new int[grid.length][grid[0].length];
+        //dp[0][0]初始化
+        dp[0][0] = grid[0][0];
 
-        return minSum;
+        //dp初始化
+        for (int i = 1; i < grid.length; i++) {
+            dp[i][0] = dp[i - 1][0] + grid[i][0];
+        }
+
+        //dp初始化
+        for (int j = 1; j < grid[0].length; j++) {
+            dp[0][j] = dp[0][j - 1] + grid[0][j];
+        }
+
+        //dp初始化，未访问的dp初始化为-1
+        for (int i = 1; i < grid.length; i++) {
+            for (int j = 1; j < grid[0].length; j++) {
+                dp[i][j] = -1;
+            }
+        }
+
+        dfs(grid.length - 1, grid[0].length - 1, grid, dp);
+
+        return dp[grid.length - 1][grid[0].length - 1];
     }
 
-    private void backtrack(int[][] grid, int i, int j, int sum) {
-        //超过数组范围，剪枝
-        if (i >= grid.length || j >= grid[0].length) {
+    private void dfs(int i, int j, int[][] grid, int[][] dp) {
+        //当前dp不等于-1，则说明grid[0][0]到grid[i][j]的最小路径和已经得到，直接返回，可以直接使用
+        if (dp[i][j] != -1) {
             return;
         }
 
-        sum = sum + grid[i][j];
+        dfs(i - 1, j, grid, dp);
+        dfs(i, j - 1, grid, dp);
 
-        if (i == grid.length - 1 && j == grid[0].length - 1) {
-            minSum = Math.min(minSum, sum);
-            return;
-        }
-
-        backtrack(grid, i + 1, j, sum);
-        backtrack(grid, i, j + 1, sum);
+        dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];
     }
 }
