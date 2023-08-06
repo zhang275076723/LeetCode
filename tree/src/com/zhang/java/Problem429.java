@@ -66,6 +66,7 @@ public class Problem429 {
 
     /**
      * N叉树建树
+     * 注意：每个节点子节点的元素都是以null结尾，除了最后一个节点
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @return

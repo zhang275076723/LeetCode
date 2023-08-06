@@ -96,7 +96,7 @@ public class Problem219 {
             set.add(nums[right]);
             right++;
 
-            //始终保持滑动窗口大小不超过k，当滑动窗口大小大于k时，nums[left]从set中移除，左指针右移
+            //始终保持滑动窗口大小不超过k+1(因为是abs(i-j)<=k)，当滑动窗口大小大于k+1时，nums[left]从set中移除，左指针右移
             if (right - left > k) {
                 set.remove(nums[left]);
                 left++;
