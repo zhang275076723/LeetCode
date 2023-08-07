@@ -89,6 +89,7 @@ public class HuffmanEncode {
 
         /**
          * dfs建立encodeMap，对节点的code进行哈夫曼编码
+         * 左子树为0，右子树为1
          */
         private void buildEncodeMap(HuffmanNode node) {
             if (node.left == null && node.right == null) {
@@ -119,6 +120,7 @@ public class HuffmanEncode {
 
         /**
          * bfs建立encodeMap，对节点的code进行哈夫曼编码
+         * 左子树为0，右子树为1
          */
         private void buildEncodeMap() {
             Queue<HuffmanNode> queue = new LinkedList<>();

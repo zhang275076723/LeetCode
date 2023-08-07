@@ -67,6 +67,7 @@ public class Interview_08_06 {
     private void dfs(int n, List<Integer> A, List<Integer> B, List<Integer> C) {
         //A中只有1个盘子需要移动，直接将这1个盘子移动到C中
         if (n == 1) {
+            //注意：不能写成A.remove(0)，因为n为1时，A中元素个数不一定为1，所以要移除最上面元素只能通过A.remove(A.size()-1)
             C.add(A.remove(A.size() - 1));
 //            System.out.println(A);
 //            System.out.println(B);
