@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/16 08:33
  * @Author zsy
- * @Description 判断一个点是否在三角形内 字节面试题 腾讯面试题 网易面试题 美团面试题 阿里面试题
+ * @Description 判断一个点是否在三角形内 字节面试题 腾讯面试题 网易面试题 美团面试题 阿里面试题 类比Problem149
  * 在二维坐标系中，所有的值都是double类型，那么一个三角形可以由3个点来代表，
  * 给定3个点代表的三角形，再给定一个点(x, y)，判断(x, y)是否在三角形中。
  * <p>
@@ -109,7 +109,7 @@ public class IsInTriangle {
      * 向量AO和AB的叉乘(注意叉乘的前后顺序)
      * 点A(x1,y1),B(x2,y2),O(x,y)
      * 向量AO(x-x1,y-y1),AB(x2-x1,y2-y1)
-     * AO×AB=((x-x1)*(y2-y1),(y-y1)*(x2-x1))
+     * AO×AB=(x-x1)*(y2-y1)-(y-y1)*(x2-x1)
      *
      * @param A
      * @param B

@@ -42,7 +42,7 @@ public class Problem96 {
 
         for (int i = 1; i <= n; i++) {
             for (int j = 0; j <= i - 1; j++) {
-                dp[i] = dp[i] + dp[j] * dp[i - 1 - j];
+                dp[i] = dp[i] + dp[j] * dp[i - j - 1];
             }
         }
 
