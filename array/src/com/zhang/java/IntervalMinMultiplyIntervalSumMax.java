@@ -62,15 +62,17 @@ public class IntervalMinMultiplyIntervalSumMax {
 
     /**
      * 前缀和+单调栈
-     * 单调递增栈存放arr中元素下标索引，前缀和用于相减求区间元素之和
-     * 当前元素不满足单调递增栈，栈顶元素出栈，作为区间中最小元素的下标索引
+     * 单调递增栈存放arr中元素下标索引，前缀和用于求区间元素之和
+     * 当前元素不满足单调递增栈，栈顶元素出栈，作为区间中最小元素的下标索引，
+     * 对每一个最小元素，得到以当前元素作为区间最小元素的最大左右区间，
+     * 因为求区间最小值和区间和乘积的最大值，所以每次只需要考虑以当前元素作为区间最小元素的最大区间
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param arr
      * @return
      */
     public int find2(int[] arr) {
-        //前缀和用于相减求区间元素之和
+        //前缀和用于求区间元素之和
         int[] preSum = new int[arr.length + 1];
 
         for (int i = 1; i <= arr.length; i++) {
@@ -85,11 +87,11 @@ public class IntervalMinMultiplyIntervalSumMax {
         for (int i = 0; i < arr.length; i++) {
             //不满足单调递增栈，则栈顶元素出栈，作为区间中最小元素的下标索引
             while (!stack.isEmpty() && arr[stack.peek()] > arr[i]) {
-                //区间[left,right]中最小元素
+                //区间[left,right]的最小元素下标索引
                 int min = arr[stack.pop()];
-                //区间[left,right]左边界
+                //区间[left,right]左边界，通过preSum相减得到区间和
                 int left;
-                //区间[left,right]右边界
+                //区间[left,right]右边界，通过preSum相减得到区间和
                 int right = i - 1;
 
                 //栈为空，区间[left,right]左边界为0
@@ -100,7 +102,7 @@ public class IntervalMinMultiplyIntervalSumMax {
                     left = stack.peek() + 1;
                 }
 
-                //通过preSum相减得到区间和
+                //每次只需要考虑以当前元素作为区间最小元素的最大区间
                 result = Math.max(result, min * (preSum[right + 1] - preSum[left]));
             }
 
@@ -112,9 +114,9 @@ public class IntervalMinMultiplyIntervalSumMax {
         while (!stack.isEmpty()) {
             //区间[left,right]中最小元素
             int min = arr[stack.pop()];
-            //区间[left,right]左边界
+            //区间[left,right]左边界，通过preSum相减得到区间和
             int left;
-            //区间[left,right]右边界
+            //区间[left,right]右边界，通过preSum相减得到区间和
             int right = arr.length - 1;
 
             //栈为空，区间[left,right]左边界为0
@@ -125,7 +127,7 @@ public class IntervalMinMultiplyIntervalSumMax {
                 left = stack.peek() + 1;
             }
 
-            //通过preSum相减得到区间和
+            //每次只需要考虑以当前元素作为区间最小元素的最大区间
             result = Math.max(result, min * (preSum[right + 1] - preSum[left]));
         }
 

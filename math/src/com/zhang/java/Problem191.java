@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/7/27 9:10
  * @Author zsy
- * @Description 位1的个数 二进制类比Problem7、Problem190、Problem201、Problem461、Problem477 同Offer15
+ * @Description 位1的个数 二进制类比Problem190、Problem201、Problem461、Problem477 同Offer15
  * 编写一个函数，输入是一个无符号整数（以二进制串的形式），
  * 返回其二进制表达式中数字位数为 '1' 的个数（也被称为汉明重量）。
  * 请注意，在某些语言（如 Java）中，没有无符号整数类型。

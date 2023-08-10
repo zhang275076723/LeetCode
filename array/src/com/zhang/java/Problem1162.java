@@ -100,7 +100,7 @@ public class Problem1162 {
         while (!queue.isEmpty()) {
             int size = queue.size();
 
-            //遍历当前层中为0的节点，将下一层为0的节点加入队列
+            //遍历当前层中的节点，将下一层为0的节点加入队列
             for (int i = 0; i < size; i++) {
                 int[] arr = queue.poll();
 

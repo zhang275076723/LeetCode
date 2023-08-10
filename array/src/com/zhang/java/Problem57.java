@@ -43,10 +43,10 @@ public class Problem57 {
     }
 
     /**
-     * 分三段处理
-     * 第一段：小于newIntervals的区间直接加入结果集合
-     * 第二段：和newIntervals相交的区间，合并之后再加入结果集合
-     * 第三段：大于newIntervals的区间直接加入结果集合
+     * 分三部分处理
+     * 第一部分：小于newIntervals的区间直接加入结果集合
+     * 第二部分：和newIntervals相交的区间，合并之后再加入结果集合
+     * 第三部分：大于newIntervals的区间直接加入结果集合
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param intervals
@@ -62,7 +62,7 @@ public class Problem57 {
 
         int i = 0;
 
-        //第一段：小于newIntervals的区间直接加入结果集合
+        //第一部分：小于newIntervals的区间直接加入结果集合
         while (i < intervals.length && intervals[i][1] < newInterval[0]) {
             list.add(intervals[i]);
             i++;
@@ -72,7 +72,7 @@ public class Problem57 {
         int start = newInterval[0];
         int end = newInterval[1];
 
-        //第二段：和newIntervals相交的区间，合并之后再加入结果集合
+        //第二部分：和newIntervals相交的区间，合并之后再加入结果集合
         while (i < intervals.length && intervals[i][0] <= end) {
             start = Math.min(start, intervals[i][0]);
             end = Math.max(end, intervals[i][1]);
@@ -81,7 +81,7 @@ public class Problem57 {
 
         list.add(new int[]{start, end});
 
-        //第三段：大于newIntervals的区间直接加入结果集合
+        //第三部分：大于newIntervals的区间直接加入结果集合
         while (i < intervals.length) {
             list.add(intervals[i]);
             i++;

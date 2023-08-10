@@ -58,21 +58,21 @@ public class Problem212 {
      */
     public List<String> findWords(char[][] board, String[] words) {
         List<String> list = new ArrayList<>();
-        //用于去重，当找到满足要求的word时，加入set，停止对当前word的继续寻找，相当于剪枝
-        Set<String> set = new HashSet<>();
 
         for (String word : words) {
-            //当前已经找到单词word，则加入list中，进行下个单词的搜索，相当于剪枝
+            //当前单词word是否找到标志
             boolean flag = false;
 
             for (int i = 0; i < board.length; i++) {
                 for (int j = 0; j < board[0].length; j++) {
                     flag = backtrack(0, i, j, new boolean[board.length][board[0].length], board, word);
+                    //当前已经找到单词word，则加入list中，进行下个单词的搜索，相当于剪枝
                     if (flag) {
                         list.add(word);
                         break;
                     }
                 }
+                //跳出循环，进行下个单词的搜索，相当于剪枝
                 if (flag) {
                     break;
                 }
@@ -94,9 +94,6 @@ public class Problem212 {
      * @return
      */
     public List<String> findWords2(char[][] board, String[] words) {
-        List<String> list = new ArrayList<>();
-        //用于去重，当找到满足要求的word时，加入set，之后再次遍历到set中存在的相同word时不加入set，相当于剪枝
-        Set<String> set = new HashSet<>();
         //前缀树
         Trie trie = new Trie();
 
@@ -105,9 +102,13 @@ public class Problem212 {
             trie.insert(word);
         }
 
+        List<String> list = new ArrayList<>();
+        //用于去重，当找到满足要求的word时，加入set，之后再次遍历到set中存在的相同word时不加入set，相当于剪枝
+        Set<String> set = new HashSet<>();
+
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                backtrack2(trie.root, i, j, board, new StringBuilder(),
+                backtrack2(i, j, trie.root, board, new StringBuilder(),
                         new boolean[board.length][board[0].length], list, set);
             }
         }
@@ -140,7 +141,7 @@ public class Problem212 {
         return flag;
     }
 
-    private void backtrack2(Trie.TrieNode node, int i, int j, char[][] board, StringBuilder sb,
+    private void backtrack2(int i, int j, Trie.TrieNode node, char[][] board, StringBuilder sb,
                             boolean[][] visited, List<String> list, Set<String> set) {
         //当前位置越界，或当前位置已经被访问时，直接返回
         if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || visited[i][j]) {
@@ -166,10 +167,10 @@ public class Problem212 {
         }
 
         //往上下左右找
-        backtrack2(node, i - 1, j, board, sb, visited, list, set);
-        backtrack2(node, i + 1, j, board, sb, visited, list, set);
-        backtrack2(node, i, j - 1, board, sb, visited, list, set);
-        backtrack2(node, i, j + 1, board, sb, visited, list, set);
+        backtrack2(i - 1, j, node, board, sb, visited, list, set);
+        backtrack2(i + 1, j, node, board, sb, visited, list, set);
+        backtrack2(i, j - 1, node, board, sb, visited, list, set);
+        backtrack2(i, j + 1, node, board, sb, visited, list, set);
 
         sb.delete(sb.length() - 1, sb.length());
         visited[i][j] = false;

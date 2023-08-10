@@ -53,7 +53,7 @@ public class Problem474 {
             //strs[i-1]中1的数量
             int oneCount = strs[i - 1].length() - zeroCount;
 
-            //注意从0开始遍历，因为strs中0和1的数量可能为0
+            //注意：j、k都要从0开始遍历，因为strs中0和1的数量可能为0
             for (int j = 0; j <= m; j++) {
                 for (int k = 0; k <= n; k++) {
                     //j或k的数量小于strs[i-1]中0或1的数量，则不能选strs[i-1]

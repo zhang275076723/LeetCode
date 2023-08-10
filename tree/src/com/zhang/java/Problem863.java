@@ -123,7 +123,7 @@ public class Problem863 {
      * @param pre      当前遍历到root节点的前驱节点，用于剪枝，避免重复查找
      * @param distance
      * @param k
-     * @param map
+     * @param map      父节点map
      * @param list
      */
     private void dfs(TreeNode root, TreeNode pre, int distance, int k, Map<TreeNode, TreeNode> map, List<Integer> list) {
