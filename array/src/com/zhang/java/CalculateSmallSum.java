@@ -6,6 +6,7 @@ package com.zhang.java;
  * @Author zsy
  * @Description 计算数组的小和 快手面试题 归并排序类比Problem23、Problem148、Problem315、Problem327、Problem493、Offer51
  * 在一个数组中，每一个数左边小于等于当前数的数累加起来，叫做这个数组的小和。求一个数组的小和。
+ * <p>
  * 输入：arr = [1,3,5,2,4,6]
  * 输出：27
  * 解释：
