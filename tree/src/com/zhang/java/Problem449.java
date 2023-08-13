@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/10/28 18:34
  * @Author zsy
- * @Description 序列化和反序列化二叉搜索树 序列化类比类比Problem271、Problem297、Problem331、Offer37 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem255、Problem395、Problem617、Problem889、Problem1008、Offer7、Offer33
+ * @Description 序列化和反序列化二叉搜索树 序列化类比类比Problem271、Problem297、Problem331、Offer37 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem255、Problem395、Problem617、Problem654、Problem889、Problem1008、Offer7、Offer33
  * 序列化是将数据结构或对象转换为一系列位的过程，以便它可以存储在文件或内存缓冲区中，
  * 或通过网络连接链路传输，以便稍后在同一个或另一个计算机环境中重建。
  * 设计一个算法来序列化和反序列化 二叉搜索树 。
@@ -209,8 +209,10 @@ public class Problem449 {
 
             //根节点，前序遍历数组中第一个元素即为根节点
             TreeNode root = new TreeNode(preorder[left]);
+
             root.left = buildTree(preorder, left + 1, rightRootIndex - 1);
             root.right = buildTree(preorder, rightRootIndex, right);
+
             return root;
         }
     }

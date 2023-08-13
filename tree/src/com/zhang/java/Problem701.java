@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/10/7 09:50
  * @Author zsy
- * @Description 二叉搜索树中的插入操作 类比Problem173、Problem235、Problem450、Problem700、Offer68
+ * @Description 二叉搜索树中的插入操作 类比Problem235、Problem236、Problem450、Problem700、Problem998、Offer68、Offer68_2、InorderNextNode
  * 给定二叉搜索树（BST）的根节点 root 和要插入树中的值 value ，将值插入二叉搜索树。
  * 返回插入后二叉搜索树的根节点。
  * 输入数据 保证 ，新值和原始二叉搜索树中的任意节点值都不同。

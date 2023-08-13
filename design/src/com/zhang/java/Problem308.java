@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/12/14 11:14
  * @Author zsy
- * @Description 二维区域和检索 - 可变 类比Problem303、Problem304、Problem307 线段树类比Problem307、Problem327、Problem729、Problem731、Problem732
+ * @Description 二维区域和检索 - 可变 类比Problem303、Problem304、Problem307 线段树类比Problem307、Problem327、Problem654、Problem729、Problem731、Problem732
  * 给你一个二维矩阵 matrix ，你需要处理下面两种类型的若干次查询：
  * 更新：更新 matrix 中某个单元的值。
  * 求和：计算矩阵 matrix 中某一矩形区域元素的 和 ，该区域由 左上角 (row1, col1) 和 右下角 (row2, col2) 界定。
@@ -46,9 +46,11 @@ public class Problem308 {
         };
 //        NumMatrix numMatrix = new NumMatrix(matrix);
         NumMatrix2 numMatrix = new NumMatrix2(matrix);
-        System.out.println(numMatrix.sumRegion(2, 1, 4, 3));//8
+        //8
+        System.out.println(numMatrix.sumRegion(2, 1, 4, 3));
         numMatrix.update(3, 2, 2);
-        System.out.println(numMatrix.sumRegion(2, 1, 4, 3));//10
+        //10
+        System.out.println(numMatrix.sumRegion(2, 1, 4, 3));
     }
 
     /**

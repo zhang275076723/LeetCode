@@ -114,7 +114,7 @@ public class Offer54 {
         reverseInorder(root.left, k);
     }
 
-    public TreeNode buildTree(String[] data) {
+    private TreeNode buildTree(String[] data) {
         if (data == null || data.length == 0) {
             return null;
         }

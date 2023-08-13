@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/13 11:38
  * @Author zsy
- * @Description 区域和检索 - 数组可修改 类比Problem303、Problem304、Problem308 线段树类比Problem308、Problem327、Problem729、Problem731、Problem732 二分搜索树类比Problem4、Problem230、Problem378、Problem440
+ * @Description 区域和检索 - 数组可修改 类比Problem303、Problem304、Problem308 线段树类比Problem308、Problem327、Problem654、Problem729、Problem731、Problem732 二分搜索树类比Problem4、Problem230、Problem378、Problem440
  * 给你一个数组 nums ，请你完成两类查询。
  * 1、其中一类查询要求 更新 数组 nums 下标对应的值
  * 2、另一类查询要求返回数组 nums 中索引 left 和索引 right 之间（ 包含 ）的nums元素的 和 ，其中 left <= right
@@ -36,9 +36,11 @@ public class Problem307 {
         int[] nums = {1, 3, 5};
 //        NumArray numArray = new NumArray(nums);
         NumArray2 numArray = new NumArray2(nums);
-        System.out.println(numArray.sumRange(0, 2));//9
+        //9
+        System.out.println(numArray.sumRange(0, 2));
         numArray.update(1, 2);
-        System.out.println(numArray.sumRange(0, 2));//8
+        //8
+        System.out.println(numArray.sumRange(0, 2));
     }
 
     /**
@@ -107,7 +109,7 @@ public class Problem307 {
                 maxValueArr = new int[nums.length * 4];
                 //区间元素的最小值数组长度至少为4n，确保区间元素的最小值数组能够覆盖nums中所有区间
                 minValueArr = new int[nums.length * 4];
-                //懒标记数组大小至少为4n，确保懒标记数组能够覆盖nums中所有区间
+                //懒标记数组长度至少为4n，确保懒标记数组能够覆盖nums中所有区间
                 lazyValueArr = new int[nums.length * 4];
 
                 //建立线段树
