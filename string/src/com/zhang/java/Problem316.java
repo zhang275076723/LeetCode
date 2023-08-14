@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/9/12 17:08
  * @Author zsy
- * @Description 去除重复字母 腾讯面试题 华为面试题 单调栈类比Problem42、Problem84、Problem255、Problem321、Problem402、Problem456、Problem496、Problem503、Problem654、Problem739、Problem907、Problem1019、Problem1856、Problem2104、Offer33、DoubleStackSort
+ * @Description 去除重复字母 腾讯面试题 华为面试题 单调栈类比Problem42、Problem84、Problem255、Problem321、Problem402、Problem456、Problem496、Problem503、Problem654、Problem739、Problem907、Problem1019、Problem1856、Problem2104、Problem2487、Offer33、DoubleStackSort
  * 给你一个字符串 s ，请你去除字符串中重复的字母，使得每个字母只出现一次。
  * 需保证 返回结果的字典序最小（要求不能打乱其他字符的相对位置）。
  * <p>

@@ -3,7 +3,7 @@ package com.zhang.zhang;
 /**
  * @Date 2022/6/21 8:32
  * @Author zsy
- * @Description 删除排序链表中的重复元素 II 类比Problem83、Problem92、Problem206
+ * @Description 删除排序链表中的重复元素 II 类比Problem83、Problem92、Problem206、Problem2487
  * 给定一个已排序的链表的头 head ， 删除原始链表中所有重复数字的节点，只留下不同的数字 。
  * 返回 已排序的链表 。
  * <p>
@@ -82,22 +82,21 @@ public class Problem82 {
             return head;
         }
 
-        //当前节点和下一个节点相等时，找当前节点后面第一个和当前节点不同的节点
+        //当前节点和下一个节点相等时，找当前节点后面第一个和当前节点不同的节点，删除这些相等的节点，返回新的头结点
         if (head.val == head.next.val) {
             //和head值相等的最后一个节点的下一个节点
-            ListNode node = head.next;
+            ListNode nextNode = head.next;
 
-            while (node != null && head.val == node.val) {
-                node = node.next;
+            while (nextNode != null && head.val == nextNode.val) {
+                nextNode = nextNode.next;
             }
 
-            head = deleteDuplicates(node);
+            return deleteDuplicates2(nextNode);
         } else {
-            //当前节点和下一个节点不相等，不更新头结点
+            //当前节点和下一个节点不相等，不删除当前节点，递归往后找，返回当前头结点
             head.next = deleteDuplicates2(head.next);
+            return head;
         }
-
-        return head;
     }
 
     private ListNode buildList(int[] data) {

@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2022/3/30 16:24
  * @Author zsy
- * @Description 接雨水 字节面试题 类比Problem11、Problem152、Problem238、Offer66 单调栈类比Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem654、Problem739、Problem907、Problem1019、Problem1856、Problem2104、Offer33、DoubleStackSort
+ * @Description 接雨水 字节面试题 类比Problem11、Problem152、Problem238、Offer66 单调栈类比Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem654、Problem739、Problem907、Problem1019、Problem1856、Problem2104、Problem2487、Offer33、DoubleStackSort
  * 给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
  * <p>
  * 输入：height = [0,1,0,2,1,0,1,3,2,1,2,1]
@@ -65,34 +65,34 @@ public class Problem42 {
     /**
      * 动态规划，按列求雨水
      * 暴力每个位置都需要遍历一遍才能够找到最大和最小值，而动态规划在O(1)就能找到最大最小值
-     * leftMax[i]：height[0]-height[i]中的最大值
-     * rightMax[i]：height[i]-height[height.length-1]中的最大值
-     * leftMax[i] = max(height[i], leftMax[i-1])
-     * rightMax[i] = max(height[i], rightMax[i+1])
+     * left[i]：height[0]-height[i]中的最大值
+     * right[i]：height[i]-height[height.length-1]中的最大值
+     * left[i] = max(height[i], left[i-1])
+     * right[i] = max(height[i], right[i+1])
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param height
      * @return
      */
     public int trap2(int[] height) {
-        int[] leftMax = new int[height.length];
-        int[] rightMax = new int[height.length];
-        //leftMax、rightMax初始化
-        leftMax[0] = height[0];
-        rightMax[height.length - 1] = height[height.length - 1];
+        int[] left = new int[height.length];
+        int[] right = new int[height.length];
+        //left、right初始化
+        left[0] = height[0];
+        right[height.length - 1] = height[height.length - 1];
 
-        for (int i = 1; i < leftMax.length; i++) {
-            leftMax[i] = Math.max(leftMax[i - 1], height[i]);
+        for (int i = 1; i < left.length; i++) {
+            left[i] = Math.max(left[i - 1], height[i]);
         }
 
-        for (int i = rightMax.length - 2; i >= 0; i--) {
-            rightMax[i] = Math.max(rightMax[i + 1], height[i]);
+        for (int i = right.length - 2; i >= 0; i--) {
+            right[i] = Math.max(right[i + 1], height[i]);
         }
 
         int result = 0;
 
         for (int i = 0; i < height.length; i++) {
-            result = result + Math.min(leftMax[i], rightMax[i]) - height[i];
+            result = result + Math.min(left[i], right[i]) - height[i];
         }
 
         return result;

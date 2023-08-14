@@ -32,7 +32,9 @@ public class Problem369 {
     }
 
     /**
-     * 先反转链表，再链表加1(如果最高位需要进位，则添加一个新的节点)，最后再反转回来
+     * 1、反转链表
+     * 2、链表加1(如果最高位需要进位，则添加一个新的节点)
+     * 3、最后再反转回来
      * 时间复杂度O(n)，空间复杂度O(1) (如果使用递归反转链表，空间复杂度为O(n))
      *
      * @param head
@@ -43,7 +45,7 @@ public class Problem369 {
             return new ListNode(1);
         }
 
-        //反转链表，便于末尾加一操作
+        //1、反转链表，便于末尾加一操作
         head = reverse(head);
 
         ListNode node = head;
@@ -52,6 +54,7 @@ public class Problem369 {
         node.val++;
         int carry = 0;
 
+        //2、链表加1(如果最高位需要进位，则添加一个新的节点)
         while (node != null) {
             node.val = node.val + carry;
             carry = node.val / 10;
@@ -71,7 +74,7 @@ public class Problem369 {
             pre.next = new ListNode(carry);
         }
 
-        //再反转回来，得到结果链表
+        //3、反转回来，得到结果链表
         return reverse(head);
     }
 

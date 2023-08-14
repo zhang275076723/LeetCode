@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/13 8:48
  * @Author zsy
- * @Description 反转链表 反转类比Problem156 类比Problem21、Problem23、Problem24、Problem25、Problem92、Problem143 同Offer24
+ * @Description 反转链表 反转类比Problem156、Problem226 类比Problem21、Problem23、Problem24、Problem25、Problem92、Problem143、Problem2487 同Offer24
  * 给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。
  * <p>
  * 输入：head = [1,2,3,4,5]

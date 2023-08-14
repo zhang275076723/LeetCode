@@ -53,7 +53,7 @@ public class Problem445 {
         ListNode head = new ListNode();
         ListNode node = head;
 
-        //翻转链表，便于相加操作
+        //反转链表，便于相加操作
         ListNode head1 = reverse(l1);
         ListNode head2 = reverse(l2);
 

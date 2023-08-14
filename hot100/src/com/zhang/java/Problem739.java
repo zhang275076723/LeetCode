@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2022/6/18 9:37
  * @Author zsy
- * @Description 每日温度 字节面试题 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem654、Problem907、Problem1019、Problem1856、Problem2104、Offer33、DoubleStackSort
+ * @Description 每日温度 字节面试题 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem654、Problem907、Problem1019、Problem1856、Problem2104、Problem2487、Offer33、DoubleStackSort
  * 给定一个整数数组 temperatures ，表示每天的温度，返回一个数组 answer ，
  * 其中 answer[i] 是指在第 i 天之后，才会有更高的温度。如果气温在这之后都不会升高，请在该位置用 0 来代替。
  * <p>

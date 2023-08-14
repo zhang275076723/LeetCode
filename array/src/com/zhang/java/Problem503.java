@@ -6,7 +6,7 @@ import java.util.Stack;
 /**
  * @Date 2022/11/18 10:07
  * @Author zsy
- * @Description 下一个更大元素 II 类比Problem496、Problem556 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem654、Problem739、Problem907、Problem1019、Problem1856、Problem2104、Offer33、DoubleStackSort
+ * @Description 下一个更大元素 II 类比Problem496、Problem556 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem654、Problem739、Problem907、Problem1019、Problem1856、Problem2104、Problem2487、Offer33、DoubleStackSort
  * 给定一个循环数组 nums（ nums[nums.length - 1] 的下一个元素是 nums[0] ），返回 nums 中每个元素的 下一个更大元素 。
  * 数字 x 的 下一个更大的元素 是按数组遍历顺序，这个数字之后的第一个比它更大的数，这意味着你应该循环地搜索它的下一个更大的数。
  * 如果不存在，则输出 -1 。
