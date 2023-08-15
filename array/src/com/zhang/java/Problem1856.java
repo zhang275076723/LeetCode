@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2023/8/11 08:42
  * @Author zsy
- * @Description 子数组最小乘积的最大值 字节面试题 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem654、Problem739、Problem907、Problem1019、Problem2104、Problem2487、Offer33、DoubleStackSort
+ * @Description 子数组最小乘积的最大值 字节面试题 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem654、Problem739、Problem907、Problem1019、Problem2104、Problem2454、Problem2487、Offer33、DoubleStackSort
  * 一个数组的 最小乘积 定义为这个数组中 最小值 乘以 数组的 和 。
  * 比方说，数组 [3,2,5] （最小值是 2）的最小乘积为 2 * (3+2+5) = 2 * 10 = 20 。
  * 给你一个正整数数组 nums ，请你返回 nums 任意 非空子数组 的最小乘积 的 最大值 。

@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2023/8/13 08:25
  * @Author zsy
- * @Description 从链表中移除节点 类比Problem82、Problem83、Problem92、Problem206 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem654、Problem739、Problem907、Problem1019、Problem1856、Problem2104、Offer33、DoubleStackSort
+ * @Description 从链表中移除节点 类比Problem82、Problem83、Problem92、Problem206 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem654、Problem739、Problem907、Problem1019、Problem1856、Problem2104、Problem2454、Offer33、DoubleStackSort
  * 给你一个链表的头节点 head 。
  * 对于列表中的每个节点 node ，如果其右侧存在一个具有 严格更大 值的节点，则移除 node 。
  * 返回修改后链表的头节点 head 。

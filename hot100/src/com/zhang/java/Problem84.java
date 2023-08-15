@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2022/4/28 9:35
  * @Author zsy
- * @Description 柱状图中最大的矩形 类比Problem11、Problem85 单调栈类比Problem42、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem654、Problem739、Problem907、Problem1019、Problem1856、Problem2104、Problem2487、Offer33、DoubleStackSort
+ * @Description 柱状图中最大的矩形 类比Problem11、Problem85 单调栈类比Problem42、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem654、Problem739、Problem907、Problem1019、Problem1856、Problem2104、Problem2454、Problem2487、Offer33、DoubleStackSort
  * 给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。
  * 求在该柱状图中，能够勾勒出来的矩形的最大面积。
  * <p>
