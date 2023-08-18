@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/28 17:11
  * @Author zsy
- * @Description 路径总和 II 类比Problem112、Problem257、Problem437 保存父节点类比Problem126、Problem863 同Offer34
+ * @Description 路径总和 II 类比Problem112、Problem257、Problem437 保存父节点类比Problem126、Problem863、Offer34 同Offer34
  * 给你二叉树的根节点 root 和一个整数目标和 targetSum ，找出所有 从根节点到叶子节点 路径总和等于给定目标和的路径。
  * 叶子节点 是指没有子节点的节点。
  * <p>
@@ -122,6 +122,7 @@ public class Problem113 {
 
     /**
      * 根据父节点map，获取根节点到当前节点的路径集合
+     * 因为map存放当前节点的父节点，所以从当前节点往根节点找
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param node

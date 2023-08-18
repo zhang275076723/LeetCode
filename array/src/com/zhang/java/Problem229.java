@@ -81,9 +81,9 @@ public class Problem229 {
         int result2 = -1;
 
         for (int num : nums) {
-            if (result1 == num && vote1 > 0) {
+            if (result1 == num) {
                 vote1++;
-            } else if (result2 == num && vote2 > 0) {
+            } else if (result2 == num) {
                 vote2++;
             } else {
                 if (vote1 == 0) {

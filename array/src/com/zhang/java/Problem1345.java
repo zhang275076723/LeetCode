@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/2/5 08:34
  * @Author zsy
- * @Description 跳跃游戏 IV 跳跃问题类比Problem45、Problem55、Problem403、Problem1306、Problem1340、Problem1696、Problem1871 双向bfs类比Problem126、Problem127
+ * @Description 跳跃游戏 IV 双向bfs类比Problem126、Problem127、Problem433、Problem752 跳跃问题类比Problem45、Problem55、Problem403、Problem1306、Problem1340、Problem1696、Problem1871
  * 给你一个整数数组 arr ，你一开始在数组的第一个元素处（下标为 0）。
  * 每一步，你可以从下标 i 跳到下标 i + 1 、i - 1 或者 j ：
  * i + 1 需满足：i + 1 < arr.length
@@ -39,7 +39,8 @@ public class Problem1345 {
 
     /**
      * bfs (bfs确保最先得到跳跃到末尾元素的最少跳跃次数)
-     * 从下标索引0开始dfs，bfs每次往外扩一层，表示跳一次，将和当前元素相邻元素和值相同的元素加入队列，直至到达末尾元素
+     * bfs每次往外扩一层，将当前层中所有下标索引的相邻下标索引和同值下标索引全部加入队列中，直至遍历到末尾下标索引，
+     * 或全部遍历完都没有跳跃到末尾下标索引，返回-1
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param arr
@@ -62,11 +63,12 @@ public class Problem1345 {
             list.add(i);
         }
 
-        //bfs向外扩展的次数，得到跳跃到末尾元素的最少跳跃次数
-        int count = 0;
         Queue<Integer> queue = new LinkedList<>();
         boolean[] visited = new boolean[arr.length];
         queue.offer(0);
+
+        //bfs向外扩展的次数，arr[0]跳跃到arr[arr.length-1]的最少跳跃次数
+        int count = 0;
 
         while (!queue.isEmpty()) {
             int size = queue.size();
@@ -75,37 +77,37 @@ public class Problem1345 {
             for (int i = 0; i < size; i++) {
                 int index = queue.poll();
 
-                //当前下标索引超出数组范围，或已被visited访问，直接进行下次循环
+                //当前下标索引超出数组范围，或者已访问，直接进行下次循环
                 if (index < 0 || index >= arr.length || visited[index]) {
                     continue;
                 }
 
-                //可以跳跃到最后一个位置，直接返回
+                //当前下标索引为最后一个位置，则找到了arr[0]跳跃到arr[arr.length-1]的最少跳跃次数，直接返回count
                 if (index == arr.length - 1) {
                     return count;
                 }
 
-                //当前索引下标已被访问
+                //当前下标索引已被访问
                 visited[index] = true;
 
-                //当前元素相邻元素加入队列
+                //当前下标索引相邻下标索引加入队列
                 queue.offer(index - 1);
                 queue.offer(index + 1);
 
-                //当前元素值相同的元素索引下标加入队列
+                //将当前下标索引同值的下标索引加入队列
                 if (map.containsKey(arr[index])) {
                     List<Integer> list = map.get(arr[index]);
 
                     for (int j = 0; j < list.size(); j++) {
-                        //和index同值的下标索引
+                        //和arr[index]同值的下标索引
                         int sameValueIndex = list.get(j);
-                        //将所有未访问和index同值的下标索引加入queue
+                        //将所有未访问和index同值的下标索引加入队列
                         if (!visited[sameValueIndex]) {
                             queue.offer(sameValueIndex);
                         }
                     }
 
-                    //当前元素值相同的元素索引下标加入队列之后，不需要再遍历当前元素值相同的元素，从map中移除，相当于剪枝
+                    //和arr[index]同值的下标索引全部都加入队列之后，arr[index]从map中移除
                     map.remove(arr[index]);
                 }
             }
@@ -114,15 +116,15 @@ public class Problem1345 {
             count++;
         }
 
-        //无法跳跃到最后一个位置，返回-1
+        //bfs结束也没有跳跃到最后一个位置，即arr[0]无法跳跃到arr[arr.length-1]，返回-1
         return -1;
     }
 
     /**
      * 双向bfs (bfs确保最先得到跳跃到末尾元素的最少跳跃次数)
-     * 从下标索引0和数组末尾下标索引同时开始bfs，bfs每次往外扩一层，表示跳一次，当前元素相邻元素和值相同元素的索引下标加入队列，
-     * 直至一个队列遍历到了另一个队列已经遍历过的下标索引，则两个队列相交，找到了跳跃到末尾元素的最少跳跃次数
-     * 优化：优先遍历两个队列中元素较少的队列，能够加快查询速度
+     * 从0和arr.length-1同时开始bfs，bfs每次往外扩一层，将当前队列当前层中所有下标索引的相邻下标索引和同值下标索引全部加入另一个队列中，
+     * 直至一个队列中包含了另一个队列中的下标索引，即双向bfs相交，或者全部遍历完都没有找到跳跃到末尾下标索引，返回-1
+     * 注意：双向bfs优先遍历两个队列中较少的队列，因为较少的队列，扩展一层得到的元素少，能够加快查询速度
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param arr
@@ -145,15 +147,13 @@ public class Problem1345 {
             list.add(i);
         }
 
-        //双向bfs向外扩展的次数，得到跳跃到末尾元素的最少跳跃次数
-        int count = 0;
         //从前往后遍历的队列，即从0开始遍历
         Queue<Integer> queue1 = new LinkedList<>();
         //从后往前遍历的队列，即从arr.length-1开始遍历
         Queue<Integer> queue2 = new LinkedList<>();
-        //从前往后遍历的访问数组
+        //从前往后遍历的访问数组，存储queue1已经访问到的下标索引
         boolean[] visited1 = new boolean[arr.length];
-        //从后往前遍历的访问数组
+        //从后往前遍历的访问数组，存储queue2已经访问到的下标索引
         boolean[] visited2 = new boolean[arr.length];
         queue1.offer(0);
         queue2.offer(arr.length - 1);
@@ -161,10 +161,11 @@ public class Problem1345 {
         visited1[0] = true;
         visited2[arr.length - 1] = true;
 
+        //双向bfs向外扩展的次数，两个队列相交，即arr[0]跳跃到arr[arr.length-1]的最少跳跃次数
+        int count = 0;
+
         while (!queue1.isEmpty() && !queue2.isEmpty()) {
-            //优化：优先遍历两个队列中存储单词较少的队列，这样遍历的单词少，能够加快查询速度
-            //从前往后遍历的queue1中元素索引下标数量大于从后往前遍历的queue2中元素索引下标数量，两个队列和两个访问数组交换，
-            //queue1是两个队列中存储元素索引下标较少的队列，每次只遍历queue1
+            //双向bfs优先遍历两个队列中较少的队列，因为较少的队列，扩展一层得到的元素少，能够加快查询速度
             if (queue1.size() > queue2.size()) {
                 Queue<Integer> tempQueue = queue1;
                 queue1 = queue2;
@@ -176,22 +177,21 @@ public class Problem1345 {
 
             int size = queue1.size();
 
-            //每次往外扩一层，表示跳一次
             for (int i = 0; i < size; i++) {
                 int index = queue1.poll();
 
-                //index在visited2中已被访问，双向dfs已经相交，则已经得到跳跃到末尾元素的最少跳跃次数
+                //index已经存在visited2中，即双向bfs相交，则找到了arr[0]跳跃到arr[arr.length-1]的最少跳跃次数，直接返回count
                 if (visited2[index]) {
                     return count;
                 }
 
-                //未被访问的index-1加入queue1，并在visited1设置为已访问
+                //不越界并且未访问的index-1加入queue1，并在visited1设置为已访问
                 if (index - 1 >= 0 && !visited1[index - 1]) {
                     queue1.offer(index - 1);
                     visited1[index - 1] = true;
                 }
 
-                //未被访问的index+1加入queue1，并在visited1设置为已访问
+                //不越界并且未访问的index+1加入queue1，并在visited1设置为已访问
                 if (index + 1 < arr.length && !visited1[index + 1]) {
                     queue1.offer(index + 1);
                     visited1[index + 1] = true;
@@ -202,16 +202,16 @@ public class Problem1345 {
                     List<Integer> list = map.get(arr[index]);
 
                     for (int j = 0; j < list.size(); j++) {
-                        //和index同值的下标索引
+                        //和arr[index]同值的下标索引
                         int sameValueIndex = list.get(j);
-                        //将所有未访问和index同值的下标索引加入queue，并在visited1设置为已访问
+                        //将所有未访问和index同值的下标索引加入队列，并在visited1设置为已访问
                         if (!visited1[sameValueIndex]) {
                             queue1.offer(sameValueIndex);
                             visited1[sameValueIndex] = true;
                         }
                     }
 
-                    //当前元素值相同的元素索引下标加入队列之后，不需要再遍历当前元素值相同的元素，从map中移除，相当于剪枝
+                    //和arr[index]同值的下标索引全部都加入队列之后，arr[index]从map中移除
                     map.remove(arr[index]);
                 }
             }
@@ -220,7 +220,7 @@ public class Problem1345 {
             count++;
         }
 
-        //无法跳跃到最后一个位置，返回-1
+        //bfs结束也没有跳跃到最后一个位置，即arr[0]无法跳跃到arr[arr.length-1]，返回-1
         return -1;
     }
 }

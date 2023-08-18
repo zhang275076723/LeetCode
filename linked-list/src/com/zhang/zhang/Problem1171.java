@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/4/14 08:24
  * @Author zsy
- * @Description 从链表中删去总和值为零的连续节点 字节面试题 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem523、Problem525、Problem560、Problem862、Problem974、Problem1871、Offer57_2
+ * @Description 从链表中删去总和值为零的连续节点 字节面试题 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem523、Problem525、Problem560、Problem862、Problem974、Problem1856、Problem1871、Offer57_2
  * 给你一个链表的头节点 head，请你编写代码，反复删去链表中由 总和 值为 0 的连续节点组成的序列，直到不存在这样的序列为止。
  * 删除完毕后，请你返回最终结果链表的头节点。
  * 你可以返回任何满足题目要求的答案。

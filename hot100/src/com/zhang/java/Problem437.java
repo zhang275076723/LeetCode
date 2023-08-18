@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/7 8:19
  * @Author zsy
- * @Description 路径总和 III 类比Problem112、Problem113、Problem257 前缀和类比Problem209、Problem325、Problem327、Problem523、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1871、Offer57_2
+ * @Description 路径总和 III 类比Problem112、Problem113、Problem257 前缀和类比Problem209、Problem325、Problem327、Problem523、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1856、Problem1871、Offer57_2
  * 给定一个二叉树的根节点 root ，和一个整数 targetSum ，求该二叉树里节点值之和等于 targetSum 的 路径 的数目。
  * 路径 不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。
  * <p>
@@ -128,7 +128,7 @@ public class Problem437 {
         //更新前缀和，根节点到当前节点的路径和
         sum = sum + root.val;
 
-        //从前缀和哈希表中找路径和为curSum-targetSum的数量，即为路径和为targetSum的数量
+        //从前缀和哈希表中找路径和为curSum-targetSum的数量，即存在路径总和为targetSum的路径，即为路径和为targetSum的数量
         if (map.containsKey(sum - targetSum)) {
             //节点存在负值，所以不能剪枝，继续dfs
             count = count + map.get(sum - targetSum);

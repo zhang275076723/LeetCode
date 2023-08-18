@@ -29,8 +29,10 @@ import java.util.Set;
 public class Problem817 {
     public static void main(String[] args) {
         Problem817 problem817 = new Problem817();
-        int[] data = {0, 1, 2, 3};
-        int[] nums = {0, 1, 3};
+//        int[] data = {0, 1, 2, 3};
+//        int[] nums = {0, 1, 3};
+        int[] data = {0, 1, 2};
+        int[] nums = {0, 2};
         ListNode head = problem817.buildList(data);
         System.out.println(problem817.numComponents(head, nums));
     }
@@ -50,11 +52,12 @@ public class Problem817 {
 
         Set<Integer> set = new HashSet<>();
 
+        //nums数组中元素存放到哈希集合中
         for (int num : nums) {
             set.add(num);
         }
 
-        //初始化链表中组件个数为0
+        //链表中nums数组组件的个数
         int count = 0;
         ListNode node = head;
 

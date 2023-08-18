@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/7/30 08:54
  * @Author zsy
- * @Description 和可被 K 整除的子数组 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem523、Problem525、Problem560、Problem862、Problem1171、Problem1871、Offer57_2
+ * @Description 和可被 K 整除的子数组 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem523、Problem525、Problem560、Problem862、Problem1171、Problem1856、Problem1871、Offer57_2
  * 给定一个整数数组 nums 和一个整数 k ，返回其中元素之和可被 k 整除的（连续、非空） 子数组 的数目。
  * 子数组 是数组的 连续 部分。
  * <p>
