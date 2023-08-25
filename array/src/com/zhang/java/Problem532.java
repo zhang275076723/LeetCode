@@ -99,7 +99,7 @@ public class Problem532 {
     /**
      * 排序+二分查找
      * 先按照由小到大排序，对数组中每个元素，往右二分查找nums[i]+k
-     * 时间复杂度O(nlogn)，空间复杂度O(logn) (递归堆排序的空间复杂度为O(logn))
+     * 时间复杂度O(nlogn)，空间复杂度O(logn) (递归整堆的空间复杂度为O(logn))
      *
      * @param nums
      * @param k
@@ -145,7 +145,7 @@ public class Problem532 {
      * 排序+双指针(滑动窗口)
      * 先按照由小到大排序，如果nums[right]-nums[left]等于k，则找到一个diff，left++；
      * 如果nums[right]-nums[left]大于k，left++；如果nums[right]-nums[left]小于k，right++
-     * 时间复杂度O(nlogn)，空间复杂度O(logn) (递归堆排序的空间复杂度为O(logn))
+     * 时间复杂度O(nlogn)，空间复杂度O(logn) (递归整堆的空间复杂度为O(logn))
      *
      * @param nums
      * @param k

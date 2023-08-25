@@ -47,7 +47,7 @@ public class Problem687 {
             return 0;
         }
 
-        //根节点的父节点假设为int最小值
+        //根节点不存在父节点，假设根节点的父节点为int最小值
         dfs(root, Integer.MIN_VALUE);
 
         return diameter;

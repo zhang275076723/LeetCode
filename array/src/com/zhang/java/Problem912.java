@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/11/12 11:37
  * @Author zsy
- * @Description 排序数组 十大排序算法
+ * @Description 排序数组 十大排序算法 类比Problem164
  * 给你一个整数数组 nums，请你将该数组升序排列。
  * <p>
  * 输入：nums = [5,2,3,1]
@@ -209,12 +209,12 @@ public class Problem912 {
      * @return
      */
     public int[] sortArray8(int[] nums) {
-        int min = nums[0];
         int max = nums[0];
+        int min = nums[0];
 
         for (int num : nums) {
-            min = Math.min(min, num);
             max = Math.max(max, num);
+            min = Math.min(min, num);
         }
 
         //计数数组
@@ -224,19 +224,21 @@ public class Problem912 {
             countArr[num - min]++;
         }
 
-        //将计数数组累加，countArr[i]：原数组中小于等于i+min的元素个数
+        //计数数组累加，用于从右往左遍历nums找在结果数组中的下标索引，保证稳定性
+        //countArr[i]：原数组中小于等于i+min的元素个数
         for (int i = 1; i < countArr.length; i++) {
             countArr[i] = countArr[i] + countArr[i - 1];
         }
 
+        //计数排序后的数组
         int[] result = new int[nums.length];
 
-        //从后往前遍历原数组nums，确定每个nums[i]排序后在result中的下标索引，保证稳定性
+        //从右往左遍历nums，确定每个nums[i]在result中的下标索引，保证稳定性
         for (int i = nums.length - 1; i >= 0; i--) {
-            //当前元素nums[i]在结果数组result中的下标索引
+            //当前nums[i]在结果数组result中的下标索引
             int index = countArr[nums[i] - min] - 1;
             result[index] = nums[i];
-            //值为nums[i]的元素个数减1
+            //当前nums[i]已排序，nums[i]的元素个数减1
             countArr[nums[i] - min]--;
         }
 
@@ -252,20 +254,20 @@ public class Problem912 {
      * @return
      */
     public int[] sortArray9(int[] nums) {
-        int min = nums[0];
         int max = nums[0];
+        int min = nums[0];
 
         for (int num : nums) {
-            min = Math.min(min, num);
             max = Math.max(max, num);
+            min = Math.min(min, num);
         }
 
-        //每个桶存放元素的范围，例如第一个桶存放[min,min+bucketSize)
+        //桶的大小：每个桶存放元素的范围，例如第一个桶存放的范围为[min,min+bucketSize)
         int bucketSize = 10;
         //桶的数量
         int bucketCount = (max - min) / bucketSize + 1;
-
-        List<List<Integer>> buckets = new ArrayList<>();
+        //bucketCount个桶
+        List<List<Integer>> buckets = new ArrayList<>(bucketCount);
 
         for (int i = 0; i < bucketCount; i++) {
             buckets.add(new ArrayList<>());
@@ -281,8 +283,8 @@ public class Problem912 {
         for (int i = 0; i < bucketCount; i++) {
             buckets.get(i).sort(new Comparator<Integer>() {
                 @Override
-                public int compare(Integer a1, Integer a2) {
-                    return a1 - a2;
+                public int compare(Integer a, Integer b) {
+                    return a - b;
                 }
             });
         }
@@ -302,7 +304,7 @@ public class Problem912 {
 
     /**
      * 基数排序 稳定
-     * 时间复杂度O(kn)，空间复杂度O(n) (k：数组中最长元素的位数)
+     * 时间复杂度O(kn)=O((log32)n)=O(n)，空间复杂度O(n) (k：数组中最长元素的位数，int范围最多有32位)
      *
      * @param nums
      * @return
@@ -324,27 +326,27 @@ public class Problem912 {
             len++;
         }
 
-        //数组中元素需要除的值，得到每一位的值
+        //数组中元素需要除的值，确定当前对数组中元素哪一位进行排序
         int bitCount = 1;
 
         //由低到高对数组中每一位进行排序，排序之后重新赋值回原数组nums中
         for (int i = 0; i < len; i++) {
-            List<List<Integer>> radix = new ArrayList<>();
+            //存在负数，共19个桶，从小到大分别为-9、-8...-1、0、1...8、9
+            List<List<Integer>> radix = new ArrayList<>(19);
 
-            //每一位从0-9，存在负数，共19个
             for (int j = 0; j < 19; j++) {
                 radix.add(new ArrayList<>());
             }
 
             for (int num : nums) {
-                //当前元素由低到高第i位所在radix中的索引下标，因为存在负数，所以index要加9
+                //得到num当前位所在桶的下标索引，因为存在负数，所以index要加9
                 int index = (num / bitCount) % 10 + 9;
                 radix.get(index).add(num);
             }
 
             int index = 0;
 
-            //由低到高对数组中第i位排序之后，重新赋值回原数组nums中
+            //由低到高对nums元素第i位排序后，重新赋值回nums，用于第i+1位排序
             for (List<Integer> bucket : radix) {
                 for (int num : bucket) {
                     nums[index] = num;

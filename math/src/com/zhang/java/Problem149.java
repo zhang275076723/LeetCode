@@ -33,7 +33,7 @@ public class Problem149 {
      * 每次确定一个点，往后遍历其他点，如果k相同，则说明这些点在同一条直线上
      * 直线方程：y=kx+b，任意两个不同的点(x1,y1)、(x2,y2)就能确定一条直线，k=(y1-y2)/(x1-x2)，b=(x1y2-x2y1)/(x1-x2)
      * 注意：k可能为小数，作为key不精确，所以k用分数表示，分数需要进行约分，通过辗转相除法得到最大公因数
-     * 时间复杂度O(n^2*logn)，空间复杂度O(n)
+     * 时间复杂度O(n^2*logn)，空间复杂度O(n) (辗转相除法时间复杂度O(logn))
      *
      * @param points
      * @return
@@ -66,6 +66,7 @@ public class Problem149 {
                 //k1和k2的最大公因数
                 int gcd1 = gcd(k1, k2);
 
+                //除以最大公因数，这样不管分子分母是多少，相同分数最后的表示形式都一样
                 k1 = k1 / gcd1;
                 k2 = k2 / gcd1;
 
@@ -74,7 +75,7 @@ public class Problem149 {
                 map.put(key, map.getOrDefault(key, 0) + 1);
             }
 
-            //统计(x1,y1)和其他点钟最多有多少个点在同一条直线上
+            //统计(x1,y1)和其他点中最多有多少个点在同一条直线上
             for (Map.Entry<String, Integer> entry : map.entrySet()) {
                 max = Math.max(max, entry.getValue() + 1);
             }

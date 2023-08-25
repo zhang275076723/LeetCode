@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/12/14 11:13
  * @Author zsy
- * @Description 二维区域和检索 - 矩阵不可变 类比Problem303、Problem307、Problem308
+ * @Description 二维区域和检索 - 矩阵不可变 二维前缀和类比Problem1444 类比Problem303、Problem307、Problem308
  * 给定一个二维矩阵 matrix，以下类型的多个请求：
  * 计算其子矩形范围内元素的总和，该子矩阵的 左上角 为 (row1, col1) ，右下角 为 (row2, col2) 。
  * 实现 NumMatrix 类：
@@ -51,8 +51,8 @@ public class Problem304 {
     /**
      * 二维前缀和数组
      * 适用于：多次求二维数组区间范围元素之和
-     * preSum[i][j]：左上角matrix[0][0]和右下角matrix[i-1][j-1]围成矩阵的元素之和
-     * preSum[i][i] = preSum[i-1][j] + preSum[i][j-1] - preSum[i-1][j-1] + matrix[i-1][j-1]
+     * preSum[i][j]：左上角(0,0)和右下角(i-1,j-1)围成矩形的元素之和
+     * preSum[i][j] = preSum[i][j-1] + preSum[i-1][j] - preSum[i-1][j-1] + matrix[i-1][j-1]
      * 时间复杂度O(mn)，空间复杂度O(mn)
      */
     static class NumMatrix {

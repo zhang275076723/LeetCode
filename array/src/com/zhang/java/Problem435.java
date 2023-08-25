@@ -71,7 +71,7 @@ public class Problem435 {
      * 如果当前区间左边界intervals[i][0]小于当前不重叠区间中的最右边界end，则有重叠，
      * 更新end为intervals[i][1]和end中较小值，需要移除移除的重叠区间个数count加1；
      * 如果当前区间左边界intervals[i][0]大于等于当前不重叠区间中的最右边界end，则没有重叠，更新end为intervals[i][1]
-     * 时间复杂度O(nlogn)，空间复杂度O(logn) (递归堆排序的空间复杂度O(logn))
+     * 时间复杂度O(nlogn)，空间复杂度O(logn) (递归整堆的空间复杂度为O(logn))
      *
      * @param intervals
      * @return

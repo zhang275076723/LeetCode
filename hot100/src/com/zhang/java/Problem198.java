@@ -30,8 +30,8 @@ public class Problem198 {
 
     /**
      * 动态规划
-     * dp[i]：偷窃到第i个房屋，能够偷窃到的最高金额
-     * dp[i] = Math(dp[i-2] + nums[i], dp[i-1])
+     * dp[i]：nums[0]-nums[i]偷窃到的最高金额
+     * dp[i] = max(dp[i-1], dp[i-2] + nums[i])
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param nums
@@ -47,19 +47,19 @@ public class Problem198 {
         }
 
         int[] dp = new int[nums.length];
+        //dp初始化
         dp[0] = nums[0];
         dp[1] = Math.max(nums[0], nums[1]);
 
         for (int i = 2; i < nums.length; i++) {
-            dp[i] = Math.max(dp[i - 2] + nums[i], dp[i - 1]);
+            dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i]);
         }
 
         return dp[nums.length - 1];
     }
 
     /**
-     * 动态规划优化
-     * dp[i]只与dp[i-1]和dp[i-2]有关，所有只用两个变量p、q即可
+     * 动态规划优化，使用滚动数组
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -74,13 +74,13 @@ public class Problem198 {
             return nums[0];
         }
 
-        //dp[i-2]
+        //dp初始化，dp[i-2]
         int p = nums[0];
-        //dp[i-1]
+        //dp初始化，dp[i-1]
         int q = Math.max(nums[0], nums[1]);
 
         for (int i = 2; i < nums.length; i++) {
-            int temp = Math.max(p + nums[i], q);
+            int temp = Math.max(q, p + nums[i]);
             p = q;
             q = temp;
         }

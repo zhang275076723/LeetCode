@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/5/6 08:20
  * @Author zsy
- * @Description 字符串的编码与解码 移位运算类比Problem405、IPToInt 类比Problem394、Problem443、Problem604 序列化类比Problem297、Problem331、Problem449、Offer37
+ * @Description 字符串的编码与解码 移位运算类比Problem405、Problem1290、IPToInt 类比Problem394、Problem443、Problem604 序列化类比Problem297、Problem331、Problem449、Offer37
  * 请你设计一个算法，可以将一个 字符串列表 编码成为一个 字符串。
  * 这个编码后的字符串是可以通过网络进行高效传送的，并且可以在接收端被解码回原来的字符串列表。
  * 1 号机（发送方）有如下函数：

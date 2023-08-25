@@ -54,74 +54,74 @@ public class Offer64 {
         int b = n + 1;
         boolean flag;
 
-        //1
+        //从右往左第1位
         flag = ((b & 1) == 1) && (result = result + a) > 0;
-        b = b >> 1;
+        b = b >>> 1;
         a = a << 1;
 
-        //2
+        //从右往左第2位
         flag = ((b & 1) == 1) && (result = result + a) > 0;
-        b = b >> 1;
+        b = b >>> 1;
         a = a << 1;
 
-        //3
+        //从右往左第3位
         flag = ((b & 1) == 1) && (result = result + a) > 0;
-        b = b >> 1;
+        b = b >>> 1;
         a = a << 1;
 
-        //4
+        //从右往左第4位
         flag = ((b & 1) == 1) && (result = result + a) > 0;
-        b = b >> 1;
+        b = b >>> 1;
         a = a << 1;
 
-        //5
+        //从右往左第5位
         flag = ((b & 1) == 1) && (result = result + a) > 0;
-        b = b >> 1;
+        b = b >>> 1;
         a = a << 1;
 
-        //6
+        //从右往左第6位
         flag = ((b & 1) == 1) && (result = result + a) > 0;
-        b = b >> 1;
+        b = b >>> 1;
         a = a << 1;
 
-        //7
+        //从右往左第7位
         flag = ((b & 1) == 1) && (result = result + a) > 0;
-        b = b >> 1;
+        b = b >>> 1;
         a = a << 1;
 
-        //8
+        //从右往左第8位
         flag = ((b & 1) == 1) && (result = result + a) > 0;
-        b = b >> 1;
+        b = b >>> 1;
         a = a << 1;
 
-        //9
+        //从右往左第9位
         flag = ((b & 1) == 1) && (result = result + a) > 0;
-        b = b >> 1;
+        b = b >>> 1;
         a = a << 1;
 
-        //10
+        //从右往左第10位
         flag = ((b & 1) == 1) && (result = result + a) > 0;
-        b = b >> 1;
+        b = b >>> 1;
         a = a << 1;
 
-        //11
+        //从右往左第11位
         flag = ((b & 1) == 1) && (result = result + a) > 0;
-        b = b >> 1;
+        b = b >>> 1;
         a = a << 1;
 
-        //12
+        //从右往左第12位
         flag = ((b & 1) == 1) && (result = result + a) > 0;
-        b = b >> 1;
+        b = b >>> 1;
         a = a << 1;
 
-        //13
+        //从右往左第13位
         flag = ((b & 1) == 1) && (result = result + a) > 0;
-        b = b >> 1;
+        b = b >>> 1;
         a = a << 1;
 
-        //14
+        //从右往左第14位
         flag = ((b & 1) == 1) && (result = result + a) > 0;
-        b = b >> 1;
+        b = b >>> 1;
         a = a << 1;
 
         result = result >> 1;

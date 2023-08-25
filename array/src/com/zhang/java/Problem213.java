@@ -28,15 +28,16 @@ public class Problem213 {
         Problem213 problem213 = new Problem213();
         int[] nums = {1, 2, 3, 1};
         System.out.println(problem213.rob(nums));
+        System.out.println(problem213.rob2(nums));
     }
 
     /**
      * 动态规划
-     * 相当于把原数组分成两个数组，一个是从[0,n-2]，另一个是从[1,n-1]，
-     * 如果偷窃第一个房屋，则最后一个房屋不能偷窃；如果偷窃最后一个房屋，则第一个房屋不能偷窃
-     * dp[i]：偷窃到第i个房屋，能够偷窃到的最高金额
-     * dp[i] = max(dp[i-2] + nums[i], dp[i-1])
-     * 时间复杂度O(n)，空间复杂度O(n)/空间复杂度O(1)
+     * 原数组分成两个数组，一个是从[0,n-2]，另一个是从[1,n-1]，
+     * 如果选择nums[0]，则不能选择nums[n-1]；如果选择nums[n-1]，则不能选择nums[0]
+     * dp[i]：nums[0]-nums[i]偷窃到的最高金额
+     * dp[i] = max(dp[i-1], dp[i-2] + nums[i])
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param nums
      * @return
@@ -57,50 +58,80 @@ public class Problem213 {
     }
 
     /**
-     * 时间复杂度O(end-start)，空间复杂度O(end-start)
+     * 动态规划优化，使用滚动数组
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
-     * @param start
-     * @param end
      * @return
      */
-    private int robInRange(int[] nums, int start, int end) {
-        if (start == end) {
-            return nums[start];
+    public int rob2(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return -1;
         }
 
-        int[] dp = new int[end - start + 1];
-        dp[0] = nums[start];
-        dp[1] = Math.max(nums[start], nums[start + 1]);
-
-        for (int i = start + 2; i <= end; i++) {
-            dp[i - start] = Math.max(dp[i - start - 2] + nums[i], dp[i - start - 1]);
+        if (nums.length == 1) {
+            return nums[0];
         }
 
-        return dp[end - start];
+        int max1 = robInRange2(nums, 0, nums.length - 2);
+        int max2 = robInRange2(nums, 1, nums.length - 1);
+
+        return Math.max(max1, max2);
     }
 
     /**
-     * 使用滚动数组
-     * 时间复杂度O(end-start)，空间复杂度O(1)
+     * 时间复杂度O(right-left)，空间复杂度O(right-left)
      *
      * @param nums
-     * @param start
-     * @param end
+     * @param left
+     * @param right
      * @return
      */
-    private int robInRange2(int[] nums, int start, int end) {
-        if (start == end) {
-            return nums[start];
+    private int robInRange(int[] nums, int left, int right) {
+        if (left > right) {
+            return -1;
         }
 
-        //dp[i-2]
-        int p = nums[start];
-        //dp[i-1]
-        int q = nums[start + 1];
+        if (left == right) {
+            return nums[left];
+        }
 
-        for (int i = start + 2; i <= end; i++) {
-            int temp = Math.max(p + nums[i], q);
+        int[] dp = new int[right - left + 1];
+        //dp初始化
+        dp[0] = nums[left];
+        dp[1] = Math.max(nums[left], nums[left + 1]);
+
+        for (int i = 2; i <= right - left; i++) {
+            dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[left + i]);
+        }
+
+        return dp[right - left];
+    }
+
+    /**
+     * 时间复杂度O(right-left)，空间复杂度O(1)
+     *
+     * @param nums
+     * @param left
+     * @param right
+     * @return
+     */
+    private int robInRange2(int[] nums, int left, int right) {
+        if (left > right) {
+            return -1;
+        }
+
+        if (left == right) {
+            return nums[left];
+        }
+
+        //dp初始化，dp[i-2]
+        int p = nums[left];
+        //dp初始化，dp[i-1]
+        int q = nums[left + 1];
+
+        for (int i = 2; i <= right - left; i++) {
+            int temp = Math.max(q, p + nums[left + i]);
             p = q;
             q = temp;
         }

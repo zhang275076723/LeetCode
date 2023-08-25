@@ -43,7 +43,7 @@ public class Problem1162 {
 
     /**
      * bfs
-     * 对为0的节点bfs，得到为0的节点到最近为1的节点的距离，取所有遍历为0的节点到最近为1的节点的距离中的最大值
+     * 对每个为0的节点bfs，得到为0的节点到最近为1的节点的距离，取所有遍历为0的节点到最近为1的节点的距离中的最大值
      * 时间复杂度O(n^4)，空间复杂度O(n^2)
      *
      * @param grid
@@ -51,24 +51,24 @@ public class Problem1162 {
      */
     public int maxDistance(int[][] grid) {
         //赋初值-1，表示矩阵中全1或全0的特殊情况
-        int max = -1;
+        int maxDistance = -1;
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 //对每个为0的节点进行bfs，得到当前节点和他最接近1的距离
                 if (grid[i][j] == 0) {
-                    max = Math.max(max, bfs(i, j, grid));
+                    maxDistance = Math.max(maxDistance, bfs(i, j, grid));
                 }
             }
         }
 
-        return max;
+        return maxDistance;
     }
 
     /**
-     * bfs
-     * 逆向思维，不对为0的节点bfs，而是对为1的节点bfs，每次出队的元素个数为当前队列中元素的个数，每次相当于往外扩一层，
-     * 将遍历到为0的节点加入队列，直至队列为空，得到为0的节点到最近为1的节点的距离中的最大距离
+     * bfs+优化
+     * 逆向思维，不对为0的节点bfs，而是对为1的节点bfs，每次于往外扩一层，将当前层中遍历到为0的节点加入队列，
+     * 直至队列为空，得到为0的节点到最近为1的节点的距离中的最大距离
      * 时间复杂度O(n^2)，空间复杂度O(n^2)
      *
      * @param grid
@@ -80,7 +80,7 @@ public class Problem1162 {
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
-                //为1的节点加入集合
+                //为1的节点加入队列，并设置为已访问
                 if (grid[i][j] == 1) {
                     queue.offer(new int[]{i, j});
                     visited[i][j] = true;
@@ -88,7 +88,7 @@ public class Problem1162 {
             }
         }
 
-        //队列为空或队列大小等于矩阵大小，则矩阵全为0或全为1，不存在为0的节点到最近为1的节点的距离中的最大距离，直接返回-1
+        //队列为空或队列大小等于矩阵大小，则矩阵全为0或全为1，则不存在为0的节点到最近为1的节点的距离中的最大距离，直接返回-1
         if (queue.isEmpty() || queue.size() == grid.length * grid[0].length) {
             return -1;
         }
@@ -115,17 +115,17 @@ public class Problem1162 {
                         continue;
                     }
 
-                    //为0的节点(x,y)加入队列，并置为已访问
+                    //为0的节点(x,y)加入队列，并设置为已访问
                     queue.offer(new int[]{x, y});
                     visited[x][y] = true;
                 }
             }
 
-            //每次往外扩一层
+            //maxDistance加1，表示bfs每次往外扩一层
             maxDistance++;
         }
 
-        //返回maxDistance-1，因为将最远的0加入到队列时得到最大距离，此时还需要遍历当前最远的0节点，额外多遍历了一次
+        //因为将最远的0加入队列，此时还需要往外扩一层，额外多遍历了一次，所以需要减1
         return maxDistance - 1;
     }
 

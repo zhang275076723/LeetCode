@@ -92,7 +92,7 @@ public class Problem474 {
             int oneCount = strs[i - 1].length() - zeroCount;
 
             //当前dp[j][k]会使用到前面的dp，所以逆序遍历
-            //注意要遍历到0，因为strs中0和1的数量可能为0
+            //注意：j、k都要遍历到0，因为strs中0和1的数量可能为0
             for (int j = m; j >= 0; j--) {
                 for (int k = n; k >= 0; k--) {
                     if (j >= zeroCount && k >= oneCount) {
