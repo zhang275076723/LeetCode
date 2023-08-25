@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/6/6 8:44
  * @Author zsy
- * @Description 分割等和子集 动态规划类比Problem279、Problem322、Problem343、Problem377、Problem474、Problem494、Problem518、Problem983、Offer14、Offer14_2、CircleBackToOrigin、Knapsack 数组类比Problem53、Problem135、Problem152、Problem238、Problem581、Problem628、Offer42、Offer66 划分子集类比Problem698
+ * @Description 分割等和子集 划分子集类比Problem698 数组类比Problem53、Problem135、Problem152、Problem238、Problem581、Problem628、Offer42、Offer66 动态规划类比Problem198、Problem213、Problem279、Problem322、Problem343、Problem377、Problem474、Problem494、Problem518、Problem983、Problem1340、Problem1388、Problem1444、Offer14、Offer14_2、CircleBackToOrigin、Knapsack
  * 给你一个 只包含正整数 的 非空 数组 nums 。请你判断是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。
  * <p>
  * 输入：nums = [1,5,11,5]

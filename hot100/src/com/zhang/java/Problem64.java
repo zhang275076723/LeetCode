@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/23 11:12
  * @Author zsy
- * @Description 最小路径和 类比Problem62、Problem63、Problem980、Offer47 记忆化搜索类比Problem62、Problem63、Problem70、Problem329、Problem509、Problem1340、Offer10、Offer10_2
+ * @Description 最小路径和 类比Problem62、Problem63、Problem980、Offer47 记忆化搜索类比Problem62、Problem63、Problem70、Problem329、Problem509、Problem1340、Problem1388、Problem1444、Offer10、Offer10_2
  * 给定一个包含非负整数的 m x n 网格 grid ，
  * 请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。
  * 说明：每次只能向下或者向右移动一步。

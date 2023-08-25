@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/17 16:51
  * @Author zsy
- * @Description 剪绳子 II 动态规划类比Problem279、Problem322、Problem343、Problem377、Problem416、Problem474、Problem494、Problem518、Problem983、Offer14、CircleBackToOrigin、Knapsack
+ * @Description 剪绳子 II 动态规划类比Problem198、Problem213、Problem279、Problem322、Problem343、Problem377、Problem416、Problem474、Problem494、Problem518、Problem983、Problem1340、Problem1388、Problem1444、Offer14、CircleBackToOrigin、Knapsack
  * 给你一根长度为 n 的绳子，请把绳子剪成整数长度的 m 段（m、n都是整数，n>1并且m>1），
  * 每段绳子的长度记为 k[0],k[1]...k[m - 1] 。
  * 请问 k[0]*k[1]*...*k[m - 1] 可能的最大乘积是多少？
