@@ -136,7 +136,7 @@ public class Problem62 {
 
     /**
      * 组合数学，移动m+n-2次，向下m-1次，向右n-1次，从m+n-2中选出m-1个向下移动的方案
-     * 时间复杂度O(min(m,n)) (交换行列的值，保证取到m、n最小值)，空间复杂度O(1)
+     * 时间复杂度O(min(m,n))，空间复杂度O(1) (交换行列的值，保证取到m、n最小值)
      *
      * @param m
      * @param n
@@ -146,9 +146,15 @@ public class Problem62 {
         //有可能溢出，所以使用long，最后再转换成int
         long result = 1;
 
-        for (int i = 1; i <= m - 1; i++) {
+        //注意：i要从n开始，不能从m+n-1开始，从大往小乘，有可能long溢出
+        int i = n;
+        int j = 1;
+
+        while (i <= m + n - 1 && j <= m - 1) {
             //先乘再除，保证每次运算都是整数
-            result = result * (n - 1 + i) / i;
+            result = result * i / j;
+            i++;
+            j++;
         }
 
         return (int) result;

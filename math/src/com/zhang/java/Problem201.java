@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/7/14 08:20
  * @Author zsy
- * @Description 数字范围按位与 二进制类比Problem190、Problem191、Problem461、Problem477、Offer15 类比Problem371、Offer65
+ * @Description 数字范围按位与 位运算类比Problem29、Problem190、Problem191、Problem271、Problem371、Problem405、Problem461、Problem477、Problem1290、Offer15、Offer64、Offer65、IpToInt
  * 给你两个整数 left 和 right ，表示区间 [left, right] ，
  * 返回此区间内所有数字 按位与 的结果（包含 left 、right 端点）。
  * <p>
@@ -48,7 +48,7 @@ public class Problem201 {
     /**
      * 模拟
      * 只要有一个数二进制的当前位是0，则当前位的与运算结果为0
-     * 找left和right二进制的最长公共前缀，即为left-right的与运算结果
+     * 找left和right二进制表示的最长公共前缀，即为[left,right]的与运算结果
      * 时间复杂度O(logn)=O(1)，空间复杂度O(1) (n=32，int范围长度为32)
      *
      * @param left
@@ -59,14 +59,14 @@ public class Problem201 {
         //left和right二进制右移的次数
         int count = 0;
 
-        //找left和right二进制的最长公共前缀
+        //找left和right二进制表示的最长公共前缀
         while (left != right) {
             left = left >>> 1;
             right = right >>> 1;
             count++;
         }
 
-        //右移之后再重新左移count次，得到left-right的与运算结果
+        //右移之后再重新左移count次，得到[left,right]的与运算结果
         return left << count;
     }
 }

@@ -49,8 +49,10 @@ public class Problem974 {
 
         for (int i = 0; i < nums.length; i++) {
             int sum = 0;
+
             for (int j = i; j < nums.length; j++) {
                 sum = sum + nums[j];
+
                 if (sum % k == 0) {
                     count++;
                 }
@@ -83,7 +85,7 @@ public class Problem974 {
         int count = 0;
 
         for (int i = 0; i < nums.length; i++) {
-            //注意：preSum+nums[i]有可能小于0，导致余数为负数，所以余数需要加上k再取余数
+            //注意：nums[i]有可能小于0，导致余数为负数，所以余数需要加上k再取余数
             preSum = ((preSum + nums[i]) % k + k) % k;
 
             //map中存在preSum，即之前存在相同余数，则存在和可被k整除的子数组

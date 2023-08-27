@@ -69,16 +69,17 @@ public class Problem919 {
 
             while (!queue.isEmpty()) {
                 TreeNode node = queue.poll();
+
+                //当前节点左右子树只要有一个为空，则当前节点可以是完全二叉树下一个插入节点的父节点，放入candidateQueue
+                if (node.left == null || node.right == null) {
+                    candidateQueue.offer(node);
+                }
+
                 if (node.left != null) {
                     queue.offer(node.left);
                 }
                 if (node.right != null) {
                     queue.offer(node.right);
-                }
-
-                //当前节点左右子树只要有一个为空，则当前节点可以是完全二叉树下一个插入节点的父节点，放入candidateQueue
-                if (node.left == null || node.right == null) {
-                    candidateQueue.offer(node);
                 }
             }
         }

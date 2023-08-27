@@ -79,8 +79,9 @@ public class Offer56 {
         int bit = 1;
 
         //找异或结果中不相同，即为1的一位
-        while ((result & bit) != 1) {
+        while ((result & 1) != 1) {
             bit = bit << 1;
+            result = result >>> 1;
         }
 
         //不同的两个数

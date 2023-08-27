@@ -23,7 +23,7 @@ import java.util.*;
  */
 public class Problem958 {
     /**
-     * dfs遍历中最后一个节点的索引(索引从0开始)
+     * dfs遍历树中最后一个节点的索引(索引从0开始，按照完全二叉树排序)
      */
     private int lastIndex = 0;
 
@@ -55,21 +55,26 @@ public class Problem958 {
         queue.offer(root);
 
         while (!queue.isEmpty()) {
-            TreeNode node = queue.poll();
+            int size = queue.size();
 
-            //标志位为true，且当前节点不为null，则说明之前出现过null节点，不是完全二叉树，返回false
-            if (flag && node != null) {
-                return false;
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+
+                //bfs遍历过程中，当第一次出现null节点时，设置标志位为true，
+                //如果之后队列中所有节点都为null，则是完全二叉树；如果之后队列出现一个非null节点，则不是完全二叉树
+                if (node == null) {
+                    flag = true;
+                    continue;
+                }
+
+                //标志位为true，则说明当前节点之前出现过null节点，不是完全二叉树，返回false
+                if (flag) {
+                    return false;
+                }
+
+                queue.offer(node.left);
+                queue.offer(node.right);
             }
-
-            //bfs遍历过程中，当第一次出现null节点时，设置标志位为true，如果此时队列中的节点都为null，则是完全二叉树
-            if (node == null) {
-                flag = true;
-                continue;
-            }
-
-            queue.offer(node.left);
-            queue.offer(node.right);
         }
 
         return true;
@@ -88,7 +93,7 @@ public class Problem958 {
             return true;
         }
 
-        //bfs遍历中最后一个节点的索引
+        //树中最后一个节点的索引
         int lastIndex = 0;
         //树中节点的个数
         int count = 0;
@@ -97,7 +102,7 @@ public class Problem958 {
 
         while (!queue.isEmpty()) {
             Pos pos = queue.poll();
-            lastIndex = pos.index;
+            lastIndex = Math.max(lastIndex, pos.index);
             count++;
 
             if (pos.node.left != null) {

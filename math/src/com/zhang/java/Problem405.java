@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/8/1 08:48
  * @Author zsy
- * @Description 数字转换为十六进制数 移位运算类比Problem271、Problem1290、IPToInt
+ * @Description 数字转换为十六进制数 位运算类比Problem29、Problem190、Problem191、Problem201、Problem271、Problem371、Problem461、Problem477、Problem1290、Offer15、Offer64、Offer65、IpToInt
  * 给定一个整数，编写一个算法将这个数转换为十六进制数。对于负整数，我们通常使用 补码运算 方法。
  * 注意:
  * 1、十六进制中所有字母(a-f)都必须是小写。
