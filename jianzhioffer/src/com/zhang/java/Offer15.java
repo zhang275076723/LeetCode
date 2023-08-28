@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/17 17:37
  * @Author zsy
- * @Description 二进制中1的个数 位运算类比Problem29、Problem190、Problem191、Problem201、Problem271、Problem371、Problem405、Problem461、Problem477、Problem1290、Offer64、Offer65、IpToInt 同Problem191
+ * @Description 二进制中1的个数 位运算类比Problem29、Problem190、Problem191、Problem201、Problem231、Problem271、Problem326、Problem342、Problem371、Problem405、Problem461、Problem477、Problem898、Problem1290、Offer64、Offer65、IpToInt 同Problem191
  * 编写一个函数，输入是一个无符号整数（以二进制串的形式），
  * 返回其二进制表达式中数字位数为 '1' 的个数（也被称为 汉明重量)）。
  * <p>

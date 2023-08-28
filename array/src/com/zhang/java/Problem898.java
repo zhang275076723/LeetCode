@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2023/8/26 08:54
  * @Author zsy
- * @Description 子数组按位或操作 猿辅导笔试题 类比Problem134 位运算类比Problem29、Problem190、Problem191、Problem201、Problem271、Problem371、Problem405、Problem461、Problem477、Problem1290、Offer15、Offer64、Offer65、IpToInt
+ * @Description 子数组按位或操作 猿辅导笔试题 类比Problem134 位运算类比Problem29、Problem190、Problem191、Problem201、Problem231、Problem271、Problem326、Problem342、Problem371、Problem405、Problem461、Problem477、Problem1290、Offer15、Offer64、Offer65、IpToInt
  * 我们有一个非负整数数组 arr 。
  * 对于每个（连续的）子数组 sub = [arr[i], arr[i + 1], ..., arr[j]] （ i <= j），
  * 我们对 sub 中的每个元素进行按位或操作，获得结果 arr[i] | arr[i + 1] | ... | arr[j] 。
