@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2023/8/11 09:11
  * @Author zsy
- * @Description 子数组范围和 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem654、Problem739、Problem907、Problem1019、Problem1856、Problem2454、Problem2487、Offer33、DoubleStackSort
+ * @Description 子数组范围和 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem654、Problem739、Problem795、Problem907、Problem1019、Problem1856、Problem2454、Problem2487、Offer33、DoubleStackSort
  * 给你一个整数数组 nums 。nums 中，子数组的 范围 是子数组中最大元素和最小元素的差值。
  * 返回 nums 中 所有 子数组范围的 和 。
  * 子数组是数组中一个连续 非空 的元素序列。

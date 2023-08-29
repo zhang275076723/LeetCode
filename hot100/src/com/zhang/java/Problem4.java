@@ -79,16 +79,15 @@ public class Problem4 {
                     num2 = nums2[j];
                     j++;
                 }
+            } else if (i < nums1.length) {
+                num1 = num2;
+                num2 = nums1[i];
+                i++;
             } else {
-                if (i < nums1.length) {
-                    num1 = num2;
-                    num2 = nums1[i];
-                    i++;
-                } else {
-                    num1 = num2;
-                    num2 = nums2[j];
-                    j++;
-                }
+                num1 = num2;
+                num2 = nums2[j];
+                j++;
+
             }
         }
 
@@ -128,19 +127,19 @@ public class Problem4 {
         }
 
         //两个中位数中的前一个数
-        int value1 = getMinKValue(nums1, nums2, (nums1.length + nums2.length) / 2);
+        int num1 = getMinKValue(nums1, nums2, (nums1.length + nums2.length) / 2);
         //两个中位数中的后一个数
-        int value2 = getMinKValue(nums1, nums2, (nums1.length + nums2.length) / 2 + 1);
+        int num2 = getMinKValue(nums1, nums2, (nums1.length + nums2.length) / 2 + 1);
 
         if ((nums1.length + nums2.length) % 2 == 0) {
-            return (value1 + value2) / 2.0;
+            return (num1 + num2) / 2.0;
         } else {
-            return value2;
+            return num2;
         }
     }
 
     /**
-     * 获取nums1数组和nums2数组中的第k小元素的值
+     * 获取有序数组nums1和nums2中的第k小元素的值 (k从1开始)
      * 时间复杂度O(log(m+n))，空间复杂度O(1) (m=nums1.length, n=nums2.length)
      *
      * @param nums1
@@ -153,9 +152,9 @@ public class Problem4 {
         int i = 0;
         //当前指向nums2的起始下标索引
         int j = 0;
-        //i的下一个下标索引，最多为nums1中最后一个元素下标索引，用于判断nums1[i]-nums1[nextI]和nums2[j]-nums2[nextJ]的大小
+        //i下次跳到的下标索引的前一位，最多为nums1中最后一个元素下标索引，用于判断nums1[i]-nums1[nextI]和nums2[j]-nums2[nextJ]的大小
         int nextI = Math.min(nums1.length - 1, i + k / 2 - 1);
-        //j的下一个下标索引，最多为nums2中最后一个元素下标索引，用于判断nums1[i]-nums1[nextI]和nums2[j]-nums2[nextJ]的大小
+        //j下次跳到的下标索引的前一位，最多为nums2中最后一个元素下标索引，用于判断nums1[i]-nums1[nextI]和nums2[j]-nums2[nextJ]的大小
         int nextJ = Math.min(nums2.length - 1, j + k / 2 - 1);
 
         while (k != 1) {
@@ -169,12 +168,12 @@ public class Problem4 {
                 j = nextJ + 1;
             }
 
-            //i已经遍历完，直接返回nums2中j起始的第k个元素
+            //i已经遍历完，直接返回nums2中从j开始的第k个元素
             if (i == nums1.length) {
                 return nums2[j + k - 1];
             }
 
-            //j已经遍历完，直接返回nums1中i起始的第k个元素
+            //j已经遍历完，直接返回nums1中从i开始的第k个元素
             if (j == nums2.length) {
                 return nums1[i + k - 1];
             }
