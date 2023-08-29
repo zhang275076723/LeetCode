@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/21 16:38
  * @Author zsy
- * @Description 最大子数组和 美团面试题 子序列和子数组类比Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2 数组类比Problem135、Problem152、Problem238、Problem416、Problem581、Problem628、Offer42、Offer66 同Offer42
+ * @Description 最大子数组和 美团面试题 数组类比Problem135、Problem152、Problem238、Problem581、Problem628、Problem845、Problem1749、Offer42、Offer66、FindLeftBiggerRightLessIndex 子序列和子数组类比Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2 同Offer42
  * 给你一个整数数组 nums ，请你找出一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
  * 子数组 是数组中的一个连续部分。
  * <p>
@@ -54,9 +54,8 @@ public class Problem53 {
 
     /**
      * 动态规划
-     * dp[i]：以nums[i]结尾的连续子数组的最大和
-     * dp[i] = nums[i]           (dp[i-1] <= 0)
-     * dp[i] = dp[i-1] + nums[i] (dp[i-1] > 0)
+     * dp[i]：以nums[i]结尾的子数组的最大和
+     * dp[i] = max(dp[i-1] + nums[i], nums[i])
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param nums
@@ -70,12 +69,7 @@ public class Problem53 {
         int max = dp[0];
 
         for (int i = 1; i < nums.length; i++) {
-            if (dp[i - 1] <= 0) {
-                dp[i] = nums[i];
-            } else {
-                dp[i] = dp[i - 1] + nums[i];
-            }
-
+            dp[i] = Math.max(dp[i - 1] + nums[i], nums[i]);
             max = Math.max(max, dp[i]);
         }
 
@@ -83,7 +77,7 @@ public class Problem53 {
     }
 
     /**
-     * 动态规划优化，使用滚动元素
+     * 动态规划优化，使用滚动数组
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -94,11 +88,7 @@ public class Problem53 {
         int max = dp;
 
         for (int i = 1; i < nums.length; i++) {
-            if (dp > 0) {
-                dp = dp + nums[i];
-            } else {
-                dp = nums[i];
-            }
+            dp = Math.max(dp + nums[i], nums[i]);
             max = Math.max(max, dp);
         }
 

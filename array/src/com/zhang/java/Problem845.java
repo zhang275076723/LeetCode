@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/11 08:27
  * @Author zsy
- * @Description 数组中的最长山脉 动态规划类比Problem135、Problem152、Problem238、FindLeftBiggerRightLessIndex 山脉类比Problem852、Problem941、Problem1095
+ * @Description 数组中的最长山脉 山脉类比Problem852、Problem941、Problem1095 数组类比Problem53、Problem135、Problem152、Problem238、Problem581、Problem628、Problem1749、Offer42、Offer66、FindLeftBiggerRightLessIndex
  * 把符合下列属性的数组 arr 称为 山脉数组 ：
  * arr.length >= 3
  * 存在下标 i（0 < i < arr.length - 1），满足
@@ -58,8 +58,8 @@ public class Problem845 {
                 left[i] = 0;
             }
 
-            if (arr[arr.length - 1 - i] > arr[arr.length - i]) {
-                right[arr.length - 1 - i] = right[arr.length - i] + 1;
+            if (arr[arr.length - i - 1] > arr[arr.length - i]) {
+                right[arr.length - i - 1] = right[arr.length - i] + 1;
             } else {
                 right[arr.length - 1 - i] = 0;
             }
@@ -95,15 +95,18 @@ public class Problem845 {
 
         //最大山脉子数组长度
         int max = 0;
-        //左边山底下标索引
-        int left = 0;
-        //右边山底下标索引
-        int right = 0;
+        //当前遍历到的下标索引
+        int index = 0;
 
         //长度至少为3才能构成山脉数组
-        while (left < arr.length - 2) {
-            //当前元素作为左边山底
-            if (arr[left] < arr[left + 1]) {
+        while (index < arr.length - 2) {
+            //当前下标索引作为左边山底
+            if (arr[index] < arr[index + 1]) {
+                //左边山底下标索引
+                int left = index;
+                //右边山底下标索引
+                int right = index;
+
                 //往右找山顶
                 while (right + 1 < arr.length && arr[right] < arr[right + 1]) {
                     right++;
@@ -119,12 +122,11 @@ public class Problem845 {
                     max = Math.max(max, right - left + 1);
                 }
 
-                //更新左边山底下标索引，当前元素arr[right]作为左边山底
-                left = right;
+                //index更新为右边山底right
+                index = right;
             } else {
-                //当前不能元素作为左边山底，更新左右山底下标索引
-                left = right + 1;
-                right = left;
+                //当前不能元素作为左边山底，index右移
+                index++;
             }
         }
 

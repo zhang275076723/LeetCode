@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/5/23 08:22
  * @Author zsy
- * @Description 上下翻转二叉树 类比Problem206、Problem226
+ * @Description 上下翻转二叉树 类比Problem206、Problem226、Problem998
  * 给你一个二叉树的根节点 root ，请你将此二叉树上下翻转，并返回新的根节点。
  * 你可以按下面的步骤翻转一棵二叉树：
  * 1、原来的左子节点变成新的根节点

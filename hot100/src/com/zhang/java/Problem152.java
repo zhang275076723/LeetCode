@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/9 12:21
  * @Author zsy
- * @Description 乘积最大子数组 子序列和子数组类比Problem53、Problem115、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2 数组类比Problem53、Problem135、Problem238、Problem416、Problem581、Problem628、Problem845、Offer42、Offer66、FindLeftBiggerRightLessIndex
+ * @Description 乘积最大子数组 两次遍历类比Problem32、Problem135、Problem581 数组类比Problem53、Problem135、Problem238、Problem581、Problem628、Problem845、Problem1749、Offer42、Offer66、FindLeftBiggerRightLessIndex子序列和子数组类比Problem53、Problem115、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
  * 给你一个整数数组 nums ，请你找出数组中乘积最大的非空连续子数组（该子数组中至少包含一个数字），
  * 并返回该子数组所对应的乘积。
  * 测试用例的答案是一个 32-位 整数。
@@ -49,8 +49,10 @@ public class Problem152 {
 
         int[] dpMax = new int[nums.length];
         int[] dpMin = new int[nums.length];
+        //dp初始化
         dpMax[0] = nums[0];
         dpMin[0] = nums[0];
+
         int max = nums[0];
 
         for (int i = 1; i < nums.length; i++) {
@@ -81,18 +83,18 @@ public class Problem152 {
 
         int dpMax = nums[0];
         int dpMin = nums[0];
+
         int max = nums[0];
 
         for (int i = 1; i < nums.length; i++) {
-            //上次循环的dpMax，如果直接使用dpMax，则会修改本次要使用的dpMax
-            int tempMax = dpMax;
-            //上次循环的dpMin，如果直接使用dpMin，则会修改本次要使用的dpMin
-            int tempMin = dpMin;
+            //保存前一个dp状态，用于更新下一个dp
+            int preDpMax = dpMax;
+            int preDpMin = dpMin;
 
             dpMax = Math.max(nums[i],
-                    Math.max(tempMax * nums[i], tempMin * nums[i]));
+                    Math.max(preDpMax * nums[i], preDpMin * nums[i]));
             dpMin = Math.min(nums[i],
-                    Math.min(tempMax * nums[i], tempMin * nums[i]));
+                    Math.min(preDpMax * nums[i], preDpMin * nums[i]));
 
             max = Math.max(max, dpMax);
         }
@@ -101,7 +103,7 @@ public class Problem152 {
     }
 
     /**
-     * 两次遍历
+     * 贪心，两次遍历
      * 第一次从左往右遍历，进行相乘，如果相乘结果是0，就赋值为1，每次相乘都和最大值进行比较
      * 第二次从右往左遍历，进行相乘，如果相乘结果是0，就赋值为1，每次相乘都和最大值进行比较
      * 时间复杂度O(n)，空间复杂度O(1)

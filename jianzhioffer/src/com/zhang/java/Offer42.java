@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/25 20:48
  * @Author zsy
- * @Description 连续子数组的最大和 数组类比Problem53、Problem135、Problem152、Problem238、Problem416、Problem581、Problem628、Offer66 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer57_2 同Problem53
+ * @Description 连续子数组的最大和 数组类比Problem53、Problem135、Problem152、Problem238、Problem581、Problem628、Problem845、Problem1749、Offer66、FindLeftBiggerRightLessIndex 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer57_2 同Problem53
  * 输入一个整型数组，数组中的一个或连续多个整数组成一个子数组。求所有子数组的和的最大值。
  * 要求时间复杂度为O(n)。
  * <p>
@@ -48,9 +48,8 @@ public class Offer42 {
 
     /**
      * 动态规划
-     * dp[i]：以nums[i-1]元素结尾的最大子段和
-     * dp[i] = dp[i-1] + nums[i-1] (dp[i-1] > 0)
-     * dp[i] = nums[i]             (dp[i-1] <= 0)
+     * dp[i]：以nums[i]结尾的子数组的最大和
+     * dp[i] = max(dp[i-1] + nums[i], nums[i])
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param nums
@@ -64,12 +63,7 @@ public class Offer42 {
         int max = dp[0];
 
         for (int i = 1; i < nums.length; i++) {
-            if (dp[i - 1] > 0) {
-                dp[i] = dp[i - 1] + nums[i];
-            } else {
-                dp[i] = nums[i];
-            }
-
+            dp[i] = Math.max(dp[i - 1] + nums[i], nums[i]);
             max = Math.max(max, dp[i]);
         }
 
@@ -88,11 +82,7 @@ public class Offer42 {
         int max = dp;
 
         for (int i = 1; i < nums.length; i++) {
-            if (dp > 0) {
-                dp = dp + nums[i];
-            } else {
-                dp = nums[i];
-            }
+            dp = Math.max(dp + nums[i], nums[i]);
             max = Math.max(max, dp);
         }
 

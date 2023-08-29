@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/6/14 8:50
  * @Author zsy
- * @Description 最短无序连续子数组 两次遍历类比Problem32、Problem135 数组类比Problem53、Problem135、Problem152、Problem238、Problem416、Problem628、Offer42、Offer66 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
+ * @Description 最短无序连续子数组 两次遍历类比Problem32、Problem135、Problem152 数组类比Problem53、Problem135、Problem152、Problem238、Problem628、Problem845、Problem1749、Offer42、Offer66、FindLeftBiggerRightLessIndex 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
  * 给你一个整数数组 nums ，你需要找出一个 连续子数组 ，如果对这个子数组进行升序排序，那么整个数组都会变为升序排序。
  * 请你找出符合题意的 最短 子数组，并输出它的长度。
  * <p>

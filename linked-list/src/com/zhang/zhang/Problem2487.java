@@ -48,21 +48,26 @@ public class Problem2487 {
 
         //头结点，初始化为int最大值，避免头结点作为栈顶节点时不满足单调递减栈，造成头结点出栈的情况
         ListNode hair = new ListNode(Integer.MAX_VALUE);
-        hair.next = hair;
-        ListNode node = head;
+        hair.next = head;
         //单调递减栈
         Stack<ListNode> stack = new Stack<>();
-        //头结点入栈，用于head节点要删除的情况
-        stack.push(hair);
+        ListNode node = hair;
 
         while (node != null) {
             while (!stack.isEmpty() && stack.peek().val < node.val) {
                 stack.pop();
             }
 
-            stack.peek().next = node;
-            stack.push(node);
-            node = node.next;
+            //栈为空，即头结点直接入栈
+            if (stack.isEmpty()) {
+                stack.push(node);
+                node = node.next;
+            } else {
+                //栈非空，栈顶元素指向当前节点
+                stack.peek().next = node;
+                stack.push(node);
+                node = node.next;
+            }
         }
 
         return hair.next;

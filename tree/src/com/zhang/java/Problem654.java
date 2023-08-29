@@ -80,7 +80,7 @@ public class Problem654 {
             map.put(nums[i], i);
         }
 
-        return dfs2(nums, 0, nums.length - 1, segmentTree, map);
+        return dfs(nums, 0, nums.length - 1, segmentTree, map);
     }
 
     /**
@@ -105,14 +105,14 @@ public class Problem654 {
             map.put(nums[i], i);
         }
 
-        return dfs2(nums, 0, nums.length - 1, segmentTree, map);
+        return dfs(nums, 0, nums.length - 1, segmentTree, map);
     }
 
     /**
      * 单调栈
      * 单调递减栈存放nums表示的树中节点
-     * 当前元素小于栈顶元素，栈顶元素节点的右子节点为当前元素节点；
-     * 当前元素大于栈顶元素，栈顶元素出栈，当前元素节点的左子节点为出栈元素节点
+     * 当前元素小于栈顶元素，栈顶元素节点的右子节点指向当前元素节点；
+     * 当前元素大于栈顶元素，栈顶元素出栈，当前元素节点的左子节点指向出栈元素节点
      * 时间复杂度O(n)，空间复杂度O(n)
      * <p>
      * 例如：nums = [3,2,1,6,0,5]
@@ -143,12 +143,12 @@ public class Problem654 {
         for (int i = 0; i < nums.length; i++) {
             TreeNode node = new TreeNode(nums[i]);
 
-            //不满足单调递减栈，栈顶元素出栈，当前元素节点的左子节点为出栈元素节点
+            //不满足单调递减栈，栈顶元素出栈，当前元素节点的左子节点指向出栈元素节点
             while (!stack.isEmpty() && stack.peekLast().val < node.val) {
                 node.left = stack.pollLast();
             }
 
-            //栈不为空，满足单调递减栈，即当前元素小于栈顶元素，栈顶元素节点的右子节点为当前元素节点
+            //栈不为空，满足单调递减栈，即当前元素小于栈顶元素，栈顶元素节点的右子节点指向当前元素节点
             if (!stack.isEmpty()) {
                 stack.peekLast().right = node;
             }
@@ -187,7 +187,7 @@ public class Problem654 {
         return root;
     }
 
-    private TreeNode dfs2(int[] nums, int left, int right, SegmentTree segmentTree, Map<Integer, Integer> map) {
+    private TreeNode dfs(int[] nums, int left, int right, SegmentTree segmentTree, Map<Integer, Integer> map) {
         if (left > right) {
             return null;
         }
@@ -203,13 +203,13 @@ public class Problem654 {
 
         TreeNode root = new TreeNode(maxValue);
 
-        root.left = dfs2(nums, left, index - 1, segmentTree, map);
-        root.right = dfs2(nums, index + 1, right, segmentTree, map);
+        root.left = dfs(nums, left, index - 1, segmentTree, map);
+        root.right = dfs(nums, index + 1, right, segmentTree, map);
 
         return root;
     }
 
-    private TreeNode dfs2(int[] nums, int left, int right, SegmentTree2 segmentTree, Map<Integer, Integer> map) {
+    private TreeNode dfs(int[] nums, int left, int right, SegmentTree2 segmentTree, Map<Integer, Integer> map) {
         if (left > right) {
             return null;
         }
@@ -225,8 +225,8 @@ public class Problem654 {
 
         TreeNode root = new TreeNode(maxValue);
 
-        root.left = dfs2(nums, left, index - 1, segmentTree, map);
-        root.right = dfs2(nums, index + 1, right, segmentTree, map);
+        root.left = dfs(nums, left, index - 1, segmentTree, map);
+        root.right = dfs(nums, index + 1, right, segmentTree, map);
 
         return root;
     }
