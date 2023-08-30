@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/4/4 16:36
  * @Author zsy
- * @Description 和为s的连续正数序列 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem567、Problem1004、Offer48、Offer59 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem523、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1856、Problem1871 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42
+ * @Description 和为s的连续正数序列 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem532、Problem567、Problem713、Problem1004、Offer48、Offer59 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem523、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1856、Problem1871 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42
  * 输入一个正整数 target ，输出所有和为 target 的连续正整数序列（至少含有两个数）。
  * 序列内的数字由小到大排列，不同序列按照首个数字从小到大排列。
  * 1 <= target <= 10^5
@@ -29,7 +29,7 @@ public class Offer57_2 {
 
     /**
      * 暴力
-     * 时间复杂度O(target^(3/2))，空间复杂度O(1)
+     * 时间复杂度O(target^2)，空间复杂度O(1) (精确时间复杂度O(target^(3/2)))
      *
      * @param target
      * @return
@@ -71,7 +71,7 @@ public class Offer57_2 {
 
     /**
      * 暴力优化
-     * 如果i到j满足和为target，根据(i+j)(j-i+1)/2=target，解方程组得到正整数j
+     * 如果i到j满足和为target，根据(i+j)(j-i+1)/2=target，得到j^2+j+i-i^2-2target=0，解方程组得到正整数j
      * 时间复杂度O(target)，空间复杂度O(1)
      *
      * @param target
@@ -99,7 +99,7 @@ public class Offer57_2 {
 
             int sqrtDelta = (int) Math.sqrt(delta);
 
-            //如果delta开方为整数，说明j存在
+            //如果delta开方为整数，说明存在正整数j
             if ((long) sqrtDelta * sqrtDelta == delta) {
                 int j = (-1 + sqrtDelta) / 2;
                 int[] arr = new int[j - i + 1];

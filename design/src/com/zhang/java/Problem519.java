@@ -53,7 +53,7 @@ public class Problem519 {
     /**
      * 哈希表
      * 核心思想：随机选择一个元素，当前元素指向末尾元素的下标索引，即删除末尾元素，保证下次随机选择的元素连续
-     * 注意：不能使用下标数组，m*n空间太大，会溢出
+     * 注意：不能使用下标数组，m*n过大，会空间溢出
      */
     static class Solution {
         //存放元素和元素二维坐标转换为一维坐标下标索引的映射关系
@@ -64,7 +64,7 @@ public class Problem519 {
         private final int m;
         //矩阵列
         private final int n;
-        //当前剩余未翻转元素的数量，即为0的数量
+        //当前剩余未翻转元素的数量，即矩阵中剩余为0的数量
         private int total;
         //获取随机值
         private final Random random;

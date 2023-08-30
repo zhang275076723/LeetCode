@@ -44,7 +44,7 @@ public class Problem738 {
         int i = 0;
 
         //找从nums[0]开始的递增数组nums[0]-nums[i]
-        while (i < nums.length - 1 && nums[i] <= nums[i + 1]) {
+        while (i + 1 < nums.length && nums[i] <= nums[i + 1]) {
             i++;
         }
 

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/4/6 10:00
  * @Author zsy
- * @Description 滑动窗口的最大值 单调队列类比Problem209、Problem239、Problem862、Problem1696、Offer59_2 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem567、Problem1004、Offer48、Offer57_2 类比Offer59_2 同Problem239
+ * @Description 滑动窗口的最大值 单调队列类比Problem209、Problem239、Problem862、Problem1696、Offer59_2 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem532、Problem567、Problem713、Problem1004、Offer48、Offer57_2 类比Offer59_2 同Problem239
  * 给定一个数组 nums 和滑动窗口的大小 k，请找出所有滑动窗口里的最大值。
  * 你可以假设 k 总是有效的，在输入数组不为空的情况下，1 ≤ k ≤ 输入数组的大小。
  * <p>
@@ -150,7 +150,7 @@ public class Offer59 {
             }
 
             //队尾元素在数组中表示的值小于当前元素，队尾元素出队
-            while (!queue.isEmpty() && nums[i] > nums[queue.peekLast()]) {
+            while (!queue.isEmpty() && nums[queue.peekLast()] < nums[i]) {
                 queue.pollLast();
             }
 

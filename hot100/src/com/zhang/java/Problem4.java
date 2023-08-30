@@ -152,9 +152,11 @@ public class Problem4 {
         int i = 0;
         //当前指向nums2的起始下标索引
         int j = 0;
-        //i下次跳到的下标索引的前一位，最多为nums1中最后一个元素下标索引，用于判断nums1[i]-nums1[nextI]和nums2[j]-nums2[nextJ]的大小
+        //i下次跳到的下标索引的前一位，因为nums1[i]-nums1[nextI]和nums2[j]-nums2[nextJ]都是有序数组，
+        //可以直接比较nums1[nextI]和nums2[nextJ]的大小，确定i指针下次跳到nextI+1,，或者j指针跳到nextJ+1
         int nextI = Math.min(nums1.length - 1, i + k / 2 - 1);
-        //j下次跳到的下标索引的前一位，最多为nums2中最后一个元素下标索引，用于判断nums1[i]-nums1[nextI]和nums2[j]-nums2[nextJ]的大小
+        //j下次跳到的下标索引的前一位，因为nums1[i]-nums1[nextI]和nums2[j]-nums2[nextJ]都是有序数组，
+        //可以直接比较nums1[nextI]和nums2[nextJ]的大小，确定i指针下次跳到nextI+1,，或者j指针跳到nextJ+1
         int nextJ = Math.min(nums2.length - 1, j + k / 2 - 1);
 
         while (k != 1) {

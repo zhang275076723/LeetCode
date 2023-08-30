@@ -51,7 +51,7 @@ public class Problem395 {
     }
 
     private int dfs(int left, int right, String s, int k) {
-        //当前字符串长度小于等于1，则不存在字符串中每个字符出现次数都大于等于k，返回0
+        //当前字符串长度小于等于1，则不存在字符串中每个字符出现次数都大于等于k(之前已经考虑过k为1的情况)，返回0
         if (left >= right) {
             return 0;
         }
@@ -72,7 +72,7 @@ public class Problem395 {
 
         for (int i = left; i <= right; i++) {
             char c = s.charAt(i);
-            //当前字符出现次数小于k，则将s[left]-s[right]分割为s[left]-s[i-1]和s[i+1]-s[right]，继续进行判断
+            //当前字符出现次数小于k，则将s[left]-s[right]分割为s[left]-s[i-1]和s[i+1]-s[right]，继续往左右两边判断
             if (count[c - 'a'] < k) {
                 return Math.max(dfs(left, i - 1, s, k), dfs(i + 1, right, s, k));
             }

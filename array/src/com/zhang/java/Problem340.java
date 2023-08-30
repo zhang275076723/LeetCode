@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/8/3 10:49
  * @Author zsy
- * @Description 至多包含 K 个不同字符的最长子串 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem438、Problem485、Problem487、Problem567、Problem1004、Offer48、Offer57_2、Offer59
+ * @Description 至多包含 K 个不同字符的最长子串 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem438、Problem485、Problem487、Problem532、Problem567、Problem713、Problem1004、Offer48、Offer57_2、Offer59
  * 给你一个字符串 s 和一个整数 k ，请你找出 至多 包含 k 个 不同 字符的最长子串，并返回该子串的长度。
  * <p>
  * 输入：s = "eceba", k = 2

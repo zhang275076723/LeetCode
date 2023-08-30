@@ -34,7 +34,7 @@ public class Problem62 {
         System.out.println(problem62.uniquePaths(7, 3));
         System.out.println(problem62.uniquePaths2(7, 3));
         System.out.println(problem62.uniquePaths3(7, 3));
-        System.out.println(problem62.uniquePaths4(7, 3));
+        System.out.println(problem62.uniquePaths4(4, 3));
     }
 
     /**
@@ -143,15 +143,14 @@ public class Problem62 {
      * @return
      */
     public int uniquePaths4(int m, int n) {
-        //有可能溢出，所以使用long，最后再转换成int
+        //C(m+n-2,m-1)：从m+n-2中选出m-1个向下移动的方案，使用long，避免int溢出
         long result = 1;
-
-        //注意：i要从n开始，不能从m+n-1开始，从大往小乘，有可能long溢出
+        //注意：i要从n开始，不能从m+n-2开始，如果从大往小乘，有可能long溢出
         int i = n;
         int j = 1;
 
-        while (i <= m + n - 1 && j <= m - 1) {
-            //先乘再除，保证每次运算都是整数
+        while (i <= m + n - 2 && j <= m - 1) {
+            //先乘再除，保证每次运算不会产生小数
             result = result * i / j;
             i++;
             j++;
