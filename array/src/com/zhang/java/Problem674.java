@@ -45,6 +45,7 @@ public class Problem674 {
         //最长连续递增序列的长度，连续递增序列即为递增子数组
         int maxLen = 1;
         int[] dp = new int[nums.length];
+        //dp初始化
         dp[0] = 1;
 
         for (int i = 1; i < nums.length; i++) {
@@ -73,6 +74,7 @@ public class Problem674 {
 
         //最长连续递增序列的长度，连续递增序列即为递增子数组
         int maxLen = 1;
+        //dp初始化
         int dp = 1;
 
         for (int i = 1; i < nums.length; i++) {

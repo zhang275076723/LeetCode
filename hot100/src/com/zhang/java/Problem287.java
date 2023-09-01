@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/5/26 10:15
  * @Author zsy
- * @Description 寻找重复数 美团面试题 原地哈希类比Problem41、Problem268、Problem442、Problem448、Offer3 循环链表找环类比Problem141、Problem142 二分查找类比Problem4、Problem378、Problem410、Problem658、Problem1482、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 寻找重复数 美团面试题 原地哈希类比Problem41、Problem268、Problem442、Problem448、Offer3 循环链表找环类比Problem141、Problem142 二分查找类比Problem4、Problem378、Problem410、Problem644、Problem658、Problem1482、CutWood、FindMaxArrayMinAfterKMinus
  * 给定一个包含n + 1 个整数的数组nums ，其数字都在[1, n]范围内（包括 1 和 n），可知至少存在一个重复的整数。
  * 假设 nums 只有 一个重复的整数 ，返回 这个重复的数 。
  * 你设计的解决方案必须 不修改 数组 nums 且只用常量级 O(1) 的额外空间。
@@ -71,7 +71,7 @@ public class Problem287 {
 
         for (int i = 0; i < nums.length; i++) {
             //当nums[i]和nums[nums[i]-1]不相等时，元素进行交换
-            while (nums[i] != nums[nums[i] - 1]) {
+            while (nums[i] - 1 != nums[nums[i] - 1]) {
                 swap(nums, i, nums[i] - 1);
             }
 
@@ -86,7 +86,7 @@ public class Problem287 {
 
     /**
      * 二分查找变形
-     * 对[left,right]进行二分查找，left为数组中最小值，right为数组中最大值，统计数组中小于等于mid的元素个数count，
+     * 对[left,right]进行二分查找，left为数组中最小值，right为数组中最大值，统计数组中小于等于mid的个数count，
      * 如果count小于等于mid，则重复元素在mid右边，left=mid+1；
      * 如果count大于mid，则重复元素在mid或mid左边，right=mid
      * 时间复杂度O(nlog(right-left))=O(n)，空间复杂度O(1) (left:数组中最小值，right:数组中最大值)
@@ -99,16 +99,11 @@ public class Problem287 {
             return -1;
         }
 
-        //二分查找左区间，为数组中元素的最小值
-        int left = nums[0];
-        //二分查找左区间，为数组中元素的最大值
-        int right = nums[0];
+        //二分查找左边界，初始化为nums中最小元素1
+        int left = 1;
+        //二分查找右边界，初始化为nums中最大元素n-1
+        int right = nums.length - 1;
         int mid;
-
-        for (int num : nums) {
-            left = Math.min(left, num);
-            right = Math.max(right, num);
-        }
 
         while (left < right) {
             mid = left + ((right - left) >> 1);

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/14 17:33
  * @Author zsy
- * @Description 最大连续1的个数 III b站机试题 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem532、Problem567、Problem713、Offer48、Offer57_2、Offer59
+ * @Description 最大连续1的个数 III b站机试题 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem532、Problem567、Problem643、Problem713、Offer48、Offer57_2、Offer59
  * 给定一个二进制数组 nums 和一个整数 k，如果可以翻转最多 k 个 0 ，则返回 数组中连续 1 的最大个数 。
  * <p>
  * 输入：nums = [1,1,1,0,0,0,1,1,1,1,0], K = 2

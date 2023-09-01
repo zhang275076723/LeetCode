@@ -30,8 +30,8 @@ public class Problem673 {
      * dp1[i]：以nums[i]结尾的最长递增子序列的长度
      * dp2[i]：以nums[i]结尾的最长递增子序列的个数
      * dp1[i] = max(dp1[j] + 1) (0 <= j < i，且nums[j] < nums[i])
-     * dp2[i] = dp2[i] + dp2[j] (0 <= j < i，且dp1[j] + 1 == dp1[i])
-     * dp2[i] = dp2[j]          (0 <= j < i，且dp1[j] + 1 > dp1[i])
+     * dp2[i] = dp2[i] + dp2[j] (0 <= j < i，且nums[j] < nums[i]，且dp1[j] + 1 == dp1[i])
+     * dp2[i] = 1               (dp2[i] == 0，即以nums[i]结尾的最长递增子序列的个数至少为1)
      * 时间复杂度O(n^2)，空间复杂度O(n)
      *
      * @param nums
@@ -54,29 +54,28 @@ public class Problem673 {
         for (int i = 1; i < nums.length; i++) {
             //初始化，以nums[i]结尾的最长递增子序列的长度为1
             dp1[i] = 1;
-            //初始化，以nums[i]结尾的最长递增子序列的个数为1
-            dp2[i] = 1;
 
             for (int j = 0; j < i; j++) {
                 if (nums[j] < nums[i]) {
-                    //以nums[j]结尾的最长递增子序列加上nums[i]等于以nums[i]结尾的最长递增子序列的长度，
-                    //则以nums[i]结尾的最长递增子序列的个数加上以nums[j]结尾的最长递增子序列的个数
-                    if (dp1[j] + 1 == dp1[i]) {
-                        dp2[i] = dp2[i] + dp2[j];
-                    } else if (dp1[j] + 1 > dp1[i]) {
-                        //以nums[j]结尾的最长递增子序列加上nums[i]大于以nums[i]结尾的最长递增子序列的长度，
-                        //则以nums[i]结尾的最长递增子序列的个数为以nums[j]结尾的最长递增子序列的个数
-                        dp2[i] = dp2[j];
-                    }
-
                     //更新以nums[i]结尾的最长递增子序列的长度
-                    //注意：dp1，即nums[i]结尾的最长递增子序列的长度，只能在dp2更新之后再更新
                     dp1[i] = Math.max(dp1[i], dp1[j] + 1);
                 }
             }
 
             //更新最长递增子序列长度
             maxLen = Math.max(maxLen, dp1[i]);
+
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i] && dp1[j] + 1 == dp1[i]) {
+                    //更新以nums[i]结尾的最长递增子序列的个数
+                    dp2[i] = dp2[i] + dp2[j];
+                }
+            }
+
+            //以nums[i]结尾的最长递增子序列的个数至少为1
+            if (dp2[i] == 0) {
+                dp2[i] = 1;
+            }
         }
 
         //最长递增子序列的个数

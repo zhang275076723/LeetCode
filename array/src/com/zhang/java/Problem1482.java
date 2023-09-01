@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/8 16:25
  * @Author zsy
- * @Description 制作 m 束花所需的最少天数 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem658、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 制作 m 束花所需的最少天数 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem644、Problem658、CutWood、FindMaxArrayMinAfterKMinus
  * 给你一个整数数组 bloomDay，以及两个整数 m 和 k 。
  * 现需要制作 m 束花。制作花束时，需要使用花园中 相邻的 k 朵花 。
  * 花园中有 n 朵花，第 i 朵花会在 bloomDay[i] 时盛开，恰好 可以用于 一束 花中。

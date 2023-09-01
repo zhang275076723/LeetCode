@@ -25,7 +25,7 @@ public class FindMaxArrayMinAfterKMinus {
     /**
      * 手动实现大根堆
      * 取出堆顶元素，减去x，再入堆，执行k次，堆顶元素即为尽可能小的最大值
-     * 时间复杂度O(klogn)，空间复杂度O(n) (n = arr.length)
+     * 时间复杂度O(nlogn+klogn)，空间复杂度O(n) (n = arr.length)
      *
      * @param arr
      * @param k
@@ -53,7 +53,7 @@ public class FindMaxArrayMinAfterKMinus {
      * 对[left,right]进行二分查找，left为arr最小值减去kx，right为arr最大值，统计数组中元素都小于等于mid，减去x的次数count，
      * 如果count大于k，则数组中元素减去x，执行k次之后的最大值在mid右边，left=mid+1；
      * 如果count小于等于mid，则数组中元素减去x，执行k次之后的最大值在mid或mid左边，right=mid
-     * 时间复杂度O(n*log(right-left))=O(n)，空间复杂度O(1) (n = arr.length，left和right为int中的数，log(right-left)为常数)
+     * 时间复杂度O(n*log(right-left))=O(n)，空间复杂度O(1) (n = arr.length，left和right为int范围内的数，log(right-left)<32)
      *
      * @param arr
      * @param k

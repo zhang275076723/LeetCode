@@ -54,10 +54,6 @@ public class Problem898 {
             return -1;
         }
 
-        if (arr.length == 1) {
-            return 1;
-        }
-
         //存放子数组不同的或运算结果
         Set<Integer> set = new HashSet<>();
 

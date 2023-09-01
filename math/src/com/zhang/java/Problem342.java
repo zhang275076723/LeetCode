@@ -25,7 +25,7 @@ public class Problem342 {
         int n = 16;
         System.out.println(problem342.isPowerOfFour(n));
         System.out.println(problem342.isPowerOfFour2(n));
-        System.out.println(problem342.isPowerOfFour3(2));
+        System.out.println(problem342.isPowerOfFour3(n));
     }
 
     /**

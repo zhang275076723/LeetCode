@@ -67,8 +67,10 @@ public class Problem132 {
         }
 
         int[] dp2 = new int[s.length()];
+        //dp初始化
+        dp2[0] = 0;
 
-        for (int i = 0; i < s.length(); i++) {
+        for (int i = 1; i < s.length(); i++) {
             //s[0]-s[i]是回文串，则分割s[0]-s[i]为回文子串的最少分割次数为0
             if (dp1[0][i]) {
                 dp2[i] = 0;

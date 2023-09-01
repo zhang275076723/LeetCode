@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * @Date 2022/8/17 8:07
  * @Author zsy
- * @Description 有序矩阵中第 K 小的元素 类比Problem23、Problem74、Problem240、Offer4 二分查找类比Problem4、Problem287、Problem410、Problem658、Problem1482、CutWood、FindMaxArrayMinAfterKMinus 二分搜索树类比Problem4、Problem230、Problem440
+ * @Description 有序矩阵中第 K 小的元素 类比Problem23、Problem74、Problem240、Offer4 二分查找类比Problem4、Problem287、Problem410、Problem644、Problem658、Problem1482、CutWood、FindMaxArrayMinAfterKMinus 二分搜索树类比Problem4、Problem230、Problem440
  * 给你一个 n x n 矩阵 matrix ，其中每行和每列元素均按升序排序，找到矩阵中第 k 小的元素。
  * 请注意，它是 排序后 的第 k 小元素，而不是第 k 个 不同 的元素。
  * <p>
@@ -120,17 +120,17 @@ public class Problem378 {
      * 如果二维数组左边小于等于当前中值的数量小于k，说明中值小于第k小元素，左指针=mid+1
      * 如果二维数组左边小于等于当前中值的数量大于等于k，说明中值大于等于第k小元素，右指针=mid
      * 每次循环都保证了第k小元素在左指针-右指针之间，当左指针等于右指针时，即找到第k小元素，等于左指针，也等于右指针
-     * 时间复杂度O(n*log(right-left))，空间复杂度O(1)
-     * (n=matrix.length, left=matrix[0][0], right=matrix[matrix.length-1][matrix[0].length-1])
+     * 时间复杂度O(n*log(right-left))=O(n)，空间复杂度O(1)
+     * (n=matrix.length，n=matrix[0].length，left=matrix[0][0]，right=matrix[n-1][n-1])
      *
      * @param matrix
      * @param k
      * @return
      */
     public int kthSmallest3(int[][] matrix, int k) {
-        //当前最小元素
+        //二分左边界，初始化为matrix中最小元素
         int left = matrix[0][0];
-        //当前最大元素
+        //二分右边界，初始化为matrix中最大元素
         int right = matrix[matrix.length - 1][matrix[0].length - 1];
         int mid;
 
@@ -138,7 +138,7 @@ public class Problem378 {
             mid = left + ((right - left) >> 1);
 
             //小于等于mid的元素个数小于k，说明前k小元素在右边
-            if (getNotBiggerThanMidCount(matrix, mid) < k) {
+            if (getLessEqualThanNumCount(matrix, mid) < k) {
                 left = mid + 1;
             } else {
                 //小于等于mid的元素个数大于等于k，说明前k小元素在左边或mid处
@@ -149,7 +149,15 @@ public class Problem378 {
         return left;
     }
 
-    private int getNotBiggerThanMidCount(int[][] matrix, int mid) {
+    /**
+     * 获取matrix数组中小于等于num的元素个数
+     * 时间复杂度O(n)，空间复杂度O(1) (n=matrix.length，n=matrix[0].length)
+     *
+     * @param matrix
+     * @param num
+     * @return
+     */
+    private int getLessEqualThanNumCount(int[][] matrix, int num) {
         int count = 0;
         int i = matrix.length - 1;
         int j = 0;
@@ -157,7 +165,7 @@ public class Problem378 {
         //从左下往右上遍历
         while (i >= 0 && j < matrix[0].length) {
             //mid小于当前元素matrix[i][j]时，i指针上移
-            while (i >= 0 && mid < matrix[i][j]) {
+            while (i >= 0 && num < matrix[i][j]) {
                 i--;
             }
 

@@ -67,7 +67,7 @@ public class CutWood {
      * 对[left,right]进行二分查找，left为1，right为数组中最大值，统计数组中能够截出长度为mid的木块数量count，
      * 如果count大于等于k，则能够截出k个长度为m的木块的最大值在mid或mid右边，left=mid；
      * 如果count小于k，则能够截出k个长度为m的木块的最大值在mid左边，right=mid-1
-     * 时间复杂度O(n*log(maxLen))，空间复杂度O(1) (maxLen为数组中的最大值)
+     * 时间复杂度O(n*log(maxLen))=O(n)，空间复杂度O(1) (maxLen为数组中的最大值)
      *
      * @param arr
      * @param k

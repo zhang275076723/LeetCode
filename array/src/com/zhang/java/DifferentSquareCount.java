@@ -32,22 +32,22 @@ public class DifferentSquareCount {
 
         int i = 0;
         int j = nums.length - 1;
-        //当前元素的上一个元素值，赋初值为数组中不存在的元素
-        int num = Integer.MIN_VALUE;
+        //当前元素的前一个元素，用于去重，赋初值为数组中不存在的元素
+        int preNum = Integer.MIN_VALUE;
         int count = 0;
 
         while (i <= j) {
             if (Math.abs(nums[i]) > Math.abs(nums[j])) {
-                if (Math.abs(nums[i]) != Math.abs(num)) {
+                if (Math.abs(nums[i]) != Math.abs(preNum)) {
                     count++;
-                    num = nums[i];
+                    preNum = nums[i];
                 }
 
                 i++;
             } else {
-                if (Math.abs(nums[j]) != Math.abs(num)) {
+                if (Math.abs(nums[j]) != Math.abs(preNum)) {
                     count++;
-                    num = nums[j];
+                    preNum = nums[j];
                 }
 
                 j--;
