@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/8/27 08:46
  * @Author zsy
- * @Description 2 的幂 位运算类比Problem29、Problem190、Problem191、Problem201、Problem271、Problem326、Problem342、Problem371、Problem405、Problem461、Problem477、Problem1290、Offer15、Offer64、Offer65、IpToInt
+ * @Description 2 的幂 位运算类比Problem29、Problem136、Problem137、Problem190、Problem191、Problem201、Problem260、Problem271、Problem326、Problem342、Problem371、Problem389、Problem405、Problem461、Problem477、Problem645、Problem898、Problem1290、Offer15、Offer56、Offer56_2、Offer64、Offer65、IpToInt
  * 给你一个整数 n，请你判断该整数是否是 2 的幂次方。
  * 如果是，返回 true ；否则，返回 false 。
  * 如果存在一个整数 x 使得 n == 2^x ，则认为 n 是 2 的幂次方。

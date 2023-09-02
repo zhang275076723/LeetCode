@@ -3,7 +3,7 @@ package com.zhang.zhang;
 /**
  * @Date 2023/4/14 08:11
  * @Author zsy
- * @Description 二进制链表转整数 位运算类比Problem29、Problem190、Problem191、Problem201、Problem231、Problem271、Problem326、Problem342、Problem371、Problem405、Problem461、Problem477、Problem898、Offer15、Offer64、Offer65、IpToInt
+ * @Description 二进制链表转整数 位运算类比Problem29、Problem136、Problem137、Problem190、Problem191、Problem201、Problem231、Problem260、Problem271、Problem326、Problem342、Problem371、Problem389、Problem405、Problem461、Problem477、Problem645、Problem898、Offer15、Offer56、Offer56_2、Offer64、Offer65、IpToInt
  * 给你一个单链表的引用结点 head。链表中每个结点的值不是 0 就是 1。已知此链表是一个整数数字的二进制表示形式。
  * 请你返回该链表所表示数字的 十进制值 。
  * <p>

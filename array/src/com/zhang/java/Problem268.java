@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/11/12 10:54
  * @Author zsy
- * @Description 丢失的数字 原地哈希类比Problem41、Problem287、Problem442、Problem448、Offer3
+ * @Description 丢失的数字 原地哈希类比Problem41、Problem287、Problem442、Problem448、Problem645、Offer3
  * 给定一个包含 [0, n] 中 n 个数的数组 nums ，找出 [0, n] 这个范围内没有出现在数组中的那个数。
  * <p>
  * 输入：nums = [3,0,1]
@@ -69,7 +69,7 @@ public class Problem268 {
     }
 
     /**
-     * 原地哈希
+     * 原地哈希，原数组作为哈希表，零或正整数i和nums[i]建立映射关系
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -81,7 +81,7 @@ public class Problem268 {
         }
 
         for (int i = 0; i < nums.length; i++) {
-            //当nums[i]小于n，nums[i]和nums[nums[i]]不相等时，才进行交换
+            //nums[i]小于n，nums[i]和nums[nums[i]]不相等时，元素进行交换
             while (nums[i] < nums.length && nums[i] != nums[nums[i]]) {
                 swap(nums, i, nums[i]);
             }
@@ -122,7 +122,7 @@ public class Problem268 {
 
     /**
      * 位运算
-     * 0-n中缺失了一个数，数组元素和0-n分别进行异或，得到的结果就是缺失的那个数
+     * 0-n中缺失了一个数，数组元素和0-n分别进行异或，即缺失的数出现1次，其他数都出现2次，异或结果即为缺失的那个数
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums

@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/3/13 10:27
  * @Author zsy
- * @Description 数组中重复的数字 原地哈希类比Problem41、Problem268、Problem287、Problem442、Problem448
+ * @Description 数组中重复的数字 原地哈希类比Problem41、Problem268、Problem287、Problem442、Problem448、Problem645
  * 在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。数组中某些数字是重复的，
  * 但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字
  * <p>
@@ -65,7 +65,7 @@ public class Offer3 {
     }
 
     /**
-     * 原地哈希，原数组作为哈希表
+     * 原地哈希，原数组作为哈希表，零或正整数i和nums[i]建立映射关系
      * 数组nums[i]和i对应，如果不相等，则进行交换；如果相等，且i!=nums[i]，说明nums[i]不是第一次出现，则返回nums[i]
      * 例如：[(2), 3, (1), 0, 2, 5, 3]
      * 第一次交换：[(1), (3), 2, 0, 2, 5, 3]
@@ -78,7 +78,7 @@ public class Offer3 {
      */
     public int findRepeatNumber3(int[] nums) {
         for (int i = 0; i < nums.length; i++) {
-            //当nums[i]和nums[nums[i]]不相等时，元素进行交换
+            //nums[i]和nums[nums[i]]不相等时，元素进行交换
             while (nums[i] != nums[nums[i]]) {
                 swap(nums, i, nums[i]);
             }

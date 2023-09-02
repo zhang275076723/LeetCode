@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/6/9 20:49
  * @Author zsy
- * @Description 找到所有数组中消失的数字 原地哈希类比Problem41、Problem268、Problem287、Problem442、Offer3
+ * @Description 找到所有数组中消失的数字 原地哈希类比Problem41、Problem268、Problem287、Problem442、Problem645、Offer3
  * 给你一个含 n 个整数的数组 nums ，其中 nums[i] 在区间 [1, n] 内。
  * 请你找出所有在 [1, n] 范围内但没有出现在 nums 中的数字，并以数组的形式返回结果。
  * <p>
@@ -28,7 +28,7 @@ public class Problem448 {
     }
 
     /**
-     * 原地哈希
+     * 原地哈希，原数组作为哈希表，正整数i和nums[i-1]建立映射关系
      * 将nums[i]放到nums[nums[i]-1]，例如将元素3放到数组索引下标2的位置
      * 从原地哈希中找出nums[i]和i+1不相同的元素i+1
      * 时间复杂度O(n)，空间复杂度O(1)
@@ -42,7 +42,7 @@ public class Problem448 {
         }
 
         for (int i = 0; i < nums.length; i++) {
-            //当nums[i]和nums[nums[i]-1]不相等时，元素进行交换
+            //nums[i]和nums[nums[i]-1]不相等时，元素进行交换
             while (nums[i] != nums[nums[i] - 1]) {
                 swap(nums, i, nums[i] - 1);
             }
