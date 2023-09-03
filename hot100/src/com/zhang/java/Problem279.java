@@ -49,7 +49,7 @@ public class Problem279 {
         int[] dp = new int[n + 1];
 
         for (int i = 1; i <= n; i++) {
-            //初始化当前数字i最多由i个1平方之和
+            //初始化当前数字i最少由i个1平方之和
             dp[i] = i;
 
             for (int j = 1; j * j <= i; j++) {

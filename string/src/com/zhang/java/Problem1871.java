@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/2/28 11:41
  * @Author zsy
- * @Description 跳跃游戏 VII 跳跃问题类比Problem45、Problem55、Problem403、Problem1306、Problem1340、Problem1345、Problem1696 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem523、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1856、Offer57_2
+ * @Description 跳跃游戏 VII 跳跃问题类比Problem45、Problem55、Problem403、Problem1306、Problem1340、Problem1345、Problem1654、Problem1696、Problem2498 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem523、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1856、Offer57_2
  * 给你一个下标从 0 开始的二进制字符串 s 和两个整数 minJump 和 maxJump 。
  * 一开始，你在下标 0 处，且该位置的值一定为 '0' 。
  * 当同时满足如下条件时，你可以从下标 i 移动到下标 j 处：

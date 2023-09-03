@@ -33,13 +33,14 @@ public class Problem440 {
         int n = 681692778;
         int k = 351251360;
         //416126219
-//        System.out.println(problem440.findKthNumber(n, k));
-//        System.out.println(problem440.findKthNumber2(n, k));
+        System.out.println(problem440.findKthNumber(n, k));
+        System.out.println(problem440.findKthNumber2(n, k));
         System.out.println(problem440.findKthNumber3(n, k));
     }
 
     /**
      * 回溯+剪枝
+     * 注意：n和k过大会int溢出，所以要使用long
      * 时间复杂度O(k)，空间复杂度O(logn)
      *
      * @param n
@@ -61,6 +62,7 @@ public class Problem440 {
 
     /**
      * 迭代
+     * 注意：n和k过大会int溢出，所以要使用long
      * 时间复杂度O(k)，空间复杂度O(1)
      *
      * @param n
@@ -116,7 +118,7 @@ public class Problem440 {
         //t为long，避免乘10，int溢出
         long num = 1;
         //以num为根节点字典序树中小于等于n的个数
-        int count = getNotBiggerThanNCount(num, n);
+        int count = getLessEqualThanNCount(num, n);
 
         //当k为1时，当前num即为结果
         while (k != 1) {
@@ -130,7 +132,7 @@ public class Problem440 {
                 num = num * 10;
             }
 
-            count = getNotBiggerThanNCount(num, n);
+            count = getLessEqualThanNCount(num, n);
         }
 
         return (int) num;
@@ -163,7 +165,7 @@ public class Problem440 {
      * @param n
      * @return
      */
-    private int getNotBiggerThanNCount(long num, int n) {
+    private int getLessEqualThanNCount(long num, int n) {
         int count = 1;
         //num下一层字典序树的第一个元素，使用long避免int溢出
         long left = num * 10;

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/5/28 14:58
  * @Author zsy
- * @Description 01背包、完全背包、多重背包 动态规划类比Problem198、Problem213、Problem279、Problem322、Problem343、Problem377、Problem416、Problem474、Problem494、Problem518、Problem983、Problem1340、Problem1388、Problem1444、Offer14、Offer14_2、CircleBackToOrigin
+ * @Description 01背包、完全背包、多重背包 华为面试题 动态规划类比Problem198、Problem213、Problem279、Problem322、Problem343、Problem377、Problem416、Problem474、Problem494、Problem518、Problem983、Problem1340、Problem1388、Problem1444、Offer14、Offer14_2、CircleBackToOrigin
  */
 public class Knapsack {
     public static void main(String[] args) {
@@ -103,7 +103,7 @@ public class Knapsack {
      * 01背包正好装满的最小价值
      * dp[i][j]：前i件物品在容量为j正好装满的最小价值
      * dp[i][0]初始化为0，表示正好装满，dp[0][j]初始化为一个较大的数，表示无法装满，
-     * 不能赋值为Integer.MAX_VALUE，避免相加溢出结果为负数
+     * 不能赋值为Integer.MAX_VALUE，避免int相加溢出结果为负数
      * dp[i][j] = dp[i-1][j]                                            (weight[i-1] > j)
      * dp[i][j] = min(dp[i-1][j], dp[i-1][j-weight[i-1]] + values[i-1]) (weight[i-1] <= j)
      * 时间复杂度O(mn)，空间复杂度O(mn)，可以使用滚动数组优化空间复杂度为O(n) (m=weights.length, n=bagWeight)
@@ -117,12 +117,12 @@ public class Knapsack {
         int[][] dp = new int[weights.length + 1][bagWeight + 1];
 
         for (int j = 1; j <= bagWeight; j++) {
-            //初始化较大的整数，表示无法装满，不能赋值为Integer.MAX_VALUE，避免相加溢出结果为负数
+            //初始化较大的整数，表示无法装满，不能赋值为Integer.MAX_VALUE，避免int相加溢出结果为负数
             dp[0][j] = 10000;
         }
 
         for (int i = 1; i <= weights.length; i++) {
-            //注意最小价值是从后往前，不是从前往后
+            //注意：最小价值是从后往前遍历，不能从前往后遍历
             for (int j = bagWeight; j >= 1; j--) {
                 if (weights[i - 1] > j) {
                     dp[i][j] = dp[i - 1][j];

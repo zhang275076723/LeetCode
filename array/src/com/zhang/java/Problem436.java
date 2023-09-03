@@ -73,7 +73,7 @@ public class Problem436 {
     }
 
     /**
-     * 暴力优化，二分查找
+     * 二分查找
      * 创建新的二维数组newIntervals，newIntervals[i][0]：区间左边界，newIntervals[i][1]：区间在intervals中的下标索引
      * 按照区间左边界newIntervals[i][0]对newIntervals由小到大排序，因为每个区间的左边界不同，对排好序的newIntervals，
      * 每个intervals区间，对newIntervals二分查找大于等于当前区间右边界，且距离当前区间右边界最近区间的下标索引newIntervals[j][1]

@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/9/26 8:32
  * @Author zsy
- * @Description 青蛙过河 华为面试题、微信面试题 跳跃问题类比Problem45、Problem55、Problem1340、Problem1306、Problem1345、Problem1696、Problem1871、CircleBackToOrigin
+ * @Description 青蛙过河 华为面试题 微信面试题 类比CircleBackToOrigin 跳跃问题类比Problem45、Problem55、Problem1340、Problem1306、Problem1345、Problem1654、Problem1696、Problem1871、Problem2498
  * 一只青蛙想要过河。
  * 假定河流被等分为若干个单元格，并且在每一个单元格内都有可能放有一块石子（也有可能没有）。
  * 青蛙可以跳上石子，但是不可以跳入水中。
@@ -64,7 +64,7 @@ public class Problem403 {
 
     /**
      * 动态规划
-     * dp[i][k]：能否跳跃k步到达stones[i]
+     * dp[i][j]：能否跳跃j步到达stones[i]
      * dp[i][jumpDistance] = dp[j][jumpDistance-1] || dp[j][jumpDistance] || dp[j][jumpDistance+1]
      * (stones[j]为跳跃到stones[i]的前一块石头，jumpDistance = stones[i]-stones[j]，j+1 >= jumpDistance)
      * 时间复杂度O(n^2)，空间复杂度O(n^2)

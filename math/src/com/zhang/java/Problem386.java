@@ -21,7 +21,7 @@ import java.util.List;
 public class Problem386 {
     public static void main(String[] args) {
         Problem386 problem386 = new Problem386();
-        int n = 13;
+        int n = 25;
         System.out.println(problem386.lexicalOrder(n));
         System.out.println(problem386.lexicalOrder2(n));
     }
