@@ -42,7 +42,7 @@ public class Problem441 {
 
     /**
      * 二分查找
-     * 从1-n行，二分判断当前行放满共有几个硬币和n比较
+     * 1-n作为二分查找边界，mid行放满共有几个硬币和n比较，根据大小关系，判断继续往左找还是往右找
      * 时间复杂度O(logn)，空间复杂度O(1)
      *
      * @param n
@@ -54,10 +54,9 @@ public class Problem441 {
         int mid;
 
         while (left < right) {
-            //二分往右偏移，因为转移条件是right=mid-1，如果转移条件是left=mid+1，则二分要往左边偏移
+            //mid往右偏移，因为转移条件是right=mid-1，避免无法跳出循环
             mid = left + ((right - left) >> 1) + 1;
-            //mid行放满共有几个硬币
-            //使用long，避免int溢出
+            //mid行放满共有几个硬币，使用long，避免int溢出
             long count = (long) mid * (mid + 1) / 2;
 
             if (count > n) {

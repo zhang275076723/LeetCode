@@ -91,5 +91,4 @@ public class Problem55 {
 
         return true;
     }
-
 }

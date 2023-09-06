@@ -67,7 +67,7 @@ public class Problem69 {
         int mid;
 
         while (left < right) {
-            //二分往右偏移，因为转移条件是right=mid-1，如果转移条件是left=mid+1，则二分要往左边偏移
+            //mid往右偏移，因为转移条件是right=mid-1，避免无法跳出循环
             mid = left + ((right - left) >> 1) + 1;
 
             //使用long，避免mid*mid在int范围内溢出

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/12/4 11:58
  * @Author zsy
- * @Description 删除被覆盖区间 区间类比Problem56、Problem57、Problem228、Problem252、Problem253、Problem406、Problem435、Problem436、Problem763、Problem986
+ * @Description 删除被覆盖区间 区间类比Problem56、Problem57、Problem228、Problem252、Problem253、Problem352、Problem406、Problem435、Problem436、Problem763、Problem986
  * 给你一个区间列表，请你删除列表中被其他区间所覆盖的区间。
  * 只有当 c <= a 且 b <= d 时，我们才认为区间 [a,b) 被区间 [c,d) 覆盖。
  * 在完成所有删除操作后，请你返回列表中剩余区间的数目。

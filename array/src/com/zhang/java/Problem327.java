@@ -192,8 +192,8 @@ public class Problem327 {
         for (int i = 0; i < preSum.length; i++) {
             long queryLeft = preSum[i] - upper;
             long queryRight = preSum[i] - lower;
-            leftBound = Math.min(leftBound, Math.min(preSum[i], Math.min(queryLeft, queryRight)));
-            rightBound = Math.max(rightBound, Math.max(preSum[i], Math.max(queryLeft, queryRight)));
+            leftBound = Math.min(leftBound, Math.min(preSum[i], queryLeft));
+            rightBound = Math.max(rightBound, Math.max(preSum[i], queryRight));
         }
 
         int count = 0;

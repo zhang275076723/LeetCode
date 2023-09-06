@@ -39,14 +39,17 @@ public class Problem275 {
      * @return
      */
     public int hIndex(int[] citations) {
+        //左边界，h指数最小为0
         int left = 0;
+        //右边界，h指数最大为数组长度
         int right = citations.length;
         int mid;
 
         while (left < right) {
-            //二分往右偏移，因为转移条件是right=mid-1，如果转移条件是left=mid+1，则二分要往左边偏移
+            //mid往右偏移，因为转移条件是right=mid-1，避免无法跳出循环
             mid = left + ((right - left) >> 1) + 1;
 
+            //citations[citation.length-mid]-citations[citation.length-1]引用次数都大于等于mid，则h指数为至少为mid
             if (citations[citations.length - mid] >= mid) {
                 left = mid;
             } else {

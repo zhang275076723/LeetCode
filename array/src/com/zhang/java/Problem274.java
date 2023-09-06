@@ -40,8 +40,9 @@ public class Problem274 {
     public int hIndex(int[] citations) {
         mergeSort(citations, 0, citations.length - 1, new int[citations.length]);
 
+        //从大到小找h指数，引用次数最大为数组长度，最小为0，避免数组越界，最小只遍历到1
         for (int i = citations.length; i >= 1; i--) {
-            //存在引用次数超过当前大小i个文献，则h指数为i
+            //citations[citation.length-i]-citations[citation.length-1]引用次数都大于等于i，则h指数为i
             if (citations[citations.length - i] >= i) {
                 return i;
             }

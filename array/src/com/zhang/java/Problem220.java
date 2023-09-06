@@ -5,7 +5,7 @@ import java.util.TreeSet;
 /**
  * @Date 2023/3/22 10:23
  * @Author zsy
- * @Description 存在重复元素 III 类比Problem532 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem239、Problem340、Problem438、Problem485、Problem487、Problem532、Problem567、Problem643、Problem713、Problem1004、Offer48、Offer57_2、Offer59
+ * @Description 存在重复元素 III 类比Problem532 有序集合类比Problem352 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem239、Problem340、Problem438、Problem485、Problem487、Problem532、Problem567、Problem643、Problem713、Problem1004、Offer48、Offer57_2、Offer59
  * 给你一个整数数组 nums 和两个整数 k 和 t 。
  * 请你判断是否存在 两个不同下标 i 和 j，使得 abs(nums[i] - nums[j]) <= t ，同时又满足 abs(i - j) <= k 。
  * 如果存在则返回 true，不存在返回 false。
@@ -45,8 +45,8 @@ public class Problem220 {
      */
     public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
         //TreeSet中才有ceiling()、floor()，TreeSet添加、删除、查找的时间复杂度都为O(logn)
-        //ceiling(x)：返回树中大于等于x的最小元素，如果不存在返回null
-        //floor(x)：返回树中小于等于x的最大元素，如果不存在返回null
+        //ceiling(x)：返回set中大于等于x的最小元素，如果不存在返回null
+        //floor(x)：返回set中小于等于x的最大元素，如果不存在返回null
         TreeSet<Integer> set = new TreeSet<>();
         int left = 0;
         int right = 0;
