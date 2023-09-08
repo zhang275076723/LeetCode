@@ -125,9 +125,11 @@ public class Problem352 {
 
             //情况1、2，value在左边区间左边
             if (value < leftInterval[0]) {
+                //情况1
                 if (leftInterval[0] - 1 != value) {
                     list.add(leftIntervalIndex, new int[]{value, value});
                 } else {
+                    //情况2
                     leftInterval[0] = value;
                 }
             } else if (value <= leftInterval[1]) {
@@ -167,6 +169,7 @@ public class Problem352 {
         private final TreeSet<int[]> set;
 
         public SummaryRanges2() {
+            //按照区间左边界由小到大排序
             set = new TreeSet<>(new Comparator<int[]>() {
                 @Override
                 public int compare(int[] arr1, int[] arr2) {
@@ -215,9 +218,11 @@ public class Problem352 {
 
             //情况1、2，value在左边区间左边
             if (value < leftInterval[0]) {
+                //情况1
                 if (leftInterval[0] - 1 != value) {
                     set.add(newInterval);
                 } else {
+                    //情况2
                     leftInterval[0] = value;
                 }
             } else if (value <= leftInterval[1]) {

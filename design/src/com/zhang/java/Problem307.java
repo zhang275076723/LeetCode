@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/13 11:38
  * @Author zsy
- * @Description 区域和检索 - 数组可修改 类比Problem303、Problem304、Problem308 线段树类比Problem308、Problem327、Problem654、Problem715、Problem729、Problem731、Problem732 二分搜索树类比Problem4、Problem230、Problem378、Problem440
+ * @Description 区域和检索 - 数组可修改 类比Problem303、Problem304、Problem308 线段树类比Problem308、Problem327、Problem654、Problem715、Problem729、Problem731、Problem732、Problem2407 二分搜索树类比Problem4、Problem230、Problem378、Problem440
  * 给你一个数组 nums ，请你完成两类查询。
  * 1、其中一类查询要求 更新 数组 nums 下标对应的值
  * 2、另一类查询要求返回数组 nums 中索引 left 和索引 right 之间（ 包含 ）的nums元素的 和 ，其中 left <= right
@@ -50,20 +50,23 @@ public class Problem307 {
     static class NumArray {
         //线段树
         private final SegmentTree segmentTree;
-        //线段树表示区间的最大右边界
-        private final int maxRight;
+        //线段树表示区间的左边界
+        private final int leftBound;
+        //线段树表示区间的右边界
+        private final int rightBound;
 
         public NumArray(int[] nums) {
             segmentTree = new SegmentTree(nums);
-            maxRight = nums.length - 1;
+            leftBound = 0;
+            rightBound = nums.length - 1;
         }
 
         public void update(int index, int val) {
-            segmentTree.update(0, 0, maxRight, index, val);
+            segmentTree.update(0, leftBound, rightBound, index, val);
         }
 
         public int sumRange(int left, int right) {
-            return segmentTree.querySumValue(0, 0, maxRight, left, right);
+            return segmentTree.querySumValue(0, leftBound, rightBound, left, right);
         }
 
         /**

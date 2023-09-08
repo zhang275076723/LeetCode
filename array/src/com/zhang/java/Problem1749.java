@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/8/28 08:42
  * @Author zsy
- * @Description 任意子数组和的绝对值的最大值 数组类比Problem53、Problem135、Problem152、Problem238、Problem581、Problem628、Problem845、Offer42、Offer66、FindLeftBiggerRightLessIndex
+ * @Description 任意子数组和的绝对值的最大值 数组类比Problem53、Problem135、Problem152、Problem238、Problem581、Problem628、Problem845、Offer42、Offer66、FindLeftBiggerRightLessIndex 子序列和子数组类比
  * 给你一个整数数组 nums 。一个子数组 [numsl, numsl+1, ..., numsr-1, numsr] 的 和的绝对值 为
  * abs(numsl + numsl+1 + ... + numsr-1 + numsr) 。
  * 请你找出 nums 中 和的绝对值 最大的任意子数组（可能为空），并返回该 最大值 。

@@ -32,6 +32,7 @@ public class Problem863 {
         int k = 2;
         System.out.println(problem863.distanceK(root, target, k));
         System.out.println(problem863.distanceK2(root, target, k));
+        System.out.println(problem863.distanceK3(root, target, k));
     }
 
     /**
@@ -66,8 +67,8 @@ public class Problem863 {
     }
 
     /**
-     * 图的dfs或bfs
-     * 树转换为图，通过dfs或bfs找距离target节点为k的节点
+     * 图的dfs
+     * 树转换为图，通过dfs找距离target节点为k的节点
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -83,8 +84,29 @@ public class Problem863 {
         //通过树建立邻接表形表的有向图
         buildGraph(root, edges);
 
-//        //图的dfs
-//        dfs(target, 0, k, new HashSet<>(), edges, list);
+        //图的dfs，HashSet作为访问集合
+        dfs(target, 0, k, new HashSet<>(), edges, list);
+
+        return list;
+    }
+
+    /**
+     * 图的bfs
+     * 树转换为图，通过bfs找距离target节点为k的节点
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param root
+     * @param target
+     * @param k
+     * @return
+     */
+    public List<Integer> distanceK3(TreeNode root, TreeNode target, int k) {
+        //邻接表表示的图，key：当前节点，value：当前节点的邻接节点集合
+        Map<TreeNode, List<TreeNode>> edges = new HashMap<>();
+        List<Integer> list = new ArrayList<>();
+
+        //通过树建立邻接表形表的有向图
+        buildGraph(root, edges);
 
         //图的bfs
         bfs(target, k, edges, list);
@@ -160,11 +182,11 @@ public class Problem863 {
      * @param node
      * @param distance
      * @param k
-     * @param visited
+     * @param visitedSet
      * @param edges
      * @param list
      */
-    private void dfs(TreeNode node, int distance, int k, Set<TreeNode> visited,
+    private void dfs(TreeNode node, int distance, int k, Set<TreeNode> visitedSet,
                      Map<TreeNode, List<TreeNode>> edges, List<Integer> list) {
         if (node == null) {
             return;
@@ -176,19 +198,19 @@ public class Problem863 {
         }
 
         //设置当前节点已访问
-        visited.add(node);
+        visitedSet.add(node);
 
         //遍历当前节点没有访问过的邻接节点
         for (TreeNode nextNode : edges.get(node)) {
-            if (visited.contains(nextNode)) {
+            if (visitedSet.contains(nextNode)) {
                 continue;
             }
 
-            dfs(nextNode, distance + 1, k, visited, edges, list);
+            dfs(nextNode, distance + 1, k, visitedSet, edges, list);
         }
 
         //设置当前节点未访问
-        visited.remove(node);
+        visitedSet.remove(node);
     }
 
     /**
@@ -207,9 +229,9 @@ public class Problem863 {
 
         Queue<TreeNode> queue = new LinkedList<>();
         //节点的访问集合
-        Set<TreeNode> visited = new HashSet<>();
+        Set<TreeNode> visitedSet = new HashSet<>();
         queue.offer(target);
-        visited.add(target);
+        visitedSet.add(target);
         //bfs扩展的次数
         int count = 0;
 
@@ -226,22 +248,23 @@ public class Problem863 {
                 return;
             }
 
+            //每次往外扩一层
             for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
 
                 //遍历当前节点没有访问过的邻接节点，加入队列
                 for (TreeNode nextNode : edges.get(node)) {
-                    if (visited.contains(nextNode)) {
+                    if (visitedSet.contains(nextNode)) {
                         continue;
                     }
 
                     queue.offer(nextNode);
                     //设置当前节点已访问
-                    visited.add(nextNode);
+                    visitedSet.add(nextNode);
                 }
             }
 
-            //bfs扩展的次数加1
+            //count加1，表示bfs每次往外扩一层
             count++;
         }
     }

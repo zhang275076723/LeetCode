@@ -86,6 +86,7 @@ public class Problem994 {
 
             int size = queue.size();
 
+            //每次往外扩一层
             for (int i = 0; i < size; i++) {
                 int[] arr = queue.poll();
 
@@ -108,7 +109,7 @@ public class Problem994 {
                 }
             }
 
-            //每次往外扩一层
+            //count加1，表示bfs每次往外扩一层
             time++;
         }
 

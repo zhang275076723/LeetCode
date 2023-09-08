@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/9/25 8:34
  * @Author zsy
- * @Description 区间和的个数 阿里机试题 归并排序类比Problem23、Problem148、Problem315、Problem493、Offer51、CalculateSmallSum 前缀和类比Problem209、Problem325、Problem437、Problem523、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1856、Problem1871、Offer57_2 线段树类比Problem307、Problem308、Problem654、Problem715、Problem729、Problem731、Problem732
+ * @Description 区间和的个数 阿里机试题 归并排序类比Problem23、Problem148、Problem315、Problem493、Offer51、CalculateSmallSum 前缀和类比Problem209、Problem325、Problem437、Problem523、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1856、Problem1871、Offer57_2 线段树类比Problem307、Problem308、Problem654、Problem715、Problem729、Problem731、Problem732、Problem2407
  * 给你一个整数数组 nums 以及两个整数 lower 和 upper 。
  * 求数组中，值位于范围 [lower, upper] （包含 lower 和 upper）之内的 区间和的个数 。
  * 区间和 S(i, j) 表示在 nums 中，位置从 i 到 j 的元素之和，包含 i 和 j (i ≤ j)。
@@ -140,8 +140,10 @@ public class Problem327 {
 
         //线段树+数据离散化
         SegmentTree segmentTree = new SegmentTree(list.size());
-        //离散化之后线段树所表示区间的最大右边界
-        int maxRight = list.size() - 1;
+        //离散化之后线段树所的左边界
+        int leftBound = 0;
+        //离散化之后线段树所的右边界
+        int rightBound = list.size() - 1;
 
         int count = 0;
 
@@ -153,9 +155,9 @@ public class Problem327 {
             //map离散化之后的更新区间左右边界
             int updateIndex = map.get(preSum[i]);
 
-            count = count + segmentTree.query(0, 0, maxRight, queryLeft, queryRight);
+            count = count + segmentTree.query(0, leftBound, rightBound, queryLeft, queryRight);
             //离散化之后的区间[preSum[i],preSum[i]]表示元素出现次数加1
-            segmentTree.update(0, 0, maxRight, updateIndex, updateIndex, 1);
+            segmentTree.update(0, leftBound, rightBound, updateIndex, updateIndex, 1);
         }
 
         return count;

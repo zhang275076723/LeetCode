@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/7/9 8:42
  * @Author zsy
- * @Description 复制带随机指针的链表 节点复制类比Problem133 同Offer35
+ * @Description 复制带随机指针的链表 节点复制类比Problem133、Offer35 同Offer35
  * 给你一个长度为 n 的链表，每个节点包含一个额外增加的随机指针 random ，该指针可以指向链表中的任何节点或空节点。
  * 构造这个链表的 深拷贝。
  * 深拷贝应该正好由 n 个 全新 节点组成，其中每个新节点的值都设为其对应的原节点的值。

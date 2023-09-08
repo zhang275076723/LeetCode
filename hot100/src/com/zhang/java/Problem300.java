@@ -33,7 +33,7 @@ public class Problem300 {
     /**
      * 动态规划
      * dp[i]：以nums[i]结尾的最长递增子序列的长度
-     * dp[i] = max(dp[j] + 1) (0 <= j < i，且nums[j] < nums[i])
+     * dp[i] = max(dp[j] + 1) (0 <= j < i，nums[j] < nums[i])
      * 时间复杂度O(n^2)，空间复杂度O(n)
      *
      * @param nums

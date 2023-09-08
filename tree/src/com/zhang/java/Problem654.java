@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/8/12 08:39
  * @Author zsy
- * @Description 最大二叉树 类比Problem998 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem255、Problem395、Problem449、Problem617、Problem889、Problem1008、Offer7、Offer33 线段树类比Problem307、Problem308、Problem327、Problem715、Problem729、Problem731、Problem732 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem739、Problem795、Problem907、Problem1019、Problem1856、Problem2104、Problem2454、Problem2487、Offer33、DoubleStackSort
+ * @Description 最大二叉树 类比Problem998 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem255、Problem395、Problem449、Problem617、Problem889、Problem1008、Offer7、Offer33 线段树类比Problem307、Problem308、Problem327、Problem715、Problem729、Problem731、Problem732、Problem2407 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem739、Problem795、Problem907、Problem1019、Problem1856、Problem2104、Problem2454、Problem2487、Offer33、DoubleStackSort
  * 给定一个不重复的整数数组 nums 。
  * 最大二叉树 可以用下面的算法从 nums 递归地构建:
  * 创建一个根节点，其值为 nums 中的最大值。
@@ -236,13 +236,13 @@ public class Problem654 {
      */
     private static class SegmentTree {
         //区间元素的最大值数组
-        private final int[] valueArr;
+        private final int[] maxValueArr;
         //懒标记数组，当前节点的所有子孙节点需要加上的值
         private final int[] lazyValueArr;
 
         public SegmentTree(int[] nums) {
             //长度至少要开4n，确保包含了所有的区间
-            valueArr = new int[4 * nums.length];
+            maxValueArr = new int[4 * nums.length];
             lazyValueArr = new int[4 * nums.length];
 
             buildSegmentTree(nums, 0, 0, nums.length - 1);
@@ -250,7 +250,7 @@ public class Problem654 {
 
         private void buildSegmentTree(int[] nums, int rootIndex, int left, int right) {
             if (left == right) {
-                valueArr[rootIndex] = nums[left];
+                maxValueArr[rootIndex] = nums[left];
                 return;
             }
 
@@ -261,8 +261,8 @@ public class Problem654 {
             buildSegmentTree(nums, leftRootIndex, left, mid);
             buildSegmentTree(nums, rightRootIndex, mid + 1, right);
 
-            //valueArr[rootIndex]为左右子树中的较大值
-            valueArr[rootIndex] = Math.max(valueArr[leftRootIndex], valueArr[rightRootIndex]);
+            //maxValueArr[rootIndex]为左右子树中的较大值
+            maxValueArr[rootIndex] = Math.max(maxValueArr[leftRootIndex], maxValueArr[rightRootIndex]);
         }
 
         public int query(int rootIndex, int left, int right, int queryLeft, int queryRight) {
@@ -272,7 +272,7 @@ public class Problem654 {
             }
 
             if (queryLeft <= left && right <= queryRight) {
-                return valueArr[rootIndex];
+                return maxValueArr[rootIndex];
             }
 
             int mid = left + ((right - left) >> 1);
@@ -280,8 +280,8 @@ public class Problem654 {
             int rightRootIndex = rootIndex * 2 + 2;
 
             if (lazyValueArr[rootIndex] != 0) {
-                valueArr[leftRootIndex] = valueArr[leftRootIndex] + lazyValueArr[rootIndex];
-                valueArr[rightRootIndex] = valueArr[rightRootIndex] + lazyValueArr[rootIndex];
+                maxValueArr[leftRootIndex] = maxValueArr[leftRootIndex] + lazyValueArr[rootIndex];
+                maxValueArr[rightRootIndex] = maxValueArr[rightRootIndex] + lazyValueArr[rootIndex];
                 lazyValueArr[leftRootIndex] = lazyValueArr[leftRootIndex] + lazyValueArr[rootIndex];
                 lazyValueArr[rightRootIndex] = lazyValueArr[rightRootIndex] + lazyValueArr[rootIndex];
 
@@ -301,7 +301,7 @@ public class Problem654 {
             }
 
             if (updateLeft <= left && right <= updateRight) {
-                valueArr[rootIndex] = valueArr[rootIndex] + value;
+                maxValueArr[rootIndex] = maxValueArr[rootIndex] + value;
                 lazyValueArr[rootIndex] = lazyValueArr[rootIndex] + value;
                 return;
             }
@@ -311,8 +311,8 @@ public class Problem654 {
             int rightRootIndex = rootIndex * 2 + 2;
 
             if (lazyValueArr[rootIndex] != 0) {
-                valueArr[leftRootIndex] = valueArr[leftRootIndex] + lazyValueArr[rootIndex];
-                valueArr[rightRootIndex] = valueArr[rightRootIndex] + lazyValueArr[rootIndex];
+                maxValueArr[leftRootIndex] = maxValueArr[leftRootIndex] + lazyValueArr[rootIndex];
+                maxValueArr[rightRootIndex] = maxValueArr[rightRootIndex] + lazyValueArr[rootIndex];
                 lazyValueArr[leftRootIndex] = lazyValueArr[leftRootIndex] + lazyValueArr[rootIndex];
                 lazyValueArr[rightRootIndex] = lazyValueArr[rightRootIndex] + lazyValueArr[rootIndex];
 
@@ -322,8 +322,8 @@ public class Problem654 {
             update(leftRootIndex, left, mid, updateLeft, updateRight, value);
             update(rightRootIndex, mid + 1, right, updateLeft, updateRight, value);
 
-            //更新valueArr[rootIndex]为左右子树中的较大值
-            valueArr[rootIndex] = Math.max(valueArr[leftRootIndex], valueArr[rightRootIndex]);
+            //更新maxValueArr[rootIndex]为左右子树中的较大值
+            maxValueArr[rootIndex] = Math.max(maxValueArr[leftRootIndex], maxValueArr[rightRootIndex]);
         }
     }
 
@@ -348,7 +348,7 @@ public class Problem654 {
             }
 
             if (queryLeft <= node.leftBound && node.rightBound <= queryRight) {
-                return node.value;
+                return node.maxValue;
             }
 
             int mid = node.leftBound + ((node.rightBound - node.leftBound) >> 1);
@@ -362,8 +362,8 @@ public class Problem654 {
             }
 
             if (node.lazyValue != 0) {
-                node.leftNode.value = node.leftNode.value + node.lazyValue;
-                node.rightNode.value = node.rightNode.value + node.lazyValue;
+                node.leftNode.maxValue = node.leftNode.maxValue + node.lazyValue;
+                node.rightNode.maxValue = node.rightNode.maxValue + node.lazyValue;
                 node.leftNode.lazyValue = node.leftNode.lazyValue + node.lazyValue;
                 node.rightNode.lazyValue = node.rightNode.lazyValue + node.lazyValue;
 
@@ -383,7 +383,7 @@ public class Problem654 {
             }
 
             if (updateLeft <= node.leftBound && node.rightBound <= updateRight) {
-                node.value = node.value + value;
+                node.maxValue = node.maxValue + value;
                 node.lazyValue = node.lazyValue + value;
                 return;
             }
@@ -399,28 +399,35 @@ public class Problem654 {
             }
 
             if (node.lazyValue != 0) {
-                node.leftNode.value = node.leftNode.value + node.lazyValue;
-                node.rightNode.value = node.rightNode.value + node.lazyValue;
+                node.leftNode.maxValue = node.leftNode.maxValue + node.lazyValue;
+                node.rightNode.maxValue = node.rightNode.maxValue + node.lazyValue;
                 node.leftNode.lazyValue = node.leftNode.lazyValue + node.lazyValue;
                 node.rightNode.lazyValue = node.rightNode.lazyValue + node.lazyValue;
 
                 node.lazyValue = 0;
             }
 
-            update(node.leftNode, updateLeft, updateRight);
-            update(node.rightNode, updateLeft, updateRight);
+            update(node.leftNode, updateLeft, updateRight, value);
+            update(node.rightNode, updateLeft, updateRight, value);
 
-            //更新node.value为左右子树中的较大值
-            node.value = Math.max(node.leftNode.value, node.rightNode.value);
+            //更新node.maxValue为左右子树中的较大值
+            node.maxValue = Math.max(node.leftNode.maxValue, node.rightNode.maxValue);
         }
 
+        /**
+         * 更新区间[updateIndex,updateIndex]节点值为value
+         *
+         * @param node
+         * @param updateIndex
+         * @param value
+         */
         public void update(SegmentTreeNode node, int updateIndex, int value) {
             if (node.leftBound > updateIndex || node.rightBound < updateIndex) {
                 return;
             }
 
             if (node.leftBound == node.rightBound) {
-                node.value = value;
+                node.maxValue = value;
                 return;
             }
 
@@ -435,8 +442,8 @@ public class Problem654 {
             }
 
             if (node.lazyValue != 0) {
-                node.leftNode.value = node.leftNode.value + node.lazyValue;
-                node.rightNode.value = node.rightNode.value + node.lazyValue;
+                node.leftNode.maxValue = node.leftNode.maxValue + node.lazyValue;
+                node.rightNode.maxValue = node.rightNode.maxValue + node.lazyValue;
                 node.leftNode.lazyValue = node.leftNode.lazyValue + node.lazyValue;
                 node.rightNode.lazyValue = node.rightNode.lazyValue + node.lazyValue;
 
@@ -446,12 +453,12 @@ public class Problem654 {
             update(node.leftNode, updateIndex, value);
             update(node.rightNode, updateIndex, value);
 
-            //更新node.value为左右子树中的较大值
-            node.value = Math.max(node.leftNode.value, node.rightNode.value);
+            //更新node.maxValue为左右子树中的较大值
+            node.maxValue = Math.max(node.leftNode.maxValue, node.rightNode.maxValue);
         }
 
         private static class SegmentTreeNode {
-            private int value;
+            private int maxValue;
             private int lazyValue;
             private int leftBound;
             private int rightBound;

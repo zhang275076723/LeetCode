@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/8/30 08:38
  * @Author zsy
- * @Description 乘积小于 K 的子数组 京东面试题 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem532、Problem567、Problem643、Problem1004、Offer48、Offer57_2、Offer59
+ * @Description 乘积小于 K 的子数组 京东面试题 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem532、Problem567、Problem643、Problem1004、Offer48、Offer57_2、Offer59 子序列和子数组类比
  * 给你一个整数数组 nums 和一个整数 k ，请你返回子数组内所有元素的乘积严格小于 k 的连续子数组的数目。
  * <p>
  * 输入：nums = [10,5,2,6], k = 100
@@ -90,7 +90,8 @@ public class Problem713 {
         while (right < nums.length) {
             product = product * nums[right];
 
-            //nums[left]-nums[right]乘积大于等于k，则left右移，直至nums[left]-nums[right]乘积小于k
+            //nums[left]-nums[right]乘积大于等于k，则left右移，直至nums[left]-nums[right]乘积小于k，
+            //即nums[left]-nums[right]、nums[left]-nums[right+1]、...、nums[right]-nums[nums.length-1]的乘积都大于k
             while (left <= right && product >= k) {
                 product = product / nums[left];
                 left++;
