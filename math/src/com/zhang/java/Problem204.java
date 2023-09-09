@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/12/6 11:57
  * @Author zsy
- * @Description 计数质数 类比Problem263、Problem264、Offer49
+ * @Description 计数质数 各种数类比Problem263、Problem264、Offer49
  * 给定整数 n ，返回 所有小于非负整数 n 的质数的数量。
  * <p>
  * 输入：n = 10
@@ -98,6 +98,7 @@ public class Problem204 {
 
     /**
      * 动态规划，埃氏筛
+     * 核心思想：如果一个数是质数，则该质数的i倍表示的数都不是质数 (i为整数，且大于1)
      * 质数：大于1的自然数中，除了1和该数本身外，无法被其他自然数整除的数
      * dp[i]：数字i是否是质数
      * 如果dp[i] = true，则dp[i*2] = dp[i*3] = ... = dp[i*n] = false (如果i是质数，则i的倍数表示的数都不是质数)
@@ -114,7 +115,7 @@ public class Problem204 {
         //dp[i]：数字i是否是质数
         boolean[] dp = new boolean[n];
 
-        //dp初始化，每个数都是质数
+        //dp初始化，初始化[2,n-1]每个数都是质数
         for (int i = 2; i < n; i++) {
             dp[i] = true;
         }
@@ -122,7 +123,7 @@ public class Problem204 {
         int count = 0;
 
         for (int i = 2; i < n; i++) {
-            //i是质数，则i的倍数表示的数都不是质数
+            //如果i是质数，则质数i的正整数倍表示的数都不是质数
             if (dp[i]) {
                 count++;
 

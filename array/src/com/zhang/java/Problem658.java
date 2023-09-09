@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/12/7 09:16
  * @Author zsy
- * @Description 找到 K 个最接近的元素 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem644、Problem1482、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 找到 K 个最接近的元素 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem644、Problem1201、Problem1482、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
  * 给定一个 排序好 的数组 arr ，两个整数 k 和 x ，从数组中找到最靠近 x（两数之差最小）的 k 个数。
  * 返回的结果必须要是按升序排好的。
  * 整数 a 比整数 b 更接近 x 需要满足：
@@ -123,9 +123,11 @@ public class Problem658 {
      * @return
      */
     public List<Integer> findClosestElements3(int[] arr, int k, int x) {
-        //[left,right]都表示的是长度为k+1区间的左边界
+        //二分查找左边界，初始化为0
         int left = 0;
+        //二分查找右边界，初始化为arr.length-k
         int right = arr.length - k;
+        //每次比较两个端点arr[mid]和arr[mid+k]哪个距离x更近
         int mid;
 
         //比较以mid为左边界的区间[mid,mid+k]，两个端点arr[mid]和arr[mid+k]哪个距离x更近

@@ -49,13 +49,14 @@ public class Problem1 {
             return new int[0];
         }
 
-        //key：元素值；value：元素索引
+        //key：元素值；value：元素下标索引
         Map<Integer, Integer> map = new HashMap<>();
 
         for (int i = 0; i < nums.length; i++) {
             if (map.containsKey(target - nums[i])) {
                 return new int[]{i, map.get(target - nums[i])};
             }
+
             map.put(nums[i], i);
         }
 

@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/3/22 20:19
  * @Author zsy
- * @Description 复杂链表的复制 节点复制类比Problem133 同Problem138
+ * @Description 复杂链表的复制 节点复制类比Problem133、Problem138 同Problem138
  * 请实现 copyRandomList 函数，复制一个复杂链表。
  * 在复杂链表中，每个节点除了有一个 next 指针指向下一个节点，还有一个 random 指针指向链表中的任意节点或者 null。
  * <p>

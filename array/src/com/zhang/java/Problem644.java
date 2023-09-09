@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/8/31 08:30
  * @Author zsy
- * @Description 子数组最大平均数 II 类比Problem643 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem658、Problem1482、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 子数组最大平均数 II 类比Problem643 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem658、Problem1201、Problem1482、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
  * 给你一个包含 n 个整数的数组 nums，和一个整数 k 。
  * 请你找出长度 大于等于 k 且含最大平均值的连续子数组。并输出这个最大平均值。
  * 任何计算误差小于 10^-5 的结果都将被视为正确答案。
@@ -97,9 +97,9 @@ public class Problem644 {
             min = Math.min(min, num);
         }
 
-        //二分查找左边界，长度大于等于k的子数组之和的最大平均值的左边界，初始化为nums数组的最小值
+        //二分查找左边界，初始化为nums数组的最小值，长度大于等于k的子数组之和的最小平均值
         double left = min;
-        //二分查找右边界，长度大于等于k的子数组之和的最大平均值的右边界，初始化为nums数组的最大值
+        //二分查找右边界，初始化为nums数组的最大值，长度大于等于k的子数组之和的最大平均值
         double right = max;
         double mid;
 
@@ -133,7 +133,7 @@ public class Problem644 {
      * @return
      */
     private boolean isBiggerEqualThanAvg(int[] nums, int k, double avg) {
-        //nums[0]-nums[i]减去avg之和，如果curAvg大于等于0，则存在长度大于等于k，平均值大于等于avg的子数组
+        //nums[i]-nums[j](数组长度大于等于k)之和减去(j-i+1)个avg，如果curSum大于等于0，则存在长度大于等于k，平均值大于等于avg的子数组
         double curSum = 0;
 
         for (int i = 0; i < k; i++) {
@@ -144,9 +144,9 @@ public class Problem644 {
             return true;
         }
 
-        //nums[0]-nums[i-k]减去avg之和
+        //nums[0]-nums[i-k]之和减去(i-k+1)个avg
         double preSum = 0;
-        //nums[0]-nums[0]、nums[0]-nums[1]、...、nums[0]-nums[i-k]减去avg之和中的最小值，
+        //nums[0]-nums[0]、nums[0]-nums[1]、...、nums[0]-nums[i-k]之和减去相对应个avg中的最小值，
         //通过minPreSum得到nums[0]-nums[i]中长度大于等于k的最大子数组
         double minPreSum = 0;
 
@@ -156,12 +156,13 @@ public class Problem644 {
             preSum = preSum + nums[i - k] - avg;
             minPreSum = Math.min(minPreSum, preSum);
 
+            //存在平均值大于等于avg的子数组，返回true
             if (curSum - minPreSum >= 0) {
                 return true;
             }
         }
 
-        //遍历结束还没有找到长度大于等于k，平均值大于等于avg的子数组，返回false
+        //遍历结束还没有找到长度大于等于k，则不存在平均值大于等于avg的子数组，返回false
         return false;
     }
 }

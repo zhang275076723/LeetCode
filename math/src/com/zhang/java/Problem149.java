@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/8/7 08:24
  * @Author zsy
- * @Description 直线上最多的点数 类比Problem1979、IsInTriangle
+ * @Description 直线上最多的点数 类比IsInTriangle 最大公因数和最小公倍数类比Problem1979
  * 给你一个数组 points ，其中 points[i] = [xi, yi] 表示 X-Y 平面上的一个点。
  * 求最多有多少个点在同一条直线上。
  * <p>
@@ -85,7 +85,7 @@ public class Problem149 {
     }
 
     /**
-     * 非递归，辗转相除法得到最大公因数
+     * 非递归，辗转相除法得到a和b的最大公因数
      * 例如：a=36，b=24
      * 36%24=12 ----> a=24，b=12
      * 24%12=0  ----> a=12，b=0
@@ -109,7 +109,7 @@ public class Problem149 {
     }
 
     /**
-     * 递归，辗转相除法得到最大公因数
+     * 递归，辗转相除法得到a和b的最大公因数
      * 时间复杂度O(logn)，空间复杂度O(logn)
      *
      * @param a
