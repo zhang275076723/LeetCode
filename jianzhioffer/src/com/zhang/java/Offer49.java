@@ -1,9 +1,14 @@
 package com.zhang.java;
 
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.PriorityQueue;
+import java.util.Set;
+
 /**
  * @Date 2022/3/30 9:41
  * @Author zsy
- * @Description 丑数 三指针类比Problem75、Problem264、Problem1201 各种数类比Problem204、Problem263、Problem264、Problem1201 同Problem264
+ * @Description 丑数 三指针类比Problem75、Problem264、Problem1201 各种数类比Problem202、Problem204、Problem263、Problem264、Problem313、Problem1201 同Problem264
  * 我们把只包含质因子 2、3 和 5 的数称作丑数（Ugly Number）。
  * 求按从小到大的顺序的第 n 个丑数。
  * <p>
@@ -17,7 +22,77 @@ package com.zhang.java;
 public class Offer49 {
     public static void main(String[] args) {
         Offer49 offer49 = new Offer49();
-        System.out.println(offer49.nthUglyNumber(10));
+        int n = 10;
+        System.out.println(offer49.nthUglyNumber(n));
+        System.out.println(offer49.nthUglyNumber2(n));
+    }
+
+    /**
+     * 小根堆
+     * 核心思想：一个丑数乘上2、3、5也是丑数
+     * 堆顶丑数出堆，当前丑数乘以2、3、5表示的丑数入堆
+     * 时间复杂度O(nlogn)，空间复杂度O(n)
+     *
+     * @param n
+     * @return
+     */
+    public int nthUglyNumber(int n) {
+        if (n <= 0) {
+            return -1;
+        }
+
+        if (n == 1) {
+            return 1;
+        }
+
+        //小根堆，使用long，避免int溢出
+        PriorityQueue<Long> priorityQueue = new PriorityQueue<>(new Comparator<Long>() {
+            @Override
+            public int compare(Long a, Long b) {
+                //不能写成return a-b;，因为long相减再转为int有可能在int范围溢出
+                return Long.compare(a, b);
+            }
+        });
+        //访问集合，用于当前丑数乘以2、3、5表示的丑数入堆前去重，使用long，避免int溢出
+        Set<Long> visitedSet = new HashSet<>();
+
+        //小根堆初始化，1入堆
+        priorityQueue.offer(1L);
+        visitedSet.add(1L);
+
+        for (int i = 2; i <= n; i++) {
+            //当前丑数，使用long，避免int溢出
+            long curUglyNum = priorityQueue.poll();
+            //当前丑数乘以2表示的下一个丑数，使用long，避免int溢出
+            long nextUglyNum1 = curUglyNum * 2;
+            //当前丑数乘以3表示的下一个丑数，使用long，避免int溢出
+            long nextUglyNum2 = curUglyNum * 3;
+            //当前丑数乘以5表示的下一个丑数，使用long，避免int溢出
+            long nextUglyNum3 = curUglyNum * 5;
+
+            //nextUglyNum1未访问，加入小根堆中，并设置已访问
+            if (!visitedSet.contains(nextUglyNum1)) {
+                priorityQueue.offer(nextUglyNum1);
+                visitedSet.add(nextUglyNum1);
+            }
+
+            //nextUglyNum2未访问，加入小根堆中，并设置已访问
+            if (!visitedSet.contains(nextUglyNum2)) {
+                priorityQueue.offer(nextUglyNum2);
+                visitedSet.add(nextUglyNum2);
+            }
+
+            //nextUglyNum3未访问，加入小根堆中，并设置已访问
+            if (!visitedSet.contains(nextUglyNum3)) {
+                priorityQueue.offer(nextUglyNum3);
+                visitedSet.add(nextUglyNum3);
+            }
+        }
+
+        //Long自动拆箱为long，再强转为int返回
+        long result = priorityQueue.poll();
+
+        return (int) result;
     }
 
     /**
@@ -32,7 +107,7 @@ public class Offer49 {
      * @param n
      * @return
      */
-    public int nthUglyNumber(int n) {
+    public int nthUglyNumber2(int n) {
         if (n <= 0) {
             return -1;
         }

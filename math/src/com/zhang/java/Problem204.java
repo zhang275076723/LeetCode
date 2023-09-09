@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/12/6 11:57
  * @Author zsy
- * @Description 计数质数 各种数类比Problem263、Problem264、Offer49
+ * @Description 计数质数 各种数类比Problem202、Problem263、Problem264、Problem313、Problem1201、Offer49 最大公因数和最小公倍数类比
  * 给定整数 n ，返回 所有小于非负整数 n 的质数的数量。
  * <p>
  * 输入：n = 10

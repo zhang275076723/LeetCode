@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/7 08:00
  * @Author zsy
- * @Description 丑数 III 三指针类比Problem75、Problem264、Offer49 最大公因数和最小公倍数类比 各种数类比 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem644、Problem658、Problem1482、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 丑数 III 三指针类比Problem75、Problem264、Offer49 最大公因数和最小公倍数类比 各种数类比Problem202、Problem204、Problem263、Problem264、Problem313、Offer49 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem644、Problem658、Problem1482、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
  * 给你四个整数：n 、a 、b 、c ，请你设计一个算法来找出第 n 个丑数。
  * 丑数是可以被 a 或 b 或 c 整除的 正整数 。
  * <p>
@@ -43,7 +43,7 @@ public class Problem1201 {
 
     /**
      * 三指针
-     * 注意：这里的丑数是能被a、b、c整除，而不是丑数只含有因子a、b、c
+     * 注意：这里的丑数是能被a、b、c整除的数，而不是只含有因子a、b、c的丑数
      * 例如：a=2，b=3，c=5，8在这里是丑数，因为8能整除2；但在其他地方，8不是丑数，因为8/2=4，4不是因子2、3、5
      * 时间复杂度O(n)，空间复杂度O(1)
      *
@@ -93,8 +93,8 @@ public class Problem1201 {
     }
 
     /**
-     * 二分查找
-     * 注意：这里的丑数是能被a、b、c整除，而不是丑数只含有因子a、b、c
+     * 二分查找，容斥原理
+     * 注意：这里的丑数是能被a、b、c整除的数，而不是只含有因子a、b、c的丑数
      * 对[left,right]进行二分查找，left为a、b、c中的最小值，right为n*left，统计小于等于mid的丑数个数count，
      * 如果count小于n，则第n个丑数在mid右边，left=mid+1；
      * 如果count大于等于n，则则第n个丑数在mid或mid左边，right=mid

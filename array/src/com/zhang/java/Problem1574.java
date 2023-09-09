@@ -128,15 +128,17 @@ public class Problem1574 {
         //最长不减后缀的首元素下标索引
         int j = arr.length - 1;
 
+        //从前往后找以arr[0]起始的最长不减前缀
         while (i + 1 < arr.length && arr[i] <= arr[i + 1]) {
             i++;
         }
 
+        //从后往前找以arr[arr.length-1]结尾的最长不减后缀
         while (j - 1 >= 0 && arr[j - 1] <= arr[j]) {
             j--;
         }
 
-        //数组单调不减，则不需要删除元素，直接返回0
+        //arr数组单调不减，则不需要删除元素，直接返回0
         if (i >= j) {
             return 0;
         }
@@ -150,13 +152,15 @@ public class Problem1574 {
 
         //arr[0]-arr[i]和arr[j]-arr[arr.length-1]都单调不减，即只需要减去arr[left+1]-arr[right-1]的子数组，则剩余元素单调不减
         while (left <= i && right < arr.length) {
-            //右指针右移，保证arr[left]和arr[right]保证单调不减
+            //右指针右移，保证arr[left]和arr[right]两个元素保证单调不减，
+            //保证arr[0]-arr[left]，arr[right]-arr[arr.length-1]整体单调不减
             while (right < arr.length && arr[left] > arr[right]) {
                 right++;
             }
 
-            //arr[left+1]-arr[right-1]为要删除的子数组，删除之后剩余元素单调不减
+            //arr[left+1]-arr[right-1]即为要删除的子数组，删除之后剩余元素单调不减
             min = Math.min(min, right - left - 1);
+            //左指针右移
             left++;
         }
 
