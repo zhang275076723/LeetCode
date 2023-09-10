@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2023/7/16 09:12
  * @Author zsy
- * @Description 检查替换后的词是否有效 类比Problem71、Problem402、Problem1047、CharacterToInteger 类比Problem331
+ * @Description 检查替换后的词是否有效 类比Problem331 类比Problem71、Problem402、Problem1047、CharacterToInteger
  * 给你一个字符串 s ，请你判断它是否 有效 。
  * 字符串 s 有效 需要满足：假设开始有一个空字符串 t = "" ，你可以执行 任意次 下述操作将 t 转换为 s ：
  * 将字符串 "abc" 插入到 t 中的任意位置。形式上，t 变为 tleft + "abc" + tright，其中 t == tleft + tright 。

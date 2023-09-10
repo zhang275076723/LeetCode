@@ -107,6 +107,7 @@ public class Problem313 {
         }
 
         int[] dp = new int[n];
+        //指向dp的下标索引数组
         int[] index = new int[primes.length];
         //dp初始化
         dp[0] = 1;

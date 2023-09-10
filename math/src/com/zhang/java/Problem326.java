@@ -69,12 +69,12 @@ public class Problem326 {
         //int范围内3的整数次幂表示的最大数，3^19
         int max = 3;
 
-        //得到max，max*3如果溢出，则为负数
+        //得到max，max*3避免int溢出
         while (max * 3 > 0 && max * 3 <= Integer.MAX_VALUE) {
             max = max * 3;
         }
 
-        //如果n是3的整数次幂，则最大数能够整除n
+        //如果n是3的整数次幂，则3的整数次幂表示的最大数max能够整除n
         return max % n == 0;
     }
 }
