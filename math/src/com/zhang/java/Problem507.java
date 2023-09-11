@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/9 08:18
  * @Author zsy
- * @Description 完美数 各种数类比
+ * @Description 完美数 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem509、Problem728、Problem842、Problem878、Problem1201、Problem1291、Offer10、Offer49
  * 对于一个 正整数，如果它和除了它自身以外的所有 正因子 之和相等，我们称它为 「完美数」。
  * 给定一个 整数 n， 如果是完美数，返回 true；否则返回 false。
  * <p>

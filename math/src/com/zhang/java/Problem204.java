@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/12/6 11:57
  * @Author zsy
- * @Description 计数质数 各种数类比Problem202、Problem263、Problem264、Problem313、Problem1201、Offer49 最大公因数和最小公倍数类比
+ * @Description 计数质数 各种数类比Problem202、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1201、Problem1291、Offer10、Offer49
  * 给定整数 n ，返回 所有小于非负整数 n 的质数的数量。
  * <p>
  * 输入：n = 10
@@ -78,7 +78,7 @@ public class Problem204 {
         int count = 0;
 
         for (int i = 2; i < n; i++) {
-            //当前数i是否为质数
+            //当前数i是否为质数标志位
             boolean flag = true;
 
             for (int j = 2; j * j <= i; j++) {

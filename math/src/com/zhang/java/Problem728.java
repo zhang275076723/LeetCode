@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/9/9 08:28
  * @Author zsy
- * @Description 自除数
+ * @Description 自除数 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem842、Problem878、Problem1201、Problem1291、Offer10、Offer49
  * 自除数 是指可以被它包含的每一位数整除的数。
  * 例如，128 是一个 自除数 ，因为 128 % 1 == 0，128 % 2 == 0，128 % 8 == 0。
  * 自除数 不允许包含 0 。
@@ -53,7 +53,7 @@ public class Problem728 {
                 int cur = num % 10;
 
                 //当前位cur为0，或者当前数i不能整除当前位cur，则不是自除数，直接跳出循环
-                if (cur == 0 ||i % cur != 0) {
+                if (cur == 0 || i % cur != 0) {
                     flag = false;
                     break;
                 }

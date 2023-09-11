@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/9/9 09:30
  * @Author zsy
- * @Description 顺次数 各种数类比 回溯+剪枝类比
+ * @Description 顺次数 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1201、Offer10、Offer49 回溯+剪枝类比
  * 我们定义「顺次数」为：每一位上的数字都比前一位上的数字大 1 的整数。
  * 请你返回由 [low, high] 范围内所有顺次数组成的 有序 列表（从小到大排序）。
  * <p>
