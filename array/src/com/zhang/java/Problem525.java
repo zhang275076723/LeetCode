@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/5/28 08:41
  * @Author zsy
- * @Description 连续数组 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem523、Problem560、Problem862、Problem974、Problem1171、Problem1856、Problem1871、Offer57_2 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
+ * @Description 连续数组 类比Problem696 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem523、Problem560、Problem862、Problem974、Problem1171、Problem1856、Problem1871、Offer57_2 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
  * 给定一个二进制数组 nums , 找到含有相同数量的 0 和 1 的最长连续子数组，并返回该子数组的长度。
  * <p>
  * 输入: nums = [0,1]

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/13 9:32
  * @Author zsy
- * @Description 最长回文子串 腾讯面试题 回文类比Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem409、Problem516、Problem647、Problem680、Problem1312 (注意和最长回文子序列的区别)
+ * @Description 最长回文子串 腾讯面试题 中心扩散类比Problem647、Problem696 回文类比Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem409、Problem516、Problem647、Problem680、Problem1312 (注意和最长回文子序列的区别)
  * 给你一个字符串 s，找到 s 中最长的回文子串。
  * <p>
  * 输入：s = "babad"
@@ -183,6 +183,7 @@ public class Problem5 {
 
     /**
      * 中心扩散
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param s     原字符串
      * @param left  扩散起始的左指针
