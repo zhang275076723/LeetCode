@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/4/17 10:51
  * @Author zsy
- * @Description 下一个排列 字节面试题 类比Problem556、Problem670、Problem738
+ * @Description 下一个排列 字节面试题 类比Problem556、Problem670、Problem738、Problem1323
  * 整数数组的一个 排列 就是将其所有成员以序列或线性顺序排列。
  * 例如，arr = [1,2,3] ，以下这些都可以视作 arr 的排列：[1,2,3]、[1,3,2]、[3,1,2]、[2,3,1] 。
  * 整数数组的 下一个排列 是指其整数的下一个字典序更大的排列。
@@ -33,7 +33,7 @@ import java.util.Arrays;
 public class Problem31 {
     public static void main(String[] args) {
         Problem31 problem31 = new Problem31();
-        int[] nums = {2, 6, 3, 5, 4, 1};
+        int[] nums = {1, 3, 3, 2};
         problem31.nextPermutation(nums);
         System.out.println(Arrays.toString(nums));
     }
@@ -87,10 +87,7 @@ public class Problem31 {
      */
     private void reverse(int[] nums, int i, int j) {
         while (i < j) {
-            int temp = nums[i];
-            nums[i] = nums[j];
-            nums[j] = temp;
-
+            swap(nums, i, j);
             i++;
             j--;
         }

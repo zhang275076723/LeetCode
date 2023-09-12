@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/4 08:49
  * @Author zsy
- * @Description 重复的子字符串 kmp类比Problem28、Problem214、Problem686、Problem796 旋转问题类比Problem61、Problem186、Problem189、Problem686、Problem796、Offer58_2
+ * @Description 重复的子字符串 类比Problem1071 kmp类比Problem28、Problem214、Problem686、Problem796 旋转问题类比Problem61、Problem186、Problem189、Problem686、Problem796、Offer58_2
  * 给定一个非空的字符串 s ，检查是否可以通过由它的一个子串重复多次构成。
  * <p>
  * 输入: s = "abab"
@@ -94,7 +94,8 @@ public class Problem459 {
 
     /**
      * kmp
-     * s拼接s，再去除首尾字符，得到的新字符串str，str中包含了s旋转的各种情况，
+     * s拼接s，再去除首尾字符(如果不去除首尾字符，则s拼接s得到的字符串为ss，其中肯定包含s，为了避免原始s的影响，所以要去除首尾字符)，
+     * 得到的新字符串str，str中包含了s旋转的各种情况，
      * 如果s通过旋转能够得到s，等价于str中包含s，则s由重复的子字符串构成。
      * 通过kmp判断str中是否包含s
      * 时间复杂度O(n)，空间复杂度O(n)

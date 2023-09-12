@@ -150,7 +150,7 @@ public class Problem352 {
                 } else {
                     //情况7
                     //注意：只能写成leftIntervalIndex+1，不能写成rightIntervalIndex，
-                    //避免leftIntervalIndex等于rightIntervalIndex，导致lsit中插入区间[value,value]之后无序
+                    //避免leftIntervalIndex等于rightIntervalIndex，导致list中插入区间[value,value]之后无序
                     list.add(leftIntervalIndex + 1, new int[]{value, value});
                 }
             }

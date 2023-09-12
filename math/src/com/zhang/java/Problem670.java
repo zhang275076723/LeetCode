@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/2/21 10:35
  * @Author zsy
- * @Description 最大交换 字节面试题 类比Problem31、Problem556、Problem738
+ * @Description 最大交换 字节面试题 类比Problem31、Problem556、Problem738、Problem1323
  * 给定一个非负整数，你至多可以交换一次数字中的任意两位。返回你能得到的最大值。
  * <p>
  * 输入: 2736
@@ -29,7 +29,7 @@ public class Problem670 {
      * 两者进行交换，得到交换一次得到的最大值
      * 如果是最小交换，找第一个右边存在比当前元素值小的最小元素，如果存在相同的最小元素，则找最远的最小元素，
      * 两者进行交换，得到交换一次得到的最小值
-     * 时间复杂度O((lognum)^2)=O(1)，空间复杂度O(lognum)=O(1)
+     * 时间复杂度O((log(num))^2)=O(1)，空间复杂度O(log(num))=O(1)
      *
      * @param num
      * @return

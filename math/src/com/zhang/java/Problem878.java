@@ -112,7 +112,7 @@ public class Problem878 {
      * 得到a和b的最小公倍数
      * a和b的最小公倍数=a*b/(a和b的最大公因数)
      * 返回long，避免int相乘溢出
-     * 时间复杂度O(logn)，空间复杂度O(1)
+     * 时间复杂度O(logn)=O(1)，空间复杂度O(1) (n：a、b的范围)
      *
      * @param a
      * @param b
@@ -128,7 +128,7 @@ public class Problem878 {
      * 36%24=12 ----> a=24，b=12
      * 24%12=0  ----> a=12，b=0
      * 当b为0时，a即为最大公因数
-     * 时间复杂度O(logn)，空间复杂度O(1)
+     * 时间复杂度O(logn)=O(1)，空间复杂度O(1) (n：a、b的范围)
      *
      * @param a
      * @param b
