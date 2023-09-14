@@ -4,7 +4,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/19 09:19
  * @Author zsy
- * @Description 无重叠区间 区间类比Problem56、Problem57、Problem228、Problem252、Problem253、Problem352、Problem406、Problem436、Problem763、Problem986、Problem1288 动态规划类比Problem300
+ * @Description 无重叠区间 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem352、Problem406、Problem436、Problem763、Problem986、Problem1288 动态规划类比Problem300
  * 给定一个区间的集合 intervals ，其中 intervals[i] = [starti, endi] 。
  * 返回 需要移除区间的最小数量，使剩余区间互不重叠 。
  * <p>

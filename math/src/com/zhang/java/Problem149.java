@@ -64,11 +64,11 @@ public class Problem149 {
                 int k1 = y1 - y2;
                 int k2 = x1 - x2;
                 //k1和k2的最大公因数
-                int gcd1 = gcd(k1, k2);
+                int gcd = gcd(k1, k2);
 
                 //除以最大公因数，这样不管分子分母是多少，相同分数最后的表示形式都一样
-                k1 = k1 / gcd1;
-                k2 = k2 / gcd1;
+                k1 = k1 / gcd;
+                k2 = k2 / gcd;
 
                 //k可能为小数，作为key不精确，所以用分数表示
                 String key = k1 + "/" + k2;
@@ -90,7 +90,7 @@ public class Problem149 {
      * 36%24=12 ----> a=24，b=12
      * 24%12=0  ----> a=12，b=0
      * 当b为0时，a即为最大公因数
-     * 时间复杂度O(logn)=O(1)，空间复杂度O(1) (n：a、b的范围)
+     * 时间复杂度O(logn)=O(log32)=O(1)，空间复杂度O(1) (n：a、b的范围，a、b都在int范围内)
      *
      * @param a
      * @param b
