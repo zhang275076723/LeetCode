@@ -39,12 +39,13 @@ public class Problem898 {
         int[] arr = {1, 11, 6, 11};
         System.out.println(problem898.subarrayBitwiseORs(arr));
         System.out.println(problem898.subarrayBitwiseORs2(arr));
+        System.out.println(problem898.subarrayBitwiseORs3(arr));
     }
 
     /**
      * 暴力
      * 时间复杂度O(n^2)，空间复杂度O(nlogC)=O(nlog32)=O(n) (C：arr中的最大数，arr元素在int范围内)
-     * (arr[i]与后面的元素进行或运算，结果只增不减，每个arr[i]最多只会有logC种不同的或运算结果，共nlogC种不同的或运算结果)
+     * (以arr[i]结尾的子数组与下一个元素求或运算结果，结果只增不减，每个以nums[i]结尾的子数组最多只会有logC种不同的或运算结果，共nlogC种不同的或运算结果)
      *
      * @param arr
      * @return
@@ -58,7 +59,7 @@ public class Problem898 {
         Set<Integer> set = new HashSet<>();
 
         for (int i = 0; i < arr.length; i++) {
-            //nums[i]-nums[j]或运算结果
+            //nums[i]-nums[j]的或运算结果
             int orResult = 0;
 
             for (int j = i; j < arr.length; j++) {
@@ -73,12 +74,13 @@ public class Problem898 {
     /**
      * 动态规划
      * dp[j]：从前往后遍历到arr[i]，此时dp[j]表示arr[j]-arr[i]或运算结果 (0 <= j < i)
-     * 遍历到arr[i]，从后往前dp[j]分别和arr[i]进行或运算，此时dp[j]表示arr[j]-arr[i-1]或运算结果，
-     * 如果dp[j]|arr[i] == dp[j]，则说明arr[i]表示的二进制数中1，都在arr[j]-arr[i-1]或运算结果中出现过，
-     * 则同样也在arr[j-1]-arr[i-1]、arr[j-2]-arr[i-1]...arr[0]-arr[i-1]或运算结果中出现过，因为随着数组长度变大，
-     * 或运算结果只增不减，直接跳出循环，遍历下一个arr[i]；否则，更新dp[j]，此时dp[j]表示arr[j]-arr[i]或运算结果
-     * 时间复杂度O(nlogC)=O(nlog32)=O(n)，空间复杂度O(nlogC)=O(nlog32)=O(n) (C：arr中的最大元素，arr元素在int范围内)
-     * (arr[i]与后面的元素进行或运算，结果只增不减，每个arr[i]与其他元素最多只会有logC种不同的或运算结果，共nlogC种不同的或运算结果)
+     * 遍历到arr[i]，从后往前dp[j]和arr[i]进行或运算，此时dp[j]表示arr[j]-arr[i-1]或运算结果，
+     * 如果dp[j] == dp[j]|arr[i]，则说明arr[i]表示的二进制数中1，都在arr[j]-arr[i-1]或运算结果中出现过，
+     * 则arr[0]-arr[i-1]、arr[1]-arr[i-1]...arr[j]-arr[i-1]和arr[i]或运算结果都不会变，
+     * 因为随着数组长度变大，或运算结果只增不减，直接跳出循环，遍历下一个arr[i]；
+     * 否则，更新dp[j]，此时dp[j]表示arr[j]-arr[i]或运算结果
+     * 时间复杂度O(nlogC)=O(nlog32)=O(n)，空间复杂度O(n+nlogC)=O(n+nlog32)=O(n) (C：arr中的最大元素，arr元素在int范围内)
+     * (以arr[i]结尾的子数组与下一个元素求或运算结果，结果只增不减，每个以arr[i]结尾的子数组最多只会有logC种不同的或运算结果，共nlogC种不同的或运算结果)
      *
      * @param arr
      * @return
@@ -99,12 +101,12 @@ public class Problem898 {
             //当前arr[i]-arr[i]或运算结果加入set中
             set.add(arr[i]);
 
-            //从后往前dp[j]分别和arr[i]进行或运算，此时dp[j]表示arr[j]-arr[i-1]或运算结果
+            //从后往前dp[j]和arr[i]进行或运算，此时dp[j]表示arr[j]-arr[i-1]或运算结果
             for (int j = i - 1; j >= 0; j--) {
-                //如果dp[j]|arr[i] == dp[j]，则说明arr[i]表示的二进制数中1，都在arr[j]-arr[i-1]或运算结果中出现过，
-                //则同样也在arr[j-1]-arr[i-1]、arr[j-2]-arr[i-1]...arr[0]-arr[i-1]或运算结果中出现过，因为随着数组长度变大，
-                //或运算结果只增不减，直接跳出循环，遍历下一个arr[i]
-                if ((dp[j] | arr[i]) == dp[j]) {
+                //如果dp[j] == dp[j]|arr[i]，则说明arr[i]表示的二进制数中1，都在arr[j]-arr[i-1]或运算结果中出现过，
+                //则arr[0]-arr[i-1]、arr[1]-arr[i-1]...arr[j]-arr[i-1]和arr[i]或运算结果都不会变，
+                //因为随着数组长度变大，或运算结果只增不减，直接跳出循环，遍历下一个arr[i]
+                if (dp[j] == (dp[j] | arr[i])) {
                     break;
                 }
 
@@ -112,6 +114,80 @@ public class Problem898 {
                 dp[j] = dp[j] | arr[i];
                 //当前dp[j]表示arr[j]-arr[i]或运算结果，没有出现过，加入set中
                 set.add(dp[j]);
+            }
+        }
+
+        return set.size();
+    }
+
+    /**
+     * 动态规划
+     * curArr[0]：从前往后遍历到arr[i]，arr[j]-arr[i]或运算结果 (curArr[1] <= j <= curArr[2])
+     * curArr[1]：arr[j]-arr[i]或运算结果为curArr[0]的第一个下标索引j
+     * curArr[2]：arr[j]-arr[i]或运算结果为curArr[0]的最后一个下标索引j
+     * 遍历到arr[i]，从后往前遍历list中数组，curArr[0]和arr[i]求或运算结果，此时curArr[0]表示arr[j]-arr[i-1]或运算结果(curArr[1] <= j <= curArr[2])
+     * 如果curArr[0] == curArr[0]|arr[i]，则说明arr[i]表示的二进制数中1，都在arr[j]-arr[i-1](curArr[1] <= j <= curArr[2])或运算结果中出现过，
+     * 则arr[0]-arr[i-1]、arr[1]-arr[i-1]...arr[j]-arr[i-1]和arr[i]或运算结果都不会变，
+     * 因为随着数组长度变大，或运算结果只增不减，直接跳出循环，遍历下一个arr[i]；
+     * 否则，更新curArr[0]，此时curArr[0]表示arr[j]-arr[i]或运算结果(curArr[1] <= j <= curArr[2])，
+     * 时间复杂度O(nlogC)=O(nlog32)=O(n)，空间复杂度O(nlogC+logC)=O(nlog32+log32)=O(n) (C：arr中的最大元素，arr元素在int范围内)
+     * (以arr[i]结尾的子数组与下一个元素求或运算结果，结果只增不减，每个以arr[i]结尾的子数组最多只会有logC种不同的或运算结果，共nlogC种不同的或运算结果)
+     *
+     * @param arr
+     * @return
+     */
+    public int subarrayBitwiseORs3(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return -1;
+        }
+
+        Set<Integer> set = new HashSet<>();
+        //curArr[0]：从前往后遍历到arr[i]，arr[j]-arr[i]或运算结果 (curArr[1] <= j <= curArr[2])
+        //curArr[1]：arr[j]-arr[i]或运算结果为curArr[0]的第一个下标索引j
+        //curArr[2]：arr[j]-arr[i]或运算结果为curArr[0]的最后一个下标索引j
+        List<int[]> list = new ArrayList<>();
+
+        for (int i = 0; i < arr.length; i++) {
+            //当前arr[i]-arr[i]或运算结果加入set中
+            set.add(arr[i]);
+
+            //需要和arr[i]求或运算结果的curArr个数
+            int size = list.size();
+            //arr[i]-arr[i]或运算结果为arr[i]，或运算结果为arr[i]的第一个和最后一个下标索引j都为i，作为新的curArr加入list集合中
+            list.add(new int[]{arr[i], i, i});
+            //从后往前遍历到的curArr数组的前一个curArr数组，用于合并两个curArr
+            int[] preArr = list.get(list.size() - 1);
+
+            //从后往前遍历list中数组，curArr[0]和arr[i]求或运算结果，此时curArr[0]表示arr[j]-arr[i-1]或运算结果(curArr[1] <= j <= curArr[2])
+            for (int j = size - 1; j >= 0; j--) {
+                //当前arr数组
+                int[] curArr = list.get(j);
+
+                //如果curArr[0] == curArr[0]|arr[i]，则说明arr[i]表示的二进制数中1，都在arr[j]-arr[i-1](curArr[1] <= j <= curArr[2])或运算结果中出现过，
+                //则arr[0]-arr[i-1]、arr[1]-arr[i-1]...arr[j]-arr[i-1]和arr[i]或运算结果都不会变，
+                //因为随着数组长度变大，或运算结果只增不减，直接跳出循环，遍历下一个arr[i]
+                if (curArr[0] == (curArr[0] | arr[i])) {
+                    //如果当前数组或运算结果curArr[0]和前一个数组或运算结果preArr[0]相等，则合并两个curArr
+                    if (curArr[0] == preArr[0]) {
+                        curArr[2] = preArr[2];
+                    }
+
+                    break;
+                }
+
+                //更新curArr[0]，此时curArr[0]表示arr[j]-arr[i]或运算结果(curArr[1] <= j <= curArr[2])
+                curArr[0] = curArr[0] | arr[i];
+
+                //当前curArr[0]表示arr[j]-arr[i]或运算结果，没有出现过，加入set中(curArr[1] <= j <= curArr[2])
+                set.add(curArr[0]);
+
+                //如果当前数组或运算结果curArr[0]和前一个数组或运算结果preArr[0]相等，则合并两个curArr
+                if (curArr[0] == preArr[0]) {
+                    curArr[2] = preArr[2];
+                }
+
+                //更新前一个数组preArr，用于下次循环
+                preArr = curArr;
             }
         }
 
