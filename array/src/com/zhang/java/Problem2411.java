@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @Date 2023/9/14 08:27
  * @Author zsy
- * @Description 按位或最大的最小子数组长度 类比Problem898、Problem2447、Problem2470
+ * @Description 按位或最大的最小子数组长度 类比Problem898、Problem2447、Problem2470 子序列和子数组类比
  * 给你一个长度为 n 下标从 0 开始的数组 nums ，数组中所有数字均为非负整数。
  * 对于 0 到 n - 1 之间的每一个下标 i ，你需要找出 nums 中一个 最小 非空子数组，它的起始位置为 i （包含这个位置），
  * 同时有 最大 的 按位或运算值 。

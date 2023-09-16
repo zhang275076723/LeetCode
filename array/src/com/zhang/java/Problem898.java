@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/8/26 08:54
  * @Author zsy
- * @Description 子数组按位或操作 猿辅导机试题 类比Problem134 类比Problem2411、Problem2447、Problem2470 位运算类比Problem29、Problem136、Problem137、Problem190、Problem191、Problem201、Problem231、Problem260、Problem271、Problem326、Problem342、Problem371、Problem389、Problem405、Problem461、Problem477、Problem645、Problem1290、Offer15、Offer56、Offer56_2、Offer64、Offer65、IpToInt 子数组类比
+ * @Description 子数组按位或操作 猿辅导机试题 类比Problem134 类比Problem2411、Problem2447、Problem2470 位运算类比Problem29、Problem136、Problem137、Problem190、Problem191、Problem201、Problem231、Problem260、Problem271、Problem326、Problem342、Problem371、Problem389、Problem405、Problem461、Problem477、Problem645、Problem1290、Offer15、Offer56、Offer56_2、Offer64、Offer65、IpToInt 子序列和子数组类比
  * 我们有一个非负整数数组 arr 。
  * 对于每个（连续的）子数组 sub = [arr[i], arr[i + 1], ..., arr[j]] （ i <= j），
  * 我们对 sub 中的每个元素进行按位或操作，获得结果 arr[i] | arr[i + 1] | ... | arr[j] 。

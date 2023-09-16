@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/9 08:18
  * @Author zsy
- * @Description 完美数 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem509、Problem728、Problem842、Problem878、Problem1201、Problem1291、Offer10、Offer49
+ * @Description 完美数 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem509、Problem728、Problem842、Problem878、Problem1175、Problem1201、Problem1291、Offer10、Offer49
  * 对于一个 正整数，如果它和除了它自身以外的所有 正因子 之和相等，我们称它为 「完美数」。
  * 给定一个 整数 n， 如果是完美数，返回 true；否则返回 false。
  * <p>
@@ -37,13 +37,12 @@ public class Problem507 {
             return false;
         }
 
-        //num除了自身之外所有的正因子之和，初始化为1
+        //num除了自身之外所有的正因子之和，初始化为1，即考虑了因子1
         int sum = 1;
-        int sqrt = (int) Math.sqrt(num);
 
-        for (int i = 2; i <= sqrt; i++) {
+        for (int i = 2; i * i <= num; i++) {
             if (num % i == 0) {
-                //i和num/i相等，相同因子只能累加1次
+                //i和num/i是相同因子，只能累加1次
                 if (i == num / i) {
                     sum = sum + i;
                 } else {

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/9 09:10
  * @Author zsy
- * @Description 累加数 各种数类比Problem202、Problem204、Problem263、Problem264、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1201、Problem1291、Offer10、Offer49 回溯+剪枝类比
+ * @Description 累加数 各种数类比Problem202、Problem204、Problem263、Problem264、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1175、Problem1201、Problem1291、Offer10、Offer49 回溯+剪枝类比
  * 累加数 是一个字符串，组成它的数字可以形成累加序列。
  * 一个有效的 累加序列 必须 至少 包含 3 个数。
  * 除了最开始的两个数以外，序列中的每个后续数字必须是它之前两个数字之和。

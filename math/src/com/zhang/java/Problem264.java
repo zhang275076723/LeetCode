@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @Date 2022/8/27 11:37
  * @Author zsy
- * @Description 丑数 II 三指针类比Problem75、Problem313、Problem1201、Offer49 各种数类比Problem202、Problem204、Problem263、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1201、Problem1291、Offer10、Offer49 同Offer49
+ * @Description 丑数 II 三指针类比Problem75、Problem313、Problem1201、Offer49 各种数类比Problem202、Problem204、Problem263、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1175、Problem1201、Problem1291、Offer10、Offer49 同Offer49
  * 给你一个整数 n ，请你找出并返回第 n 个 丑数 。
  * 丑数 就是只包含质因数 2、3 和/或 5 的正整数。
  * <p>
