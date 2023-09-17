@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/12/6 11:57
  * @Author zsy
- * @Description 计数质数 各种数类比Problem202、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1175、Problem1201、Problem1291、Offer10、Offer49
+ * @Description 计数质数 质数类比Problem952、Problem1175 各种数类比Problem202、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1175、Problem1201、Problem1291、Offer10、Offer49
  * 给定整数 n ，返回 所有小于非负整数 n 的质数的数量。
  * <p>
  * 输入：n = 10
@@ -145,7 +145,7 @@ public class Problem204 {
     /**
      * 动态规划，线性筛(欧拉筛)
      * 核心思想：一个数的i倍表示的数都不是质数 (i>=2，且i为整数)
-     * 核心思想：任意一个合数都可以表示为质数乘积的形式
+     * 核心思想：任意一个合数都可以表示为质数乘积的形式，但每个合数只能由最小质因子筛选出来
      * 当前遍历到的数i，i和质数集合相乘(此时质数集合中只有小于等于i的质数)，标记得到的合数，
      * 如果i能整除当前质数primesList[j]，则primesList[j]为i的最小质因子，primesList[j]之后的质数都不是i的最小质因子，
      * 与i相乘会得到重复的合数，每个合数只能由最小质因子筛选标记，避免了重复计算标记合数
@@ -163,7 +163,7 @@ public class Problem204 {
 
         //dp[i]：数字i是否是质数
         boolean[] dp = new boolean[n];
-        //存放当前遍历到的质数
+        //存放当前遍历到的质数集合
         List<Integer> primesList = new ArrayList<>();
 
         //dp初始化，初始化[2,n-1]每个数都是质数
@@ -180,7 +180,8 @@ public class Problem204 {
                 primesList.add(i);
             }
 
-            //i和质数集合中数相乘，得到合数，注意：每个合数只能由最小质因子得到，避免了重复计算标记合数
+            //i和质数集合中质数相乘，得到合数，注意：每个合数只能由最小质因子得到，当找到i的最小质因子之后，
+            //直接跳出循环，避免了重复计算标记合数
             for (int j = 0; j < primesList.size(); j++) {
                 //primesList中的当前质数
                 int curPrime = primesList.get(j);

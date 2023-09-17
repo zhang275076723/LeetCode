@@ -146,11 +146,11 @@ public class Problem547 {
      * 用数组的形式表示图
      */
     private static class UnionFind {
-        //并查集中连通分量的个数
+        //连通分量的个数
         private int count;
-        //节点的父节点索引下标数组，从0开始存储
+        //节点的父节点数组
         private final int[] parent;
-        //节点的权值数组(节点的高度)，只有一个节点的权值为1
+        //节点的权值数组
         private final int[] weight;
 
         public UnionFind(int n) {
