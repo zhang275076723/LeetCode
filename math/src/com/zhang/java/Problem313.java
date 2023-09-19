@@ -42,7 +42,7 @@ public class Problem313 {
      * 小根堆
      * 核心思想：一个超级丑数乘上primes[i]也是超级丑数
      * 堆顶超级丑数出堆，当前超级丑数乘以primes[i]表示的超级丑数入堆
-     * 时间复杂度O(mnlogmn)，空间复杂度O(mn)
+     * 时间复杂度O(mnlog(mn))，空间复杂度O(mn)
      *
      * @param n
      * @param primes

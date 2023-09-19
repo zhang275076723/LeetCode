@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/9/17 08:35
  * @Author zsy
- * @Description 带阈值的图连通性 并查集类比
+ * @Description 带阈值的图连通性 并查集类比Problem
  * 有 n 座城市，编号从 1 到 n 。编号为 x 和 y 的两座城市直接连通的前提是：
  * x 和 y 的公因数中，至少有一个 严格大于 某个阈值 threshold 。
  * 更正式地说，如果存在整数 z ，且满足以下所有条件，则编号 x 和 y 的城市之间有一条道路：

@@ -8,7 +8,7 @@ import java.util.Random;
 /**
  * @Date 2023/9/15 08:49
  * @Author zsy
- * @Description 数组的最大公因数排序 质数类比 并查集类比
+ * @Description 数组的最大公因数排序 质数类比 并查集类比Problem
  * 给你一个整数数组 nums ，你可以在 nums 上执行下述操作 任意次 ：
  * 如果 gcd(nums[i], nums[j]) > 1 ，交换 nums[i] 和 nums[j] 的位置。
  * 其中 gcd(nums[i], nums[j]) 是 nums[i] 和 nums[j] 的最大公因数。

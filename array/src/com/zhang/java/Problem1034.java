@@ -38,7 +38,7 @@ import java.util.Queue;
 public class Problem1034 {
     public static void main(String[] args) {
         Problem1034 problem1034 = new Problem1034();
-        int[][] gird = {
+        int[][] grid = {
                 {1, 1, 1},
                 {1, 1, 1},
                 {1, 1, 1}
@@ -46,8 +46,8 @@ public class Problem1034 {
         int row = 1;
         int col = 1;
         int color = 2;
-//        System.out.println(Arrays.deepToString(problem1034.colorBorder(gird, row, col, color)));
-        System.out.println(Arrays.deepToString(problem1034.colorBorder2(gird, row, col, color)));
+//        System.out.println(Arrays.deepToString(problem1034.colorBorder(grid, row, col, color)));
+        System.out.println(Arrays.deepToString(problem1034.colorBorder2(grid, row, col, color)));
     }
 
     /**
