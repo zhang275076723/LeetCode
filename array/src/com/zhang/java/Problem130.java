@@ -66,6 +66,7 @@ public class Problem130 {
      * dfs
      * 对边界'O'dfs，将相连的'O'置为'#'，表示当前的'O'不是被'X'围绕的区域，剩下的'O'都是被'X'围绕的区域，需要置为'X'，
      * 遍历矩阵元素，将未被置为'#'的'O'置为'X'，此时的'O'是被'X'围绕的区域，将被置为'#'的'O'重新置为'O'
+     * 注意：不使用访问数组，原数组置为'#'表示已访问
      * 时间复杂度O(mn)，空间复杂度O(mn)
      *
      * @param board
@@ -109,50 +110,32 @@ public class Problem130 {
      * bfs
      * 边界'O'加入队列，队列中出队一个'O'，将相连的'O'置为'#'，表示当前的'O'不是被'X'围绕的区域，剩下的'O'都是需要置为'X'，
      * 遍历矩阵元素，将未被置为'#'的'O'置为'X'，此时的'O'是被'X'围绕的区域，将被置为'#'的'O'重新置为'O'
+     * 注意：不使用访问数组，原数组置为'#'表示已访问
      * 时间复杂度O(mn)，空间复杂度O(mn)
      *
      * @param board
      */
     public void solve2(char[][] board) {
-        Queue<int[]> queue = new LinkedList<>();
-
-        //边界'O'加入队列
+        //边界'O'bfs，将相连的'O'置为'#'
         for (int i = 0; i < board.length; i++) {
             if (board[i][0] == 'O') {
-                queue.offer(new int[]{i, 0});
+                bfs(i, 0, board);
             }
 
             if (board[i][board[0].length - 1] == 'O') {
-                queue.offer(new int[]{i, board[0].length - 1});
+                bfs(i, board[0].length - 1, board);
             }
         }
 
-        //边界'O'加入队列
+        //边界'O'bfs，将相连的'O'置为'#'
         for (int j = 1; j < board[0].length - 1; j++) {
             if (board[0][j] == 'O') {
-                queue.offer(new int[]{0, j});
+                bfs(0, j, board);
             }
 
             if (board[board.length - 1][j] == 'O') {
-                queue.offer(new int[]{board.length - 1, j});
+                bfs(board.length - 1, j, board);
             }
-        }
-
-        //队列中'O'进行bfs，将相连的'O'置为'#'，表示当前的'O'不是被'X'围绕的区域
-        while (!queue.isEmpty()) {
-            int[] arr = queue.poll();
-
-            if (arr[0] < 0 || arr[0] >= board.length || arr[1] < 0 || arr[1] >= board[0].length ||
-                    board[arr[0]][arr[1]] != 'O') {
-                continue;
-            }
-
-            board[arr[0]][arr[1]] = '#';
-
-            queue.offer(new int[]{arr[0] - 1, arr[1]});
-            queue.offer(new int[]{arr[0] + 1, arr[1]});
-            queue.offer(new int[]{arr[0], arr[1] - 1});
-            queue.offer(new int[]{arr[0], arr[1] + 1});
         }
 
         //遍历矩阵元素，将未被置为'#'的'O'置为'X'，此时的'O'是被'X'围绕的区域，将被置为'#'的'O'重新置为'O'
@@ -169,6 +152,8 @@ public class Problem130 {
 
     /**
      * 并查集
+     * 边界'O'和dummyIndex相连，遍历除边界外为'O'的节点，和相邻为'O'节点相连，遍历除边界外为'O'且不和dummyIndex相连的节点，
+     * 将当前为'O'的节点置为'X'
      * 时间复杂度O(mn*α(mn))=O(mn)，空间复杂度O(mn) (find()和union()的时间复杂度为O(α(mn))，可视为常数O(1))
      *
      * @param board
@@ -176,7 +161,7 @@ public class Problem130 {
     public void solve3(char[][] board) {
         UnionFind unionFind = new UnionFind(board);
 
-        //边界'O'和dummyIndex合并为一个集合，dummyIndex作为根节点
+        //边界'O'和dummyIndex相连，dummyIndex作为根节点
         for (int i = 0; i < board.length; i++) {
             if (board[i][0] == 'O') {
                 unionFind.unionDummy(i * board[0].length);
@@ -187,7 +172,7 @@ public class Problem130 {
             }
         }
 
-        //边界'O'和dummyIndex合并为一个集合，dummyIndex作为根节点
+        //边界'O'和dummyIndex相连，dummyIndex作为根节点
         for (int j = 1; j < board[0].length - 1; j++) {
             if (board[0][j] == 'O') {
                 unionFind.unionDummy(j);
@@ -201,7 +186,7 @@ public class Problem130 {
         //当前节点的上下左右四个位置
         int[][] direction = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
-        //遍历除矩阵最外圈的节点
+        //遍历除边界外为'O'的节点，和相邻为'O'节点相连
         for (int i = 1; i < board.length - 1; i++) {
             for (int j = 1; j < board[0].length - 1; j++) {
                 //当前节点为'O'时，和当前位置的上下左右'O'进行合并，成为一个连通分量
@@ -219,7 +204,7 @@ public class Problem130 {
             }
         }
 
-        //除矩阵外圈所有与dummyIndex不连通的'O'均置为'X'，即被'X'围绕的区域
+        //遍历除边界外为'O'且不和dummyIndex相连的节点，将当前为'O'的节点置为'X'
         for (int i = 1; i < board.length - 1; i++) {
             for (int j = 1; j < board[0].length - 1; j++) {
                 if (board[i][j] == 'O' && !unionFind.isConnected(unionFind.dummyIndex, i * board[0].length + j)) {
@@ -243,6 +228,27 @@ public class Problem130 {
         dfs(i, j + 1, board);
     }
 
+    private void bfs(int i, int j, char[][] board) {
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{i, j});
+
+        while (!queue.isEmpty()) {
+            int[] arr = queue.poll();
+
+            if (arr[0] < 0 || arr[0] >= board.length || arr[1] < 0 || arr[1] >= board[0].length ||
+                    board[arr[0]][arr[1]] != 'O') {
+                continue;
+            }
+
+            board[arr[0]][arr[1]] = '#';
+
+            queue.offer(new int[]{arr[0] - 1, arr[1]});
+            queue.offer(new int[]{arr[0] + 1, arr[1]});
+            queue.offer(new int[]{arr[0], arr[1] - 1});
+            queue.offer(new int[]{arr[0], arr[1] + 1});
+        }
+    }
+
     /**
      * 并查集(不相交数据集)类
      * 用数组的形式表示图
@@ -250,7 +256,7 @@ public class Problem130 {
     private static class UnionFind {
         //并查集中连通分量的个数
         private int count;
-        //虚拟节点，board中所有边界'O'相连的集合根节点都指向虚拟节点
+        //虚拟节点，board中所有边界为'O'的节点的连通分量根节点都指向虚拟节点
         private final int dummyIndex;
         //节点的父节点索引下标数组，二维数组按照由左到右由上到下的顺序，从0开始存储
         private final int[] parent;

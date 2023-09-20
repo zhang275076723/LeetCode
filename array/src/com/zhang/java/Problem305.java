@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/9/18 08:08
  * @Author zsy
- * @Description 岛屿数量 II 并查集类比
+ * @Description 岛屿数量 II 并查集类比Problem
  * 给你一个大小为 m x n 的二进制网格 grid 。
  * 网格表示一个地图，其中，0 表示水，1 表示陆地。
  * 最初，grid 中的所有单元格都是水单元格（即，所有单元格都是 0）。
@@ -43,7 +43,7 @@ public class Problem305 {
         int m = 3;
         int n = 3;
         int[][] positions = {{0, 0}, {0, 1}, {1, 2}, {2, 1}};
-        System.out.println(problem305.numIslands2(m, n, positions));
+        System.out.println(problem305.numIslands(m, n, positions));
     }
 
     /**
@@ -55,7 +55,7 @@ public class Problem305 {
      * @param positions
      * @return
      */
-    public List<Integer> numIslands2(int m, int n, int[][] positions) {
+    public List<Integer> numIslands(int m, int n, int[][] positions) {
         List<Integer> list = new ArrayList<>();
         UnionFind unionFind = new UnionFind(m, n);
         //当前节点的上下左右四个位置

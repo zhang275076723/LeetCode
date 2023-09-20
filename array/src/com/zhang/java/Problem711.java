@@ -44,8 +44,8 @@ public class Problem711 {
                 {0, 1, 0, 0, 1},
                 {0, 1, 1, 1, 0}
         };
+        System.out.println(problem711.numDistinctIslands(grid));
         System.out.println(problem711.numDistinctIslands2(grid));
-        System.out.println(problem711.numDistinctIslands22(grid));
     }
 
     /**
@@ -66,7 +66,7 @@ public class Problem711 {
      * @param grid
      * @return
      */
-    public int numDistinctIslands2(int[][] grid) {
+    public int numDistinctIslands(int[][] grid) {
         //保存不同岛屿标记的set集合，当前岛屿中每个节点经过旋转或翻转，减去每种情况的最小横纵坐标节点，
         //得到相对节点，由小到大排序后的第1种情况作为当前岛屿的标记
         Set<String> set = new HashSet<>();
@@ -108,7 +108,7 @@ public class Problem711 {
      * @param grid
      * @return
      */
-    public int numDistinctIslands22(int[][] grid) {
+    public int numDistinctIslands2(int[][] grid) {
         //保存不同岛屿标记的set集合，当前岛屿中每个节点经过旋转或翻转，减去每种情况的最小横纵坐标节点，
         //得到相对节点，由小到大排序后的第1种情况作为当前岛屿的标记
         Set<String> set = new HashSet<>();

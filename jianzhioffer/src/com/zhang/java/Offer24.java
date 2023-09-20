@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/19 10:43
  * @Author zsy
- * @Description 反转链表 同Problem206 类比Offer25
+ * @Description 反转链表 类比Offer25 同Problem206
  * 定义一个函数，输入一个链表的头节点，反转该链表并输出反转后链表的头节点
  * <p>
  * 输入: 1->2->3->4->5->NULL
