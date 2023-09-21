@@ -14,6 +14,7 @@ import java.util.*;
  * 返回 所有问题的答案 。如果存在某个无法确定的答案，则用 -1.0 替代这个答案。
  * 如果问题中出现了给定的已知条件中没有出现的字符串，也需要用 -1.0 替代这个答案。
  * 注意：输入总是有效的。你可以假设除法运算中不会出现除数为 0 的情况，且不存在任何矛盾的结果。
+ * 注意：未在等式列表中出现的变量是未定义的，因此无法确定它们的答案。
  * <p>
  * 输入：equations = [["a","b"],["b","c"]], values = [2.0,3.0],
  * queries = [["a","c"],["b","a"],["a","e"],["a","a"],["x","x"]]
@@ -22,6 +23,7 @@ import java.util.*;
  * 条件：a / b = 2.0, b / c = 3.0
  * 问题：a / c = ?, b / a = ?, a / e = ?, a / a = ?, x / x = ?
  * 结果：[6.0, 0.5, -1.0, 1.0, -1.0 ]
+ * 注意：x 是未定义的 => -1.0
  * <p>
  * 输入：equations = [["a","b"],["b","c"],["bc","cd"]], values = [1.5,2.5,5.0],
  * queries = [["a","c"],["c","b"],["bc","cd"],["cd","bc"]]
@@ -91,7 +93,7 @@ public class Problem399 {
      * @return
      */
     public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
-        //将字符串和数字一一对应，便于建图
+        //建立字符串和数字的映射关系，便于建图
         Map<String, Integer> map = new HashMap<>();
         //有向图中不同元素的个数
         int count = 0;
@@ -154,7 +156,7 @@ public class Problem399 {
      * @return
      */
     public double[] calcEquation2(List<List<String>> equations, double[] values, List<List<String>> queries) {
-        //将字符串转换成数字存储，便于建立图
+        //建立字符串和数字的映射关系，便于建图
         Map<String, Integer> map = new HashMap<>();
         //有向图中不同元素的个数
         int count = 0;
@@ -217,7 +219,7 @@ public class Problem399 {
      * @return
      */
     public double[] calcEquation3(List<List<String>> equations, double[] values, List<List<String>> queries) {
-        //将字符串转换成数字存储，便于建立图
+        //建立字符串和数字的映射关系，便于建图
         Map<String, Integer> map = new HashMap<>();
         //有向图中不同元素的个数
         int count = 0;
@@ -246,7 +248,8 @@ public class Problem399 {
             for (int i = 0; i < edges.length; i++) {
                 for (int j = 0; j < edges.length; j++) {
                     //只有在i-k和k-j存在路径时，才计算i-j的路径
-                    if (edges[i][k] != -1 && edges[k][j] != -1) {
+                    //这里元素大于0.000001是特殊用例精度的考虑
+                    if (edges[i][k] > 0.000001 && edges[k][j] > 0.000001) {
                         edges[i][j] = edges[i][k] * edges[k][j];
                     }
                 }
@@ -285,7 +288,7 @@ public class Problem399 {
      * @return
      */
     public double[] calcEquation4(List<List<String>> equations, double[] values, List<List<String>> queries) {
-        //将字符串转换成数字存储，便于建立图
+        //建立字符串和数字的映射关系，便于建图
         Map<String, Integer> map = new HashMap<>();
         //有向图中不同元素的个数
         int count = 0;
@@ -308,7 +311,7 @@ public class Problem399 {
         UnionFind unionFind = new UnionFind(map.size());
 
         //创建并查集
-        for (int i = 0; i < equations.size(); i++) {
+        for (int i = 0; i < values.length; i++) {
             String str1 = equations.get(i).get(0);
             String str2 = equations.get(i).get(1);
             int u = map.get(str1);
@@ -387,7 +390,7 @@ public class Problem399 {
 
         while (!queue.isEmpty()) {
             Pos pos = queue.poll();
-            visited[u] = true;
+            visited[pos.v] = true;
 
             //找到结束节点v，直接返回
             if (pos.v == v) {
@@ -518,7 +521,7 @@ public class Problem399 {
 
         /**
          * 路径压缩，返回当前节点的根节点
-         * 使每个节点的父节点直接指向根节点，并更新每个节点的权值
+         * 使当前节点直接指向根节点，并更新路径压缩过程中节点的权值
          *
          * @param i
          * @return
@@ -540,6 +543,12 @@ public class Problem399 {
         /**
          * 判断节点i和节点j是否连通 (判断之前，需要进行路径压缩)
          * 如果连通，返回i/j；如果不连通，返回-1.0
+         * <        rootI == rootJ
+         * <           /\ /\
+         * < weight[i]/    \  weight[j]
+         * <        /       \
+         * <     /     ?     \
+         * < i —————————————> j
          *
          * @param i
          * @param j

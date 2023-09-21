@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/12/6 11:57
  * @Author zsy
- * @Description 计数质数 质数类比Problem952、Problem1175 各种数类比Problem202、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1175、Problem1201、Problem1291、Offer10、Offer49
+ * @Description 计数质数 质数类比Problem952、Problem1175、Problem1998 各种数类比Problem202、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1175、Problem1201、Problem1291、Offer10、Offer49
  * 给定整数 n ，返回 所有小于非负整数 n 的质数的数量。
  * <p>
  * 输入：n = 10

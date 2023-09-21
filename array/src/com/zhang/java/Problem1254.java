@@ -276,7 +276,7 @@ public class Problem1254 {
 
         public UnionFind(int[][] grid) {
             count = 0;
-            //数组长度多申请1个，末尾节点作为为虚拟节点
+            //多申请一个长度，末尾节点作为为虚拟节点
             parent = new int[grid.length * grid[0].length + 1];
             weight = new int[grid.length * grid[0].length + 1];
             dummyIndex = grid.length * grid[0].length;

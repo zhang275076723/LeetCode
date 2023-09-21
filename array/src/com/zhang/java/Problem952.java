@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/9/16 08:14
  * @Author zsy
- * @Description 按公因数计算最大组件大小 质数类比Problem204、Problem1175 并查集类比
+ * @Description 按公因数计算最大组件大小 质数类比Problem204、Problem1175、Problem1998 并查集类比
  * 给定一个由不同正整数的组成的非空数组 nums ，考虑下面的图：
  * 有 nums.length 个节点，按从 nums[0] 到 nums[nums.length - 1] 标记；
  * 只有当 nums[i] 和 nums[j] 共用一个大于 1 的公因数时，nums[i] 和 nums[j]之间才有一条边。
