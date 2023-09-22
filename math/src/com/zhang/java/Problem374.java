@@ -33,7 +33,7 @@ public class Problem374 {
     public static void main(String[] args) {
         Problem374 problem374 = new Problem374();
         int n = 10;
-        System.out.println();
+        System.out.println(problem374.guessNumber(n));
     }
 
     /**

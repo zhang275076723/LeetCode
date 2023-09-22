@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/8/21 08:20
  * @Author zsy
- * @Description 3n 块披萨 类比Problem198、Problem213 动态规划类比Problem198、Problem213、Problem279、Problem322、Problem343、Problem377、Problem416、Problem474、Problem494、Problem518、Problem746、Problem983、Problem1340、Problem1444、Offer14、Offer14_2、CircleBackToOrigin、Knapsack 记忆化搜索类比Problem62、Problem63、Problem64、Problem70、Problem329、Problem509、Problem1340、Problem1444、Offer10、Offer10_2
+ * @Description 3n 块披萨 类比Problem198、Problem213 动态规划类比Problem198、Problem213、Problem279、Problem322、Problem343、Problem377、Problem416、Problem474、Problem494、Problem518、Problem746、Problem983、Problem1340、Problem1444、Offer14、Offer14_2、Offer60、CircleBackToOrigin、Knapsack 记忆化搜索类比Problem62、Problem63、Problem64、Problem70、Problem329、Problem509、Problem1340、Problem1444、Offer10、Offer10_2
  * 给你一个披萨，它由 3n 块不同大小的部分组成，现在你和你的朋友们需要按照如下规则来分披萨：
  * 你挑选 任意 一块披萨。
  * Alice 将会挑选你所选择的披萨逆时针方向的下一块披萨。

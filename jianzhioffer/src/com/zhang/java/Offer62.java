@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/4/8 8:33
  * @Author zsy
- * @Description 圆圈中最后剩下的数字 华为面试题 类比Problem887、CircleBackToOrigin
+ * @Description 圆圈中最后剩下的数字 华为面试题 类比Problem312、Problem375、Problem887、Problem1887、CircleBackToOrigin
  * 0, 1, ···, n-1这n个数字排成一个圆圈，从数字0开始，
  * 每次从这个圆圈里删除第m个数字（删除后从下一个数字开始计数）。求出这个圆圈里剩下的最后一个数字。
  * 例如，0、1、2、3、4这5个数字组成一个圆圈，从数字0开始每次删除第3个数字，
