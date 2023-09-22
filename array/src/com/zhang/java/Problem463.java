@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2023/2/10 08:04
  * @Author zsy
- * @Description 岛屿的周长 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem547、Problem695、Problem733、Problem827、Problem994、Problem1034、Problem1162、Offer12
+ * @Description 岛屿的周长 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Problem1905、Offer12
  * 给定一个 row x col 的二维网格地图 grid ，其中：grid[i][j] = 1 表示陆地， grid[i][j] = 0 表示水域。
  * 网格中的格子 水平和垂直 方向相连（对角线方向不相连）。
  * 整个网格被水完全包围，但其中恰好有一个岛屿（或者说，一个或多个表示陆地的格子相连组成的岛屿）。
@@ -55,7 +55,7 @@ public class Problem463 {
      */
     public int islandPerimeter(int[][] grid) {
         //岛屿周长
-        int result = 0;
+        int perimeter = 0;
         //当前节点的上下左右四个位置
         int[][] direction = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
@@ -70,14 +70,14 @@ public class Problem463 {
 
                         //相邻节点(x,y)不在矩阵范围之内，或相邻节点(x,y)为0，边长加1
                         if (x < 0 || x >= grid.length || y < 0 || y >= grid[0].length || grid[x][y] == 0) {
-                            result++;
+                            perimeter++;
                         }
                     }
                 }
             }
         }
 
-        return result;
+        return perimeter;
     }
 
     /**
@@ -92,19 +92,19 @@ public class Problem463 {
      */
     public int islandPerimeter2(int[][] grid) {
         //岛屿周长
-        int result = 0;
+        int perimeter = 0;
         boolean[][] visited = new boolean[grid.length][grid[0].length];
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 //对未被访问为1的节点进行dfs，找贡献的边长
                 if (grid[i][j] == 1 && !visited[i][j]) {
-                    result = result + dfs(i, j, grid, visited);
+                    perimeter = perimeter + dfs(i, j, grid, visited);
                 }
             }
         }
 
-        return result;
+        return perimeter;
     }
 
     /**
@@ -119,19 +119,19 @@ public class Problem463 {
      */
     public int islandPerimeter3(int[][] grid) {
         //岛屿周长
-        int result = 0;
+        int perimeter = 0;
         boolean[][] visited = new boolean[grid.length][grid[0].length];
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 //对未被访问为1的节点进行bfs，找贡献的边长
                 if (grid[i][j] == 1 && !visited[i][j]) {
-                    result = result + bfs(i, j, grid, visited);
+                    perimeter = perimeter + bfs(i, j, grid, visited);
                 }
             }
         }
 
-        return result;
+        return perimeter;
     }
 
     private int dfs(int i, int j, int[][] grid, boolean[][] visited) {

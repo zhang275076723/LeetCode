@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/9/20 08:22
  * @Author zsy
- * @Description 不同岛屿的数量 II dfs和bfs类比
+ * @Description 不同岛屿的数量 II dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem547、Problem694、Problem695、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Problem1905、Offer12
  * 给定一个 m x n 二进制数组表示的网格 grid ，一个岛屿由 四连通 （上、下、左、右四个方向）的 1 组成（代表陆地）。
  * 你可以认为网格的四周被海水包围。
  * 如果两个岛屿的形状相同，或者通过旋转（顺时针旋转 90°，180°，270°）、翻转（左右翻转、上下翻转）后形状相同，

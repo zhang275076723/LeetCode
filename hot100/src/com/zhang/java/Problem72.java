@@ -44,7 +44,7 @@ public class Problem72 {
      * dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]) + 1 (word1[i-1] != word2[j-1])
      * 时间复杂度O(mn)，空间复杂度O(mn)
      * <p>
-     * word1[0]-word1[i]转换成word2[0]-word2[j]分为3种情况：
+     * word1[0]-word1[i]转换成word2[0]-word2[j]，有以下3种情况：
      * 1、word1[0]-word1[i-1]转换成word2[0]-word2[j-1]，消耗dp[i][j]，
      * 再根据word1[i]和word2[j]是否相等判断是否需要再消耗1步
      * 2、word1[0]-word1[i]先删除word1[i]，消耗1步，变为word1[0]-word1[i-1]，

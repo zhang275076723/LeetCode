@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2023/7/23 08:28
  * @Author zsy
- * @Description 省份数量 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem695、Problem733、Problem827、Problem994、Problem1034、Problem1162、Offer12 并查集类比Problem130、Problem200、Problem305、Problem399、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem952、Problem1254、Problem1627、Problem1905、Problem1998
+ * @Description 省份数量 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Problem1905、Offer12 并查集类比Problem130、Problem200、Problem305、Problem399、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem952、Problem1254、Problem1627、Problem1905、Problem1998
  * 有 n 个城市，其中一些彼此相连，另一些没有相连。
  * 如果城市 a 与城市 b 直接相连，且城市 b 与城市 c 直接相连，那么城市 a 与城市 c 间接相连。
  * 省份 是一组直接或间接相连的城市，组内不含其他没有相连的城市。
@@ -49,7 +49,7 @@ public class Problem547 {
         //访问数组
         boolean[] visited = new boolean[isConnected.length];
 
-        //对未被访问的节点i进行bfs
+        //对未被访问的节点i进行dfs
         for (int i = 0; i < isConnected.length; i++) {
             if (!visited[i]) {
                 dfs(i, isConnected, visited);
