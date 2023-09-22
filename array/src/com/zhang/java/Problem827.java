@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/2/9 12:40
  * @Author zsy
- * @Description 最大人工岛 华为机试题 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem547、Problem695、Problem733、Problem994、Problem1034、Problem1162、Offer12 并查集类比Problem130、Problem200、Problem399、Problem547、Problem695、Problem765、Problem785
+ * @Description 最大人工岛 华为机试题 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem547、Problem695、Problem733、Problem994、Problem1034、Problem1162、Offer12 并查集类比Problem130、Problem200、Problem305、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem952、Problem1254、Problem1627、Problem1905、Problem1998
  * 给你一个大小为 n x n 二进制矩阵 grid 。最多 只能将一格 0 变成 1 。
  * 返回执行此操作后，grid 中最大的岛屿面积是多少？
  * 岛屿 由一组上、下、左、右四个方向相连的 1 形成。
@@ -267,7 +267,7 @@ public class Problem827 {
 
                         //当前节点(x,y)根节点的下标索引
                         //注意：必须使用unionFind.find找(x,y)的根节点，不能使用unionFind.parent找(x,y)的根节点，
-                        //因为有可能(x,y)没有进行路径压缩，unionFind.parent并没有指向当前连通分量的根节点
+                        //因为有可能(x,y)没有进行路径压缩，此时unionFind.parent并没有指向当前连通分量的根节点
                         int rootIndex = unionFind.find(x * grid[0].length + y);
 
                         //(x,y)所在岛屿没有添加到set中，岛屿面积累加到area中
