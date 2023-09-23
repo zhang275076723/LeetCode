@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/8/26 08:54
  * @Author zsy
- * @Description 子数组按位或操作 猿辅导机试题 类比Problem134 类比Problem2411、Problem2447、Problem2470 位运算类比Problem29、Problem136、Problem137、Problem190、Problem191、Problem201、Problem231、Problem260、Problem271、Problem326、Problem342、Problem371、Problem389、Problem405、Problem461、Problem477、Problem645、Problem1290、Offer15、Offer56、Offer56_2、Offer64、Offer65、IpToInt 子序列和子数组类比
+ * @Description 子数组按位或操作 猿辅导机试题 类比Problem134 类比Problem1521、Problem2411、Problem2419、Problem2444、Problem2447、Problem2470 位运算类比Problem29、Problem136、Problem137、Problem190、Problem191、Problem201、Problem231、Problem260、Problem271、Problem326、Problem342、Problem371、Problem389、Problem405、Problem461、Problem477、Problem645、Problem1290、Offer15、Offer56、Offer56_2、Offer64、Offer65、IpToInt 子序列和子数组类比
  * 我们有一个非负整数数组 arr 。
  * 对于每个（连续的）子数组 sub = [arr[i], arr[i + 1], ..., arr[j]] （ i <= j），
  * 我们对 sub 中的每个元素进行按位或操作，获得结果 arr[i] | arr[i + 1] | ... | arr[j] 。
@@ -130,6 +130,7 @@ public class Problem898 {
      * 则arr[0]-arr[i-1]、arr[1]-arr[i-1]...arr[j]-arr[i-1]和arr[i]或运算结果都不会变，
      * 因为随着数组长度变大，或运算结果只增不减，直接跳出循环，遍历下一个arr[i]；
      * 否则，更新curArr[0]，此时curArr[0]表示arr[j]-arr[i]或运算结果(curArr[1] <= j <= curArr[2])，
+     * 将curArr[0]加入结果集合set中
      * 时间复杂度O(nlogC)=O(nlog32)=O(n)，空间复杂度O(nlogC+logC)=O(nlog32+log32)=O(n) (C：arr中的最大元素，arr元素在int范围内)
      * (以arr[i]结尾的子数组与下一个元素求或运算结果，结果只增不减，每个以arr[i]结尾的子数组最多只会有logC种不同的或运算结果，共nlogC种不同的或运算结果)
      *
@@ -160,7 +161,7 @@ public class Problem898 {
 
             //从后往前遍历list中数组，curArr[0]和arr[i]求或运算结果，此时curArr[0]表示arr[j]-arr[i-1]或运算结果(curArr[1] <= j <= curArr[2])
             for (int j = size - 1; j >= 0; j--) {
-                //当前arr数组
+                //list中当前数组
                 int[] curArr = list.get(j);
 
                 //如果curArr[0] == curArr[0]|arr[i]，则说明arr[i]表示的二进制数中1，都在arr[j]-arr[i-1](curArr[1] <= j <= curArr[2])或运算结果中出现过，
@@ -170,6 +171,7 @@ public class Problem898 {
                     //如果当前数组或运算结果curArr[0]和前一个数组或运算结果preArr[0]相等，则合并两个curArr
                     if (curArr[0] == preArr[0]) {
                         curArr[2] = preArr[2];
+                        list.remove(j + 1);
                     }
 
                     break;
@@ -184,6 +186,7 @@ public class Problem898 {
                 //如果当前数组或运算结果curArr[0]和前一个数组或运算结果preArr[0]相等，则合并两个curArr
                 if (curArr[0] == preArr[0]) {
                     curArr[2] = preArr[2];
+                    list.remove(j + 1);
                 }
 
                 //更新前一个数组preArr，用于下次循环

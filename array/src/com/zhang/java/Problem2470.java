@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/9/13 08:46
  * @Author zsy
- * @Description 最小公倍数为 K 的子数组数目 类比Problem898、Problem2411、Problem2447  最大公因数和最小公倍数类比
+ * @Description 最小公倍数为 K 的子数组数目 类比Problem898、Problem1521、Problem2411、Problem2419、Problem2444、Problem2447 最大公因数和最小公倍数类比
  * 给你一个整数数组 nums 和一个整数 k ，请你统计并返回 nums 的 子数组 中满足 元素最小公倍数为 k 的子数组数目。
  * 子数组 是数组中一个连续非空的元素序列。
  * 数组的最小公倍数 是可被所有数组元素整除的最小正整数。
@@ -70,14 +70,15 @@ public class Problem2470 {
 
     /**
      * 动态规划
-     * arr[0]：从前往后遍历到nums[i]，nums[j]-nums[i]的最小公倍数 (arr[1] <= j <= arr[2])
-     * arr[1]：nums[j]-nums[i]的最小公倍数为arr[0]的第一个下标索引j
-     * arr[2]：nums[j]-nums[i]的最小公倍数为arr[0]的最后一个下标索引j
-     * 遍历到nums[i]，从后往前遍历list中数组，arr[0]和nums[i]求最小公倍数，此时arr[0]表示nums[j]-nums[i-1]的最小公倍数(arr[1] <= j <= arr[2])
-     * 如果arr[0] == lcm(arr[0],nums[i])，则说明nums[j]-nums[i-1](arr[1] <= j <= arr[2])和nums[i]的最小公倍数仍为arr[0]，
+     * curArr[0]：从前往后遍历到nums[i]，nums[j]-nums[i]的最小公倍数 (curArr[1] <= j <= curArr[2])
+     * curArr[1]：nums[j]-nums[i]的最小公倍数为curArr[0]的第一个下标索引j
+     * curArr[2]：nums[j]-nums[i]的最小公倍数为curArr[0]的最后一个下标索引j
+     * 遍历到nums[i]，从后往前遍历list中数组，curArr[0]和nums[i]求最小公倍数，此时curArr[0]表示nums[j]-nums[i-1]的最小公倍数(curArr[1] <= j <= curArr[2])
+     * 如果curArr[0] == lcm(curArr[0],nums[i])，则说明nums[j]-nums[i-1](curArr[1] <= j <= curArr[2])和nums[i]的最小公倍数仍为curArr[0]，
      * 则nums[0]-nums[i-1]、nums[1]-nums[i-1]...nums[j]-nums[i-1]和nums[i]的最小公倍数都不会变，
      * 因为随着数组长度变大，最小公倍数只增不减，直接跳出循环，统计以nums[i]结尾子数组的最小公倍数为k的个数，遍历下一个nums[i]；
-     * 否则，更新arr[0]，此时arr[0]表示nums[j]-nums[i]的最小公倍数(arr[1] <= j <= arr[2])，统计以nums[i]结尾子数组的最小公倍数为k的个数
+     * 否则，更新curArr[0]，此时curArr[0]表示nums[j]-nums[i]的最小公倍数(curArr[1] <= j <= curArr[2])，
+     * 统计以nums[i]结尾子数组的最小公倍数为k的个数
      * 时间复杂度O(nlogC)=O(nlog32)=O(n)，空间复杂度O(logC)=O(log32)=O(1) (C：nums中的最大元素，nums元素在int范围内)
      * (以nums[i]结尾的子数组与下一个元素求最小公倍数，结果只增不减，每个以nums[i]结尾的子数组最多只会有logC种不同的最小公倍数，共nlogC种不同的最小公倍数)
      *
@@ -87,9 +88,9 @@ public class Problem2470 {
      */
     public int subarrayLCM2(int[] nums, int k) {
         int count = 0;
-        //arr[0]：从前往后遍历到nums[i]，nums[j]-nums[i]的最小公倍数 (arr[1] <= j <= arr[2])
-        //arr[1]：nums[j]-nums[i]的最小公倍数为arr[0]的第一个下标索引j
-        //arr[2]：nums[j]-nums[i]的最小公倍数为arr[0]的最后一个下标索引j
+        //curArr[0]：从前往后遍历到nums[i]，nums[j]-nums[i]的最小公倍数 (curArr[1] <= j <= curArr[2])
+        //curArr[1]：nums[j]-nums[i]的最小公倍数为curArr[0]的第一个下标索引j
+        //curArr[2]：nums[j]-nums[i]的最小公倍数为curArr[0]的最后一个下标索引j
         List<int[]> list = new ArrayList<>();
 
         for (int i = 0; i < nums.length; i++) {
@@ -107,43 +108,43 @@ public class Problem2470 {
             //从后往前遍历到的arr数组的前一个arr数组，用于合并两个arr
             int[] preArr = list.get(list.size() - 1);
 
-            //从后往前遍历list中数组，arr[0]和nums[i]求最小公倍数，此时arr[0]表示nums[j]-nums[i-1]的最小公倍数(arr[1] <= j <= arr[2])
+            //从后往前遍历list中数组，curArr[0]和nums[i]求最小公倍数，此时curArr[0]表示nums[j]-nums[i-1]的最小公倍数(curArr[1] <= j <= curArr[2])
             for (int j = size - 1; j >= 0; j--) {
-                //当前arr数组
-                int[] arr = list.get(j);
+                //list中当前数组
+                int[] curArr = list.get(j);
 
-                //如果arr[0] == lcm(arr[0],nums[i])，则说明nums[j]-nums[i-1](arr[1] <= j <= arr[2])和nums[i]的最小公倍数仍为arr[0]，
+                //如果curArr[0] == lcm(curArr[0],nums[i])，则说明nums[j]-nums[i-1](curArr[1] <= j <= curArr[2])和nums[i]的最小公倍数仍为curArr[0]，
                 //则nums[0]-nums[i-1]、nums[1]-nums[i-1]...nums[j]-nums[i-1]和nums[i]的最小公倍数都不会变，
                 //因为随着数组长度变大，最小公倍数只增不减，直接跳出循环，统计以nums[i]结尾子数组的最小公倍数为k的个数，遍历下一个nums[i]
-                if (arr[0] == lcm(arr[0], nums[i])) {
-                    //如果当前数组的最小公倍数arr[0]和前一个数组的最小公倍数preArr[0]相等，则合并两个arr
-                    if (arr[0] == preArr[0]) {
-                        arr[2] = preArr[2];
+                if (curArr[0] == lcm(curArr[0], nums[i])) {
+                    //如果当前数组的最小公倍数curArr[0]和前一个数组的最小公倍数preArr[0]相等，则合并两个arr
+                    if (curArr[0] == preArr[0]) {
+                        curArr[2] = preArr[2];
                         list.remove(j + 1);
                     }
 
                     break;
                 }
 
-                //更新arr[0]，此时arr[0]表示nums[j]-nums[i]的最小公倍数(arr[1] <= j <= arr[2])
-                arr[0] = lcm(arr[0], nums[i]);
+                //更新curArr[0]，此时curArr[0]表示nums[j]-nums[i]的最小公倍数(curArr[1] <= j <= curArr[2])
+                curArr[0] = lcm(curArr[0], nums[i]);
 
                 //如果当前数组的最小公倍数arr[0]和前一个数组的最小公倍数preArr[0]相等，则合并两个arr
-                if (arr[0] == preArr[0]) {
-                    arr[2] = preArr[2];
+                if (curArr[0] == preArr[0]) {
+                    curArr[2] = preArr[2];
                     list.remove(j + 1);
                 }
 
                 //更新前一个数组preArr，用于下次循环
-                preArr = arr;
+                preArr = curArr;
             }
 
             //从前往后遍历到nums[i]，统计list中以nums[i]结尾子数组的最小公倍数为k的个数
             for (int j = 0; j < list.size(); j++) {
-                int[] arr = list.get(j);
+                int[] curArr = list.get(j);
 
-                if (arr[0] == k) {
-                    count = count + arr[2] - arr[1] + 1;
+                if (curArr[0] == k) {
+                    count = count + curArr[2] - curArr[1] + 1;
                 }
             }
         }
