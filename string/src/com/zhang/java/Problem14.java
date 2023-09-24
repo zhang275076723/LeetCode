@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/7/1 9:24
  * @Author zsy
- * @Description 最长公共前缀 小米机试题 前缀树类比Problem208、Problem211、Problem212、Problem677
+ * @Description 最长公共前缀 小米机试题 前缀树类比Problem208、Problem211、Problem212、Problem421、Problem677、Problem1804
  * 编写一个函数来查找字符串数组中的最长公共前缀。
  * 如果不存在公共前缀，返回空字符串 ""。
  * <p>
@@ -194,19 +194,14 @@ public class Problem14 {
          * 前缀树节点
          */
         private static class TrieNode {
-            /**
-             * 当前前缀树节点的子节点
-             */
+            //当前节点的子节点map
             private final Map<Character, TrieNode> children;
-
-            /**
-             * 当前前缀树节点是否是尾节点，即从根到当前节点是否是一个字符串
-             */
+            //当前节点是否是一个添加到前缀树的字符串的结尾节点
             private boolean isEnd;
 
             public TrieNode() {
-                this.children = new HashMap<>();
-                this.isEnd = false;
+                children = new HashMap<>();
+                isEnd = false;
             }
         }
     }

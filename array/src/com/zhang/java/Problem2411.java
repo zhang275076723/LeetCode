@@ -83,7 +83,7 @@ public class Problem2411 {
      * 则nums[0]-nums[i-1]、nums[1]-nums[i-1]...nums[j]-nums[i-1]和nums[i]或运算结果都不会变，
      * 因为随着数组长度变大，或运算结果只增不减，直接跳出循环，遍历下一个nums[i]；
      * 否则，更新dp[j]和result[j]，此时dp[j]表示nums[j]-nums[i]或运算结果
-     * 时间复杂度O(nlogC)=O(nlog32)=O(n)，空间复杂度O(n) (C：nums中的最大元素，nums元素在int范围内)
+     * 时间复杂度O(nlogC)=O(n*32)=O(n)，空间复杂度O(n) (C：nums中的最大元素，nums元素在int范围内)
      * (以nums[i]结尾的子数组与下一个元素求或运算结果，结果只增不减，每个以nums[i]结尾的子数组最多只会有logC种不同的或运算结果，共nlogC种不同的或运算结果)
      *
      * @param nums
@@ -130,7 +130,7 @@ public class Problem2411 {
      * 因为随着数组长度变大，或运算结果只增不减，直接跳出循环，遍历下一个nums[i]；
      * 否则，更新curArr[0]，此时curArr[0]表示nums[j]-nums[i]或运算结果(curArr[1] <= j <= curArr[2])，
      * 更新以nums[k]起始的最大或运算结果的最小子数组长度(curArr[1] <= k <= curArr[2])
-     * 时间复杂度O(nlogC)=O(nlog32)=O(n)，空间复杂度O(logC)=O(log32)=O(1) (C：nums中的最大元素，nums元素在int范围内)
+     * 时间复杂度O(nlogC)=O(n*32)=O(n)，空间复杂度O(logC)=O(log32)=O(1) (C：nums中的最大元素，nums元素在int范围内)
      * (以nums[i]结尾的子数组与下一个元素求或运算结果，结果只增不减，每个以nums[i]结尾的子数组最多只会有logC种不同的或运算结果，共nlogC种不同的或运算结果)
      *
      * @param nums

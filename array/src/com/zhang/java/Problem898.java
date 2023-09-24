@@ -44,7 +44,7 @@ public class Problem898 {
 
     /**
      * 暴力
-     * 时间复杂度O(n^2)，空间复杂度O(nlogC)=O(nlog32)=O(n) (C：arr中的最大数，arr元素在int范围内)
+     * 时间复杂度O(n^2)，空间复杂度O(nlogC)=O(n*32)=O(n) (C：arr中的最大数，arr元素在int范围内)
      * (以arr[i]结尾的子数组与下一个元素求或运算结果，结果只增不减，每个以nums[i]结尾的子数组最多只会有logC种不同的或运算结果，共nlogC种不同的或运算结果)
      *
      * @param arr
@@ -79,7 +79,7 @@ public class Problem898 {
      * 则arr[0]-arr[i-1]、arr[1]-arr[i-1]...arr[j]-arr[i-1]和arr[i]或运算结果都不会变，
      * 因为随着数组长度变大，或运算结果只增不减，直接跳出循环，遍历下一个arr[i]；
      * 否则，更新dp[j]，此时dp[j]表示arr[j]-arr[i]或运算结果
-     * 时间复杂度O(nlogC)=O(nlog32)=O(n)，空间复杂度O(n+nlogC)=O(n+nlog32)=O(n) (C：arr中的最大元素，arr元素在int范围内)
+     * 时间复杂度O(nlogC)=O(n*32)=O(n)，空间复杂度O(n+nlogC)=O(n+nlog32)=O(n) (C：arr中的最大元素，arr元素在int范围内)
      * (以arr[i]结尾的子数组与下一个元素求或运算结果，结果只增不减，每个以arr[i]结尾的子数组最多只会有logC种不同的或运算结果，共nlogC种不同的或运算结果)
      *
      * @param arr
@@ -131,7 +131,7 @@ public class Problem898 {
      * 因为随着数组长度变大，或运算结果只增不减，直接跳出循环，遍历下一个arr[i]；
      * 否则，更新curArr[0]，此时curArr[0]表示arr[j]-arr[i]或运算结果(curArr[1] <= j <= curArr[2])，
      * 将curArr[0]加入结果集合set中
-     * 时间复杂度O(nlogC)=O(nlog32)=O(n)，空间复杂度O(nlogC+logC)=O(nlog32+log32)=O(n) (C：arr中的最大元素，arr元素在int范围内)
+     * 时间复杂度O(nlogC)=O(n*32)=O(n)，空间复杂度O(nlogC+logC)=O(nlog32+log32)=O(n) (C：arr中的最大元素，arr元素在int范围内)
      * (以arr[i]结尾的子数组与下一个元素求或运算结果，结果只增不减，每个以arr[i]结尾的子数组最多只会有logC种不同的或运算结果，共nlogC种不同的或运算结果)
      *
      * @param arr

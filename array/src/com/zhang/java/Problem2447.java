@@ -80,7 +80,7 @@ public class Problem2447 {
      * 因为随着数组长度变大，最大公因数只减不增，直接跳出循环，统计以nums[i]结尾子数组的最大公因数为k的个数，遍历下一个nums[i]；
      * 否则，更新curArr[0]，此时curArr[0]表示nums[j]-nums[i]的最大公因数(curArr[1] <= j <= curArr[2])，
      * 统计以nums[i]结尾子数组的最大公因数为k的个数
-     * 时间复杂度O(nlogC)=O(nlog32)=O(n)，空间复杂度O(logC)=O(log32)=O(1) (C：nums中的最大元素，nums元素在int范围内)
+     * 时间复杂度O(nlogC)=O(n*32)=O(n)，空间复杂度O(logC)=O(log32)=O(1) (C：nums中的最大元素，nums元素在int范围内)
      * (以nums[i]结尾的子数组与下一个元素求最大公因数，结果只减不增，每个以nums[i]结尾的子数组最多只会有logC种不同的最大公因数，共nlogC种不同的最大公因数)
      *
      * @param nums

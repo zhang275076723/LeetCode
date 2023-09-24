@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/4/30 08:06
  * @Author zsy
- * @Description 键值映射 前缀树类比Problem14、Problem208、Problem211、Problem212
+ * @Description 键值映射 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem421、Problem1804
  * 设计一个 map ，满足以下几点:
  * 字符串表示键，整数表示值
  * 返回具有前缀等于给定字符串的键的值的总和
@@ -45,12 +45,13 @@ public class Problem677 {
     }
 
     /**
-     * 前缀树
+     * 前缀树+哈希表
      */
     static class MapSum {
         //前缀树
         private final Trie trie;
-        //key：字符串key，value：key在前缀树中表示的值
+        //key：字符串，value：字符串在前缀树中表示的值
+        //如果前缀树中存在当前字符串，用于更新根节点到字符串末尾节点的sum
         private final Map<String, Integer> map;
 
         public MapSum() {
@@ -82,6 +83,9 @@ public class Problem677 {
             return trie.search(prefix);
         }
 
+        /**
+         * 前缀树
+         */
         private static class Trie {
             private final TrieNode root;
 
@@ -121,22 +125,25 @@ public class Problem677 {
                 TrieNode node = root;
 
                 for (char c : word.toCharArray()) {
-                    if (!node.children.containsKey(c)) {
+                    node = node.children.get(c);
+
+                    if (node == null) {
                         return 0;
                     }
-
-                    node = node.children.get(c);
                 }
 
                 return node.sum;
             }
 
+            /**
+             * 前缀树节点
+             */
             private static class TrieNode {
-                //当前节点的子节点
+                //当前节点的子节点map
                 private final Map<Character, TrieNode> children;
                 //根节点到当前节点作为前缀，前缀树中满足当前前缀的所有字符串值之和，即当前节点所有子节点sum之和
                 private int sum;
-                //当前节点是否是一个单词的结尾
+                //当前节点是否是一个添加到前缀树的字符串的结尾节点
                 private boolean isEnd;
 
                 public TrieNode() {

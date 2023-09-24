@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/8/28 11:58
  * @Author zsy
- * @Description 单词搜索 II dfs和bfs类比Problem79、Problem130、Problem200、Problem463、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Problem1905、Offer12 前缀树类比Problem14、Problem208、Problem211、Problem677
+ * @Description 单词搜索 II dfs和bfs类比Problem79、Problem130、Problem200、Problem463、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Problem1905、Offer12 前缀树类比Problem14、Problem208、Problem211、Problem421、Problem677、Problem1804
  * 给定一个 m x n 二维字符网格 board 和一个单词（字符串）列表 words， 返回所有二维网格上的单词 。
  * 单词必须按照字母顺序，通过 相邻的单元格 内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。
  * 同一个单元格内的字母在一个单词中不允许被重复使用。
@@ -176,6 +176,9 @@ public class Problem212 {
         visited[i][j] = false;
     }
 
+    /**
+     * 前缀树
+     */
     private static class Trie {
         /**
          * 前缀树根节点
@@ -202,15 +205,13 @@ public class Problem212 {
             node.isEnd = true;
         }
 
+        /**
+         * 前缀树节点
+         */
         private static class TrieNode {
-            /**
-             * 当前前缀树节点的子节点
-             */
+            //当前节点的子节点数组
             private final TrieNode[] children;
-
-            /**
-             * 当前前缀树节点是否是一个单词的结尾
-             */
+            //当前节点是否是一个添加到前缀树的字符串的结尾节点
             private boolean isEnd;
 
             public TrieNode() {

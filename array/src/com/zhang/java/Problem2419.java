@@ -94,7 +94,7 @@ public class Problem2419 {
      * 因为随着数组长度变大，与运算结果只减不增，直接跳出循环，遍历下一个nums[i]；
      * 否则，更新curArr[0]，此时curArr[0]表示nums[j]-nums[i]与运算结果(curArr[1] <= j <= curArr[2])，
      * 当前nums[i]遍历结束，通过list中最后一个curArr更新maxLen
-     * 时间复杂度O(nlogC)=O(nlog32)=O(n)，空间复杂度O(logC)=O(log32)=O(1) (C：nums中的最大元素，nums元素在int范围内)
+     * 时间复杂度O(nlogC)=O(n*32)=O(n)，空间复杂度O(logC)=O(log32)=O(1) (C：nums中的最大元素，nums元素在int范围内)
      * (以nums[i]结尾的子数组与下一个元素求与运算结果，结果只减不增，每个以nums[i]结尾的子数组最多只会有logC种不同的与运算结果，共nlogC种不同的与运算结果)
      *
      * @param nums
@@ -167,7 +167,7 @@ public class Problem2419 {
 
     /**
      * 模拟
-     * 子数组与运算的最大值即为数组中最大元素组成的连续数组的最大长度
+     * 子数组与运算最大值的最长数组即为数组中最大元素组成的连续数组的最大长度
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums

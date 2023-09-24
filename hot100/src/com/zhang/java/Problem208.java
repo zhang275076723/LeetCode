@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * @Date 2022/5/14 8:48
  * @Author zsy
- * @Description 实现 Trie (前缀树) 腾讯面试题 字节面试题 前缀树类比Problem14、Problem211、Problem212、Problem677
+ * @Description 实现 Trie (前缀树) 腾讯面试题 字节面试题 前缀树类比Problem14、Problem211、Problem212、Problem421、Problem677、Problem1804
  * Trie（发音类似 "try"）或者说 前缀树 是一种树形数据结构，用于高效地存储和检索字符串数据集中的键。
  * 这一数据结构有相当多的应用情景，例如自动补完和拼写检查。
  * 请你实现 Trie 类：
@@ -53,9 +53,7 @@ public class Problem208 {
      * 空间复杂度O(|Σ|*|T|)，Σ为字符集的大小，Σ=26，T为字符串的个数
      */
     private static class Trie {
-        /**
-         * 前缀树根节点
-         */
+        //前缀树根节点
         private final TrieNode root;
 
         public Trie() {
@@ -68,9 +66,9 @@ public class Problem208 {
          * @param word
          */
         public void insert(String word) {
-            //得到根节点
             TrieNode node = root;
 
+            //word从根节点往下插入
             for (char c : word.toCharArray()) {
                 if (!node.children.containsKey(c)) {
                     node.children.put(c, new TrieNode());
@@ -79,7 +77,7 @@ public class Problem208 {
                 node = node.children.get(c);
             }
 
-            //最后一个节点作为尾节点
+            //最后一个节点作为word的尾节点
             node.isEnd = true;
         }
 
@@ -94,16 +92,15 @@ public class Problem208 {
                 return false;
             }
 
-            //得到根节点
             TrieNode node = root;
 
             for (char c : word.toCharArray()) {
+                node = node.children.get(c);
+
                 //前缀树中没有当前字符，例如：字符串"ab"，前缀树"ap"
-                if (!node.children.containsKey(c)) {
+                if (node == null) {
                     return false;
                 }
-
-                node = node.children.get(c);
             }
 
             //字符串匹配前缀树或者匹配前缀树的前半部分，通过node.isEnd判断是否匹配，例如：字符串"ap"，前缀树"app"
@@ -125,12 +122,12 @@ public class Problem208 {
             TrieNode node = root;
 
             for (char c : prefix.toCharArray()) {
+                node = node.children.get(c);
+
                 //前缀树中没有当前字符，例如：字符串"ab"，前缀树"ap"
-                if (!node.children.containsKey(c)) {
+                if (node == null) {
                     return false;
                 }
-
-                node = node.children.get(c);
             }
 
             //字符串匹配前缀树或者匹配前缀树的前半部分，例如：字符串"ap"，前缀树"app"
@@ -141,14 +138,9 @@ public class Problem208 {
          * 前缀树节点
          */
         private static class TrieNode {
-            /**
-             * 当前前缀树节点的子节点
-             */
+            //当前节点的子节点map
             private final Map<Character, TrieNode> children;
-
-            /**
-             * 当前前缀树节点是否是一个单词的结尾
-             */
+            //当前节点是否是一个添加到前缀树的字符串的结尾节点
             private boolean isEnd;
 
             public TrieNode() {

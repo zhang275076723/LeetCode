@@ -79,7 +79,7 @@ public class Problem2470 {
      * 因为随着数组长度变大，最小公倍数只增不减，直接跳出循环，统计以nums[i]结尾子数组的最小公倍数为k的个数，遍历下一个nums[i]；
      * 否则，更新curArr[0]，此时curArr[0]表示nums[j]-nums[i]的最小公倍数(curArr[1] <= j <= curArr[2])，
      * 统计以nums[i]结尾子数组的最小公倍数为k的个数
-     * 时间复杂度O(nlogC)=O(nlog32)=O(n)，空间复杂度O(logC)=O(log32)=O(1) (C：nums中的最大元素，nums元素在int范围内)
+     * 时间复杂度O(nlogC)=O(n*32)=O(n)，空间复杂度O(logC)=O(log32)=O(1) (C：nums中的最大元素，nums元素在int范围内)
      * (以nums[i]结尾的子数组与下一个元素求最小公倍数，结果只增不减，每个以nums[i]结尾的子数组最多只会有logC种不同的最小公倍数，共nlogC种不同的最小公倍数)
      *
      * @param nums
