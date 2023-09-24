@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/9/25 08:27
  * @Author zsy
- * @Description 找到最接近目标值的函数值 类比Problem898、Problem2411、Problem2419、Problem2444、Problem2447、Problem2470
+ * @Description 找到最接近目标值的函数值 类比Problem898、Problem2411、Problem2419、Problem2444、Problem2447、Problem2470 位运算类比
  * < int func(int[] arr, int l, int r) {
  * <   if (r < l) {
  * <     return -1000000000;

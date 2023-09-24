@@ -1,69 +1,69 @@
 package com.zhang.java;
 
-import java.util.Arrays;
-
 /**
- * @Date 2023/9/22 08:32
+ * @Date 2023/9/30 08:16
  * @Author zsy
- * @Description 冗余连接 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem685、Problem695、Problem765、Problem785、Problem827、Problem952、Problem1254、Problem1627、Problem1905、Problem1998
- * 树可以看成是一个连通且 无环 的 无向 图。
- * 给定往一棵 n 个节点 (节点值 1～n) 的树中添加一条边后的图。
- * 添加的边的两个顶点包含在 1 到 n 中间，且这条附加的边不属于树中已存在的边。
- * 图的信息记录于长度为 n 的二维数组 edges ，edges[i] = [ai, bi] 表示图中在 ai 和 bi 之间存在一条边。
- * 请找出一条可以删去的边，删除后可使得剩余部分是一个有着 n 个节点的树。
- * 如果有多个答案，则返回数组 edges 中最后出现的那个。
+ * @Description 以图判树 并查集类比Problem130、Problem200、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem952、Problem1254、Problem1627、Problem1905、Problem1998
+ * 给定编号从 0 到 n - 1 的 n 个结点。
+ * 给定一个整数 n 和一个 edges 列表，其中 edges[i] = [ai, bi] 表示图中节点 ai 和 bi 之间存在一条无向边。
+ * 如果这些边能够形成一个合法有效的树结构，则返回 true ，否则返回 false 。
  * <p>
- * 输入: edges = [[1,2], [1,3], [2,3]]
- * 输出: [2,3]
+ * 输入: n = 5, edges = [[0,1],[0,2],[0,3],[1,4]]
+ * 输出: true
  * <p>
- * 输入: edges = [[1,2], [2,3], [3,4], [1,4], [1,5]]
- * 输出: [1,4]
+ * 输入: n = 5, edges = [[0,1],[1,2],[2,3],[1,3],[1,4]]
+ * 输出: false
  * <p>
- * n == edges.length
- * 3 <= n <= 1000
+ * 1 <= n <= 2000
+ * 0 <= edges.length <= 5000
  * edges[i].length == 2
- * 1 <= ai < bi <= edges.length
+ * 0 <= ai, bi < n
  * ai != bi
- * edges 中无重复元素
- * 给定的图是连通的
+ * 不存在自循环或重复的边
  */
-public class Problem684 {
+public class Problem261 {
     public static void main(String[] args) {
-        Problem684 problem684 = new Problem684();
-//        int[][] edges = {{1, 2}, {1, 3}, {2, 3}};
-        int[][] edges = {{1, 2}, {2, 3}, {3, 4}, {1, 4}, {1, 5}};
-        System.out.println(Arrays.toString(problem684.findRedundantConnection(edges)));
+        Problem261 problem261 = new Problem261();
+        int n = 5;
+//        int[][] edges = {{0, 1}, {0, 2}, {0, 3}, {1, 4}};
+        int[][] edges = {{0, 1}, {1, 2}, {2, 3}, {1, 3}, {1, 4}};
+        System.out.println(problem261.validTree(n, edges));
     }
 
     /**
      * 并查集
-     * 树只有n-1条边，再添加1条边就变为图，顺序遍历有n条边的edges，如果edges[i][0]和edges[i][1]已经是同一个连通分量中节点，
-     * 添加当前边edges[i]，则树产生环变为图，当前边edges[i]就是需要删除的边；
+     * 如果edges[i][0]和edges[i][1]已经是同一个连通分量中节点，添加当前边edges[i]，则树产生环变为图；
      * 如果edges[i][0]和edges[i][1]不是同一个连通分量中节点，则连接这两个节点
      * 时间复杂度O(n*α(n))=O(n)，空间复杂度O(n) (find()和union()的时间复杂度为O(α(n))，可视为常数O(1))
      *
+     * @param n
      * @param edges
      * @return
      */
-    public int[] findRedundantConnection(int[][] edges) {
-        //因为节点是从1开始，所以要多申请一个长度
-        UnionFind unionFind = new UnionFind(edges.length + 1);
+    public boolean validTree(int n, int[][] edges) {
+        //n个节点的树只能有n-1条边，大于n-1条边或小于n-1条边，则为图
+        if (edges.length != n - 1) {
+            return false;
+        }
+
+        UnionFind unionFind = new UnionFind(n);
 
         for (int i = 0; i < edges.length; i++) {
             //当前边edges[i]的两个节点
             int u = edges[i][0];
             int v = edges[i][1];
 
-            //u、v这两个节点已经是同一个连通分量中节点，添加当前边edges[i]，则树产生环变为图，当前边edges[i]就是需要删除的冗余边
+            //u、v两个节点已经是同一个连通分量中节点，添加当前边edges[i]，则树产生环变为图，返回false
             if (unionFind.isConnected(u, v)) {
-                return edges[i];
+                return false;
             } else {
                 //u、v这两个节点不是同一个连通分量中节点，则连接这两个节点
                 unionFind.union(u, v);
             }
         }
 
-        return null;
+        //节点连接完之后，只有1个连通分量则为树，超过1个连通分量则为图
+        return unionFind.count == 1;
     }
 
     /**

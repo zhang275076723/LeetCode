@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @Date 2023/9/22 08:57
  * @Author zsy
- * @Description 冗余连接 II 并查集类比Problem130、Problem200、Problem305、Problem399、Problem547、Problem684、Problem695、Problem765、Problem785、Problem827、Problem952、Problem1254、Problem1627、Problem1905、Problem1998
+ * @Description 冗余连接 II 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem695、Problem765、Problem785、Problem827、Problem952、Problem1254、Problem1627、Problem1905、Problem1998
  * 在本问题中，有根树指满足以下条件的 有向 图。
  * 该树只有一个根节点，所有其他节点都是该根节点的后继。
  * 该树除了根节点之外的每一个节点都有且只有一个父节点，而根节点没有父节点。
@@ -107,7 +107,7 @@ public class Problem685 {
             if (unionFind.isConnected(u, v)) {
                 return edge1;
             } else {
-                //当前这两个节点不是同一个连通分量中节点，则连接这两个节点
+                //u、v这两个节点不是同一个连通分量中节点，则连接这两个节点
                 unionFind.union(u, v);
             }
         }
@@ -132,11 +132,11 @@ public class Problem685 {
             int u = edges[i][0];
             int v = edges[i][1];
 
-            //当前这两个节点已经是同一个连通分量中节点，添加当前边edges[i]，则树产生环变为图，当前边edges[i]就是需要删除的冗余边
+            //u、v这两个节点已经是同一个连通分量中节点，添加当前边edges[i]，则树产生环变为图，当前边edges[i]就是需要删除的冗余边
             if (unionFind.isConnected(u, v)) {
                 return edges[i];
             } else {
-                //当前这两个节点不是同一个连通分量中节点，则连接这两个节点
+                //u、v这两个节点不是同一个连通分量中节点，则连接这两个节点
                 unionFind.union(u, v);
             }
         }

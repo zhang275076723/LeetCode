@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2023/4/16 08:37
  * @Author zsy
- * @Description 判断二分图 微软面试题 图类比Problem133、Problem207、Problem210、Problem329、Problem399、Problem863 并查集类比Problem130、Problem200、Problem305、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem827、Problem952、Problem1254、Problem1627、Problem1905、Problem1998
+ * @Description 判断二分图 微软面试题 图类比Problem133、Problem207、Problem210、Problem329、Problem399、Problem863 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem827、Problem952、Problem1254、Problem1627、Problem1905、Problem1998
  * 存在一个 无向图 ，图中有 n 个节点。
  * 其中每个节点都有一个介于 0 到 n - 1 之间的唯一编号。
  * 给你一个二维数组 graph ，其中 graph[u] 是一个节点数组，由节点 u 的邻接节点组成。
