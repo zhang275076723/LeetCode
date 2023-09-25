@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/5/7 08:54
  * @Author zsy
- * @Description 砖墙 哈希表类比Problem242、Problem383、Problem387、Problem389、Problem763、Offer50
+ * @Description 砖墙 哈希表类比Problem187、Problem242、Problem383、Problem387、Problem389、Problem763、Problem1640、Offer50
  * 你的面前有一堵矩形的、由 n 行砖块组成的砖墙。
  * 这些砖块高度相同（也就是一个单位高）但是宽度不同。每一行砖块的宽度之和相等。
  * 你现在要画一条 自顶向下 的、穿过 最少 砖块的垂线。
@@ -68,7 +68,7 @@ public class Problem554 {
         Map<Integer, Integer> map = new HashMap<>();
 
         for (List<Integer> list : wall) {
-            //从左边界开始，距离左边界的距离
+            //从左边界开始，距离左边界的距离，即得到从左边开始的每一个从砖块边缘经过的数量
             int sum = 0;
             //最后一个砖块的宽度不能统计，因为最后一个砖块是墙的右边界
             for (int i = 0; i < list.size() - 1; i++) {

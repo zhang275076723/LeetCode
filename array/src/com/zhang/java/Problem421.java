@@ -33,15 +33,15 @@ public class Problem421 {
      * @return
      */
     public int findMaximumXOR(int[] nums) {
-        int maxXOrResult = 0;
+        int maxXorResult = 0;
 
         for (int i = 0; i < nums.length - 1; i++) {
             for (int j = i + 1; j < nums.length; j++) {
-                maxXOrResult = Math.max(maxXOrResult, nums[i] ^ nums[j]);
+                maxXorResult = Math.max(maxXorResult, nums[i] ^ nums[j]);
             }
         }
 
-        return maxXOrResult;
+        return maxXorResult;
     }
 
     /**
@@ -60,14 +60,14 @@ public class Problem421 {
             trie.insert(num);
         }
 
-        int maxXOrResult = 0;
+        int maxXorResult = 0;
 
         //找前缀树中和nums[i]异或的最大值对应的数
         for (int i = 0; i < nums.length; i++) {
-            maxXOrResult = Math.max(maxXOrResult, nums[i] ^ trie.search(nums[i]));
+            maxXorResult = Math.max(maxXorResult, nums[i] ^ trie.search(nums[i]));
         }
 
-        return maxXOrResult;
+        return maxXorResult;
     }
 
     /**
