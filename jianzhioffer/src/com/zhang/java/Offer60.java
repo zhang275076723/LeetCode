@@ -6,7 +6,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/4/7 12:14
  * @Author zsy
- * @Description n个骰子的点数 动态规划类比Problem198、Problem213、Problem279、Problem322、Problem343、Problem377、Problem416、Problem474、Problem494、Problem518、Problem746、Problem983、Problem1340、Problem1388、Problem1444、Offer14、Offer14_2、CircleBackToOrigin、Knapsack
+ * @Description n个骰子的点数 动态规划类比Problem198、Problem213、Problem256、Problem265、Problem279、Problem322、Problem338、Problem343、Problem377、Problem416、Problem474、Problem494、Problem518、Problem746、Problem983、Problem1340、Problem1388、Problem1444、Problem1473、Offer14、Offer14_2、CircleBackToOrigin、Knapsack
  * 把n个骰子扔在地上，所有骰子朝上一面的点数之和为s。
  * 输入n，打印出s的所有可能的值出现的概率。
  * 你需要用一个浮点数数组返回答案，其中第 i 个元素代表这 n 个骰子所能掷出的点数集合中第 i 小的那个的概率。

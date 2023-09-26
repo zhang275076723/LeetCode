@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/27 15:58
  * @Author zsy
- * @Description 使用最小花费爬楼梯 类比Problem70、Problem509、Problem1137、Offer10、Offer10_2、Offer46 动态规划类比Problem198、Problem213、Problem279、Problem322、Problem343、Problem377、Problem416、Problem474、Problem494、Problem518、Problem983、Problem1340、Problem1388、Problem1444、Offer14、Offer14_2、Offer60、CircleBackToOrigin、Knapsack
+ * @Description 使用最小花费爬楼梯 类比Problem70、Problem509、Problem1137、Offer10、Offer10_2、Offer46 动态规划类比Problem198、Problem213、Problem256、Problem265、Problem279、Problem322、Problem338、Problem343、Problem377、Problem416、Problem474、Problem494、Problem518、Problem983、Problem1340、Problem1388、Problem1444、Problem1473、Offer14、Offer14_2、Offer60、CircleBackToOrigin、Knapsack
  * 给你一个整数数组 cost ，其中 cost[i] 是从楼梯第 i 个台阶向上爬需要支付的费用。
  * 一旦你支付此费用，即可选择向上爬一个或者两个台阶。
  * 你可以选择从下标为 0 或下标为 1 的台阶开始爬楼梯。
