@@ -48,7 +48,8 @@ public class Problem78 {
     }
 
     /**
-     * 每遍历到一个元素，就将原结果集合中每个list添加该元素，重新添加回结果集合
+     * 模拟
+     * 每遍历到nums的一个元素，就将结果集合result中每个子集添加该元素，作为新的子集重新添加回result
      * 时间复杂度O(n*2^n)，空间复杂度O(1) (一共2^n种状态，获取结果集合每个list需要O(n))
      *
      * @param nums
@@ -68,11 +69,11 @@ public class Problem78 {
             int size = result.size();
 
             for (int j = 0; j < size; j++) {
-                //结果集合每个list，需要当前list的副本，不能在原list上操作，会修改之后的list
+                //结果集合中每个list，需要当前list的副本，不能在原list上操作，会修改之前的list
                 List<Integer> list = new ArrayList<>(result.get(j));
                 //list添加当前元素
                 list.add(nums[i]);
-                //重新添加回结果集合
+                //list作为新的子集重新添加回result
                 result.add(list);
             }
         }

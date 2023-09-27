@@ -41,7 +41,8 @@ public class Problem1373 {
 
     public static void main(String[] args) {
         Problem1373 problem1373 = new Problem1373();
-        String[] data = {"1", "4", "3", "2", "4", "2", "5", "null", "null", "null", "null", "null", "null", "4", "6"};
+//        String[] data = {"1", "4", "3", "2", "4", "2", "5", "null", "null", "null", "null", "null", "null", "4", "6"};
+        String[] data = {"5", "4", "8", "3", "null", "6", "3"};
         TreeNode root = problem1373.buildTree(data);
         System.out.println(problem1373.maxSumBST(root));
     }
@@ -85,7 +86,7 @@ public class Problem1373 {
         //右子树作为二叉搜索树根节点的最大键值和数组
         int[] rightArr = dfs(root.right);
 
-        //根节点的值大于左子树的最大值，并且根节点的值小于右子树的最小值，才是二叉搜索树，否则不是二叉搜索树，
+        //根节点的值大于左子树的最大值，并且根节点的值小于右子树的最小值，则是二叉搜索树，否则不是二叉搜索树，
         //赋值树中节点的最大值为int最大值，树中节点的最小值为int最小值，表示不是二叉搜索树
         if (!(root.val > leftArr[1] && root.val < rightArr[2])) {
             return new int[]{0, Integer.MAX_VALUE, Integer.MIN_VALUE};
