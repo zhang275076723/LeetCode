@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/9/9 09:30
  * @Author zsy
- * @Description 顺次数 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1175、Problem1201、Offer10、Offer49 回溯+剪枝类比
+ * @Description 顺次数 类比Problem967 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1175、Problem1201、Offer10、Offer49 回溯+剪枝类比
  * 我们定义「顺次数」为：每一位上的数字都比前一位上的数字大 1 的整数。
  * 请你返回由 [low, high] 范围内所有顺次数组成的 有序 列表（从小到大排序）。
  * <p>
@@ -27,7 +27,7 @@ public class Problem1291 {
     }
 
     /**
-     * 模拟
+     * 回溯+剪枝
      * 时间复杂度O(1)，空间复杂度O(1)
      *
      * @param low
@@ -42,20 +42,8 @@ public class Problem1291 {
         List<Integer> list = new ArrayList<>();
 
         for (int i = 1; i <= 9; i++) {
-            //从i开始的顺次数
-            int num = 0;
-
-            for (int j = i; j <= 9; j++) {
-                num = num * 10 + j;
-
-                //当前顺次数在[low,high]范围内，加入结果集合
-                if (low <= num && num <= high) {
-                    list.add(num);
-                } else if (num > high) {
-                    //当前顺次数超过high，则不在[low,high]范围内，直接跳出循环
-                    break;
-                }
-            }
+            //last：当前数字的最后一位
+            backtrack(i, i, low, high, list);
         }
 
         //得到的顺次数无序，需要从小到大排序
@@ -70,7 +58,7 @@ public class Problem1291 {
     }
 
     /**
-     * 回溯+剪枝
+     * bfs
      * 时间复杂度O(1)，空间复杂度O(1)
      *
      * @param low
@@ -83,9 +71,25 @@ public class Problem1291 {
         }
 
         List<Integer> list = new ArrayList<>();
+        Queue<Pos> queue = new LinkedList<>();
 
         for (int i = 1; i <= 9; i++) {
-            backtrack(i, i, low, high, list);
+            queue.offer(new Pos(i, i));
+        }
+
+        while (!queue.isEmpty()) {
+            Pos pos = queue.poll();
+
+            if (pos.last < 0 || pos.last > 9) {
+                continue;
+            }
+
+            //当前顺次数在[low,high]范围内，加入结果集合
+            if (low <= pos.num && pos.num <= high) {
+                list.add(pos.num);
+            }
+
+            queue.offer(new Pos(pos.num * 10 + pos.last + 1, pos.last + 1));
         }
 
         //得到的顺次数无序，需要从小到大排序
@@ -111,5 +115,19 @@ public class Problem1291 {
         }
 
         backtrack(t * 10 + last + 1, last + 1, low, high, list);
+    }
+
+    /**
+     * bfs节点
+     */
+    private static class Pos {
+        private int num;
+        //当前数字的最后一位
+        private int last;
+
+        public Pos(int num, int last) {
+            this.num = num;
+            this.last = last;
+        }
     }
 }

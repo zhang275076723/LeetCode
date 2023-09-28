@@ -74,6 +74,7 @@ public class Problem306 {
 
     /**
      * 回溯+剪枝
+     * 当前累加序列由前两个累加序列构成，确定第一个和第二个累加序列，根据前两个累加序列，得到下一个累加序列，判断能否构成num
      *
      * @param num
      * @return
@@ -146,18 +147,18 @@ public class Problem306 {
                 return false;
             }
 
-            //当前累加序列num[t]-num[i]
-            String curNum = num.substring(t, i + 1);
+            //下一个累加序列num[t]-num[i]
+            String nextNum = num.substring(t, i + 1);
 
             //第一个累加序列不存在
             if ("".equals(num1)) {
-                if (backtrack(i + 1, count + 1, num, curNum, num2)) {
+                if (backtrack(i + 1, count + 1, num, nextNum, num2)) {
                     return true;
                 }
             } else if ("".equals(num2)) {
                 //第二个累加序列不存在
 
-                if (backtrack(i + 1, count + 1, num, num1, curNum)) {
+                if (backtrack(i + 1, count + 1, num, num1, nextNum)) {
                     return true;
                 }
             } else {
@@ -166,7 +167,7 @@ public class Problem306 {
                 //num1和num2相加得到的下一个累加序列，使用long避免int溢出
                 String sum = Long.parseLong(num1) + Long.parseLong(num2) + "";
 
-                if (curNum.equals(sum) && backtrack(i + 1, count + 1, num, num2, curNum)) {
+                if (nextNum.equals(sum) && backtrack(i + 1, count + 1, num, num2, nextNum)) {
                     return true;
                 }
             }

@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @Date 2022/8/8 8:57
  * @Author zsy
- * @Description N 皇后 类比Problem36、Problem37、Problem52、Problem1001
+ * @Description N 皇后 类比Problem36、Problem37、Problem52、Problem1001 回溯+剪枝类比
  * 按照国际象棋的规则，皇后可以攻击与之处在同一行或同一列或同一斜线上的棋子。
  * n 皇后问题 研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。
  * 给你一个整数 n ，返回所有不同的 n 皇后问题 的解决方案。
@@ -32,7 +32,7 @@ public class Problem51 {
 
     /**
      * 回溯+剪枝
-     * 使用数组存储皇后放置的位置，判断是否冲突
+     * 使用数组存储皇后放置的位置，判断当前皇后和之前皇后是否冲突
      * 时间复杂度O(n*n!)，空间复杂度O(n)
      *
      * @param n
@@ -41,7 +41,13 @@ public class Problem51 {
     public List<List<String>> solveNQueens(int n) {
         List<List<String>> result = new ArrayList<>();
 
-        backtrack(0, n, new int[n], result);
+        int[] visited = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            visited[i] = -1;
+        }
+
+        backtrack(0, n, visited, result);
 
         return result;
     }
@@ -49,7 +55,7 @@ public class Problem51 {
     /**
      * 回溯+剪枝
      * 使用set存储皇后影响的行(可以省略)、列、左上右下对角线(第j-i+n-1个对角线)、左下右上对角线(第i+j个对角线)，判断是否冲突
-     * 时间复杂度O(n!)，空间复杂度O(n)
+     * 时间复杂度O(n*n!)，空间复杂度O(n)
      *
      * @param n
      * @return
@@ -68,15 +74,16 @@ public class Problem51 {
         return result;
     }
 
-    private void backtrack(int t, int n, int[] position, List<List<String>> result) {
+    private void backtrack(int t, int n, int[] visited, List<List<String>> result) {
         if (t == n) {
+            //根据visited得到当前n皇后方案
             List<String> list = new ArrayList<>();
 
             for (int i = 0; i < n; i++) {
                 StringBuilder sb = new StringBuilder();
 
                 //当前皇后之前的'.'
-                for (int j = 0; j < position[i]; j++) {
+                for (int j = 0; j < visited[i]; j++) {
                     sb.append('.');
                 }
 
@@ -84,7 +91,7 @@ public class Problem51 {
                 sb.append('Q');
 
                 //当前皇后之后的'.'
-                for (int j = position[i] + 1; j < n; j++) {
+                for (int j = visited[i] + 1; j < n; j++) {
                     sb.append('.');
                 }
 
@@ -96,14 +103,14 @@ public class Problem51 {
         }
 
         for (int i = 0; i < n; i++) {
-            position[t] = i;
+            visited[t] = i;
 
             //第0行到第t行共t+1个皇后不冲突，才继续往后查找
-            if (!isConflict(t, position)) {
-                backtrack(t + 1, n, position, result);
+            if (!isConflict(t, visited)) {
+                backtrack(t + 1, n, visited, result);
             }
 
-            position[t] = -1;
+            visited[t] = -1;
         }
     }
 

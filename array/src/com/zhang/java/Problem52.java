@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/8/8 7:57
  * @Author zsy
- * @Description N 皇后 II 类比Problem36、Problem37、Problem51、Problem1001
+ * @Description N 皇后 II 类比Problem36、Problem37、Problem51、Problem1001 回溯+剪枝类比
  * n 皇后问题 研究的是如何将 n 个皇后放置在 n × n 的棋盘上，并且使皇后彼此之间不能相互攻击。
  * 给你一个整数 n ，返回 n 皇后问题 不同的解决方案的数量。
  * <p>
@@ -28,7 +28,7 @@ public class Problem52 {
 
     /**
      * 回溯+剪枝
-     * 使用数组存储皇后放置的位置，判断是否冲突
+     * 使用数组存储皇后放置的位置，判断当前皇后和之前皇后是否冲突
      * 时间复杂度O(n*n!)，空间复杂度O(n)
      *
      * @param n
@@ -39,7 +39,14 @@ public class Problem52 {
             return 1;
         }
 
-        return backtrack(0, n, new int[n]);
+        //皇后的位置数组，visited[0]=3，表示第0个皇后放在第0行第3列
+        int[] visited = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            visited[i] = -1;
+        }
+
+        return backtrack(0, n, visited);
     }
 
     /**
@@ -65,13 +72,7 @@ public class Problem52 {
         return backtrack2(0, n, colSet, diagSet, antiDiagSet);
     }
 
-    /**
-     * @param t
-     * @param n
-     * @param position position[0]=3，表示第0个皇后放在第0行第3列
-     * @return
-     */
-    private int backtrack(int t, int n, int[] position) {
+    private int backtrack(int t, int n, int[] visited) {
         if (t == n) {
             return 1;
         }
@@ -79,14 +80,14 @@ public class Problem52 {
         int count = 0;
 
         for (int i = 0; i < n; i++) {
-            position[t] = i;
+            visited[t] = i;
 
-            //第0行到第t行共t+1个皇后不冲突，才继续往后查找
-            if (!isConflict(t, position)) {
-                count = count + backtrack(t + 1, n, position);
+            //第t个皇后和之前0到t-1个皇后之间不冲突，继续往后查找
+            if (!isConflict(t, visited)) {
+                count = count + backtrack(t + 1, n, visited);
             }
 
-            position[t] = -1;
+            visited[t] = -1;
         }
 
         return count;
@@ -112,8 +113,8 @@ public class Problem52 {
 
             count = count + backtrack2(t + 1, n, colSet, diagSet, antiDiagSet);
 
-            antiDiagSet.remove(i - t + n - 1);
-            diagSet.remove(t + i);
+            antiDiagSet.remove(t + i);
+            diagSet.remove(i - t + n - 1);
             colSet.remove(i);
         }
 
@@ -122,15 +123,17 @@ public class Problem52 {
 
     /**
      * 第t个皇后和之前0到t-1个皇后之间是否冲突
+     * 因为使用一维数组，不需要考虑行是否冲突，只考虑列和对角线是否冲突
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param t
-     * @param position
+     * @param visited
      * @return
      */
-    private boolean isConflict(int t, int[] position) {
+    private boolean isConflict(int t, int[] visited) {
         for (int i = 0; i < t; i++) {
-            //两个皇后在同一行或同一列或同一斜线上，则会相互攻击，返回true
-            if (position[i] == position[t] || Math.abs(i - t) == Math.abs(position[i] - position[t])) {
+            //两个皇后在同一行或同一列或同一对角线上，则冲突，返回true
+            if (visited[i] == visited[t] || Math.abs(i - t) == Math.abs(visited[i] - visited[t])) {
                 return true;
             }
         }

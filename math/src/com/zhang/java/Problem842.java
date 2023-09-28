@@ -56,7 +56,7 @@ public class Problem842 {
         for (int i = 0; i < num.length() - 2; i++) {
             //第一个斐波那契式数num1长度超过1的情况下不能出现前导0
             if (i > 0 && num.charAt(0) == '0') {
-                return new ArrayList<>();
+                break;
             }
 
             //第一个斐波那契式数num[0]-num[i]
@@ -64,7 +64,7 @@ public class Problem842 {
 
             //num1只能在int范围内，使用long避免int溢出
             if (Long.parseLong(num1) > Integer.MAX_VALUE) {
-                return new ArrayList<>();
+                break;
             }
 
             list.add(Integer.parseInt(num1));
@@ -193,47 +193,39 @@ public class Problem842 {
                 return false;
             }
 
-            //当前斐波那契式数num[t]-num[i]
-            String curNum = num.substring(t, i + 1);
+            //下一个斐波那契式数num[t]-num[i]
+            String nextNum = num.substring(t, i + 1);
 
-            //curNum只能在int范围内，使用long避免int溢出
-            if (Long.parseLong(curNum) > Integer.MAX_VALUE) {
+            //nextNum只能在int范围内，使用long避免int溢出
+            if (Long.parseLong(nextNum) > Integer.MAX_VALUE) {
                 return false;
             }
 
+            list.add(Integer.parseInt(nextNum));
+
             //第一个斐波那契式数不存在
             if ("".equals(num1)) {
-                list.add(Integer.parseInt(curNum));
-
-                if (backtrack(i + 1, num, curNum, num2, list)) {
+                if (backtrack(i + 1, num, nextNum, num2, list)) {
                     return true;
                 }
-
-                list.remove(list.size() - 1);
             } else if ("".equals(num2)) {
                 //第二个斐波那契式数不存在
 
-                list.add(Integer.parseInt(curNum));
-
-                if (backtrack(i + 1, num, num1, curNum, list)) {
+                if (backtrack(i + 1, num, num1, nextNum, list)) {
                     return true;
                 }
-
-                list.remove(list.size() - 1);
             } else {
                 //两个斐波那契式数都存在
 
                 //num1和num2相加得到的下一个斐波那契式数，使用long避免int溢出
                 String sum = Long.parseLong(num1) + Long.parseLong(num2) + "";
 
-                list.add(Integer.parseInt(curNum));
-
-                if (curNum.equals(sum) && backtrack(i + 1, num, num2, curNum, list)) {
+                if (nextNum.equals(sum) && backtrack(i + 1, num, num2, nextNum, list)) {
                     return true;
                 }
-
-                list.remove(list.size() - 1);
             }
+
+            list.remove(list.size() - 1);
         }
 
         //遍历结束不存在num1和num2能构成num，返回false
