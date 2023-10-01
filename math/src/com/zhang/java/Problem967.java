@@ -1,13 +1,11 @@
 package com.zhang.java;
 
-import javafx.geometry.Pos;
-
 import java.util.*;
 
 /**
  * @Date 2023/10/3 08:49
  * @Author zsy
- * @Description 连续差相同的数字 类比Problem1291
+ * @Description 连续差相同的数字 类比Problem1291 回溯+剪枝类比
  * 返回所有长度为 n 且满足其每两个连续位上的数字之间的差的绝对值为 k 的 非负整数 。
  * 请注意，除了 数字 0 本身之外，答案中的每个数字都 不能 有前导零。
  * 例如，01 有一个前导零，所以是无效的；但 0 是有效的。
