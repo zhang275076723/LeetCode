@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @Date 2023/5/2 08:14
  * @Author zsy
- * @Description 24 点游戏 字节面试题 华为面试题 阿里面试题 微软面试题 网易面试题 回溯+剪枝类比Problem17、Problem22、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem89、Problem90、Problem97、Problem216、Problem301、Problem377、Problem491、Problem698、Offer17、Offer38
+ * @Description 24 点游戏 字节面试题 华为面试题 阿里面试题 微软面试题 网易面试题 类比Problem282 回溯+剪枝类比Problem17、Problem22、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem89、Problem90、Problem97、Problem216、Problem301、Problem377、Problem491、Problem698、Offer17、Offer38
  * 给定一个长度为4的整数数组 cards 。你有 4 张卡片，每张卡片上都包含一个范围在 [1,9] 的数字。
  * 您应该使用运算符 ['+', '-', '*', '/'] 和括号 '(' 和 ')' 将这些卡片上的数字排列成数学表达式，以获得值24。
  * 你须遵守以下规则:
@@ -76,14 +76,14 @@ public class Problem679 {
         //每次从list中取出2个数进行运算，得到的结果重新加入list
         List<Double> list = new ArrayList<>();
         //每次保存list中的表达式，最终得到和为24的表达式
-        List<String> opsList = new ArrayList<>();
+        List<String> expressionList = new ArrayList<>();
 
         for (int card : cards) {
             list.add((double) card);
-            opsList.add(card + "");
+            expressionList.add(card + "");
         }
 
-        backtrack2(list, opsList, result);
+        backtrack2(list, expressionList, result);
 
         return result;
     }
@@ -103,40 +103,41 @@ public class Problem679 {
                 //第2个要进行运算的数
                 double num2 = list.remove(j);
 
-                //选1个运算符
-                for (int k = 0; k < 4; k++) {
-                    //加法
-                    if (k == 1) {
-                        list.add(num1 + num2);
-                    } else if (k == 2) {
-                        //减法
-                        list.add(num1 - num2);
-                    } else if (k == 3) {
-                        //乘法
-                        list.add(num1 * num2);
-                    } else {
-                        //除法
-                        //实数运算和0比较必须通过差值比较，num2和0之间的误差小于10^(-6)，则认为num2为0，0不能做除数
-                        if (Math.abs(num2) < 1e-6) {
-                            continue;
-                        }
-                        list.add(num1 / num2);
-                    }
+                //加
+                list.add(num1 + num2);
+                if (backtrack(list)) {
+                    return true;
+                }
+                list.remove(list.size() - 1);
 
-                    //继续往后寻找，当找到和为24的组合，直接返回true
+                //减
+                list.add(num1 - num2);
+                if (backtrack(list)) {
+                    return true;
+                }
+                list.remove(list.size() - 1);
+
+                //乘
+                list.add(num1 * num2);
+                if (backtrack(list)) {
+                    return true;
+                }
+                list.remove(list.size() - 1);
+
+                //除，num2和0之间的误差小于10^(-6)，则认为num2为0，0不能做除数
+                if (Math.abs(num1) >= 1e-6) {
+                    list.add(num1 / num2);
                     if (backtrack(list)) {
                         return true;
                     }
-
-                    //删除之前添加的运算结果
                     list.remove(list.size() - 1);
                 }
 
-                //添加之前删除的第2个要进行运算的数
+                //num2重新添加回list下标索引j处
                 list.add(j, num2);
             }
 
-            //添加之前删除的第1个要进行运算的数
+            //num1重新添加回list下标索引i处
             list.add(i, num1);
         }
 
@@ -144,12 +145,12 @@ public class Problem679 {
         return false;
     }
 
-    private void backtrack2(List<Double> list, List<String> opsList, Set<String> result) {
+    private void backtrack2(List<Double> list, List<String> expressionList, Set<String> result) {
         //当list中只剩1个数时，则得到了4个数的运算结果
         if (list.size() == 1) {
             //因为是实数运算，所以得到的结果和24之间的误差小于10^(-6)，则认为得到的结果就是24
             if (Math.abs(list.get(0) - 24) < 1e-6) {
-                result.add(opsList.get(0));
+                result.add(expressionList.get(0));
             }
             return;
         }
@@ -158,55 +159,53 @@ public class Problem679 {
             //第1个要进行运算的数
             double num1 = list.remove(i);
             //第1个要进行运算的表达式
-            String ops1 = opsList.remove(i);
+            String expr1 = expressionList.remove(i);
 
             for (int j = 0; j < list.size(); j++) {
                 //第2个要进行运算的数
                 double num2 = list.remove(j);
                 //第2个要进行运算的表达式
-                String ops2 = opsList.remove(j);
+                String expr2 = expressionList.remove(j);
 
-                //选1个运算符
-                for (int k = 0; k < 4; k++) {
-                    //加法
-                    if (k == 0) {
-                        list.add(num1 + num2);
-                        opsList.add("(" + ops1 + "+" + ops2 + ")");
-                    } else if (k == 1) {
-                        //减法
-                        list.add(num1 - num2);
-                        opsList.add("(" + ops1 + "-" + ops2 + ")");
-                    } else if (k == 2) {
-                        //乘法
-                        list.add(num1 * num2);
-                        opsList.add("(" + ops1 + "*" + ops2 + ")");
-                    } else {
-                        //除法
-                        //实数运算和0比较必须通过差值比较，num2和0之间的误差小于10^(-6)，则认为num2为0，0不能做除数
-                        if (Math.abs(num2) < 1e-6) {
-                            continue;
-                        }
-                        list.add(num1 / num2);
-                        opsList.add("(" + ops1 + "/" + ops2 + ")");
-                    }
+                //加
+                list.add(num1 + num2);
+                expressionList.add("(" + expr1 + "+" + expr2 + ")");
+                backtrack2(list, expressionList, result);
+                expressionList.remove(expressionList.size() - 1);
+                list.remove(list.size() - 1);
 
-                    backtrack2(list, opsList, result);
+                //减
+                list.add(num1 - num2);
+                expressionList.add("(" + expr1 + "-" + expr2 + ")");
+                backtrack2(list, expressionList, result);
+                expressionList.remove(expressionList.size() - 1);
+                list.remove(list.size() - 1);
 
-                    //删除之前添加的运算表达式
-                    opsList.remove(opsList.size() - 1);
-                    //删除之前添加的运算结果
+                //乘
+                list.add(num1 * num2);
+                expressionList.add("(" + expr1 + "*" + expr2 + ")");
+                backtrack2(list, expressionList, result);
+                expressionList.remove(expressionList.size() - 1);
+                list.remove(list.size() - 1);
+
+                //除，num2和0之间的误差小于10^(-6)，则认为num2为0，0不能做除数
+                if (Math.abs(num1) >= 1e-6) {
+                    list.add(num1 / num2);
+                    expressionList.add("(" + expr1 + "/" + expr2 + ")");
+                    backtrack2(list, expressionList, result);
+                    expressionList.remove(expressionList.size() - 1);
                     list.remove(list.size() - 1);
                 }
 
-                //添加之前删除的第2个要进行运算的表达式
-                opsList.add(j, ops2);
-                //添加之前删除的第1个要进行运算的数
+                //expr2重新添加回expressionList下标索引j处
+                expressionList.add(j, expr2);
+                //num2重新添加回list下标索引j处
                 list.add(j, num2);
             }
 
-            //添加之前删除的第1个要进行运算的表达式
-            opsList.add(i, ops1);
-            //添加之前删除的第1个要进行运算的数
+            //expr1重新添加回expressionList下标索引i处
+            expressionList.add(i, expr1);
+            //num1重新添加回list下标索引i处
             list.add(i, num1);
         }
     }
