@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/9/15 8:25
  * @Author zsy
- * @Description 根据前序和后序遍历构造二叉树 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem255、Problem395、Problem449、Problem617、Problem654、Problem1008、Offer7、Offer33
+ * @Description 根据前序和后序遍历构造二叉树 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem241、Problem255、Problem395、Problem449、Problem617、Problem654、Problem1008、Offer7、Offer33
  * 给定两个整数数组，preorder 和 postorder ，
  * 其中 preorder 是一个具有 无重复 值的二叉树的前序遍历，postorder 是同一棵树的后序遍历，重构并返回二叉树。
  * 如果存在多个答案，您可以返回其中 任何 一个。
@@ -36,9 +36,9 @@ public class Problem889 {
     /**
      * 分治法
      * 前序遍历数组中第一个元素确定当前根节点，前序遍历数组中第二个元素作为左子树的根节点，
+     * (注意：前序遍历和后序遍历是无法确定唯一一个二叉树，这里假定优先往左子树插入)
      * 将前序遍历数组和后序遍历数组分为左子树数组和右子树数组，递归对左子树数组和右子树数组建立二叉树
      * 时间复杂度O(n)，空间复杂度O(n) (哈希表需要O(n)的空间，栈的深度平均为O(logn)，最差为O(n))
-     * 注意：前序遍历和后序遍历是无法确定唯一一个二叉树，这里假定优先往左子树插入
      *
      * @param preorder
      * @param postorder

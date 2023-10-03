@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/12/6 10:45
  * @Author zsy
- * @Description 快乐数 类比Problem141、Problem142、Problem160、Offer52 各种数类比Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1175、Problem1201、Problem1291、Offer10、Offer49
+ * @Description 快乐数 类比Problem258 类比Problem141、Problem142、Problem160、Offer52 各种数类比Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1175、Problem1201、Problem1291、Offer10、Offer49
  * 编写一个算法来判断一个数 n 是不是快乐数。
  * 「快乐数」定义为：
  * 对于一个正整数，每一次将该数替换为它每个位置上的数字的平方和。

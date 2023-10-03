@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/9/1 9:19
  * @Author zsy
- * @Description 不同的二叉搜索树 II 二叉搜索树类比Problem96、Problem98、Problem99、Problem230、Offer33、Offer36 分治法类比Problem105、Problem106、Problem108、Problem109、Problem255、Problem395、Problem449、Problem617、Problem654、Problem889、Problem1008、Offer7、Offer33
+ * @Description 不同的二叉搜索树 II 二叉搜索树类比Problem96、Problem98、Problem99、Problem230、Offer33、Offer36 分治法类比Problem105、Problem106、Problem108、Problem109、Problem241、Problem255、Problem395、Problem449、Problem617、Problem654、Problem889、Problem1008、Offer7、Offer33
  * 给你一个整数 n ，请你生成并返回所有由 n 个节点组成且节点值从 1 到 n 互不相同的不同 二叉搜索树 。
  * 可以按 任意顺序 返回答案。
  * <p>
@@ -45,7 +45,7 @@ public class Problem95 {
 
     /**
      * 分治法
-     * 确定1-n中哪个节点作为根节点，递归得到左子树集合和右子树集合，分别赋值为当前根节点的左右子树
+     * [1,n]中找一个数作为根节点，以当前根节点分别往左右子树找不同的二叉搜索树集合
      * 时间复杂度O(n*Cn)，空间复杂度O(n*Cn) (Cn为第n个卡特兰数)
      *
      * @param n
@@ -76,11 +76,11 @@ public class Problem95 {
 
         List<TreeNode> list = new ArrayList<>();
 
-        //[start,end]选择一个数作为根节点
+        //[start,end]中找一个数作为根节点，以当前根节点分别往左右子树找不同的二叉搜索树集合
         for (int i = left; i <= right; i++) {
-            //[start,i-1]作为左子树集合
+            //[start,i-1]作为左子树的不同的二叉搜索树集合
             List<TreeNode> leftNodes = dfs(left, i - 1);
-            //[i+1,end]作为右子树集合
+            //[i+1,end]作为右子树的不同的二叉搜索树集合
             List<TreeNode> rightNodes = dfs(i + 1, right);
 
             for (TreeNode leftNode : leftNodes) {

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/6/23 8:39
  * @Author zsy
- * @Description 分割回文串 回文类比Problem5、Problem9、Problem125、Problem132、Problem214、Problem234、Problem409、Problem516、Problem647、Problem680、Problem1312 动态规划预处理类比Problem140
+ * @Description 分割回文串 回文类比Problem5、Problem9、Problem125、Problem132、Problem214、Problem234、Problem266、Problem267、Problem409、Problem516、Problem647、Problem680、Problem1312 动态规划预处理类比Problem140
  * 给你一个字符串 s，请你将 s 分割成一些子串，使每个子串都是 回文串 。
  * 返回 s 所有可能的分割方案。
  * 回文串 是正着读和反着读都一样的字符串。

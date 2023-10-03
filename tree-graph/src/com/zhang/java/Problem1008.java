@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * @Date 2022/9/15 10:09
  * @Author zsy
- * @Description 前序遍历构造二叉搜索树 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem255、Problem395、Problem449、Problem617、Problem654、Problem889、Offer7、Offer33
+ * @Description 前序遍历构造二叉搜索树 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem241、Problem255、Problem395、Problem449、Problem617、Problem654、Problem889、Offer7、Offer33
  * 给定一个整数数组，它表示BST(即 二叉搜索树 )的 先序遍历 ，构造树并返回其根。
  * 保证 对于给定的测试用例，总是有可能找到具有给定需求的二叉搜索树。
  * 二叉搜索树 是一棵二叉树，其中每个节点，

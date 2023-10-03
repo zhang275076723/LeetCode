@@ -92,7 +92,7 @@ public class Problem685 {
         int[] edge1 = list.get(0);
         int[] edge2 = list.get(1);
 
-        //优先删除edge2，判断删除edge2，有向图是否存在有向环
+        //优先删除靠后的边edge2，判断删除edge2，有向图是否存在有向环
         for (int i = 0; i < edges.length; i++) {
             //当前边是要删除的边，则直接进行下次循环
             if (edges[i] == edge2) {

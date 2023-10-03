@@ -50,7 +50,7 @@ public class Problem1785 {
         //使nums元素之和等于goal所需要添加的元素之和绝对值
         long abs = Math.abs(sum - goal);
 
-        //abs能倍limit整除，不需要额外加1
+        //abs能整除limit，不需要额外加1
         if (abs % limit == 0) {
             return (int) (abs / limit);
         } else {
