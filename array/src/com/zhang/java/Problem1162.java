@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2023/2/14 08:28
  * @Author zsy
- * @Description 地图分析 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1254、Problem1905、Offer12
+ * @Description 地图分析 类比Problem310 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1254、Problem1905、Offer12
  * 你现在手里有一份大小为 n x n 的 网格 grid，上面的每个 单元格 都用 0 和 1 标记好了。
  * 其中 0 代表海洋，1 代表陆地。
  * 请你找出一个海洋单元格，这个海洋单元格到离它最近的陆地单元格的距离是最大的，并返回该距离。

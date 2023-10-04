@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2022/5/13 9:06
  * @Author zsy
- * @Description 课程表 华为机试题 拓扑排序类比Problem210、Problem329、IsCircleDependency 图类比Problem133、Problem210、Problem329、Problem399、Problem785、Problem863
+ * @Description 课程表 华为机试题 拓扑排序类比Problem210、Problem310、Problem329、IsCircleDependency 图类比Problem133、Problem210、Problem261、Problem277、Problem310、Problem323、Problem329、Problem399、Problem574、Problem684、Problem685、Problem765、Problem785、Problem797、Problem863
  * 你这个学期必须选修 numCourses 门课程，记为 0 到 numCourses - 1 。
  * 在选修某些课程之前需要一些先修课程。
  * 先修课程按数组 prerequisites 给出，其中 prerequisites[i] = [ai, bi] ，
