@@ -51,17 +51,19 @@ public class Problem210 {
     }
 
     /**
-     * dfs，计算图的拓扑排序
-     * 本质：找出度为0的节点，出度为0的节点在拓扑排序中一定排在后面
-     * 拓扑排序：有向无环图所有顶点进行排序，使图中任意一对顶点u、v，边<u,v>在排序中u出现在v之前
-     * 时间复杂度O(m+n)，空间复杂度O(m+n)，m为课程数，n为先修课程的要求数
+     * dfs拓扑排序
+     * 核心思想：找出度为0的节点，出度为0的节点在拓扑排序中排在后面
+     * 拓扑排序：有向无环图所有顶点进行排序，图中u到v的边在排序中u出现在v之前
+     * 对未访问的节点dfs，标记未访问的节点为0，正在访问的节点为1，已经访问的节点为2，如果当前节点访问标记为1，
+     * 则说明图中存在环，不存在拓扑排序，当前节点访问结束，标记当前节点访问标记为2
+     * 时间复杂度O(m+n)，空间复杂度O(m+n) (m为课程数，n为先修课程的要求数)
      *
      * @param numCourses
      * @param prerequisites
      * @return
      */
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        //集合表示的邻接表
+        //邻接表
         List<List<Integer>> edges = new ArrayList<>();
         //访问数组，0-未访问，1-正在访问，2-已访问
         int[] visited = new int[numCourses];
@@ -95,17 +97,19 @@ public class Problem210 {
     }
 
     /**
-     * bfs，计算图的拓扑排序
-     * 本质：找入度为0的节点，入度为0的节点在拓扑排序中一定排在前面
-     * 拓扑排序：有向无环图所有顶点进行排序，使图中任意一对顶点u、v，边<u,v>在排序中u出现在v之前
-     * 时间复杂度O(m+n)，空间复杂度O(m+n)，m为课程数，n为先修课程的要求数
+     * bfs拓扑排序
+     * 核心思想：找入度为0的节点，入度为0的节点在拓扑排序中排在前面
+     * 拓扑排序：有向无环图所有顶点进行排序，图中u到v的边在排序中u出现在v之前
+     * 图中入度为0的节点入队，队列中节点出队，当前节点指向的节点的入度减1，如果存在新的入度为0的节点，则新节点入队，
+     * 判断是否能够遍历到所有的节点，如果能遍历到所有的节点，则存在拓扑排序；否则不存在拓扑排序
+     * 时间复杂度O(m+n)，空间复杂度O(m+n) (m为课程数，n为先修课程的要求数)
      *
      * @param numCourses
      * @param prerequisites
      * @return
      */
     public int[] findOrder2(int numCourses, int[][] prerequisites) {
-        //集合表示的邻接表
+        //邻接表
         List<List<Integer>> edges = new ArrayList<>();
         //入度数组
         int[] inDegree = new int[numCourses];
@@ -148,7 +152,7 @@ public class Problem210 {
             }
         }
 
-        //能够访问到所有的入度为0的顶点，则存在拓扑排序
+        //能遍历到所有的节点，则存在拓扑排序；否则不存在拓扑排序
         return index == numCourses ? result : new int[0];
     }
 
