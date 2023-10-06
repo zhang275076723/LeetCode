@@ -21,12 +21,12 @@ import java.util.Queue;
  */
 public class IsCircleDependency {
     /**
-     * dfs中是否有环，是否可以完成所有课程
+     * dfs图中是否有环标志位
      */
     private boolean hasCircle = false;
 
     /**
-     * 拓扑排序数组指针，dfs需要倒序
+     * dfs拓扑排序数组指针，dfs需要倒序
      */
     private int index;
 
@@ -62,7 +62,7 @@ public class IsCircleDependency {
 
         //拓扑排序数组
         int[] result = new int[n];
-        //拓扑排序数组指针，dfs需要倒序
+        //dfs拓扑排序数组指针，dfs需要倒序
         index = n - 1;
 
         for (int i = 0; i < n; i++) {
@@ -84,8 +84,8 @@ public class IsCircleDependency {
      * bfs拓扑排序
      * 核心思想：找入度为0的节点，入度为0的节点在拓扑排序中排在前面
      * 拓扑排序：有向无环图所有顶点进行排序，图中u到v的边在排序中u出现在v之前
-     * 图中入度为0的节点入队，队列中节点出队，当前节点指向的节点的入度减1，如果存在新的入度为0的节点，则新节点入队，
-     * 判断是否能够遍历到所有的节点，如果能遍历到所有的节点，则存在拓扑排序；否则不存在拓扑排序
+     * 图中入度为0的节点入队，队列中节点出队，当前节点的邻接节点的入度减1，邻接节点入度为0的节点入队，
+     * 遍历结束判断是否能够遍历到所有的节点，如果能遍历到所有的节点，则存在拓扑排序；否则不存在拓扑排序
      * 时间复杂度O(m+n)，空间复杂度O(m^2) (m为顶点数，n为依赖数组的要求数，如果使用集合替代临界矩阵，空间复杂度O(m+n))
      *
      * @param n
@@ -107,7 +107,7 @@ public class IsCircleDependency {
             inDegree[dependency[i][1]]++;
         }
 
-        //存放入度为0的队列
+        //存放入度为0节点的队列
         Queue<Integer> queue = new LinkedList<>();
 
         for (int i = 0; i < n; i++) {

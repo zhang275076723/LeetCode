@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2022/5/13 9:06
  * @Author zsy
- * @Description 课程表 华为机试题 拓扑排序类比Problem210、Problem269、Problem310、Problem329、Problem444、Problem2360、IsCircleDependency 图类比Problem133、Problem210、Problem261、Problem269、Problem277、Problem310、Problem323、Problem329、Problem332、Problem399、Problem444、Problem574、Problem684、Problem685、Problem753、Problem765、Problem785、Problem797、Problem834、Problem863
+ * @Description 课程表 华为机试题 拓扑排序类比Problem210、Problem269、Problem310、Problem329、Problem444、Problem2127、Problem2360、IsCircleDependency 图类比Problem133、Problem210、Problem261、Problem269、Problem277、Problem310、Problem323、Problem329、Problem332、Problem399、Problem444、Problem574、Problem684、Problem685、Problem753、Problem765、Problem785、Problem797、Problem834、Problem863
  * 你这个学期必须选修 numCourses 门课程，记为 0 到 numCourses - 1 。
  * 在选修某些课程之前需要一些先修课程。
  * 先修课程按数组 prerequisites 给出，其中 prerequisites[i] = [ai, bi] ，
@@ -32,7 +32,7 @@ import java.util.Queue;
  */
 public class Problem207 {
     /**
-     * dfs中是否有环，是否可以完成所有课程
+     * dfs图中是否有环标志位
      */
     private boolean hasCircle = false;
 
@@ -85,8 +85,8 @@ public class Problem207 {
      * bfs拓扑排序
      * 核心思想：找入度为0的节点，入度为0的节点在拓扑排序中排在前面
      * 拓扑排序：有向无环图所有顶点进行排序，图中u到v的边在排序中u出现在v之前
-     * 图中入度为0的节点入队，队列中节点出队，当前节点指向的节点的入度减1，如果存在新的入度为0的节点，则新节点入队，
-     * 判断是否能够遍历到所有的节点，如果能遍历到所有的节点，则存在拓扑排序；否则不存在拓扑排序
+     * 图中入度为0的节点入队，队列中节点出队，当前节点的邻接节点的入度减1，邻接节点入度为0的节点入队，
+     * 遍历结束判断是否能够遍历到所有的节点，如果能遍历到所有的节点，则存在拓扑排序；否则不存在拓扑排序
      * 时间复杂度O(m+n)，空间复杂度O(m^2) (m为课程数，n为先修课程的要求数，如果使用邻接表，空间复杂度O(m+n))
      *
      * @param numCourses
@@ -104,7 +104,7 @@ public class Problem207 {
             inDegree[prerequisites[i][0]]++;
         }
 
-        //存放入度为0的队列
+        //存放入度为0节点的队列
         Queue<Integer> queue = new LinkedList<>();
         //统计能够访问到的入度为0顶点个数
         int count = 0;
