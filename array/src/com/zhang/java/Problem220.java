@@ -1,5 +1,6 @@
 package com.zhang.java;
 
+import java.util.Comparator;
 import java.util.TreeSet;
 
 /**
@@ -47,7 +48,13 @@ public class Problem220 {
         //TreeSet中才有ceiling()、floor()，TreeSet添加、删除、查找的时间复杂度都为O(logn)
         //ceiling(x)：返回set中大于等于x的最小元素，如果不存在返回null
         //floor(x)：返回set中小于等于x的最大元素，如果不存在返回null
-        TreeSet<Integer> set = new TreeSet<>();
+        //由小到大排序
+        TreeSet<Integer> set = new TreeSet<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer a, Integer b) {
+                return a - b;
+            }
+        });
         int left = 0;
         int right = 0;
 
