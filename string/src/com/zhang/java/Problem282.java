@@ -79,18 +79,18 @@ public class Problem282 {
                 backtrack(i + 1, curNum, curNum, num, target, sb, list);
                 sb.delete(len, sb.length());
             } else {
-                //加
+                //加，前驱pre为curNum
                 int len = sb.length();
                 sb.append('+').append(curNum);
                 backtrack(i + 1, curNum, curResult + curNum, num, target, sb, list);
                 sb.delete(len, sb.length());
 
-                //减
+                //减，前驱pre为-curNum
                 sb.append('-').append(curNum);
                 backtrack(i + 1, -curNum, curResult - curNum, num, target, sb, list);
                 sb.delete(len, sb.length());
 
-                //乘
+                //乘，前驱pre为pre*curNum
                 sb.append('*').append(curNum);
                 //考虑到运算符的优先级，先减去上一次运算结果，乘法运算符优先级高，需要先计算pre*curNum
                 //例如：num=123，当前遍历到3，pre为-2，sb为1-2，此时要*3，需要先计算2*3，再减去2*3的结果6
