@@ -41,14 +41,14 @@ public class Problem491 {
 
         List<List<Integer>> result = new ArrayList<>();
 
-        //pre表示list中最后一个选择的元素，初始化list中最后一个选择的元素为int最小值，使添加nums[0]满足递增子序列
-        //当前元素和pre不相等，当前元素才能不添加
+        //last表示list集合中最后一个选择的元素，初始化list中最后一个选择的元素为int最小值，使添加nums[0]满足递增子序列
+        //当前元素和last不相等，当前元素才能不添加
         backtrack(0, nums, Integer.MIN_VALUE, new ArrayList<>(), result);
 
         return result;
     }
 
-    private void backtrack(int t, int[] nums, int pre, List<Integer> list, List<List<Integer>> result) {
+    private void backtrack(int t, int[] nums, int last, List<Integer> list, List<List<Integer>> result) {
         if (t == nums.length) {
             //递增子序列中至少有2个元素
             if (list.size() >= 2) {
@@ -57,13 +57,13 @@ public class Problem491 {
             return;
         }
 
-        //当前元素和pre不相等，nums[t]才能不添加
-        if (nums[t] != pre) {
-            backtrack(t + 1, nums, pre, list, result);
+        //当前元素和last不相等，nums[t]才能不添加
+        if (nums[t] != last) {
+            backtrack(t + 1, nums, last, list, result);
         }
 
-        //pre大于nums[t]，则构不成递增子序列，直接返回
-        if (pre > nums[t]) {
+        //last大于nums[t]，则添加nums[t]构不成递增子序列，直接返回
+        if (last > nums[t]) {
             return;
         }
 

@@ -49,7 +49,7 @@ public class Problem282 {
         List<String> list = new ArrayList<>();
 
         //pre：上一次运算结果(考虑运算符的优先级)，result：当前运算结果(即num[0]-num[t]运算结果)，使用long避免int溢出
-        //加减法下一个backtrack，pre为当前数字；乘法下一个backtrack，pre为pre*当前数字
+        //加减法的下一个backtrack，pre为当前数字；乘法的下一个backtrack，pre为pre*当前数字
         backtrack(0, 0, 0, num, target, new StringBuilder(), list);
 
         return list;
