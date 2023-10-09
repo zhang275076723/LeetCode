@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/4 10:27
  * @Author zsy
- * @Description 除法求值 图类比Problem133、Problem207、Problem210、Problem329、Problem785、Problem863 图求最短路径类比Dijkstra 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem952、Problem1254、Problem1627、Problem1905、Problem1998
+ * @Description 除法求值 图中最短路径类比Problem1462、Dijkstra 图类比Problem133、Problem207、Problem210、Problem329、Problem785、Problem863 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem952、Problem1254、Problem1627、Problem1905、Problem1998
  * 给你一个变量对数组 equations 和一个实数值数组 values 作为已知条件，
  * 其中 equations[i] = [Ai, Bi] 和 values[i] 共同表示等式 Ai / Bi = values[i] 。
  * 每个 Ai 或 Bi 是一个表示单个变量的字符串。
@@ -239,7 +239,7 @@ public class Problem399 {
             }
         }
 
-        //邻接矩阵表示的图
+        //邻接矩阵表示的图，edges[i][j]：节点i到节点j的最短路径长度，-1即不可达
         double[][] edges = buildGraph(equations, values, map);
         double[] result = new double[queries.size()];
 

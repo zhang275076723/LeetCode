@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2022/5/13 9:06
  * @Author zsy
- * @Description 课程表 华为机试题 拓扑排序类比Problem210、Problem269、Problem310、Problem329、Problem444、Problem1462、Problem2127、Problem2192、Problem2360、IsCircleDependency 图类比Problem133、Problem210、Problem261、Problem269、Problem277、Problem310、Problem323、Problem329、Problem332、Problem399、Problem444、Problem574、Problem684、Problem685、Problem753、Problem765、Problem785、Problem797、Problem834、Problem863
+ * @Description 课程表 华为机试题 课程表类比Problem210、Problem630、Problem1462 拓扑排序类比Problem210、Problem269、Problem310、Problem329、Problem444、Problem1462、Problem2127、Problem2192、Problem2360、IsCircleDependency 图类比Problem133、Problem210、Problem261、Problem269、Problem277、Problem310、Problem323、Problem329、Problem332、Problem399、Problem444、Problem574、Problem684、Problem685、Problem753、Problem765、Problem785、Problem797、Problem834、Problem863
  * 你这个学期必须选修 numCourses 门课程，记为 0 到 numCourses - 1 。
  * 在选修某些课程之前需要一些先修课程。
  * 先修课程按数组 prerequisites 给出，其中 prerequisites[i] = [ai, bi] ，
@@ -143,7 +143,7 @@ public class Problem207 {
         //当前顶点u正在访问
         visited[u] = 1;
 
-        //遍历u的邻接顶点v
+        //节点u的邻接顶点v
         for (int v = 0; v < edges[0].length; v++) {
             if (hasCircle) {
                 return;
