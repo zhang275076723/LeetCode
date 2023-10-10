@@ -57,7 +57,7 @@ public class Problem1462 {
      * dfs过程中，存在节点u到节点v的边，则dp[u][v]为true，节点u通过节点v作为中间节点还能到达哪些节点i，
      * 来更新dp[u][i]，即u->v->i
      * 时间复杂度O(numCourses^2+m+n)，空间复杂度O(numCourses^2+n) (n=prerequisites.length，m=queries.length)
-     * (dp数组的空间复杂度O(numCourses^2)，邻接表的空间复杂度O(n)，dfs栈的深度O(numCourses))
+     * (dp数组的空间复杂度O(numCourses^2)，邻接表的空间复杂度O(n)，dfs栈的深度为O(numCourses))
      *
      * @param numCourses
      * @param prerequisites
@@ -207,7 +207,7 @@ public class Problem1462 {
 
         visited[u] = true;
 
-        //节点u的邻接节点v
+        //遍历节点u的邻接节点v
         for (int v : edges.get(u)) {
             //当前节点u到邻接节点v可达
             dp[u][v] = true;

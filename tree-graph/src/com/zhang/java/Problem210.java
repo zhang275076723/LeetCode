@@ -52,11 +52,12 @@ public class Problem210 {
 
     /**
      * dfs拓扑排序
-     * 核心思想：拓扑排序能够保证如果存在u到v的边，则u在拓扑排序中出现在v之前
-     * 拓扑排序：有向无环图所有顶点进行排序，图中u到v的边在排序中u出现在v之前
+     * 核心思想：拓扑排序能够保证如果存在节点u到节点v的边，则节点u在拓扑排序中出现在节点v之前
+     * 拓扑排序：有向无环图所有节点进行排序，图中节点u到节点v的边在排序中节点u出现在节点v之前
      * 对未访问的节点dfs，标记未访问的节点为0，正在访问的节点为1，已经访问的节点为2，如果当前节点访问标记为1，
      * 则说明图中存在环，不存在拓扑排序，当前节点访问结束，标记当前节点访问标记为2
-     * 时间复杂度O(m+n)，空间复杂度O(m+n) (m为课程数，n为先修课程的要求数，如果使用邻接矩阵，空间复杂度O(m^2))
+     * 时间复杂度O(numCourses+m)，空间复杂度O(numCourses+m)
+     * (m为先修课程的要求数，即图中边的个数，如果使用邻接矩阵，空间复杂度O(numCourses^2))
      *
      * @param numCourses
      * @param prerequisites
@@ -82,14 +83,14 @@ public class Problem210 {
         index = numCourses - 1;
 
         for (int i = 0; i < numCourses; i++) {
+            //从未访问的节点开始dfs
+            if (visited[i] == 0) {
+                dfs(i, result, edges, visited);
+            }
+
             //有环说明不存在拓扑排序，返回空数组
             if (hasCircle) {
                 return new int[0];
-            }
-
-            //从未访问的顶点开始dfs
-            if (visited[i] == 0) {
-                dfs(i, result, edges, visited);
             }
         }
 
@@ -98,11 +99,12 @@ public class Problem210 {
 
     /**
      * bfs拓扑排序
-     * 核心思想：拓扑排序能够保证如果存在u到v的边，则u在拓扑排序中出现在v之前
-     * 拓扑排序：有向无环图所有顶点进行排序，图中u到v的边在排序中u出现在v之前
+     * 核心思想：拓扑排序能够保证如果存在节点u到节点v的边，则节点u在拓扑排序中出现在节点v之前
+     * 拓扑排序：有向无环图所有节点进行排序，图中节点u到节点v的边在排序中节点u出现在节点v之前
      * 图中入度为0的节点入队，队列中节点出队，当前节点的邻接节点的入度减1，邻接节点入度为0的节点入队，
      * 遍历结束判断是否能够遍历到所有的节点，如果能遍历到所有的节点，则存在拓扑排序；否则不存在拓扑排序
-     * 时间复杂度O(m+n)，空间复杂度O(m+n) (m为课程数，n为先修课程的要求数，如果使用邻接矩阵，空间复杂度O(m^2))
+     * 时间复杂度O(numCourses+m)，空间复杂度O(numCourses+m)
+     * (m为先修课程的要求数，即图中边的个数，如果使用邻接矩阵，空间复杂度O(numCourses^2))
      *
      * @param numCourses
      * @param prerequisites
@@ -141,11 +143,11 @@ public class Problem210 {
             result[index] = u;
             index++;
 
-            //遍历u的邻接顶点v
+            //遍历u的邻接节点v
             for (int v : edges.get(u)) {
                 inDegree[v]--;
 
-                //邻接顶点v的入度为0，则入队
+                //邻接节点v的入度为0，则入队
                 if (inDegree[v] == 0) {
                     queue.offer(v);
                 }
@@ -157,36 +159,33 @@ public class Problem210 {
     }
 
     private void dfs(int u, int[] result, List<List<Integer>> edges, int[] visited) {
-        if (hasCircle) {
+        //存在环，或者当前节点u已经访问，直接返回
+        if (hasCircle || visited[u] == 2) {
             return;
         }
 
-        //当前顶点u正在访问
+        //当前节点u正在访问，说明有环，不存在拓扑排序，直接返回
+        if (visited[u] == 1) {
+            hasCircle = true;
+            return;
+        }
+
+        //当前节点u正在访问
         visited[u] = 1;
 
-        //节点u的邻接节点v
+        //遍历节点u的邻接节点v
         for (int v : edges.get(u)) {
+            dfs(v, result, edges, visited);
+
             if (hasCircle) {
                 return;
-            }
-
-            //邻接顶点v没有访问
-            if (visited[v] == 0) {
-                dfs(v, result, edges, visited);
-            } else if (visited[v] == 1) {
-                //邻接顶点v正在访问，说明有环，不存在拓扑排序
-                hasCircle = true;
-                return;
-            } else if (visited[v] == 2) {
-                //邻接顶点v已经访问过，直接进行下次循环
-                continue;
             }
         }
 
         //拓扑排序数组赋值
         result[index] = u;
         index--;
-        //当前顶点u已经访问
+        //当前节点u已经访问
         visited[u] = 2;
     }
 }

@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2022/5/13 9:06
  * @Author zsy
- * @Description 课程表 华为机试题 课程表类比Problem210、Problem630、Problem1462 拓扑排序类比Problem210、Problem269、Problem310、Problem329、Problem444、Problem1462、Problem2127、Problem2192、Problem2360、IsCircleDependency 图类比Problem133、Problem210、Problem261、Problem269、Problem277、Problem310、Problem323、Problem329、Problem332、Problem399、Problem444、Problem574、Problem684、Problem685、Problem753、Problem765、Problem785、Problem797、Problem834、Problem863
+ * @Description 课程表 华为机试题 课程表类比Problem210、Problem630、Problem1462 拓扑排序类比Problem210、Problem269、Problem310、Problem329、Problem444、Problem802、Problem1462、Problem1976、Problem2127、Problem2192、Problem2360、IsCircleDependency 图类比Problem133、Problem210、Problem261、Problem269、Problem277、Problem310、Problem323、Problem329、Problem332、Problem399、Problem444、Problem574、Problem684、Problem685、Problem753、Problem765、Problem785、Problem797、Problem834、Problem863
  * 你这个学期必须选修 numCourses 门课程，记为 0 到 numCourses - 1 。
  * 在选修某些课程之前需要一些先修课程。
  * 先修课程按数组 prerequisites 给出，其中 prerequisites[i] = [ai, bi] ，
@@ -44,13 +44,13 @@ public class Problem207 {
 
     /**
      * dfs拓扑排序
-     * 核心思想：拓扑排序能够保证如果存在u到v的边，则u在拓扑排序中出现在v之前
-     * 拓扑排序：有向无环图所有顶点进行排序，图中u到v的边在排序中u出现在v之前
+     * 核心思想：拓扑排序能够保证如果存在节点u到节点v的边，则节点u在拓扑排序中出现在节点v之前
+     * 拓扑排序：有向无环图所有节点进行排序，图中节点u到节点v的边在排序中节点u出现在节点v之前
      * 对未访问的节点dfs，标记未访问的节点为0，正在访问的节点为1，已经访问的节点为2，如果当前节点访问标记为1，
      * 则说明图中存在环，不存在拓扑排序，当前节点访问结束，标记当前节点访问标记为2
-     * 时间复杂度O(m+n)，空间复杂度O(m^2) (m为课程数，n为先修课程的要求数，如果使用邻接表，空间复杂度O(m+n))
+     * 时间复杂度O(numCourses+m)，空间复杂度O(numCourses^2)
+     * (m为先修课程的要求数，即图中边的个数，如果使用邻接表，空间复杂度O(numCourses+m))
      *
-     * @param numCourses
      * @param prerequisites
      * @return
      */
@@ -65,7 +65,7 @@ public class Problem207 {
         }
 
         for (int i = 0; i < numCourses; i++) {
-            //从未访问的顶点开始dfs
+            //从未访问的节点开始dfs
             if (visited[i] == 0) {
                 dfs(i, edges, visited);
             }
@@ -81,11 +81,12 @@ public class Problem207 {
 
     /**
      * bfs拓扑排序
-     * 核心思想：拓扑排序能够保证如果存在u到v的边，则u在拓扑排序中出现在v之前
-     * 拓扑排序：有向无环图所有顶点进行排序，图中u到v的边在排序中u出现在v之前
+     * 核心思想：拓扑排序能够保证如果存在节点u到节点v的边，则节点u在拓扑排序中出现在节点v之前
+     * 拓扑排序：有向无环图所有节点进行排序，图中节点u到节点v的边在排序中节点u出现在节点v之前
      * 图中入度为0的节点入队，队列中节点出队，当前节点的邻接节点的入度减1，邻接节点入度为0的节点入队，
      * 遍历结束判断是否能够遍历到所有的节点，如果能遍历到所有的节点，则存在拓扑排序；否则不存在拓扑排序
-     * 时间复杂度O(m+n)，空间复杂度O(m^2) (m为课程数，n为先修课程的要求数，如果使用邻接表，空间复杂度O(m+n))
+     * 时间复杂度O(numCourses+m)，空间复杂度O(numCourses^2)
+     * (m为先修课程的要求数，即图中边的个数，如果使用邻接表，空间复杂度O(numCourses+m))
      *
      * @param numCourses
      * @param prerequisites
@@ -104,7 +105,7 @@ public class Problem207 {
 
         //存放入度为0节点的队列
         Queue<Integer> queue = new LinkedList<>();
-        //统计能够访问到的入度为0顶点个数
+        //统计能够访问到的入度为0节点个数
         int count = 0;
 
         for (int i = 0; i < numCourses; i++) {
@@ -117,13 +118,13 @@ public class Problem207 {
             int u = queue.poll();
             count++;
 
-            //遍历u的邻接顶点v
+            //遍历u的邻接节点v
             for (int v = 0; v < edges[0].length; v++) {
                 if (edges[u][v] != 0) {
                     //v入度减1
                     inDegree[v]--;
 
-                    //邻接顶点v的入度为0，则入队
+                    //邻接节点v的入度为0，则入队
                     if (inDegree[v] == 0) {
                         queue.offer(v);
                     }
@@ -136,36 +137,33 @@ public class Problem207 {
     }
 
     private void dfs(int u, int[][] edges, int[] visited) {
-        if (hasCircle) {
+        //存在环，或者当前节点u已经访问，直接返回
+        if (hasCircle || visited[u] == 2) {
             return;
         }
 
-        //当前顶点u正在访问
+        //当前节点u正在访问，说明有环，不存在拓扑排序，直接返回
+        if (visited[u] == 1) {
+            hasCircle = true;
+            return;
+        }
+
+        //当前节点u正在访问
         visited[u] = 1;
 
-        //节点u的邻接顶点v
-        for (int v = 0; v < edges[0].length; v++) {
+        //遍历节点u的邻接节点v
+        for (int v = 0; v < edges.length; v++) {
+            //找节点u未被访问的邻接节点v
+            if (edges[u][v] != 0) {
+                dfs(v, edges, visited);
+            }
+
             if (hasCircle) {
                 return;
             }
-
-            //找u未被访问的邻接顶点v
-            if (edges[u][v] != 0) {
-                //邻接顶点v没有访问
-                if (visited[v] == 0) {
-                    dfs(v, edges, visited);
-                } else if (visited[v] == 1) {
-                    //邻接顶点v正在访问，说明有环，不存在拓扑排序
-                    hasCircle = true;
-                    return;
-                } else if (visited[v] == 2) {
-                    //邻接顶点v已经访问过，直接进行下次循环
-                    continue;
-                }
-            }
         }
 
-        //当前顶点u已经访问
+        //当前节点u已经访问
         visited[u] = 2;
     }
 }

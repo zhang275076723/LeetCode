@@ -97,6 +97,7 @@ public class Problem797 {
 
         list.add(u);
 
+        //遍历节点u的邻接节点graph[u][i]
         for (int i = 0; i < graph[u].length; i++) {
             dfs(graph[u][i], v, graph, list, result);
         }
