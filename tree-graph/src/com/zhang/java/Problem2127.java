@@ -56,8 +56,9 @@ public class Problem2127 {
     }
 
     /**
-     * bfs拓扑排序+动态规划计算以当前节点作为结尾节点的最长链的节点之和+dfs/bfs计算环中节点的个数
+     * bfs拓扑排序+动态规划+dfs/bfs计算环中节点的个数
      * dp[i]：以节点i作为结尾节点的最长链的节点之和
+     * dp[i] = max(dp[i],dp[j]+1) (存在节点j到节点i的边)
      * 基环树：n个节点n条边的无向连通图，基环树有且仅有一个环
      * 节点1喜欢节点2，则存在一条节点1到节点2的边，根据基环树中环的大小，分为以下2种情况：
      * 1、基环树中大小为2的环，则该基环树能组成圆桌的最大员工个数为以环上节点作为结尾节点的最长链的节点个数之和，即这两个最长链节点个数之和
@@ -79,6 +80,7 @@ public class Problem2127 {
 
         for (int i = 0; i < n; i++) {
             inDegree[favorite[i]]++;
+            //dp初始化
             dp[i] = 1;
         }
 
@@ -122,11 +124,11 @@ public class Problem2127 {
                 int count = dfs(i, favorite, visited, list);
 //                int count = bfs(i, favorite, visited, list);
 
-                //情况1
+                //情况1，环中只有2个节点
                 if (count == 2) {
                     count1 = count1 + dp[list.get(0)] + dp[list.get(1)];
                 } else if (count > 2) {
-                    //情况2
+                    //情况2，环中节点个数超过2个
                     count2 = Math.max(count2, count);
                 }
             }

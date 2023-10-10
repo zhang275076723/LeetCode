@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2023/2/12 18:22
  * @Author zsy
- * @Description Dijkstra求单元最短路径 图求最短路径类比Problem399
+ * @Description Dijkstra求单元最短路径 图中最短路径类比Problem399、Problem1462、Problem1976
  */
 public class Dijkstra {
     public static void main(String[] args) {
@@ -20,62 +20,57 @@ public class Dijkstra {
                 {14, -1, -1, -1, 8, 9, 0}
         };
         int u = 3;
-        int[] path = dijkstra.getClosestPath(edges, u);
-        System.out.println(Arrays.toString(path));
+        int[] distance = dijkstra.getClosestPath(u, edges);
+        System.out.println(Arrays.toString(distance));
     }
 
     /**
-     * Dijkstra用于求单元最短路径，不适合权值为负的图
+     * Dijkstra求单元最短路径，不适合权值为负的图
+     * 求节点u到其他节点的最短路径长度
      * 时间复杂度O(n^2)，空间复杂度O(n)
      *
-     * @param edges 带权图
      * @param u     起始节点u
-     * @return 节点u到其他节点的最短路径数组
+     * @param edges 带权图
+     * @return
      */
-    public int[] getClosestPath(int[][] edges, int u) {
-        //节点u到其他节点的最短路径数组
-        int[] path = new int[edges.length];
-        //节点访问数组
+    public int[] getClosestPath(int u, int[][] edges) {
+        //节点u到其他节点的最短路径长度数组
+        int[] distance = new int[edges.length];
+        //节点访问数组，visited[v]为true，表示已经得到节点u到节点v的最短路径长度
         boolean[] visited = new boolean[edges.length];
 
-        //节点u直接能够到达的节点加入path，不能到达的节点赋值int最大值
+        //distance数组初始化，初始化为int最大值表示节点u无法到达节点i
         for (int i = 0; i < edges.length; i++) {
-            if (edges[u][i] != -1) {
-                path[i] = edges[u][i];
-            } else {
-                path[i] = Integer.MAX_VALUE;
-            }
+            distance[i] = Integer.MAX_VALUE;
         }
 
-        //u节点已经访问
-        visited[u] = true;
+        //节点u到节点u的最短路径长度为0
+        distance[u] = 0;
 
-        //每次选择path数组中未访问的最短路径节点v，通过节点v更新节点u能够达到的其他节点最短路径
-        for (int i = 0; i < edges.length - 1; i++) {
-            //初始化u到path数组中未访问的最短路径节点v
+        //每次从还未得到节点u到其他节点的最短路径长度节点中选择最短路径长度节点v，
+        //节点u通过节点v作为中间节点更新节点u能够达到其他节点的最短路径长度
+        for (int i = 0; i < edges.length; i++) {
+            //初始化distance数组中本次选择的最短路径长度节点v
             int v = -1;
-            //初始化u到v的最短路径minPath
-            int minPath = Integer.MAX_VALUE;
 
-            //找path数组中未访问的从u到v的最短路径节点v
-            for (int j = 0; j < path.length; j++) {
-                if (!visited[j] && path[j] < minPath) {
+            //从还未得到节点u到其他节点的最短路径节点中选择最短路径节点v
+            for (int j = 0; j < edges.length; j++) {
+                if (!visited[j] && (v == -1 || distance[j] < distance[v])) {
                     v = j;
-                    minPath = path[j];
                 }
             }
 
-            //v节点已经访问
+            //节点v已访问，表示已经得到节点u到节点v的最短路径长度
             visited[v] = true;
 
-            //通过节点v更新节点u能够达到未访问节点的最短路径
+            //节点u通过节点v作为中间节点更新节点u能够达到其他节点的最短路径长度
             for (int j = 0; j < edges.length; j++) {
                 if (!visited[j] && edges[v][j] != -1) {
-                    path[j] = Math.min(path[j], path[v] + edges[v][j]);
+                    distance[j] = Math.min(distance[j], distance[v] + edges[v][j]);
                 }
             }
         }
 
-        return path;
+        return distance;
     }
 }

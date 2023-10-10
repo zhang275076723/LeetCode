@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2023/10/20 08:10
  * @Author zsy
- * @Description 课程表 IV 课程表类比Problem207、Problem210、Problem630 图中最短路径类比Problem399、Dijkstra 拓扑排序类比 图类比
+ * @Description 课程表 IV 课程表类比Problem207、Problem210、Problem630 图中最短路径类比Problem399、Problem1976、Dijkstra 拓扑排序类比 图类比
  * 你总共需要上 numCourses 门课，课程编号依次为 0 到 numCourses-1 。
  * 你会得到一个数组 prerequisite ，其中 prerequisites[i] = [ai, bi] 表示如果你想选 bi 课程，你 必须 先选 ai 课程。
  * 有的课会有直接的先修课程，比如如果想上课程 1 ，你必须先上课程 0 ，那么会以 [0,1] 数对的形式给出先修课程数对。
@@ -99,7 +99,7 @@ public class Problem1462 {
      * bfs拓扑排序+动态规划
      * dp[i][j]：节点i到节点j是否可达
      * dp[i][j] = dp[i][j] || dp[i][k] (bfs拓扑排序中，存在节点k到节点j的边)
-     * 队列中出队入度为0的节点u，存在节点u到节点v的边，则dp[u][v]为true，哪些节点i通过节点u作为中间节点还能到达节点v，
+     * 图中入度为0的节点入队，队列中节点出队，存在节点u到节点v的边，则dp[u][v]为true，哪些节点i通过节点u作为中间节点还能到达节点v，
      * 来更新dp[i][v]，即i->u->v
      * 时间复杂度O(numCourses^3+m+n)，空间复杂度O(numCourses^2+n) (n=prerequisites.length，m=queries.length)
      * (dp数组的空间复杂度O(numCourses^2)，邻接表的空间复杂度O(n))
