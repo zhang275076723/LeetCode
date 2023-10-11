@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2022/5/13 9:06
  * @Author zsy
- * @Description 课程表 华为机试题 课程表类比Problem210、Problem630、Problem1462 拓扑排序类比Problem210、Problem269、Problem310、Problem329、Problem444、Problem802、Problem1462、Problem1976、Problem2127、Problem2192、Problem2360、IsCircleDependency 图类比Problem133、Problem210、Problem261、Problem269、Problem277、Problem310、Problem323、Problem329、Problem332、Problem399、Problem444、Problem574、Problem684、Problem685、Problem753、Problem765、Problem785、Problem797、Problem834、Problem863
+ * @Description 课程表 华为机试题 课程表类比Problem210、Problem630、Problem1462 拓扑排序类比Problem210、Problem269、Problem310、Problem329、Problem444、Problem802、Problem1136、Problem1203、Problem1462、Problem1976、Problem2127、Problem2192、Problem2360、IsCircleDependency 图类比Problem133、Problem210、Problem261、Problem269、Problem277、Problem310、Problem323、Problem329、Problem332、Problem399、Problem444、Problem574、Problem684、Problem685、Problem753、Problem765、Problem785、Problem797、Problem834、Problem863
  * 你这个学期必须选修 numCourses 门课程，记为 0 到 numCourses - 1 。
  * 在选修某些课程之前需要一些先修课程。
  * 先修课程按数组 prerequisites 给出，其中 prerequisites[i] = [ai, bi] ，
@@ -30,7 +30,7 @@ import java.util.Queue;
  */
 public class Problem207 {
     /**
-     * dfs图中是否有环标志位
+     * dfs拓扑排序图中是否有环标志位
      */
     private boolean hasCircle = false;
 
@@ -118,7 +118,7 @@ public class Problem207 {
             int u = queue.poll();
             count++;
 
-            //遍历u的邻接节点v
+            //遍历节点u的邻接节点v
             for (int v = 0; v < edges[0].length; v++) {
                 if (edges[u][v] != 0) {
                     //v入度减1
@@ -137,7 +137,7 @@ public class Problem207 {
     }
 
     private void dfs(int u, int[][] edges, int[] visited) {
-        //存在环，或者当前节点u已经访问，直接返回
+        //已经存在环，或者当前节点u已经访问，直接返回
         if (hasCircle || visited[u] == 2) {
             return;
         }
@@ -153,7 +153,6 @@ public class Problem207 {
 
         //遍历节点u的邻接节点v
         for (int v = 0; v < edges.length; v++) {
-            //找节点u未被访问的邻接节点v
             if (edges[u][v] != 0) {
                 dfs(v, edges, visited);
             }

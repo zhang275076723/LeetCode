@@ -31,7 +31,7 @@ import java.util.Set;
  */
 public class Problem269 {
     /**
-     * dfs图中是否有环标志位
+     * dfs拓扑排序图中是否有环标志位
      */
     private boolean hasCircle = false;
 

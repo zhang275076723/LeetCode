@@ -33,7 +33,7 @@ import java.util.*;
  */
 public class Problem210 {
     /**
-     * dfs图中是否有环标志位
+     * dfs拓扑排序图中是否有环标志位
      */
     private boolean hasCircle = false;
 
@@ -143,7 +143,7 @@ public class Problem210 {
             result[index] = u;
             index++;
 
-            //遍历u的邻接节点v
+            //遍历节点u的邻接节点v
             for (int v : edges.get(u)) {
                 inDegree[v]--;
 
@@ -159,7 +159,7 @@ public class Problem210 {
     }
 
     private void dfs(int u, int[] result, List<List<Integer>> edges, int[] visited) {
-        //存在环，或者当前节点u已经访问，直接返回
+        //已经存在环，或者当前节点u已经访问，直接返回
         if (hasCircle || visited[u] == 2) {
             return;
         }
@@ -182,10 +182,10 @@ public class Problem210 {
             }
         }
 
-        //拓扑排序数组赋值
-        result[index] = u;
-        index--;
         //当前节点u已经访问
         visited[u] = 2;
+        //当前节点u倒序插入拓扑排序数组中
+        result[index] = u;
+        index--;
     }
 }
