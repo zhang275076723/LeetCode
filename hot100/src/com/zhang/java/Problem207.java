@@ -105,7 +105,7 @@ public class Problem207 {
 
         //存放入度为0节点的队列
         Queue<Integer> queue = new LinkedList<>();
-        //统计能够访问到的入度为0节点个数
+        //bfs能够遍历到的入度为0节点个数
         int count = 0;
 
         for (int i = 0; i < numCourses; i++) {

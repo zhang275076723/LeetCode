@@ -57,7 +57,7 @@ public class Problem2360 {
         Queue<Integer> queue = new LinkedList<>();
         //节点访问数组，bfs拓扑排序之后用于判断哪些节点是环中节点
         boolean[] visited = new boolean[n];
-        //bfs遍历到的节点个数
+        //bfs能够遍历到的入度为0节点个数
         int count = 0;
 
         for (int i = 0; i < n; i++) {
