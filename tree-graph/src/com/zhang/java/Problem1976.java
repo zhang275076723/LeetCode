@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2023/10/21 08:00
  * @Author zsy
- * @Description 到达目的地的方案数 图中最短路径类比Problem399、Problem1462、Dijkstra 拓扑排序类比 图类比
+ * @Description 到达目的地的方案数 图中最短路径类比Problem399、Problem1462、Problem1786、Dijkstra 拓扑排序类比 图类比
  * 你在一个城市里，城市由 n 个路口组成，路口编号为 0 到 n - 1 ，某些路口之间有 双向 道路。
  * 输入保证你可以从任意路口出发到达其他任意路口，且任意两个路口之间最多有一条路。
  * 给你一个整数 n 和二维整数数组 roads ，其中 roads[i] = [ui, vi, timei] 表示在路口 ui 和 vi 之间有一条需要花费 timei 时间才能通过的道路。
@@ -49,10 +49,11 @@ public class Problem1976 {
 
     /**
      * Dijkstra+bfs拓扑排序+动态规划
-     * 核心思想：通过Dijkstra使无向图转换为有向图，有向图才能dp求两个节点之间最短路径的个数
+     * 核心思想：Dijkstra求节点0到其他节点的最短路径长度，通过节点0到其他节点的最短路径长度，将无向图转换为有向图，
+     * 有向图才能拓扑排序，在bfs拓扑排序过程中，通过动态规划求两个节点之间最短路径的个数
      * dp[i]：节点0到节点i最短路径的个数
      * dp[i] = sum(dp[j]) (图为有向图，存在节点j到节点i的边)
-     * Dijkstra得到节点0到其他节点的最短路径长度，通过求单元最短路径长度，将无向图转换为有向图才能求dp，
+     * Dijkstra求节点0到其他节点的最短路径长度，通过节点0到其他节点的最短路径长度，将无向图转换为有向图，
      * 节点0到节点u的最短路径长度+节点u和节点v边的权值==节点0到节点v的最短路径长度，则有向图中存在节点u到节点v的边，不存在节点v到节点u的边
      * 图中入度为0的节点入队，队列中节点出队，存在节点u到节点v的边，则dp[v]=dp[v]+dp[u]
      * 时间复杂度O(n^2+m)，空间复杂度O(n^2) (m=roads.length，即无向图中边的数量)
@@ -63,7 +64,7 @@ public class Problem1976 {
      * @return
      */
     public int countPaths(int n, int[][] roads) {
-        //邻接矩阵
+        //邻接矩阵，先作为无向图，之后通过Dijkstra转换为有向图
         int[][] edges = new int[n][n];
 
         //邻接矩阵初始化，节点i到节点j不存在边，则为-1
@@ -78,8 +79,9 @@ public class Problem1976 {
         for (int i = 0; i < roads.length; i++) {
             int u = roads[i][0];
             int v = roads[i][1];
-            edges[u][v] = roads[i][2];
-            edges[v][u] = roads[i][2];
+            int weight = roads[i][2];
+            edges[u][v] = weight;
+            edges[v][u] = weight;
         }
 
         //节点0到其他节点的最短路径长度数组
@@ -87,19 +89,20 @@ public class Problem1976 {
         //入度数组
         int[] inDegree = new int[n];
 
-        //无向图转换为有向图才能求dp
+        //通过Dijkstra无向图转换为有向图，有向图才能拓扑排序
         for (int i = 0; i < roads.length; i++) {
             int u = roads[i][0];
             int v = roads[i][1];
+            int weight = roads[i][2];
 
             //节点0到节点u的最短路径长度+节点u和节点v边的权值==节点0到节点v的最短路径长度，则有向图中存在节点u到节点v的边，不存在节点v到节点u的边
-            if (distance[u] + roads[i][2] == distance[v]) {
-                edges[u][v] = roads[i][2];
+            if (distance[u] + weight == distance[v]) {
+                edges[u][v] = weight;
                 edges[v][u] = -1;
                 inDegree[v]++;
-            } else if (distance[v] + roads[i][2] == distance[u]) {
+            } else if (distance[v] + weight == distance[u]) {
                 //点0到节点v的最短路径长度+节点u和节点v边的权值==节点0到节点u的最短路径长度，则有向图中存在节点v到节点u的边，不存在节点u到节点v的边
-                edges[v][u] = roads[i][2];
+                edges[v][u] = weight;
                 edges[u][v] = -1;
                 inDegree[u]++;
             } else {
@@ -145,7 +148,7 @@ public class Problem1976 {
     }
 
     /**
-     * 求节点u到其他节点的最短路径长度
+     * dijkstra求节点u到其他节点的最短路径长度
      * 时间复杂度O(n^2)，空间复杂度O(n)
      *
      * @param u

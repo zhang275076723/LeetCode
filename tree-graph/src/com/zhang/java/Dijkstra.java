@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2023/2/12 18:22
  * @Author zsy
- * @Description Dijkstra求单元最短路径 图中最短路径类比Problem399、Problem1462、Problem1976
+ * @Description Dijkstra求单元最短路径 图中最短路径类比Problem399、Problem1462、Problem1786、Problem1976
  */
 public class Dijkstra {
     public static void main(String[] args) {
@@ -25,8 +25,8 @@ public class Dijkstra {
     }
 
     /**
-     * Dijkstra求单元最短路径，不适合权值为负的图
-     * 求节点u到其他节点的最短路径长度
+     * dijkstra求节点u到其他节点的最短路径长度
+     * 注意：不适合权值为负的图
      * 时间复杂度O(n^2)，空间复杂度O(n)
      *
      * @param u     起始节点u

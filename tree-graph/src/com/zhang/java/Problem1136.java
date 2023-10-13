@@ -43,6 +43,7 @@ public class Problem1136 {
 
     /**
      * bfs拓扑排序
+     * 时间复杂度O(m+n)，空间复杂度O(m+n) (m=relations.length，如果使用邻接矩阵，空间复杂度O(n^2))
      *
      * @param n
      * @param relations
