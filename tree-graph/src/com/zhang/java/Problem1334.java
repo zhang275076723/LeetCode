@@ -97,6 +97,7 @@ public class Problem1334 {
         //节点result到达其他节点的路径长度不超过distanceThreshold的个数
         int minCount = Integer.MAX_VALUE;
 
+        //从前往后遍历保证如果存在多个答案，优先返回编号较大的节点
         for (int i = 0; i < n; i++) {
             //节点i到达其他节点的路径长度不超过distanceThreshold的个数
             int count = 0;

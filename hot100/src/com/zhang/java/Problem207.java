@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2022/5/13 9:06
  * @Author zsy
- * @Description 课程表 华为机试题 课程表类比Problem210、Problem630、Problem1462 拓扑排序类比Problem210、Problem269、Problem310、Problem329、Problem444、Problem802、Problem1136、Problem1203、Problem1462、Problem1786、Problem1857、Problem1976、Problem2115、Problem2127、Problem2192、Problem2360、IsCircleDependency 图类比Problem133、Problem210、Problem261、Problem269、Problem277、Problem310、Problem323、Problem329、Problem332、Problem399、Problem444、Problem499、Problem505、Problem574、Problem684、Problem685、Problem753、Problem765、Problem785、Problem797、Problem802、Problem834、Problem847、Problem863、Problem1136、Problem1203、Problem1245、Problem1334、Problem1361、Problem1462、Problem1786、Problem1857、Problem1976、Problem2115、Problem2127、Problem2192、Problem2360
+ * @Description 课程表 华为机试题 课程表类比Problem210、Problem630、Problem1462 拓扑排序类比Problem210、Problem269、Problem310、Problem329、Problem444、Problem802、Problem1136、Problem1203、Problem1462、Problem1786、Problem1857、Problem1976、Problem2115、Problem2127、Problem2192、Problem2360、IsCircleDependency 图类比Problem133、Problem210、Problem261、Problem269、Problem277、Problem310、Problem323、Problem329、Problem332、Problem399、Problem444、Problem499、Problem505、Problem574、Problem684、Problem685、Problem753、Problem765、Problem785、Problem797、Problem802、Problem834、Problem847、Problem863、Problem1136、Problem1203、Problem1245、Problem1334、Problem1361、Problem1462、Problem1786、Problem1857、Problem1976、Problem2115、Problem2127、Problem2192、Problem2359、Problem2360
  * 你这个学期必须选修 numCourses 门课程，记为 0 到 numCourses - 1 。
  * 在选修某些课程之前需要一些先修课程。
  * 先修课程按数组 prerequisites 给出，其中 prerequisites[i] = [ai, bi] ，
