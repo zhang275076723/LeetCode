@@ -92,7 +92,7 @@ public class Problem2360 {
         int max = 0;
 
         for (int i = 0; i < n; i++) {
-            //为访问的节点即为环中的节点
+            //未访问的节点即为环中的节点
             if (!visited[i]) {
 //                max = Math.max(max, dfs(i, edges, visited));
                 max = Math.max(max, bfs(i, edges, visited));

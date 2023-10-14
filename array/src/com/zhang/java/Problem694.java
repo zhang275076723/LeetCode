@@ -57,6 +57,7 @@ public class Problem694 {
 
     /**
      * dfs
+     * 核心思想：对每个岛屿需要得到当前岛屿的唯一识别
      * dfs遍历每个岛屿，保存遍历到的路径，并且回溯路径也保存，如果当前岛屿的路径在之前保存的路径中出现过，则存在相同岛屿
      * 从当前节点出发记为0，往上遍历记为1，往下遍历记为2，往左遍历记为3，往右遍历记为4，回溯记为5
      * 时间复杂度O(mn)，空间复杂度O(mn)
@@ -72,7 +73,7 @@ public class Problem694 {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j] == 1 && !visited[i][j]) {
-                    //当前岛屿遍历路径
+                    //岛屿的唯一识别，当前岛屿遍历的路径(包含回溯路径)
                     StringBuilder path = new StringBuilder();
 
                     //当前节点出发记为0
@@ -88,6 +89,7 @@ public class Problem694 {
 
     /**
      * bfs
+     * 核心思想：对每个岛屿需要得到当前岛屿的唯一识别
      * bfs遍历每个岛屿，当前岛屿中每个节点减去起始节点的横纵坐标节点，得到相对节点，作为当前岛屿的标记，
      * 如果当前岛屿的标记在之前保存的标记中出现过，则存在相同岛屿
      * 时间复杂度O(mn)，空间复杂度O(mn)
@@ -103,7 +105,7 @@ public class Problem694 {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j] == 1 && !visited[i][j]) {
-                    //当前岛屿的标记，当前岛屿中每个节点减去起始节点的横纵坐标节点，得到相对节点
+                    //岛屿的唯一识别，当前岛屿中每个节点减去起始节点的横纵坐标节点，得到相对节点
                     StringBuilder key = new StringBuilder();
 
                     bfs(i, j, i, j, grid, visited, key);
