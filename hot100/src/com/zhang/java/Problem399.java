@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/4 10:27
  * @Author zsy
- * @Description 除法求值 图中最短路径类比Problem1462、Problem1786、Problem1976、Dijkstra 图类比Problem133、Problem207、Problem210、Problem329、Problem785、Problem863 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem952、Problem1254、Problem1627、Problem1905、Problem1998
+ * @Description 除法求值 图中最短路径类比Problem1334、Problem1462、Problem1786、Problem1976、Dijkstra 图类比Problem133、Problem207、Problem210、Problem329、Problem785、Problem863 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem952、Problem1254、Problem1627、Problem1905、Problem1998
  * 给你一个变量对数组 equations 和一个实数值数组 values 作为已知条件，
  * 其中 equations[i] = [Ai, Bi] 和 values[i] 共同表示等式 Ai / Bi = values[i] 。
  * 每个 Ai 或 Bi 是一个表示单个变量的字符串。
@@ -239,18 +239,18 @@ public class Problem399 {
             }
         }
 
-        //邻接矩阵表示的图，edges[i][j]：节点i到节点j的最短路径长度，-1即不可达
-        double[][] edges = buildGraph(equations, values, map);
+        //Floyd数组，distance[i][j]：节点i到节点j的最短路径长度，-1即不可达
+        double[][] distance = buildGraph(equations, values, map);
         double[] result = new double[queries.size()];
 
         //Floyd，计算任意两个节点之间的最近距离
-        for (int k = 0; k < edges.length; k++) {
-            for (int i = 0; i < edges.length; i++) {
-                for (int j = 0; j < edges.length; j++) {
-                    //只有在i-k和k-j存在路径时，才计算i-j的路径
+        for (int k = 0; k < distance.length; k++) {
+            for (int i = 0; i < distance.length; i++) {
+                for (int j = 0; j < distance.length; j++) {
+                    //节点i到节点k和节点k到节点j存在路径时，才计算节点i到节点j的最短路径长度
                     //这里元素大于0.000001是特殊用例精度的考虑
-                    if (edges[i][k] > 0.000001 && edges[k][j] > 0.000001) {
-                        edges[i][j] = edges[i][k] * edges[k][j];
+                    if (distance[i][k] > 0.000001 && distance[k][j] > 0.000001) {
+                        distance[i][j] = distance[i][k] * distance[k][j];
                     }
                 }
             }
@@ -269,8 +269,8 @@ public class Problem399 {
             int u = map.get(str1);
             int v = map.get(str2);
 
-            //u到v已经计算过，在邻接矩阵中，直接赋值edge[u][v]
-            result[i] = edges[u][v];
+            //u到v已经计算过，在邻接矩阵中，直接赋值distance[u][v]
+            result[i] = distance[u][v];
         }
 
         return result;
