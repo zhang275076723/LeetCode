@@ -51,7 +51,7 @@ public class Problem405 {
             if (cur < 10) {
                 sb.append(cur);
             } else {
-                sb.append((char)(cur + 'a' - 10));
+                sb.append((char) ('a' + cur - 10));
             }
 
             //num有可能为负数，所以要无符号右移4位

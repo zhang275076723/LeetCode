@@ -138,7 +138,7 @@ public class Problem404 {
      * bfs节点
      */
     private static class Pos {
-        //当期节点
+        //当前节点
         TreeNode node;
         //bfs遍历过程中当前节点的前驱节点
         TreeNode pre;

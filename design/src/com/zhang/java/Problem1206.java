@@ -121,7 +121,7 @@ public class Problem1206 {
          */
         public void add(int num) {
             //从跳表高层往低层每层中的遍历节点路径数组update，确保插入到每一层的链表有序
-            //这里是maxLevel，而不是level，因为新增节点的高度有可能会大于当前跳表的高度
+            //注意：添加节点时，update数组是maxLevel，而不是level，因为新增节点的高度有可能会大于当前跳表的高度
             //redis中还记录了update数组中跳表节点在当前层中距离跳表头节点的距离数组rank
             Node[] update = new Node[maxLevel];
 
@@ -164,6 +164,7 @@ public class Problem1206 {
          */
         public boolean erase(int num) {
             //从跳表高层往低层每层中的遍历节点路径数组update，确保插入到每一层的链表有序
+            //注意：删除节点时，update数组是level就可以了，不需要从maxLevel，因为删除节点的高度不会超过当前跳表的高度
             //redis中还记录了update数组中跳表节点在当前层中距离跳表头节点的距离数组rank
             Node[] update = new Node[level];
 
@@ -191,14 +192,14 @@ public class Problem1206 {
                 return false;
             }
 
-            //从deleteNode的最高层第开始往第一层，将deleteNode从当前层中删除
+            //从deleteNode的最高层开始往第一层遍历，将deleteNode从当前层中删除
             for (int i = deleteNode.next.length - 1; i >= 0; i--) {
                 //也写成update[i].next[i] = deleteNode.next[i];
                 update[i].next[i] = update[i].next[i].next[i];
             }
 
-            //更新跳表的高度，由当前跳表的高度开始往下遍历，如果当前层头结点的下一个节点为空，
-            //则说明当前层之前只有要删除的deleteNode节点，跳表高度减1
+            //更新跳表的高度，从当前跳表的高度开始往下遍历，如果当前层头结点的下一个节点为空，
+            //即当前层删除deleteNode节点之后为空，跳表高度减1
             while (level > 0 && head.next[level - 1] == null) {
                 level--;
             }
@@ -214,7 +215,7 @@ public class Problem1206 {
          */
         private int getLevel() {
             int level = 1;
-            //生成的概率小于factor，则当期跳表节点的高度加1
+            //生成的概率小于factor，则当前跳表节点的高度加1
             while (level < maxLevel && random.nextDouble() < factor) {
                 level++;
             }
