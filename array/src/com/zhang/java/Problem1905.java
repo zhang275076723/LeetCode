@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @Date 2023/9/21 08:54
  * @Author zsy
- * @Description 统计子岛屿 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Offer12 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem952、Problem1254、Problem1319、Problem1627、Problem1998
+ * @Description 统计子岛屿 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Offer12 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1254、Problem1319、Problem1627、Problem1998
  * 给你两个 m x n 的二进制矩阵 grid1 和 grid2 ，它们只包含 0 （表示水域）和 1 （表示陆地）。
  * 一个 岛屿 是由 四个方向 （水平或者竖直）上相邻的 1 组成的区域。
  * 任何矩阵以外的区域都视为水域。
