@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/9/16 08:14
  * @Author zsy
- * @Description 按公因数计算最大组件大小 质数类比Problem204、Problem1175、Problem1998 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem1254、Problem1627、Problem1905、Problem1998
+ * @Description 按公因数计算最大组件大小 质数类比Problem204、Problem1175、Problem1998 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem1254、Problem1319、Problem1627、Problem1905、Problem1998
  * 给定一个由不同正整数的组成的非空数组 nums ，考虑下面的图：
  * 有 nums.length 个节点，按从 nums[0] 到 nums[nums.length - 1] 标记；
  * 只有当 nums[i] 和 nums[j] 共用一个大于 1 的公因数时，nums[i] 和 nums[j]之间才有一条边。
@@ -72,6 +72,8 @@ public class Problem952 {
         }
 
         //统计数组，nums[i]所属连通分量，即nums[i]根节点都为root的数量count[root]
+        //注意：不能直接返回并查集中最大连通分量中元素的个数，因为有可能连通分量中存在某个元素，
+        //但当前元素只是nums[i]的因子，并不是nums中的元素
         int[] count = new int[maxNum + 1];
         //最大连通分量中元素的个数
         int max = 1;
@@ -162,6 +164,8 @@ public class Problem952 {
         }
 
         //统计数组，nums[i]所属连通分量，即nums[i]根节点都为root的数量count[root]
+        //注意：不能直接返回并查集中最大连通分量中元素的个数，因为有可能连通分量中存在某个元素，
+        //但当前元素只是nums[i]的因子，并不是nums中的元素
         int[] count = new int[maxNum + 1];
         //最大连通分量中元素的个数
         int max = 1;
@@ -266,6 +270,8 @@ public class Problem952 {
         }
 
         //统计数组，nums[i]所属连通分量，即nums[i]根节点都为root的数量count[root]
+        //注意：不能直接返回并查集中最大连通分量中元素的个数，因为有可能连通分量中存在某个元素，
+        //但当前元素只是nums[i]的因子，并不是nums中的元素
         int[] count = new int[maxNum + 1];
         //最大连通分量中元素的个数
         int max = 1;

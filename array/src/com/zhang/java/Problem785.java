@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2023/4/16 08:37
  * @Author zsy
- * @Description 判断二分图 微软面试题 图类比Problem133、Problem207、Problem210、Problem329、Problem399、Problem863 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem827、Problem952、Problem1254、Problem1627、Problem1905、Problem1998
+ * @Description 判断二分图 微软面试题 类比Problem886 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem827、Problem952、Problem1254、Problem1319、Problem1627、Problem1905、Problem1998 图类比Problem133、Problem207、Problem210、Problem329、Problem399、Problem863
  * 存在一个 无向图 ，图中有 n 个节点。
  * 其中每个节点都有一个介于 0 到 n - 1 之间的唯一编号。
  * 给你一个二维数组 graph ，其中 graph[u] 是一个节点数组，由节点 u 的邻接节点组成。
@@ -53,9 +53,9 @@ public class Problem785 {
 
     /**
      * dfs
-     * 当前节点的所有邻接节点都在一个集合中，并且当前节点和其邻接节点不在一个集合中，才是二分图
+     * 当前节点所有的邻接节点都在一个集合中，并且当前节点和所有的邻接节点都不在一个集合中，才是二分图
      * 标记当前节点的访问方式和前一个节点的访问方式不同，
-     * 如果一条边上两个节点的访问方式相同，则当前边的两个节点在一个集合中，无法二分，不是二分图
+     * 如果当前节点已被访问，并且和前一个节点的访问方式相同，则一条边上两个节点的访问方式相同，当前边的两个节点在一个集合中，无法二分，不是二分图
      * 时间复杂度O(m+n)，空间复杂度O(n) (m：图中边数，n：图中节点个数)
      *
      * @param graph
@@ -64,31 +64,33 @@ public class Problem785 {
     public boolean isBipartite(int[][] graph) {
         //节点访问数组
         //visited[i]为0：节点i未访问；visited[i]为1：节点i的访问方式为1；visited[i]为2：节点i的访问方式为2
-        //使用访问方式1和访问方式2判断一条边上两个顶点是否属于不同的集合
+        //一条边上两个顶点的访问方式不同，则当前边可以二分
         int[] visited = new int[graph.length];
 
         //一条边上两个节点的访问方式相同，则当前边的两个节点属于同一个集合，无法二分，不是二分图
         for (int i = 0; i < graph.length; i++) {
-            //dfs未访问的节点
+            //未访问的节点进行dfs
             if (visited[i] == 0) {
                 //lastVisited：节点i的上一个节点的访问方式
+                //这里lastVisited不仅可以为0，也可以为1或2
                 dfs(i, 0, visited, graph);
             }
 
-            //dfs过程中不是二分图，返回false
+            //dfs过程中不能二分，不是二分图，返回false
             if (!flag) {
                 return false;
             }
         }
 
+        //dfs遍历结束，则说明所有边都可以二分，是二分图，返回true
         return true;
     }
 
     /**
      * bfs
-     * 当前节点的所有邻接节点都在一个集合中，并且当前节点和其邻接节点不在一个集合中，才是二分图
+     * 当前节点所有的邻接节点都在一个集合中，并且当前节点和所有的邻接节点都不在一个集合中，才是二分图
      * 标记当前节点的访问方式和前一个节点的访问方式不同，
-     * 如果一条边上两个节点的访问方式相同，则当前边的两个节点在一个集合中，无法二分，不是二分图
+     * 如果当前节点已被访问，并且和前一个节点的访问方式相同，则一条边上两个节点的访问方式相同，当前边的两个节点在一个集合中，无法二分，不是二分图
      * 时间复杂度O(m+n)，空间复杂度O(n) (m：图中边数，n：图中节点个数)
      *
      * @param graph
@@ -97,57 +99,28 @@ public class Problem785 {
     public boolean isBipartite2(int[][] graph) {
         //节点访问数组
         //visited[i]为0：节点i未访问；visited[i]为1：节点i的访问方式为1；visited[i]为2：节点i的访问方式为2
-        //使用访问方式1和访问方式2判断一条边上两个顶点是否属于不同的集合
+        //一条边上两个顶点的访问方式不同，则当前边可以二分
         int[] visited = new int[graph.length];
-        Queue<Integer> queue = new LinkedList<>();
 
         //一条边上两个节点的访问方式相同，则当前边的两个节点属于同一个集合，无法二分，不是二分图
         for (int i = 0; i < graph.length; i++) {
-            //当前节点已被访问，直接进行下次循环
-            if (visited[i] != 0) {
-                continue;
-            }
-
-            //当前未访问的节点入队
-            queue.offer(i);
-            //设置当前节点i的访问方式为1
-            visited[i] = 1;
-
-            while (!queue.isEmpty()) {
-                //当前节点u
-                int u = queue.poll();
-
-                for (int j = 0; j < graph[u].length; j++) {
-                    int v = graph[u][j];
-
-                    //邻接节点v未访问，则设置邻接节点v的访问方式不同于当前节点u的访问方式
-                    if (visited[graph[u][j]] == 0) {
-                        if (visited[u] == 1) {
-                            queue.offer(v);
-                            visited[v] = 2;
-                        } else {
-                            queue.offer(v);
-                            visited[v] = 1;
-                        }
-                    } else {
-                        //邻接节点v已访问，并且当前节点u的访问方式和邻接节点v的访问方式相同，则当前边的两个节点属于同一个集合，
-                        //无法二分，不是二分图，直接返回false
-                        if (visited[u] == visited[v]) {
-                            return false;
-                        }
-                    }
+            //未访问的节点进行bfs
+            if (visited[i] == 0) {
+                //bfs过程中不能二分，不是二分图，返回false
+                if (!bfs(i, visited, graph)) {
+                    return false;
                 }
             }
         }
 
-        //bfs遍历结束都没有两个节点属于同一个集合，则是二分图，返回true
+        //bfs遍历结束，则说明所有边都可以二分，是二分图，返回true
         return true;
     }
 
     /**
      * 并查集
-     * 当前节点的所有邻接节点都在一个集合中，且和当前节点不在一个集合中，才是二分图
-     * 时间复杂度O(m+n)，空间复杂度O(n) (m：图中边数，n：图中节点个数)
+     * 当前节点所有的邻接节点都在同一个连通分量中，并且当前节点和所有邻接节点都不在同一个连通分量中，才是二分图
+     * 时间复杂度O(m+n)，空间复杂度O(n) (m：图中边的个数，n：图中节点的个数)
      *
      * @param graph
      * @return
@@ -157,17 +130,17 @@ public class Problem785 {
 
         for (int i = 0; i < graph.length; i++) {
             for (int j = 0; j < graph[i].length; j++) {
-                //当前节点i和当前节点的邻接节点graph[i][j]连通，是一个连通分量，则当前边无法二分，不是二分图，直接返回false
+                //当前节点i和当前节点的邻接节点graph[i][j]连通，则无法二分，不是二分图，返回false
                 if (unionFind.isConnected(i, graph[i][j])) {
                     return false;
                 } else {
-                    //当前节点i的邻接节点graph[i][j]相连，是一个连通分量，能和当前节点二分
+                    //当前节点i和当前节点的邻接节点graph[i][j]不连通，则节点graph[i][j]和节点i的邻接节点graph[i][0]相连
                     unionFind.union(graph[i][0], graph[i][j]);
                 }
             }
         }
 
-        //遍历完也不存在一条边上两个节点连通，则说明每个边都可以二分，是二分图，返回true
+        //遍历结束，则说明所有边都可以二分，是二分图，返回true
         return true;
     }
 
@@ -176,29 +149,63 @@ public class Problem785 {
             return;
         }
 
-        //当前节点未访问，设置当前节点的访问方式不同于上一个节点的访问方式
-        if (visited[i] == 0) {
+        //当前节点已访问
+        if (visited[i] != 0) {
+            //当前节点的访问方式和上一个节点的访问方式相同，则当前边的两个节点属于同一个集合，
+            //无法二分，不是二分图，flag设置为false
+            if (visited[i] == lastVisited) {
+                flag = false;
+            }
+        } else {
+            //当前节点未访问，设置当前节点的访问方式不同于上一个节点的访问方式
             if (lastVisited == 1) {
                 visited[i] = 2;
             } else {
                 visited[i] = 1;
             }
-        } else {
-            //当前节点已访问，并且当前节点的访问方式和上一个节点的访问方式相同，则当前边的两个节点属于同一个集合，
-            //无法二分，不是二分图，flag设置为false，直接返回
-            if (visited[i] == lastVisited) {
-                flag = false;
-                return;
-            } else {
-                //当前节点已访问，并且当前节点的访问方式和上一个节点的访问方式不同，则当前边的两个节点可以二分，直接返回
-                return;
+
+            //dfs遍历当前节点i的邻接节点graph[i][j]
+            for (int j = 0; j < graph[i].length; j++) {
+                dfs(graph[i][j], visited[i], visited, graph);
+            }
+        }
+    }
+
+    private boolean bfs(int i, int[] visited, int[][] graph) {
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(i);
+        //设置当前节点i的访问方式为1，也可以设置为2
+        visited[i] = 1;
+
+        while (!queue.isEmpty()) {
+            //当前节点u
+            int u = queue.poll();
+
+            //当前节点u的邻接节点v
+            for (int j = 0; j < graph[u].length; j++) {
+                int v = graph[u][j];
+
+                //邻接节点v已访问，当前节点u的访问方式和邻接节点v的访问方式相同，则当前边的两个节点属于同一个集合，
+                //无法二分，不是二分图，返回false
+                if (visited[v] != 0) {
+                    if (visited[u] == visited[v]) {
+                        return false;
+                    }
+                } else {
+                    //邻接节点v未访问，设置邻接节点v的访问方式不同于当前节点u的访问方式
+                    if (visited[u] == 1) {
+                        visited[v] = 2;
+                    } else {
+                        visited[v] = 1;
+                    }
+
+                    queue.offer(v);
+                }
             }
         }
 
-        //dfs遍历当前节点i的邻接节点graph[i][j]
-        for (int j = 0; j < graph[i].length; j++) {
-            dfs(graph[i][j], visited[i], visited, graph);
-        }
+        //bfs遍历结束，则说明所有边都可以二分，是二分图，返回true
+        return true;
     }
 
     /**

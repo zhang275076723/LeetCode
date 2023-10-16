@@ -8,7 +8,7 @@ import java.util.Random;
 /**
  * @Date 2023/9/15 08:49
  * @Author zsy
- * @Description 数组的最大公因数排序 质数类比Problem204、Problem952、Problem1175 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem952、Problem1254、Problem1627、Problem1905
+ * @Description 数组的最大公因数排序 质数类比Problem204、Problem952、Problem1175 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem952、Problem1254、Problem1319、Problem1627、Problem1905
  * 给你一个整数数组 nums ，你可以在 nums 上执行下述操作 任意次 ：
  * 如果 gcd(nums[i], nums[j]) > 1 ，交换 nums[i] 和 nums[j] 的位置。
  * 其中 gcd(nums[i], nums[j]) 是 nums[i] 和 nums[j] 的最大公因数。
@@ -38,8 +38,8 @@ import java.util.Random;
 public class Problem1998 {
     public static void main(String[] args) {
         Problem1998 problem1998 = new Problem1998();
-//        int[] nums = {5, 2, 6, 2};
-        int[] nums = {2, 6, 2, 11};
+        int[] nums = {5, 2, 6, 2};
+//        int[] nums = {2, 6, 2, 11};
         System.out.println(problem1998.gcdSort(nums));
         System.out.println(problem1998.gcdSort2(nums));
         System.out.println(problem1998.gcdSort3(nums));

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/9/17 08:35
  * @Author zsy
- * @Description 带阈值的图连通性 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem952、Problem1254、Problem1905、Problem1998
+ * @Description 带阈值的图连通性 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem952、Problem1254、Problem1319、Problem1905、Problem1998
  * 有 n 座城市，编号从 1 到 n 。编号为 x 和 y 的两座城市直接连通的前提是：
  * x 和 y 的公因数中，至少有一个 严格大于 某个阈值 threshold 。
  * 更正式地说，如果存在整数 z ，且满足以下所有条件，则编号 x 和 y 的城市之间有一条道路：
@@ -80,10 +80,10 @@ public class Problem1627 {
         }
 
         List<Boolean> list = new ArrayList<>();
-        //因为是从0开始，所以需要多加1
+        //节点是从1开始，所以需要多加1
         UnionFind unionFind = new UnionFind(n + 1);
 
-        //[threshold+1,n/2]中每个因子i，都大于threshold，i和i*j属于同一个连通分量
+        //[threshold+1,n/2]中每个数i都作为大于threshold的因子，即i和i*j存在大于threshold的公因子
         for (int i = threshold + 1; i <= n / 2; i++) {
             for (int j = 2; i * j <= n; j++) {
                 unionFind.union(i, i * j);

@@ -64,7 +64,10 @@ public class Problem421 {
 
         //找前缀树中和nums[i]异或的最大值对应的数
         for (int i = 0; i < nums.length; i++) {
-            maxXorResult = Math.max(maxXorResult, nums[i] ^ trie.search(nums[i]));
+            //前缀树中从nums[i]表示的二进制数中从高位到低位尽可能不同的数，
+            //即nums[i]当前位为0，则要找前缀树中当前位为1的值；nums[i]当前位为1，则要找前缀树中当前位为0的值
+            int num = trie.search(nums[i]);
+            maxXorResult = Math.max(maxXorResult, nums[i] ^ num);
         }
 
         return maxXorResult;

@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @Date 2023/9/21 08:54
  * @Author zsy
- * @Description 统计子岛屿 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Offer12 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem952、Problem1254、Problem1627、Problem1998
+ * @Description 统计子岛屿 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Offer12 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem952、Problem1254、Problem1319、Problem1627、Problem1998
  * 给你两个 m x n 的二进制矩阵 grid1 和 grid2 ，它们只包含 0 （表示水域）和 1 （表示陆地）。
  * 一个 岛屿 是由 四个方向 （水平或者竖直）上相邻的 1 组成的区域。
  * 任何矩阵以外的区域都视为水域。
@@ -177,9 +177,9 @@ public class Problem1905 {
             }
         }
 
-        //grid2中岛屿是grid1子岛屿的连通分量的根节点下标索引
+        //grid2中岛屿是grid1子岛屿的连通分量根节点的下标索引集合
         Set<Integer> set1 = new HashSet<>();
-        //grid2中岛屿不是grid1子岛屿的连通分量的根节点下标索引
+        //grid2中岛屿不是grid1子岛屿的连通分量根节点的下标索引集合
         Set<Integer> set2 = new HashSet<>();
 
         for (int i = 0; i < grid2.length; i++) {
@@ -219,7 +219,7 @@ public class Problem1905 {
         visited1[i][j] = true;
 
 //        //注意：不能这样写，因为当一个dfs为false的时候，后面的dfs都不会执行，导致grid2中当前岛屿未被完全遍历，
-//        //有可能grid2中当前岛屿的部分岛屿是grid1的子岛屿，导致出错
+//        //有可能grid2中当前岛屿的部分岛屿是grid1的子岛屿，导致当前grid2岛屿被多次统计
 //        return dfs(i - 1, j, grid1, grid2, visited1, visited2) &&
 //                dfs(i + 1, j, grid1, grid2, visited1, visited2) &&
 //                dfs(i, j - 1, grid1, grid2, visited1, visited2) &&
@@ -252,7 +252,7 @@ public class Problem1905 {
 
             //当前节点在grid1中不为1，或者当前节点在grid1中已被访问，则flag置为false，表示grid2当前岛屿不是grid1的子岛屿
             //注意：不能直接返回false，如果直接返回false，导致grid2中当前岛屿未被完全遍历，
-            //有可能grid2中当前岛屿的部分岛屿是grid1的子岛屿，导致出错
+            //有可能grid2中当前岛屿的部分岛屿是grid1的子岛屿，导致当前grid2岛屿被多次统计
             if (grid1[arr[0]][arr[1]] != 1 || visited1[arr[0]][arr[1]]) {
                 flag = false;
             }
