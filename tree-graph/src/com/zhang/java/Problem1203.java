@@ -105,9 +105,9 @@ public class Problem1203 {
             }
         }
 
-        //小组邻接表
+        //小组节点邻接表
         List<List<Integer>> groupEdges = new ArrayList<>();
-        //组内邻接表
+        //组内节点邻接表
         List<List<Integer>> itemEdges = new ArrayList<>();
 
         for (int i = 0; i < groupCount; i++) {
@@ -183,9 +183,12 @@ public class Problem1203 {
 
         //5、建立小组节点和组内拓扑排序中属于当前小组节点的组内节点集合映射
         for (int i = 0; i < n; i++) {
-            List<Integer> list = map.getOrDefault(copyGroup[itemResult[i]], new ArrayList<>());
+            if (!map.containsKey(copyGroup[itemResult[i]])) {
+                map.put(copyGroup[itemResult[i]], new ArrayList<>());
+            }
+
+            List<Integer> list = map.get(copyGroup[itemResult[i]]);
             list.add(itemResult[i]);
-            map.put(copyGroup[itemResult[i]], list);
         }
 
         //结果数组
@@ -244,9 +247,9 @@ public class Problem1203 {
             }
         }
 
-        //小组邻接表
+        //小组节点邻接表
         List<List<Integer>> groupEdges = new ArrayList<>();
-        //组内邻接表
+        //组内节点邻接表
         List<List<Integer>> itemEdges = new ArrayList<>();
 
         for (int i = 0; i < groupCount; i++) {
@@ -298,9 +301,12 @@ public class Problem1203 {
 
         //5、建立小组节点和组内拓扑排序中属于当前小组节点的组内节点集合映射
         for (int i = 0; i < n; i++) {
-            List<Integer> list = map.getOrDefault(copyGroup[itemResult[i]], new ArrayList<>());
+            if (!map.containsKey(copyGroup[itemResult[i]])) {
+                map.put(copyGroup[itemResult[i]], new ArrayList<>());
+            }
+
+            List<Integer> list = map.get(copyGroup[itemResult[i]]);
             list.add(itemResult[i]);
-            map.put(copyGroup[itemResult[i]], list);
         }
 
         //结果数组
