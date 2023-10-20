@@ -151,7 +151,7 @@ public class Problem1786 {
 
     /**
      * 堆优化dijkstra求节点u到其他节点的最短路径长度
-     * 通过优先队列找节点u到未访问节点中最短路径长度的节点
+     * 通过优先队列找未访问节点中距离节点u最短路径长度的节点v，节点v作为中间节点更新节点u到其他节点的最短路径长度
      * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
      * @param u
@@ -159,20 +159,22 @@ public class Problem1786 {
      * @return
      */
     private int[] dijkstra(int u, Map<Integer, Map<Integer, Integer>> edges) {
+        //图中节点的个数
+        int n = edges.size();
         //节点u到其他节点的最短路径长度数组
         //注意：节点不是从0而是从1开始，需要多申请一个长度
-        int[] distance = new int[edges.size() + 1];
+        int[] distance = new int[n + 1];
         //节点访问数组，visited[v]为true，表示已经得到节点u到节点v的最短路径长度
         //注意：节点不是从0而是从1开始，需要多申请一个长度
-        boolean[] visited = new boolean[edges.size() + 1];
+        boolean[] visited = new boolean[n + 1];
 
         //distance数组初始化，初始化为int最大值表示节点u无法到达节点i
         //注意：节点不是从0而是从1开始
-        for (int i = 1; i <= edges.size(); i++) {
+        for (int i = 1; i <= n; i++) {
             distance[i] = Integer.MAX_VALUE;
         }
 
-        //节点u到节点u的最短路径长度为0
+        //初始化，节点u到节点u的最短路径长度为0
         distance[u] = 0;
 
         //小根堆，arr[0]：当前节点，arr[i]：节点u到当前节点的路径长度
@@ -188,20 +190,22 @@ public class Problem1786 {
 
         while (!priorityQueue.isEmpty()) {
             int[] arr = priorityQueue.poll();
-            //节点u到小根堆中节点的最短路径长度节点v
+            //通过优先队列找未访问节点中距离节点u最短路径长度的节点v
             int v = arr[0];
 
             if (visited[v]) {
                 continue;
             }
 
+            //设置节点v已访问，表示已经得到节点u到节点v的最短路径长度
             visited[v] = true;
 
-            //节点u通过节点v作为中间节点更新节点u能够达到其他节点的最短路径长度
+            //节点v作为中间节点更新节点u到其他节点的最短路径长度
             //节点v的邻接节点entry.getKey()和权值entry.getValue()
             for (Map.Entry<Integer, Integer> entry : edges.get(v).entrySet()) {
                 if (!visited[entry.getKey()]) {
                     distance[entry.getKey()] = Math.min(distance[entry.getKey()], distance[v] + entry.getValue());
+                    //节点entry.getKey()入堆，用于下一次找未访问节点中距离节点u最短路径长度的节点v
                     priorityQueue.offer(new int[]{entry.getKey(), distance[entry.getKey()]});
                 }
             }

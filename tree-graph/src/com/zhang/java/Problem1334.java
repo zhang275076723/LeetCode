@@ -68,6 +68,7 @@ public class Problem1334 {
                 if (i == j) {
                     distance[i][j] = 0;
                 } else {
+                    //注意：只能初始化不能到达的两个节点的距离为int最大值，不能初始化为-1，因为floyd是通过min求最短路径的
                     distance[i][j] = Integer.MAX_VALUE;
                 }
             }

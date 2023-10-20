@@ -45,7 +45,8 @@ public class Problem1319 {
      * 并查集
      * n个节点最少n-1条边才能连通，如果图中连通分量的个数超过1个，则移动一条边，可以连通两个连通分量，使得连通分量的个数减少1个，
      * 则只需要移动连通分量的个数减1条边，即可以使图中节点都连通
-     * 时间复杂度O(mn*α(n))=O(n)，空间复杂度O(n) (m=connections.length) (find()和union()的时间复杂度为O(α(mn))，可视为常数O(1))
+     * 时间复杂度O(m*α(n))=O(m)，空间复杂度O(n) (m=connections.length，即图中边的个数)
+     * (find()和union()的时间复杂度为O(α(n))，可视为常数O(1))
      *
      * @param n
      * @param connections
