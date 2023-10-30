@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/11/2 08:00
  * @Author zsy
- * @Description Prim求最小生成树 最小生成树类比Problem1135、Problem1489
+ * @Description Prim求最小生成树 最小生成树类比Problem1135、Problem1489、Problem1584
  */
 public class Prim {
     public static void main(String[] args) {

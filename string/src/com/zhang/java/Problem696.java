@@ -56,7 +56,7 @@ public class Problem696 {
 
     /**
      * 模拟
-     * 统计相邻连续1和连续0的个数，由相邻连续1和0组成相同个数的字符串的个数为相邻连续1和0个数中的较小值
+     * 统计相邻连续1和相邻连续0的个数，由相邻连续1和0组成相同个数字符串的个数为相邻连续1和0个数中的较小值
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param s
@@ -69,11 +69,11 @@ public class Problem696 {
 
         int count = 0;
         int index = 0;
-        //在index之前，和s[index-1]相同元素的连续元素个数
+        //index之前，和s[index-1]是相同元素的连续元素个数
         int preCount = 0;
 
         while (index < s.length()) {
-            //和s[index]相同元素的连续元素个数
+            //和s[index]是相同元素的连续元素个数，即s[index-1]和s[index]分别为0和1，或者分别为1和0
             int curCount = 0;
             int c = s.charAt(index);
 
@@ -82,7 +82,7 @@ public class Problem696 {
                 index++;
             }
 
-            //由相邻连续1和0组成相同个数的字符串的个数为相邻连续1和0个数中的较小值
+            //由相邻连续1和0组成相同个数字符串的个数为相邻连续1和0个数中的较小值
             count = count + Math.min(preCount, curCount);
             //更新preCount
             preCount = curCount;

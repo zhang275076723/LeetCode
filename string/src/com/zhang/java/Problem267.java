@@ -54,7 +54,7 @@ public class Problem267 {
         for (int i = 0; i < 26; i++) {
             //出现次数为奇数的字符最多只能有1个，超过1个，则不能构成回文串
             if (arr[i] % 2 == 1) {
-                //之前已经出现过出现次数为奇数的字符，则不能构成回文串，返回空列表
+                //之前已经出现过出现次数为奇数的字符，则不能构成回文串，返回空集合
                 if (oddFlag) {
                     return new ArrayList<>();
                 }
@@ -79,7 +79,7 @@ public class Problem267 {
 
             return list;
         } else {
-            //不存在出现次数为奇数的字符，以""为中心，向两边扩散
+            //不存在出现次数为奇数的字符，则以""空字符串为中心，向两边扩散
             backtrack(new StringBuilder(), s, arr, list);
 
             return list;
@@ -100,12 +100,14 @@ public class Problem267 {
             StringBuilder tempSb = new StringBuilder();
             int count = arr[i];
 
+            //拼接前半部分
             for (int j = 0; j < count / 2; j++) {
                 tempSb.append((char) ('a' + i));
             }
 
             tempSb.append(sb);
 
+            //拼接后半部分
             for (int j = 0; j < count / 2; j++) {
                 tempSb.append((char) ('a' + i));
             }

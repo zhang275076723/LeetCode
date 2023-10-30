@@ -770,7 +770,7 @@ public class Problem307 {
                 update(node.leftNode, updateIndex, value);
                 update(node.rightNode, updateIndex, value);
 
-                //更新当前节点表示的区间元素之和
+                //更新当前节点表示的区间元素之和，即为左右节点表示区间元素之和相加
                 node.sumValue = node.leftNode.sumValue + node.rightNode.sumValue;
                 //更新当前节点表示的区间元素的最大值，即为左右节点表示区间元素的最大值中较大的值
                 node.maxValue = Math.max(node.leftNode.maxValue, node.rightNode.maxValue);

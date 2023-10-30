@@ -61,17 +61,17 @@ public class Problem149 {
                 int x2 = points[j][0];
                 int y2 = points[j][1];
 
-                int k1 = y1 - y2;
-                int k2 = x1 - x2;
+                int x = y1 - y2;
+                int y = x1 - x2;
                 //k1和k2的最大公因数
-                int gcd = gcd(k1, k2);
+                int gcd = gcd(x, y);
 
                 //除以最大公因数，这样不管分子分母是多少，相同分数最后的表示形式都一样
-                k1 = k1 / gcd;
-                k2 = k2 / gcd;
+                x = x / gcd;
+                y = y / gcd;
 
                 //k可能为小数，作为key不精确，所以用分数表示
-                String key = k1 + "/" + k2;
+                String key = x + "/" + y;
                 map.put(key, map.getOrDefault(key, 0) + 1);
             }
 

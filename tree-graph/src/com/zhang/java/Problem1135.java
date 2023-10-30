@@ -41,8 +41,8 @@ public class Problem1135 {
 
     /**
      * Kruskal求最小生成树
-     * 图中边权值由小到大排序，遍历排好序的边，当前边两个节点已经连通，即当前边作为最小生成树的边成环，
-     * 则当前边不能作为最小生成树的边，直接进行下次循环；当前边两个节点不连通，则当前边作为最小生成树的边，
+     * 图中边的权值由小到大排序，由小到大遍历排好序的边，当前边两个节点已经连通，即当前边作为最小生成树的边会成环，
+     * 当前边不能作为最小生成树的边，直接进行下次循环；当前边两个节点不连通，则当前边能够作为最小生成树的边，
      * 当前边的两个节点相连，遍历结束，判断所有节点是否连通，即只有一个连通分量，则能得到最小生成树；否则不能得到最小生成树
      * 时间复杂度O(mlogm+m*α(n))=O(mlogm+m)+O(mlogm)，空间复杂度O(n) (m=connections.length，即图中边的个数)
      * (find()和union()的时间复杂度为O(α(n))，可视为常数O(1))
@@ -52,10 +52,11 @@ public class Problem1135 {
      * @return
      */
     public int minimumCost(int n, int[][] connections) {
-        UnionFind unionFind = new UnionFind(n);
         //图中边权值由小到大排序
         mergeSort(connections, 0, connections.length - 1, new int[connections.length][2]);
-        //最小生成树的权值
+
+        UnionFind unionFind = new UnionFind(n);
+        //图的最小生成树的权值
         int minCost = 0;
 
         for (int i = 0; i < connections.length; i++) {
@@ -146,7 +147,7 @@ public class Problem1135 {
             }
         }
 
-        //最小生成树的权值
+        //图的最小生成树的权值
         int minCost = 0;
 
         //n个节点的最小生成树只需要遍历n-1次，得到n-1条边
@@ -260,7 +261,7 @@ public class Problem1135 {
             }
         }
 
-        //最小生成树的权值
+        //图的最小生成树的权值
         int minCost = 0;
         //最小生成树边的个数，用于判断是否存在最小生成树
         int count = 0;
