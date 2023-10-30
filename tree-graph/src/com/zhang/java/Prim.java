@@ -94,12 +94,10 @@ public class Prim {
 
             //节点u作为中间节点更新未访问节点到已访问节点集合的最短路径长度
             for (int j = 0; j < n; j++) {
-                if (!visited[j] && edges[u][j] != -1) {
-                    if (edges[u][j] < distance[j]) {
-                        distance[j] = edges[u][j];
-                        //节点j到已访问节点集合是通过节点u得到的最短路径长度
-                        vertexArr[j] = u;
-                    }
+                if (!visited[j] && edges[u][j] != -1 && edges[u][j] < distance[j]) {
+                    distance[j] = edges[u][j];
+                    //节点j到已访问节点集合是通过节点u得到的最短路径长度
+                    vertexArr[j] = u;
                 }
             }
         }
@@ -176,14 +174,12 @@ public class Prim {
 
             //节点u作为中间节点更新未访问节点到已访问节点集合的最短路径长度
             for (int i = 0; i < n; i++) {
-                if (!visited[i] && edges[u][i] != -1) {
-                    if (edges[u][i] < distance[i]) {
-                        distance[i] = edges[u][i];
-                        //节点i到已访问节点集合是通过节点u得到的最短路径长度
-                        vertexArr[i] = u;
-                        //节点i入堆，用于下一次找未访问节点到已访问节点集合的最短路径长度的节点u
-                        priorityQueue.offer(new int[]{i, distance[i]});
-                    }
+                if (!visited[i] && edges[u][i] != -1 && edges[u][i] < distance[i]) {
+                    distance[i] = edges[u][i];
+                    //节点i到已访问节点集合是通过节点u得到的最短路径长度
+                    vertexArr[i] = u;
+                    //节点i入堆，用于下一次找未访问节点到已访问节点集合的最短路径长度的节点u
+                    priorityQueue.offer(new int[]{i, distance[i]});
                 }
             }
         }

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/11/3 08:51
  * @Author zsy
- * @Description 找到最小生成树里的关键边和伪关键边 Tarjan类比Problem1192、Problem1568 最小生成树类比 并查集类比 图类比
+ * @Description 找到最小生成树里的关键边和伪关键边 Tarjan类比Problem1192、Problem1568 最小生成树类比Problem1135、Problem1584、Prim 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1584、Problem1627、Problem1905、Problem1998
  * 给你一个 n 个点的带权无向连通图，节点编号为 0 到 n-1 ，同时还有一个数组 edges ，
  * 其中 edges[i] = [fromi, toi, weighti] 表示在 fromi 和 toi 节点之间有一条带权无向边。
  * 最小生成树 (MST) 是给定图中边的一个子集，它连接了所有节点且没有环，而且这些边的权值和最小。
@@ -63,8 +63,8 @@ public class Problem1489 {
     /**
      * Kruskal求最小生成树
      * 图中边的权值由小到大排序，由小到大遍历排好序的边，当前边两个节点已经连通，即当前边作为最小生成树的边会成环，
-     * 当前边不能作为最小生成树的边，直接进行下次循环；当前边两个节点不连通，则当前边能够作为最小生成树的边，
-     * 当前边的两个节点相连，遍历结束，判断所有节点是否连通，即只有一个连通分量，则能得到最小生成树；否则不能得到最小生成树
+     * 当前边不能作为最小生成树的边，直接进行下次循环；当前边两个节点不连通，则当前边能够作为最小生成树的边，当前边的两个节点相连，
+     * 遍历结束，判断所有节点是否连通，即只有一个连通分量，则能得到最小生成树；否则不能得到最小生成树
      * 关键边：删除当前边，通过Kruskal无法得到最小生成树，或得到的最小生成树的权值大于原先图的最小生成树的权值
      * 伪关键边：当前边不是关键边，并且以当前边作为最小生成树的起始边，通过Kruskal得到最小生成树的权值等于原先图的最小生成树的权值
      * 注意：要先判断当前边是否是关键边，再判断当前边是否是伪关键边

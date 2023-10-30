@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/2/8 08:34
  * @Author zsy
- * @Description 情侣牵手 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem785、Problem827、Problem886、Problem952、Problem1254、Problem1319、Problem1627、Problem1905、Problem1998
+ * @Description 情侣牵手 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1489、Problem1584、Problem1627、Problem1905、Problem1998
  * n 对情侣坐在连续排列的 2n 个座位上，想要牵到对方的手。
  * 人和座位由一个整数数组 row 表示，其中 row[i] 是坐在第 i 个座位上的人的 ID。
  * 情侣们按顺序编号，第一对是 (0, 1)，第二对是 (2, 3)，以此类推，最后一对是 (2n-2, 2n-1)。
