@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/10/31 08:13
  * @Author zsy
- * @Description 连通网络的操作次数 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1489、Problem1584、Problem1627、Problem1905、Problem1998
+ * @Description 连通网络的操作次数 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998
  * 用以太网线缆将 n 台计算机连接成一个网络，计算机的编号从 0 到 n-1。
  * 线缆用 connections 表示，其中 connections[i] = [a, b] 连接了计算机 a 和 b。
  * 网络中的任何一台计算机都可以通过网络直接或者间接访问同一个网络中其他任意一台计算机。

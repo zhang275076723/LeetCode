@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/30 08:16
  * @Author zsy
- * @Description 以图判树 并查集类比Problem130、Problem200、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1489、Problem1584、Problem1627、Problem1905、Problem1998
+ * @Description 以图判树 并查集类比Problem130、Problem200、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998
  * 给定编号从 0 到 n - 1 的 n 个结点。
  * 给定一个整数 n 和一个 edges 列表，其中 edges[i] = [ai, bi] 表示图中节点 ai 和 bi 之间存在一条无向边。
  * 如果这些边能够形成一个合法有效的树结构，则返回 true ，否则返回 false 。

@@ -59,17 +59,18 @@ public class Problem1192 {
 
     /**
      * dfs，Tarjan(读作：ta young，https://www.cnblogs.com/nullzx/p/7968110.html)
-     * 核心思想：通过Tarjan求图的桥边，桥边即为删除连通图中的某条边导致连通图不连通的边，即为关键连接
+     * 核心思想：通过Tarjan求图的桥边，桥边即为删除连通图中的某条边导致图中连通分量的个数增加的边，即为关键连接
      * dfn[u]：节点u第一次访问的时间戳，即节点u在dfs的访问顺序
      * low[u]：节点u不通过当前节点u到父节点的边能够访问到的祖先节点v的最小dfn[v]
-     * 1、判断连通分量：当前节点u的邻接节点全部遍历完，如果dfn[u]==low[u]，则节点u是连通分量中时间戳最小的节点，
-     * 即第一个访问的节点，栈内大于节点u的节点出栈，都是同一个连通分量中的节点
-     * 2、判断桥边：当前节点u访问未访问的邻接节点v，更新当前节点u的low[u]=min(low[u],low[v])，
-     * 如果low[v]>dfn[u]，则邻接节点v只能通过访问节点u访问节点u的祖先节点，则节点u和节点v的边是桥边
+     * 1、判断桥边：当前节点u访问未访问的邻接节点v，更新当前节点u的low[u]=min(low[u],low[v])，
+     * 如果low[v]>dfn[u]，则邻接节点v只能通过节点u访问节点u的祖先节点，则节点u和节点v的边是桥边
+     * 2、判断割点：当前节点u访问未访问的邻接节点v，更新当前节点u的low[u]=min(low[u],low[v])，
+     * 如果low[v]>=dfn[u]，则邻接节点v只能通过节点u访问节点u的祖先节点，则节点u是割点；
+     * 如果节点u是第一个访问到的节点(即图的根节点)，并且节点u能够访问到2个或2个以上子节点，则节点u是割点
      * <p>
      * 遍历到当前节点u，找当前节点u的邻接节点v，邻接节点v未访问，进行dfs，dfs结束后更新当前节点u的low[u]=min(low[u],low[v])，
-     * 如果low[v]>dfn[u]，则邻接节点v只能通过访问节点u访问节点u的祖先节点，则节点u和节点v的边是桥边；
-     * 邻接节点v已访问，更新当前节点u的low[u]=min(low[u],dfn[v])
+     * 如果low[v]>dfn[u]，则邻接节点v只能通过节点u访问节点u的祖先节点，则节点u和节点v的边是桥边；
+     * 邻接节点v已访问，并且邻接节点v不是节点u的父节点，更新当前节点u的low[u]=min(low[u],dfn[v])
      * 时间复杂度O(m+n)，空间复杂度O(m+n) (m=connections.size()，即图中边的个数)
      *
      * @param n
@@ -117,14 +118,14 @@ public class Problem1192 {
 
     /**
      * Tarjan求桥边
-     * 注意：本题图中不存在重复的连接，即两个节点之间最多只存在一条边，遍历当前节点时保存父节点，即可避免重复遍历
+     * 注意：本题图中两个节点之间最多只存在一条边，则遍历当前节点时保存父节点parent，避免重复遍历
      *
      * @param u      当前节点u
-     * @param parent 节点u的父节点，即节点u是从哪个节点遍历到的，无向图中不存在重复的连接，保存父节点，即可避免重复遍历
+     * @param parent 节点u的父节点，即节点u是从哪个节点遍历到的，本题无向图中两个节点之间最多只存在一条边，保存父节点，避免重复遍历
      * @param dfn    节点u第一次访问的时间戳，即节点在dfs的访问顺序，同时也作为节点访问数组
      * @param low    节点u不通过当前节点u到父节点的边能够访问到的祖先节点v的最小dfn[v]
      * @param edges  邻接表
-     * @param result 存储桥边的结果集合
+     * @param result 存储桥边的集合
      */
     private void dfs(int u, int parent, int[] dfn, int[] low, List<List<Integer>> edges, List<List<Integer>> result) {
         dfn[u] = index;
@@ -133,7 +134,7 @@ public class Problem1192 {
 
         //遍历节点u的邻接节点v
         for (int v : edges.get(u)) {
-            //无向图中不存在重复的连接，保存父节点，即可避免重复遍历
+            //本题无向图中两个节点之间最多只存在一条边，保存父节点，避免重复遍历
             if (v == parent) {
                 continue;
             }

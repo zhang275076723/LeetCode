@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/11/3 08:51
  * @Author zsy
- * @Description 找到最小生成树里的关键边和伪关键边 Tarjan类比Problem1192、Problem1568 最小生成树类比Problem1135、Problem1584、Prim 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1584、Problem1627、Problem1905、Problem1998
+ * @Description 找到最小生成树里的关键边和伪关键边 Tarjan类比Problem1192、Problem1568 最小生成树类比Problem1135、Problem1584、Prim 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998
  * 给你一个 n 个点的带权无向连通图，节点编号为 0 到 n-1 ，同时还有一个数组 edges ，
  * 其中 edges[i] = [fromi, toi, weighti] 表示在 fromi 和 toi 节点之间有一条带权无向边。
  * 最小生成树 (MST) 是给定图中边的一个子集，它连接了所有节点且没有环，而且这些边的权值和最小。
@@ -169,19 +169,20 @@ public class Problem1489 {
     }
 
     /**
-     * dfs，Tarjan(读作：ta young，https://www.cnblogs.com/nullzx/p/7968110.html)
-     * 核心思想：通过Tarjan求图的桥边，桥边即为删除连通图中的某条边导致连通图不连通的边，即为关键边
+     * 并查集+dfs，Tarjan(读作：ta young，https://www.cnblogs.com/nullzx/p/7968110.html)
+     * 核心思想：通过Tarjan求图的桥边，桥边即为删除连通图中的某条边导致图中连通分量的个数增加的边，即为关键边
      * dfn[u]：节点u第一次访问的时间戳，即节点u在dfs的访问顺序
      * low[u]：节点u不通过当前节点u到父节点的边能够访问到的祖先节点v的最小dfn[v]
-     * 1、判断连通分量：当前节点u的邻接节点全部遍历完，如果dfn[u]==low[u]，则节点u是连通分量中时间戳最小的节点，
-     * 即第一个访问的节点，栈内大于节点u的节点出栈，都是同一个连通分量中的节点
-     * 2、判断桥边：当前节点u访问未访问的邻接节点v，更新当前节点u的low[u]=min(low[u],low[v])，
-     * 如果low[v]>dfn[u]，则邻接节点v只能通过访问节点u访问节点u的祖先节点，则节点u和节点v的边是桥边
+     * 1、判断桥边：当前节点u访问未访问的邻接节点v，更新当前节点u的low[u]=min(low[u],low[v])，
+     * 如果low[v]>dfn[u]，则邻接节点v只能通过节点u访问节点u的祖先节点，则节点u和节点v的边是桥边
+     * 2、判断割点：当前节点u访问未访问的邻接节点v，更新当前节点u的low[u]=min(low[u],low[v])，
+     * 如果low[v]>=dfn[u]，则邻接节点v只能通过节点u访问节点u的祖先节点，则节点u是割点；
+     * 如果节点u是第一个访问到的节点(即图的根节点)，并且节点u能够访问到2个或2个以上子节点，则节点u是割点
      * <p>
      * 图中边的权值由小到大排序，由小到大选择权值相等的边，这些权值相等的边对应的节点构成的图存在以下3种情况的边：
-     * 1、桥边：删除连通图中的某条边导致连通图不连通的边，即flag为1的边是关键边
-     * 2、非桥边：删除连通图中的某条边不会导致连通图不连通的边，即flag为0的边是伪关键边
-     * 3、自环边：从一个节点指向本身节点的边，即flag为2的边既不是关键边也不是伪关键边
+     * 1、桥边：删除连通图中的某条边导致图中连通分量的个数增加的边，即flag为1的边是关键边
+     * 2、非桥边：删除连通图中的某条边不会导致图中连通分量的个数增加的边，即flag为0的边是伪关键边
+     * 3、自环边：从一个节点指向节点自身的边，即flag为2的边既不是关键边也不是伪关键边
      * 本次权值相等的边的两个节点连接，作为同一个连通分量中的节点，下次循环选择权值更大的边时本次本次权值相等的边的节点作为一个节点
      * 时间复杂度O(mlogm+m*α(n)+n)，空间复杂度O(m+n) (m=edges.length，即图中边的个数，n为图中节点的个数)
      * (存储边空间复杂度O(m)，并查集空间复杂度O(n)) (find()和union()的时间复杂度为O(α(n))，可视为常数O(1))
@@ -295,6 +296,7 @@ public class Problem1489 {
             //Tarjan，得到图graph的桥边，保存到flag数组中
             for (int k = 0; k < count; k++) {
                 if (dfn[k] == -1) {
+                    //初始化节点k和父节点的边为-1，表示不存在节点k和父节点的边
                     dfs(k, -1, dfn, low, graph, flag);
                 }
             }
@@ -328,11 +330,11 @@ public class Problem1489 {
 
     /**
      * Tarjan求桥边
-     * 注意：本题权值相等的边对应的节点构成图中存在重复的连接，即两个节点之间存在多条边，
-     * 遍历当前节点时保存父节点到当前节点边是edges中的第几条边，即可避免重复遍历
+     * 注意：本题权值相等的边对应的节点构成图中两个节点之间存在多条边，则遍历当前节点时保存父节点到当前节点边是edges中的第几条边，
+     * 避免重复遍历
      *
      * @param u         当前节点u
-     * @param edgeIndex 节点u的父节点和节点u的边的下标索引，即当前边是edges中的第几条边
+     * @param edgeIndex 节点u的父节点和节点u的边的下标索引，即当前边是edges中的第几条边，避免重复遍历
      * @param dfn       节点u第一次访问的时间戳，即节点在dfs的访问顺序，同时也作为节点访问数组
      * @param low       节点u不通过当前节点u到父节点的边能够访问到的祖先节点v的最小dfn[v]
      * @param graph     邻接表，arr[0]：节点的邻接节点，arr[1]：节点和邻接节点的边的下标索引，即当前边是edges中的第几条边
@@ -350,7 +352,7 @@ public class Problem1489 {
             //节点u和邻接节点v的边的下标索引，即当前边是edges中的第几条边
             int index = arr[1];
 
-            //无向图中存在重复的连接，保存父节点到当前节点边是edges中的第几条边，即可避免重复遍历
+            //无向图中两个节点之间存在多条边，保存父节点到当前节点边是edges中的第几条边，避免重复遍历
             if (index == edgeIndex) {
                 continue;
             }
