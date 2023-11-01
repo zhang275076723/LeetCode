@@ -7,7 +7,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2023/2/12 18:22
  * @Author zsy
- * @Description Dijkstra求单元最短路径 图中最短路径类比Problem399、Problem1334、Problem1462、Problem1786、Problem1976
+ * @Description Dijkstra求单元最短路径 图中最短路径类比Problem399、Problem1334、Problem1368、Problem1462、Problem1786、Problem1976
  */
 public class Dijkstra {
     public static void main(String[] args) {
@@ -27,7 +27,7 @@ public class Dijkstra {
     }
 
     /**
-     * dijkstra求节点u到其他节点的最短路径长度
+     * Dijkstra求节点u到其他节点的最短路径长度
      * 注意：不适合权值为负的图
      * 每次从未访问节点中选择距离节点u最短路径长度的节点v，节点v作为中间节点更新节点u到其他节点的最短路径长度
      * 时间复杂度O(n^2)，空间复杂度O(n)
@@ -79,7 +79,7 @@ public class Dijkstra {
     }
 
     /**
-     * 堆优化dijkstra求节点u到其他节点的最短路径长度
+     * 堆优化Dijkstra求节点u到其他节点的最短路径长度
      * 通过优先队列找未访问节点中距离节点u最短路径长度的节点v，节点v作为中间节点更新节点u到其他节点的最短路径长度
      * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
@@ -103,7 +103,7 @@ public class Dijkstra {
         //初始化，节点u到节点u的最短路径长度为0
         distance[u] = 0;
 
-        //小根堆，arr[0]：当前节点，arr[i]：节点u到当前节点的路径长度
+        //小根堆，arr[0]：当前节点，arr[1]：节点u到当前节点的路径长度
         PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(new Comparator<int[]>() {
             @Override
             public int compare(int[] arr1, int[] arr2) {
@@ -128,8 +128,8 @@ public class Dijkstra {
 
             //节点v作为中间节点更新节点u到其他节点的最短路径长度
             for (int i = 0; i < n; i++) {
-                if (!visited[i] && edges[v][i] != -1) {
-                    distance[i] = Math.min(distance[i], distance[v] + edges[v][i]);
+                if (!visited[i] && edges[v][i] != -1 && distance[v] + edges[v][i] < distance[i]) {
+                    distance[i] = distance[v] + edges[v][i];
                     //节点i入堆，用于下一次找未访问节点中距离节点u最短路径长度的节点v
                     priorityQueue.offer(new int[]{i, distance[i]});
                 }

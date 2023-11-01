@@ -109,10 +109,10 @@ public class Problem1574 {
     /**
      * 双指针
      * 删除一个子数组使剩余数组有序，有以下3种情况：
-     * 1、删除以arr[0]起始的子数组，得到以arr[arr.length-1]结尾的最长不减子数组，即为删除子数组后剩下的不减元素
-     * 2、删除以arr[arr.length-1]结尾的子数组，得到以arr[0]起始的最长不减子数组，即为删除子数组后剩下的不减元素
-     * 3、删除arr中间的子数组，通过情况1、2，得到最长不减前缀数组和最长不减后缀数组，
-     * 则由最长不减前缀数组和最长不减后缀数组构成最长不减子数组，双指针确定要删除的长度
+     * 1、从前往后找以arr[0]起始的最长不减前缀数组
+     * 2、从后往前找以arr[arr.length-1]结尾的最长不减后缀数组
+     * 3、删除中间的子数组，通过情况1、2，得到最长不减前缀数组和最长不减后缀数组，最长不减前缀数组和最长不减后缀数组拼接得到新数组，
+     * 通过双指针确定新数组中要删除的长度，使新数组得到最长不减子数组
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param arr
@@ -128,12 +128,12 @@ public class Problem1574 {
         //最长不减后缀的首元素下标索引
         int j = arr.length - 1;
 
-        //从前往后找以arr[0]起始的最长不减前缀
+        //从前往后找以arr[0]起始的最长不减前缀数组
         while (i + 1 < arr.length && arr[i] <= arr[i + 1]) {
             i++;
         }
 
-        //从后往前找以arr[arr.length-1]结尾的最长不减后缀
+        //从后往前找以arr[arr.length-1]结尾的最长不减后缀数组
         while (j - 1 >= 0 && arr[j - 1] <= arr[j]) {
             j--;
         }
@@ -146,8 +146,8 @@ public class Problem1574 {
         //要删除的子数组左右指针，即arr[left+1]-arr[right-1]为要删除的子数组
         int left = 0;
         int right = j;
-        //删除数组中子数组的最小长度，初始化保留最长不减前缀或保留最长不减后缀，删除子数组中的较小值，
-        //即arr[0]-arr[i]或arr[j]-arr[arr.length-1]
+        //删除数组中子数组的最小长度，初始化保留最长不减前缀数组或保留最长不减后缀数组，
+        //即保留arr[0]-arr[i]和arr[j]-arr[arr.length-1]中较大值
         int min = Math.min(arr.length - i - 1, j);
 
         //arr[0]-arr[i]和arr[j]-arr[arr.length-1]都单调不减，即只需要减去arr[left+1]-arr[right-1]的子数组，则剩余元素单调不减
@@ -158,7 +158,7 @@ public class Problem1574 {
                 right++;
             }
 
-            //arr[left+1]-arr[right-1]即为要删除的子数组，删除之后剩余元素单调不减
+            //更新min，arr[left+1]-arr[right-1]即为要删除的子数组，删除之后剩余元素单调不减
             min = Math.min(min, right - left - 1);
             //左指针右移
             left++;

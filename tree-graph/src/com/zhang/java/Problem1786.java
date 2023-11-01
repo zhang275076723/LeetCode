@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/10/25 08:14
  * @Author zsy
- * @Description 从第一个节点出发到最后一个节点的受限路径数 图中最短路径类比Problem399、Problem1334、Problem1462、Problem1976、Dijkstra 拓扑排序类比 图类比
+ * @Description 从第一个节点出发到最后一个节点的受限路径数 图中最短路径类比Problem399、Problem1334、Problem1368、Problem1462、Problem1976、Dijkstra 拓扑排序类比 图类比
  * 现有一个加权无向连通图。给你一个正整数 n ，表示图中有 n 个节点，并按从 1 到 n 给节点编号；
  * 另给你一个数组 edges ，其中每个 edges[i] = [ui, vi, weighti] 表示存在一条位于节点 ui 和 vi 之间的边，这条边的权重为 weighti 。
  * 从节点 start 出发到节点 end 的路径是一个形如 [z0, z1, z2, ..., zk] 的节点序列，
@@ -72,7 +72,7 @@ public class Problem1786 {
         //key：当前节点，value：当前节点的邻接节点和权值映射
         Map<Integer, Map<Integer, Integer>> graph1 = new HashMap<>();
 
-        //注意：节点不是从0而是从1开始，需要多申请一个长度
+        //注意：节点不是从0而是从1开始
         for (int i = 1; i <= n; i++) {
             graph1.put(i, new HashMap<>());
         }
@@ -150,7 +150,7 @@ public class Problem1786 {
     }
 
     /**
-     * 堆优化dijkstra求节点u到其他节点的最短路径长度
+     * 堆优化Dijkstra求节点u到其他节点的最短路径长度
      * 通过优先队列找未访问节点中距离节点u最短路径长度的节点v，节点v作为中间节点更新节点u到其他节点的最短路径长度
      * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
@@ -177,7 +177,7 @@ public class Problem1786 {
         //初始化，节点u到节点u的最短路径长度为0
         distance[u] = 0;
 
-        //小根堆，arr[0]：当前节点，arr[i]：节点u到当前节点的路径长度
+        //小根堆，arr[0]：当前节点，arr[1]：节点u到当前节点的路径长度
         PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(new Comparator<int[]>() {
             @Override
             public int compare(int[] arr1, int[] arr2) {
@@ -203,8 +203,8 @@ public class Problem1786 {
             //节点v作为中间节点更新节点u到其他节点的最短路径长度
             //节点v的邻接节点entry.getKey()和权值entry.getValue()
             for (Map.Entry<Integer, Integer> entry : edges.get(v).entrySet()) {
-                if (!visited[entry.getKey()]) {
-                    distance[entry.getKey()] = Math.min(distance[entry.getKey()], distance[v] + entry.getValue());
+                if (!visited[entry.getKey()] && distance[v] + entry.getValue() < distance[entry.getKey()]) {
+                    distance[entry.getKey()] = distance[v] + entry.getValue();
                     //节点entry.getKey()入堆，用于下一次找未访问节点中距离节点u最短路径长度的节点v
                     priorityQueue.offer(new int[]{entry.getKey(), distance[entry.getKey()]});
                 }
