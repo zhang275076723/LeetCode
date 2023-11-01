@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/11/4 08:33
  * @Author zsy
- * @Description 查找集群内的关键连接 Tarjan类比Problem1489、Problem1568
+ * @Description 查找集群内的关键连接 Tarjan类比Problem1489、Problem1568、Problem2685
  * 力扣数据中心有 n 台服务器，分别按从 0 到 n-1 的方式进行了编号。
  * 它们之间以 服务器到服务器 的形式相互连接组成了一个内部集群，连接是无向的。
  * 用  connections 表示集群网络，connections[i] = [a, b] 表示服务器 a 和 b 之间形成连接。
@@ -62,11 +62,13 @@ public class Problem1192 {
      * 核心思想：通过Tarjan求图的桥边，桥边即为删除连通图中的某条边导致图中连通分量的个数增加的边，即为关键连接
      * dfn[u]：节点u第一次访问的时间戳，即节点u在dfs的访问顺序
      * low[u]：节点u不通过当前节点u到父节点的边能够访问到的祖先节点v的最小dfn[v]
-     * 1、判断桥边：当前节点u访问未访问的邻接节点v，更新当前节点u的low[u]=min(low[u],low[v])，
+     * 1、求桥边：当前节点u访问未访问的邻接节点v，更新当前节点u的low[u]=min(low[u],low[v])，
      * 如果low[v]>dfn[u]，则邻接节点v只能通过节点u访问节点u的祖先节点，则节点u和节点v的边是桥边
-     * 2、判断割点：当前节点u访问未访问的邻接节点v，更新当前节点u的low[u]=min(low[u],low[v])，
-     * 如果low[v]>=dfn[u]，则邻接节点v只能通过节点u访问节点u的祖先节点，则节点u是割点；
-     * 如果节点u是第一个访问到的节点(即图的根节点)，并且节点u能够访问到2个或2个以上子节点，则节点u是割点
+     * 2、求割点：当前节点u访问未访问的邻接节点v，更新当前节点u的low[u]=min(low[u],low[v])，
+     * 如果low[v]>=dfn[u]，并且节点u不是第一个访问到的节点(即不是图的根节点)，则邻接节点v只能通过节点u访问节点u的祖先节点，
+     * 则节点u是割点；如果节点u是第一个访问到的节点(即图的根节点)，并且节点u能够访问到2个或2个以上子节点，则节点u是割点
+     * 3、求强连通分量：遍历到当前节点u，当前节点u入栈，当前节点u的邻接节点dfs结束，如果dfn[u]==low[u]，
+     * 则节点u为当前强连通分量dfs过程中的第一个遍历到的节点，栈中不等于节点u的节点出栈，是同一个强连通分量中的节点
      * <p>
      * 遍历到当前节点u，找当前节点u的邻接节点v，邻接节点v未访问，进行dfs，dfs结束后更新当前节点u的low[u]=min(low[u],low[v])，
      * 如果low[v]>dfn[u]，则邻接节点v只能通过节点u访问节点u的祖先节点，则节点u和节点v的边是桥边；
@@ -78,7 +80,7 @@ public class Problem1192 {
      * @return
      */
     public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
-        //邻接表
+        //邻接表，无向图
         List<List<Integer>> edges = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
@@ -104,6 +106,7 @@ public class Problem1192 {
             low[i] = -1;
         }
 
+        //存储桥边的集合
         List<List<Integer>> result = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
@@ -118,13 +121,13 @@ public class Problem1192 {
 
     /**
      * Tarjan求桥边
-     * 注意：本题图中两个节点之间最多只存在一条边，则遍历当前节点时保存父节点parent，避免重复遍历
+     * 注意：本题无向图中两个节点之间最多只存在一条边，则遍历当前节点时保存父节点parent，避免重复遍历
      *
      * @param u      当前节点u
      * @param parent 节点u的父节点，即节点u是从哪个节点遍历到的，本题无向图中两个节点之间最多只存在一条边，保存父节点，避免重复遍历
      * @param dfn    节点u第一次访问的时间戳，即节点在dfs的访问顺序，同时也作为节点访问数组
      * @param low    节点u不通过当前节点u到父节点的边能够访问到的祖先节点v的最小dfn[v]
-     * @param edges  邻接表
+     * @param edges  邻接表，无向图
      * @param result 存储桥边的集合
      */
     private void dfs(int u, int parent, int[] dfn, int[] low, List<List<Integer>> edges, List<List<Integer>> result) {

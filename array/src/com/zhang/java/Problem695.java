@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2023/2/9 09:05
  * @Author zsy
- * @Description 岛屿的最大面积 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem547、Problem694、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Problem1905、Offer12 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998
+ * @Description 岛屿的最大面积 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem547、Problem694、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Problem1568、Problem1905、Offer12 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
  * 给你一个大小为 m x n 的二进制矩阵 grid 。
  * 岛屿 是由一些相邻的 1 (代表土地) 构成的组合，这里的「相邻」要求两个 1 必须在 水平或者竖直的四个方向上 相邻。
  * 你可以假设 grid 的四个边缘都被 0（代表水）包围着。
@@ -211,7 +211,7 @@ public class Problem695 {
         private final int[] parent;
         //节点的权值数组(节点的高度)，只有一个节点的权值为1
         private final int[] weight;
-        //节点所包含的个数数组，用于求面积
+        //连通分量中节点个数数组，用于求面积
         private final int[] area;
 
         public UnionFind(int[][] grid) {

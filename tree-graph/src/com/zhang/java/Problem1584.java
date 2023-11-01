@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2023/11/5 08:10
  * @Author zsy
- * @Description 连接所有点的最小费用 最小生成树类比Problem1135、Problem1489、Prim 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1489、Problem1568、Problem1627、Problem1905、Problem1998
+ * @Description 连接所有点的最小费用 最小生成树类比Problem1135、Problem1489、Prim 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1489、Problem1568、Problem1627、Problem1905、Problem1998、Problem2685
  * 给你一个points 数组，表示 2D 平面上的一些点，其中 points[i] = [xi, yi] 。
  * 连接点 [xi, yi] 和点 [xj, yj] 的费用为它们之间的 曼哈顿距离 ：|xi - xj| + |yi - yj| ，其中 |val| 表示 val 的绝对值。
  * 请你返回将所有点连接的最小总费用。
