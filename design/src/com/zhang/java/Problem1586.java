@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/11/9 08:56
  * @Author zsy
- * @Description 二叉搜索树迭代器 II 迭代器类比Problem173、Problem281、Problem284
+ * @Description 二叉搜索树迭代器 II 迭代器类比Problem173、Problem251、Problem281、Problem284、Problem341
  * 实现二叉搜索树（BST）的中序遍历迭代器 BSTIterator 类：
  * BSTIterator(TreeNode root) 初始化 BSTIterator 类的实例。二叉搜索树的根节点 root 作为构造函数的参数传入。
  * 内部指针使用一个不存在于树中且小于树中任意值的数值来初始化。

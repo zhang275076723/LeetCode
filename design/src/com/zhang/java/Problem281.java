@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/11/10 08:50
  * @Author zsy
- * @Description 锯齿迭代器 类比Problem6 迭代器类比Problem173、Problem284、Problem1586
+ * @Description 锯齿迭代器 类比Problem6 迭代器类比Problem173、Problem251、Problem284、Problem341、Problem1586
  * 给出两个一维的向量，请你实现一个迭代器，交替返回它们中间的元素。
  * 输入:
  * v1 = [1,2]

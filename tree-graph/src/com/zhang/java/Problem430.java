@@ -91,6 +91,7 @@ public class Problem430 {
 
     /**
      * 前序遍历
+     * 将多级双向链表顺时针旋转45°作为二叉树，child指针作为左子节点，next指针作为右子节点，
      * 根据前序遍历顺序，将节点放在集合中，再按照前序遍历顺序连接节点为链表
      * 注意：将节点的child指针置空
      * 时间复杂度O(n)，空间复杂度O(n)
@@ -127,7 +128,7 @@ public class Problem430 {
 
     /**
      * 前序遍历
-     * 将当前多级双向链表视为二叉树，child视为左指针，next视为右指针，
+     * 将多级双向链表顺时针旋转45°作为二叉树，child指针作为左子节点，next指针作为右子节点，
      * 根据前序遍历性质，在前序遍历过程中，左子树中最右下节点的下一个遍历到节点是右子树根节点，
      * 所以找当前节点左子树的最右下节点，将当前节点的右子树作为最右下节点的右子树，再将当前节点的左子树作为当前节点的右子树
      * 时间复杂度O(n)，空间复杂度O(1)
@@ -175,7 +176,6 @@ public class Problem430 {
                 while (mostRightNode.next != null) {
                     mostRightNode = mostRightNode.next;
                 }
-
 
                 //当前节点node的右节点的前驱指针prev指向当前节点左子树的最右下节点mostRightNode
                 if (node.next != null) {
