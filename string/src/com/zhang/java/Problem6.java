@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/10/31 09:33
  * @Author zsy
- * @Description Z 字形变换
+ * @Description Z 字形变换 类比Problem281
  * 将一个给定字符串 s 根据给定的行数 numRows ，以从上往下、从左到右进行Z 字形排列。
  * 比如输入字符串为 "PAYPALISHIRING" 行数为 3 时，排列如下：
  * P   A   H   N
@@ -41,8 +41,9 @@ public class Problem6 {
 
     /**
      * 模拟
-     * 当s的长度小于等于行数时，直接返回s
-     * 当s的长度大于行数时，创建StringBuilder数组，使用标志位，确定当前字符放入哪个StringBuilder中，最后再将所有StringBuilder拼接，得到最后结果
+     * 1、s的长度小于等于行数，或只有一行，直接返回s
+     * 2、s的长度大于行数，创建行数大小的StringBuilder数组，使用标志位，确定当前是从上往下添加还是从下往上添加到StringBuilder中，
+     * 最后拼接StringBuilder数组，得到最后结果
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param s

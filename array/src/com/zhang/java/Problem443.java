@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/6 09:07
  * @Author zsy
- * @Description 压缩字符串 类比Problem271、Problem394、Problem604
+ * @Description 压缩字符串 类比Problem271、Problem394、Problem604、Problem900
  * 给你一个字符数组 chars ，请使用下述算法压缩：
  * 从一个空字符串 s 开始。对于 chars 中的每组 连续重复字符 ：
  * 如果这一组长度为 1 ，则将字符追加到 s 中。

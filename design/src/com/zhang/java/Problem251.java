@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/11/11 08:12
  * @Author zsy
- * @Description 展开二维向量 迭代器类比Problem173、Problem281、Problem284、Problem341、Problem1586
+ * @Description 展开二维向量 迭代器类比Problem173、Problem281、Problem284、Problem341、Problem604、Problem900、Problem1286、Problem1586
  * 请设计并实现一个能够展开二维向量的迭代器。
  * 该迭代器需要支持 next 和 hasNext 两种操作。
  * <p>
