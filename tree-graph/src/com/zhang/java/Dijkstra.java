@@ -7,7 +7,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2023/2/12 18:22
  * @Author zsy
- * @Description Dijkstra求单元最短路径 图中最短路径类比Problem399、Problem1334、Problem1368、Problem1462、Problem1786、Problem1976
+ * @Description Dijkstra求单元最短路径 图中最短路径类比Problem399、Problem743、Problem1334、Problem1368、Problem1462、Problem1786、Problem1976
  */
 public class Dijkstra {
     public static void main(String[] args) {

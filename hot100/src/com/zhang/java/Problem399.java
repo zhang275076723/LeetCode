@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/4 10:27
  * @Author zsy
- * @Description 除法求值 图中最短路径类比Problem1334、Problem1368、Problem1462、Problem1786、Problem1976、Dijkstra 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685 图类比Problem133、Problem207、Problem210、Problem329、Problem785、Problem863
+ * @Description 除法求值 图中最短路径类比Problem743、Problem1334、Problem1368、Problem1462、Problem1786、Problem1976、Dijkstra 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685 图类比Problem133、Problem207、Problem210、Problem329、Problem785、Problem863
  * 给你一个变量对数组 equations 和一个实数值数组 values 作为已知条件，
  * 其中 equations[i] = [Ai, Bi] 和 values[i] 共同表示等式 Ai / Bi = values[i] 。
  * 每个 Ai 或 Bi 是一个表示单个变量的字符串。
@@ -247,7 +247,7 @@ public class Problem399 {
         for (int k = 0; k < distance.length; k++) {
             for (int i = 0; i < distance.length; i++) {
                 for (int j = 0; j < distance.length; j++) {
-                    //节点i到节点k和节点k到节点j存在路径时，才计算节点i到节点j的最短路径长度
+                    //节点i到节点k和节点k到节点j都存在路径时，才计算节点i到节点j的最短路径长度
                     //这里元素大于0.000001是特殊用例精度的考虑
                     if (distance[i][k] > 0.000001 && distance[k][j] > 0.000001) {
                         distance[i][j] = distance[i][k] * distance[k][j];

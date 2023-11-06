@@ -4,7 +4,7 @@ package com.zhang.java;
 /**
  * @Date 2023/10/28 08:12
  * @Author zsy
- * @Description 阈值距离内邻居最少的城市 图中最短路径类比Problem399、Problem1368、Problem1462、Problem1786、Problem1976、Dijkstra 图类比
+ * @Description 阈值距离内邻居最少的城市 图中最短路径类比Problem399、Problem743、Problem1368、Problem1462、Problem1786、Problem1976、Dijkstra 图类比
  * 有 n 个城市，按从 0 到 n-1 编号。
  * 给你一个边数组 edges，其中 edges[i] = [fromi, toi, weighti] 代表 fromi 和 toi 两个城市之间的双向加权边，
  * 距离阈值是一个整数 distanceThreshold。
@@ -68,7 +68,7 @@ public class Problem1334 {
                 if (i == j) {
                     distance[i][j] = 0;
                 } else {
-                    //注意：只能初始化不能到达的两个节点的距离为int最大值，不能初始化为-1，因为floyd是通过min求最短路径的
+                    //注意：只能初始化不存在边的两个节点的距离为int最大值，不能初始化为-1，因为floyd可以求带负权值的边
                     distance[i][j] = Integer.MAX_VALUE;
                 }
             }
@@ -85,7 +85,7 @@ public class Problem1334 {
         for (int k = 0; k < n; k++) {
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
-                    //节点i到节点k和节点k到节点j存在路径时，才计算节点i到节点j的最短路径长度
+                    //节点i到节点k和节点k到节点j都存在路径时，才计算节点i到节点j的最短路径长度
                     if (distance[i][k] != Integer.MAX_VALUE && distance[k][j] != Integer.MAX_VALUE) {
                         distance[i][j] = Math.min(distance[i][j], distance[i][k] + distance[k][j]);
                     }
