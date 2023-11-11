@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2023/11/8 08:02
  * @Author zsy
- * @Description 使网格图至少有一条有效路径的最小代价 类比Problem847、Problem1129 图中最短路径类比Problem399、Problem743、Problem1334、Problem1462、Problem1786、Problem1976、Dijkstra
+ * @Description 使网格图至少有一条有效路径的最小代价 bfs类比Problem847、Problem1129 图中最短路径类比Problem399、Problem743、Problem787、Problem1334、Problem1462、Problem1786、Problem1928、Problem1976、Dijkstra
  * 给你一个 m x n 的网格图 grid 。 grid 中每个格子都有一个数字，对应着从该格子出发下一步走的方向。
  * grid[i][j] 中的数字可能为以下几种情况：
  * 1 ，下一步往右走，也就是你会从 grid[i][j] 走到 grid[i][j + 1]
@@ -81,9 +81,9 @@ public class Problem1368 {
 
         //节点(0,0)到其他节点的最短路径长度数组
         int[][] distance = new int[m][n];
-        //当前节点的右左下上四个位置，和grid[i][j]中1、2、3、4相对应，用于判断当前节点到相邻节点的代价是0还是1，
-        //例如：当前节点grid[i][j]为2，即指向左，通过direction[1]到相邻左边节点的代价为0(grid[i][j]==k+1)，
-        //到其他相邻节点的代价为1(grid[i][j]!=k+1)
+        //当前节点的右左下上四个位置，和grid[i][j]中1、2、3、4相对应，用于判断当前节点到相邻节点边的权值是0还是1，
+        //例如：当前节点grid[i][j]为2，即指向左，通过direction[1]到相邻左边节点的边的权值为0(grid[i][j]==k+1)，
+        //到其他相邻节点的边的权值为1(grid[i][j]!=k+1)
         int[][] direction = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
         //distance数组初始化，初始化为int最大值表示节点(0,0)无法到达节点(i,j)
@@ -117,8 +117,8 @@ public class Problem1368 {
                 }
 
                 //节点(x1,y1)作为中间节点，节点(0,0)到节点(x2,y2)的路径长度
-                //grid[x1][y1]所指方向等于节点(x1,y1)到节点(x2,y2)的方向，则代价为0；
-                //grid[x1][y1]所指方向不等于节点(x1,y1)到节点(x2,y2)的方向，则代价为1
+                //grid[x1][y1]所指方向等于节点(x1,y1)到节点(x2,y2)的方向，则节点(x1,y1)到节点(x2,y2)边的权值为0；
+                //grid[x1][y1]所指方向不等于节点(x1,y1)到节点(x2,y2)的方向，则节点(x1,y1)到节点(x2,y2)边的权值为1
                 int cost = distance[x1][y1] + ((grid[x1][y1] == i + 1) ? 0 : 1);
 
                 //节点(x1,y1)作为中间节点，节点(0,0)到节点(x2,y2)的路径长度cost小于之前节点(0,0)到节点(x2,y2)的路径长度distance[x2][y2]，
@@ -150,9 +150,9 @@ public class Problem1368 {
         int[][] distance = new int[m][n];
         //节点访问数组，visited[i][j]为true，表示已经得到节点(0,0)到节点(i,j)的最短路径长度
         boolean[][] visited = new boolean[m][n];
-        //当前节点的右左下上四个位置，和grid[i][j]中1、2、3、4相对应，用于判断当前节点到相邻节点的代价是0还是1，
-        //例如：当前节点grid[i][j]为2，即指向左，通过direction[1]到相邻左边节点的代价为0(grid[i][j]==k+1)，
-        //到其他相邻节点的代价为1(grid[i][j]!=k+1)
+        //当前节点的右左下上四个位置，和grid[i][j]中1、2、3、4相对应，用于判断当前节点到相邻节点边的权值是0还是1，
+        //例如：当前节点grid[i][j]为2，即指向左，通过direction[1]到相邻左边节点的边的权值为0(grid[i][j]==k+1)，
+        //到其他相邻节点的边的权值为1(grid[i][j]!=k+1)
         int[][] direction = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
         //distance数组初始化，初始化为int最大值表示节点(0,0)无法到达节点(i,j)
@@ -196,8 +196,8 @@ public class Problem1368 {
                 }
 
                 if (!visited[x2][y2]) {
-                    //grid[x1][y1]所指方向等于节点(x1,y1)到节点(x2,y2)的方向，则代价为0；
-                    //grid[x1][y1]所指方向不等于节点(x1,y1)到节点(x2,y2)的方向，则代价为1
+                    //grid[x1][y1]所指方向等于节点(x1,y1)到节点(x2,y2)的方向，则节点(x1,y1)到节点(x2,y2)边的权值为0；
+                    //grid[x1][y1]所指方向不等于节点(x1,y1)到节点(x2,y2)的方向，则节点(x1,y1)到节点(x2,y2)边的权值为1
                     distance[x2][y2] = Math.min(distance[x2][y2], distance[x1][y1] + ((grid[x1][y1] == k + 1) ? 0 : 1));
                 }
             }
@@ -208,8 +208,9 @@ public class Problem1368 {
 
     /**
      * 堆优化Dijkstra求(0,0)到(m-1,n-1)的最短路径长度
-     * 通过优先队列找未访问节点中距离节点(0,0)最短路径长度的节点(x,y)，节点(x,y)作为中间节点更新节点(0,0)到其他节点的最短路径长度
+     * 优先队列每次出队节点(0,0)到其他节点的路径长度中最短路径的节点(x,y)，节点(x,y)作为中间节点更新节点(0,0)到其他节点的最短路径长度
      * 时间复杂度O(mn*log(mn))，空间复杂度O(mn)
+     * (堆优化Dijkstra的时间复杂度O(mlogm)，其中m为图中边的个数，本题边的个数O(mn)，所以时间复杂度O(mn*log(mn)))
      *
      * @param grid
      * @return
@@ -220,11 +221,9 @@ public class Problem1368 {
 
         //节点(0,0)到其他节点的最短路径长度数组
         int[][] distance = new int[m][n];
-        //节点访问数组，visited[i][j]为true，表示已经得到节点(0,0)到节点(i,j)的最短路径长度
-        boolean[][] visited = new boolean[m][n];
-        //当前节点的右左下上四个位置，和grid[i][j]中1、2、3、4相对应，用于判断当前节点到相邻节点的代价是0还是1，
-        //例如：当前节点grid[i][j]为2，即指向左，通过direction[1]到相邻左边节点的代价为0(grid[i][j]==k+1)，
-        //到其他相邻节点的代价为1(grid[i][j]!=k+1)
+        //当前节点的右左下上四个位置，和grid[i][j]中1、2、3、4相对应，用于判断当前节点到相邻节点边的权值是0还是1，
+        //例如：当前节点grid[i][j]为2，即指向左，通过direction[1]到相邻左边节点的边的权值为0(grid[i][j]==k+1)，
+        //到其他相邻节点的边的权值为1(grid[i][j]!=k+1)
         int[][] direction = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
         //distance数组初始化，初始化为int最大值表示节点(0,0)无法到达节点(i,j)
@@ -251,15 +250,15 @@ public class Problem1368 {
             //当前节点(x1,y1)
             int x1 = arr[0];
             int y1 = arr[1];
+            //节点(0,0)到节点(x1,y1)的路径长度
+            int curDistance = arr[2];
 
-            if (visited[x1][y1]) {
+            //curDistance大于distance[x1][y1]，则当前节点(x1,y1)不能作为中间节点更新节点(0,0)到其他节点的最短路径长度，直接进行下次循环
+            if (curDistance > distance[x1][y1]) {
                 continue;
             }
 
-            //设置节点(x1,y1)已访问，表示已经得到节点(0,0)到节点(x1,y1)的最短路径长度
-            visited[x1][y1] = true;
-
-            //节点(x1,y1)作为中间节点更新节点(0,0)到其他节点的最短路径长度
+            //遍历节点(x1,y1)的邻接节点(x2,y2)
             for (int i = 0; i < direction.length; i++) {
                 //节点(x1,y1)的邻接节点(x2,y2)
                 int x2 = x1 + direction[i][0];
@@ -270,12 +269,11 @@ public class Problem1368 {
                 }
 
                 //节点(x1,y1)作为中间节点，节点(0,0)到节点(x2,y2)的路径长度
-                //grid[x1][y1]所指方向等于节点(x1,y1)到节点(x2,y2)的方向，则代价为0；
-                //grid[x1][y1]所指方向不等于节点(x1,y1)到节点(x2,y2)的方向，则代价为1
-                int cost = distance[x1][y1] + ((grid[x1][y1] == i + 1) ? 0 : 1);
+                //grid[x1][y1]所指方向等于节点(x1,y1)到节点(x2,y2)的方向，则节点(x1,y1)到节点(x2,y2)边的权值为0；
+                //grid[x1][y1]所指方向不等于节点(x1,y1)到节点(x2,y2)的方向，则节点(x1,y1)到节点(x2,y2)边的权值为1
+                int cost = curDistance + ((grid[x1][y1] == i + 1) ? 0 : 1);
 
-                //节点(x1,y1)作为中间节点，节点(0,0)到节点(x2,y2)的路径长度cost小于之前节点(0,0)到节点(x2,y2)的路径长度distance[x2][y2]，
-                //更新节点(0,0)到节点(x2,y2)的最短路径长度，并将节点(x2,y2)入队
+                //节点(x1,y1)作为中间节点更新节点(0,0)到其他节点的最短路径长度，更新distance[x2][y2]，节点(x2,y2)入堆
                 if (cost < distance[x2][y2]) {
                     distance[x2][y2] = cost;
                     priorityQueue.offer(new int[]{x2, y2, distance[x2][y2]});

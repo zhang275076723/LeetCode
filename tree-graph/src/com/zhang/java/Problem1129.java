@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * @Date 2023/10/30 08:58
  * @Author zsy
- * @Description 颜色交替的最短路径 字节面试题 类比Problem847、Problem1368
+ * @Description 颜色交替的最短路径 字节面试题 bfs类比Problem847、Problem1368
  * 给定一个整数 n，即有向图中的节点数，其中节点标记为 0 到 n - 1。
  * 图中的每条边为红色或者蓝色，并且可能存在自环或平行边。
  * 给定两个数组 redEdges 和 blueEdges，其中：
@@ -71,7 +71,7 @@ public class Problem1129 {
         //节点0到其他节点的最短路径长度数组，并且遍历到当前节点的最短路径最后一条边的颜色为蓝色
         int[] distance2 = new int[n];
 
-        //distance1和distance2初始化，int最大值表示当前节点不可达
+        //distance1和distance2初始化，初始化为int最大值表示无法到达节点i
         for (int i = 0; i < n; i++) {
             distance1[i] = Integer.MAX_VALUE;
             distance2[i] = Integer.MAX_VALUE;

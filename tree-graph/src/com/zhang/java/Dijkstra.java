@@ -7,7 +7,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2023/2/12 18:22
  * @Author zsy
- * @Description Dijkstra求单元最短路径 图中最短路径类比Problem399、Problem743、Problem1334、Problem1368、Problem1462、Problem1786、Problem1976
+ * @Description Dijkstra求单元最短路径 图中最短路径类比Problem399、Problem743、Problem787、Problem1334、Problem1368、Problem1462、Problem1786、Problem1928、Problem1976
  */
 public class Dijkstra {
     public static void main(String[] args) {
@@ -80,8 +80,8 @@ public class Dijkstra {
 
     /**
      * 堆优化Dijkstra求节点u到其他节点的最短路径长度
-     * 通过优先队列找未访问节点中距离节点u最短路径长度的节点v，节点v作为中间节点更新节点u到其他节点的最短路径长度
-     * 时间复杂度O(nlogn)，空间复杂度O(n)
+     * 优先队列每次出队节点u到其他节点的路径长度中最短路径的节点v，节点v作为中间节点更新节点u到其他节点的最短路径长度
+     * 时间复杂度O(mlogm)，空间复杂度O(n) (n为图中节点的个数，m为图中边的个数)
      *
      * @param u
      * @param edges
@@ -92,8 +92,6 @@ public class Dijkstra {
         int n = edges.length;
         //节点u到其他节点的最短路径长度数组
         int[] distance = new int[n];
-        //节点访问数组，visited[v]为true，表示已经得到节点u到节点v的最短路径长度
-        boolean[] visited = new boolean[n];
 
         //distance数组初始化，初始化为int最大值表示节点u无法到达节点i
         for (int i = 0; i < n; i++) {
@@ -116,21 +114,21 @@ public class Dijkstra {
 
         while (!priorityQueue.isEmpty()) {
             int[] arr = priorityQueue.poll();
-            //通过优先队列找未访问节点中距离节点u最短路径长度的节点v
+            //当前节点v
             int v = arr[0];
+            //节点u到节点v的路径长度
+            int curDistance = arr[1];
 
-            if (visited[v]) {
+            //curDistance大于distance[v]，则当前节点v不能作为中间节点更新节点u到其他节点的最短路径长度，直接进行下次循环
+            if (curDistance > distance[v]) {
                 continue;
             }
 
-            //设置节点v已访问，表示已经得到节点u到节点v的最短路径长度
-            visited[v] = true;
-
-            //节点v作为中间节点更新节点u到其他节点的最短路径长度
+            //遍历节点v的邻接节点i
             for (int i = 0; i < n; i++) {
-                if (!visited[i] && edges[v][i] != -1 && distance[v] + edges[v][i] < distance[i]) {
-                    distance[i] = distance[v] + edges[v][i];
-                    //节点i入堆，用于下一次找未访问节点中距离节点u最短路径长度的节点v
+                //节点v作为中间节点更新节点u到其他节点的最短路径长度，更新distance[i]，节点i入堆
+                if (edges[v][i] != -1 && curDistance + edges[v][i] < distance[i]) {
+                    distance[i] = curDistance + edges[v][i];
                     priorityQueue.offer(new int[]{i, distance[i]});
                 }
             }

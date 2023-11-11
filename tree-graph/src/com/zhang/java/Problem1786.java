@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/10/25 08:14
  * @Author zsy
- * @Description 从第一个节点出发到最后一个节点的受限路径数 图中最短路径类比Problem399、Problem743、Problem1334、Problem1368、Problem1462、Problem1976、Dijkstra 拓扑排序类比 图类比
+ * @Description 从第一个节点出发到最后一个节点的受限路径数 图中最短路径类比Problem399、Problem743、Problem787、Problem1334、Problem1368、Problem1462、Problem1928、Problem1976、Dijkstra 拓扑排序类比 图类比
  * 现有一个加权无向连通图。给你一个正整数 n ，表示图中有 n 个节点，并按从 1 到 n 给节点编号；
  * 另给你一个数组 edges ，其中每个 edges[i] = [ui, vi, weighti] 表示存在一条位于节点 ui 和 vi 之间的边，这条边的权重为 weighti 。
  * 从节点 start 出发到节点 end 的路径是一个形如 [z0, z1, z2, ..., zk] 的节点序列，
@@ -60,8 +60,8 @@ public class Problem1786 {
      * 节点u到节点n的最短路径长度 < 节点v到节点n的最短路径长度，则有向图中存在节点v到节点u的边，不存在节点u到节点v的边；
      * 节点u到节点n的最短路径长度 == 节点v和节点n边的权值，则有向图中不存在节点u到节点v的边和节点v到节点u的边，
      * 图中入度为0的节点入队，队列中节点出队，存在节点u到节点v的边，则dp[v]=dp[v]+dp[u]
-     * 时间复杂度O(nlogn+m)，空间复杂度O(m+n) (m=edges.length，即无向图中边的数量)
-     * (Dijkstra的时间复杂度O(nlogn)，拓扑排序的时间复杂度O(m+n)，无向图转换为有向图的时间复杂度O(m)，邻接表的空间复杂度O(m+n))
+     * 时间复杂度O(mlogm+m)=O(mlogm)，空间复杂度O(m+n) (m=edges.length，即无向图中边的数量，n为图中节点的个数)
+     * (Dijkstra的时间复杂度O(mlogm)，拓扑排序的时间复杂度O(m+n)，无向图转换为有向图的时间复杂度O(m)，邻接表的空间复杂度O(m+n))
      *
      * @param n
      * @param edges
@@ -151,8 +151,8 @@ public class Problem1786 {
 
     /**
      * 堆优化Dijkstra求节点u到其他节点的最短路径长度
-     * 通过优先队列找未访问节点中距离节点u最短路径长度的节点v，节点v作为中间节点更新节点u到其他节点的最短路径长度
-     * 时间复杂度O(nlogn)，空间复杂度O(n)
+     * 优先队列每次出队节点u到其他节点的路径长度中最短路径的节点v，节点v作为中间节点更新节点u到其他节点的最短路径长度
+     * 时间复杂度O(mlogm)，空间复杂度O(n) (n为图中节点的个数，m为图中边的个数)
      *
      * @param u
      * @param edges
@@ -164,9 +164,6 @@ public class Problem1786 {
         //节点u到其他节点的最短路径长度数组
         //注意：节点不是从0而是从1开始，需要多申请一个长度
         int[] distance = new int[n + 1];
-        //节点访问数组，visited[v]为true，表示已经得到节点u到节点v的最短路径长度
-        //注意：节点不是从0而是从1开始，需要多申请一个长度
-        boolean[] visited = new boolean[n + 1];
 
         //distance数组初始化，初始化为int最大值表示节点u无法到达节点i
         //注意：节点不是从0而是从1开始
@@ -190,22 +187,21 @@ public class Problem1786 {
 
         while (!priorityQueue.isEmpty()) {
             int[] arr = priorityQueue.poll();
-            //通过优先队列找未访问节点中距离节点u最短路径长度的节点v
+            //当前节点v
             int v = arr[0];
+            //节点u到节点v的路径长度
+            int curDistance = arr[1];
 
-            if (visited[v]) {
+            //curDistance大于distance[v]，则当前节点v不能作为中间节点更新节点u到其他节点的最短路径长度，直接进行下次循环
+            if (curDistance > distance[v]) {
                 continue;
             }
 
-            //设置节点v已访问，表示已经得到节点u到节点v的最短路径长度
-            visited[v] = true;
-
-            //节点v作为中间节点更新节点u到其他节点的最短路径长度
-            //节点v的邻接节点entry.getKey()和权值entry.getValue()
+            //遍历节点v的邻接节点entry.getKey()，节点v到邻接节点entry.getKey()边的权值entry.getValue()
             for (Map.Entry<Integer, Integer> entry : edges.get(v).entrySet()) {
-                if (!visited[entry.getKey()] && distance[v] + entry.getValue() < distance[entry.getKey()]) {
-                    distance[entry.getKey()] = distance[v] + entry.getValue();
-                    //节点entry.getKey()入堆，用于下一次找未访问节点中距离节点u最短路径长度的节点v
+                //节点v作为中间节点更新节点u到其他节点的最短路径长度，更新distance[entry.getKey()]，节点entry.getKey()入堆
+                if (curDistance + entry.getValue() < distance[entry.getKey()]) {
+                    distance[entry.getKey()] = curDistance + entry.getValue();
                     priorityQueue.offer(new int[]{entry.getKey(), distance[entry.getKey()]});
                 }
             }

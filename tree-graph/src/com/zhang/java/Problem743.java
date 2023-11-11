@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2023/11/15 08:05
  * @Author zsy
- * @Description 网络延迟时间 华为机试题 快手面试题 图中最短路径类比Problem399、Problem1334、Problem1368、Problem1462、Problem1786、Problem1976、Dijkstra
+ * @Description 网络延迟时间 华为机试题 快手面试题 图中最短路径类比Problem399、Problem787、Problem1334、Problem1368、Problem1462、Problem1786、Problem1928、Problem1976、Dijkstra
  * 有 n 个网络节点，标记为 1 到 n。
  * 给你一个列表 times，表示信号经过 有向 边的传递时间。
  * times[i] = (ui, vi, wi)，其中 ui 是源节点，vi 是目标节点， wi 是一个信号从源节点传递到目标节点的时间。
@@ -123,8 +123,8 @@ public class Problem743 {
 
     /**
      * 堆优化Dijkstra求节点k-1(每个节点都减1，节点从1开始变为从0开始)到其他节点的最短路径长度
-     * 通过优先队列找未访问节点中距离节点k-1最短路径长度的节点u，节点u作为中间节点更新节点k-1到其他节点的最短路径长度
-     * 时间复杂度O(nlogn)，空间复杂度O(m+n) (m=times.length，即图中边的个数，n为图中节点的个数)
+     * 优先队列每次出队节点k-1到其他节点的路径长度中最短路径的节点u，节点u作为中间节点更新节点k-1到其他节点的最短路径长度
+     * 时间复杂度O(mlogm)，空间复杂度O(m+n) (m=times.length，即图中边的个数，n为图中节点的个数)
      *
      * @param times
      * @param n
@@ -151,8 +151,6 @@ public class Problem743 {
 
         //节点k-1到其他节点的最短路径长度数组
         int[] distance = new int[n];
-        //节点访问数组，visited[u]为true，表示已经得到节点k-1到节点u的最短路径长度
-        boolean[] visited = new boolean[n];
 
         //distance数组初始化，初始化为int最大值表示节点k-1无法到达节点i
         for (int i = 0; i < n; i++) {
@@ -175,26 +173,26 @@ public class Problem743 {
 
         while (!priorityQueue.isEmpty()) {
             int[] arr = priorityQueue.poll();
-            //通过优先队列找未访问节点中距离节点k-1最短路径长度的节点u
+            //当前节点u
             int u = arr[0];
+            //节点k-1到节点u的路径长度
+            int curDistance = arr[1];
 
-            if (visited[u]) {
+            //curDistance大于distance[u]，则当前节点u不能作为中间节点更新节点k-1到其他节点的最短路径长度，直接进行下次循环
+            if (curDistance > distance[u]) {
                 continue;
             }
 
-            //设置节点u已访问，表示已经得到节点k-1到节点u的最短路径长度
-            visited[u] = true;
-
-            //节点u作为中间节点更新节点k-1到其他节点的最短路径长度
+            //遍历节点u的邻接节点v
             for (int[] arr2 : edges.get(u)) {
                 //节点u的邻接节点v
                 int v = arr2[0];
                 //节点u到节点v边的权值
                 int weight = arr2[1];
 
-                if (!visited[v] && distance[u] + weight < distance[v]) {
-                    distance[v] = distance[u] + weight;
-                    //节点v入堆，用于下一次找未访问节点中距离节点k-1最短路径长度的节点u
+                //节点u作为中间节点更新节点k-1到其他节点的最短路径长度，更新distance[v]，节点v入堆
+                if (curDistance + weight < distance[v]) {
+                    distance[v] = curDistance + weight;
                     priorityQueue.offer(new int[]{v, distance[v]});
                 }
             }
