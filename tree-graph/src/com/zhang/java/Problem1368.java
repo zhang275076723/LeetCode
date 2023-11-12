@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2023/11/8 08:02
  * @Author zsy
- * @Description 使网格图至少有一条有效路径的最小代价 bfs类比Problem847、Problem1129 图中最短路径类比Problem399、Problem743、Problem787、Problem1334、Problem1462、Problem1786、Problem1928、Problem1976、Dijkstra
+ * @Description 使网格图至少有一条有效路径的最小代价 bfs类比Problem847、Problem1129 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1462、Problem1786、Problem1928、Problem1976、Dijkstra
  * 给你一个 m x n 的网格图 grid 。 grid 中每个格子都有一个数字，对应着从该格子出发下一步走的方向。
  * grid[i][j] 中的数字可能为以下几种情况：
  * 1 ，下一步往右走，也就是你会从 grid[i][j] 走到 grid[i][j + 1]
@@ -137,6 +137,7 @@ public class Problem1368 {
      * Dijkstra求(0,0)到(m-1,n-1)的最短路径长度
      * 注意：不适合权值为负的图
      * 每次从未访问节点中选择距离节点(0,0)最短路径长度的节点(x,y)，节点(x,y)作为中间节点更新节点(0,0)到其他节点的最短路径长度
+     * 如果存在当前节点指向邻接节点的边，则当前节点到邻接节点边的权值为0；否则，权值为1
      * 时间复杂度O((mn)^2)，空间复杂度O(mn)
      *
      * @param grid
@@ -209,6 +210,7 @@ public class Problem1368 {
     /**
      * 堆优化Dijkstra求(0,0)到(m-1,n-1)的最短路径长度
      * 优先队列每次出队节点(0,0)到其他节点的路径长度中最短路径的节点(x,y)，节点(x,y)作为中间节点更新节点(0,0)到其他节点的最短路径长度
+     * 如果存在当前节点指向邻接节点的边，则当前节点到邻接节点边的权值为0；否则，权值为1
      * 时间复杂度O(mn*log(mn))，空间复杂度O(mn)
      * (堆优化Dijkstra的时间复杂度O(mlogm)，其中m为图中边的个数，本题边的个数O(mn)，所以时间复杂度O(mn*log(mn)))
      *

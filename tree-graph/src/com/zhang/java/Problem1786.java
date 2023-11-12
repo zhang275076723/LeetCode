@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/10/25 08:14
  * @Author zsy
- * @Description 从第一个节点出发到最后一个节点的受限路径数 图中最短路径类比Problem399、Problem743、Problem787、Problem1334、Problem1368、Problem1462、Problem1928、Problem1976、Dijkstra 拓扑排序类比 图类比
+ * @Description 从第一个节点出发到最后一个节点的受限路径数 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1368、Problem1462、Problem1928、Problem1976、Dijkstra 拓扑排序类比 图类比
  * 现有一个加权无向连通图。给你一个正整数 n ，表示图中有 n 个节点，并按从 1 到 n 给节点编号；
  * 另给你一个数组 edges ，其中每个 edges[i] = [ui, vi, weighti] 表示存在一条位于节点 ui 和 vi 之间的边，这条边的权重为 weighti 。
  * 从节点 start 出发到节点 end 的路径是一个形如 [z0, z1, z2, ..., zk] 的节点序列，
