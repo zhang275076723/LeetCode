@@ -49,7 +49,7 @@ public class Offer49 {
         PriorityQueue<Long> priorityQueue = new PriorityQueue<>(new Comparator<Long>() {
             @Override
             public int compare(Long a, Long b) {
-                //不能写成return a-b;，因为long相减再转为int有可能在int范围溢出
+                //不能写成return (int) (a - b);，因为long相减再转为int有可能在int范围溢出
                 return Long.compare(a, b);
             }
         });

@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2023/11/16 08:36
  * @Author zsy
- * @Description K 站中转内最便宜的航班 图中最短路径类比Problem399、Problem743、Problem882、Problem1334、Problem1368、Problem1462、Problem1786、Problem1928、Problem1976、Dijkstra
+ * @Description K 站中转内最便宜的航班 图中最短路径类比Problem399、Problem743、Problem882、Problem1334、Problem1368、Problem1462、Problem1514、Problem1786、Problem1928、Problem1976、Dijkstra
  * 有 n 个城市通过一些航班连接。给你一个数组 flights ，其中 flights[i] = [fromi, toi, pricei] ，
  * 表示该航班都从城市 fromi 开始，以价格 pricei 抵达 toi。
  * 现在给定所有的城市和航班，以及出发城市 src 和目的地 dst，你的任务是找到出一条最多经过 k 站中转的路线，
@@ -136,7 +136,7 @@ public class Problem787 {
                 continue;
             }
 
-            //小根堆保证第一次得到节点src到节点dst的路径长度是最短路径长度，直接返回curDistance
+            //小根堆保证第一次访问到节点dst，则得到节点src最多经过k+1个节点到达节点dst的最短路径长度，直接返回curDistance
             //注意：如果使用变量保存curDistance取最小值，在小根堆遍历结束时再返回，会超时
             if (u == dst) {
                 return curDistance;

@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2023/11/17 08:14
  * @Author zsy
- * @Description 规定时间内到达终点的最小花费 花旗银行笔试题 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1368、Problem1462、Problem1786、Problem1976、Dijkstra
+ * @Description 规定时间内到达终点的最小花费 花旗银行笔试题 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1368、Problem1462、Problem1514、Problem1786、Problem1976、Dijkstra
  * 一个国家有 n 个城市，城市编号为 0 到 n - 1 ，题目保证 所有城市 都由双向道路 连接在一起 。
  * 道路由二维整数数组 edges 表示，其中 edges[i] = [xi, yi, timei] 表示城市 xi 和 yi 之间有一条双向道路，耗费时间为 timei 分钟。
  * 两个城市之间可能会有多条耗费时间不同的道路，但是不会有道路两头连接着同一座城市。
@@ -125,7 +125,7 @@ public class Problem1928 {
                 continue;
             }
 
-            //小根堆保证第一次得到节点0最多经过maxTime分钟到达节点n-1是最少费用，直接返回curDistance
+            //小根堆保证第一次访问到节点n-1，则得到节点0最多经过maxTime分钟到达节点n-1的最少费用，直接返回curDistance
             //注意：如果使用变量保存curDistance取最小值，在小根堆遍历结束时再返回，会超时
             if (u == n - 1) {
                 return curDistance;

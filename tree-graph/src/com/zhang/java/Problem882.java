@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2023/11/18 08:37
  * @Author zsy
- * @Description 细分图中的可到达节点 图中最短路径类比Problem399、Problem743、Problem787、Problem1334、Problem1368、Problem1462、Problem1786、Problem1928、Problem1976、Dijkstra
+ * @Description 细分图中的可到达节点 图中最短路径类比Problem399、Problem743、Problem787、Problem1334、Problem1368、Problem1462、Problem1514、Problem1786、Problem1928、Problem1976、Dijkstra
  * 给你一个无向图（原始图），图中有 n 个节点，编号从 0 到 n - 1 。
  * 你决定将图中的每条边 细分 为一条节点链，每条边之间的新节点数各不相同。
  * 图用由边组成的二维数组 edges 表示，其中 edges[i] = [ui, vi, cnti] 表示原始图中节点 ui 和 vi 之间存在一条边，cnti 是将边 细分 后的新节点总数。
@@ -61,7 +61,7 @@ public class Problem882 {
      * 节点0到节点u往节点v走，最多还能经过fromU2V=max(0,maxMoves-distance[u])个节点，
      * 节点0到节点v往节点u走，最多还能经过fromV2U=max(0,maxMoves-distance[v])个节点，
      * 则细分后节点u和节点v之间能够到达min(fromU2V+fromV2U,edges[i][2])个节点
-     * 时间复杂度O(n^2+m)，空间复杂度O(m+n) (n为图中节点的个数，m为图中边的个数)
+     * 时间复杂度O(n^2+m)，空间复杂度O(m+n) (n为图中节点的个数，m为图中边的个数，m=edges.length)
      *
      * @param edges
      * @param maxMoves
@@ -166,7 +166,7 @@ public class Problem882 {
      * 节点0到节点u往节点v走，最多还能经过fromU2V=max(0,maxMoves-distance[u])个节点，
      * 节点0到节点v往节点u走，最多还能经过fromV2U=max(0,maxMoves-distance[v])个节点，
      * 则细分后节点u和节点v之间能够到达min(fromU2V+fromV2U,edges[i][2])个节点
-     * 时间复杂度O(mlogm+n)，空间复杂度O(m+n) (n为图中节点的个数，m为图中边的个数)
+     * 时间复杂度O(mlogm+n)，空间复杂度O(m+n) (n为图中节点的个数，m为图中边的个数，m=edges.length)
      *
      * @param edges
      * @param maxMoves
@@ -233,7 +233,7 @@ public class Problem882 {
                 //节点u和邻接节点v边的权值，即节点u到邻接节点v经过的节点个数
                 int weight = arr2[1];
 
-                //节点u作为中间节点更新节点u到其他节点的最短路径长度，更新distance[v]，节点v入堆
+                //节点u作为中间节点更新节点0到其他节点的最短路径长度，更新distance[v]，节点v入堆
                 if (curDistance + weight < distance[v]) {
                     distance[v] = curDistance + weight;
                     priorityQueue.offer(new int[]{v, distance[v]});
