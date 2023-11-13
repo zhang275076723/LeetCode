@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2023/11/16 08:36
  * @Author zsy
- * @Description K 站中转内最便宜的航班 图中最短路径类比Problem399、Problem743、Problem882、Problem1334、Problem1368、Problem1462、Problem1514、Problem1786、Problem1928、Problem1976、Dijkstra
+ * @Description K 站中转内最便宜的航班 带限制条件的单元最短路径类比Problem1928、Problem2093 图中最短路径类比Problem399、Problem743、Problem882、Problem1334、Problem1368、Problem1462、Problem1514、Problem1786、Problem1928、Problem1976、Problem2093、Dijkstra
  * 有 n 个城市通过一些航班连接。给你一个数组 flights ，其中 flights[i] = [fromi, toi, pricei] ，
  * 表示该航班都从城市 fromi 开始，以价格 pricei 抵达 toi。
  * 现在给定所有的城市和航班，以及出发城市 src 和目的地 dst，你的任务是找到出一条最多经过 k 站中转的路线，
@@ -60,11 +60,10 @@ public class Problem787 {
 
     /**
      * 堆优化Dijkstra求节点src最多经过k+1个节点(经过k站中转)到达节点dst的最少费用
-     * Dijkstra求节点到其他节点经过边的最短路径，注意和1928题区别
-     * 难点：使用额外的step数组，记录节点src到其他节点的最短路径经过的节点个数，遍历到当前节点u，如果不能更新邻接节点v的distance[v]，
-     * 但节点src到节点u的路径经过的节点个数加1小于节点src到节点v的最短路径经过的节点个数，即curStep+1<step[v]，
+     * 难点：使用额外的step数组，记录节点src到其他节点的最少费用经过的节点个数，遍历到当前节点u，如果不能更新邻接节点v的distance[v]，
+     * 但节点src到节点u经过的节点个数加1小于节点src到节点v的最少费用经过的节点个数，即curStep+1<step[v]，
      * 节点src经过节点u到达节点v，最后到达节点dst可能是一条更优的路径，不能遗漏这条路径
-     * 时间复杂度O(nklognk)，空间复杂度O(m+n) (m=flights.length，即图中边的个数，n为图中节点的个数)
+     * 时间复杂度O(nklognk)，空间复杂度O(m+n+nk) (m=flights.length，即图中边的个数，n为图中节点的个数)
      * (最多经过k+1个节点，每经过1个节点，对应n个节点，最多会将nk个节点加入堆中)
      * (堆优化Dijkstra的时间复杂度O(mlogm)，其中m为图中边的个数，本题边的个数O(nk)，所以时间复杂度O(nklognk))
      *
@@ -91,11 +90,11 @@ public class Problem787 {
             edges.get(u).add(new int[]{v, weight});
         }
 
-        //节点src到其他节点的最短路径长度数组
+        //节点src到其他节点的最少费用数组
         int[] distance = new int[n];
-        //节点src到其他节点的最短路径经过的节点个数数组
+        //节点src到其他节点的最少费用经过的节点个数数组
         //遍历到当前节点u，如果不能更新邻接节点v的distance[v]，
-        //但节点src到节点u的路径经过的节点个数加1小于节点src到节点v的最短路径经过的节点个数，即curStep+1<step[v]，
+        //但节点src到节点u经过的节点个数加1小于节点src到节点v的最少费用经过的节点个数，即curStep+1<step[v]，
         //节点src经过节点u到达节点v，最后到达节点dst可能是一条更优的路径，不能遗漏这条路径
         int[] step = new int[n];
 
@@ -105,13 +104,13 @@ public class Problem787 {
             step[i] = Integer.MAX_VALUE;
         }
 
-        //初始化，节点src到节点src的最短路径长度为0
+        //初始化，节点src到节点src的最少费用为0
         distance[src] = 0;
-        //初始化，节点src到节点src的最短路径经过的节点个数为0
+        //初始化，节点src到节点src的最少费用经过的节点个数为0
         step[src] = 0;
 
-        //小根堆，arr[0]：当前节点，arr[1]：节点src到节点arr[0]的路径长度，注意：当前路径长度不是最短路径长度，
-        //arr[2]：节点src到节点arr[0]的路径经过的节点个数(即经过的中转次数为arr[2]-1)
+        //小根堆，arr[0]：当前节点，arr[1]：节点src到节点arr[0]的费用，注意：当前费用不一定是最少费用，
+        //arr[2]：节点src到节点arr[0]经过的节点个数(即经过的中转次数为arr[2]-1)
         PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(new Comparator<int[]>() {
             @Override
             public int compare(int[] arr1, int[] arr2) {
@@ -126,23 +125,23 @@ public class Problem787 {
             int[] arr = priorityQueue.poll();
             //当前节点u
             int u = arr[0];
-            //节点src到节点u的路径长度，注意：当前路径长度不是最短路径长度
+            //节点src到节点u的费用，注意：当前费用不一定是最少费用
             int curDistance = arr[1];
-            //节点src到节点u的路径经过的节点个数(即经过的中转次数为curStep-1)
+            //节点src到节点u经过的节点个数(即经过的中转次数为curStep-1)
             int curStep = arr[2];
 
-            //节点src到节点u的路径经过的节点个数curStep大于k+1(即经过的中转次数大于k)，则不合法，直接进行下次循环
+            //节点src到节点u经过的节点个数curStep大于k+1(即经过的中转次数大于k)，则不合法，直接进行下次循环
             if (curStep > k + 1) {
                 continue;
             }
 
-            //小根堆保证第一次访问到节点dst，则得到节点src最多经过k+1个节点到达节点dst的最短路径长度，直接返回curDistance
+            //小根堆保证第一次访问到节点dst，则得到节点src最多经过k+1个节点到达节点dst的最少费用，直接返回curDistance
             //注意：如果使用变量保存curDistance取最小值，在小根堆遍历结束时再返回，会超时
             if (u == dst) {
                 return curDistance;
             }
 
-            //遍历节点u的邻接节点，节点u作为中间节点更新节点u到其他节点的最短路径长度
+            //遍历节点u的邻接节点，节点u作为中间节点更新节点src到其他节点的最少费用
             for (int[] arr2 : edges.get(u)) {
                 //节点u的邻接节点
                 int v = arr2[0];
@@ -156,7 +155,7 @@ public class Problem787 {
                     priorityQueue.offer(new int[]{v, distance[v], step[v]});
                 } else if (curStep + 1 < step[v]) {
                     //curDistance+weight不能更新distance[v]，
-                    //但节点src到节点u的路径经过的节点个数加1小于节点src到节点v的最短路径经过的节点个数，即curStep+1<step[v]，
+                    //但节点src到节点u经过的节点个数加1小于节点src到节点v的最少费用经过的节点个数，即curStep+1<step[v]，
                     //节点src经过节点u到达节点v，最后到达节点dst可能是一条更优的路径，不能遗漏这条路径，节点v入堆
                     priorityQueue.offer(new int[]{v, curDistance + weight, curStep + 1});
                 }
@@ -196,7 +195,7 @@ public class Problem787 {
 
         //经过的节点个数i
         for (int i = 1; i <= k + 1; i++) {
-            //图中节点u、v
+            //当前节点u、v
             for (int j = 0; j < flights.length; j++) {
                 int u = flights[j][0];
                 int v = flights[j][1];
