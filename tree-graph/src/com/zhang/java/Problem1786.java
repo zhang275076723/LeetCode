@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/10/25 08:14
  * @Author zsy
- * @Description 从第一个节点出发到最后一个节点的受限路径数 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1368、Problem1462、Problem1514、Problem1928、Problem1976、Problem2045、Problem2093、Problem2662、Dijkstra 拓扑排序类比
+ * @Description 从第一个节点出发到最后一个节点的受限路径数 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1368、Problem1462、Problem1514、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2662、Dijkstra 拓扑排序类比
  * 现有一个加权无向连通图。给你一个正整数 n ，表示图中有 n 个节点，并按从 1 到 n 给节点编号；
  * 另给你一个数组 edges ，其中每个 edges[i] = [ui, vi, weighti] 表示存在一条位于节点 ui 和 vi 之间的边，这条边的权重为 weighti 。
  * 从节点 start 出发到节点 end 的路径是一个形如 [z0, z1, z2, ..., zk] 的节点序列，
@@ -174,7 +174,7 @@ public class Problem1786 {
         //初始化，节点u到节点u的最短路径长度为0
         distance[u] = 0;
 
-        //小根堆，arr[0]：当前节点，arr[1]：节点u到当前节点的路径长度
+        //小根堆，arr[0]：当前节点，arr[1]：节点u到当前节点的路径长度，注意：当前路径长度不一定是最短路径长度
         PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(new Comparator<int[]>() {
             @Override
             public int compare(int[] arr1, int[] arr2) {
@@ -189,7 +189,7 @@ public class Problem1786 {
             int[] arr = priorityQueue.poll();
             //当前节点v
             int v = arr[0];
-            //节点u到节点v的路径长度
+            //节点u到节点v的路径长度，注意：当前路径长度不一定是最短路径长度
             int curDistance = arr[1];
 
             //curDistance大于distance[v]，则当前节点v不能作为中间节点更新节点u到其他节点的最短路径长度，直接进行下次循环

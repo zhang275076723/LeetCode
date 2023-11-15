@@ -7,7 +7,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2023/2/12 18:22
  * @Author zsy
- * @Description Dijkstra求单元最短路径 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1368、Problem1462、Problem1514、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2662
+ * @Description Dijkstra求单元最短路径 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1368、Problem1462、Problem1514、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2662
  */
 public class Dijkstra {
     public static void main(String[] args) {
@@ -101,7 +101,7 @@ public class Dijkstra {
         //初始化，节点u到节点u的最短路径长度为0
         distance[u] = 0;
 
-        //小根堆，arr[0]：当前节点，arr[1]：节点u到当前节点的路径长度
+        //小根堆，arr[0]：当前节点，arr[1]：节点u到当前节点的路径长度，注意：当前路径长度不一定是最短路径长度
         PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(new Comparator<int[]>() {
             @Override
             public int compare(int[] arr1, int[] arr2) {
@@ -116,7 +116,7 @@ public class Dijkstra {
             int[] arr = priorityQueue.poll();
             //当前节点v
             int v = arr[0];
-            //节点u到节点v的路径长度
+            //节点u到节点v的路径长度，注意：当前路径长度不一定是最短路径长度
             int curDistance = arr[1];
 
             //curDistance大于distance[v]，则当前节点v不能作为中间节点更新节点u到其他节点的最短路径长度，直接进行下次循环
