@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2023/11/8 08:02
  * @Author zsy
- * @Description 使网格图至少有一条有效路径的最小代价 bfs类比Problem847、Problem1129、Problem2045 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1462、Problem1514、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2662、Dijkstra
+ * @Description 使网格图至少有一条有效路径的最小代价 bfs类比Problem847、Problem1129、Problem1631、Problem2045 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1462、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2662、Dijkstra
  * 给你一个 m x n 的网格图 grid 。 grid 中每个格子都有一个数字，对应着从该格子出发下一步走的方向。
  * grid[i][j] 中的数字可能为以下几种情况：
  * 1 ，下一步往右走，也就是你会从 grid[i][j] 走到 grid[i][j + 1]
@@ -107,7 +107,7 @@ public class Problem1368 {
             //当前节点(x1,y1)
             int x1 = arr[0];
             int y1 = arr[1];
-            //节点(0,0)到当前节点的路径长度，注意：当前路径长度不一定是最短路径长度
+            //节点(0,0)到当前节点(x1,y1)的路径长度，注意：当前路径长度不一定是最短路径长度
             int curDistance = arr[2];
 
             //curDistance大于distance[x1][y1]，则当前节点(x1,y1)不能作为中间节点更新节点(0,0)到其他节点的最短路径长度，直接进行下次循环
@@ -115,7 +115,7 @@ public class Problem1368 {
                 continue;
             }
 
-            //节点(x1,y1)作为中间节点更新节点(0,0)到其他节点的最短路径长度
+            //遍历节点(x1,y1)的邻接节点(x2,y2)
             for (int i = 0; i < direction.length; i++) {
                 //节点(x1,y1)的邻接节点(x2,y2)
                 int x2 = x1 + direction[i][0];
@@ -130,8 +130,7 @@ public class Problem1368 {
                 //grid[x1][y1]所指方向不等于节点(x1,y1)到节点(x2,y2)的方向，则节点(x1,y1)到节点(x2,y2)边的权值为1
                 int cost = curDistance + ((grid[x1][y1] == i + 1) ? 0 : 1);
 
-                //节点(x1,y1)作为中间节点，节点(0,0)到节点(x2,y2)的路径长度cost小于之前节点(0,0)到节点(x2,y2)的路径长度distance[x2][y2]，
-                //更新节点(0,0)到节点(x2,y2)的最短路径长度，并将节点(x2,y2)入队
+                //节点(x1,y1)作为中间节点更新节点(0,0)到其他节点的最短路径长度，更新distance[x2][y2]，节点(x2,y2)入队
                 if (cost < distance[x2][y2]) {
                     distance[x2][y2] = cost;
                     queue.offer(new int[]{x2, y2, distance[x2][y2]});
@@ -143,7 +142,7 @@ public class Problem1368 {
     }
 
     /**
-     * Dijkstra求(0,0)到(m-1,n-1)的最短路径长度
+     * Dijkstra求节点(0,0)到节点(m-1,n-1)的最短路径长度
      * 注意：不适合权值为负的图
      * 每次从未访问节点中选择距离节点(0,0)最短路径长度的节点(x,y)，节点(x,y)作为中间节点更新节点(0,0)到其他节点的最短路径长度
      * 如果存在当前节点指向邻接节点的边，则当前节点到邻接节点边的权值为0；否则，权值为1
@@ -195,6 +194,11 @@ public class Problem1368 {
             //设置节点(x1,y1)已访问，表示已经得到节点(0,0)到节点(x1,y1)的最短路径长度
             visited[x1][y1] = true;
 
+            //已经得到节点(0,0)到节点(m-1,n-1)的最短路径长度，直接返回distance[m-1][n-1]
+            if (x1 == m - 1 && y1 == n - 1) {
+                return distance[m - 1][n - 1];
+            }
+
             //节点(x1,y1)作为中间节点更新节点(0,0)到其他节点的最短路径长度
             for (int k = 0; k < direction.length; k++) {
                 //节点(x1,y1)的邻接节点(x2,y2)
@@ -213,11 +217,12 @@ public class Problem1368 {
             }
         }
 
-        return distance[m - 1][n - 1];
+        //遍历结束，没有找到节点(0,0)到节点(m-1,n-1)的最短路径长度，则返回-1
+        return -1;
     }
 
     /**
-     * 堆优化Dijkstra求(0,0)到(m-1,n-1)的最短路径长度
+     * 堆优化Dijkstra求节点(0,0)到节点(m-1,n-1)的最短路径长度
      * 优先队列每次出队节点(0,0)到其他节点的路径长度中最短路径的节点(x,y)，节点(x,y)作为中间节点更新节点(0,0)到其他节点的最短路径长度
      * 如果存在当前节点指向邻接节点的边，则当前节点到邻接节点边的权值为0；否则，权值为1
      * 时间复杂度O(mn*log(mn))，空间复杂度O(mn)
@@ -254,6 +259,8 @@ public class Problem1368 {
                 return arr1[2] - arr2[2];
             }
         });
+
+        //节点(0,0)入堆
         priorityQueue.offer(new int[]{0, 0, 0});
 
         while (!priorityQueue.isEmpty()) {
@@ -261,12 +268,17 @@ public class Problem1368 {
             //当前节点(x1,y1)
             int x1 = arr[0];
             int y1 = arr[1];
-            //节点(0,0)到节点(x1,y1)的路径长度
+            //节点(0,0)到当前节点(x1,y1)的路径长度
             int curDistance = arr[2];
 
             //curDistance大于distance[x1][y1]，则当前节点(x1,y1)不能作为中间节点更新节点(0,0)到其他节点的最短路径长度，直接进行下次循环
             if (curDistance > distance[x1][y1]) {
                 continue;
+            }
+
+            //小根堆保证第一次访问到节点(m-1,n-1)，则得到节点(0,0)到节点(m-1,n-1)的最短路径长度，直接返回curDistance
+            if (x1 == m - 1 && y1 == n - 1) {
+                return curDistance;
             }
 
             //遍历节点(x1,y1)的邻接节点(x2,y2)
@@ -292,6 +304,7 @@ public class Problem1368 {
             }
         }
 
-        return distance[m - 1][n - 1];
+        //遍历结束，没有找到节点(0,0)到节点(m-1,n-1)的最短路径长度，则返回-1
+        return -1;
     }
 }
