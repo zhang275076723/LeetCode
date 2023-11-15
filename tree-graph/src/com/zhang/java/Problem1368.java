@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2023/11/8 08:02
  * @Author zsy
- * @Description 使网格图至少有一条有效路径的最小代价 bfs类比Problem847、Problem1129 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1462、Problem1514、Problem1786、Problem1928、Problem1976、Problem2093、Problem2662、Dijkstra
+ * @Description 使网格图至少有一条有效路径的最小代价 bfs类比Problem847、Problem1129、Problem2045 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1462、Problem1514、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2662、Dijkstra
  * 给你一个 m x n 的网格图 grid 。 grid 中每个格子都有一个数字，对应着从该格子出发下一步走的方向。
  * grid[i][j] 中的数字可能为以下几种情况：
  * 1 ，下一步往右走，也就是你会从 grid[i][j] 走到 grid[i][j + 1]
@@ -70,7 +70,7 @@ public class Problem1368 {
 
     /**
      * bfs
-     * 时间复杂度O((mn)^2)，空间复杂度O(mn) (共mn个节点，每个节点最终可以访问到其他所有节点，即可以访问到(mn)^2个节点)
+     * 时间复杂度O(mn)，空间复杂度O(mn)
      *
      * @param grid
      * @return
@@ -96,15 +96,24 @@ public class Problem1368 {
         //初始化，节点(0,0)到节点(0,0)的最短路径长度为0
         distance[0][0] = 0;
 
-        //arr[0]：节点的横坐标，arr[1]：节点的纵坐标
+        //arr[0]：节点的横坐标，arr[1]：节点的纵坐标，arr[2]：节点(0,0)到当前节点的路径长度，注意：当前路径长度不一定是最短路径长度
         Queue<int[]> queue = new LinkedList<>();
-        queue.offer(new int[]{0, 0});
+
+        //节点(0,0)入队
+        queue.offer(new int[]{0, 0, 0});
 
         while (!queue.isEmpty()) {
             int[] arr = queue.poll();
             //当前节点(x1,y1)
             int x1 = arr[0];
             int y1 = arr[1];
+            //节点(0,0)到当前节点的路径长度，注意：当前路径长度不一定是最短路径长度
+            int curDistance = arr[2];
+
+            //curDistance大于distance[x1][y1]，则当前节点(x1,y1)不能作为中间节点更新节点(0,0)到其他节点的最短路径长度，直接进行下次循环
+            if (curDistance > distance[x1][y1]) {
+                continue;
+            }
 
             //节点(x1,y1)作为中间节点更新节点(0,0)到其他节点的最短路径长度
             for (int i = 0; i < direction.length; i++) {
@@ -119,13 +128,13 @@ public class Problem1368 {
                 //节点(x1,y1)作为中间节点，节点(0,0)到节点(x2,y2)的路径长度
                 //grid[x1][y1]所指方向等于节点(x1,y1)到节点(x2,y2)的方向，则节点(x1,y1)到节点(x2,y2)边的权值为0；
                 //grid[x1][y1]所指方向不等于节点(x1,y1)到节点(x2,y2)的方向，则节点(x1,y1)到节点(x2,y2)边的权值为1
-                int cost = distance[x1][y1] + ((grid[x1][y1] == i + 1) ? 0 : 1);
+                int cost = curDistance + ((grid[x1][y1] == i + 1) ? 0 : 1);
 
                 //节点(x1,y1)作为中间节点，节点(0,0)到节点(x2,y2)的路径长度cost小于之前节点(0,0)到节点(x2,y2)的路径长度distance[x2][y2]，
                 //更新节点(0,0)到节点(x2,y2)的最短路径长度，并将节点(x2,y2)入队
                 if (cost < distance[x2][y2]) {
                     distance[x2][y2] = cost;
-                    queue.offer(new int[]{x2, y2});
+                    queue.offer(new int[]{x2, y2, distance[x2][y2]});
                 }
             }
         }

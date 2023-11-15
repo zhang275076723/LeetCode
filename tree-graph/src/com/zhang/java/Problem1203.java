@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/10/24 08:50
  * @Author zsy
- * @Description 项目管理 拓扑排序类比 图类比
+ * @Description 项目管理 拓扑排序类比
  * 有 n 个项目，每个项目或者不属于任何小组，或者属于 m 个小组之一。
  * group[i] 表示第 i 个项目所属的小组，如果第 i 个项目不属于任何小组，则 group[i] 等于 -1。
  * 项目和小组都是从零开始编号的。
