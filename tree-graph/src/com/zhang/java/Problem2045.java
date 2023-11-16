@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/11/22 08:45
  * @Author zsy
- * @Description 到达目的地的第二短时间 bfs类比Problem847、Problem1129、Problem1368、Problem1631 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2093、Problem2203、Problem2662、Dijkstra
+ * @Description 到达目的地的第二短时间 bfs类比Problem847、Problem1129、Problem1368、Problem1631、Problem2290 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2093、Problem2203、Problem2662、Dijkstra
  * 城市用一个 双向连通 图表示，图中有 n 个节点，从 1 到 n 编号（包含 1 和 n）。
  * 图中的边用一个二维整数数组 edges 表示，其中每个 edges[i] = [ui, vi] 表示一条节点 ui 和节点 vi 之间的双向连通边。
  * 每组节点对由 最多一条 边连通，顶点不存在连接到自身的边。穿过任意一条边的时间是 time 分钟。
