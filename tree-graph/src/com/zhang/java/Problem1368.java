@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2023/11/8 08:02
  * @Author zsy
- * @Description 使网格图至少有一条有效路径的最小代价 bfs类比Problem847、Problem1129、Problem1631、Problem2045、Problem2290 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1462、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2662、Dijkstra
+ * @Description 使网格图至少有一条有效路径的最小代价 bfs类比Problem847、Problem1129、Problem1293、Problem1631、Problem2045、Problem2290 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1462、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2290、Problem2662、Dijkstra
  * 给你一个 m x n 的网格图 grid 。 grid 中每个格子都有一个数字，对应着从该格子出发下一步走的方向。
  * grid[i][j] 中的数字可能为以下几种情况：
  * 1 ，下一步往右走，也就是你会从 grid[i][j] 走到 grid[i][j + 1]

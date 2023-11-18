@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2023/11/25 08:35
  * @Author zsy
- * @Description 到达角落需要移除障碍物的最小数目 bfs类比Problem847、Problem1129、Problem1368、Problem1631、Problem2045
+ * @Description 到达角落需要移除障碍物的最小数目 bfs类比Problem847、Problem1129、Problem1293、Problem1368、Problem1631、Problem2045 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2662、Dijkstra
  * 给你一个下标从 0 开始的二维整数数组 grid ，数组大小为 m x n 。
  * 每个单元格都是两个值之一：
  * 0 表示一个 空 单元格，
@@ -48,6 +48,7 @@ public class Problem2290 {
 
     /**
      * bfs
+     * 当前节点的邻接节点grid为1，则邻接节点为障碍物，当前节点到邻接节点边的权值为1；否则，权值为0
      * 时间复杂度O(mn)，空间复杂度O(mn)
      *
      * @param grid
@@ -68,7 +69,7 @@ public class Problem2290 {
             }
         }
 
-        //初始化，节点(0,0)到节点(0,0)需要移除的最小障碍物数量为0
+        //初始化，节点(0,0)到节点(0,0)需要移除的最小障碍物数量为grid[0][0]
         remove[0][0] = grid[0][0];
 
         //arr[0]：节点的横坐标，arr[1]：节点的纵坐标，arr[2]：节点(0,0)到当前节点需要移除的障碍物数量，注意：当前需要移除的障碍物数量不一定是需要移除的最小障碍物数量
@@ -113,7 +114,7 @@ public class Problem2290 {
 
     /**
      * Dijkstra求节点(0,0)到节点(m-1,n-1)需要移除的最小障碍物数量
-     * 如果当前节点的邻接节点grid为1，则邻接节点为障碍物，当前节点到邻接节点边的权值为1；否则，权值为0
+     * 当前节点的邻接节点grid为1，则邻接节点为障碍物，当前节点到邻接节点边的权值为1；否则，权值为0
      * 时间复杂度O((mn)^2)，空间复杂度O(mn)
      *
      * @param grid
@@ -136,7 +137,7 @@ public class Problem2290 {
             }
         }
 
-        //初始化，节点(0,0)到节点(0,0)需要移除的最小障碍物数量为0
+        //初始化，节点(0,0)到节点(0,0)需要移除的最小障碍物数量为grid[0][0]
         remove[0][0] = grid[0][0];
 
         for (int i = 0; i < m * n; i++) {
@@ -185,7 +186,7 @@ public class Problem2290 {
 
     /**
      * 堆优化Dijkstra求节点(0,0)到节点(m-1,n-1)需要移除的最小障碍物数量
-     * 如果当前节点的邻接节点grid为1，则邻接节点为障碍物，当前节点到邻接节点边的权值为1；否则，权值为0
+     * 当前节点的邻接节点grid为1，则邻接节点为障碍物，当前节点到邻接节点边的权值为1；否则，权值为0
      * 时间复杂度O(mn*log(mn))，空间复杂度O(mn)
      * (堆优化Dijkstra的时间复杂度O(mlogm)，其中m为图中边的个数，本题边的个数O(mn)，所以时间复杂度O(mn*log(mn)))
      *
@@ -207,7 +208,7 @@ public class Problem2290 {
             }
         }
 
-        //初始化，节点(0,0)到节点(0,0)需要移除的最小障碍物数量为0
+        //初始化，节点(0,0)到节点(0,0)需要移除的最小障碍物数量为grid[0][0]
         remove[0][0] = grid[0][0];
 
         //小根堆，arr[0]：节点的横坐标，arr[1]：节点的纵坐标，arr[2]：节点(0,0)到当前节点需要移除的障碍物数量，注意：当前需要移除的障碍物数量不一定是需要移除的最小障碍物数量

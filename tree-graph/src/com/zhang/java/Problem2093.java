@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2023/11/18 08:48
  * @Author zsy
- * @Description 前往目标城市的最小费用 带限制条件的单元最短路径类比Problem787、Problem1928 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2045、Problem2203、Problem2662、Dijkstra
+ * @Description 前往目标城市的最小费用 带限制条件的单元最短路径类比Problem787、Problem1293、Problem1928 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2045、Problem2203、Problem2290、Problem2662、Dijkstra
  * 一组公路连接 n 个城市，城市编号为从 0 到 n - 1 。
  * 输入包含一个二维数组 highways ，其中 highways[i] = [city1i, city2i, tolli] 表示有一条连接城市 city1i 和 city2i 的双向公路，
  * 允许汽车缴纳值为 tolli 的费用从  city1i 前往 city2i 或 从  city2i 前往 city1i 。
@@ -117,15 +117,15 @@ public class Problem2093 {
             int[] arr = priorityQueue.poll();
             //当前节点u
             int u = arr[0];
-            //节点0使用curCount次折扣到达节点u的费用，注意：当前费用不一定是最少费用
+            //节点0使用curDiscount次折扣到达节点u的费用，注意：当前费用不一定是最少费用
             int curDistance = arr[1];
             //节点0到达节点u使用的折扣次数
-            int curCount = arr[2];
+            int curDiscount = arr[2];
             //节点u的父节点，即无向图保存父节点，避免重复遍历
             int parent = arr[3];
 
             //节点0到达节点u使用的折扣次数大于discounts，则不合法，直接进行下次循环
-            if (curCount > discounts) {
+            if (curDiscount > discounts) {
                 continue;
             }
 
@@ -147,16 +147,16 @@ public class Problem2093 {
                     continue;
                 }
 
-                //找到更小的distance[v]，更新distance[v]，节点v入堆
+                //不使用折扣找到更小的distance[v]，更新distance[v]，节点v入堆
                 if (curDistance + weight < distance[v]) {
                     distance[v] = curDistance + weight;
-                    priorityQueue.offer(new int[]{v, distance[v], curCount, u});
+                    priorityQueue.offer(new int[]{v, distance[v], curDiscount, u});
                 }
 
-                //找到更小的distance[v]，并且使用的折扣次数加1不超过discounts，更新distance[v]，节点v入堆
-                if (curDistance + weight / 2 < distance[v] && curCount + 1 <= discounts) {
+                //使用折扣找到更小的distance[v]，并且使用的折扣次数加1不超过discounts，更新distance[v]，节点v入堆
+                if (curDistance + weight / 2 < distance[v] && curDiscount + 1 <= discounts) {
                     distance[v] = curDistance + weight / 2;
-                    priorityQueue.offer(new int[]{v, distance[v], curCount + 1, u});
+                    priorityQueue.offer(new int[]{v, distance[v], curDiscount + 1, u});
                 }
             }
         }

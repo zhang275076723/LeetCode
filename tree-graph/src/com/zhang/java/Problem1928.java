@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2023/11/17 08:14
  * @Author zsy
- * @Description 规定时间内到达终点的最小花费 花旗银行机试题 带限制条件的单元最短路径类比Problem787、Problem2093 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1976、Problem2045、Problem2093、Problem2203、Problem2662、Dijkstra
+ * @Description 规定时间内到达终点的最小花费 花旗银行机试题 带限制条件的单元最短路径类比Problem787、Problem1293、Problem2093 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1976、Problem2045、Problem2093、Problem2203、Problem2290、Problem2662、Dijkstra
  * 一个国家有 n 个城市，城市编号为 0 到 n - 1 ，题目保证 所有城市 都由双向道路 连接在一起 。
  * 道路由二维整数数组 edges 表示，其中 edges[i] = [xi, yi, timei] 表示城市 xi 和 yi 之间有一条双向道路，耗费时间为 timei 分钟。
  * 两个城市之间可能会有多条耗费时间不同的道路，但是不会有道路两头连接着同一座城市。
@@ -53,7 +53,8 @@ public class Problem1928 {
 
     /**
      * 堆优化Dijkstra求节点0最多经过maxTime分钟到达节点n-1的最少费用
-     * 注意：本题边的权值为需要的时间，节点的权值为需要的费用；无向图Dijkstra保存当前节点的父节点，避免重复遍历
+     * 注意：图中边的权值为需要的时间，而不是需要的费用
+     * 注意：无向图Dijkstra保存当前节点的父节点，避免重复遍历
      * 时间复杂度O(n*maxTime*log(n*maxTime))，空间复杂度O(m+n+n*maxTime) (m=edges.length，即图中边的个数，n=passingFees.length，即图中节点的个数)
      * (最多经过maxTime分钟，每经过1分钟，最多将n个节点入堆，最多会将n*maxTime个节点入堆)
      * (堆优化Dijkstra的时间复杂度O(mlogm)，其中m为图中边的个数，本题边的个数O(n*maxTime)，所以时间复杂度O(n*maxTime*log(n*maxTime)))
@@ -84,7 +85,7 @@ public class Problem1928 {
         }
 
         //节点0到其他节点需要的最少时间数组
-        //注意：本题边的权值为当前节点到邻接节点需要的时间，而不是当前节点到邻接节点需要的费用，注意和787题区别
+        //注意：图中边的权值为当前节点到邻接节点需要的时间，而不是当前节点到邻接节点需要的费用，注意和787题、1293题区别
         int[] time = new int[n];
 
         //time初始化，初始化为int最大值表示节点0无法到达节点i

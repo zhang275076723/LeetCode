@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2023/10/20 08:10
  * @Author zsy
- * @Description 课程表 IV 课程表类比Problem207、Problem210、Problem630 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1368、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2662、Dijkstra 拓扑排序类比
+ * @Description 课程表 IV 课程表类比Problem207、Problem210、Problem630 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2290、Problem2662、Dijkstra 拓扑排序类比
  * 你总共需要上 numCourses 门课，课程编号依次为 0 到 numCourses-1 。
  * 你会得到一个数组 prerequisite ，其中 prerequisites[i] = [ai, bi] 表示如果你想选 bi 课程，你 必须 先选 ai 课程。
  * 有的课会有直接的先修课程，比如如果想上课程 1 ，你必须先上课程 0 ，那么会以 [0,1] 数对的形式给出先修课程数对。
