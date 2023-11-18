@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2023/10/21 08:00
  * @Author zsy
- * @Description 到达目的地的方案数 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1928、Problem2045、Problem2093、Problem2203、Problem2290、Problem2662、Dijkstra 拓扑排序类比
+ * @Description 到达目的地的方案数 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1928、Problem2045、Problem2093、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra 拓扑排序类比
  * 你在一个城市里，城市由 n 个路口组成，路口编号为 0 到 n - 1 ，某些路口之间有 双向 道路。
  * 输入保证你可以从任意路口出发到达其他任意路口，且任意两个路口之间最多有一条路。
  * 给你一个整数 n 和二维整数数组 roads ，其中 roads[i] = [ui, vi, timei] 表示在路口 ui 和 vi 之间有一条需要花费 timei 时间才能通过的道路。

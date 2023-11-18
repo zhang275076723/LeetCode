@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2023/11/26 08:45
  * @Author zsy
- * @Description 网格中的最短路径 美团机试题 带限制条件的单元最短路径类比Problem787、Problem1928、Problem2093 bfs类比Problem847、Problem1129、Problem1368、Problem1631、Problem2045、Problem2290 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2290、Problem2662、Dijkstra
+ * @Description 网格中的最短路径 美团机试题 带限制条件的单元最短路径类比Problem787、Problem1928、Problem2093 bfs类比Problem847、Problem1129、Problem1368、Problem1631、Problem2045、Problem2290 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra
  * 给你一个 m * n 的网格，其中每个单元格不是 0（空）就是 1（障碍物）。
  * 每一步，您都可以在空白单元格中上、下、左、右移动。
  * 如果您 最多 可以消除 k 个障碍物，请找出从左上角 (0, 0) 到右下角 (m-1, n-1) 的最短路径，并返回通过该路径所需的步数。

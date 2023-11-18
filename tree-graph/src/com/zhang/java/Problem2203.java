@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2023/11/23 08:31
  * @Author zsy
- * @Description 得到要求路径的最小带权子图 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2290、Problem2662、Dijkstra
+ * @Description 得到要求路径的最小带权子图 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2290、Problem2473、Problem2662、Dijkstra
  * 给你一个整数 n ，它表示一个 带权有向 图的节点数，节点编号为 0 到 n - 1 。
  * 同时给你一个二维整数数组 edges ，其中 edges[i] = [fromi, toi, weighti] ，
  * 表示从 fromi 到 toi 有一条边权为 weighti 的 有向 边。
