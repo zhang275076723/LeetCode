@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2023/10/29 08:04
  * @Author zsy
- * @Description 访问所有节点的最短路径 状态压缩类比Problem187 bfs类比Problem1129、Problem1293、Problem1368、Problem1631、Problem2045、Problem2290
+ * @Description 访问所有节点的最短路径 状态压缩类比Problem187 bfs类比Problem499、Problem505、Problem1129、Problem1293、Problem1368、Problem1631、Problem2045、Problem2290
  * 存在一个由 n 个节点组成的无向连通图，图中的节点按从 0 到 n - 1 编号。
  * 给你一个数组 graph 表示这个图。其中，graph[i] 是一个列表，由所有与节点 i 直接相连的节点组成。
  * 返回能够访问所有节点的最短路径的长度。
