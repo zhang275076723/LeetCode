@@ -57,40 +57,43 @@ public class Problem694 {
 
     /**
      * dfs
-     * 核心思想：对每个岛屿需要得到当前岛屿的唯一识别
-     * dfs遍历每个岛屿，保存遍历到的路径，并且回溯路径也保存，如果当前岛屿的路径在之前保存的路径中出现过，则存在相同岛屿
-     * 从当前节点出发记为0，往上遍历记为1，往下遍历记为2，往左遍历记为3，往右遍历记为4，回溯记为5
+     * 核心思想：如果两个岛屿的唯一标识相同，则这两个岛屿是相同的岛屿
+     * dfs遍历每个岛屿，保存遍历到的路径，同时也保存回溯路径，作为当前岛屿的唯一标识，如果当前岛屿的唯一标识之前出现过，则存在相同岛屿
+     * 唯一标识中的数字，0：岛屿的起始标志，1：往上遍历，2：往下遍历，3：往左遍历，4：往右遍历，5：回溯
      * 时间复杂度O(mn)，空间复杂度O(mn)
      *
      * @param grid
      * @return
      */
     public int numDistinctIslands(int[][] grid) {
-        //保存不同岛屿路径的set集合，路径为从当前节点dfs遍历当前岛屿的过程
+        //保存不同岛屿路径的set集合，路径为从当前节点dfs遍历当前岛屿的过程，即岛屿的唯一标识
         Set<String> set = new HashSet<>();
         boolean[][] visited = new boolean[grid.length][grid[0].length];
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j] == 1 && !visited[i][j]) {
-                    //岛屿的唯一识别，当前岛屿遍历的路径(包含回溯路径)
+                    //岛屿的唯一标识，当前岛屿遍历的路径(包含回溯路径)
+                    //path形如"0455"、"025455"
                     StringBuilder path = new StringBuilder();
 
-                    //当前节点出发记为0
+                    //当前节点岛屿的起始标志为0
                     dfs(i, j, 0, grid, visited, path);
 
+                    //不同岛屿的唯一标识加入set中
                     set.add(path.toString());
                 }
             }
         }
 
+        //set中的元素个数即为不同岛屿的数量
         return set.size();
     }
 
     /**
      * bfs
-     * 核心思想：对每个岛屿需要得到当前岛屿的唯一识别
-     * bfs遍历每个岛屿，当前岛屿中每个节点减去起始节点的横纵坐标节点，得到相对节点，作为当前岛屿的标记，
+     * 核心思想：如果两个岛屿的唯一标识相同，则这两个岛屿是相同的岛屿
+     * bfs遍历每个岛屿，当前岛屿中每个节点减去起始节点的横纵坐标节点，得到相对节点，作为当前岛屿的唯一标识，
      * 如果当前岛屿的标记在之前保存的标记中出现过，则存在相同岛屿
      * 时间复杂度O(mn)，空间复杂度O(mn)
      *
@@ -98,23 +101,26 @@ public class Problem694 {
      * @return
      */
     public int numDistinctIslands2(int[][] grid) {
-        //保存不同岛屿标记的set集合，当前岛屿中每个节点减去起始节点的横纵坐标节点，得到的相对节点作为当前岛屿的标记
+        //保存不同岛屿唯一标识的set集合，当前岛屿中每个节点减去起始节点的横纵坐标节点，即岛屿进行平移变换得到的相对节点作为岛屿的唯一标识
         Set<String> set = new HashSet<>();
         boolean[][] visited = new boolean[grid.length][grid[0].length];
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j] == 1 && !visited[i][j]) {
-                    //岛屿的唯一识别，当前岛屿中每个节点减去起始节点的横纵坐标节点，得到相对节点
+                    //岛屿的唯一标识，当前岛屿中每个节点减去起始节点的横纵坐标节点，即岛屿进行平移变换得到的相对节点
+                    //key形如"(0,0)(0,1)"、"(0,0)(1,0)(1,-1)"
                     StringBuilder key = new StringBuilder();
 
                     bfs(i, j, i, j, grid, visited, key);
 
+                    //不同岛屿的唯一标识加入set中
                     set.add(key.toString());
                 }
             }
         }
 
+        //set中的元素个数即为不同岛屿的数量
         return set.size();
     }
 
@@ -158,7 +164,7 @@ public class Problem694 {
             queue.offer(new int[]{arr[0], arr[1] - 1});
             queue.offer(new int[]{arr[0], arr[1] + 1});
 
-            //拼接当前岛屿的标记，当前岛屿中每个节点减去起始节点的横纵坐标节点，得到相对节点
+            //拼接当前岛屿的唯一标识，当前岛屿中每个节点减去起始节点的横纵坐标节点，即岛屿进行平移变换得到的相对节点
             key.append('(').append(arr[0] - startI).append(',').append(arr[1] - startJ).append(')');
         }
     }

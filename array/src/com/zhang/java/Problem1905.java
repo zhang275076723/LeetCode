@@ -91,7 +91,8 @@ public class Problem1905 {
 
     /**
      * dfs
-     * 对grid2为1的节点进行dfs，如果grid2当前岛屿中所有为1的节点都在grid1中出现，则grid2当前岛屿是grid1的子岛屿
+     * 对grid2为1的节点进行dfs，如果grid2中当前岛屿所有为1的节点都在grid1中出现，则grid2中当前岛屿是grid1的子岛屿
+     * 注意：dfs过程中要保证grid2中当前岛屿所有节点被充分遍历，避免grid2中岛屿被多次统计的情况
      * 时间复杂度O(mn)，空间复杂度O(mn)
      *
      * @param grid1
@@ -118,7 +119,8 @@ public class Problem1905 {
 
     /**
      * bfs
-     * 对grid2为1的节点进行bfs，如果grid2当前岛屿中所有为1的节点都在grid1中出现，则grid2当前岛屿是grid1的子岛屿
+     * 对grid2为1的节点进行bfs，如果grid2中当前岛屿所有为1的节点都在grid1中出现，则grid2中当前岛屿是grid1的子岛屿
+     * 注意：bfs过程中要保证grid2中当前岛屿所有节点被充分遍历，避免grid2中岛屿被多次统计的情况
      * 时间复杂度O(mn)，空间复杂度O(mn)
      *
      * @param grid1
@@ -145,10 +147,11 @@ public class Problem1905 {
 
     /**
      * 并查集
-     * 将grid2中为1的相邻节点连接，使用2个set，set1记录grid2当前岛屿是grid1子岛屿的连通分量根节点，
-     * set2记录grid2当前岛屿不是grid1子岛屿的连通分量根节点，如果grid2中当前节点为1，
-     * 并且set2中grid2当前节点所在岛屿没有被标记为不是grid1子岛屿，则grid2当前节点所在岛屿的连通分类根节点加入set1，
-     * 最后统计set1中元素个数，即为grid2中子岛屿的数量
+     * grid2中为1的相邻节点连接，作为同一个连通分量，
+     * 使用2个set，set1记录grid2当前岛屿是grid1子岛屿连通分量的根节点，set2记录grid2当前岛屿不是grid1子岛屿连通分量的根节点，
+     * 如果grid1、grid2中当前节点为1，并且grid2中当前节点所在岛屿没有在set2中被标记为不是grid1子岛屿，
+     * 则到目前为止grid2当前节点所在岛屿仍是grid1子岛屿，grid2当前节点所在岛屿连通分量的根节点加入set1；
+     * 否则，grid2当前节点所在岛屿不是grid1子岛屿，grid2当前节点所在岛屿连通分量的根节点从set1中移除，加入set2
      * 时间复杂度O(mn*α(mn))=O(mn)，空间复杂度O(mn) (find()和union()的时间复杂度为O(α(mn))，可视为常数O(1))
      *
      * @param grid1
@@ -177,22 +180,27 @@ public class Problem1905 {
             }
         }
 
-        //grid2中岛屿是grid1子岛屿的连通分量根节点的下标索引集合
+        //grid2当前岛屿是grid1子岛屿连通分量的根节点的set集合
         Set<Integer> set1 = new HashSet<>();
-        //grid2中岛屿不是grid1子岛屿的连通分量根节点的下标索引集合
+        //grid2当前岛屿不是grid1子岛屿连通分量的根节点的set集合
+        //注意：必须使用set2，不能只使用一个set，如果grid2当前节点所在岛屿仍是grid1子岛屿，
+        //但遍历到下一个节点时，则grid2当前节点所在岛屿不是grid1子岛屿，只有一个set的话，
+        //则grid2当前节点所在岛屿连通分量的根节点从set中移除，如果grid2下一个节点还是该岛屿中节点的话，
+        //仍会将grid2中岛屿不是grid1子岛屿连通分量的根节点加入set中
         Set<Integer> set2 = new HashSet<>();
 
         for (int i = 0; i < grid2.length; i++) {
             for (int j = 0; j < grid2[0].length; j++) {
                 if (grid2[i][j] == 1) {
+                    //grid2当前节点所在岛屿连通分量的根节点
                     int rootIndex = unionFind2.find(i * grid2[0].length + j);
 
-                    //grid2当前岛屿的节点是grid1的子岛屿，则将grid2当前岛屿的根节点下标索引加入set1
+                    //gird1、grid2中当前节点为1，并且grid2中当前节点所在岛屿没有在set2中被标记为不是grid1子岛屿，
+                    //则到目前为止grid2当前节点所在岛屿仍是grid1子岛屿，grid2当前节点所在岛屿连通分量的根节点加入set1
                     if (grid1[i][j] == 1 && !set2.contains(rootIndex)) {
                         set1.add(rootIndex);
                     } else {
-                        //grid2当前岛屿的节点不是grid1的子岛屿，则将grid2当前岛屿的根节点下标索引从set1中移除，
-                        //grid2当前岛屿加入set2，表示不是grid1的子岛屿
+                        //grid2当前节点所在岛屿不是grid1子岛屿，grid2当前节点所在岛屿连通分量的根节点从set1中移除，加入set2
                         set1.remove(rootIndex);
                         set2.add(rootIndex);
                     }
@@ -200,6 +208,7 @@ public class Problem1905 {
             }
         }
 
+        //set1中的元素个数即为grid2中岛屿是grid1子岛屿的个数
         return set1.size();
     }
 
@@ -218,14 +227,14 @@ public class Problem1905 {
         visited2[i][j] = true;
         visited1[i][j] = true;
 
-//        //注意：不能这样写，因为当一个dfs为false的时候，后面的dfs都不会执行，导致grid2中当前岛屿未被完全遍历，
-//        //有可能grid2中当前岛屿的部分岛屿是grid1的子岛屿，导致当前grid2岛屿被多次统计
+//        //注意：不能这样写，因为当一个dfs为false的时候，后面的dfs都不会执行，导致grid2中当前岛屿未被充分遍历，
+//        //有可能grid2中当前岛屿的部分岛屿是grid1的子岛屿，导致当前grid2中岛屿被多次统计
 //        return dfs(i - 1, j, grid1, grid2, visited1, visited2) &&
 //                dfs(i + 1, j, grid1, grid2, visited1, visited2) &&
 //                dfs(i, j - 1, grid1, grid2, visited1, visited2) &&
 //                dfs(i, j + 1, grid1, grid2, visited1, visited2);
 
-        //dfs分开遍历，保证grid2中当前岛屿完全遍历，不会出现grid2中当前岛屿的部分岛屿是grid1的子岛屿的情况
+        //dfs分开遍历，保证grid2中当前岛屿充分遍历，不会出现grid2中当前岛屿的部分岛屿是grid1的子岛屿，导致当前grid2中岛屿被多次统计
         boolean flag1 = dfs(i - 1, j, grid1, grid2, visited1, visited2);
         boolean flag2 = dfs(i + 1, j, grid1, grid2, visited1, visited2);
         boolean flag3 = dfs(i, j - 1, grid1, grid2, visited1, visited2);
@@ -236,6 +245,8 @@ public class Problem1905 {
 
     private boolean bfs(int i, int j, int[][] grid1, int[][] grid2, boolean[][] visited1, boolean[][] visited2) {
         //grid2当前岛屿是否是grid1的子岛屿的标志位
+        //注意：必须使用标志位，而不能在发现不是子岛屿的时候立刻返回false，会导致grid2中当前岛屿未被充分遍历，
+        //有可能grid2中当前岛屿的部分岛屿是grid1的子岛屿，导致当前grid2中岛屿被多次统计
         boolean flag = true;
         Queue<int[]> queue = new LinkedList<>();
         queue.offer(new int[]{i, j});
@@ -251,8 +262,8 @@ public class Problem1905 {
             }
 
             //当前节点在grid1中不为1，或者当前节点在grid1中已被访问，则flag置为false，表示grid2当前岛屿不是grid1的子岛屿
-            //注意：不能直接返回false，如果直接返回false，导致grid2中当前岛屿未被完全遍历，
-            //有可能grid2中当前岛屿的部分岛屿是grid1的子岛屿，导致当前grid2岛屿被多次统计
+            //注意：不能直接返回false，如果直接返回false，导致grid2中当前岛屿未被充分遍历，
+            //有可能grid2中当前岛屿的部分岛屿是grid1的子岛屿，导致当前grid2中岛屿被多次统计
             if (grid1[arr[0]][arr[1]] != 1 || visited1[arr[0]][arr[1]]) {
                 flag = false;
             }
