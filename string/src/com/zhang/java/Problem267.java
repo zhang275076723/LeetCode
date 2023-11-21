@@ -46,7 +46,7 @@ public class Problem267 {
             arr[c - 'a']++;
         }
 
-        //map中字符出现次数为奇数的标志位
+        //map中字符出现次数为奇数的标志位，出现次数为奇数的字符最多只能有1个，超过1个，则不能构成回文串
         boolean oddFlag = false;
         //唯一一个出现出现次数为奇数的字符
         char c = 'a';
@@ -57,9 +57,10 @@ public class Problem267 {
                 //之前已经出现过出现次数为奇数的字符，则不能构成回文串，返回空集合
                 if (oddFlag) {
                     return new ArrayList<>();
+                } else {
+                    oddFlag = true;
+                    c = (char) ('a' + i);
                 }
-                oddFlag = true;
-                c = (char) ('a' + i);
             }
         }
 

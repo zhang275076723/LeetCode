@@ -44,7 +44,7 @@ public class Problem266 {
             map.put(c, map.getOrDefault(c, 0) + 1);
         }
 
-        //map中字符出现次数为奇数的标志位
+        //map中字符出现次数为奇数的标志位，出现次数为奇数的字符最多只能有1个，超过1个，则不能构成回文串
         boolean oddFlag = false;
 
         for (Map.Entry<Character, Integer> entry : map.entrySet()) {
@@ -53,8 +53,9 @@ public class Problem266 {
                 //之前已经出现过出现次数为奇数的字符，直接返回false
                 if (oddFlag) {
                     return false;
+                } else {
+                    oddFlag = true;
                 }
-                oddFlag = true;
             }
         }
 

@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * @Date 2023/10/1 08:25
  * @Author zsy
- * @Description 重复的DNA序列 状态压缩类比Problem847 哈希表类比Problem242、Problem383、Problem387、Problem389、Problem554、Problem763、Problem1640、Offer50
+ * @Description 重复的DNA序列 状态压缩类比Problem847 哈希表类比Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem554、Problem763、Problem1640、Offer50
  * DNA序列 由一系列核苷酸组成，缩写为 'A', 'C', 'G' 和 'T'.。
  * 例如，"ACGAATTCCG" 是一个 DNA序列 。
  * 在研究 DNA 时，识别 DNA 中的重复序列非常有用。
@@ -63,9 +63,9 @@ public class Problem187 {
     }
 
     /**
-     * 哈希表+位运算
+     * 哈希表+二进制状态压缩
      * 通过s.substring()获取字符串需要O(10)，将长度为10的字符串用二进制形式表示需要O(1)，
-     * 字符共4种情况，每个字符需要2bit表示，则长度为10的字符串需要20bit来表示
+     * DNA中的字符只有'A'、'C'、'G'、'T'4种情况，每个字符需要2bit表示，则长度为10的字符串需要20bit来表示，即int就能表示长度为10的序列
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param s
@@ -77,9 +77,9 @@ public class Problem187 {
         }
 
         List<String> list = new ArrayList<>();
-        //key：长度为10的字符串的二进制表示，value：当前字符串出现的次数
+        //key：长度为10的序列的二进制表示，value：当前长度为10的序列出现的次数
         Map<Integer, Integer> map = new HashMap<>();
-        //key：字符串中的字符，value：字符共4种情况，每个字符需要2bit表示
+        //key：DNA中的字符，value：DNA中的字符共4种情况，每个字符需要2bit表示
         Map<Character, Integer> character2BitMap = new HashMap<Character, Integer>() {{
             put('A', 0);
             put('C', 1);
@@ -87,16 +87,19 @@ public class Problem187 {
             put('T', 3);
         }};
 
-        //当前字符串的二进制表示
+        //当前长度为10的字符串二进制压缩表示
         int key = 0;
 
+        //初始化前9个字符，之后每次将新的1个字符加入key，低20位作为当前长度为10的字符串二进制压缩表示
         for (int i = 0; i < 9; i++) {
-            key = (key << 2) + character2BitMap.get(s.charAt(i));
+            char c = s.charAt(i);
+            key = (key << 2) + character2BitMap.get(c);
         }
 
         for (int i = 0; i <= s.length() - 10; i++) {
-            //低20位作为当前字符串的二进制表示
-            key = ((key << 2) + character2BitMap.get(s.charAt(i + 9))) & ((1 << 20) - 1);
+            char c = s.charAt(i + 9);
+            //每次将新的1个字符加入key，低20位作为当前长度为10的字符串二进制压缩表示
+            key = ((key << 2) + character2BitMap.get(c)) & ((1 << 20) - 1);
             map.put(key, map.getOrDefault(key, 0) + 1);
 
             //当前字符串第一次重复出现，加入list集合中，避免重复添加
