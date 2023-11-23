@@ -41,6 +41,7 @@ public class Problem291 {
      * 回溯+剪枝+哈希表
      * pattern中字符和s中单词的映射是双向一一对应才遵循相同的规律
      * 时间复杂度O(min(m,n)^n)，空间复杂度O(min(m,n)) (m=pattern.length()，n=s.length())
+     *
      * @param pattern
      * @param s
      * @return

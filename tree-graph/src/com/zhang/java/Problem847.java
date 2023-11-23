@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2023/10/29 08:04
  * @Author zsy
- * @Description 访问所有节点的最短路径 状态压缩类比Problem187、Problem294 bfs类比Problem499、Problem505、Problem1129、Problem1293、Problem1368、Problem1631、Problem2045、Problem2290
+ * @Description 访问所有节点的最短路径 状态压缩类比Problem187、Problem464、Problem294 bfs类比Problem499、Problem505、Problem1129、Problem1293、Problem1368、Problem1631、Problem2045、Problem2290
  * 存在一个由 n 个节点组成的无向连通图，图中的节点按从 0 到 n - 1 编号。
  * 给你一个数组 graph 表示这个图。其中，graph[i] 是一个列表，由所有与节点 i 直接相连的节点组成。
  * 返回能够访问所有节点的最短路径的长度。
@@ -37,7 +37,7 @@ public class Problem847 {
 
     /**
      * bfs+二进制状态压缩
-     * visited[i][j]：遍历到节点i，此时所有节点的二进制访问状态表示的十进制数j
+     * visited[i][j]：遍历到节点i，此时所有节点的访问状态的二进制表示的数j
      * 某个节点对应访问状态的二进制表示第i位(低位到高位，最低位为第0位)为1，则表示节点i已访问；第i位为0，则表示节点i未访问
      * n个节点共2^n种不同节点的访问状态，不使用二进制状态压缩，每种状态需要O(n)存储，每个节点需要O(n*2^n)，共需要O(n^2*2^n)；
      * 使用二进制状态压缩，每种状态需要O(1)存储，每个节点需要O(2^n)，共需要O(n*2^n)
@@ -51,14 +51,14 @@ public class Problem847 {
         //图中节点的个数
         int n = graph.length;
         //二进制状态压缩访问数组，避免重复访问，即节点u到节点v，节点v又到节点u的情况
-        //visited[i][j]：遍历到节点i，此时所有节点的二进制访问状态表示的十进制数j
+        //visited[i][j]：遍历到节点i，此时所有节点的访问状态的二进制表示的数j
         boolean[][] visited = new boolean[n][1 << n];
-        //arr[0]：当前节点，arr[1]：遍历到节点arr[0]，此时所有节点的二进制访问状态表示的十进制数
+        //arr[0]：当前节点，arr[1]：遍历到节点arr[0]，此时所有节点的访问状态的二进制表示的数
         Queue<int[]> queue = new LinkedList<>();
 
         //每个节点都作为起始节点bfs
         for (int i = 0; i < n; i++) {
-            //二进制访问状态的第i位为1，表示节点i已访问
+            //访问状态的第i位为1，表示节点i已访问
             queue.offer(new int[]{i, 1 << i});
         }
 
@@ -74,12 +74,12 @@ public class Problem847 {
                 int u = arr[0];
                 int curState = arr[1];
 
-                //二进制访问状态的所有位都为1，即遍历到节点u时所有节点都已访问，则找到了访问所有节点的最短路径长度
+                //访问状态的二进制所有位都为1，即遍历到节点u时所有节点都已访问，则找到了访问所有节点的最短路径长度
                 if (curState == (1 << n) - 1) {
                     return distance;
                 }
 
-                //遍历到节点u，此时所有节点的二进制访问状态表示的十进制数curState已经访问，则直接进行下次循环
+                //遍历到节点u，此时所有节点的访问状态的二进制表示的数curState已经访问，则直接进行下次循环
                 if (visited[u][curState]) {
                     continue;
                 }
@@ -89,7 +89,7 @@ public class Problem847 {
 
                 //节点u的邻接节点v
                 for (int v : graph[u]) {
-                    //节点v对应访问状态的二进制表示第v位置为1，表示节点v已访问
+                    //节点v对应的访问状态的二进制表示第v位为1，表示节点v已访问
                     queue.offer(new int[]{v, curState | (1 << v)});
                 }
             }

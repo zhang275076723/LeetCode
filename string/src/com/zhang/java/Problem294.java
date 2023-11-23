@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/12/8 08:39
  * @Author zsy
- * @Description 翻转游戏 II 类比Problem292、Problem293 状态压缩类比Problem187、Problem847 回溯+剪枝类比
+ * @Description 翻转游戏 II 类比Problem292、Problem293、Problem464 状态压缩类比Problem187、Problem464、Problem847 回溯+剪枝类比
  * 你和朋友玩一个叫做「翻转游戏」的游戏。游戏规则如下：
  * 给你一个字符串 currentState ，其中只含 '+' 和 '-' 。
  * 你和朋友轮流将 连续 的两个 "++" 反转成 "--" 。
@@ -35,15 +35,15 @@ public class Problem294 {
      * 回溯+剪枝+二进制状态压缩
      * currentState长度不超过60，如果使用字符串存储currentState需要O(60)，将长度为60的字符串用二进制形式表示需要O(1)，
      * 每一位只有'+'、'-'2种情况，每一位只需要1bit就能表示，则长度为60的字符串需要60bit来表示，即long就能表示长度为60的序列
-     * 时间复杂度O(n^n)，空间复杂度O(n)
+     * 时间复杂度O(n*2^n)，空间复杂度O(2^n) (共2^n种状态，每种状态需要O(n))
      *
      * @param currentState
      * @return
      */
     public boolean canWin(String currentState) {
-        //key：长度为60的字符串的二进制表示，value：当前玩家以当前字符串开始游戏是否获胜
+        //key：长度为60的字符串的二进制表示，value：当前玩家以当前字符串开始游戏能否获胜
         Map<Long, Boolean> map = new HashMap<>();
-        //currentState的二进制表示，'+'：当前位为1，'-'：当前位为0
+        //currentState的二进制表示，1表示当前位为'+'，0表示当前位为'-'
         long key = 0;
 
         for (int i = 0; i < currentState.length(); i++) {
@@ -60,7 +60,7 @@ public class Problem294 {
     }
 
     private boolean backtrack(long key, int n, Map<Long, Boolean> map) {
-        //已经得到了当前玩家以当前字符串开始游戏是否获胜，直接返回是否获胜
+        //之前已经得到了当前玩家以当前字符串开始游戏能否获胜，直接返回map.get(key)
         if (map.containsKey(key)) {
             return map.get(key);
         }
@@ -72,10 +72,10 @@ public class Problem294 {
                 continue;
             }
 
-            //key的第i位和第i+1位的1变为0，表示连续的"++"变为"--"
+            //key的第i位和第i+1位的1变为0，表示连续的"++"变为"--"，得到下一个访问状态
             long nextKey = key ^ (1L << i) ^ (1L << (i + 1));
 
-            //对手以nextKey开始游戏失败，则自己以key开始游戏获胜
+            //对手以nextKey开始游戏失败，则自己以key开始游戏获胜，返回true
             if (!backtrack(nextKey, n, map)) {
                 map.put(key, true);
                 return true;
