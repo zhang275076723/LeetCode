@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/12/8 08:39
  * @Author zsy
- * @Description 翻转游戏 II 类比Problem292、Problem293、Problem464 状态压缩类比Problem187、Problem464、Problem847 回溯+剪枝类比
+ * @Description 翻转游戏 II 类比Problem292、Problem293、Problem464、Problem1908 状态压缩类比Problem187、Problem464、Problem847、Problem1908 回溯+剪枝类比
  * 你和朋友玩一个叫做「翻转游戏」的游戏。游戏规则如下：
  * 给你一个字符串 currentState ，其中只含 '+' 和 '-' 。
  * 你和朋友轮流将 连续 的两个 "++" 反转成 "--" 。
@@ -35,7 +35,7 @@ public class Problem294 {
      * 回溯+剪枝+二进制状态压缩
      * currentState长度不超过60，如果使用字符串存储currentState需要O(60)，将长度为60的字符串用二进制形式表示需要O(1)，
      * 每一位只有'+'、'-'2种情况，每一位只需要1bit就能表示，则长度为60的字符串需要60bit来表示，即long就能表示长度为60的序列
-     * 时间复杂度O(n*2^n)，空间复杂度O(2^n) (共2^n种状态，每种状态需要O(n))
+     * 时间复杂度O(n*2^n)，空间复杂度O(2^n) (共2^n种状态，每种状态需要O(1)存储)
      *
      * @param currentState
      * @return

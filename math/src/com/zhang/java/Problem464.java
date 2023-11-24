@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/12/9 08:29
  * @Author zsy
- * @Description 我能赢吗 类比Problem292、Problem293、Problem294 状态压缩类比Problem187、Problem294、Problem847 回溯+剪枝类比
+ * @Description 我能赢吗 类比Problem292、Problem293、Problem294、Problem1908 状态压缩类比Problem187、Problem294、Problem847、Problem1908 回溯+剪枝类比
  * 在 "100 game" 这个游戏中，两名玩家轮流选择从 1 到 10 的任意整数，累计整数和，
  * 先使得累计整数和 达到或超过  100 的玩家，即为胜者。
  * 如果我们将游戏规则改为 “玩家 不能 重复使用整数” 呢？
@@ -44,7 +44,7 @@ public class Problem464 {
      * 回溯+剪枝+二进制状态压缩
      * maxChoosableInteger不超过20，如果使用数组存储1-maxChoosableInteger访问状态需要O(20)，将长度为20的数组用二进制形式表示需要O(1)，
      * 每一位只有已访问、未访问2种情况，每一位只需要1bit就能表示，则长度为20的数组需要20bit来表示，即int就能表示长度为20的数组
-     * 时间复杂度O(n*2^n)，空间复杂度O(2^n) (n=maxChoosableInteger) (共2^n种状态，每种状态需要O(n))
+     * 时间复杂度O(n*2^n)，空间复杂度O(2^n) (n=maxChoosableInteger) (共2^n种状态，每种状态需要O(1)存储)
      *
      * @param maxChoosableInteger
      * @param desiredTotal

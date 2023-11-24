@@ -23,7 +23,8 @@ import java.util.List;
 public class Problem491 {
     public static void main(String[] args) {
         Problem491 problem491 = new Problem491();
-        int[] nums = {4, 4, 3, 2, 1};
+//        int[] nums = {4, 4, 3, 2, 1};
+        int[] nums = {2, 2, 3};
         System.out.println(problem491.findSubsequences(nums));
     }
 
