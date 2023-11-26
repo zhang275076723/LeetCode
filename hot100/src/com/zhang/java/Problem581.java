@@ -32,7 +32,7 @@ public class Problem581 {
 
     /**
      * 先排序，再比较
-     * 时间复杂度O(nlogn)，空间复杂度O(n) (堆排序的空间复杂度为O(n))
+     * 时间复杂度O(nlogn)，空间复杂度O(n) (堆排序的空间复杂度为O(logn))
      *
      * @param nums
      * @return

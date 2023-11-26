@@ -36,7 +36,8 @@ public class Problem725 {
     }
 
     /**
-     * 先获取链表长度len，len/k即为每个子链表的最小长度，len%k即为从前往后每个子链表的长度需要额外加1的个数
+     * 模拟
+     * len为原链表长度，分割链表之后，前len%k个链表长度为len/k+1，剩余k-len%k个链表长度为len/k
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param head
@@ -49,28 +50,29 @@ public class Problem725 {
             return new ListNode[k];
         }
 
-        int len = 0;
+        //原链表长度
+        int length1 = 0;
         ListNode node = head;
 
         //获取链表长度
         while (node != null) {
-            len++;
+            length1++;
             node = node.next;
         }
 
-        //每个子链表的最小长度
-        int minLen = len / k;
-        //从前往后每个子链表的长度需要额外加1的个数
-        int count = len % k;
+        //分割链表之后，每个链表的长度
+        int length2 = length1 / k;
+        //前count个链表长度为length2+1，剩余k-count个链表长度为length2
+        int count = length1 % k;
 
         ListNode[] result = new ListNode[k];
         node = head;
 
-        //前count个子链表的长度为minLen+1
+        //前count个链表长度为length2+1
         for (int i = 0; i < count; i++) {
             result[i] = node;
             //找下一个子链表的头结点
-            for (int j = 0; j < minLen; j++) {
+            for (int j = 0; j < length2; j++) {
                 node = node.next;
             }
             //断开链表
@@ -79,16 +81,16 @@ public class Problem725 {
             node = temp;
         }
 
-        //k比较大，剩下的k-count个子链表均为null，直接返回
+        //原链表已经遍历结束，直接返回result
         if (node == null) {
             return result;
         }
 
-        //剩下的k-count个子链表的长度为minLen
+        //剩下的k-count个链表长度为length2
         for (int i = count; i < k; i++) {
             result[i] = node;
             //找下一个子链表的头结点
-            for (int j = 0; j < minLen - 1; j++) {
+            for (int j = 0; j < length2 - 1; j++) {
                 node = node.next;
             }
             //断开链表
