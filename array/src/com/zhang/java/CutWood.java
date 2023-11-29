@@ -45,6 +45,7 @@ public class CutWood {
 
         int m = 1;
 
+        //截出木块的长度i
         for (int i = 1; i <= maxLen; i++) {
             //截出长度为i的木块数量
             int count = 0;
