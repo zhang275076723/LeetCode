@@ -4,7 +4,7 @@ package com.zhang.java;
 /**
  * @Date 2023/12/13 08:04
  * @Author zsy
- * @Description 优美的排列 类比Problem667 状态压缩类比 记忆化搜索类比 动态规划类比
+ * @Description 优美的排列 类比Problem667 状态压缩类比Problem187、Problem294、Problem464、Problem473、Problem638、Problem698、Problem847、Problem1908 记忆化搜索类比 动态规划类比
  * 假设有从 1 到 n 的 n 个整数。用这些整数构造一个数组 perm（下标从 1 开始），
  * 只要满足下述条件 之一 ，该数组就是一个 优美的排列 ：
  * 1、perm[i] 能够被 i 整除

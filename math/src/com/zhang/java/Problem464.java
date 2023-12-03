@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/12/9 08:29
  * @Author zsy
- * @Description 我能赢吗 类比Problem292、Problem293、Problem294、Problem486、Problem1908 状态压缩类比Problem187、Problem294、Problem847、Problem1908 记忆化搜索类比
+ * @Description 我能赢吗 类比Problem292、Problem293、Problem294、Problem486、Problem1908 状态压缩类比Problem187、Problem294、Problem473、Problem526、Problem638、Problem698、Problem847、Problem1908 记忆化搜索类比
  * 在 "100 game" 这个游戏中，两名玩家轮流选择从 1 到 10 的任意整数，累计整数和，
  * 先使得累计整数和 达到或超过  100 的玩家，即为胜者。
  * 如果我们将游戏规则改为 “玩家 不能 重复使用整数” 呢？
@@ -61,50 +61,52 @@ public class Problem464 {
             return false;
         }
 
-        //key：长度为maxChoosableInteger的1-maxChoosableInteger访问状态的二进制表示，
-        //value：当前玩家以当前1-maxChoosableInteger访问状态开始游戏能否获胜
+        //key：长度为maxChoosableInteger的1-maxChoosableInteger的二进制访问状态，
+        //value：当前玩家以当前1-maxChoosableInteger的二进制访问状态开始游戏能否获胜
         Map<Integer, Boolean> map = new HashMap<>();
 
-        return backtrack(0, 0, maxChoosableInteger, desiredTotal, map);
+        return dfs(0, 0, maxChoosableInteger, desiredTotal, map);
     }
 
     /**
-     * @param key                 当前1-maxChoosableInteger访问状态的二进制表示，0表示当前位数字未访问，1表示当前位数字已访问
+     * @param state               当前1-maxChoosableInteger的二进制访问状态，0表示当前位数字未访问，1表示当前位数字已访问
      * @param curTotal            当前累计和
      * @param maxChoosableInteger 1-maxChoosableInteger可以选择的数
      * @param desiredTotal        要到达的累计和
      * @param map                 1-maxChoosableInteger访问状态map
      * @return
      */
-    private boolean backtrack(int key, int curTotal, int maxChoosableInteger, int desiredTotal, Map<Integer, Boolean> map) {
-        if (map.containsKey(key)) {
-            return map.get(key);
+    private boolean dfs(int state, int curTotal, int maxChoosableInteger, int desiredTotal, Map<Integer, Boolean> map) {
+        //已经得到了当前玩家以当前1-maxChoosableInteger的二进制访问状态开始游戏能否获胜，直接返回map.get(state)
+        if (map.containsKey(state)) {
+            return map.get(state);
         }
 
+        //当前玩家选择数字i
         for (int i = 1; i <= maxChoosableInteger; i++) {
-            //当前位数字i已访问，则进行下次循环
-            if ((key & (1 << (i - 1))) != 0) {
+            //当前数字i已访问，则进行下次循环
+            if ((state & (1 << (i - 1))) != 0) {
                 continue;
             }
 
-            //当前玩家加上数字i大于等于desiredTotal，则胜利，返回true
+            //当前玩家加上数字i大于等于desiredTotal，则当前玩家以state开始游戏获胜，返回true
             if (curTotal + i >= desiredTotal) {
-                map.put(key, true);
+                map.put(state, true);
                 return true;
             }
 
-            //key的第i-1位的0变为1，表示数字i已访问，得到下一个访问状态
-            int nextKey = key ^ (1 << (i - 1));
+            //state的第i-1位的0变为1，表示数字i已访问，得到下一个二进制访问状态
+            int nextState = state ^ (1 << (i - 1));
 
-            //对手以nextKey开始游戏失败，则自己以key开始游戏获胜，返回true
-            if (!backtrack(nextKey, curTotal + i, maxChoosableInteger, desiredTotal, map)) {
-                map.put(key, true);
+            //对手以nextState开始游戏失败，则自己以state开始游戏获胜，返回true
+            if (!dfs(nextState, curTotal + i, maxChoosableInteger, desiredTotal, map)) {
+                map.put(state, true);
                 return true;
             }
         }
 
-        //遍历结束当前玩家以key开始游戏失败，返回false
-        map.put(key, false);
+        //遍历结束当前玩家以state开始游戏失败，返回false
+        map.put(state, false);
         return false;
     }
 }

@@ -64,7 +64,7 @@ public class Problem556 {
         int result = 0;
 
         for (char num : numArr) {
-            //溢出处理，有可能n在int范围内，但比n大的下一个元素不在int范围nei
+            //溢出处理，有可能n在int范围内，但比n大的下一个元素不在int范围内
             if (result > Integer.MAX_VALUE / 10 ||
                     (result == Integer.MAX_VALUE / 10 && (num - '0') > Integer.MAX_VALUE % 10)) {
                 return -1;

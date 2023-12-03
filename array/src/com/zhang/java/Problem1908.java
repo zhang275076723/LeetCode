@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/12/10 08:13
  * @Author zsy
- * @Description Nim 游戏 II 类比Problem292、Problem293、Problem294、Problem464、Problem486 状态压缩类比Problem187、Problem294、Problem464、Problem847 记忆化搜索类比
+ * @Description Nim 游戏 II 类比Problem292、Problem293、Problem294、Problem464、Problem486 状态压缩类比Problem187、Problem294、Problem464、Problem473、Problem526、Problem638、Problem698、Problem847 记忆化搜索类比
  * Alice 和 Bob 交替进行一个游戏，由 Alice 先手。
  * 在游戏中，共有 n 堆石头。在每个玩家的回合中，玩家需要 选择 任一非空石头堆，从中移除任意 非零 数量的石头。
  * 如果不能移除任意的石头，就输掉游戏，同时另一人获胜。
@@ -47,54 +47,55 @@ public class Problem1908 {
     }
 
     /**
-     * 回溯+剪枝+二进制状态压缩
+     * 记忆化搜索+二进制状态压缩
      * 最多7堆石头，每堆石头数量不超过7，如果使用数组存储每堆石头访问状态需要O(7)，将长度为7的数组用二进制形式表示需要O(1)，
      * 每堆石头数量只有0-7，共8种情况，每堆石头只需要3bit就能表示，则长度为7的数组需要21bit来表示，即int就能表示长度为7的数组
-     * 时间复杂度O(n*n^n)，空间复杂度O(n^n) (共n^n种状态，每种状态需要O(1)存储)
+     * 时间复杂度O(n*8^n)，空间复杂度O(8^n) (共8^n种状态，每种状态需要O(1)存储)
      *
      * @param piles
      * @return
      */
     public boolean nimGame(int[] piles) {
-        //key：长度为7的数组的二进制表示，value：当前玩家以当前剩余石头开始游戏能否获胜
+        //key：piles中每堆石头剩余数量的二进制状态，value：当前玩家以当前剩余石头开始游戏能否获胜
         Map<Integer, Boolean> map = new HashMap<>();
-        //piles的二进制表示，每3位表示当前堆中石头剩余的数量
-        int key = 0;
+        //piles中每堆石头剩余数量的二进制状态，每3位表示当前堆中石头剩余的数量
+        int state = 0;
 
         for (int i = 0; i < piles.length; i++) {
             //每堆石头数量只有0-7，共8种情况，每堆石头只需要3bit就能表示
-            key = (key << 3) + piles[i];
+            state = (state << 3) + piles[i];
         }
 
-        return backtrack(key, piles.length, map);
+        return dfs(state, piles.length, map);
     }
 
-    private boolean backtrack(int key, int n, Map<Integer, Boolean> map) {
-        //之前已经得到了当前玩家以当前剩余石头开始游戏能否获胜，直接返回map.get(key)
-        if (map.containsKey(key)) {
-            return map.get(key);
+    private boolean dfs(int state, int n, Map<Integer, Boolean> map) {
+        //已经得到了当前玩家以当前每堆剩余石头开始游戏能否获胜，直接返回map.get(state)
+        if (map.containsKey(state)) {
+            return map.get(state);
         }
 
-        //key由低位到高位遍历
+        //遍历每一堆石头，移除当前堆中的石头
+        //第i堆石头，即为piles[n-i-1]堆中的石头
         for (int i = 0; i < n; i++) {
-            //当前堆剩余的石头数量
-            int count = (key >>> (i * 3)) & 0b111;
+            //当前堆剩余的石头数量，每堆石头3bit表示
+            int count = (state >>> (i * 3)) & 0b111;
 
-            //当前玩家从当前堆移除的石头数量
+            //当前玩家从第i堆移除的石头数量
             for (int j = 1; j <= count; j++) {
-                //key的当前堆石头减去移除的石头数量j，得到下一个访问状态
-                int nextKey = key - (j << (i * 3));
+                //当前堆移除j个石头，得到下一个二进制状态
+                int nextState = state - (j << (i * 3));
 
-                //对手以nextKey开始游戏失败，则自己以key开始游戏获胜，返回true
-                if (!backtrack(nextKey, n, map)) {
-                    map.put(key, true);
+                //对手以nextState开始游戏失败，则自己以state开始游戏获胜，返回true
+                if (!dfs(nextState, n, map)) {
+                    map.put(state, true);
                     return true;
                 }
             }
         }
 
-        //遍历结束当前玩家以key开始游戏失败，返回false
-        map.put(key, false);
+        //遍历结束当前玩家以state开始游戏失败，返回false
+        map.put(state, false);
         return false;
     }
 }
