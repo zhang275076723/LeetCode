@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/4 21:27
  * @Author zsy
- * @Description 找数组执行k次减x之后的尽可能小的最大值 网易机试题 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem644、Problem658、Problem1201、Problem1482、Problem2498、CutWood
+ * @Description 找数组执行k次减x之后的尽可能小的最大值 网易机试题 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem644、Problem658、Problem1201、Problem1482、Problem1723、Problem2498、CutWood
  * 一个数组中选一个数减去x，执行k次之后，返回数组中尽可能小的最大值。
  * <p>
  * 输入：arr = [1,0,7], k = 2, x = 3
@@ -52,7 +52,7 @@ public class FindMaxArrayMinAfterKMinus {
      * 二分查找变形，使...最大值尽可能小，就要想到二分查找
      * 对[left,right]进行二分查找，left为arr最小值减去kx，right为arr最大值，统计数组中元素都小于等于mid，减去x的次数count，
      * 如果count大于k，则数组中元素减去x，执行k次之后的最大值在mid右边，left=mid+1；
-     * 如果count小于等于mid，则数组中元素减去x，执行k次之后的最大值在mid或mid左边，right=mid
+     * 如果count小于等于k，则数组中元素减去x，执行k次之后的最大值在mid或mid左边，right=mid
      * 时间复杂度O(n*log(right-left))=O(n)，空间复杂度O(1) (n = arr.length，left和right为int范围内的数，log(right-left)<32)
      *
      * @param arr

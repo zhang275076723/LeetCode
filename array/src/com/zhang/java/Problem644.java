@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/8/31 08:30
  * @Author zsy
- * @Description 子数组最大平均数 II 类比Problem643 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem658、Problem1201、Problem1482、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 子数组最大平均数 II 类比Problem643 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem658、Problem1201、Problem1482、Problem1723、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
  * 给你一个包含 n 个整数的数组 nums，和一个整数 k 。
  * 请你找出长度 大于等于 k 且含最大平均值的连续子数组。并输出这个最大平均值。
  * 任何计算误差小于 10^-5 的结果都将被视为正确答案。
@@ -76,8 +76,8 @@ public class Problem644 {
      * 二分查找变形
      * 对[left,right]进行二分查找，left为数组中的最小值，right为数组中的最大值，
      * 判断数组中是否存在长度大于等于k，平均值大于等于mid的子数组，
-     * 如果存在，则left=mid，继续往右边找；
-     * 如果不存在，则right=mid，继续往左边找
+     * 如果存在，则长度大于等于k，平均值大于等于mid的子数组在mid或mid右边，left=mid；
+     * 如果不存在，则长度大于等于k，平均值大于等于mid的子数组在mid左边，但mid为double类型，right不能赋值为mid-1，right=mid
      * 时间复杂度O(n*log(right-left))=O(n)，空间复杂度O(1) (left和right为int范围内的数，log(right-left)<32)
      *
      * @param nums
@@ -108,11 +108,11 @@ public class Problem644 {
             //判断nums数组中是否存在长度大于等于k，平均值大于等于mid的子数组
             mid = left + ((right - left) / 2);
 
-            //nums数组中存在长度大于等于k，平均值大于等于mid的子数组，则left=mid，继续往右边找
+            //nums数组中存在长度大于等于k，平均值大于等于mid的子数组，则长度大于等于k，平均值大于等于mid的子数组在mid或mid右边，left=mid
             if (isBiggerEqualThanAvg(nums, k, mid)) {
                 left = mid;
             } else {
-                //nums数组中不存在长度大于等于k，平均值大于等于mid的子数组，则right=mid，继续往左边找
+                //nums数组中不存在长度大于等于k，平均值大于等于mid的子数组，则长度大于等于k，平均值大于等于mid的子数组在mid左边，但mid为double类型，right不能赋值为mid-1，right=mid
                 right = mid;
             }
         }
