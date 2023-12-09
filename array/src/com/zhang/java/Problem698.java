@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * @Date 2022/9/14 8:37
  * @Author zsy
- * @Description 划分为k个相等的子集 网易机试题 集合划分类比Problem416、Problem473 分割类比Problem659、Problem725 状态压缩类比Problem187、Problem294、Problem464、Problem473、Problem526、Problem638、Problem847、Problem1908 记忆化搜索类比 动态规划类比 回溯+剪枝类比Problem17、Problem22、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem89、Problem90、Problem97、Problem216、Problem301、Problem377、Problem491、Problem679、Offer17、Offer38
+ * @Description 划分为k个相等的子集 网易机试题 集合划分类比Problem416、Problem473、Problem1723、Problem2305 分割类比Problem659、Problem725 状态压缩类比Problem187、Problem294、Problem464、Problem473、Problem526、Problem638、Problem847、Problem1723、Problem1908、Problem2305 记忆化搜索类比 动态规划类比 回溯+剪枝类比Problem17、Problem22、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem89、Problem90、Problem97、Problem216、Problem301、Problem377、Problem491、Problem679、Offer17、Offer38
  * 给定一个整数数组  nums 和一个正整数 k，找出是否有可能把这个数组分成 k 个非空子集，其总和都相等。
  * <p>
  * 输入： nums = [4, 3, 2, 3, 5, 2, 1], k = 4

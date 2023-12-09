@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * @Date 2023/12/12 08:16
  * @Author zsy
- * @Description 火柴拼正方形 集合划分类比Problem416、Problem698 状态压缩类比Problem187、Problem294、Problem464、Problem526、Problem638、Problem698、Problem847、Problem1908 记忆化搜索类比 动态规划类比
+ * @Description 火柴拼正方形 集合划分类比Problem416、Problem698、Problem1723、Problem2305 状态压缩类比Problem187、Problem294、Problem464、Problem526、Problem638、Problem698、Problem847、Problem1723、Problem1908、Problem2305 记忆化搜索类比 动态规划类比
  * 你将得到一个整数数组 matchsticks ，其中 matchsticks[i] 是第 i 个火柴棒的长度。
  * 你要用 所有的火柴棍 拼成一个正方形。
  * 你 不能折断 任何一根火柴棒，但你可以把它们连在一起，而且每根火柴棒必须 使用一次 。

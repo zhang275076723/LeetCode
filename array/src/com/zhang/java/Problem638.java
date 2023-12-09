@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * @Date 2023/12/15 08:24
  * @Author zsy
- * @Description 大礼包 状态压缩类比Problem187、Problem294、Problem464、Problem473、Problem526、Problem698、Problem847、Problem1908 记忆化搜索类比
+ * @Description 大礼包 状态压缩类比Problem187、Problem294、Problem464、Problem473、Problem526、Problem698、Problem847、Problem1723、Problem1908、Problem2305 记忆化搜索类比
  * 在 LeetCode 商店中， 有 n 件在售的物品。
  * 每件物品都有对应的价格。然而，也有一些大礼包，每个大礼包以优惠的价格捆绑销售一组物品。
  * 给你一个整数数组 price 表示物品价格，其中 price[i] 是第 i 件物品的价格。
