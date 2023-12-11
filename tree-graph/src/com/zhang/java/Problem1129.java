@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * @Date 2023/10/30 08:58
  * @Author zsy
- * @Description 颜色交替的最短路径 字节面试题 bfs类比Problem499、Problem505、Problem847、Problem1293、Problem1368、Problem1631、Problem2045、Problem2290
+ * @Description 颜色交替的最短路径 字节面试题 bfs类比Problem407、Problem499、Problem505、Problem847、Problem1293、Problem1368、Problem1631、Problem2045、Problem2290
  * 给定一个整数 n，即有向图中的节点数，其中节点标记为 0 到 n - 1。
  * 图中的每条边为红色或者蓝色，并且可能存在自环或平行边。
  * 给定两个数组 redEdges 和 blueEdges，其中：

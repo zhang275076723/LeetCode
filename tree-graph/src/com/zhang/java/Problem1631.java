@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2023/11/24 08:08
  * @Author zsy
- * @Description 最小体力消耗路径 bfs类比Problem499、Problem505、Problem847、Problem1129、Problem1293、Problem1368、Problem2045、Problem2290 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra
+ * @Description 最小体力消耗路径 bfs类比Problem407、Problem499、Problem505、Problem847、Problem1129、Problem1293、Problem1368、Problem2045、Problem2290 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra
  * 你准备参加一场远足活动。给你一个二维 rows x columns 的地图 heights ，其中 heights[row][col] 表示格子 (row, col) 的高度。
  * 一开始你在最左上角的格子 (0, 0) ，且你希望去最右下角的格子 (rows-1, columns-1) （注意下标从 0 开始编号）。
  * 你每次可以往 上，下，左，右 四个方向之一移动，你想要找到耗费 体力 最小的一条路径。
@@ -54,7 +54,7 @@ public class Problem1631 {
 
     /**
      * bfs
-     * 时间复杂度O(mn)，空间复杂度O(mn)
+     * 时间复杂度O((mn)^2)，空间复杂度O(mn)
      *
      * @param heights
      * @return
@@ -161,7 +161,6 @@ public class Problem1631 {
                 if (!visited[x2][y2] && ((x1 == -1 && y1 == -1) || (cost[x2][y2] < cost[x1][y1]))) {
                     x1 = x2;
                     y1 = y2;
-
                 }
             }
 

@@ -80,7 +80,11 @@ public class Problem2203 {
      * <              |
      * <              |
      * <             dest
-     * < 图中节点C即为使distance1+distance2+distance3最小的中间节点
+     * < 图中节点A不是distance1+distance2+distance3最小的中间节点，
+     * < 此时distance1+distance2+distance3=|src1和A之间距离|+|src2和C之间距离|+|A和C之间距离|+|dest和A之间距离|
+     * < =|src1和C之间距离|+|src2和C之间距离|+|dest和C之间距离|+|A和C之间距离|
+     * < 图中节点C是distance1+distance2+distance3最小的中间节点，
+     * < 此时distance1+distance2+distance3=|src1和C之间距离|+|src2和C之间距离|+|dest和C之间距离|
      *
      * @param n
      * @param edges
