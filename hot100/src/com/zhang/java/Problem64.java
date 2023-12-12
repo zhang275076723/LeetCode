@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/23 11:12
  * @Author zsy
- * @Description 最小路径和 类比Problem62、Problem63、Problem980、Offer47 记忆化搜索类比Problem62、Problem63、Problem70、Problem329、Problem509、Problem1340、Problem1388、Problem1444、Offer10、Offer10_2
+ * @Description 最小路径和 类比Problem62、Problem63、Problem874、Problem980、Offer47 记忆化搜索类比Problem62、Problem63、Problem70、Problem329、Problem509、Problem1340、Problem1388、Problem1444、Offer10、Offer10_2
  * 给定一个包含非负整数的 m x n 网格 grid ，
  * 请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。
  * 说明：每次只能向下或者向右移动一步。
@@ -25,7 +25,7 @@ public class Problem64 {
         Problem64 problem64 = new Problem64();
         int[][] grid = {{1, 3, 1}, {1, 5, 1}, {4, 2, 1}};
         System.out.println(problem64.minPathSum(grid));
-//        System.out.println(problem64.minPathSum2(grid));
+        System.out.println(problem64.minPathSum2(grid));
         System.out.println(problem64.minPathSum3(grid));
     }
 
@@ -63,31 +63,35 @@ public class Problem64 {
     }
 
     /**
-     * 动态规划优化，使用原数组作为dp数组
-     * 每个位置的值只与它左边和上边的元素有关，直接使用原数组grid作为dp数组
-     * 时间复杂度O(mn)，空间复杂度O(1)
+     * 动态规划优化，使用滚动数组
+     * 时间复杂度O(mn)，空间复杂度O(n)
      *
      * @param grid
      * @return
      */
     public int minPathSum2(int[][] grid) {
-        //dp初始化
-        for (int i = 1; i < grid.length; i++) {
-            grid[i][0] = grid[i - 1][0] + grid[i][0];
-        }
+        int[] dp = new int[grid[0].length];
+        dp[0] = grid[0][0];
 
         //dp初始化
         for (int j = 1; j < grid[0].length; j++) {
-            grid[0][j] = grid[0][j - 1] + grid[0][j];
+            dp[j] = dp[j - 1] + grid[0][j];
         }
 
         for (int i = 1; i < grid.length; i++) {
+            //第i行dp的临时数组
+            int[] temp = new int[grid[0].length];
+            temp[0] = dp[0] + grid[i][0];
+
             for (int j = 1; j < grid[0].length; j++) {
-                grid[i][j] = Math.min(grid[i - 1][j], grid[i][j - 1]) + grid[i][j];
+                temp[j] = Math.min(temp[j - 1], dp[j]) + grid[i][j];
             }
+
+            //第i行dp的临时数组赋值给dp
+            dp = temp;
         }
 
-        return grid[grid.length - 1][grid[0].length - 1];
+        return dp[grid[0].length - 1];
     }
 
     /**

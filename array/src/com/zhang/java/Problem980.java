@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/8/5 08:41
  * @Author zsy
- * @Description 不同路径 III 类比Problem62、Problem63、Problem64、Offer13
+ * @Description 不同路径 III 类比Problem62、Problem63、Problem64、Problem874、Offer13
  * 在二维网格 grid 上，有 4 种类型的方格：
  * 1 表示起始方格。且只有一个起始方格。
  * 2 表示结束方格，且只有一个结束方格。
@@ -63,13 +63,14 @@ public class Problem980 {
 
     /**
      * dfs
+     * 注意：从起始节点到终止节点经过所有的空节点才是一条路径，如果一条路径没有经过某个空节点，则不是一条路径
      * 时间复杂度O(4^(mn))，空间复杂度O(mn)
      *
      * @param grid
      * @return
      */
     public int uniquePathsIII(int[][] grid) {
-        //可以走过的空方格数量
+        //空节点的数量
         int count0 = 0;
         //起始下标
         int startIndex0 = -1;
