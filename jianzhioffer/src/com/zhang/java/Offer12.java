@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/14 16:48
  * @Author zsy
- * @Description 矩阵中的路径 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem490、Problem499、Problem505、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Problem1568、Problem1905 同Problem79
+ * @Description 矩阵中的路径 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem490、Problem499、Problem505、Problem529、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Problem1568、Problem1905 同Problem79
  * 给定一个m x n二维字符网格board和一个字符串单词word。
  * 如果word存在于网格中，返回true；否则，返回false。
  * 单词必须按照字母顺序，通过相邻的单元格内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。
