@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2023/11/28 08:18
  * @Author zsy
- * @Description 迷宫 类比Problem499、Problem505 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem499、Problem505、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Problem1568、Problem1905、Offer12
+ * @Description 迷宫 类比Problem499、Problem505 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem499、Problem505、Problem529、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Problem1568、Problem1905、Offer12
  * 由空地（用 0 表示）和墙（用 1 表示）组成的迷宫 maze 中有一个球。
  * 球可以途经空地向 上、下、左、右 四个方向滚动，且在遇到墙壁前不会停止滚动。
  * 当球停下时，可以选择向下一个方向滚动。

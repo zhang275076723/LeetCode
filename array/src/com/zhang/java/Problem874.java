@@ -67,7 +67,7 @@ public class Problem874 {
     }
 
     /**
-     * 哈希表
+     * 模拟
      * 模拟机器人每一步移动的过程，使用哈希集合记录障碍物的位置
      * 时间复杂度O(Cn+m)，空间复杂度O(m) (n=commands.length，m=obstacles.length，C=commands中最大值)
      *

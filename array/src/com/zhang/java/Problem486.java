@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/12/11 08:36
  * @Author zsy
- * @Description 预测赢家 类比Problem337 类比Problem292、Problem293、Problem294、Problem464、Problem1908 动态规划类比 记忆化搜索类比
+ * @Description 预测赢家 类比Problem337 类比Problem292、Problem293、Problem294、Problem390、Problem464、Problem1908 动态规划类比 记忆化搜索类比
  * 给你一个整数数组 nums 。玩家 1 和玩家 2 基于这个数组设计了一个游戏。
  * 玩家 1 和玩家 2 轮流进行自己的回合，玩家 1 先手。开始时，两个玩家的初始分值都是 0 。
  * 每一回合，玩家从数组的任意一端取一个数字（即，nums[0] 或 nums[nums.length - 1]），取到的数字将会从数组中移除（数组长度减 1 ）。
