@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/12/8 08:39
  * @Author zsy
- * @Description 翻转游戏 II 类比Problem292、Problem293、Problem390、Problem464、Problem1908 状态压缩类比Problem187、Problem464、Problem473、Problem526、Problem638、Problem698、Problem847、Problem1723、Problem1908、Problem2305 记忆化搜索类比
+ * @Description 翻转游戏 II 类比Problem292、Problem293、Problem390、Problem464、Problem486、Problem877、Problem1908 状态压缩类比Problem187、Problem464、Problem473、Problem526、Problem638、Problem698、Problem847、Problem1723、Problem1908、Problem2305 记忆化搜索类比
  * 你和朋友玩一个叫做「翻转游戏」的游戏。游戏规则如下：
  * 给你一个字符串 currentState ，其中只含 '+' 和 '-' 。
  * 你和朋友轮流将 连续 的两个 "++" 反转成 "--" 。

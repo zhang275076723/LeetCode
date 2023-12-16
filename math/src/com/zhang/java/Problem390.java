@@ -6,7 +6,7 @@ import java.util.LinkedList;
 /**
  * @Date 2023/12/20 08:20
  * @Author zsy
- * @Description 消除游戏 类比Problem258、Problem292、Problem293、Problem294、Problem464、Problem486、Problem1823、Offer62
+ * @Description 消除游戏 类比Problem258、Problem292、Problem293、Problem294、Problem464、Problem486、Problem877、Problem1823、Problem1908、Offer62
  * 列表 arr 由在范围 [1, n] 中的所有整数组成，并按严格递增排序。请你对 arr 应用下述算法：
  * 从左到右，删除第一个数字，然后每隔一个数字删除一个，直到到达列表末尾。
  * 重复上面的步骤，但这次是从右到左。也就是，删除最右侧的数字，然后剩下的数字每隔一个删除一个。

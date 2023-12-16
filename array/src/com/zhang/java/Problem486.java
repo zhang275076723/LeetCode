@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/12/11 08:36
  * @Author zsy
- * @Description 预测赢家 类比Problem337 类比Problem292、Problem293、Problem294、Problem390、Problem464、Problem1908 动态规划类比 记忆化搜索类比
+ * @Description 预测赢家 类比Problem337 类比Problem877 类比Problem292、Problem293、Problem294、Problem390、Problem464、Problem877、Problem1908 动态规划类比 记忆化搜索类比
  * 给你一个整数数组 nums 。玩家 1 和玩家 2 基于这个数组设计了一个游戏。
  * 玩家 1 和玩家 2 轮流进行自己的回合，玩家 1 先手。开始时，两个玩家的初始分值都是 0 。
  * 每一回合，玩家从数组的任意一端取一个数字（即，nums[0] 或 nums[nums.length - 1]），取到的数字将会从数组中移除（数组长度减 1 ）。
@@ -45,7 +45,7 @@ public class Problem486 {
      */
     public boolean predictTheWinner(int[] nums) {
         //当前玩家先手得到的分数减去对手得到的分数的最大值大于等于0，则当前玩家胜利
-        return dfs(nums, 0, nums.length - 1) >= 0;
+        return dfs(0, nums.length - 1, nums) >= 0;
     }
 
     /**
@@ -59,7 +59,7 @@ public class Problem486 {
     public boolean predictTheWinner2(int[] nums) {
         int[][] dp = new int[nums.length][nums.length];
 
-        //dp初始化
+        //dp初始化，初始化为int最大值表示当前情况还没有考虑
         for (int i = 0; i < nums.length; i++) {
             for (int j = 0; j < nums.length; j++) {
                 dp[i][j] = Integer.MAX_VALUE;
@@ -67,13 +67,13 @@ public class Problem486 {
         }
 
         //当前玩家先手得到的分数减去对手得到的分数的最大值大于等于0，则当前玩家胜利
-        return dfs(nums, 0, nums.length - 1, dp) >= 0;
+        return dfs(0, nums.length - 1, nums, dp) >= 0;
     }
 
     /**
      * 动态规划
-     * dp[i][j]：在nums[i]-nums[j]范围内，当前玩家先手得到的分数减去对手得到的分数的最大值
-     * dp[i][j] = max(nums[i]-dp[i+1][j],nums[j]-dp[i][j+1])
+     * dp[i][j]：nums[i]-nums[j]范围内，当前玩家先手得到的分数减去对手得到的分数的最大值
+     * dp[i][j] = max(nums[i]-dp[i+1][j],nums[j]-dp[i][j-1])
      * 时间复杂度O(n^2)，空间复杂度O(n^2)
      *
      * @param nums
@@ -82,7 +82,7 @@ public class Problem486 {
     public boolean predictTheWinner3(int[] nums) {
         int[][] dp = new int[nums.length][nums.length];
 
-        //dp初始化，nums[i]-nums[i]得到的分数为nums[i]
+        //dp初始化，，nums[i]-nums[i]范围内，当前玩家先手得到的分数减去对手得到的分数的最大值为piles[i]
         for (int i = 0; i < nums.length; i++) {
             dp[i][i] = nums[i];
         }
@@ -105,60 +105,61 @@ public class Problem486 {
     }
 
     /**
-     * 在nums[start]-nums[end]范围内，当前玩家先手得到的分数减去对手得到的分数的最大值
+     * nums[left]-nums[right]范围内，当前玩家先手得到的分数减去对手得到的分数的最大值
      *
+     * @param left
+     * @param right
      * @param nums
-     * @param start
-     * @param end
      * @return
      */
-    private int dfs(int[] nums, int start, int end) {
-        if (start > end) {
+    private int dfs(int left, int right, int[] nums) {
+        if (left > right) {
             return 0;
         }
 
-        if (start == end) {
-            return nums[start];
+        if (left == right) {
+            return nums[left];
         }
 
-        //当前玩家先手取nums[start]得到的分数减去对手得到的分数的最大值
-        int max1 = nums[start] - dfs(nums, start + 1, end);
-        //当前玩家先手取nums[end]得到的分数减去对手得到的分数的最大值
-        int max2 = nums[end] - dfs(nums, start, end - 1);
+        //当前玩家先手取nums[left]得到的分数减去对手得到的分数的最大值
+        int max1 = nums[left] - dfs(left + 1, right, nums);
+        //当前玩家先手取nums[right]得到的分数减去对手得到的分数的最大值
+        int max2 = nums[right] - dfs(left, right - 1, nums);
 
         return Math.max(max1, max2);
     }
 
     /**
-     * 记忆化搜索，在nums[start]-nums[end]范围内，当前玩家先手得到的分数减去对手得到的分数的最大值
+     * 记忆化搜索，nums[left]-nums[right]范围内，当前玩家先手得到的分数减去对手得到的分数的最大值
      *
+     * @param left
+     * @param right
      * @param nums
-     * @param start
-     * @param end
      * @param dp
      * @return
      */
-    private int dfs(int[] nums, int start, int end, int[][] dp) {
-        if (start > end) {
+    private int dfs(int left, int right, int[] nums, int[][] dp) {
+        if (left > right) {
             return 0;
         }
 
-        if (start == end) {
-            dp[start][end] = nums[start];
-            return dp[start][end];
+        if (left == right) {
+            dp[left][right] = nums[left];
+            return dp[left][right];
         }
 
-        if (dp[start][end] != Integer.MAX_VALUE) {
-            return dp[start][end];
+        //已经得到nums[left]-nums[right]范围内，当前玩家先手得到的分数减去对手得到的分数的最大值，直接返回dp[left][right]
+        if (dp[left][right] != Integer.MAX_VALUE) {
+            return dp[left][right];
         }
 
-        //当前玩家先手取nums[start]得到的分数减去对手得到的分数的最大值
-        int max1 = nums[start] - dfs(nums, start + 1, end, dp);
-        //当前玩家先手取nums[end]得到的分数减去对手得到的分数的最大值
-        int max2 = nums[end] - dfs(nums, start, end - 1, dp);
+        //当前玩家先手取nums[left]得到的分数减去对手得到的分数的最大值
+        int max1 = nums[left] - dfs(left + 1, right, nums, dp);
+        //当前玩家先手取nums[right]得到的分数减去对手得到的分数的最大值
+        int max2 = nums[right] - dfs(left, right - 1, nums, dp);
 
-        dp[start][end] = Math.max(max1, max2);
+        dp[left][right] = Math.max(max1, max2);
 
-        return dp[start][end];
+        return dp[left][right];
     }
 }

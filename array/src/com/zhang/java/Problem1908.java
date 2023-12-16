@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/12/10 08:13
  * @Author zsy
- * @Description Nim 游戏 II 类比Problem292、Problem293、Problem294、Problem464、Problem486 状态压缩类比Problem187、Problem294、Problem464、Problem473、Problem526、Problem638、Problem698、Problem847、Problem1723、Problem2305 记忆化搜索类比
+ * @Description Nim 游戏 II 类比Problem292、Problem293、Problem294、Problem390、Problem464、Problem486、Problem877 状态压缩类比Problem187、Problem294、Problem464、Problem473、Problem526、Problem638、Problem698、Problem847、Problem1723、Problem2305 记忆化搜索类比
  * Alice 和 Bob 交替进行一个游戏，由 Alice 先手。
  * 在游戏中，共有 n 堆石头。在每个玩家的回合中，玩家需要 选择 任一非空石头堆，从中移除任意 非零 数量的石头。
  * 如果不能移除任意的石头，就输掉游戏，同时另一人获胜。
