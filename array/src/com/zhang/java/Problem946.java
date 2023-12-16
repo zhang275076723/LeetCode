@@ -3,13 +3,11 @@ package com.zhang.java;
 import java.util.Stack;
 
 /**
- * @Date 2022/3/21 15:34
+ * @Date 2023/12/24 08:24
  * @Author zsy
- * @Description 栈的压入、弹出序列 类比Problem155、Problem225、Problem232、Problem295、Problem716、Offer9、Offer30、Offer41、Offer59_2 同Problem946
- * 输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。
- * 假设压入栈的所有数字均不相等。
- * 例如，序列 {1,2,3,4,5} 是某栈的压栈序列，序列 {4,5,3,2,1} 是该压栈序列对应的一个弹出序列，
- * 但 {4,3,5,1,2} 就不可能是该压栈序列的弹出序列。
+ * @Description 验证栈序列 美团机试题 栈类比 同Offer31
+ * 给定 pushed 和 popped 两个序列，每个序列中的 值都不重复，
+ * 只有当它们可能是在最初空栈上进行的推入 push 和弹出 pop 操作序列的结果时，返回 true；否则，返回 false 。
  * <p>
  * 输入：pushed = [1,2,3,4,5], popped = [4,5,3,2,1]
  * 输出：true
@@ -21,16 +19,20 @@ import java.util.Stack;
  * 输出：false
  * 解释：1 不能在 2 之前弹出。
  * <p>
- * 0 <= pushed.length == popped.length <= 1000
- * 0 <= pushed[i], popped[i] < 1000
- * pushed 是 popped 的排列。
+ * 1 <= pushed.length <= 1000
+ * 0 <= pushed[i] <= 1000
+ * pushed 的所有元素 互不相同
+ * popped.length == pushed.length
+ * popped 是 pushed 的一个排列
  */
-public class Offer31 {
+public class Problem946 {
     public static void main(String[] args) {
-        Offer31 offer31 = new Offer31();
+        Problem946 problem946 = new Problem946();
+//        int[] pushed = {1, 2, 3, 4, 5};
+//        int[] popped = {4, 5, 3, 2, 1};
         int[] pushed = {1, 2, 3, 4, 5};
-        int[] popped = {4, 5, 3, 2, 1};
-        System.out.println(offer31.validateStackSequences(pushed, popped));
+        int[] popped = {4, 3, 5, 1, 2};
+        System.out.println(problem946.validateStackSequences(pushed, popped));
     }
 
     /**

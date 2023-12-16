@@ -99,27 +99,27 @@ public class Problem229 {
             }
         }
 
-        //票数重新赋值为0，统计result1和result2出现的次数是否超过n/3次
-        vote1 = 0;
-        vote2 = 0;
+        //result1和result2出现的次数
+        int count1 = 0;
+        int count2 = 0;
 
         //统计result1和result2出现的次数是否超过n/3次
         for (int num : nums) {
             if (result1 == num) {
-                vote1++;
+                count1++;
             } else if (result2 == num) {
-                vote2++;
+                count2++;
             }
         }
 
         List<Integer> list = new ArrayList<>();
 
         //判断result1和result2是否超过n/3
-        if (vote1 > nums.length / 3) {
+        if (count1 > nums.length / 3) {
             list.add(result1);
         }
 
-        if (vote2 > nums.length / 3) {
+        if (count2 > nums.length / 3) {
             list.add(result2);
         }
 
