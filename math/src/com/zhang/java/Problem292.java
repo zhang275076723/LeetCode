@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/12/5 08:45
  * @Author zsy
- * @Description Nim 游戏 字节面试题 类比Problem258、Problem293、Problem294、Problem390、Problem464、Problem486、Problem1823、Offer62
+ * @Description Nim 游戏 字节面试题 类比Problem258、Problem293、Problem294、Problem390、Problem464、Problem486、Problem877、Problem1823、Problem1908、Offer62
  * 你和你的朋友，两个人一起玩 Nim 游戏：
  * 桌子上有一堆石头。
  * 你们轮流进行自己的回合， 你作为先手 。
