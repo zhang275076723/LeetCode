@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/11/12 08:52
  * @Author zsy
- * @Description 扁平化嵌套列表迭代器 迭代器类比Problem173、Problem251、Problem281、Problem284、Problem604、Problem900、Problem1286、Problem1586
+ * @Description 扁平化嵌套列表迭代器 迭代器类比Problem173、Problem251、Problem281、Problem284、Problem604、Problem900、Problem1286、Problem1586 栈类比Problem20、Problem71、Problem150、Problem224、Problem227、Problem331、Problem394、Problem678、Problem856、Problem946、Problem1003、Problem1047、Problem1096、Offer31、CharacterToInteger
  * 给你一个嵌套的整数列表 nestedList 。每个元素要么是一个整数，要么是一个列表；该列表的元素也可能是整数或者是其他列表。
  * 请你实现一个迭代器将其扁平化，使之能够遍历这个列表中的所有整数。
  * 实现扁平迭代器类 NestedIterator ：
@@ -146,7 +146,7 @@ public class Problem341 {
                 }
             }
 
-            //栈中元素都遍历完，则不存在下一个整数，直接返回true
+            //栈中元素都遍历完，则不存在下一个整数，直接返回false
             return false;
         }
     }

@@ -46,9 +46,9 @@ public class Problem407 {
      * bfs
      * water[i][j]：节点(i,j)接雨水之后的高度
      * water[i][j]-heightMap[i][j]即为当前位置能够接的雨水
-     * 当前节点(i,j)所接雨水之后的高度小于邻接节点(x,y)所接雨水之后的高度，
-     * 并且邻接节点(x,y)的高度小于邻接节点(x,y)所接雨水之后的高度，
-     * 则更新邻接节点(x,y)所接雨水之后的高度
+     * 当前节点(i,j)所接雨水之后的高度water[i][j]小于邻接节点(x,y)所接雨水之后的高度water[x][y]，
+     * 并且邻接节点(x,y)所接雨水之后的高度water[x][y]大于邻接节点(x,y)的高度heightMap[x][y]，
+     * 则更新邻接节点(x,y)所接雨水之后的高度water[x][y]=max(heightMap[x][y],water[i][j])
      * 时间复杂度O((mn)^2)，空间复杂度O(mn)
      *
      * @param heightMap
@@ -87,7 +87,7 @@ public class Problem407 {
             queue.offer(new int[]{m - 1, j});
         }
 
-        //water内部元素初始化
+        //water内部元素初始化，初始化为maxHeight，通过bfs一步步缩小
         for (int i = 1; i < m - 1; i++) {
             for (int j = 1; j < n - 1; j++) {
                 water[i][j] = maxHeight;
@@ -109,11 +109,12 @@ public class Problem407 {
                     continue;
                 }
 
-                //当前节点(i,j)所接雨水之后的高度小于邻接节点(x,y)所接雨水之后的高度，
-                //并且邻接节点(x,y)的高度小于邻接节点(x,y)所接雨水之后的高度，
-                //则更新邻接节点(x,y)所接雨水之后的高度，临界节点(x,y)入队
-                if (water[i][j] < water[x][y] && heightMap[x][y] < water[x][y]) {
-                    water[x][y] = Math.max(water[i][j], heightMap[x][y]);
+                //当前节点(i,j)所接雨水之后的高度water[i][j]小于邻接节点(x,y)所接雨水之后的高度water[x][y]，
+                //并且邻接节点(x,y)所接雨水之后的高度water[x][y]大于邻接节点(x,y)的高度heightMap[x][y]，
+                //则更新邻接节点(x,y)所接雨水之后的高度water[x][y]=max(heightMap[x][y],water[i][j])，邻接节点(x,y)入队
+                if (water[i][j] < water[x][y] && water[x][y] > heightMap[x][y]) {
+                    //water[i][j]始终不小于heightMap[i][j]，即当前位置能够接的雨水不小于当前位置的高度
+                    water[x][y] = Math.max(heightMap[x][y], water[i][j]);
                     queue.offer(new int[]{x, y});
                 }
             }
@@ -132,9 +133,11 @@ public class Problem407 {
     }
 
     /**
-     * 优先队列
-     * 边缘不会接到雨水，所有边缘节点先入堆，最小高度节点出堆，最小高度节点的邻接节点所接雨水之后的高度入堆(注意：不是节点的高度)，
-     * 最小高度节点所接雨水之后的高度减去最小高度节点的邻接节点的高度，即为邻接节点能接的雨水
+     * 优先队列，小根堆
+     * 边缘不会接到雨水，所有边缘节点先入堆，最小高度节点(i,j)出堆，
+     * 如果当前节点(i,j)所接雨水之后的高度water(注意：不是节点的高度)大于当前节点邻接节点(x,y)的高度heightMap[x][y]，
+     * 则邻接节点能接到的雨水，能接到的雨水为当前节点所接雨水之后的高度water减去当前节点邻接节点的高度heightMap[x][y]，
+     * 并且邻接节点所接雨水之后的高度入堆(注意：不是节点的高度)，邻接节点所接雨水之后的高度为max(heightMap[x][y],water)
      * 时间复杂度O(mnlog(mn))，空间复杂度O(mn)
      *
      * @param heightMap
@@ -187,8 +190,9 @@ public class Problem407 {
                     continue;
                 }
 
-                //最小高度节点(i,j)所接雨水之后的高度减去最小高度节点的邻接节点(x,y)的高度，即为邻接节点(x,y)能接的雨水
-                if (heightMap[x][y] < water) {
+                //当前节点(i,j)所接雨水之后的高度water(注意：不是节点的高度)大于当前节点邻接节点(x,y)的高度heightMap[x][y]，
+                //则邻接节点能接到的雨水，能接到的雨水为当前节点所接雨水之后的高度water减去当前节点邻接节点的高度heightMap[x][y]
+                if (water > heightMap[x][y]) {
                     result = result + water - heightMap[x][y];
                 }
 

@@ -8,7 +8,7 @@ import java.util.Random;
 /**
  * @Date 2023/10/4 08:10
  * @Author zsy
- * @Description 花括号展开 类比Problem17 括号类比 回溯+剪枝类比
+ * @Description 花括号展开 类比Problem17 括号类比Problem20、Problem22、Problem32、Problem301、Problem678、Problem856、Problem1096 回溯+剪枝类比
  * 给定一个表示单词列表的字符串 s 。
  * 单词中的每个字母都有一个或多个选项。
  * 如果有一个选项，则字母按原样表示。
@@ -67,6 +67,7 @@ public class Problem1087 {
             } else {
                 //当前位置有多种选择
 
+                //index右移一位，表示跳过'{'
                 index++;
                 List<String> list = new ArrayList<>();
 
@@ -86,6 +87,7 @@ public class Problem1087 {
                     }
                 }
 
+                //index右移一位，表示跳过'}'
                 index++;
                 strList.add(list);
             }

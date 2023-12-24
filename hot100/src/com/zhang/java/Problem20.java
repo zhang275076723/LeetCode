@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2022/4/15 10:40
  * @Author zsy
- * @Description 有效的括号 括号类比Problem22、Problem32、Problem301、Problem678
+ * @Description 有效的括号 括号类比Problem22、Problem32、Problem301、Problem678、Problem856、Problem1087、Problem1096 栈类比Problem71、Problem150、Problem224、Problem227、Problem331、Problem341、Problem394、Problem678、Problem856、Problem946、Problem1003、Problem1047、Problem1096、Offer31、CharacterToInteger
  * 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s ，判断字符串是否有效。
  * 有效字符串需满足：
  * 1、左括号必须用相同类型的右括号闭合。

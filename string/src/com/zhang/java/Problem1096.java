@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/10/4 08:50
  * @Author zsy
- * @Description 花括号展开 II 括号类比 栈类比 回溯+剪枝类比
+ * @Description 花括号展开 II 括号类比Problem20、Problem22、Problem32、Problem301、Problem678、Problem856、Problem1087 栈类比Problem20、Problem71、Problem150、Problem224、Problem227、Problem331、Problem341、Problem394、Problem678、Problem856、Problem946、Problem1003、Problem1047、Offer31、CharacterToInteger 回溯+剪枝类比
  * 如果你熟悉 Shell 编程，那么一定了解过花括号展开，它可以用来生成任意字符串。
  * 花括号展开的表达式可以看作一个由 花括号、逗号 和 小写英文字母 组成的字符串，定义下面几条语法规则：
  * 如果只给出单一的元素 x，那么表达式表示的字符串就只有 "x"。R(x) = {x}
@@ -48,7 +48,7 @@ public class Problem1096 {
     }
 
     /**
-     * 回溯+剪枝
+     * dfs
      * 找第一个'}'(即优先处理最内层花括号)，如果不存在，则当前字符串为不包含花括号的表达式，直接加入set中；
      * 如果存在，找'}'对应的'{'，根据','拆分花括号，得到花括号中每个字符串，拼接前缀、花括号中字符串、后缀，继续分治
      *
@@ -75,7 +75,7 @@ public class Problem1096 {
     }
 
     /**
-     * bfs，分治法
+     * bfs
      * 出队一个字符串，找第一个'}'(即优先处理最内层花括号)，如果不存在，则当前字符串为不包含花括号的表达式，直接加入set中；
      * 如果存在，找'}'对应的'{'，根据','拆分花括号，得到花括号中每个字符串，拼接前缀、花括号中字符串、后缀，加入队列中
      *
@@ -141,11 +141,10 @@ public class Problem1096 {
     }
 
     /**
-     * 双栈，字符串栈和操作符栈
+     * 双栈，字符串栈和操作符栈(按照基本计算器双栈的形式进行运算)
      * ','作为'+'
      * '{'、'}'作为'('、')'
-     * aa{}、{}aa、{}{}、aabb之间需要添加'*'，即aa*{}、{}*aa、{}*{}、aa*bb
-     * 按照基本计算器双栈的形式进行运算
+     * 特殊情况：aa{}、{}aa、{}{}、aabb之间需要添加'*'，即aa*{}、{}*aa、{}*{}、aa*bb
      *
      * @param expression
      * @return
@@ -161,7 +160,7 @@ public class Problem1096 {
 
             //当前字符为字母，则作为基本计算器的数字
             if ('a' <= c && c <= 'z') {
-                //当前字符的前一个字符为'{'或字母，则需要添加'*'
+                //当前字符的前一个字符为'}'或字母，则需要添加'*'
                 if (i > 0 && (expression.charAt(i - 1) == '}' ||
                         ('a' <= expression.charAt(i - 1) && expression.charAt(i - 1) <= 'z'))) {
                     opsStack.offerLast('*');
@@ -173,7 +172,7 @@ public class Problem1096 {
             } else if (c == '{') {
                 //当前字符为'{'，则作为基本计算器的'('
 
-                //判断是否需要添加'*'
+                //当前字符的前一个字符为'}'或字母，则需要添加'*'
                 if (i > 0 && (expression.charAt(i - 1) == '}' ||
                         ('a' <= expression.charAt(i - 1) && expression.charAt(i - 1) <= 'z'))) {
                     opsStack.offerLast('*');

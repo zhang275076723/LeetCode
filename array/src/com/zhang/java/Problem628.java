@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * @Date 2023/8/3 08:45
  * @Author zsy
- * @Description 三个数的最大乘积 数组类比Problem53、Problem135、Problem152、Problem238、Problem581、Problem845、Problem1749、Offer42、Offer66、FindLeftBiggerRightLessIndex
+ * @Description 三个数的最大乘积 类比Problem581
  * 给你一个整型数组 nums ，在数组中找出由三个数组成的最大乘积，并输出这个乘积。
  * <p>
  * 输入：nums = [1,2,3]

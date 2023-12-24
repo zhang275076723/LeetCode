@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2023/12/24 08:24
  * @Author zsy
- * @Description 验证栈序列 美团机试题 栈类比 同Offer31
+ * @Description 验证栈序列 美团机试题 栈类比Problem20、Problem71、Problem150、Problem224、Problem227、Problem331、Problem341、Problem394、Problem678、Problem856、Problem1003、Problem1047、Problem1096、Offer31、CharacterToInteger 同Offer31
  * 给定 pushed 和 popped 两个序列，每个序列中的 值都不重复，
  * 只有当它们可能是在最初空栈上进行的推入 push 和弹出 pop 操作序列的结果时，返回 true；否则，返回 false 。
  * <p>

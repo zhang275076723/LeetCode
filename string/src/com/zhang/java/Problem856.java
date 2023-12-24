@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2023/7/17 08:27
  * @Author zsy
- * @Description 括号的分数 类比Problem150、Problem224、Problem227、Problem394、CharacterToInteger
+ * @Description 括号的分数 括号类比Problem20、Problem22、Problem32、Problem301、Problem678、Problem1087、Problem1096 栈类比Problem20、Problem71、Problem150、Problem224、Problem227、Problem331、Problem341、Problem394、Problem678、Problem946、Problem1003、Problem1047、Problem1096、Offer31、CharacterToInteger
  * 给定一个平衡括号字符串 S，按下述规则计算该字符串的分数：
  * () 得 1 分。
  * AB 得 A + B 分，其中 A 和 B 是平衡括号字符串。
@@ -29,7 +29,7 @@ import java.util.Stack;
 public class Problem856 {
     public static void main(String[] args) {
         Problem856 problem856 = new Problem856();
-        //(1(1))=(12)=(3)=6
+        //(()(()))=(1(1))=(12)=(3)=6
         String s = "(()(()))";
         System.out.println(problem856.scoreOfParentheses(s));
     }

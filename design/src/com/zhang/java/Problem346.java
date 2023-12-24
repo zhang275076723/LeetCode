@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/7/5 09:23
  * @Author zsy
- * @Description 数据流中的移动平均值 类比Problem295、Problem480、Offer41
+ * @Description 数据流中的移动平均值 类比Problem295、Problem480、Problem703、Offer41
  * 给定一个整数数据流和一个窗口大小，根据该滑动窗口的大小，计算其所有整数的移动平均值。
  * 实现 MovingAverage 类：
  * MovingAverage(int size) 用窗口大小 size 初始化对象。

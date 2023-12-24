@@ -6,7 +6,7 @@ import java.util.LinkedList;
 /**
  * @Date 2022/11/17 10:51
  * @Author zsy
- * @Description 删除字符串中的所有相邻重复项 类比Problem71、Problem402、Problem1003、CharacterToInteger
+ * @Description 删除字符串中的所有相邻重复项 栈类比Problem20、Problem71、Problem150、Problem224、Problem227、Problem331、Problem341、Problem394、Problem678、Problem856、Problem946、Problem1003、Problem1096、Offer31、CharacterToInteger
  * 给出由小写字母组成的字符串 S，重复项删除操作会选择两个相邻且相同的字母，并删除它们。
  * 在 S 上反复执行重复项删除操作，直到无法继续删除。
  * 在完成所有重复项删除操作后返回最终的字符串。答案保证唯一。
@@ -43,14 +43,12 @@ public class Problem1047 {
         Deque<Character> stack = new LinkedList<>();
 
         for (char c : s.toCharArray()) {
-            //栈为空，当前元素c入栈
-            if (stack.isEmpty()) {
-                stack.offerLast(c);
+            //栈顶元素和当前元素c相等，即存在相邻重复元素，栈顶元素出栈
+            if (!stack.isEmpty() && stack.peekLast() == c) {
+                stack.pollLast();
             } else {
-                //当前元素c和栈顶元素相等，即存在相邻重复元素，栈顶元素出栈
-                if (stack.peekLast() == c) {
-                    stack.pollLast();
-                }
+                //否则，当前元素c入栈
+                stack.offerLast(c);
             }
         }
 

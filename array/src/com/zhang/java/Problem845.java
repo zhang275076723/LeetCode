@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/11 08:27
  * @Author zsy
- * @Description 数组中的最长山脉 山脉类比Problem852、Problem941、Problem1095 数组类比Problem53、Problem135、Problem152、Problem238、Problem581、Problem628、Problem1749、Offer42、Offer66、FindLeftBiggerRightLessIndex
+ * @Description 数组中的最长山脉 山脉类比Problem852、Problem941、Problem1095 数组中的动态规划类比Problem53、Problem135、Problem152、Problem238、Problem724、Problem768、Problem769、Problem1749、Offer42、Offer66、FindLeftBiggerRightLessIndex
  * 把符合下列属性的数组 arr 称为 山脉数组 ：
  * arr.length >= 3
  * 存在下标 i（0 < i < arr.length - 1），满足
@@ -57,11 +57,13 @@ public class Problem845 {
             } else {
                 left[i] = 0;
             }
+        }
 
-            if (arr[arr.length - i - 1] > arr[arr.length - i]) {
-                right[arr.length - i - 1] = right[arr.length - i] + 1;
+        for (int i = arr.length - 2; i >= 0; i--) {
+            if (arr[i] > arr[i + 1]) {
+                right[i] = right[i + 1] + 1;
             } else {
-                right[arr.length - 1 - i] = 0;
+                right[i] = 0;
             }
         }
 
@@ -95,7 +97,7 @@ public class Problem845 {
 
         //最大山脉子数组长度
         int max = 0;
-        //当前遍历到的下标索引
+        //当前遍历到的下标索引，当前下标索引作为左边山底
         int index = 0;
 
         //长度至少为3才能构成山脉数组
@@ -122,7 +124,7 @@ public class Problem845 {
                     max = Math.max(max, right - left + 1);
                 }
 
-                //index更新为右边山底right
+                //index更新为右边山底right，即右边山底right作为下次遍历的左边山底
                 index = right;
             } else {
                 //当前不能元素作为左边山底，index右移

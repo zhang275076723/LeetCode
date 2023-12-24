@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/12/23 08:17
  * @Author zsy
- * @Description 寻找数组的中心下标 双指针类比 数组类比
+ * @Description 寻找数组的中心下标 双指针类比 数组中的动态规划类比Problem53、Problem135、Problem152、Problem238、Problem768、Problem769、Problem845、Problem1749、Offer42、Offer66、FindLeftBiggerRightLessIndex
  * 给你一个整数数组 nums ，请计算数组的 中心下标 。
  * 数组 中心下标 是数组的一个下标，其左侧所有元素相加的和等于右侧所有元素相加的和。
  * 如果中心下标位于数组最左端，那么左侧数之和视为 0 ，因为在下标的左侧不存在元素。

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/3/25 19:30
  * @Author zsy
- * @Description 数据流中的中位数 类比Problem4、Problem346、Problem480 类比Problem155、Problem225、Problem232、Problem716、Offer9、Offer30、Offer31、Offer59_2 同Problem295
+ * @Description 数据流中的中位数 类比Problem295、Problem346、Problem480、Problem703 同Problem295
  * 如何得到一个数据流中的中位数？
  * 如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。
  * 如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。

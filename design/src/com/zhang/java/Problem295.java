@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * @Date 2022/10/27 09:07
  * @Author zsy
- * @Description 数据流的中位数 类比Problem4、Problem346、Problem480 类比Problem155、Problem232、Problem295、Problem716、Offer9、Offer30、Offer31、Offer59_2 同Offer41
+ * @Description 数据流的中位数 类比Problem346、Problem480、Problem703、Offer41 同Offer41
  * 中位数是有序列表中间的数。如果列表长度是偶数，中位数则是中间两个数的平均值。
  * 例如 arr = [2,3,4] 的中位数是 3 。
  * 例如 arr = [2,3] 的中位数是 (2 + 3) / 2 = 2.5 。

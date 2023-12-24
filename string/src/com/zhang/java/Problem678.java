@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2022/3/15 21:39
  * @Author zsy
- * @Description 有效的括号字符串 括号类比Problem20、Problem22、Problem32、Problem301
+ * @Description 有效的括号字符串 括号类比Problem20、Problem22、Problem32、Problem301、Problem856、Problem1087、Problem1096 栈类比Problem20、Problem71、Problem150、Problem224、Problem227、Problem331、Problem341、Problem394、Problem856、Problem946、Problem1003、Problem1047、Problem1096、Offer31、CharacterToInteger
  * 给定一个只包含三种字符的字符串：（，）和 *，写一个函数来检验这个字符串是否为有效字符串。
  * 有效字符串具有如下规则：
  * 1.任何左括号 (必须有相应的右括号 )。

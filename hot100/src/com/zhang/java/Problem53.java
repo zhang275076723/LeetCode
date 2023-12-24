@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/21 16:38
  * @Author zsy
- * @Description 最大子数组和 美团面试题 数组类比Problem135、Problem152、Problem238、Problem581、Problem628、Problem845、Problem1749、Offer42、Offer66、FindLeftBiggerRightLessIndex 子序列和子数组类比Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2 同Offer42
+ * @Description 最大子数组和 美团面试题 数组中的动态规划类比Problem135、Problem152、Problem238、Problem724、Problem768、Problem769、Problem845、Problem1749、Offer42、Offer66、FindLeftBiggerRightLessIndex 子序列和子数组类比Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2 同Offer42
  * 给你一个整数数组 nums ，请你找出一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
  * 子数组 是数组中的一个连续部分。
  * <p>

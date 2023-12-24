@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/28 9:15
  * @Author zsy
- * @Description 删除无效的括号 中山大学机试题 括号类比Problem20、Problem22、Problem32、Problem678 回溯+剪枝类比Problem17、Problem22、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem89、Problem90、Problem97、Problem216、Problem377、Problem491、Problem679、Problem698、Offer17、Offer38
+ * @Description 删除无效的括号 中山大学机试题 括号类比Problem20、Problem22、Problem32、Problem678、Problem856、Problem1087、Problem1096 回溯+剪枝类比Problem17、Problem22、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem89、Problem90、Problem97、Problem216、Problem377、Problem491、Problem679、Problem698、Offer17、Offer38
  * 给你一个由若干括号和字母组成的字符串 s ，删除最小数量的无效括号，使得输入的字符串有效。
  * 返回所有可能的结果。答案可以按 任意顺序 返回。
  * <p>
