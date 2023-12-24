@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/2/10 10:38
  * @Author zsy
- * @Description 反转字符串中的单词 III 类比Problem58、Problem151、Problem186、Problem344、Problem541、Offer58、Offer58_2
+ * @Description 反转字符串中的单词 III 类比Problem58、Problem151、Problem186、Problem344、Problem345、Problem541、Offer58、Offer58_2
  * 给定一个字符串 s ，你需要反转字符串中每个单词的字符顺序，同时仍保留空格和单词的初始顺序。
  * <p>
  * 输入：s = "Let's take LeetCode contest"
@@ -49,6 +49,7 @@ public class Problem557 {
             //拼接' '
             sb.append(' ');
 
+            //跳过空格
             left = right + 1;
             right = left;
         }

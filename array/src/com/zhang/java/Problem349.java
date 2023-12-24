@@ -37,7 +37,9 @@ public class Problem349 {
      * @return
      */
     public int[] intersection(int[] nums1, int[] nums2) {
+        //存放nums1中元素的set集合
         Set<Integer> set = new HashSet<>();
+        //存放重叠元素的set集合
         Set<Integer> resultSet = new HashSet<>();
 
         for (int num1 : nums1) {
@@ -88,7 +90,7 @@ public class Problem349 {
             } else if (nums1[i] > nums2[j]) {
                 j++;
             } else {
-                //找到重叠元素，并且list集合中没有当前重叠元素，则加入list中
+                //找到重叠元素，并且list集合中没有当前重叠元素，因为重叠元素不能重复，则加入list中
                 if (list.isEmpty() || list.get(list.size() - 1) != nums1[i]) {
                     list.add(nums1[i]);
                 }
