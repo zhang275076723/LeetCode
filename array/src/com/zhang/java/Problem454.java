@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/8/29 11:09
  * @Author zsy
- * @Description 四数相加 II 类比Problem1、Problem15、Problem16、Problem18、Problem167、Offer57
+ * @Description 四数相加 II 类比Problem1、Problem15、Problem16、Problem18、Problem167、Problem170、Offer57 哈希表类比
  * 给你四个整数数组 nums1、nums2、nums3 和 nums4 ，数组长度都是 n ，
  * 请你计算有多少个元组 (i, j, k, l) 能满足：
  * 0 <= i, j, k, l < n
@@ -37,6 +37,40 @@ public class Problem454 {
         int[] nums3 = {-1, 2};
         int[] nums4 = {0, 2};
         System.out.println(problem454.fourSumCount(nums1, nums2, nums3, nums4));
+        System.out.println(problem454.fourSumCount2(nums1, nums2, nums3, nums4));
+    }
+
+    /**
+     * 暴力
+     * 时间复杂度O(n^4)，空间复杂度O(1)
+     *
+     * @param nums1
+     * @param nums2
+     * @param nums3
+     * @param nums4
+     * @return
+     */
+    public int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
+        if (nums1 == null || nums1.length == 0) {
+            return 0;
+        }
+
+        int n = nums1.length;
+        int count = 0;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                for (int k = 0; k < n; k++) {
+                    for (int l = 0; l < n; l++) {
+                        if (nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0) {
+                            count++;
+                        }
+                    }
+                }
+            }
+        }
+
+        return count;
     }
 
     /**
@@ -50,7 +84,7 @@ public class Problem454 {
      * @param nums4
      * @return
      */
-    public int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
+    public int fourSumCount2(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
         if (nums1 == null || nums1.length == 0) {
             return 0;
         }

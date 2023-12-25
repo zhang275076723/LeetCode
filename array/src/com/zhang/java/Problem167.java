@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/11/4 11:26
  * @Author zsy
- * @Description 两数之和 II - 输入有序数组 类比Problem1、Problem15、Problem16、Problem18、Problem454 同Offer57
+ * @Description 两数之和 II - 输入有序数组 类比Problem1、Problem15、Problem16、Problem18、Problem170、Problem454、Offer57 双指针类比 同Offer57
  * 给你一个下标从 1 开始的整数数组 numbers ，该数组已按 非递减顺序排列 ，
  * 请你从数组中找出满足相加之和等于目标数 target 的两个数。
  * 如果设这两个数分别是 numbers[index1] 和 numbers[index2] ，则 1 <= index1 < index2 <= numbers.length 。
