@@ -28,11 +28,11 @@ public class Problem611 {
 
     /**
      * 排序+双指针
-     * 先排序，从大到小每次确定三角形中最长的一条边nums[i]，判断nums[left]+nums[right]和nums[i]大小关系，
-     * nums[left]+nums[right]>nums[i]，则nums[left]-nums[right-1]+nums[right]都大于nums[i]，
-     * 有right-left个满足要求的三角形，right--
-     * nums[left]+nums[right]<=nums[i]，则left++
-     * 时间复杂度O(n^2)，空间复杂度O(n) (归并排序使用的额外数组O(n))
+     * 由小到大排序，从大到小确定三角形中最长的一条边nums[i]，判断nums[left]+nums[right]和nums[i]大小关系，
+     * 如果nums[left]+nums[right]>nums[i]，则nums[left]-nums[right-1]+nums[right]都大于nums[i]，
+     * 有right-left个能构成三角形，right--；
+     * 如果nums[left]+nums[right]<=nums[i]，则不能构成三角形，left++
+     * 时间复杂度O(n^2)，空间复杂度O(n) (归并排序的空间复杂度为O(n))
      *
      * @param nums
      * @return
@@ -42,11 +42,12 @@ public class Problem611 {
             return 0;
         }
 
+        //由小到大排序
         mergeSort(nums, 0, nums.length - 1, new int[nums.length]);
 
         int count = 0;
 
-        //从大到小每次确定三角形中最长的一条边nums[i]
+        //从大到小确定三角形中最长的一条边nums[i]
         for (int i = nums.length - 1; i >= 2; i--) {
             //三角形的另外两条边nums[left]、nums[right]
             int left = 0;
@@ -54,12 +55,12 @@ public class Problem611 {
 
             while (left < right) {
                 //nums[left]+nums[right]>nums[i]，则nums[left]-nums[right-1]+nums[right]都大于nums[i]，
-                //有right-left个满足要求的三角形，right--
+                //有right-left个能构成三角形，right--
                 if (nums[left] + nums[right] > nums[i]) {
                     count = count + right - left;
                     right--;
                 } else {
-                    //nums[left]+nums[right]<=nums[i]，则left++
+                    //nums[left]+nums[right]<=nums[i]，则不能构成三角形，left++
                     left++;
                 }
             }

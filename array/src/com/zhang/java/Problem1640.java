@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/10/1 08:40
  * @Author zsy
- * @Description 能否连接形成数组 类比Problem134 哈希表类比Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem554、Problem763、Offer50
+ * @Description 能否连接形成数组 类比Problem134 哈希表类比Problem1、Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem554、Problem763、Offer50
  * 给你一个整数数组 arr ，数组中的每个整数 互不相同 。
  * 另有一个由整数数组构成的数组 pieces，其中的整数也 互不相同 。
  * 请你以 任意顺序 连接 pieces 中的数组以形成 arr 。
