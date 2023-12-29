@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/5/13 9:23
  * @Author zsy
- * @Description 分糖果
+ * @Description 分糖果 类比Problem135
  * Alice 有 n 枚糖，其中第 i 枚糖的类型为 candyType[i] 。
  * Alice 注意到她的体重正在增长，所以前去拜访了一位医生。
  * 医生建议 Alice 要少摄入糖分，只吃掉她所有糖的 n / 2 即可（n 是一个偶数）。
