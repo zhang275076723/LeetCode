@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/11 9:27
  * @Author zsy
- * @Description 把二叉搜索树转换为累加树 类比problem98、Problem99、Problem501、Problem530
+ * @Description 把二叉搜索树转换为累加树 类比problem98、Problem99、Problem173、Problem501、Problem530、Problem653、Offer54
  * 给出二叉 搜索 树的根节点，该树的节点值各不相同，请你将其转换为累加树（Greater Sum Tree），
  * 使每个节点 node 的新值等于原树中大于或等于 node.val 的值之和。
  * 提醒一下，二叉搜索树满足下列约束条件：
@@ -34,7 +34,7 @@ public class Problem538 {
     /**
      * 递归逆序中序遍历中当前节点的前驱节点
      */
-    private TreeNode pre;
+    private TreeNode pre = null;
 
     public static void main(String[] args) {
         Problem538 problem538 = new Problem538();

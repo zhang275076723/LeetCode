@@ -4,7 +4,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/15 20:13
  * @Author zsy
- * @Description 比较版本号 阿里面试题
+ * @Description 比较版本号 阿里面试题 双指针类比
  * 给你两个版本号 version1 和 version2 ，请你比较它们。
  * 版本号由一个或多个修订号组成，各修订号由一个 '.' 连接。每个修订号由 多位数字 组成，可能包含 前导零 。
  * 每个版本号至少包含一个字符。
@@ -46,7 +46,7 @@ public class Problem165 {
     }
 
     /**
-     * 字符串分割
+     * 模拟
      * 时间复杂度为O(max(m,n))，空间复杂的为O(m+n)
      *
      * @param version1
@@ -82,7 +82,7 @@ public class Problem165 {
 
     /**
      * 双指针
-     * 在分割版本号的同时解析出修订号进行比较
+     * 每次比较version1和version2的修订号，如果不一致，则返回大小关系；如果一致，则继续往后面比较
      * 时间复杂度为O(max(m,n))，空间复杂的为O(1)
      *
      * @param version1
@@ -94,7 +94,7 @@ public class Problem165 {
         int j = 0;
 
         while (i < version1.length() || j < version2.length()) {
-            //赋版本号初值为0
+            //version1和version2的修订号
             int value1 = 0;
             int value2 = 0;
 
