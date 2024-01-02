@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/18 16:37
  * @Author zsy
- * @Description 表示数值的字符串 同Problem65
+ * @Description 表示数值的字符串 类比Problem520 同Problem65
  * 请实现一个函数用来判断字符串是否表示数值（包括整数和小数）
  * 字符串 s 仅含英文字母（大写和小写），数字（0-9），加号 '+' ，减号 '-' ，空格 ' ' 或者点 '.'
  * <p>

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/6/17 10:05
  * @Author zsy
- * @Description 有效数字 同Offer20
+ * @Description 有效数字 类比Problem520 同Offer20
  * 有效数字（按顺序）可以分成以下几个部分：
  * 一个 小数 或者 整数
  * （可选）一个 'e' 或 'E' ，后面跟着一个 整数
