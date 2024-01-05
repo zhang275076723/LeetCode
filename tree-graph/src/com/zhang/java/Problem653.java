@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/12/30 08:17
  * @Author zsy
- * @Description 两数之和 IV - 输入二叉搜索树 类比Problem173、Problem538、Offer54 类比Problem1、Problem15、Problem16、Problem18、Problem167、Problem170、Problem454、Offer57
+ * @Description 两数之和 IV - 输入二叉搜索树 类比Problem173、Problem538、Offer54 类比Problem1、Problem15、Problem16、Problem18、Problem167、Problem170、Problem454、Problem1099、Offer57
  * 给定一个二叉搜索树 root 和一个目标结果 k，如果二叉搜索树中存在两个元素且它们的和等于给定的目标结果，则返回 true。
  * <p>
  * 输入: root = [5,3,6,2,4,null,7], k = 9

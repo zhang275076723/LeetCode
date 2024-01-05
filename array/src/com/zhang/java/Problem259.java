@@ -37,7 +37,7 @@ public class Problem259 {
      * 由小到大排序，从小到大确定最小的元素nums[i]，判断nums[i]+nums[left]+nums[right]和target大小关系，
      * 如果nums[i]+nums[left]+nums[right]<target，则nums[i]+nums[left]+nums[left+1]-nums[right]都小于target，
      * 有right-left个满足nums[left]+nums[right]+nums[i]<target，left++；
-     * 如果nums[i]+nums[left]+nums[right]>target，则不能构成三角形，right--
+     * 如果nums[i]+nums[left]+nums[right]>target，则nums[i]+nums[left]+nums[left+1]-nums[right]都大于target，right--
      * 时间复杂度O(n^2)，空间复杂度O(n) (归并排序的空间复杂度为O(n))
      *
      * @param nums

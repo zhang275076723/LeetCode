@@ -136,6 +136,7 @@ public class Problem1087 {
 
     private int partition(String[] arr, int left, int right) {
         int randomIndex = new Random().nextInt(right - left + 1) + left;
+
         String value = arr[left];
         arr[left] = arr[randomIndex];
         arr[randomIndex] = value;

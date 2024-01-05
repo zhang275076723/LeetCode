@@ -43,6 +43,7 @@ public class Problem75 {
             return;
         }
 
+        //当前0要插入的下标索引
         int index = 0;
 
         for (int i = 0; i < nums.length; i++) {
@@ -52,6 +53,7 @@ public class Problem75 {
             }
         }
 
+        //此时index为1要插入的下标索引
         for (int i = index; i < nums.length; i++) {
             if (nums[i] == 1) {
                 swap(nums, i, index);

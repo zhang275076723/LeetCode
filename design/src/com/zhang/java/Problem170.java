@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/12/28 08:38
  * @Author zsy
- * @Description 两数之和 III - 数据结构设计 类比Problem1、Problem15、Problem16、Problem18、Problem167、Problem454、Problem653、Offer57
+ * @Description 两数之和 III - 数据结构设计 类比Problem1、Problem15、Problem16、Problem18、Problem167、Problem454、Problem653、Problem1099、Offer57
  * 设计一个接收整数流的数据结构，该数据结构支持检查是否存在两数之和等于特定值。
  * 实现 TwoSum 类：
  * TwoSum() 使用空数组初始化 TwoSum 对象
