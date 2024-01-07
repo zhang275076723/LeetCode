@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2023/10/19 08:12
  * @Author zsy
- * @Description 课程表 III 优先队列类比Problem253、Problem407 692 373 378 23 课程表类比Problem207、Problem210、Problem1462
+ * @Description 课程表 III 优先队列类比Problem253、Problem407 692 373 378 23 264 课程表类比Problem207、Problem210、Problem1462
  * 这里有 n 门不同的在线课程，按从 1 到 n 编号。
  * 给你一个数组 courses ，其中 courses[i] = [durationi, lastDayi] 表示第 i 门课将会 持续 上 durationi 天课，
  * 并且必须在不晚于 lastDayi 的时候完成。

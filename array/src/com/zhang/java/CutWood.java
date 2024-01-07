@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/14 09:14
  * @Author zsy
- * @Description 木头切割问题 字节面试题 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem644、Problem658、Problem1201、Problem1482、Problem1723、Problem2305、Problem2498、FindMaxArrayMinAfterKMinus
+ * @Description 木头切割问题 字节面试题 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem644、Problem658、Problem719、Problem878、Problem1201、Problem1482、Problem1723、Problem2305、Problem2498、FindMaxArrayMinAfterKMinus
  * 给定长度为n的数组，每个元素代表一个木头的长度，木头可以任意截断，
  * 从这堆木头中截出至少k个相同长度的木块，每个木块长度为m，求m的最大值。
  * <p>
