@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2024/1/6 08:18
  * @Author zsy
- * @Description 查找和最小的 K 对数字 优先队列类比 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem644、Problem658、Problem719、Problem878、Problem1201、Problem1482、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 查找和最小的 K 对数字 优先队列类比 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem644、Problem658、Problem668、Problem719、Problem878、Problem1201、Problem1482、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
  * 给定两个以 非递减顺序排列 的整数数组 nums1 和 nums2 , 以及一个整数 k 。
  * 定义一对值 (u,v)，其中第一个元素来自 nums1，第二个元素来自 nums2 。
  * 请找到和最小的 k 个数对 (u1,v1),  (u2,v2)  ...  (uk,vk) 。
@@ -64,7 +64,7 @@ public class Problem373 {
             }
         });
 
-        //nums1中每个下标索引和nums2中下标索引0组成的arr入小根堆
+        //nums1中每个下标索引和nums2中下标索引0组成的arr入小根堆，作为二维数组
         for (int i = 0; i < nums1.length; i++) {
             priorityQueue.offer(new int[]{i, 0});
         }
@@ -102,7 +102,7 @@ public class Problem373 {
      * 再根据结果集合中元素的个数，将每列等于left的nums1[i]+nums2[j]加入结果集合，使结果集合中有k个元素
      * 注意：不能一次性将小于和等于left的nums1[i]+nums2[j]一起加入结果集合，因为小于left的nums1[i]+nums2[j]是前k小元素，
      * 但加上全部等于left的nums1[i]+nums2[j]有可能大于前k小元素，所以只需要加上分部等于left的nums1[i]+nums2[j]得到前k小元素
-     * 时间复杂度O((m+n)*log(right-left)+max(nlogm,k))=O(m+n+max(nlogm,k)，空间复杂度O(1)
+     * 时间复杂度O((m+n)*log(right-left)+max(nlogm,k))=O(m+n+max(nlogm,k))，空间复杂度O(1)
      * (m=nums1.length，n=nums2.length，left=nums1[0]+nums2[0]，right=nums1[m-1]+nums2[n-1])
      * (找等于sum的nums1[i]+nums2[j]加入结果集合要通过二分查找，时间复杂度O(max(nlogm,k)))
      *

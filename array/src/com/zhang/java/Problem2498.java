@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/2 09:42
  * @Author zsy
- * @Description 青蛙过河 II 类比Problem561、Problem717 跳跃问题类比Problem45、Problem55、Problem403、Problem1306、Problem1340、Problem1345、Problem1654、Problem1696、Problem1871 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem644、Problem658、Problem719、Problem878、Problem1201、Problem1482、Problem1723、Problem2305、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 青蛙过河 II 类比Problem561、Problem717 跳跃问题类比Problem45、Problem55、Problem403、Problem1306、Problem1340、Problem1345、Problem1654、Problem1696、Problem1871 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem644、Problem658、Problem668、Problem719、Problem878、Problem1201、Problem1482、Problem1723、Problem2305、CutWood、FindMaxArrayMinAfterKMinus
  * 给你一个下标从 0 开始的整数数组 stones ，数组中的元素 严格递增 ，表示一条河中石头的位置。
  * 一只青蛙一开始在第一块石头上，它想到达最后一块石头，然后回到第一块石头。同时每块石头 至多 到达 一次。
  * 一次跳跃的 长度 是青蛙跳跃前和跳跃后所在两块石头之间的距离。
