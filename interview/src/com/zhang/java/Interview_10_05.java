@@ -44,7 +44,7 @@ public class Interview_10_05 {
         while (left <= right) {
             mid = left + ((right - left) >> 1);
 
-            //当words[mid]为""，即不满足二分查找条件时，退化为线性查找，words[left]和s进行比较
+            //当words[mid]为""，即不满足二分查找条件时，words[left]和s进行比较
             if ("".equals(words[mid])) {
                 //words[left]和s相等，则直接返回left
                 if (words[left].equals(s)) {

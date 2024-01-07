@@ -56,6 +56,7 @@ public class Problem378 {
             }
         });
 
+        //将每行第一个元素入小根堆
         for (int i = 0; i < matrix.length; i++) {
             //int[0]：当前元素，int[1]：当前元素的行索引，int[2]：当前元素的列索引
             priorityQueue.offer(new int[]{matrix[i][0], i, 0});
@@ -116,10 +117,9 @@ public class Problem378 {
 
     /**
      * 二分查找变形
-     * 从左下往右上移动，可以以一个数将二维数组分为左右两部分，左边都小于等于该数，右边都大于等于该数
-     * 如果二维数组左边小于等于当前中值的数量小于k，说明中值小于第k小元素，左指针=mid+1
-     * 如果二维数组左边小于等于当前中值的数量大于等于k，说明中值大于等于第k小元素，右指针=mid
-     * 每次循环都保证了第k小元素在左指针-右指针之间，当左指针等于右指针时，即找到第k小元素，等于左指针，也等于右指针
+     * 对[left,right]进行二分查找，left为数组中最小值，right为数组中最大值，统计数组中小于等于mid的个数count，
+     * 如果count小于k，则第k小元素在mid右边，left=mid+1；
+     * 如果count大于等于k，则第k小元素在mid或mid左边，right=mid
      * 时间复杂度O(n*log(right-left))=O(n)，空间复杂度O(1)
      * (n=matrix.length，n=matrix[0].length，left=matrix[0][0]，right=matrix[n-1][n-1])
      *
@@ -137,11 +137,11 @@ public class Problem378 {
         while (left < right) {
             mid = left + ((right - left) >> 1);
 
-            //小于等于mid的元素个数小于k，说明前k小元素在右边
+            //小于等于mid的元素个数小于k，说明第k小元素在右边
             if (getLessEqualThanNumCount(matrix, mid) < k) {
                 left = mid + 1;
             } else {
-                //小于等于mid的元素个数大于等于k，说明前k小元素在左边或mid处
+                //小于等于mid的元素个数大于等于k，说明第k小元素在mid或mid左边
                 right = mid;
             }
         }
@@ -151,6 +151,7 @@ public class Problem378 {
 
     /**
      * 获取matrix数组中小于等于num的元素个数
+     * 从左下往右上移动，根据num将二维数组分为左上和右下两部分，左边都小于num，右边都大于num
      * 时间复杂度O(n)，空间复杂度O(1) (n=matrix.length，n=matrix[0].length)
      *
      * @param matrix
