@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/1/7 09:18
  * @Author zsy
- * @Description 找出第 K 小的数对距离 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem644、Problem658、Problem668、Problem878、Problem1201、Problem1482、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 找出第 K 小的数对距离 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem644、Problem658、Problem668、Problem786、Problem878、Problem1201、Problem1482、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
  * 数对 (a,b) 由整数 a 和 b 组成，其数对距离定义为 a 和 b 的绝对差值。
  * 给你一个整数数组 nums 和一个整数 k ，数对由 nums[i] 和 nums[j] 组成且满足 0 <= i < j < nums.length 。
  * 返回 所有数对距离中 第 k 小的数对距离。
@@ -34,7 +34,8 @@ public class Problem719 {
      * 排序+二分查找
      * 先排序，对[left,right]进行二分查找，left为0，right为nums[nums.length-1]-nums[0]，统计数对距离小于等于mid的个数count，
      * 如果count小于k，则第k小的数对距离在mid右边，left=mid+1；
-     * 如果count大于等于m，则第k小的数对距离在mid或mid左边，right=mid
+     * 如果count大于等于k，则第k小的数对距离在mid或mid左边，right=mid
+     * 其中通过二分查找，往右找和每一个nums[i]构成数对距离小于等于mid的个数
      * 时间复杂度O(log(right-left)*nlogn)=O(nlogn)，空间复杂度O(n) (归并排序的空间复杂度O(n))
      *
      * @param nums

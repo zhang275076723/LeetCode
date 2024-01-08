@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2024/1/6 08:18
  * @Author zsy
- * @Description 查找和最小的 K 对数字 优先队列类比 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem644、Problem658、Problem668、Problem719、Problem878、Problem1201、Problem1482、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 查找和最小的 K 对数字 优先队列类比 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
  * 给定两个以 非递减顺序排列 的整数数组 nums1 和 nums2 , 以及一个整数 k 。
  * 定义一对值 (u,v)，其中第一个元素来自 nums1，第二个元素来自 nums2 。
  * 请找到和最小的 k 个数对 (u1,v1),  (u2,v2)  ...  (uk,vk) 。
@@ -48,7 +48,7 @@ public class Problem373 {
 
     /**
      * 小根堆，优先队列，k路归并排序
-     * 时间复杂度O(klogk)，空间复杂度O(k)
+     * 时间复杂度O(klogm)，空间复杂度O(m) (m=nums1.length，n=nums2.length)
      *
      * @param nums1
      * @param nums2
@@ -64,7 +64,8 @@ public class Problem373 {
             }
         });
 
-        //nums1中每个下标索引和nums2中下标索引0组成的arr入小根堆，作为二维数组
+        //nums1中每个下标索引和nums2中下标索引0组成的arr作为二维数组入小根堆
+        //即每行第一个元素入堆
         for (int i = 0; i < nums1.length; i++) {
             priorityQueue.offer(new int[]{i, 0});
         }
@@ -85,6 +86,7 @@ public class Problem373 {
             result.add(list);
 
             //arr[1]后面还有nums2的下标索引，arr[0]和arr[1]的下一个下标索引组成的arr入小根堆
+            //即当前行的下一个元素入堆
             if (arr[1] + 1 < nums2.length) {
                 priorityQueue.offer(new int[]{arr[0], arr[1] + 1});
             }

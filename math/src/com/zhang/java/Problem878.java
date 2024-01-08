@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/10 08:40
  * @Author zsy
- * @Description 第 N 个神奇数字 最大公因数和最小公倍数类比 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem644、Problem658、Problem668、Problem719、Problem1201、Problem1482、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem1175、Problem1201、Problem1291、Offer10、Offer49
+ * @Description 第 N 个神奇数字 最大公因数和最小公倍数类比 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem644、Problem658、Problem668、Problem719、Problem786、Problem1201、Problem1482、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem1175、Problem1201、Problem1291、Offer10、Offer49
  * 一个正整数如果能被 a 或 b 整除，那么它是神奇的。
  * 给定三个整数 n , a , b ，返回第 n 个神奇的数字。
  * 因为答案可能很大，所以返回答案 对 10^9 + 7 取模 后的值。
