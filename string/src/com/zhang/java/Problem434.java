@@ -21,6 +21,7 @@ public class Problem434 {
 
     /**
      * 模拟
+     * 单词以空格作为分隔
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param s
