@@ -1,9 +1,12 @@
 package com.zhang.java;
 
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 /**
  * @Date 2024/1/7 09:18
  * @Author zsy
- * @Description 找出第 K 小的数对距离 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem644、Problem658、Problem668、Problem786、Problem878、Problem1201、Problem1482、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 找出第 K 小的数对距离 优先队列类比 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem644、Problem658、Problem668、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
  * 数对 (a,b) 由整数 a 和 b 组成，其数对距离定义为 a 和 b 的绝对差值。
  * 给你一个整数数组 nums 和一个整数 k ，数对由 nums[i] 和 nums[j] 组成且满足 0 <= i < j < nums.length 。
  * 返回 所有数对距离中 第 k 小的数对距离。
@@ -21,6 +24,11 @@ package com.zhang.java;
  * <p>
  * 输入：nums = [1,6,1], k = 3
  * 输出：5
+ * <p>
+ * n == nums.length
+ * 2 <= n <= 10^4
+ * 0 <= nums[i] <= 10^6
+ * 1 <= k <= n * (n - 1) / 2
  */
 public class Problem719 {
     public static void main(String[] args) {
@@ -28,6 +36,48 @@ public class Problem719 {
         int[] nums = {1, 3, 1};
         int k = 1;
         System.out.println(problem719.smallestDistancePair(nums, k));
+        System.out.println(problem719.smallestDistancePair2(nums, k));
+    }
+
+    /**
+     * 排序+小根堆，优先队列，k路归并排序 (超时)
+     * 先排序，排序后每个nums[i]和后面nums[j]作为数对距离加入小根堆，
+     * 小根堆堆顶元素出堆，如果arr[1]后面还有元素，则nums[arr[0]]和nums[arr[1]+1]作为下一个数对距离加入小根堆
+     * 时间复杂度O(nlogn+klogn)，空间复杂度O(n) (归并排序的空间复杂度O(n)，小根堆中最多存放n个arr)
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int smallestDistancePair(int[] nums, int k) {
+        //由小到大排序
+        mergeSort(nums, 0, nums.length - 1, new int[nums.length]);
+
+        //小根堆，arr[0]：nums[i]的下标索引，arr[1]：nums[i]后面nums[j]的下标索引
+        PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(new Comparator<int[]>() {
+            @Override
+            public int compare(int[] arr1, int[] arr2) {
+                return (nums[arr1[1]] - nums[arr1[0]]) - (nums[arr2[1]] - nums[arr2[0]]);
+            }
+        });
+
+        //排序后每个nums[i]和后面nums[j]作为数对距离加入小根堆
+        for (int i = 0; i < nums.length - 1; i++) {
+            priorityQueue.offer(new int[]{i, i + 1});
+        }
+
+        for (int i = 0; i < k - 1; i++) {
+            int[] arr = priorityQueue.poll();
+
+            //nums[i]后面nums[j]的下标索引不越界，则nums[arr[0]]和nums[arr[1]+1]作为下一个数对距离加入小根堆
+            if (arr[1] + 1 < nums.length) {
+                priorityQueue.offer(new int[]{arr[0], arr[1] + 1});
+            }
+        }
+
+        int[] arr = priorityQueue.poll();
+
+        return nums[arr[1]] - nums[arr[0]];
     }
 
     /**
@@ -36,13 +86,13 @@ public class Problem719 {
      * 如果count小于k，则第k小的数对距离在mid右边，left=mid+1；
      * 如果count大于等于k，则第k小的数对距离在mid或mid左边，right=mid
      * 其中通过二分查找，往右找和每一个nums[i]构成数对距离小于等于mid的个数
-     * 时间复杂度O(log(right-left)*nlogn)=O(nlogn)，空间复杂度O(n) (归并排序的空间复杂度O(n))
+     * 时间复杂度O(nlogn+log(right-left)*nlogn)=O(nlogn)，空间复杂度O(n) (归并排序的空间复杂度O(n))
      *
      * @param nums
      * @param k
      * @return
      */
-    public int smallestDistancePair(int[] nums, int k) {
+    public int smallestDistancePair2(int[] nums, int k) {
         //由小到大排序
         mergeSort(nums, 0, nums.length - 1, new int[nums.length]);
 

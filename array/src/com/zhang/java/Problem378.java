@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * @Date 2022/8/17 8:07
  * @Author zsy
- * @Description 有序矩阵中第 K 小的元素 类比Problem23、Problem74、Problem240、Offer4 二分查找类比Problem4、Problem287、Problem373、Problem410、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus 二分搜索树类比Problem4、Problem230、Problem440
+ * @Description 有序矩阵中第 K 小的元素 类比Problem23、Problem74、Problem240、Offer4 二分查找类比Problem4、Problem287、Problem373、Problem410、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus 二分搜索树类比Problem4、Problem230、Problem440
  * 给你一个 n x n 矩阵 matrix ，其中每行和每列元素均按升序排序，找到矩阵中第 k 小的元素。
  * 请注意，它是 排序后 的第 k 小元素，而不是第 k 个 不同 的元素。
  * <p>
@@ -150,8 +150,9 @@ public class Problem378 {
     }
 
     /**
-     * 获取matrix数组中小于等于num的元素个数
-     * 从左下往右上移动，根据num将二维数组分为左上和右下两部分，左边都小于num，右边都大于num
+     * 双指针获取matrix数组中小于等于num的元素个数
+     * 从左下往右上遍历，根据num将二维数组分为左上和右下两部分，左边都小于num，右边都大于num
+     * 注意：也可以从右上角往左下角遍历
      * 时间复杂度O(n)，空间复杂度O(1) (n=matrix.length，n=matrix[0].length)
      *
      * @param matrix

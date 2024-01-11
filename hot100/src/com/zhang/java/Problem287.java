@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/5/26 10:15
  * @Author zsy
- * @Description 寻找重复数 美团面试题 原地哈希类比Problem41、Problem268、Problem442、Problem448、Problem645、Offer3 循环链表找环类比Problem141、Problem142 二分查找类比Problem4、Problem373、Problem378、Problem410、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 寻找重复数 美团面试题 原地哈希类比Problem41、Problem268、Problem442、Problem448、Problem645、Offer3 循环链表找环类比Problem141、Problem142 二分查找类比Problem4、Problem373、Problem378、Problem410、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
  * 给定一个包含n + 1 个整数的数组nums ，其数字都在[1, n]范围内（包括 1 和 n），可知至少存在一个重复的整数。
  * 假设 nums 只有 一个重复的整数 ，返回 这个重复的数 。
  * 你设计的解决方案必须 不修改 数组 nums 且只用常量级 O(1) 的额外空间。
@@ -89,7 +89,7 @@ public class Problem287 {
      * 对[left,right]进行二分查找，left为数组中最小值，right为数组中最大值，统计数组中小于等于mid的个数count，
      * 如果count小于等于mid，则重复元素在mid右边，left=mid+1；
      * 如果count大于mid，则重复元素在mid或mid左边，right=mid
-     * 时间复杂度O(nlog(right-left))=O(n)，空间复杂度O(1) (left:数组中最小值，right:数组中最大值)
+     * 时间复杂度O(n*log(right-left))=O(n)，空间复杂度O(1) (left:数组中最小值，right:数组中最大值)
      *
      * @param nums
      * @return

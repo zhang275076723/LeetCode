@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/7 08:00
  * @Author zsy
- * @Description 丑数 III 三指针类比Problem75、Problem264、Problem313、Offer49 最大公因数和最小公倍数类比 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1482、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1175、Problem1291、Offer10、Offer49
+ * @Description 丑数 III 三指针类比Problem75、Problem264、Problem313、Offer49 最大公因数和最小公倍数类比 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1175、Problem1291、Offer10、Offer49
  * 给你四个整数：n 、a 、b 、c ，请你设计一个算法来找出第 n 个丑数。
  * 丑数是可以被 a 或 b 或 c 整除的 正整数 。
  * <p>

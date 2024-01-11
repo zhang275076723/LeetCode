@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/12/16 08:48
  * @Author zsy
- * @Description 完成所有工作的最短时间 美团机试题 美团面试题 集合划分类比Problem416、Problem473、Problem698、Problem2305 状态压缩类比Problem187、Problem294、Problem464、Problem473、Problem526、Problem638、Problem698、Problem847、Problem1908、Problem2305 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 完成所有工作的最短时间 美团机试题 美团面试题 集合划分类比Problem416、Problem473、Problem698、Problem2305 状态压缩类比Problem187、Problem294、Problem464、Problem473、Problem526、Problem638、Problem698、Problem847、Problem1908、Problem2305 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
  * 给你一个整数数组 jobs ，其中 jobs[i] 是完成第 i 项工作要花费的时间。
  * 请你将这些工作分配给 k 位工人。所有工作都应该分配给工人，且每项工作只能分配给一位工人。
  * 工人的 工作时间 是完成分配给他们的所有工作花费时间的总和。
