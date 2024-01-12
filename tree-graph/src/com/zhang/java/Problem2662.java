@@ -52,8 +52,9 @@ public class Problem2662 {
 
     /**
      * Dijkstra求节点(startX,startY)到节点(targetX,targetY)的最短路径长度
-     * 难点：将二维节点转换为一维节点存储，保证不同的二维节点不会映射到同一个一维节点，
-     * 节点都在int范围内，横坐标左移32位加上纵坐标，得到long范围内唯一的一维节点
+     * 难点：将二维节点转换为一维节点存储，保证不同的二维节点不会映射到同一个一维节点，节点都在int范围内，横坐标左移32位加上纵坐标，得到long范围内唯一的一维节点
+     * 为什么要将二维节点转换为一维节点存储，如果邻接表使用二维节点int[]作为key，则需要重写hashCode()和equals()，
+     * 而Integer作为key，已经重写过hashCode()和equals()，可以直接使用，省去重写的麻烦
      * 时间复杂度O(n^2)，空间复杂度O(n) (n=specialRoads.length，2n+2为图中节点的个数，图为O(n)个节点的完全图)
      *
      * @param start
@@ -177,8 +178,9 @@ public class Problem2662 {
 
     /**
      * 堆优化Dijkstra求节点(startX,startY)到节点(targetX,targetY)的最短路径长度
-     * 难点：将二维节点转换为一维节点存储，保证不同的二维节点不会映射到同一个一维节点，
-     * 节点都在int范围内，横坐标左移32位加上纵坐标，得到long范围内唯一的一维节点
+     * 难点：将二维节点转换为一维节点存储，保证不同的二维节点不会映射到同一个一维节点，节点都在int范围内，横坐标左移32位加上纵坐标，得到long范围内唯一的一维节点
+     * 为什么要将二维节点转换为一维节点存储，如果邻接表使用二维节点int[]作为key，则需要重写hashCode()和equals()，
+     * 而Integer作为key，已经重写过hashCode()和equals()，可以直接使用，省去重写的麻烦
      * 时间复杂度O(n^2*logn)，空间复杂度O(n) (n=specialRoads.length，2n+2为图中节点的个数，图为O(n)个节点的完全图)
      * (堆优化Dijkstra的时间复杂度O(mlogm)，其中m为图中边的个数，完全图边的个数O(n^2)，所以时间复杂度O(n^2*logn))
      *
