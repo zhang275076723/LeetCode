@@ -75,7 +75,7 @@ public class Problem170 {
                 //和x相对应，相加为value的数y
                 int y = value - x;
 
-                //map中存在y，并且x和y不相等，或者x和y相等，并且x出现的次数大于1，则map中存在x+y等于value的情况，返回true
+                //map中存在y，并且x和y不相等，或者x和y相等，x出现的次数大于1，则map中存在x+y等于value的情况，返回true
                 if (map.containsKey(y) && (x != y || count > 1)) {
                     return true;
                 }
