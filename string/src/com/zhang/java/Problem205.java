@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/12/2 08:43
  * @Author zsy
- * @Description 同构字符串 哈希表类比Problem1、Problem187、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem554、Problem763、Problem1640、Offer50
+ * @Description 同构字符串 哈希表类比Problem1、Problem187、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem554、Problem763、Problem1640、Offer50
  * 给定两个字符串 s 和 t ，判断它们是否是同构的。
  * 如果 s 中的字符可以按某种映射关系替换得到 t ，那么这两个字符串是同构的。
  * 每个出现的字符都应当映射到另一个字符，同时不改变字符的顺序。

@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/6/26 08:38
  * @Author zsy
- * @Description 数组中的 k-diff 数对 类比Problem220 双指针类比Problem15、Problem16、Problem18、Problem456、Problem611、Problem633 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem567、Problem643、Problem713、Problem1004、Offer48、Offer57_2、Offer59
+ * @Description 数组中的 k-diff 数对 类比Problem220 哈希表类比Problem1、Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem554、Problem763、Problem1640、Offer50 双指针类比
  * 给你一个整数数组 nums 和一个整数 k，请你在数组中找出 不同的 k-diff 数对，并返回不同的 k-diff 数对 的数目。
  * k-diff 数对定义为一个整数对 (nums[i], nums[j]) ，并满足下述全部条件：
  * 0 <= i, j < nums.length
@@ -54,7 +54,7 @@ public class Problem532 {
      * @return
      */
     public int findPairs(int[] nums, int k) {
-        //统计nums元素出现的次数
+        //key：nums中元素，value：当前元素出现的次数
         Map<Integer, Integer> map = new HashMap<>();
 
         for (int num : nums) {
@@ -64,7 +64,7 @@ public class Problem532 {
         int count = 0;
 
         for (int num : nums) {
-            //去重，当前元素num已经考虑过，直接进行下次循环
+            //当前元素num已经考虑过，即已经被标记为0，直接进行下次循环
             if (map.get(num) == 0) {
                 continue;
             }
@@ -89,7 +89,7 @@ public class Problem532 {
                 }
             }
 
-            //考虑过当前元素num之后，num从map中移除，避免重复计算，即num出现次数为0
+            //考虑过当前元素num之后，num从map中移除，避免重复计算，即置num出现次数为0
             map.put(num, 0);
         }
 

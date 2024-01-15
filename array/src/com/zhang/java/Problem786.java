@@ -40,7 +40,7 @@ public class Problem786 {
     }
 
     /**
-     * 小根堆，优先队列，k路归并排序
+     * 小根堆，优先队列，多路归并排序
      * 时间复杂度O(klogn)，空间复杂度O(n)
      *
      * @param arr

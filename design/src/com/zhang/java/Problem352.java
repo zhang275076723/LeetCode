@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/9/4 08:24
  * @Author zsy
- * @Description 将数据流变为多个不相交区间 有序集合类比Problem220 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem406、Problem435、Problem436、Problem763、Problem986、Problem1288
+ * @Description 将数据流变为多个不相交区间 有序集合类比Problem220 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem406、Problem435、Problem436、Problem632、Problem763、Problem986、Problem1288、Problem2402
  * 给你一个由非负整数 a1, a2, ..., an 组成的数据流输入，请你将到目前为止看到的数字总结为不相交的区间列表。
  * 实现 SummaryRanges 类：
  * SummaryRanges() 使用一个空数据流初始化对象。
@@ -71,9 +71,9 @@ public class Problem352 {
         }
 
         /**
-         * 二分查找区间左边界小于等于value的最大区间，作为value的左边区间，如果不存在该区间，则返回区间左边界大于value的最小区间，
-         * 左边区间的下一个区间作为value的右边区间
-         * 有以下7种情况：
+         * 二分查找区间左边界小于等于value的最大区间，作为value的左边区间，value的左边区间的下一个区间作为value的右边区间，
+         * 如果不存在左边界小于等于value的最大区间，则二分查找返回左边界大于value的最小区间
+         * 二分查找区间左边界小于等于value的最大区间之后，有以下7种情况：
          * 1、value在左边区间左边，且左边区间左边界-1不等于value，则value作为单独区间插入左边区间左侧
          * 2、value在左边区间左边，且左边区间左边界-1等于value，则value和左边区间合并
          * 3、value在左边区间内，则不需要合并和插入，直接返回
@@ -107,7 +107,7 @@ public class Problem352 {
                 }
             }
 
-            //value左边区间下标索引
+            //左边界小于等于value的最大区间的下标索引，即value左边区间下标索引
             int leftIntervalIndex = left;
             //value右边区间下标索引
             int rightIntervalIndex;
@@ -119,7 +119,8 @@ public class Problem352 {
                 rightIntervalIndex = leftIntervalIndex + 1;
             }
 
-            //value左边区间，即区间左边界小于等于value的最大区间，如果不存在该区间，则返回区间左边界大于value的最小区间
+            //value左边区间，即区间左边界小于等于value的最大区间
+            //如果不存在左边界小于等于value的最大区间，则二分查找返回左边界大于value的最小区间
             int[] leftInterval = list.get(leftIntervalIndex);
             //value右边区间
             int[] rightInterval = list.get(rightIntervalIndex);
@@ -182,7 +183,7 @@ public class Problem352 {
         /**
          * 通过有序集合得到区间左边界小于等于value的最大区间，作为value的左边区间，如果不存在该区间，则返回区间左边界大于value的最小区间，
          * 通过有序集合得到区间左边界大于等于value的最大区间，作为value的右边区间，如果不存在该区间，则返回区间左边界小于value的最小区间，
-         * 有以下7种情况：
+         * 通过有序集合得到value的的左右边区间之后，有以下7种情况：
          * 1、value在左边区间左边，且左边区间左边界-1不等于value，则value作为单独区间插入左边区间左侧
          * 2、value在左边区间左边，且左边区间左边界-1等于value，则value和左边区间合并
          * 3、value在左边区间内，则不需要合并和插入，直接返回

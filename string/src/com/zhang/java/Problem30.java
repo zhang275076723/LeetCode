@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/2/6 11:42
  * @Author zsy
- * @Description 串联所有单词的子串 滑动窗口类比Problem3、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem532、Problem567、Problem643、Problem713、Problem1004、Offer48、Offer57_2、Offer59
+ * @Description 串联所有单词的子串 滑动窗口类比Problem3、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem567、Problem632、Problem643、Problem713、Problem1004、Offer48、Offer57_2、Offer59
  * 给定一个字符串 s 和一个字符串数组 words。 words 中所有字符串 长度相同。
  * s 中的 串联子串 是指一个包含 words 中所有字符串以任意顺序排列连接起来的子串。
  * 例如，如果 words = ["ab","cd","ef"]，
@@ -125,12 +125,12 @@ public class Problem30 {
         }
 
         //words中单词数量
-        int wordCont = words.length;
+        int wordCount = words.length;
         //words中每个单词长度
         int wordLen = words[0].length();
 
         //words中字符串的总长度超过s的长度，则不存在s的串联子串，直接返回
-        if (s.length() < wordCont * wordLen) {
+        if (s.length() < wordCount * wordLen) {
             return new ArrayList<>();
         }
 
@@ -156,7 +156,7 @@ public class Problem30 {
                 right = right + wordLen;
 
                 //当前窗口大小满足要求，判断s[left]-s[right-1]是否是words的串联子串
-                if (right - left == wordCont * wordLen) {
+                if (right - left == wordCount * wordLen) {
                     if (isEqual(sMap, wordsMap)) {
                         //left加入结果集合
                         list.add(left);

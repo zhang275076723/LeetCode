@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/21 7:51
  * @Author zsy
- * @Description 滑动窗口最大值 字节面试题 华为面试题 类比Problem4、Problem480 单调队列类比Problem209、Problem862、Problem1696、Offer59、Offer59_2 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem340、Problem438、Problem485、Problem487、Problem532、Problem567、Problem643、Problem713、Problem1004、Offer48、Offer57_2、Offer59 同Offer59
+ * @Description 滑动窗口最大值 字节面试题 华为面试题 类比Problem4、Problem480 单调队列类比Problem209、Problem862、Problem1696、Offer59、Offer59_2 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem340、Problem438、Problem485、Problem487、Problem567、Problem632、Problem643、Problem713、Problem1004、Offer48、Offer57_2、Offer59 同Offer59
  * 给你一个整数数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。
  * 你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。
  * 返回 滑动窗口中的最大值 。
@@ -70,7 +70,7 @@ public class Problem239 {
     }
 
     /**
-     * 大根堆
+     * 大根堆，优先队列
      * 时间复杂度O(nlogn)，空间复杂度O(n)
      * (最差情况下，数组单调递增，当前元素入大根堆整堆之后，堆顶元素不需要移除，大根堆最终有n个元素)
      *
@@ -83,7 +83,7 @@ public class Problem239 {
             return new int[0];
         }
 
-        //优先队列存放二元组(num, index)
+        //大根堆，arr[0]：当前元素，arr[1]：当前元素的下标索引
         PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(new Comparator<int[]>() {
             @Override
             public int compare(int[] arr1, int[] arr2) {
@@ -107,12 +107,12 @@ public class Problem239 {
         for (int i = k; i < nums.length; i++) {
             priorityQueue.offer(new int[]{nums[i], i});
 
-            //当前优先队列最大值，不在滑动窗口的范围内
+            //大根堆堆顶元素，不在滑动窗口的范围内
             while (!priorityQueue.isEmpty() && priorityQueue.peek()[1] <= i - k) {
                 priorityQueue.poll();
             }
 
-            //当前优先队列最大值为滑动窗口的最大值
+            //大根堆堆顶元素为滑动窗口的最大值
             result[i - k + 1] = priorityQueue.peek()[0];
         }
 

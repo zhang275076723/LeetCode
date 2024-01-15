@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @Date 2023/3/22 09:13
  * @Author zsy
- * @Description 存在重复元素 II 大疆机试题 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem532、Problem567、Problem643、Problem713、Problem1004、Offer48、Offer57_2、Offer59
+ * @Description 存在重复元素 II 大疆机试题 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem567、Problem632、Problem643、Problem713、Problem1004、Offer48、Offer57_2、Offer59
  * 给你一个整数数组 nums 和一个整数 k ，判断数组中是否存在两个 不同的索引 i 和 j ，
  * 满足 nums[i] == nums[j] 且 abs(i - j) <= k 。
  * 如果存在，返回 true ；否则，返回 false 。
@@ -70,6 +70,7 @@ public class Problem219 {
 
     /**
      * 滑动窗口，双指针
+     * 滑动窗口保证数组中两个元素的下标索引小于等于k
      * 时间复杂度O(n)，空间复杂度O(k)
      *
      * @param nums
@@ -87,7 +88,7 @@ public class Problem219 {
         int right = 0;
 
         while (right < nums.length) {
-            //滑动窗口中已经存在nums[right]，并且两个元素的索引下标小于等于k，返回true
+            //滑动窗口中已经存在nums[right]，并且滑动窗口保证两个元素的索引下标小于等于k，返回true
             if (set.contains(nums[right])) {
                 return true;
             }
@@ -96,7 +97,8 @@ public class Problem219 {
             set.add(nums[right]);
             right++;
 
-            //始终保持滑动窗口大小不超过k+1(因为是abs(i-j)<=k)，当滑动窗口大小大于k+1时，nums[left]从set中移除，左指针右移
+            //始终保持滑动窗口大小小于等于k，当滑动窗口大小大于k时，nums[left]从set中移除，左指针右移
+            //因为是right先右移再判断窗口大小，所以判断条件是大于k
             if (right - left > k) {
                 set.remove(nums[left]);
                 left++;

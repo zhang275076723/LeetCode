@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * @Date 2022/4/11 7:36
  * @Author zsy
- * @Description 两数之和 类比Problem15、Problem16、Problem18、Problem167、Problem170、Problem454、Problem653、Problem1099、Offer57 哈希表类比Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem554、Problem763、Problem1640、Offer50
+ * @Description 两数之和 类比Problem15、Problem16、Problem18、Problem167、Problem170、Problem454、Problem653、Problem1099、Offer57 哈希表类比Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem554、Problem763、Problem1640、Offer50
  * 给定一个整数数组 nums 和一个整数目标值 target，
  * 请你在该数组中找出 和为目标值 target 的那两个整数，并返回它们的数组下标。
  * 你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。

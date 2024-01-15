@@ -40,7 +40,7 @@ public class Problem378 {
     }
 
     /**
-     * 小根堆，优先队列，k路归并排序
+     * 小根堆，优先队列，多路归并排序
      * 时间复杂度O(nlogn+klogn)，空间复杂度O(n) (n=matrix.length)
      *
      * @param matrix
@@ -48,7 +48,7 @@ public class Problem378 {
      * @return
      */
     public int kthSmallest(int[][] matrix, int k) {
-        //小根堆
+        //小根堆，int[0]：当前元素，int[1]：当前元素所在行的下标索引，int[2]：当前元素所在列的下标索引
         Queue<int[]> priorityQueue = new PriorityQueue<>(matrix.length, new Comparator<int[]>() {
             @Override
             public int compare(int[] arr1, int[] arr2) {
@@ -56,16 +56,15 @@ public class Problem378 {
             }
         });
 
-        //将每行第一个元素入小根堆
+        //每行第一个元素入小根堆
         for (int i = 0; i < matrix.length; i++) {
-            //int[0]：当前元素，int[1]：当前元素的行索引，int[2]：当前元素的列索引
             priorityQueue.offer(new int[]{matrix[i][0], i, 0});
         }
 
         for (int i = 0; i < k - 1; i++) {
             int[] arr = priorityQueue.poll();
 
-            //当前元素所在行还存在下一个元素时，该行下一个元素入队
+            //当前元素所在行存在下一个元素时，该行下一个元素入队
             if (arr[2] + 1 < matrix[0].length) {
                 priorityQueue.offer(new int[]{matrix[arr[1]][arr[2] + 1], arr[1], arr[2] + 1});
             }

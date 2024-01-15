@@ -47,7 +47,7 @@ public class Problem373 {
     }
 
     /**
-     * 小根堆，优先队列，k路归并排序
+     * 小根堆，优先队列，多路归并排序
      * 时间复杂度O(klogm)，空间复杂度O(m) (m=nums1.length，n=nums2.length)
      *
      * @param nums1

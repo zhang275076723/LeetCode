@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/12/3 12:03
  * @Author zsy
- * @Description 寻找右区间 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem352、Problem406、Problem435、Problem763、Problem986、Problem1288
+ * @Description 寻找右区间 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem352、Problem406、Problem435、Problem632、Problem763、Problem986、Problem1288、Problem2402
  * 给你一个区间数组 intervals ，其中 intervals[i] = [starti, endi] ，且每个 starti 都 不同 。
  * 区间 i 的 右侧区间 可以记作区间 j ，并满足 startj >= endi ，且 startj 最小化 。
  * 返回一个由每个区间 i 的 右侧区间 在 intervals 中对应下标组成的数组。
@@ -76,7 +76,7 @@ public class Problem436 {
      * 二分查找
      * 创建新的二维数组newIntervals，newIntervals[i][0]：区间左边界，newIntervals[i][1]：区间在intervals中的下标索引
      * 按照区间左边界newIntervals[i][0]对newIntervals由小到大排序，因为每个区间的左边界不同，对排好序的newIntervals，
-     * 每个intervals区间，对newIntervals二分查找大于等于当前区间右边界，且距离当前区间右边界最近区间的下标索引newIntervals[j][1]
+     * 每个intervals区间，对newIntervals二分查找大于等于当前区间右边界intervals[i][1]的最小区间的下标索引newIntervals[j][1]
      * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
      * @param intervals
@@ -101,11 +101,11 @@ public class Problem436 {
             int right = newIntervals.length - 1;
             int mid;
             int target = intervals[i][1];
-            //大于等于当前区间右边界intervals[i][1]，且距离intervals[i][1]最近区间的下标索引
-            //赋初值为-1，表示不存在大于等于当前区间右边界intervals[i][1]的区间
+            //大于等于当前区间右边界intervals[i][1]的最小区间的下标索引
+            //赋初值为-1，表示不存在大于等于当前区间右边界intervals[i][1]的最小区间
             int index = -1;
 
-            //二分查找大于等于当前区间右边界intervals[i][1]，且距离intervals[i][1]最近区间的下标索引index
+            //二分查找大于等于当前区间右边界intervals[i][1]的最小区间的下标索引index
             while (left <= right) {
                 mid = left + ((right - left) >> 1);
 

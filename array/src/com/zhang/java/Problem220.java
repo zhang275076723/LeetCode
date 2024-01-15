@@ -6,7 +6,7 @@ import java.util.TreeSet;
 /**
  * @Date 2023/3/22 10:23
  * @Author zsy
- * @Description 存在重复元素 III 类比Problem532 有序集合类比Problem352 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem239、Problem340、Problem438、Problem485、Problem487、Problem532、Problem567、Problem643、Problem713、Problem1004、Offer48、Offer57_2、Offer59
+ * @Description 存在重复元素 III 类比Problem532 有序集合类比Problem352 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem239、Problem340、Problem438、Problem485、Problem487、Problem567、Problem632、Problem643、Problem713、Problem1004、Offer48、Offer57_2、Offer59
  * 给你一个整数数组 nums 和两个整数 k 和 t 。
  * 请你判断是否存在 两个不同下标 i 和 j，使得 abs(nums[i] - nums[j]) <= t ，同时又满足 abs(i - j) <= k 。
  * 如果存在则返回 true，不存在返回 false。
@@ -36,7 +36,7 @@ public class Problem220 {
 
     /**
      * 滑动窗口，双指针+有序集合
-     * 滑动窗口保证数组中两个元素下标索引不超过k，有序集合保证O(logk)得到大于nums[i]-t的最小元素
+     * 滑动窗口保证数组中两个元素的下标索引小于等于k，有序集合保证O(logk)得到大于nums[i]-t的最小元素
      * 时间复杂度O(nlogk)，空间复杂度O(k)
      *
      * @param nums
@@ -48,7 +48,7 @@ public class Problem220 {
         //TreeSet中才有ceiling()、floor()，TreeSet添加、删除、查找的时间复杂度都为O(logn)
         //ceiling(x)：返回set中大于等于x的最小元素，如果不存在返回null
         //floor(x)：返回set中小于等于x的最大元素，如果不存在返回null
-        //由小到大排序
+        //由小到大排序的集合
         TreeSet<Integer> set = new TreeSet<>(new Comparator<Integer>() {
             @Override
             public int compare(Integer a, Integer b) {
@@ -72,7 +72,8 @@ public class Problem220 {
             set.add(nums[right]);
             right++;
 
-            //始终保持滑动窗口大小不超过k+1(因为是abs(i-j)<=k)，当滑动窗口大小大于k+1时，nums[left]从set中移除，左指针右移
+            //始终保持滑动窗口大小小于等于k，当滑动窗口大小大于k时，nums[left]从set中移除，左指针右移
+            //因为是right先右移再判断窗口大小，所以判断条件是大于k
             if (right - left > k) {
                 set.remove(nums[left]);
                 left++;

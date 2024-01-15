@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * @Date 2024/1/13 08:11
  * @Author zsy
- * @Description 会议室 III
+ * @Description 会议室 III 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem352、Problem406、Problem435、Problem436、Problem632、Problem763、Problem986、Problem1288 优先队列类比
  * 给你一个整数 n ，共有编号从 0 到 n - 1 的 n 个会议室。
  * 给你一个二维整数数组 meetings ，其中 meetings[i] = [starti, endi] 表示一场会议将会在 半闭 时间区间 [starti, endi) 举办。
  * 所有 starti 的值 互不相同 。
