@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/8/12 09:13
  * @Author zsy
- * @Description 最大二叉树 II 类比Problem654 类比Problem156 类比Problem235、Problem236、Problem450、Problem700、Problem701、Offer68、Offer68_2、InorderNextNode
+ * @Description 最大二叉树 II 类比Problem654 类比Problem156、Problem206、Problem226
  * 最大树 定义：一棵树，并满足：其中每个节点的值都大于其子树中的任何其他值。
  * 给你最大树的根节点 root 和一个整数 val 。
  * 就像 之前的问题 那样，给定的树是利用 Construct(a) 例程从列表 a（root = Construct(a)）递归地构建的：
@@ -63,6 +63,7 @@ public class Problem998 {
         //val大于root.val，则val为根节点，val左子树为root
         if (val > root.val) {
             TreeNode newRoot = new TreeNode(val);
+            //因为val置于数组末尾，所以根节点val的左子树为root
             newRoot.left = root;
             return newRoot;
         } else {
@@ -91,6 +92,7 @@ public class Problem998 {
         //val大于root.val，则val为根节点，val左子树为root
         if (val > root.val) {
             TreeNode newRoot = new TreeNode(val);
+            //因为val置于数组末尾，所以根节点val的左子树为root
             newRoot.left = root;
             return newRoot;
         }

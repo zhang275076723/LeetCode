@@ -3,44 +3,61 @@ package com.zhang.java;
 import java.util.*;
 
 /**
- * @Date 2023/5/15 08:23
+ * @Date 2024/1/16 08:46
  * @Author zsy
- * @Description 中序遍历的下一个节点 字节面试题 类比Problem235、Problem236、Problem450、Problem700、Problem701、Problem998、Offer68、Offer68_2
- * 给定二叉树其中的一个结点，请找出其中序遍历顺序的下一个结点并且返回。
- * 注意，树中的结点不仅包含左右子结点，而且包含指向父结点的指针。
+ * @Description 二叉搜索树中的中序后继 II 字节面试题 类比Problem235、Problem236、Problem270、Problem272、Problem285、Problem450、Problem700、Problem701、Offer68、Offer68_2
+ * 给定一棵二叉搜索树和其中的一个节点 node ，找到该节点在树中的中序后继。
+ * 如果节点没有中序后继，请返回 null 。
+ * 一个节点 node 的中序后继是键值比 node.val 大所有的节点中键值最小的那个。
+ * 你可以直接访问结点，但无法直接访问树。
+ * 每个节点都会有其父节点的引用。
  * <p>
- * 输入：root = [1,2,3,4,5,null,6,7,null,8,9], node = 9
- * 输出：1
+ * 输入：tree = [2,1,3], node = 1
+ * 输出：2
+ * 解析：1 的中序后继结点是 2 。注意节点和返回值都是 Node 类型的。
  * <p>
- * 输入：root = [5], node = 5
+ * 输入：tree = [5,3,6,2,4,null,null,1], node = 6
  * 输出：null
+ * 解析：该结点没有中序后继，因此返回 null 。
+ * <p>
+ * 输入：tree = [15,6,18,3,7,17,20,2,4,null,13,null,null,null,null,null,null,null,null,9], node = 15
+ * 输出：17
+ * <p>
+ * 输入：tree = [15,6,18,3,7,17,20,2,4,null,13,null,null,null,null,null,null,null,null,9], node = 13
+ * 输出：15
+ * <p>
+ * 输入：tree = [0], node = 0
+ * 输出：null
+ * <p>
+ * 树中节点的数目在范围 [1, 10^4] 内。
+ * -10^5 <= Node.val <= 10^5
+ * 树中各结点的值均保证唯一。
  */
-public class InorderNextNode {
+public class Problem510 {
     public static void main(String[] args) {
-        InorderNextNode inorderNextNode = new InorderNextNode();
-        String[] data = {"1", "2", "3", "4", "5", "null", "6", "7", "null", "8", "9"};
-        TreeNode root = inorderNextNode.buildTree(data);
-        TreeNode node = root.left.right.right;
-        TreeNode nextNode = inorderNextNode.inorderNextNode(node);
+        Problem510 problem510 = new Problem510();
+        String[] data = {"15", "6", "18", "3", "7", "17", "20", "2", "4", "null",
+                "13", "null", "null", "null", "null", "null", "null", "null", "null", "9"};
+        TreeNode root = problem510.buildTree(data);
+        TreeNode node = root.left.right.right.left;
+        TreeNode inorderNextNode = problem510.inorderSuccessor(node);
     }
 
     /**
-     * 通过当前节点和父节点之间的关系，找中序遍历的下一个节点
-     * 1、当前节点的右子树不为空，则中序遍历当前节点的下一个节点为右子树的最左下节点
-     * 2.1、当前节点的右子树为空，当前节点是父节点的左子节点，则中序遍历当前节点的下一个节点为当前节点的父节点
-     * 2.2、当前节点的右子树为空，当前节点不是父节点的左子节点，沿着父节点往上找，
-     * 当找到一个节点的父节点的左子节点为该节点时，则中序遍历当前节点的下一个节点为找到的该节点的父节点
-     * 时间复杂度O(1)，空间复杂度O(1)
+     * 利用二叉搜索树性质
+     * 1、当前节点存在右子树，则右子树的最左下节点为当前节点中序遍历的下一个节点
+     * 2、当前节点不存在右子树，则当前节点沿着父节点往上找，直至temp节点父节点的左子节点等于temp节点时，temp节点的父节点为当前节点中序遍历的下一个节点
+     * 时间复杂度O(h)，空间复杂度O(1) (h=logn，即树的高度)
      *
      * @param node
      * @return
      */
-    public TreeNode inorderNextNode(TreeNode node) {
+    public TreeNode inorderSuccessor(TreeNode node) {
         if (node == null) {
             return null;
         }
 
-        //情况1，当前节点的右子树不为空，则中序遍历当前节点的下一个节点为右子树的最左下节点
+        //情况1：当前节点存在右子树，则右子树的最左下节点为当前节点中序遍历的下一个节点
         if (node.right != null) {
             //node右子树的最左下节点
             TreeNode mostLeftNode = node.right;
@@ -51,13 +68,8 @@ public class InorderNextNode {
 
             return mostLeftNode;
         } else {
-            //情况2.1，当前节点的右子树为空，当前节点是父节点的左子节点，则中序遍历当前节点的下一个节点为当前节点的父节点
-            if (node.parent != null && node.parent.left == node) {
-                return node.parent;
-            }
+            //情况2：当前节点不存在右子树，则当前节点沿着父节点往上找，直至temp节点父节点的左子节点等于temp节点时，temp节点的父节点为当前节点中序遍历的下一个节点
 
-            //情况2.2，当前节点的右子树为空，当前节点不是父节点的左子节点，沿着父节点往上找，
-            //当找到一个节点的父节点的左子节点为该节点时，则中序遍历当前节点的下一个节点为找到的该节点的父节点
             TreeNode temp = node;
 
             while (temp.parent != null && temp.parent.left != temp) {
@@ -69,7 +81,7 @@ public class InorderNextNode {
     }
 
     /**
-     * 建树，并在建树过程中对父节点赋值
+     * 在建树的过程中同时赋值当前节点的父节点
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param data
