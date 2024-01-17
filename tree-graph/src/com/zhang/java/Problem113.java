@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/28 17:11
  * @Author zsy
- * @Description 路径总和 II 类比Problem112、Problem257、Problem437 保存父节点类比Problem126、Problem863、Offer34 同Offer34
+ * @Description 路径总和 II 类比Problem112、Problem257、Problem437 保存父节点类比Problem126、Problem272、Problem863、Offer34 同Offer34
  * 给你二叉树的根节点 root 和一个整数目标和 targetSum ，找出所有 从根节点到叶子节点 路径总和等于给定目标和的路径。
  * 叶子节点 是指没有子节点的节点。
  * <p>
@@ -71,6 +71,7 @@ public class Problem113 {
 
         //存放当前节点的父节点，用于路径复原
         Map<TreeNode, TreeNode> map = new HashMap<>();
+        //根节点的父节点为null
         map.put(root, null);
 
         while (!queue.isEmpty()) {
@@ -95,16 +96,16 @@ public class Problem113 {
         return result;
     }
 
-    private void dfs(TreeNode root, int sum, int targetSum, List<Integer> path, List<List<Integer>> result) {
-        if (root == null) {
+    private void dfs(TreeNode node, int sum, int targetSum, List<Integer> path, List<List<Integer>> result) {
+        if (node == null) {
             return;
         }
 
-        sum = sum + root.val;
-        path.add(root.val);
+        sum = sum + node.val;
+        path.add(node.val);
 
-        //当前节点为叶节点，判断路径和是否等于targetSum
-        if (root.left == null && root.right == null) {
+        //当前节点为叶节点，则判断路径和是否等于targetSum
+        if (node.left == null && node.right == null) {
             if (sum == targetSum) {
                 //将路径和等于targetSum的路径复制到结果集合需要O(n)
                 result.add(new ArrayList<>(path));
@@ -114,8 +115,8 @@ public class Problem113 {
             return;
         }
 
-        dfs(root.left, sum, targetSum, path, result);
-        dfs(root.right, sum, targetSum, path, result);
+        dfs(node.left, sum, targetSum, path, result);
+        dfs(node.right, sum, targetSum, path, result);
 
         path.remove(path.size() - 1);
     }

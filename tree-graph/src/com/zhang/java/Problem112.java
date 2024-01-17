@@ -95,20 +95,20 @@ public class Problem112 {
         return false;
     }
 
-    private boolean dfs(TreeNode root, int sum, int targetSum) {
-        if (root == null) {
+    private boolean dfs(TreeNode node, int sum, int targetSum) {
+        if (node == null) {
             return false;
         }
 
-        sum = sum + root.val;
+        sum = sum + node.val;
 
-        //当前节点为叶节点，判断路径和是否等于targetSum
-        if (root.left == null && root.right == null) {
+        //当前节点为叶节点，则判断路径和是否等于targetSum
+        if (node.left == null && node.right == null) {
             return sum == targetSum;
         }
 
         //继续往左往右找路径总和为targetSum的路径
-        return dfs(root.left, sum, targetSum) || dfs(root.right, sum, targetSum);
+        return dfs(node.left, sum, targetSum) || dfs(node.right, sum, targetSum);
     }
 
     private TreeNode buildTree(String[] data) {

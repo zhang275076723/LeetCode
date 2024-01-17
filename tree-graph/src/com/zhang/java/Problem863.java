@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/4/15 08:58
  * @Author zsy
- * @Description 二叉树中所有距离为 K 的结点 字节面试题 保存父节点类比Problem113、Problem126、Offer34 剪枝类比Problem236、Offer68_2 图类比Problem133、Problem207、Problem210、Problem329、Problem399、Problem785
+ * @Description 二叉树中所有距离为 K 的结点 字节面试题 保存父节点类比Problem113、Problem126、Problem272、Offer34 图类比Problem133、Problem207、Problem210、Problem329、Problem399、Problem785
  * 给定一个二叉树（具有根结点 root）， 一个目标结点 target ，和一个整数值 k 。
  * 返回到目标结点 target 距离为 k 的所有结点的值的列表。
  * 答案可以以 任何顺序 返回。
@@ -139,44 +139,44 @@ public class Problem863 {
     }
 
     /**
-     * 从root节点开始往子节点和父节点找距离root节点为k的节点值加入list中
+     * 从node节点开始往子节点和父节点找距离node节点为k的节点值加入list中
      *
-     * @param root
-     * @param pre      当前遍历到root节点的前驱节点，用于剪枝，避免重复查找
+     * @param node
+     * @param pre      当前遍历到node节点的前驱节点，用于剪枝，避免重复查找
      * @param distance
      * @param k
      * @param map      父节点map
      * @param list
      */
-    private void dfs(TreeNode root, TreeNode pre, int distance, int k, Map<TreeNode, TreeNode> map, List<Integer> list) {
-        if (root == null) {
+    private void dfs(TreeNode node, TreeNode pre, int distance, int k, Map<TreeNode, TreeNode> map, List<Integer> list) {
+        if (node == null) {
             return;
         }
 
         //找到距离target节点为k的节点值，加入list集合中，直接返回
         if (distance == k) {
-            list.add(root.val);
+            list.add(node.val);
             return;
         }
 
-        //root父节点不为前驱节点pre，则说明root到root父节点这条路径没有被遍历，可以往父节点找，用于剪枝，避免重复查找
-        if (map.get(root) != pre) {
-            dfs(map.get(root), root, distance + 1, k, map, list);
+        //node父节点不为前驱节点pre，则说明node到node父节点这条路径没有被遍历，可以往父节点找，保存pre，避免重复查找
+        if (map.get(node) != pre) {
+            dfs(map.get(node), node, distance + 1, k, map, list);
         }
 
-        //root左子节点不为前驱节点pre，则说明root到root左子树这条路径没有被遍历，可以往左子树找，用于剪枝，避免重复查找
-        if (root.left != pre) {
-            dfs(root.left, root, distance + 1, k, map, list);
+        //node左子节点不为前驱节点pre，则说明node到node左子树这条路径没有被遍历，可以往左子树找，保存pre，避免重复查找
+        if (node.left != pre) {
+            dfs(node.left, node, distance + 1, k, map, list);
         }
 
-        //root右子节点不为前驱节点pre，则说明root到root右子树这条路径没有被遍历，可以往右子树找，用于剪枝，避免重复查找
-        if (root.right != pre) {
-            dfs(root.right, root, distance + 1, k, map, list);
+        //node右子节点不为前驱节点pre，则说明node到node右子树这条路径没有被遍历，可以往右子树找，保存pre，避免重复查找
+        if (node.right != pre) {
+            dfs(node.right, node, distance + 1, k, map, list);
         }
     }
 
     /**
-     * 图的dfs，从target节点开始找距离target节点为k的节点值加入list中
+     * 图的dfs，从node节点开始找距离node节点为k的节点值加入list中
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param node
@@ -232,13 +232,10 @@ public class Problem863 {
         Set<TreeNode> visitedSet = new HashSet<>();
         queue.offer(target);
         visitedSet.add(target);
-        //bfs扩展的次数
+        //bfs扩展的次数，每加1表示距离target节点的距离加1
         int count = 0;
 
         while (!queue.isEmpty()) {
-            //当前层元素的个数
-            int size = queue.size();
-
             //bfs扩展的次数count等于k，则找到了距离target节点为k的所有节点，都在queue中，加入list集合中，直接返回
             if (count == k) {
                 while (!queue.isEmpty()) {
@@ -247,6 +244,9 @@ public class Problem863 {
                 }
                 return;
             }
+
+            //当前层元素的个数
+            int size = queue.size();
 
             //每次往外扩一层
             for (int i = 0; i < size; i++) {
@@ -273,49 +273,49 @@ public class Problem863 {
      * 通过树建立邻接表形表的有向图，key：当前节点，value：当前节点的邻接节点集合
      * 时间复杂度O(n)，空间复杂度O(n)
      *
-     * @param root
+     * @param node
      * @param edges
      */
-    private void buildGraph(TreeNode root, Map<TreeNode, List<TreeNode>> edges) {
-        if (root == null) {
+    private void buildGraph(TreeNode node, Map<TreeNode, List<TreeNode>> edges) {
+        if (node == null) {
             return;
         }
 
         //邻接表中没有当前节点，则创建当前节点和当前节点的邻接节点集合
-        if (!edges.containsKey(root)) {
-            edges.put(root, new ArrayList<>());
+        if (!edges.containsKey(node)) {
+            edges.put(node, new ArrayList<>());
         }
 
         //左子节点不为空，当前节点和左子节点则存在边，加入邻接表中
-        if (root.left != null) {
+        if (node.left != null) {
             //邻接表中没有左子节点，则创建左子节点和左子节点的邻接节点集合
-            if (!edges.containsKey(root.left)) {
-                edges.put(root.left, new ArrayList<>());
+            if (!edges.containsKey(node.left)) {
+                edges.put(node.left, new ArrayList<>());
             }
 
             //当前节点的邻接表中加入左子节点
-            edges.get(root).add(root.left);
+            edges.get(node).add(node.left);
             //左子节点的邻接表中加入当前节点
-            edges.get(root.left).add(root);
+            edges.get(node.left).add(node);
 
             //继续往左子树建图
-            buildGraph(root.left, edges);
+            buildGraph(node.left, edges);
         }
 
         //右子节点不为空，当前节点和右子节点则存在边，加入邻接表中
-        if (root.right != null) {
+        if (node.right != null) {
             //邻接表中没有右子节点，则创建右子节点和右子节点的邻接节点集合
-            if (!edges.containsKey(root.right)) {
-                edges.put(root.right, new ArrayList<>());
+            if (!edges.containsKey(node.right)) {
+                edges.put(node.right, new ArrayList<>());
             }
 
             //当前节点的邻接表中加入右子节点
-            edges.get(root).add(root.right);
+            edges.get(node).add(node.right);
             //右子节点的邻接表中加入当前节点
-            edges.get(root.right).add(root);
+            edges.get(node.right).add(node);
 
             //继续往右子树建图
-            buildGraph(root.right, edges);
+            buildGraph(node.right, edges);
         }
     }
 

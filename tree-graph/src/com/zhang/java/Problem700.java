@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/10/7 09:24
  * @Author zsy
- * @Description 二叉搜索树中的搜索 类比Problem235、Problem236、Problem450、Problem701、Problem998、Offer68、Offer68_2、InorderNextNode
+ * @Description 二叉搜索树中的搜索 类比Problem235、Problem236、Problem270、Problem272、Problem285、Problem450、Problem510、Problem701、Offer68、Offer68_2
  * 给定二叉搜索树（BST）的根节点 root 和一个整数值 val。
  * 你需要在 BST 中找到节点值等于 val 的节点。
  * 返回以该节点为根的子树。 如果节点不存在，则返回 null 。

@@ -49,7 +49,7 @@ public class Problem437 {
 
         int count = 0;
 
-        //当前节点dfs
+        //当前节点作为根节点dfs
         count = count + dfs(root, 0, targetSum);
 
         //左右子树dfs

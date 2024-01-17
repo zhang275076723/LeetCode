@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/3/29 15:59
  * @Author zsy
- * @Description 最长不含重复字符的子字符串 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem532、Problem567、Problem643、Problem713、Problem1004、Offer57_2、Offer59 同Problem3
+ * @Description 最长不含重复字符的子字符串 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem567、Problem632、Problem643、Problem713、Problem1004、Offer57_2、Offer59 同Problem3
  * 请从字符串中找出一个最长的不包含重复字符的子字符串，计算该最长子字符串的长度。
  * <p>
  * 输入: "abcabcbb"
@@ -148,9 +148,9 @@ public class Offer48 {
                 left = index + 1;
             }
 
+            max = Math.max(max, right - left + 1);
             //更新当前字符c上次出现的下标索引
             map.put(c, right);
-            max = Math.max(max, right - left + 1);
             //右指针右移
             right++;
         }

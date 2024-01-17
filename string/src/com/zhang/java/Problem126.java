@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/2/13 08:28
  * @Author zsy
- * @Description 单词接龙 II Amazon面试题 双向bfs类比Problem127、Problem433、Problem752、Problem1345 保存父节点类比Problem113、Problem863、Offer34
+ * @Description 单词接龙 II Amazon面试题 双向bfs类比Problem127、Problem433、Problem752、Problem1345 保存父节点类比Problem113、Problem272、Problem863、Offer34
  * 按字典 wordList 完成从单词 beginWord 到单词 endWord 转化，
  * 一个表示此过程的 转换序列 是形式上像 beginWord -> s1 -> s2 -> ... -> sk 这样的单词序列，并满足：
  * 每对相邻的单词之间仅有单个字母不同。
@@ -56,9 +56,9 @@ public class Problem126 {
     /**
      * bfs+dfs
      * bfs每次往外扩一层，将当前层中所有单词通过wordList变化能够得到的单词全部加入队列中，直至遍历到endWord，
-     * 或全部遍历完都没有找到endWord，返回-1
+     * 或全部遍历完都没有找到endWord，返回空集合
      * convertMap存储当前单词可由哪些单词转换而来，类似当前单词的父节点，用于dfs复原beginWord转换为endWord的最短转换路径；
-     * stepMap存储当前单词在哪次bfs向外扩展中遍历到，当存在多个最短转换路径，dfs复原最短转换路径时，避免遗漏其他最短转换路径
+     * stepMap存储beginWord转换为当前单词的最少转换次数，当存在多个最短转换路径，dfs复原最短转换路径时，避免遗漏其他最短转换路径
      *
      * @param beginWord
      * @param endWord
@@ -82,16 +82,15 @@ public class Problem126 {
         //存储当前单词可由哪些单词转换而来，类似当前单词的父节点，用于dfs复原beginWord转换为endWord的最短转换路径
         //key：当前单词，value：可以转换为当前单词的单词集合，类似当前单词的父节点
         Map<String, List<String>> convertMap = new HashMap<>();
-        //存储当前单词在哪次bfs向外扩展中遍历到，当存在多个最短转换路径，dfs复原最短转换路径时，避免遗漏其他最短转换路径
+        //存储beginWord转换为当前单词的最少转换次数，每次只能将修改一个字母
+        //当存在多个最短转换路径，dfs复原最短转换路径时，避免遗漏其他最短转换路径
         //例如：从前往后bfs中，party能够转换为parry，此时parry标记已访问，但marry也能转换为parry，
-        //但此时parry已被访问，会跳过marry到parry的这条最短路径，通过stepMap，判断到parry路径中，
-        //parry是否在stepMap已存在，并且从begin到parry的路径和当前bfs扩展的层数count1相同，
-        //则marry到parry的这条路径也是最短转换路径，也要加入convertMap中(从后往前bfs同理)
+        //如果此时parry已被访问，则会跳过marry到parry的这条最短路径，通过stepMap，判断marry到parry路径中，
+        //parry是否存在于stepMap中，并且从begin到parry的最少转换次数和当前bfs扩展的层数count+1是否相同，
+        //如果都满足，则marry到parry的这条路径也是最短转换路径，也要加入convertMap中
         Map<String, Integer> stepMap = new HashMap<>();
-//        //初始化，beginWord在第0次bfs向外扩展中遍历到
-//        stepMap.put(beginWord, 0);
 
-        //bfs向外扩展的次数，beginWord转换为endWord的最少次数
+        //bfs向外扩展的次数，beginWord转换为endWord的最少转换次数，每次只能将修改一个字母
         int count = 0;
         //是否存在beginWord转换为endWord的最短转换路径标志位，只有存在最短转换路径才dfs复原路径
         boolean flag = false;
@@ -118,7 +117,7 @@ public class Problem126 {
                         String newWord = new String(wordArr);
 
                         //newWord已经转换为了endWord，则存在最短转换路径，flag置为true
-                        //不能break，要把当前bfs向外扩展层中单词全部遍历完，得到所有的最短路径
+                        //注意：如果break，则得到的最短路径长度不充分，需要把当前bfs向外扩展层中单词全部遍历完，得到所有的最短路径
                         if (newWord.equals(endWord)) {
                             flag = true;
                         }
@@ -128,11 +127,11 @@ public class Problem126 {
                             continue;
                         }
 
-                        //newWord已经遍历过，原本应该直接进行下次循环，但此时由word转换为newWord也在当前bfs向外扩展的层次中，
-                        //则word转换为newWord也是一条最短路径，也要加入convertMap，避免遗漏其他最短转换路径
+                        //newWord已经遍历过，原本应该直接进行下次循环，但此时由word转换为newWord也是一条最短路径，也要加入convertMap，避免遗漏其他最短转换路径
                         if (stepMap.containsKey(newWord) && stepMap.get(newWord) == count + 1) {
                             List<String> list = convertMap.get(newWord);
                             list.add(word);
+                            continue;
                         }
 
                         //newWord已经访问过，直接进行下次循环
@@ -140,7 +139,7 @@ public class Problem126 {
                             continue;
                         }
 
-                        //newWord在第count+1次bfs向外扩展中遍历到，加入stepMap
+                        //beginWord转换为newWord的最少转换次数为count+1，加入stepMap
                         stepMap.put(newWord, count + 1);
 
                         if (!convertMap.containsKey(newWord)) {
@@ -183,11 +182,12 @@ public class Problem126 {
     }
 
     /**
-     * 双向bfs+dfs (有用例超时，但正确)
+     * 双向bfs+dfs (有用例在交换队列取较小队列时超时，但正确)
      * 从beginWord和endWord同时开始bfs，bfs每次往外扩一层，将当前队列当前层中所有单词通过wordList变化能够得到的单词全部加入另一个队列中，
      * 直至一个队列中包含了另一个队列中的单词，即双向bfs相交，或者全部遍历完都没有找到endWord，即不存在最短转换路径
      * convertMap存储当前单词可由哪些单词转换而来，类似当前单词的父节点，用于dfs复原beginWord转换为endWord的最短转换路径；
-     * stepMap存储当前单词在哪次bfs向外扩展中遍历到，当存在多个最短转换路径，dfs复原最短转换路径时，避免遗漏其他最短转换路径
+     * stepMap1存储beginWord转换为当前单词的最少转换次数，stepMap2存储当前单词转换为endWord的最少转换次数，
+     * 当存在多个最短转换路径，dfs复原最短转换路径时，避免遗漏其他最短转换路径
      * 注意：双向bfs优先遍历两个队列中较少的队列，因为较少的队列，扩展一层得到的元素少，能够加快查询速度
      *
      * @param beginWord
@@ -220,21 +220,22 @@ public class Problem126 {
         //存储当前单词可由哪些单词转换而来，类似当前单词的父节点，用于dfs复原beginWord转换为endWord的最短转换路径
         //key：当前单词，value：可以转换为当前单词的单词集合，类似当前单词的父节点
         Map<String, List<String>> convertMap = new HashMap<>();
-        //存储当前单词在哪次bfs向外扩展中遍历到，当存在多个最短转换路径，dfs复原最短转换路径时，避免遗漏其他最短转换路径
+        //存储beginWord转换为当前单词的最少转换次数，每次只能将修改一个字母
+        //当存在多个最短转换路径，dfs复原最短转换路径时，避免遗漏其他最短转换路径
         //例如：从前往后bfs中，party能够转换为parry，此时parry标记已访问，但marry也能转换为parry，
-        //但此时parry已被访问，会跳过marry到parry的这条最短路径，通过stepMap，判断到parry路径中，
-        //parry是否在stepMap已存在，并且从begin到parry的路径和当前bfs扩展的层数count1相同，
-        //则marry到parry的这条路径也是最短转换路径，也要加入convertMap中(从后往前bfs同理)
+        //如果此时parry已被访问，则会跳过marry到parry的这条最短路径，通过stepMap，判断marry到parry路径中，
+        //parry是否存在于stepMap中，并且从begin到parry的最少转换次数和当前bfs扩展的层数count1+1是否相同，
+        //如果都满足，则marry到parry的这条路径也是最短转换路径，也要加入convertMap中(从后往前bfs同理)
         Map<String, Integer> stepMap1 = new HashMap<>();
+        //存储当前单词转换为endWord的最少转换次数，每次只能将修改一个字母
+        //当存在多个最短转换路径，dfs复原最短转换路径时，避免遗漏其他最短转换路径
         Map<String, Integer> stepMap2 = new HashMap<>();
-//        //初始化，beginWord在第0次从前往后bfs向外扩展中遍历到
-//        stepMap.put(beginWord, 0);
-//        //初始化，endWord在第0次从后往前bfs向外扩展中遍历到
-//        stepMap2.put(endWord, 0);
 
-        //从前往后bfs向外扩展的次数
+        //从前往后bfs向外扩展的次数，beginWord转换为endWord的最少转换次数，每次只能将修改一个字母，
+        //当双向bfs相交，count1+count2即为beginWord转换为endWord的最少转换次数
         int count1 = 0;
-        //从后往前bfs向外扩展的次数
+        //从后往前bfs向外扩展的次数，endWord转换为beginWord的最少转换次数，每次只能将修改一个字母
+        //当双向bfs相交，count1+count2即为beginWord转换为endWord的最少转换次数
         int count2 = 0;
         //是否存在beginWord转换为endWord的最短转换路径标志位，只有存在最短转换路径才dfs复原路径
         boolean flag = false;
@@ -275,7 +276,7 @@ public class Problem126 {
                         String newWord = new String(wordArr);
 
                         //newWord已经存在visitedSet2中，即双向bfs相交，则存在最短转换路径，flag置为true
-                        //不能break，要把当前bfs向外扩展层中单词全部遍历完，得到所有的最短路径
+                        //注意：如果break，则得到的最短路径长度不充分，需要把当前bfs向外扩展层中单词全部遍历完，得到所有的最短路径
                         if (visitedSet2.contains(newWord)) {
                             flag = true;
                         }
@@ -287,8 +288,7 @@ public class Problem126 {
 
                         //从前往后bfs，word转换为newWord
                         if (direction == 1) {
-                            //newWord已经遍历过，原本应该直接进行下次循环，但此时由word转换为newWord也在当前bfs向外扩展的层次中，
-                            //则word转换为newWord也是一条最短路径，也要加入convertMap，避免遗漏其他最短转换路径
+                            //newWord已经遍历过，原本应该直接进行下次循环，但此时由word转换为newWord也是一条最短路径，也要加入convertMap，避免遗漏其他最短转换路径
                             if (stepMap1.containsKey(newWord) && stepMap1.get(newWord) == count1 + 1) {
                                 List<String> list = convertMap.get(newWord);
                                 list.add(word);
@@ -296,8 +296,7 @@ public class Problem126 {
                         } else {
                             //从后往前bfs，newWord转换为word
 
-                            //newWord已经遍历过，原本应该直接进行下次循环，但此时由newWord转换为word也在当前bfs向外扩展的层次中，
-                            //则newWord转换为word也是一条最短路径，也要加入convertMap，避免遗漏其他最短转换路径
+                            //newWord已经遍历过，原本应该直接进行下次循环，但此时由newWord转换为word也是一条最短路径，也要加入convertMap，避免遗漏其他最短转换路径
                             if (stepMap2.containsKey(newWord) && stepMap2.get(newWord) == count2 + 1) {
                                 //从后往前bfs，convertMap中有可能没有word，则需要将word放入convertMap中
                                 if (!convertMap.containsKey(word)) {
@@ -324,7 +323,7 @@ public class Problem126 {
                             List<String> list = convertMap.get(newWord);
                             list.add(word);
 
-                            //newWord在第count1+1次从前往后bfs向外扩展中遍历到，加入stepMap1
+                            //beginWord转换为newWord的最少转换次数为count1+1，加入stepMap1
                             stepMap1.put(newWord, count1 + 1);
                         } else {
                             //从后往前bfs，更新convertMap和stepMap2
@@ -337,7 +336,7 @@ public class Problem126 {
                             List<String> list = convertMap.get(word);
                             list.add(newWord);
 
-                            //newWord在第count2+1次从后往前bfs向外扩展中遍历到，加入stepMap2
+                            //newWord转换为endWord的最少转换次数为count2+1，加入stepMap2
                             stepMap2.put(newWord, count2 + 1);
                         }
 
@@ -402,9 +401,10 @@ public class Problem126 {
             return;
         }
 
-        //因为convertMap存储当前单词可由哪些单词转换而来，类似当前单词的父节点，需要首添加，
+        //因为convertMap存储当前单词可由哪些单词转换而来，类似当前单词的父节点，需要首添加
         path.addFirst(endWord);
 
+        //newWord转换为endWord
         for (String newWord : convertMap.get(endWord)) {
             backtrack(beginWord, newWord, convertMap, path, result);
         }

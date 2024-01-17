@@ -70,7 +70,7 @@ public class Problem127 {
         queue.offer(beginWord);
         visitedSet.add(beginWord);
 
-        //bfs向外扩展的次数，beginWord转换为endWord的最少次数
+        //bfs向外扩展的次数，beginWord转换为endWord的最少转换次数，每次只能将修改一个字母
         int count = 0;
 
         while (!queue.isEmpty()) {
@@ -81,7 +81,7 @@ public class Problem127 {
                 //当前单词
                 String word = queue.poll();
 
-                //当前单词已经转换为了endWord，则找到了beginWord转换为endWord的最少次数，直接返回count+1，
+                //当前单词已经转换为了endWord，则找到了beginWord转换为endWord的最少转换次数，直接返回count+1，
                 //因为要返回beginWord转换为endWord的最少序列长度，所以返回count+1
                 if (endWord.equals(word)) {
                     return count + 1;
@@ -158,7 +158,7 @@ public class Problem127 {
         visitedSet1.add(beginWord);
         visitedSet2.add(endWord);
 
-        //双向bfs向外扩展的次数，两个队列相交，即beginWord转换为endWord的最少次数
+        //双向bfs向外扩展的次数，两个队列相交，即得到了beginWord转换为endWord的最少转换次数，每次只能将修改一个字母
         int count = 0;
 
         while (!queue1.isEmpty() && !queue2.isEmpty()) {
@@ -178,7 +178,7 @@ public class Problem127 {
                 //当前单词
                 String word = queue1.poll();
 
-                //word已经存在visitedSet2中，即双向bfs相交，则找到了beginWord转换为endWord的最少次数，直接返回count+1，
+                //word已经存在visitedSet2中，即双向bfs相交，则找到了beginWord转换为endWord的最少转换次数，直接返回count+1，
                 //因为要返回beginWord转换为endWord的最少序列长度，所以返回count+1
                 if (visitedSet2.contains(word)) {
                     return count + 1;

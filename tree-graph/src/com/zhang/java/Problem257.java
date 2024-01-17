@@ -86,12 +86,12 @@ public class Problem257 {
         return result;
     }
 
-    private void dfs(TreeNode root, StringBuilder path, List<String> result) {
+    private void dfs(TreeNode node, StringBuilder path, List<String> result) {
         //当前节点为叶节点，路径加入结果集合
-        if (root.left == null && root.right == null) {
+        if (node.left == null && node.right == null) {
             //节点的值可能不止一位，所以需要记录原始长度，用于回溯删除
             int start = path.length();
-            path.append(root.val);
+            path.append(node.val);
             //当前路径复制到结果集合需要O(n)
             result.add(path.toString());
             path.delete(start, path.length());
@@ -100,14 +100,14 @@ public class Problem257 {
 
         //记录当前长度，用于回溯删除
         int start = path.length();
-        path.append(root.val).append("->");
+        path.append(node.val).append("->");
 
-        if (root.left != null) {
-            dfs(root.left, path, result);
+        if (node.left != null) {
+            dfs(node.left, path, result);
         }
 
-        if (root.right != null) {
-            dfs(root.right, path, result);
+        if (node.right != null) {
+            dfs(node.right, path, result);
         }
 
         path.delete(start, path.length());
