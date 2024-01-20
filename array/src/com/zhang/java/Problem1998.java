@@ -8,7 +8,7 @@ import java.util.Random;
 /**
  * @Date 2023/9/15 08:49
  * @Author zsy
- * @Description 数组的最大公因数排序 质数类比Problem204、Problem952、Problem1175 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem2685
+ * @Description 数组的最大公因数排序 质数类比Problem204、Problem952、Problem1175、Problem2523 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem2685
  * 给你一个整数数组 nums ，你可以在 nums 上执行下述操作 任意次 ：
  * 如果 gcd(nums[i], nums[j]) > 1 ，交换 nums[i] 和 nums[j] 的位置。
  * 其中 gcd(nums[i], nums[j]) 是 nums[i] 和 nums[j] 的最大公因数。
@@ -258,14 +258,17 @@ public class Problem1998 {
                 int curPrime = primesList.get(j);
 
                 //超过范围maxNum，直接跳出循环
-                if (i * curPrime > maxNum) {
+                //使用long，避免int相乘溢出
+                if ((long) i * curPrime > maxNum) {
                     break;
                 }
 
                 //数i的curPrime倍表示的数不是质数
                 dp[i * curPrime] = false;
 
-                //curPrimes为i的最小质因子，则curPrime之后的质数都不是最小质因子，和i相乘得到的会得到重复的合数，直接跳出循环
+                //i能整除curPrime，则得到的合数i*curPrime的最小质因子为curPrime，
+                //curPrime之后的质数primesList[j+1]和i相乘得到的合数i*primesList[j+1]的最小质因子不是primesList[j+1]，
+                //直接跳出循环，避免重复标记合数
                 if (i % curPrime == 0) {
                     break;
                 }
