@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/6 08:05
  * @Author zsy
- * @Description 外观数列 类比Problem89
+ * @Description 外观数列 类比Problem89、Problem481
  * 给定一个正整数 n ，输出外观数列的第 n 项。
  * 「外观数列」是一个整数序列，从数字 1 开始，序列中的每一项都是对前一项的描述。
  * 你可以将其视作是由递归公式定义的数字字符串序列：
@@ -74,21 +74,20 @@ public class Problem38 {
                 char c = sb.charAt(index);
                 //字符c出现的次数
                 int count = 1;
-                index++;
 
-                while (index < sb.length() && sb.charAt(index) == c) {
+                while (index + 1 < sb.length() && sb.charAt(index + 1) == c) {
                     count++;
                     index++;
                 }
 
                 //拼接出现count次字符c
                 tempSb.append(count).append(c);
+                index++;
             }
 
             //tempSb赋值给sb，进行下次循环
             sb = tempSb;
         }
-
 
         return sb.toString();
     }

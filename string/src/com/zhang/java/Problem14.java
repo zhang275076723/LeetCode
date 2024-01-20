@@ -171,7 +171,7 @@ public class Problem14 {
 
         /**
          * 前缀树插入字符串
-         * 时间复杂度O(str.length())
+         * 时间复杂度O(n)，空间复杂度O(n)
          *
          * @param str
          */

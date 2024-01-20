@@ -116,7 +116,7 @@ public class Problem89 {
         List<Integer> list = new ArrayList<>();
 
         //flag标志位表示当前节点是左子树还是右子树，0：当前节点是左子树，1：当前节点是右子树
-        //左子树的子节点添加顺序为0、1；右子树的子节点添加顺序为1、0
+        //左子树的子节点添加顺序为01；右子树的子节点添加顺序为10
         backtrack(0, n, 0, new StringBuilder(), list);
 
         return list;

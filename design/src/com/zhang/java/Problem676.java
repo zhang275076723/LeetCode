@@ -68,18 +68,22 @@ public class Problem676 {
          */
         public void buildDict(String[] dictionary) {
             for (String word : dictionary) {
-                TrieNode node = root;
+                insert(word);
+            }
+        }
 
-                for (char c : word.toCharArray()) {
-                    if (!node.children.containsKey(c)) {
-                        node.children.put(c, new TrieNode());
-                    }
+        public void insert(String word) {
+            TrieNode node = root;
 
-                    node = node.children.get(c);
+            for (char c : word.toCharArray()) {
+                if (!node.children.containsKey(c)) {
+                    node.children.put(c, new TrieNode());
                 }
 
-                node.isEnd = true;
+                node = node.children.get(c);
             }
+
+            node.isEnd = true;
         }
 
         public boolean search(String searchWord) {
@@ -102,17 +106,18 @@ public class Problem676 {
                 return flag && node.isEnd;
             }
 
-            //searchWord[t]不修改，继续往后遍历
-            if (node.children.containsKey(searchWord.charAt(t)) &&
-                    backtrack(t + 1, node.children.get(searchWord.charAt(t)), searchWord, flag)) {
+            //当前字符searchWord[t]
+            char c = searchWord.charAt(t);
+
+            //c不修改，继续往后遍历
+            if (node.children.containsKey(c) && backtrack(t + 1, node.children.get(c), searchWord, flag)) {
                 return true;
             }
 
             //searchWord还没有修改，则修改searchWord[t]为'a'+i
             if (!flag) {
                 for (int i = 0; i < 26; i++) {
-                    if (searchWord.charAt(t) != (char) ('a' + i) &&
-                            node.children.containsKey((char) ('a' + i)) &&
+                    if (c != (char) ('a' + i) && node.children.containsKey((char) ('a' + i)) &&
                             backtrack(t + 1, node.children.get((char) ('a' + i)), searchWord, true)) {
                         return true;
                     }

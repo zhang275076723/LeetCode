@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2024/1/6 08:18
  * @Author zsy
- * @Description 查找和最小的 K 对数字 优先队列类比 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 查找和最小的 K 对数字 优先队列类比 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
  * 给定两个以 非递减顺序排列 的整数数组 nums1 和 nums2 , 以及一个整数 k 。
  * 定义一对值 (u,v)，其中第一个元素来自 nums1，第二个元素来自 nums2 。
  * 请找到和最小的 k 个数对 (u1,v1),  (u2,v2)  ...  (uk,vk) 。
@@ -116,7 +116,6 @@ public class Problem373 {
     public List<List<Integer>> kSmallestPairs2(int[] nums1, int[] nums2, int k) {
         //二分左边界，初始化为nums1[i]+nums2[j]最小值
         //使用long，避免int溢出
-        //注意：如果不使用long，会超时
         long left = nums1[0] + nums2[0];
         //二分右边界，初始化为nums1[i]+nums2[j]最大值
         long right = nums1[nums1.length - 1] + nums2[nums2.length - 1];

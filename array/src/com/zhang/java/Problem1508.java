@@ -7,7 +7,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2024/1/10 08:03
  * @Author zsy
- * @Description 子数组和排序后的区间和 优先队列类比 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus 前缀和类比 子序列和子数组类比
+ * @Description 子数组和排序后的区间和 优先队列类比 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus 前缀和类比 子序列和子数组类比
  * 给你一个数组 nums ，它包含 n 个正整数。
  * 你需要计算所有非空连续子数组的和，并将它们按升序排序，得到一个新的包含 n * (n + 1) / 2 个数字的数组。
  * 请你返回在新数组中下标为 left 到 right （下标从 1 开始）的所有数字和（包括左右端点）。

@@ -66,7 +66,7 @@ public class Problem677 {
          * @param val
          */
         public void insert(String key, int val) {
-            //字符串中每个节点在前缀树中需要加上的值
+            //前缀树中字符串的每个节点需要加上的值
             int addValue = val - map.getOrDefault(key, 0);
             trie.insert(key, addValue);
             //将key和val加入map
@@ -94,7 +94,8 @@ public class Problem677 {
             }
 
             /**
-             * 当前字符串加入前缀树，字符串中每个节点值加上addValue
+             * 当前字符串加入前缀树，并且前缀树中字符串的每个节点值加上addValue
+             * 时间复杂度O(n)，空间复杂度O(n)
              *
              * @param word
              * @param value
@@ -116,7 +117,8 @@ public class Problem677 {
             }
 
             /**
-             * 返回前缀树中以word作为前缀的所有单词之和，如果不存在返回0
+             * 返回前缀树中以word作为前缀的所有单词值之和，如果不存在返回0
+             * 时间复杂度O(n)，空间复杂度O(1)
              *
              * @param word
              * @return

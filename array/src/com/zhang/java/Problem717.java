@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/6/17 10:47
  * @Author zsy
- * @Description 1比特与2比特字符 类比Problem561、Problem2498
+ * @Description 1比特与2比特字符 类比Problem481、Problem561、Problem2498
  * 有两种特殊字符：
  * 第一种字符可以用一比特 0 表示
  * 第二种字符可以用两比特（10 或 11）表示

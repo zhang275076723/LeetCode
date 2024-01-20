@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/12/17 08:36
  * @Author zsy
- * @Description 公平分发饼干 集合划分类比Problem416、Problem473、Problem698、Problem1723 状态压缩类比Problem187、Problem294、Problem464、Problem473、Problem526、Problem638、Problem698、Problem847、Problem1723、Problem1908 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 公平分发饼干 集合划分类比Problem416、Problem473、Problem698、Problem1723 状态压缩类比Problem187、Problem294、Problem464、Problem473、Problem526、Problem638、Problem698、Problem847、Problem1723、Problem1908 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
  * 给你一个整数数组 cookies ，其中 cookies[i] 表示在第 i 个零食包中的饼干数量。
  * 另给你一个整数 k 表示等待分发零食包的孩子数量，所有 零食包都需要分发。
  * 在同一个零食包中的所有饼干都必须分发给同一个孩子，不能分开。
