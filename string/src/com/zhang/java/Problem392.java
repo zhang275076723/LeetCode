@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/4/12 09:10
  * @Author zsy
- * @Description 判断子序列 动态规划类比Problem72、Problem97、Problem115、Problem132、Problem139、Problem221、Problem516、Problem1143、Problem1312 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
+ * @Description 判断子序列 类比Problem522、Problem524 动态规划类比Problem72、Problem97、Problem115、Problem132、Problem139、Problem221、Problem516、Problem1143、Problem1312 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
  * 给定字符串 s 和 t ，判断 s 是否为 t 的子序列。
  * 字符串的一个子序列是原始字符串删除一些（也可以不删除）字符而不改变剩余字符相对位置形成的新字符串。
  * （例如，"ace"是"abcde"的一个子序列，而"aec"不是）。
@@ -69,7 +69,7 @@ public class Problem392 {
 
     /**
      * 动态规划
-     * dp[i][j]：从t[i]开始往后第一次出现字符'a'+j的下标索引
+     * dp[i][j]：从t[i]开始往后字符'a'+j第一次出现的下标索引
      * dp[i][j] = i          (t[i] == 'a'+j)
      * dp[i][j] = dp[i+1][j] (t[i] != 'a'+j)
      * 时间复杂度O(n*|Σ|+m)=O(m+n)，空间复杂度O(n*|Σ|)=O(n) (m=s.length()，n=t.length()，|Σ|=26，只包含小写字母)
@@ -84,19 +84,17 @@ public class Problem392 {
 
         //dp初始化
         for (int j = 0; j < 26; j++) {
-            //-1表示字符串t中不存在字符'a'+j
+            //-1表示""中不存在字符'a'+j
             dp[t.length()][j] = -1;
         }
 
         for (int i = t.length() - 1; i >= 0; i--) {
-            char c = t.charAt(i);
-
             for (int j = 0; j < 26; j++) {
-                //t[i]等于字符'a'+j，则从t[i]开始往后第一次出现字符'a'+j的下标索引为i
-                if (c == 'a' + j) {
+                //t[i]等于字符'a'+j，则从t[i]开始往后字符'a'+j第一次出现的下标索引为i
+                if (t.charAt(i) == 'a' + j) {
                     dp[i][j] = i;
                 } else {
-                    //t[i]不等于字符'a'+j，则从t[i]开始往后第一次出现字符'a'+j的下标索引为dp[i+1][j]
+                    //t[i]不等于字符'a'+j，则从t[i]开始往后字符'a'+j第一次出现的下标索引为dp[i+1][j]
                     dp[i][j] = dp[i + 1][j];
                 }
             }
@@ -112,7 +110,7 @@ public class Problem392 {
             if (dp[index][c - 'a'] == -1) {
                 return false;
             } else {
-                //从t[index]开始往后存在字符c，更新index为从t[index]开始往后第一次出现字符c的下标索引dp[index][c-'a']+1
+                //从t[index]开始往后存在字符c，更新index为从t[index]开始往后字符c第一次出现的下标索引dp[index][c-'a']+1
                 index = dp[index][c - 'a'] + 1;
             }
         }
