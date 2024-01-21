@@ -27,7 +27,7 @@ import java.util.Random;
  * 1 <= nums.length <= 50
  * -10^6 <= nums[i] <= 10^6
  * nums 中的所有元素都是 唯一的
- * 最多可以调用 104 次 reset 和 shuffle
+ * 最多可以调用 10^4 次 reset 和 shuffle
  */
 public class Problem384 {
     public static void main(String[] args) {
