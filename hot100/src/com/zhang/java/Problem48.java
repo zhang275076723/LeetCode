@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/4/20 9:13
  * @Author zsy
- * @Description 旋转图像 类比Problem54、Problem59、Problem498、Offer29
+ * @Description 旋转图像 类比Problem54、Problem59、Problem498、Problem885、Problem2326、Offer29
  * 给定一个 n × n 的二维矩阵 matrix 表示一个图像。请你将图像顺时针旋转 90 度。
  * 你必须在 原地 旋转图像，这意味着你需要直接修改输入的二维矩阵。请不要 使用另一个矩阵来旋转图像。
  * <p>
@@ -40,7 +40,12 @@ import java.util.Arrays;
 public class Problem48 {
     public static void main(String[] args) {
         Problem48 problem48 = new Problem48();
-        int[][] matrix = {{5, 1, 9, 11}, {2, 4, 8, 10}, {13, 3, 6, 7}, {15, 14, 12, 16}};
+        int[][] matrix = {
+                {5, 1, 9, 11},
+                {2, 4, 8, 10},
+                {13, 3, 6, 7},
+                {15, 14, 12, 16}
+        };
         problem48.rotate(matrix);
         System.out.println(Arrays.deepToString(matrix));
     }
@@ -49,7 +54,7 @@ public class Problem48 {
      * 模拟
      * 每四个元素是一组，由外到内按照一圈一圈调整每一组的四个元素，不管怎么旋转，只是调整了这四个元素的位置
      * 矩阵四个角的元素：matrix[start][start]、matrix[start][end]、matrix[end][end]、matrix[end][start]
-     * 要调整每组四个元素：matrix[start][start + j]、matrix[start + j][end]、matrix[end][end - j]、matrix[end - j][start]
+     * 要调整每组四个元素：matrix[start][start+j]、matrix[start+j][end]、matrix[end][end-j]、matrix[end-j][start]
      * 时间复杂度O(n^2)，空间复杂度O(1)
      *
      * @param matrix

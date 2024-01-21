@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/7/10 8:23
  * @Author zsy
- * @Description 对角线遍历 美团面试题 小红书面试题 类比Problem48、Problem54、Problem59、Offer29 对角线处理类比Problem1001
+ * @Description 对角线遍历 美团面试题 小红书面试题 类比Problem48、Problem54、Problem59、Problem885、Problem2326、Offer29 对角线处理类比Problem1001
  * 给你一个大小为 m x n 的矩阵 mat ，请以对角线遍历的顺序，用一个数组返回这个矩阵中的所有元素。
  * <p>
  * 输入：mat = [
@@ -30,7 +30,11 @@ import java.util.Arrays;
 public class Problem498 {
     public static void main(String[] args) {
         Problem498 problem498 = new Problem498();
-        int[][] mat = {{1, 2, 3}, {4, 5, 6}};
+        int[][] mat = {
+                {1, 2, 3},
+                {4, 5, 6}
+        };
+        //[1, 2, 4, 5, 3, 6]
         System.out.println(Arrays.toString(problem498.findDiagonalOrder(mat)));
     }
 

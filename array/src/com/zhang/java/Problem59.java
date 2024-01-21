@@ -6,7 +6,7 @@ import java.util.Arrays;
 /**
  * @Date 2021/11/27 19:31
  * @Author zsy
- * @Description 螺旋矩阵 II 类比Problem48、Problem54、Problem498、Offer29
+ * @Description 螺旋矩阵 II 类比Problem48、Problem54、Problem498、Problem885、Problem2326、Offer29
  * 给你一个正整数n，生成一个包含1到n^2所有元素，且元素按顺时针顺序螺旋排列的n x n正方形矩阵matrix
  * <p>
  * 输入：n = 3
@@ -36,7 +36,7 @@ public class Problem59 {
 
     /**
      * 模拟
-     * 使用四个指针，分别限定矩阵的上下左右，每次遍历完一行或一列之后，指针移动
+     * 使用四个指针，分别限定矩阵的上下左右边界，每次遍历完一行或一列之后，指针移动
      * 时间复杂度O(n^2)，空间复杂度O(1)
      *
      * @param n
@@ -46,13 +46,14 @@ public class Problem59 {
         int[][] result = new int[n][n];
         //结果数组中元素的值
         int value = 1;
+        //上下左右四个指针，限定矩阵的上下左右边界
         int left = 0;
         int right = n - 1;
         int top = 0;
         int bottom = n - 1;
 
         while (value <= n * n) {
-            //先从左往右找
+            //先从左往右遍历
             for (int i = left; i <= right; i++) {
                 result[top][i] = value;
                 value++;
@@ -61,7 +62,7 @@ public class Problem59 {
             //top指针下移
             top++;
 
-            //再从上往下找
+            //再从上往下遍历
             for (int i = top; i <= bottom; i++) {
                 result[i][right] = value;
                 value++;
@@ -70,7 +71,7 @@ public class Problem59 {
             //right指针左移
             right--;
 
-            //接着从右往左找
+            //接着从右往左遍历
             for (int i = right; i >= left; i--) {
                 result[bottom][i] = value;
                 value++;
@@ -79,7 +80,7 @@ public class Problem59 {
             //bottom指针上移
             bottom--;
 
-            //最后从下往上找
+            //最后从下往上遍历
             for (int i = bottom; i >= top; i--) {
                 result[i][left] = value;
                 value++;

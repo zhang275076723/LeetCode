@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/6/25 9:09
  * @Author zsy
- * @Description 螺旋矩阵 类比Problem48、Problem59、Problem498 同Offer29
+ * @Description 螺旋矩阵 类比Problem48、Problem59、Problem498、Problem885、Problem2326、Offer29 同Offer29
  * 给你一个 m 行 n 列的矩阵 matrix ，请按照 顺时针螺旋顺序 ，返回矩阵中的所有元素。
  * <p>
  * 输入：matrix = [
@@ -41,7 +41,7 @@ public class Problem54 {
 
     /**
      * 模拟
-     * 使用四个指针，分别限定矩阵的上下左右，每次遍历完一行或一列之后，指针移动
+     * 使用四个指针，分别限定矩阵的上下左右边界，每次遍历完一行或一列之后，指针移动
      * 时间复杂度O(mn)，空间复杂度O(1)
      *
      * @param matrix
@@ -53,14 +53,14 @@ public class Problem54 {
         }
 
         List<Integer> list = new ArrayList<>();
-        //上下左右四个指针，限定矩阵的上下左右
+        //上下左右四个指针，限定矩阵的上下左右边界
         int left = 0;
         int right = matrix[0].length - 1;
         int top = 0;
         int bottom = matrix.length - 1;
 
         while (list.size() < matrix.length * matrix[0].length) {
-            //先从左往右找
+            //先从左往右遍历
             for (int i = left; i <= right; i++) {
                 list.add(matrix[top][i]);
             }
@@ -73,7 +73,7 @@ public class Problem54 {
                 return list;
             }
 
-            //再从上往下找
+            //再从上往下遍历
             for (int i = top; i <= bottom; i++) {
                 list.add(matrix[i][right]);
             }
@@ -86,7 +86,7 @@ public class Problem54 {
                 return list;
             }
 
-            //接着从右往左找
+            //接着从右往左遍历
             for (int i = right; i >= left; i--) {
                 list.add(matrix[bottom][i]);
             }
@@ -99,7 +99,7 @@ public class Problem54 {
                 return list;
             }
 
-            //最后从下往上找
+            //最后从下往上遍历
             for (int i = bottom; i >= top; i--) {
                 list.add(matrix[i][left]);
             }

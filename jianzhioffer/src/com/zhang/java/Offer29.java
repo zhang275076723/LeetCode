@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/3/20 16:06
  * @Author zsy
- * @Description 顺时针打印矩阵 类比Problem48、Problem59、Problem498 同Problem54
+ * @Description 顺时针打印矩阵 类比Problem48、Problem54、Problem59、Problem498、Problem885、Problem2326 同Problem54
  * 输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字。
  * <p>
  * 输入：matrix = [
@@ -38,7 +38,7 @@ public class Offer29 {
 
     /**
      * 模拟
-     * 使用四个指针，分别限定矩阵的上下左右，每次遍历完一行或一列之后，指针移动
+     * 使用四个指针，分别限定矩阵的上下左右边界，每次遍历完一行或一列之后，指针移动
      * 时间复杂度O(mn)，空间复杂度O(1)
      *
      * @param matrix
@@ -55,14 +55,14 @@ public class Offer29 {
 
         int[] result = new int[matrix.length * matrix[0].length];
         int index = 0;
-        //上下左右四个指针，限定矩阵的上下左右
+        //上下左右四个指针，限定矩阵的上下左右边界
         int left = 0;
         int right = matrix[0].length - 1;
         int top = 0;
         int bottom = matrix.length - 1;
 
         while (index < result.length) {
-            //先从左往右找
+            //先从左往右遍历
             for (int i = left; i <= right; i++) {
                 result[index] = matrix[top][i];
                 index++;
@@ -76,7 +76,7 @@ public class Offer29 {
                 return result;
             }
 
-            //再从上往下找
+            //再从上往下遍历
             for (int i = top; i <= bottom; i++) {
                 result[index] = matrix[i][right];
                 index++;
@@ -90,7 +90,7 @@ public class Offer29 {
                 return result;
             }
 
-            //接着从右往左找
+            //接着从右往左遍历
             for (int i = right; i >= left; i--) {
                 result[index] = matrix[bottom][i];
                 index++;
@@ -104,7 +104,7 @@ public class Offer29 {
                 return result;
             }
 
-            //最后从下往上找
+            //最后从下往上遍历
             for (int i = bottom; i >= top; i--) {
                 result[index] = matrix[i][left];
                 index++;

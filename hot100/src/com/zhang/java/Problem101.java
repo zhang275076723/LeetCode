@@ -130,7 +130,7 @@ public class Problem101 {
         return root;
     }
 
-    public class TreeNode {
+    public static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;

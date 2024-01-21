@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2023/12/19 08:53
  * @Author zsy
- * @Description 模拟行走机器人 类比Problem62、Problem63、Problem64、Problem980、Offer13
+ * @Description 模拟行走机器人 改变方向类比Problem885 类比Problem62、Problem63、Problem64、Problem980、Offer13
  * 机器人在一个无限大小的 XY 网格平面上行走，从点 (0, 0) 处开始出发，面向北方。
  * 该机器人可以接收以下三种类型的命令 commands ：
  * -2 ：向左转 90 度
@@ -85,7 +85,8 @@ public class Problem874 {
         }
 
         //direction[0]：向北移动，direction[1]：向东移动，direction[2]：向南移动，direction[3]：向西移动
-        //注意：只能这样安排移动方向，因为左转右转和direction对应，向左转90度，d=(d+3)mod4；向右转90度，d=(d+1)mod4
+        //(0,0)在原点，所以向北需要加上(0,1)
+        //注意：只能这样安排移动方向，因为direction和d有对应关系，向左转90度，d=(d+3)mod4；向右转90度，d=(d+1)mod4
         int[][] direction = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
         //初始化移动方向为向北移动，(x,y)下一个移动位置为(x+direction[d][0],y+direction[d][1])
         int d = 0;
