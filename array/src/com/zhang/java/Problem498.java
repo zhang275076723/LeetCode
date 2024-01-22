@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/7/10 8:23
  * @Author zsy
- * @Description 对角线遍历 美团面试题 小红书面试题 类比Problem48、Problem54、Problem59、Problem885、Problem2326、Offer29 对角线处理类比Problem1001
+ * @Description 对角线遍历 美团面试题 小红书面试题 类比Problem1001 类比Problem48、Problem54、Problem59、Problem885、Problem1424、Problem2326、Offer29
  * 给你一个大小为 m x n 的矩阵 mat ，请以对角线遍历的顺序，用一个数组返回这个矩阵中的所有元素。
  * <p>
  * 输入：mat = [
@@ -40,8 +40,8 @@ public class Problem498 {
 
     /**
      * 模拟
-     * mat[i][j]中i+j的和相同的在一条对角线上；
-     * i+j和为偶数的是从左下到右上的对角线;
+     * 下标索引i+j相等的点在同一条对角线上
+     * i+j和为偶数的是从左下到右上的对角线
      * i+j和为奇数的是从右上到左下的对角线
      * 时间复杂度O(mn)，空间复杂度O(1)
      *
@@ -59,7 +59,7 @@ public class Problem498 {
         for (int i = 0; i < m + n - 1; i++) {
             //从左下到右上遍历
             if (i % 2 == 0) {
-                //起始行是i和最后一行中的最小值
+                //起始行为i和最大行m-1中的最小值
                 int x = Math.min(i, m - 1);
                 int y = i - x;
 
@@ -72,7 +72,7 @@ public class Problem498 {
             } else {
                 //从右上到左下遍历
 
-                //起始列是i和最后一列中的最小值
+                //起始列为i和最大列n-1中的最小值
                 int y = Math.min(i, n - 1);
                 int x = i - y;
 

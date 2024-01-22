@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/1/28 10:10
  * @Author zsy
- * @Description 网格照明 类比Problem36、Problem37、Problem51、Problem52 对角线处理类比Problem498
+ * @Description 网格照明 类比Problem36、Problem37、Problem51、Problem52 类比Problem498
  * 在大小为 n x n 的网格 grid 上，每个单元格都有一盏灯，最初灯都处于 关闭 状态。
  * 给你一个由灯的位置组成的二维数组 lamps ，其中 lamps[i] = [rowi, coli] 表示 打开 位于 grid[rowi][coli] 的灯。
  * 即便同一盏灯可能在 lamps 中多次列出，不会影响这盏灯处于 打开 状态。
@@ -70,9 +70,9 @@ public class Problem1001 {
         Map<Integer, Integer> antiDiagMap = new HashMap<>();
 
         //遍历每盏灯，确定每盏灯照亮的行、列、对角线(上右下对角线)、反对角线(左下右上对角线)的个数
-        for (int i = 0; i < queries.length; i++) {
-            int x = queries[i][0];
-            int y = queries[i][1];
+        for (int i = 0; i < lamps.length; i++) {
+            int x = lamps[i][0];
+            int y = lamps[i][1];
 
             //lightSet中已经存在当前灯，则当前灯照亮的行、列、对角线、反对角线已经加入相应map中，直接进行下次循环
             if (lightSet.contains((long) x * n + y)) {
