@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @Date 2022/8/8 8:57
  * @Author zsy
- * @Description N 皇后 类比Problem36、Problem37、Problem52、Problem1001 回溯+剪枝类比
+ * @Description N 皇后 类比Problem36、Problem37、Problem52、Problem1001 对角线类比Problem52、Problem498、Problem1001、Problem1329、Problem1424、Problem1572 回溯+剪枝类比
  * 按照国际象棋的规则，皇后可以攻击与之处在同一行或同一列或同一斜线上的棋子。
  * n 皇后问题 研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。
  * 给你一个整数 n ，返回所有不同的 n 皇后问题 的解决方案。
@@ -54,7 +54,8 @@ public class Problem51 {
 
     /**
      * 回溯+剪枝
-     * 使用set存储皇后影响的行(可以省略)、列、左上右下对角线(第j-i+n-1个对角线)、左下右上对角线(第i+j个对角线)，判断是否冲突
+     * 核心思想：左上到右下对角线上的元素的下标索引j-i相等，左下到右上对角线上的元素下标索引i+j相等
+     * 使用set存储皇后影响的行(可以省略)、列、左上到右下对角线(第j-i+n-1个对角线)、左下到右上对角线(第i+j个对角线)，判断是否冲突
      * 时间复杂度O(n*n!)，空间复杂度O(n)
      *
      * @param n
@@ -64,9 +65,9 @@ public class Problem51 {
         List<List<String>> result = new ArrayList<>();
         //皇后影响的列set
         Set<Integer> colSet = new HashSet<>();
-        //皇后影响的左上右下对角线set
+        //皇后影响的左上到右下对角线set
         Set<Integer> diagSet = new HashSet<>();
-        //皇后影响的左下右上对角线set
+        //皇后影响的左下到右上对角线set
         Set<Integer> antiDiagSet = new HashSet<>();
 
         backtrack2(0, n, colSet, diagSet, antiDiagSet, new ArrayList<>(), result);
@@ -143,7 +144,7 @@ public class Problem51 {
             }
 
             list.add(sb.toString());
-            //当前皇后影响的行(可以省略)、列、左上右下对角线、左下右上对角线，加入set中
+            //当前皇后影响的行(可以省略)、列、左上到右下对角线、左下到右上对角线，加入set中
             colSet.add(i);
             diagSet.add(i - t + n - 1);
             antiDiagSet.add(t + i);

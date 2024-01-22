@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/8/8 7:57
  * @Author zsy
- * @Description N 皇后 II 类比Problem36、Problem37、Problem51、Problem1001 回溯+剪枝类比
+ * @Description N 皇后 II 类比Problem36、Problem37、Problem51、Problem1001 对角线类比Problem51、Problem498、Problem1001、Problem1329、Problem1424、Problem1572 回溯+剪枝类比
  * n 皇后问题 研究的是如何将 n 个皇后放置在 n × n 的棋盘上，并且使皇后彼此之间不能相互攻击。
  * 给你一个整数 n ，返回 n 皇后问题 不同的解决方案的数量。
  * <p>
@@ -51,7 +51,8 @@ public class Problem52 {
 
     /**
      * 回溯+剪枝
-     * 使用set存储皇后影响的行(可以省略)、列、左上右下对角线(第j-i+n-1个对角线)、左下右上对角线(第i+j个对角线)，判断是否冲突
+     * 核心思想：左上到右下对角线上的元素的下标索引j-i相等，左下到右上对角线上的元素下标索引i+j相等
+     * 使用set存储皇后影响的行(可以省略)、列、左上到右下对角线(第j-i+n-1个对角线)、左下到右上对角线(第i+j个对角线)，判断是否冲突
      * 时间复杂度O(n!)，空间复杂度O(n)
      *
      * @param n
@@ -64,9 +65,9 @@ public class Problem52 {
 
         //皇后影响的列set
         Set<Integer> colSet = new HashSet<>();
-        //皇后影响的左上右下对角线set
+        //皇后影响的左上到右下对角线set
         Set<Integer> diagSet = new HashSet<>();
-        //皇后影响的左下右上对角线set
+        //皇后影响的左下到右上对角线set
         Set<Integer> antiDiagSet = new HashSet<>();
 
         return backtrack2(0, n, colSet, diagSet, antiDiagSet);
@@ -106,7 +107,7 @@ public class Problem52 {
                 continue;
             }
 
-            //当前皇后影响的行(可以省略)、列、左上右下对角线、左下右上对角线，加入set中
+            //当前皇后影响的行(可以省略)、列、左上到右下对角线、左下到右上对角线，加入set中
             colSet.add(i);
             diagSet.add(i - t + n - 1);
             antiDiagSet.add(t + i);

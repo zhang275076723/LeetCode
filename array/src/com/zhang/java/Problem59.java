@@ -6,7 +6,7 @@ import java.util.Arrays;
 /**
  * @Date 2021/11/27 19:31
  * @Author zsy
- * @Description 螺旋矩阵 II 类比Problem48、Problem54、Problem498、Problem885、Problem1424、Problem2326、Offer29
+ * @Description 螺旋矩阵 II 类比Problem48、Problem54、Problem885、Problem2326、Offer29
  * 给你一个正整数n，生成一个包含1到n^2所有元素，且元素按顺时针顺序螺旋排列的n x n正方形矩阵matrix
  * <p>
  * 输入：n = 3

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/1/28 10:10
  * @Author zsy
- * @Description 网格照明 类比Problem36、Problem37、Problem51、Problem52 类比Problem498
+ * @Description 网格照明 对角线类比Problem51、Problem52、Problem498、Problem1329、Problem1424、Problem1572
  * 在大小为 n x n 的网格 grid 上，每个单元格都有一盏灯，最初灯都处于 关闭 状态。
  * 给你一个由灯的位置组成的二维数组 lamps ，其中 lamps[i] = [rowi, coli] 表示 打开 位于 grid[rowi][coli] 的灯。
  * 即便同一盏灯可能在 lamps 中多次列出，不会影响这盏灯处于 打开 状态。
@@ -47,9 +47,10 @@ public class Problem1001 {
 
     /**
      * 模拟
-     * 统计每盏灯(i,j)照亮的行(第i行)、列(第j列)、左上右下对角线(第j-i+n-1个对角线)、左下右上对角线(第i+j个对角线)
-     * 遍历queries，当前位置(i,j)对应的行、列、左上右下的对角线、左下右上的对角线，如果存在灯时，则被照亮，
-     * 并关闭(i,j)周围9个位置存在的灯照亮的行、列、左上右下对角线、左下右上对角线
+     * 核心思想：左上到右下对角线上的元素的下标索引j-i相等，左下到右上对角线上的元素下标索引i+j相等
+     * 统计每盏灯(i,j)照亮的行(第i行)、列(第j列)、左上到右下对角线(第j-i+n-1个对角线)、左下到右上对角线(第i+j个对角线)
+     * 遍历queries，当前位置(i,j)对应的行、列、左上到右下的对角线、左下到右上的对角线，如果存在灯时，则被照亮，
+     * 并关闭(i,j)周围9个位置存在的灯照亮的行、列、左上到右下对角线、左下到右上对角线
      * 时间复杂度O(n+m)，空间复杂度O(n) (n=lamps.length, m=queries.length)
      *
      * @param n
@@ -64,12 +65,12 @@ public class Problem1001 {
         Map<Integer, Integer> rowMap = new HashMap<>();
         //灯照亮的列，value：灯照亮当前列的次数
         Map<Integer, Integer> colMap = new HashMap<>();
-        //灯照亮的对角线(左上右下对角线(j-i+n-1))，value：灯照亮当前左上右下对角线的次数
+        //灯照亮的对角线(左上到右下对角线(j-i+n-1))，value：灯照亮当前左上到右下对角线的次数
         Map<Integer, Integer> diagMap = new HashMap<>();
-        //灯照亮的反对角线(左下右上对角线(i+j))，value：灯照亮当前左下右上对角线的次数
+        //灯照亮的反对角线(左下到右上对角线(i+j))，value：灯照亮当前左下到右上对角线的次数
         Map<Integer, Integer> antiDiagMap = new HashMap<>();
 
-        //遍历每盏灯，确定每盏灯照亮的行、列、对角线(上右下对角线)、反对角线(左下右上对角线)的个数
+        //遍历每盏灯，确定每盏灯照亮的行、列、对角线(上右下对角线)、反对角线(左下到右上对角线)的个数
         for (int i = 0; i < lamps.length; i++) {
             int x = lamps[i][0];
             int y = lamps[i][1];

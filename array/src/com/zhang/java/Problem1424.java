@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/1/23 08:22
  * @Author zsy
- * @Description 对角线遍历 II 类比Problem48、Problem54、Problem59、Problem498、Problem885、Problem2326、Offer29 优先队列类比
+ * @Description 对角线遍历 II 对角线类比Problem51、Problem52、Problem498、Problem1001、Problem1329、Problem1572 优先队列类比
  * 给你一个列表 nums ，里面每一个元素都是一个整数列表。
  * 请你依照下面各图的规则，按顺序返回 nums 中对角线上的整数。
  * <p>
@@ -64,7 +64,7 @@ public class Problem1424 {
 
     /**
      * 模拟 (超时)
-     * 下标索引i+j相等的点在同一条对角线上
+     * 左上到右下对角线上的元素下标索引i+j相等
      * 时间复杂度O(mn)，空间复杂度O(1) (m=nums.size()，n=max(nums.get(i).size()))
      *
      * @param nums
@@ -108,8 +108,8 @@ public class Problem1424 {
 
     /**
      * 模拟优化
-     * 下标索引i+j相等的点在同一条对角线上
-     * 顺序遍历nums，下标索引i+j相等的点中先遍历到的元素出现在后遍历到的元素之后，
+     * 左上到右下对角线上的元素下标索引i+j相等
+     * 顺序遍历nums中元素，下标索引i+j相等的元素中先遍历到的元素出现在后遍历到的元素之后，
      * 所以下标索引i+j相等的元素存放到同一个list中，当前元素在list中首添加
      * 时间复杂度O(m+n+total)，空间复杂度O(total) (m=nums.size()，n=max(nums.get(i).size())，total=nums中元素的个数)
      *
@@ -128,10 +128,10 @@ public class Problem1424 {
             total = total + nums.get(i).size();
         }
 
-        //list.get(k)：下标索引i+j相等的元素集合
+        //lists.get(k)：第k个对角线上的元素的集合，下标索引i+j=k
         List<List<Integer>> lists = new ArrayList<>();
 
-        //对角线初始化，最多只有m+n-1条对角线
+        //对角线初始化，共m+n-1条对角线
         for (int i = 0; i < m + n - 1; i++) {
             //下标索引i+j相等的点中先遍历到的元素出现在后遍历到的元素之后，即需要使用LinkedList首添加当前元素
             lists.add(new LinkedList<>());

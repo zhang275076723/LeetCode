@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2024/1/22 08:53
  * @Author zsy
- * @Description 螺旋矩阵 IV 类比Problem48、Problem54、Problem59、Problem498、Problem885、Problem1424、Offer29
+ * @Description 螺旋矩阵 IV 类比Problem48、Problem54、Problem59、Problem885、Offer29
  * 给你两个整数：m 和 n ，表示矩阵的维数。
  * 另给你一个整数链表的头节点 head 。
  * 请你生成一个大小为 m x n 的螺旋矩阵，矩阵包含链表中的所有整数。
