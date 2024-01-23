@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @Date 2022/8/8 8:57
  * @Author zsy
- * @Description N 皇后 类比Problem36、Problem37、Problem52、Problem1001 对角线类比Problem52、Problem498、Problem1001、Problem1329、Problem1424、Problem1572 回溯+剪枝类比
+ * @Description N 皇后 类比Problem36、Problem37、Problem52、Problem1001 对角线类比Problem52、Problem498、Problem1001、Problem1329、Problem1424、Problem1572、Problem2614、Problem2711、Problem3000 回溯+剪枝类比
  * 按照国际象棋的规则，皇后可以攻击与之处在同一行或同一列或同一斜线上的棋子。
  * n 皇后问题 研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。
  * 给你一个整数 n ，返回所有不同的 n 皇后问题 的解决方案。
