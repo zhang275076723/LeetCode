@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @Date 2023/9/22 08:57
  * @Author zsy
- * @Description 冗余连接 II 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
+ * @Description 冗余连接 II 类比Problem331 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
  * 在本问题中，有根树指满足以下条件的 有向 图。
  * 该树只有一个根节点，所有其他节点都是该根节点的后继。
  * 该树除了根节点之外的每一个节点都有且只有一个父节点，而根节点没有父节点。
@@ -40,8 +40,8 @@ public class Problem685 {
      * 并查集
      * 有根树的根节点入度为0，其他节点入度为1
      * 有根树添加一条有向边形成有向图，有以下3种情况：
-     * 1、存在入度为2的节点，有向图中存在有向环，则删除有向环中指向入度为2的节点的那条边
-     * 2、存在入度为2的节点，有向图中不存在有向环，则删除指向入度为2的节点的两条边中在edges中最后出现的那条边
+     * 1、存在入度为2的节点，且有向图中存在有向环，则删除有向环中指向入度为2的节点的那条边
+     * 2、存在入度为2的节点，且有向图中不存在有向环，则删除指向入度为2的节点的两条边中在edges中最后出现的那条边
      * 3、不存在入度为2的节点，有向图中一定存在有向环，则按照Problem684删除有向环中在edges中最后出现的那条边
      * 时间复杂度O(n*α(n))=O(n)，空间复杂度O(n) (find()和union()的时间复杂度为O(α(n))，可视为常数O(1))
      *

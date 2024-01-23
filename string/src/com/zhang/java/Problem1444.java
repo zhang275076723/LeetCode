@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/8/20 08:41
  * @Author zsy
- * @Description 切披萨的方案数 二维前缀和类比Problem304 动态规划类比Problem198、Problem213、Problem256、Problem265、Problem279、Problem322、Problem338、Problem343、Problem377、Problem416、Problem474、Problem494、Problem518、Problem746、Problem983、Problem1340、Problem1388、Problem1473、Offer14、Offer14_2、Offer60、CircleBackToOrigin、Knapsack 记忆化搜索类比Problem62、Problem63、Problem64、Problem70、Problem329、Problem509、Problem1340、Problem1388、Offer10、Offer10_2
+ * @Description 切披萨的方案数 二维前缀和类比Problem304、Problem2711 动态规划类比Problem198、Problem213、Problem256、Problem265、Problem279、Problem322、Problem338、Problem343、Problem377、Problem416、Problem474、Problem494、Problem518、Problem746、Problem983、Problem1340、Problem1388、Problem1473、Offer14、Offer14_2、Offer60、CircleBackToOrigin、Knapsack 记忆化搜索类比Problem62、Problem63、Problem64、Problem70、Problem329、Problem509、Problem1340、Problem1388、Offer10、Offer10_2
  * 给你一个 rows x cols 大小的矩形披萨和一个整数 k ，矩形包含两种字符： 'A' （表示苹果）和 '.' （表示空白格子）。
  * 你需要切披萨 k-1 次，得到 k 块披萨并送给别人。
  * 切披萨的每一刀，先要选择是向垂直还是水平方向切，再在矩形的边界上选一个切的位置，将披萨一分为二。

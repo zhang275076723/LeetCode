@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @Date 2024/1/24 08:30
  * @Author zsy
- * @Description 将矩阵按对角线排序 对角线类比Problem51、Problem52、Problem498、Problem1001、Problem1424、Problem1572
+ * @Description 将矩阵按对角线排序 对角线类比Problem51、Problem52、Problem498、Problem1001、Problem1424、Problem1572、Problem2614、Problem2711、Problem3000
  * 矩阵对角线 是一条从矩阵最上面行或者最左侧列中的某个元素开始的对角线，沿右下方向一直到矩阵末尾的元素。
  * 例如，矩阵 mat 有 6 行 3 列，从 mat[2][0] 开始的 矩阵对角线 将会经过 mat[2][0]、mat[3][1] 和 mat[4][2] 。
  * 给你一个 m * n 的整数矩阵 mat ，请你将同一条 矩阵对角线 上的元素按升序排序后，返回排好序的矩阵。
@@ -70,7 +70,7 @@ public class Problem1329 {
         int m = mat.length;
         //列
         int n = mat[0].length;
-        //lists.get(k)：第k条对角线上的元素的集合，下标索引j-i+m-1=k
+        //lists.get(k)：第k条对角线上的元素(i,j)的集合，满足j-i+m-1=k
         List<List<Integer>> lists = new ArrayList<>();
 
         //对角线初始化，共m+n-1条对角线
@@ -80,8 +80,9 @@ public class Problem1329 {
 
         //m+n-1条对角线上的元素加入lists中
         for (int i = 0; i < m + n - 1; i++) {
-            //起始列为i和最大列n-1中的最小值
+            //第i条左上到右下对角线的最右下元素纵坐标
             int y = Math.min(i, n - 1);
+            //第i条左上到右下对角线的最右下元素横坐标
             //第i条对角线满足y-x+m-1=i，即x=y+m-1-i
             int x = y + m - 1 - i;
 
@@ -106,7 +107,10 @@ public class Problem1329 {
 
         //m+n-1条对角线上的元素按顺序加入result
         for (int i = 0; i < m + n - 1; i++) {
+            //第i条左上到右下对角线的最左上元素横坐标
             int x = Math.max(m - 1 - i, 0);
+            //第i条左上到右下对角线的最左上元素纵坐标
+            //第i条对角线满足y-x+m-1=i，即y=x+i-m+1
             int y = x + i - m + 1;
             //lists.get(i)当前遍历到的下标索引
             int index = 0;

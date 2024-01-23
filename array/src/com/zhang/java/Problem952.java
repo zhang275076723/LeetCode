@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/9/16 08:14
  * @Author zsy
- * @Description 按公因数计算最大组件大小 质数类比Problem204、Problem1175、Problem1998、Problem2523 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem1135、Problem1254、Problem1319、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
+ * @Description 按公因数计算最大组件大小 质数类比Problem204、Problem1175、Problem1998、Problem2523、Problem2614 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem1135、Problem1254、Problem1319、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
  * 给定一个由不同正整数的组成的非空数组 nums ，考虑下面的图：
  * 有 nums.length 个节点，按从 nums[0] 到 nums[nums.length - 1] 标记；
  * 只有当 nums[i] 和 nums[j] 共用一个大于 1 的公因数时，nums[i] 和 nums[j]之间才有一条边。
@@ -43,7 +43,7 @@ public class Problem952 {
 
     /**
      * 并查集+因子
-     * nums[i]中的每个大于1的因子属于同一个连通分量
+     * nums[i]中的每个大于1的因子和nums[i]属于同一个连通分量
      * 时间复杂度O(n^(2/3)*α(n))，空间复杂度O(max(nums[i])) (find()和union()的时间复杂度为O(α(n))，可视为常数O(1))
      *
      * @param nums
@@ -60,7 +60,7 @@ public class Problem952 {
         //并查集中元素的因子小于等于maxNum，因为是从0开始，所以需要多加1
         UnionFind unionFind = new UnionFind(maxNum + 1);
 
-        //nums[i]中的每个大于1的因子属于同一个连通分量
+        //nums[i]中的每个大于1的因子和nums[i]属于同一个连通分量
         for (int i = 0; i < nums.length; i++) {
             for (int j = 2; j * j <= nums[i]; j++) {
                 if (nums[i] % j == 0) {
@@ -89,7 +89,7 @@ public class Problem952 {
 
     /**
      * 并查集+质因子(埃氏筛)
-     * nums[i]中的每个大于1的质因子属于同一个连通分量，因为nums[i]可由质因子相乘得到，当nums[i]可以整除当前质数时，
+     * nums[i]中的每个大于1的质因子和nums[i]属于同一个连通分量，因为nums[i]可由质因子相乘得到，当nums[i]可以整除当前质数时，
      * nums[i]不断除以当前质数，找下一个质数，nums[i]最多只存在一个大于(nums[i])^(1/2)的质因子，
      * 因为如果存在两个或两个以上大于(nums[i])^(1/2)的质因子，则这些质因子相乘大于nums[i]，
      * 与nums[i]可由这些质因子相乘得到相矛盾
@@ -132,7 +132,7 @@ public class Problem952 {
             }
         }
 
-        //nums[i]中的每个大于1的质因子属于同一个连通分量
+        //nums[i]中的每个大于1的质因子和nums[i]属于同一个连通分量
         for (int i = 0; i < nums.length; i++) {
             //当前数
             int curNum = nums[i];
@@ -144,7 +144,7 @@ public class Problem952 {
                 //nums[i]最多只存在一个大于(nums[i])^(1/2)的质因子，因为如果存在两个或两个以上大于(nums[i])^(1/2)的质因子，
                 //则这些质因子相乘大于nums[i]，与nums[i]可由这些质因子相乘得到相矛盾
                 if (curPrime * curPrime > curNum) {
-                    //当前curNum为nums[i]的最大质因子
+                    //当前curNum为nums[i]的一个大于1的因子
                     if (curNum > 1) {
                         unionFind.union(curNum, nums[i]);
                     }
@@ -181,7 +181,7 @@ public class Problem952 {
 
     /**
      * 并查集+质因子(欧拉筛，线性筛)
-     * nums[i]中的每个大于1的质因子属于同一个连通分量，因为nums[i]可由质因子相乘得到，当nums[i]可以整除当前质数时，
+     * nums[i]中的每个大于1的质因子和nums[i]属于同一个连通分量，因为nums[i]可由质因子相乘得到，当nums[i]可以整除当前质数时，
      * nums[i]不断除以当前质数，找下一个质数，nums[i]最多只存在一个大于(nums[i])^(1/2)的质因子，
      * 因为如果存在两个或两个以上大于(nums[i])^(1/2)的质因子，则这些质因子相乘大于nums[i]，
      * 与nums[i]可由这些质因子相乘得到相矛盾
@@ -217,8 +217,8 @@ public class Problem952 {
                 primesList.add(i);
             }
 
-            //i和质数集合中质数相乘，得到合数，注意：每个合数只能由最小质因子得到，当找到i的最小质因子之后，
-            //直接跳出循环，避免了重复计算标记合数
+            //i和primesList[j]相乘，得到合数
+            //注意：每个合数只能由最小质因子得到，当i*primesList[j]的最小质因子不是primesList[j]时，直接跳出循环，避免重复标记合数
             for (int j = 0; j < primesList.size(); j++) {
                 //primesList中的当前质数
                 int curPrime = primesList.get(j);
@@ -241,7 +241,7 @@ public class Problem952 {
             }
         }
 
-        //nums[i]中的每个大于1的质因子属于同一个连通分量
+        //nums[i]中的每个大于1的质因子和nums[i]属于同一个连通分量
         for (int i = 0; i < nums.length; i++) {
             //当前数
             int curNum = nums[i];
@@ -253,7 +253,7 @@ public class Problem952 {
                 //nums[i]最多只存在一个大于(nums[i])^(1/2)的质因子，因为如果存在两个或两个以上大于(nums[i])^(1/2)的质因子，
                 //则这些质因子相乘大于nums[i]，与nums[i]可由这些质因子相乘得到相矛盾
                 if (curPrime * curPrime > curNum) {
-                    //当前curNum为nums[i]的最大质因子
+                    //当前curNum为nums[i]的一个大于1的因子
                     if (curNum > 1) {
                         unionFind.union(curNum, nums[i]);
                     }

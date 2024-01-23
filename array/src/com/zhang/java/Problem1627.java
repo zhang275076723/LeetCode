@@ -59,7 +59,7 @@ public class Problem1627 {
 
     /**
      * 并查集+因子
-     * [threshold+1,n/2]中每个因子i，都大于threshold，i和i*j属于同一个连通分量
+     * [threshold+1,n/2]中每个因子i，都大于threshold，i和i*j属于同一个连通分量，即i和i*j存在大于threshold的公因子i
      * 时间复杂度O(nlogn*α(n)+queries.length*α(n))，空间复杂度O(n) (find()和union()的时间复杂度为O(α(n))，可视为常数O(1))
      *
      * @param n
@@ -83,7 +83,7 @@ public class Problem1627 {
         //节点是从1开始，所以需要多加1
         UnionFind unionFind = new UnionFind(n + 1);
 
-        //[threshold+1,n/2]中每个数i都作为大于threshold的因子，即i和i*j存在大于threshold的公因子
+        //[threshold+1,n/2]中每个数i都作为大于threshold的因子，即i和i*j存在大于threshold的公因子i
         for (int i = threshold + 1; i <= n / 2; i++) {
             for (int j = 2; i * j <= n; j++) {
                 unionFind.union(i, i * j);
