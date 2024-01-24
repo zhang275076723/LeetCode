@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/3/24 09:55
  * @Author zsy
- * @Description N 叉树的最大深度 类比Problem104、Problem111
+ * @Description N 叉树的最大深度 类比Problem104、Problem111 n叉树类比Problem429、Problem589、Problem590
  * 给定一个 N 叉树，找到其最大深度。
  * 最大深度是指从根节点到最远叶子节点的最长路径上的节点总数。
  * N 叉树输入按层序遍历序列化表示，每组子节点由空值分隔（请参见示例）。

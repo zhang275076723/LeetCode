@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/2/21 09:23
  * @Author zsy
- * @Description 最长同值路径 dfs类比Problem104、Problem110、Problem111、Problem124、Problem337、Problem543、Problem1373
+ * @Description 最长同值路径 dfs类比Problem104、Problem110、Problem111、Problem124、Problem298、Problem337、Problem543、Problem1373
  * 给定一个二叉树的 root ，返回 最长的路径的长度 ，这个路径中的 每个节点具有相同值 。
  * 这条路径可以经过也可以不经过根节点。
  * 两个节点之间的路径长度 由它们之间的边数表示。
@@ -24,7 +24,7 @@ public class Problem687 {
     /**
      * 二叉树的最长同值路径长度
      */
-    private int diameter = 0;
+    private int max = 0;
 
     public static void main(String[] args) {
         Problem687 problem687 = new Problem687();
@@ -35,8 +35,8 @@ public class Problem687 {
 
     /**
      * dfs
-     * 计算每一个节点的最长同值路径长度，更新二叉树的最长同值路径长度，并返回当前节点对父节点的最长同值路径长度，
-     * 用于父节点更新二叉树的最长同值路径长度
+     * 计算当前节点左右子节点作为路径起点的最长同值路径长度，更新二叉树的最长同值路径长度，
+     * 返回当前节点对父节点的最长同值路径长度，用于计算以当前节点父节点作为根节点的最长同值路径长度
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -47,27 +47,44 @@ public class Problem687 {
             return 0;
         }
 
-        //根节点不存在父节点，假设根节点的父节点为int最小值
-        dfs(root, Integer.MIN_VALUE);
+        dfs(root);
 
-        return diameter;
+        return max;
     }
 
-    private int dfs(TreeNode root, int preVal) {
+    /**
+     * 返回以root作为路径起点的最长同值路径长度
+     *
+     * @param root
+     * @return
+     */
+    private int dfs(TreeNode root) {
         if (root == null) {
             return 0;
         }
 
-        //当前节点左子树的最长同值路径长度
-        int leftMax = dfs(root.left, root.val);
-        //当前节点左子树的最长同值路径长度
-        int rightMax = dfs(root.right, root.val);
+        //当前节点左子节点作为路径起点的最长同值路径长度
+        int leftMax = dfs(root.left);
+        //当前节点右子节点作为路径起点的最长同值路径长度
+        int rightMax = dfs(root.right);
+        //root作为路径起点向左子树的最长同值路径长度
+        int max1 = 0;
+        //root作为路径起点向右子树的最长同值路径长度
+        int max2 = 0;
+
+        if (root.left != null && root.left.val == root.val) {
+            max1 = leftMax + 1;
+        }
+
+        if (root.right != null && root.right.val == root.val) {
+            max2 = rightMax + 1;
+        }
 
         //更新二叉树的最长同值路径长度
-        diameter = Math.max(diameter, leftMax + rightMax);
+        max = Math.max(max, max1 + max2);
 
-        //返回当前节点对父节点的最长同值路径长度，当前节点值和父节点值不相同时，不构成同值路径，返回0
-        return root.val == preVal ? Math.max(leftMax, rightMax) + 1 : 0;
+        //返回当前节点对父节点的最长同值路径长度，用于计算以当前节点父节点作为根节点的最长同值路径长度
+        return Math.max(max1, max2);
     }
 
     private TreeNode buildTree(String[] data) {

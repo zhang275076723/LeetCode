@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/3/24 09:26
  * @Author zsy
- * @Description N 叉树的后序遍历 类比Problem94、Problem144、Problem145、Problem429、Problem589
+ * @Description N 叉树的后序遍历 类比Problem94、Problem144、Problem145 n叉树类比Problem429、Problem559、Problem589
  * 给定一个 n 叉树的根节点 root ，返回 其节点值的 后序遍历 。
  * n 叉树 在输入中按层序遍历进行序列化表示，每组子节点由空值 null 分隔（请参见示例）。
  * <p>

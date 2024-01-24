@@ -5,23 +5,25 @@ import java.util.*;
 /**
  * @Date 2022/6/12 9:43
  * @Author zsy
- * @Description 二叉树的直径 dfs类比Problem104、Problem110、Problem111、Problem124、Problem337、Problem687、Problem1373
- * 给定一棵二叉树，你需要计算它的直径长度。一棵二叉树的直径长度是任意两个结点路径长度中的最大值。
- * 这条路径可能穿过也可能不穿过根结点。
+ * @Description 二叉树的直径 dfs类比Problem104、Problem110、Problem111、Problem124、Problem298、Problem337、Problem687、Problem1373
+ * 给你一棵二叉树的根节点，返回该树的 直径 。
+ * 二叉树的 直径 是指树中任意两个节点之间最长路径的 长度 。
+ * 这条路径可能经过也可能不经过根节点 root 。
+ * 两节点之间路径的 长度 由它们之间边数表示。
  * <p>
- * 给定二叉树
- * <        1
- * <      / \
- * <     2   3
- * <    / \
- * <   4   5
- * 返回 3, 它的长度是路径 [4,2,1,3] 或者 [5,2,1,3]。
+ * 输入：root = [1,2,3,4,5]
+ * 输出：3
+ * 解释：3 ，取路径 [4,2,1,3] 或 [5,2,1,3] 的长度。
  * <p>
- * 注意：两结点之间的路径长度是以它们之间边的数目表示。
+ * 输入：root = [1,2]
+ * 输出：1
+ * <p>
+ * 树中节点数目在范围 [1, 10^4] 内
+ * -100 <= Node.val <= 100
  */
 public class Problem543 {
     /**
-     * 二叉树的直径长度
+     * 二叉树的直径
      */
     private int diameter = 0;
 
@@ -34,7 +36,8 @@ public class Problem543 {
 
     /**
      * dfs
-     * 计算每一个节点的路径长度，更新二叉树的直径，并返回当前节点对父节点的路径长度，用于父节点更新二叉树的直径
+     * 计算当前节点左右子节点作为路径起点的最大单侧路径长度，更新二叉树的直径，
+     * 返回当前节点对父节点的最大单侧路径长度，用于计算以当前节点父节点作为根节点的二叉树的直径
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -50,20 +53,26 @@ public class Problem543 {
         return diameter;
     }
 
+    /**
+     * 返回以root作为路径起点的最大单侧路径长度
+     *
+     * @param root
+     * @return
+     */
     private int dfs(TreeNode root) {
         if (root == null) {
             return 0;
         }
 
-        //当前节点左子树的路径长度
+        //当前节点左子节点作为路径起点的最大单侧路径长度
         int leftMax = dfs(root.left);
-        //当前节点右子树的路径长度
+        //当前节点右子节点作为路径起点的最大单侧路径长度
         int rightMax = dfs(root.right);
 
-        //更新二叉树的直径长度
+        //更新二叉树的直径
         diameter = Math.max(diameter, leftMax + rightMax);
 
-        //返回当前节点对父节点的路径长度
+        //返回当前节点对父节点的最大单侧路径长度，用于计算以当前节点父节点作为根节点的二叉树的直径
         return Math.max(leftMax, rightMax) + 1;
     }
 
