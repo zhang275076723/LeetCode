@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/30 08:40
  * @Author zsy
- * @Description 无向图中连通分量的数目 并查集类比Problem130、Problem200、Problem261、Problem305、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
+ * @Description 无向图中连通分量的数目 并查集类比Problem130、Problem200、Problem261、Problem305、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1361、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
  * 你有一个包含 n 个节点的图。
  * 给定一个整数 n 和一个数组 edges ，其中 edges[i] = [ai, bi] 表示图中 ai 和 bi 之间有一条边。
  * 返回 图中已连接分量的数目 。

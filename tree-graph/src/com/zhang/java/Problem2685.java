@@ -7,7 +7,7 @@ import java.util.Stack;
 /**
  * @Date 2023/11/7 08:08
  * @Author zsy
- * @Description 统计完全连通分量的数量 Tarjan类比Problem1192、Problem1489、Problem1568 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998
+ * @Description 统计完全连通分量的数量 Tarjan类比Problem1192、Problem1489、Problem1568 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1361、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998
  * 给你一个整数 n 。现有一个包含 n 个顶点的 无向 图，顶点按从 0 到 n - 1 编号。
  * 给你一个二维整数数组 edges 其中 edges[i] = [ai, bi] 表示顶点 ai 和 bi 之间存在一条 无向 边。
  * 返回图中 完全连通分量 的数量。

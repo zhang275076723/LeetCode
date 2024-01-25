@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @Date 2023/9/21 08:54
  * @Author zsy
- * @Description 统计子岛屿 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem490、Problem499、Problem505、Problem529、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Problem1568、Offer12 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1489、Problem1568、Problem1584、Problem1627、Problem1998、Problem2685
+ * @Description 统计子岛屿 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem490、Problem499、Problem505、Problem529、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Problem1568、Offer12 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1361、Problem1489、Problem1568、Problem1584、Problem1627、Problem1998、Problem2685
  * 给你两个 m x n 的二进制矩阵 grid1 和 grid2 ，它们只包含 0 （表示水域）和 1 （表示陆地）。
  * 一个 岛屿 是由 四个方向 （水平或者竖直）上相邻的 1 组成的区域。
  * 任何矩阵以外的区域都视为水域。
@@ -184,7 +184,7 @@ public class Problem1905 {
         Set<Integer> set1 = new HashSet<>();
         //grid2当前岛屿不是grid1子岛屿连通分量的根节点的set集合
         //注意：必须使用set2，不能只使用一个set，如果grid2当前节点所在岛屿仍是grid1子岛屿，
-        //但遍历到下一个节点时，则grid2当前节点所在岛屿不是grid1子岛屿，只有一个set的话，
+        //但遍历到下一个节点时，grid2当前节点所在岛屿不是grid1子岛屿，只有一个set的话，
         //则grid2当前节点所在岛屿连通分量的根节点从set中移除，如果grid2下一个节点还是该岛屿中节点的话，
         //仍会将grid2中岛屿不是grid1子岛屿连通分量的根节点加入set中
         Set<Integer> set2 = new HashSet<>();

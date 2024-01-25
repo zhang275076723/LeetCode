@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/11/3 08:51
  * @Author zsy
- * @Description 找到最小生成树里的关键边和伪关键边 Tarjan类比Problem1192、Problem1568、Problem2685 最小生成树类比Problem1135、Problem1584、Prim 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
+ * @Description 找到最小生成树里的关键边和伪关键边 Tarjan类比Problem1192、Problem1568、Problem2685 最小生成树类比Problem1135、Problem1584、Prim 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1361、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
  * 给你一个 n 个点的带权无向连通图，节点编号为 0 到 n-1 ，同时还有一个数组 edges ，
  * 其中 edges[i] = [fromi, toi, weighti] 表示在 fromi 和 toi 节点之间有一条带权无向边。
  * 最小生成树 (MST) 是给定图中边的一个子集，它连接了所有节点且没有环，而且这些边的权值和最小。

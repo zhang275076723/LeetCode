@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2023/5/22 08:40
  * @Author zsy
- * @Description 验证二叉树的前序序列化 类比Problem685 序列化类比Problem271、Problem297、Problem449、Offer37 栈类比Problem20、Problem71、Problem150、Problem224、Problem227、Problem341、Problem394、Problem678、Problem856、Problem946、Problem1003、Problem1047、Problem1096、Offer31、CharacterToInteger
+ * @Description 验证二叉树的前序序列化 入度出度类比类比Problem685、Problem1361 序列化类比Problem271、Problem297、Problem449、Offer37 栈类比Problem20、Problem71、Problem150、Problem224、Problem227、Problem341、Problem394、Problem678、Problem856、Problem946、Problem1003、Problem1047、Problem1096、Offer31、CharacterToInteger
  * 序列化二叉树的一种方法是使用 前序遍历 。
  * 当我们遇到一个非空节点时，我们可以记录下这个节点的值。
  * 如果它是一个空节点，我们可以使用一个标记值记录，例如 #。
@@ -91,7 +91,8 @@ public class Problem331 {
 
         String[] arr = preorder.split(",");
         //前序遍历过程中出度减入度之差
-        //初始化为1，因为根节点的入度为0，不像其他非根节点的入度为1
+        //初始化为1，因为根节点的入度为0，不像其他非根节点的入度为1，即当遍历到根节点时，degreeDiff++，
+        //此时degreeDiff为2，仍然满足出度减入度之差
         int degreeDiff = 1;
 
         for (int i = 0; i < arr.length; i++) {
