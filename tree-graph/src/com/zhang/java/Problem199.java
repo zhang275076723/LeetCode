@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/20 16:00
  * @Author zsy
- * @Description 二叉树的右视图 字节面试题 类比Problem513、Problem515、Problem637、Problem662
+ * @Description 二叉树的右视图 字节面试题 类比Problem513、Problem515、Problem637、Problem662、Problem1302
  * 给定一个二叉树的 根节点 root，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。
  * <p>
  * 输入: [1,2,3,null,5,null,4]
@@ -30,7 +30,8 @@ public class Problem199 {
     }
 
     /**
-     * bfs，层序遍历，每次保存每层的最后一个节点值
+     * bfs
+     * 每次保存每层的最后一个节点值
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -70,8 +71,8 @@ public class Problem199 {
     }
 
     /**
-     * dfs(逆序前序遍历)
-     * 先遍历根节点，再遍历右子树，最后遍历左子树，保证每行首次都访问最右边节点
+     * dfs
+     * 逆序前序遍历，先遍历根节点，再遍历右子树，最后遍历左子树，保证每行首次都访问最右边节点
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -100,7 +101,7 @@ public class Problem199 {
             return;
         }
 
-        //当前节点的层数等于list大小，则说明当前节点是当前层的右视图节点，加入list中
+        //当前节点的层数等于list大小，则当前节点是当前层的右视图节点，加入list中
         if (level == list.size()) {
             list.add(root.val);
         }

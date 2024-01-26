@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/6/29 10:32
  * @Author zsy
- * @Description 二叉树的层平均值 类比Problem199、Problem513、Problem515、Problem662
+ * @Description 二叉树的层平均值 类比Problem199、Problem513、Problem515、Problem662、Problem1302
  * 给定一个非空二叉树的根节点 root , 以数组的形式返回每一层节点的平均值。与实际答案相差 10^-5 以内的答案可以被接受。
  * <p>
  * 输入：root = [3,9,20,null,null,15,7]
@@ -104,7 +104,7 @@ public class Problem637 {
         if (sumList.size() == level) {
             sumList.add((double) root.val);
             countList.add(1);
-        } else {
+        } else if (sumList.size() > level) {
             //当前节点不是当前层遍历到的第一个节点，更新sumList和countList
             sumList.set(level, sumList.get(level) + root.val);
             countList.set(level, countList.get(level) + 1);

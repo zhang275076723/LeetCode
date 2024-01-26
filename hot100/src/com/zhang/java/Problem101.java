@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/1 9:58
  * @Author zsy
- * @Description 对称二叉树 类比Problem100、Problem226、Problem572、Problem951、Problem1367、Offer26、Offer27 同Offer28
+ * @Description 对称二叉树 类比Problem100、Problem226、Problem572、Problem951、Problem1367、Offer26、Offer27、Offer28 同Offer28
  * 给你一个二叉树的根节点 root ， 检查它是否轴对称。
  * <p>
  * 输入：root = [1,2,2,3,4,4,3]
@@ -38,7 +38,7 @@ public class Problem101 {
             return true;
         }
 
-        return symmetric(root.left, root.right);
+        return dfs(root.left, root.right);
     }
 
     /**
@@ -82,19 +82,19 @@ public class Problem101 {
         return true;
     }
 
-    private boolean symmetric(TreeNode node1, TreeNode node2) {
-        //当前节点左右子树都为空，则对称，返回true
+    private boolean dfs(TreeNode node1, TreeNode node2) {
+        //node1和node2都为空，则是对称二叉树，返回true
         if (node1 == null && node2 == null) {
             return true;
         }
 
-        //当前节点只有一个子树为空，或节点值不相同，则不对称，返回false
+        //node1和node2只有一个不为空，或者节点值不相等，则不是对称二叉树，返回false
         if (node1 == null || node2 == null || node1.val != node2.val) {
             return false;
         }
 
-        //递归判断当前节点的左子树的左子树和当前节点的右子树的右子树是否对称
-        return symmetric(node1.left, node2.right) && symmetric(node1.right, node2.left);
+        //递归判断node1的左子树和node2的右子树是否是对称二叉树，node1的右子树和node2的左子树是否是对称二叉树
+        return dfs(node1.left, node2.right) && dfs(node1.right, node2.left);
     }
 
     private TreeNode buildTree(String[] data) {

@@ -55,18 +55,19 @@ public class Problem404 {
             return 0;
         }
 
-        int count = 0;
+        int sum = 0;
         Queue<Pos> queue = new LinkedList<>();
         //根节点的前驱节点为root，避免pos.pre.left空指针异常
         queue.offer(new Pos(root, root));
 
         while (!queue.isEmpty()) {
             Pos pos = queue.poll();
+
             //当前节点为叶节点，并且是左叶子结点，则左叶子节点值相加
             if (pos.node.left == null && pos.node.right == null && pos.pre.left == pos.node) {
-                count = count + pos.node.val;
+                sum = sum + pos.node.val;
             }
-            //左右子树入队
+
             if (pos.node.left != null) {
                 queue.offer(new Pos(pos.node.left, pos.node));
             }
@@ -75,7 +76,7 @@ public class Problem404 {
             }
         }
 
-        return count;
+        return sum;
     }
 
     /**
@@ -88,17 +89,17 @@ public class Problem404 {
             return 0;
         }
 
-        int count = 0;
+        int sum = 0;
 
         //当前节点为叶节点，并且是左叶子结点，则左叶子节点值相加
         if (root.left == null && root.right == null && pre.left == root) {
-            count = count + root.val;
+            sum = sum + root.val;
         }
 
-        count = count + dfs(root.left, root);
-        count = count + dfs(root.right, root);
+        sum = sum + dfs(root.left, root);
+        sum = sum + dfs(root.right, root);
 
-        return count;
+        return sum;
     }
 
     private TreeNode buildTree(String[] data) {

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/7/4 8:12
  * @Author zsy
- * @Description 二叉树最大宽度 字节面试题 类比Problem199、Problem513、Problem515、Problem637
+ * @Description 二叉树最大宽度 字节面试题 类比Problem199、Problem513、Problem515、Problem637、Problem1302
  * 给定一个二叉树，编写一个函数来获取这个树的最大宽度。
  * 树的宽度是所有层中的最大宽度。这个二叉树与满二叉树（full binary tree）结构相同，但一些节点为空。
  * 每一层的宽度被定义为两个端点（该层最左和最右的非空节点，两端点间的null节点也计入长度）之间的长度。
@@ -45,7 +45,7 @@ import java.util.*;
  */
 public class Problem662 {
     /**
-     * dfs的最大宽度
+     * dfs二叉树的最大宽度
      */
     private int maxWidth = 0;
 
@@ -71,7 +71,7 @@ public class Problem662 {
 
         Queue<Pos> queue = new LinkedList<>();
         queue.offer(new Pos(root, 0));
-        //当前只有一个根节点时，最大宽度为1
+        //二叉树的最大宽度，初始化为只有一个节点的最大宽度为1
         int maxWidth = 1;
 
         while (!queue.isEmpty()) {
@@ -111,8 +111,8 @@ public class Problem662 {
 
     /**
      * dfs
-     * 每层中第一个访问到的节点即为当前层最左边节点，记录每层最左边节点的下标索引，
-     * 计算每层中节点和最左边节点的距离，得到最大宽度
+     * 前序遍历每层中第一个访问到的节点即为当前层最左边节点，记录每层最左边节点的下标索引，
+     * 计算每层中节点和当前层最左边节点的距离，得到最大宽度
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root

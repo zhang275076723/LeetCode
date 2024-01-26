@@ -3,66 +3,37 @@ package com.zhang.java;
 import java.util.*;
 
 /**
- * @Date 2023/6/29 08:50
+ * @Date 2024/1/28 08:13
  * @Author zsy
- * @Description 在每个树行中找最大值 类比Problem199、Problem513、Problem637、Problem662、Problem1302
- * 给定一棵二叉树的根节点 root ，请找出该二叉树中每一层的最大值。
+ * @Description 层数最深叶子节点的和 类比Problem199、Problem513、Problem515、Problem637、Problem662
+ * 给你一棵二叉树的根节点 root ，请你返回 层数最深的叶子节点的和 。
  * <p>
- * 输入: root = [1,3,2,5,3,null,9]
- * 输出: [1,3,9]
+ * 输入：root = [1,2,3,4,5,null,6,7,null,null,null,null,8]
+ * 输出：15
  * <p>
- * 输入: root = [1,2,3]
- * 输出: [1,3]
+ * 输入：root = [6,7,8,2,7,1,3,9,null,1,4,null,null,null,5]
+ * 输出：19
  * <p>
- * 二叉树的节点个数的范围是 [0,10^4]
- * -2^31 <= Node.val <= 2^31 - 1
+ * 树中节点数目在范围 [1, 10^4] 之间。
+ * 1 <= Node.val <= 100
  */
-public class Problem515 {
-    public static void main(String[] args) {
-        Problem515 problem515 = new Problem515();
-        String[] data = {"1", "3", "2", "5", "3", "null", "9"};
-        TreeNode root = problem515.buildTree(data);
-        System.out.println(problem515.largestValues(root));
-        System.out.println(problem515.largestValues2(root));
-    }
+public class Problem1302 {
+    /**
+     * dfs最底层节点之和
+     */
+    private int sum = 0;
 
     /**
-     * bfs
-     * 时间复杂度O(n)，空间复杂度O(n)
-     *
-     * @param root
-     * @return
+     * dfs树的最大层数，初始化为-1，表示空树
      */
-    public List<Integer> largestValues(TreeNode root) {
-        if (root == null) {
-            return new ArrayList<>();
-        }
+    private int maxLevel = -1;
 
-        List<Integer> list = new ArrayList<>();
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
-
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            //二叉树当前层的最大值
-            int max = queue.peek().val;
-
-            for (int i = 0; i < size; i++) {
-                TreeNode node = queue.poll();
-                max = Math.max(max, node.val);
-
-                if (node.left != null) {
-                    queue.offer(node.left);
-                }
-                if (node.right != null) {
-                    queue.offer(node.right);
-                }
-            }
-
-            list.add(max);
-        }
-
-        return list;
+    public static void main(String[] args) {
+        Problem1302 problem1302 = new Problem1302();
+        String[] data = {"1", "2", "3", "4", "5", "null", "6", "7", "null", "null", "null", "null", "8"};
+        TreeNode root = problem1302.buildTree(data);
+        System.out.println(problem1302.deepestLeavesSum(root));
+        System.out.println(problem1302.deepestLeavesSum2(root));
     }
 
     /**
@@ -72,36 +43,70 @@ public class Problem515 {
      * @param root
      * @return
      */
-    public List<Integer> largestValues2(TreeNode root) {
+    public int deepestLeavesSum(TreeNode root) {
         if (root == null) {
-            return new ArrayList<>();
+            return 0;
         }
 
-        List<Integer> list = new ArrayList<>();
-
         //根节点为第0层
-        dfs(root, 0, list);
+        dfs(root, 0);
 
-        return list;
+        return sum;
     }
 
-    private void dfs(TreeNode root, int level, List<Integer> list) {
+    /**
+     * bfs
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param root
+     * @return
+     */
+    public int deepestLeavesSum2(TreeNode root) {
         if (root == null) {
+            return 0;
+        }
+
+        int sum = 0;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            //当前层节点之和
+            int curSum = 0;
+
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                curSum = curSum + node.val;
+
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+
+            sum = curSum;
+        }
+
+        return sum;
+    }
+
+    private void dfs(TreeNode node, int level) {
+        if (node == null) {
             return;
         }
 
-        //当前节点是当前层遍历到的第一个节点，当前节点作为当前层的最大节点
-        if (list.size() == level) {
-            list.add(root.val);
-        } else if (list.size() > level) {
-            //当前节点的值大于list中保存的当前层中的最大值，更新当前层的最大值
-            if (list.get(level) < root.val) {
-                list.set(level, root.val);
-            }
+        if (level > maxLevel) {
+            sum = node.val;
+            maxLevel = level;
+        } else if (level == maxLevel) {
+            sum = sum + node.val;
         }
 
-        dfs(root.left, level + 1, list);
-        dfs(root.right, level + 1, list);
+        dfs(node.left, level + 1);
+        dfs(node.right, level + 1);
     }
 
     private TreeNode buildTree(String[] data) {

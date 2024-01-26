@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/4/15 08:25
  * @Author zsy
- * @Description 找树左下角的值 类比Problem199、Problem404、Problem515、Problem637、Problem662
+ * @Description 找树左下角的值 类比Problem404 类比Problem199、Problem515、Problem637、Problem662、Problem1302
  * 给定一个二叉树的 根节点 root，请找出该二叉树的 最底层 最左边 节点的值。
  * 假设二叉树中至少有一个节点。
  * <p>
@@ -20,12 +20,12 @@ import java.util.*;
  */
 public class Problem513 {
     /**
-     * dfs的最左下叶节点的值
+     * dfs树最左下叶节点的值
      */
     private int mostLeftValue;
 
     /**
-     * dfs当前遍历到的最大层数，用于每次获取当前层的一个节点，即每层的最左节点，根节点为第0层
+     * dfs树的最大层数，初始化为-1，表示空树
      */
     private int maxLevel = -1;
 
@@ -60,11 +60,12 @@ public class Problem513 {
 
             for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
+
                 //每次保存当前层中第一个节点，则bfs遍历完之后就能得到最左下叶节点的值
                 if (i == 0) {
                     mostLeftValue = node.val;
                 }
-                //左右子树入队
+
                 if (node.left != null) {
                     queue.offer(node.left);
                 }
@@ -113,6 +114,7 @@ public class Problem513 {
             maxLevel = level;
         }
 
+        //先遍历左子树再遍历右子树，保证当前层最先访问到最左边节点
         dfs(root.left, level + 1);
         dfs(root.right, level + 1);
     }

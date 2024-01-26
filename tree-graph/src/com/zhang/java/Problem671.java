@@ -49,7 +49,7 @@ public class Problem671 {
 
         //第二小节点值
         int secondMinValue = Integer.MAX_VALUE;
-        //是否存在第二小节点的值
+        //是否存在第二小节点值的标志位
         boolean flag = false;
         Stack<TreeNode> stack = new Stack<>();
         TreeNode node = root;
@@ -88,7 +88,7 @@ public class Problem671 {
 
         //第二小节点值
         int secondMinValue = Integer.MAX_VALUE;
-        //是否存在第二小节点的值
+        //是否存在第二小节点值的标志位
         boolean flag = false;
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
