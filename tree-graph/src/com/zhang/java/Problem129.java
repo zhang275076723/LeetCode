@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2022/6/23 8:53
  * @Author zsy
- * @Description 求根节点到叶节点数字之和
+ * @Description 求根节点到叶节点数字之和 类比Problem404、Problem1448
  * 给你一个二叉树的根节点 root ，树中每个节点都存放有一个 0 到 9 之间的数字。
  * 每条从根节点到叶节点的路径都代表一个数字：
  * 例如，从根节点到叶节点的路径 1 -> 2 -> 3 表示数字 123 。
@@ -33,6 +33,9 @@ import java.util.Queue;
  * 树的深度不超过 10
  */
 public class Problem129 {
+    /**
+     * dfs根节点到叶节点数字之和
+     */
     private int result = 0;
 
     public static void main(String[] args) {
@@ -72,10 +75,9 @@ public class Problem129 {
             return 0;
         }
 
+        int result = 0;
         Queue<Pos> queue = new LinkedList<>();
         queue.offer(new Pos(root, 0));
-
-        int result = 0;
 
         while (!queue.isEmpty()) {
             Pos pos = queue.poll();
@@ -96,22 +98,18 @@ public class Problem129 {
         return result;
     }
 
-    private void preorder(TreeNode root, int value) {
-        if (root.left == null && root.right == null) {
-            value = value * 10 + root.val;
-            result = result + value;
+    private void preorder(TreeNode node, int value) {
+        if (node == null) {
             return;
         }
 
-        value = value * 10 + root.val;
-
-        if (root.left != null) {
-            preorder(root.left, value);
+        if (node.left == null && node.right == null) {
+            result = result + value * 10 + node.val;
+            return;
         }
 
-        if (root.right != null) {
-            preorder(root.right, value);
-        }
+        preorder(node.left, value * 10 + node.val);
+        preorder(node.right, value * 10 + node.val);
     }
 
     private TreeNode buildTree(int[] data) {

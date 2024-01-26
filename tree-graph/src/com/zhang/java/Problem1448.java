@@ -3,28 +3,38 @@ package com.zhang.java;
 import java.util.*;
 
 /**
- * @Date 2023/4/15 08:18
+ * @Date 2024/1/29 08:27
  * @Author zsy
- * @Description 左叶子之和 类比Problem129、Problem1448
- * 给定二叉树的根节点 root ，返回所有左叶子之和。
+ * @Description 统计二叉树中好节点的数目 类比Problem129、Problem404
+ * 给你一棵根为 root 的二叉树，请你返回二叉树中好节点的数目。
+ * 「好节点」X 定义为：从根到该节点 X 所经过的节点中，没有任何节点的值大于 X 的值。
  * <p>
- * 输入: root = [3,9,20,null,null,15,7]
- * 输出: 24
- * 解释: 在这个二叉树中，有两个左叶子，分别是 9 和 15，所以返回 24
+ * 输入：root = [3,1,4,3,null,1,5]
+ * 输出：4
+ * 解释：图中蓝色节点为好节点。
+ * 根节点 (3) 永远是个好节点。
+ * 节点 4 -> (3,4) 是路径中的最大值。
+ * 节点 5 -> (3,4,5) 是路径中的最大值。
+ * 节点 3 -> (3,1,3) 是路径中的最大值。
  * <p>
- * 输入: root = [1]
- * 输出: 0
+ * 输入：root = [3,3,null,4,2]
+ * 输出：3
+ * 解释：节点 2 -> (3, 3, 2) 不是好节点，因为 "3" 比它大。
  * <p>
- * 节点数在 [1, 1000] 范围内
- * -1000 <= Node.val <= 1000
+ * 输入：root = [1]
+ * 输出：1
+ * 解释：根节点是好节点。
+ * <p>
+ * 二叉树中节点数目范围是 [1, 10^5] 。
+ * 每个节点权值的范围是 [-10^4, 10^4] 。
  */
-public class Problem404 {
+public class Problem1448 {
     public static void main(String[] args) {
-        Problem404 problem404 = new Problem404();
-        String[] data = {"3", "9", "20", "null", "null", "15", "7"};
-        TreeNode root = problem404.buildTree(data);
-        System.out.println(problem404.sumOfLeftLeaves(root));
-        System.out.println(problem404.sumOfLeftLeaves2(root));
+        Problem1448 problem1448 = new Problem1448();
+        String[] data = {"3", "1", "4", "3", "null", "1", "5"};
+        TreeNode root = problem1448.buildTree(data);
+        System.out.println(problem1448.goodNodes(root));
+        System.out.println(problem1448.goodNodes2(root));
     }
 
     /**
@@ -34,13 +44,13 @@ public class Problem404 {
      * @param root
      * @return
      */
-    public int sumOfLeftLeaves(TreeNode root) {
+    public int goodNodes(TreeNode root) {
         if (root == null) {
             return 0;
         }
 
-        //根节点的父节点假定为root，不能为null，避免空指针异常
-        return dfs(root, root);
+        //初始化遍历到根节点root之前的最大值为int最小值
+        return dfs(root, Integer.MIN_VALUE);
     }
 
     /**
@@ -50,56 +60,53 @@ public class Problem404 {
      * @param root
      * @return
      */
-    public int sumOfLeftLeaves2(TreeNode root) {
+    public int goodNodes2(TreeNode root) {
         if (root == null) {
             return 0;
         }
 
-        int sum = 0;
+        int count = 0;
         Queue<Pos> queue = new LinkedList<>();
-        //根节点的前驱节点为root，避免pos.pre.left空指针异常
-        queue.offer(new Pos(root, root));
+        queue.offer(new Pos(root, Integer.MIN_VALUE));
 
         while (!queue.isEmpty()) {
             Pos pos = queue.poll();
 
-            //当前节点为叶节点，并且是左叶子结点，则左叶子节点值相加
-            if (pos.node.left == null && pos.node.right == null && pos.pre.left == pos.node) {
-                sum = sum + pos.node.val;
+            if (pos.node.val >= pos.max) {
+                count++;
             }
 
             if (pos.node.left != null) {
-                queue.offer(new Pos(pos.node.left, pos.node));
+                queue.offer(new Pos(pos.node.left, Math.max(pos.max, pos.node.val)));
             }
             if (pos.node.right != null) {
-                queue.offer(new Pos(pos.node.right, pos.node));
+                queue.offer(new Pos(pos.node.right, Math.max(pos.max, pos.node.val)));
             }
         }
 
-        return sum;
+        return count;
     }
 
     /**
-     * @param root
-     * @param pre  root节点的父节点
+     * @param node
+     * @param max  遍历到当前节点node之前路径节点的最大值
      * @return
      */
-    private int dfs(TreeNode root, TreeNode pre) {
-        if (root == null) {
+    private int dfs(TreeNode node, int max) {
+        if (node == null) {
             return 0;
         }
 
-        int sum = 0;
+        int count = 0;
 
-        //当前节点为叶节点，并且是左叶子结点，则左叶子节点值相加
-        if (root.left == null && root.right == null && pre.left == root) {
-            sum = sum + root.val;
+        if (node.val >= max) {
+            count++;
         }
 
-        sum = sum + dfs(root.left, root);
-        sum = sum + dfs(root.right, root);
+        count = count + dfs(node.left, Math.max(max, node.val));
+        count = count + dfs(node.right, Math.max(max, node.val));
 
-        return sum;
+        return count;
     }
 
     private TreeNode buildTree(String[] data) {
@@ -139,14 +146,13 @@ public class Problem404 {
      * bfs节点
      */
     private static class Pos {
-        //当前节点
         TreeNode node;
-        //bfs遍历过程中当前节点的前驱节点
-        TreeNode pre;
+        //遍历到当前节点node之前路径节点的最大值
+        int max;
 
-        Pos(TreeNode node, TreeNode pre) {
+        Pos(TreeNode node, int max) {
             this.node = node;
-            this.pre = pre;
+            this.max = max;
         }
     }
 
