@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/1/19 08:42
  * @Author zsy
- * @Description 神奇字符串 类比Problem38、Problem717
+ * @Description 神奇字符串 类比Problem38、Problem667、Problem717
  * 神奇字符串 s 仅由 '1' 和 '2' 组成，并需要遵守下面的规则：
  * 神奇字符串 s 的神奇之处在于，串联字符串中 '1' 和 '2' 的连续出现次数可以生成该字符串。
  * s 的前几个元素是 s = "1221121221221121122……" 。

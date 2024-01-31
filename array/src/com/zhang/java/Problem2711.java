@@ -46,7 +46,7 @@ public class Problem2711 {
                 {3, 2, 1}
         };
         System.out.println(Arrays.deepToString(problem2711.differenceOfDistinctValues(grid)));
-        System.out.println(Arrays.deepToString(problem2711.differenceOfDistinctValues(grid)));
+        System.out.println(Arrays.deepToString(problem2711.differenceOfDistinctValues2(grid)));
     }
 
     /**

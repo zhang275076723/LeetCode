@@ -30,27 +30,28 @@ import java.util.*;
 public class Problem332 {
     public static void main(String[] args) {
         Problem332 problem332 = new Problem332();
-        List<List<String>> tickets = new ArrayList<>();
-        List<String> list1 = new ArrayList<>();
-        List<String> list2 = new ArrayList<>();
-        List<String> list3 = new ArrayList<>();
-        List<String> list4 = new ArrayList<>();
-        List<String> list5 = new ArrayList<>();
-        list1.add("JFK");
-        list1.add("SFO");
-        list2.add("JFK");
-        list2.add("ATL");
-        list3.add("SFO");
-        list3.add("ATL");
-        list4.add("ATL");
-        list4.add("JFK");
-        list5.add("ATL");
-        list5.add("SFO");
-        tickets.add(list1);
-        tickets.add(list2);
-        tickets.add(list3);
-        tickets.add(list4);
-        tickets.add(list5);
+        List<List<String>> tickets = new ArrayList<List<String>>() {{
+            add(new ArrayList<String>() {{
+                add("JFK");
+                add("SFO");
+            }});
+            add(new ArrayList<String>() {{
+                add("JFK");
+                add("ATL");
+            }});
+            add(new ArrayList<String>() {{
+                add("SFO");
+                add("ATL");
+            }});
+            add(new ArrayList<String>() {{
+                add("ATL");
+                add("JFK");
+            }});
+            add(new ArrayList<String>() {{
+                add("ATL");
+                add("SFO");
+            }});
+        }};
         System.out.println(problem332.findItinerary(tickets));
     }
 

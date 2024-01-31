@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2023/12/18 08:58
  * @Author zsy
- * @Description 接雨水 II 类比Problem42 优先队列类比Problem253、Problem630 bfs类比Problem499、Problem505、Problem847、Problem1129、Problem1293、Problem1368、Problem1631、Problem2045、Problem2290
+ * @Description 接雨水 II 京东笔试题 类比Problem42 bfs类比Problem499、Problem505、Problem847、Problem1129、Problem1293、Problem1368、Problem1631、Problem2045、Problem2290 优先队列类比Problem253、Problem630
  * 给你一个 m x n 的矩阵，其中的值均为非负整数，代表二维高度图每个单元的高度，请计算图中形状最多能接多少体积的雨水。
  * <p>
  * 输入: heightMap = [[1,4,3,1,3,2],[3,2,1,3,2,4],[3,2,1,3,2,4]]
@@ -45,10 +45,10 @@ public class Problem407 {
     /**
      * bfs
      * water[i][j]：节点(i,j)接雨水之后的高度
+     * water[i][j] = max(heightMap[i][j],water[i-1][j],water[i+1][j],water[i][j-1],water[i][j+1])
      * water[i][j]-heightMap[i][j]即为当前位置能够接的雨水
      * 当前节点(i,j)所接雨水之后的高度water[i][j]小于邻接节点(x,y)所接雨水之后的高度water[x][y]，
-     * 并且邻接节点(x,y)所接雨水之后的高度water[x][y]大于邻接节点(x,y)的高度heightMap[x][y]，
-     * 则更新邻接节点(x,y)所接雨水之后的高度water[x][y]=max(heightMap[x][y],water[i][j])
+     * 则修改邻接节点(x,y)所接雨水之后的高度water[x][y]=max(heightMap[x][y],water[i][j])
      * 时间复杂度O((mn)^2)，空间复杂度O(mn)
      *
      * @param heightMap
@@ -110,10 +110,9 @@ public class Problem407 {
                 }
 
                 //当前节点(i,j)所接雨水之后的高度water[i][j]小于邻接节点(x,y)所接雨水之后的高度water[x][y]，
-                //并且邻接节点(x,y)所接雨水之后的高度water[x][y]大于邻接节点(x,y)的高度heightMap[x][y]，
-                //则更新邻接节点(x,y)所接雨水之后的高度water[x][y]=max(heightMap[x][y],water[i][j])，邻接节点(x,y)入队
-                if (water[i][j] < water[x][y] && water[x][y] > heightMap[x][y]) {
-                    //water[i][j]始终不小于heightMap[i][j]，即当前位置能够接的雨水不小于当前位置的高度
+                //则修改邻接节点(x,y)所接雨水之后的高度water[x][y]=max(heightMap[x][y],water[i][j])，邻接节点(x,y)入队
+                if (water[i][j] < water[x][y]) {
+                    //water[x][y]始终不能小于heightMap[x][y]，即邻接节点(x,y)接不到水
                     water[x][y] = Math.max(heightMap[x][y], water[i][j]);
                     queue.offer(new int[]{x, y});
                 }

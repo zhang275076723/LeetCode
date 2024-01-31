@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2023/11/17 08:14
  * @Author zsy
- * @Description 规定时间内到达终点的最小花费 花旗银行机试题 带限制条件的单元最短路径类比Problem787、Problem1293、Problem2093 Bellman-Ford类比Problem568、Problem787、Problem1293、Problem2093 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1976、Problem2045、Problem2093、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra
+ * @Description 规定时间内到达终点的最小花费 花旗银行机试题 带限制条件的单元最短路径类比Problem787、Problem1293、Problem2093 Bellman-Ford类比Problem568、Problem787、Problem2093 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1976、Problem2045、Problem2093、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra
  * 一个国家有 n 个城市，城市编号为 0 到 n - 1 ，题目保证 所有城市 都由双向道路 连接在一起 。
  * 道路由二维整数数组 edges 表示，其中 edges[i] = [xi, yi, timei] 表示城市 xi 和 yi 之间有一条双向道路，耗费时间为 timei 分钟。
  * 两个城市之间可能会有多条耗费时间不同的道路，但是不会有道路两头连接着同一座城市。
@@ -113,7 +113,7 @@ public class Problem1928 {
             //当前节点u
             int u = arr[0];
             //节点0经过curTime分钟到达节点u的费用，注意：当前费用不一定是最少费用
-            int curDistance = arr[1];
+            int curCost = arr[1];
             //节点0到达节点u需要的时间
             int curTime = arr[2];
             //节点u的父节点，即无向图保存父节点，避免重复遍历
@@ -124,10 +124,10 @@ public class Problem1928 {
                 continue;
             }
 
-            //小根堆保证第一次访问到节点n-1，则得到节点0最多经过maxTime分钟到达节点n-1的最少费用，直接返回curDistance
-            //注意：如果使用变量保存curDistance取最小值，在小根堆遍历结束时再返回，会超时
+            //小根堆保证第一次访问到节点n-1，则得到节点0最多经过maxTime分钟到达节点n-1的最少费用，直接返回curCost
+            //注意：如果使用变量保存curCost取最小值，在小根堆遍历结束时再返回，会超时
             if (u == n - 1) {
-                return curDistance;
+                return curCost;
             }
 
             //遍历节点u的邻接节点，节点u作为中间节点更新节点0到其他节点的最少时间
@@ -145,7 +145,7 @@ public class Problem1928 {
                 //找到更小的time[v]，更新time[v]，节点v入堆
                 if (curTime + weight < time[v]) {
                     time[v] = curTime + weight;
-                    priorityQueue.offer(new int[]{v, curDistance + passingFees[v], time[v], u});
+                    priorityQueue.offer(new int[]{v, curCost + passingFees[v], time[v], u});
                 }
             }
         }

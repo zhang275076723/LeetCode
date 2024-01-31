@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2023/11/26 08:45
  * @Author zsy
- * @Description 网格中的最短路径 美团机试题 带限制条件的单元最短路径类比Problem787、Problem1928、Problem2093 Bellman-Ford类比Problem568、Problem787、Problem1928、Problem2093 bfs类比Problem407、Problem499、Problem505、Problem847、Problem1129、Problem1368、Problem1631、Problem2045、Problem2290 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra
+ * @Description 网格中的最短路径 美团机试题 带限制条件的单元最短路径类比Problem787、Problem1928、Problem2093 bfs类比Problem407、Problem499、Problem505、Problem847、Problem1129、Problem1368、Problem1631、Problem2045、Problem2290 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra 记忆化搜索类比
  * 给你一个 m * n 的网格，其中每个单元格不是 0（空）就是 1（障碍物）。
  * 每一步，您都可以在空白单元格中上、下、左、右移动。
  * 如果您 最多 可以消除 k 个障碍物，请找出从左上角 (0, 0) 到右下角 (m-1, n-1) 的最短路径，并返回通过该路径所需的步数。
@@ -45,13 +45,15 @@ public class Problem1293 {
         System.out.println(problem1293.shortestPath(grid, k));
         System.out.println(problem1293.shortestPath2(grid, k));
         System.out.println(problem1293.shortestPath3(grid, k));
+//        //注意：不能使用dp，方法不正确
+//        System.out.println(problem1293.shortestPath4(grid, k));
     }
 
     /**
      * bfs
-     * 注意：图中边的权值为消除的障碍物数量，而不是经过的路径长度
-     * 注意：无向图Dijkstra保存当前节点的父节点，避免重复遍历
-     * 当前节点的邻接节点grid为1，则邻接节点为障碍物，当前节点到邻接节点边的权值为1；否则，权值为0
+     * 一般dfs，如果当前节点(i,j)被访问，则直接跳过当前节点；但当前dfs，当前节点(i,j)被访问，
+     * 并且节点(0,0)到当前节点(i,j)需要消除的障碍物数量小于节点(0,0)到节点(i,j)需要消除的最少障碍物数量remove[i][j]，
+     * 则当前路径可能是最多消除k个节点到达(m-1,n-1)的最短路径，不能跳过当前节点(i,j)，也需要对当前节点(i,j)进行dfs
      * 时间复杂度O(mnk)，空间复杂度O(mnk) (每个节点对应k个节点，共有mn个节点，最多会将mnk个节点加入队列中)
      *
      * @param grid
@@ -61,6 +63,11 @@ public class Problem1293 {
     public int shortestPath(int[][] grid, int k) {
         int m = grid.length;
         int n = grid[0].length;
+
+        //能够消除的障碍物数量大于等于m+n-3，因为起点和终点都不是障碍物，则最短路径为m+n-2
+        if (k >= m + n - 3) {
+            return m + n - 2;
+        }
 
         //节点(0,0)到其他节点需要消除的最少障碍物数量数组
         int[][] remove = new int[m][n];
@@ -76,67 +83,71 @@ public class Problem1293 {
         //初始化，节点(0,0)到节点(0,0)需要消除的最少障碍物数量为grid[0][0]
         remove[0][0] = grid[0][0];
 
-        //arr[0]：节点的横坐标，arr[1]：节点的纵坐标，arr[2]：节点(0,0)到当前节点的路径长度，
-        //arr[3]：节点(0,0)到当前节点需要消除的障碍物数量，注意：当前需要消除的障碍物数量不一定是需要消除的最少障碍物数量，
-        //arr[4]：父节点的横坐标，arr[5]：父节点的纵坐标
+        //arr[0]：节点的横坐标，arr[1]：节点的纵坐标，
+        //arr[2]：节点(0,0)到当前节点需要消除的障碍物数量，注意：当前需要消除的障碍物数量不一定是需要消除的最少障碍物数量，
+        //arr[3]：父节点的横坐标，arr[4]：父节点的纵坐标
         Queue<int[]> queue = new LinkedList<>();
 
         //节点(0,0)入队
-        queue.offer(new int[]{0, 0, 0, remove[0][0], -1, -1});
+        queue.offer(new int[]{0, 0, grid[0][0], -1, -1});
 
         //节点(0,0)最多消除k个障碍物到达节点(m-1,n-1)的最短路径长度
-        int result = Integer.MAX_VALUE;
+        int distance = 0;
 
         while (!queue.isEmpty()) {
-            int[] arr = queue.poll();
-            //当前节点(x1,y1)
-            int x1 = arr[0];
-            int y1 = arr[1];
-            //节点(0,0)到当前节点(x1,y1)的路径长度
-            int curDistance = arr[2];
-            //节点(0,0)到当前节点(x1,y1)需要消除的障碍物数量，注意：当前需要消除的障碍物数量不一定是需要消除的最少障碍物数量
-            int curRemove = arr[3];
-            //父节点(parentX,parentY)
-            int parentX = arr[4];
-            int parentY = arr[5];
+            int size = queue.size();
 
-            //节点(0,0)到当前节点(x1,y1)需要消除的障碍物数量curRemove大于k，则不合法，直接进行下次循环
-            if (curRemove > k) {
-                continue;
-            }
+            for (int i = 0; i < size; i++) {
+                int[] arr = queue.poll();
+                //当前节点(x1,y1)
+                int x1 = arr[0];
+                int y1 = arr[1];
+                //节点(0,0)到当前节点(x1,y1)需要消除的障碍物数量，注意：当前需要消除的障碍物数量不一定是需要消除的最少障碍物数量
+                int curRemove = arr[2];
+                //父节点(parentX,parentY)
+                int parentX = arr[3];
+                int parentY = arr[4];
 
-            //访问到节点(m-1,n-1)，则更新result，进行下次循环
-            if (x1 == m - 1 && y1 == n - 1) {
-                result = Math.min(result, curDistance);
-                continue;
-            }
-
-            //遍历节点(x1,y1)的邻接节点(x2,y2)
-            for (int i = 0; i < direction.length; i++) {
-                //节点(x1,y1)的邻接节点(x2,y2)
-                int x2 = x1 + direction[i][0];
-                int y2 = y1 + direction[i][1];
-
-                if (x2 < 0 || x2 >= m || y2 < 0 || y2 >= n) {
+                //节点(0,0)到当前节点(x1,y1)需要消除的障碍物数量curRemove大于k，则不合法，直接进行下次循环
+                if (curRemove > k) {
                     continue;
                 }
 
-                //当前节点(x1,y1)的邻接节点(x2,y2)为节点(x1,y1)的父节点，则节点(x1,y1)到节点(x2,y2)的路径已经遍历过，避免重复遍历，直接进行下次循环
-                if (x2 == parentX && y2 == parentY) {
-                    continue;
+                //访问到节点(m-1,n-1)，则找到节点(0,0)最多消除k个障碍物到达节点(m-1,n-1)的最短路径长度，直接返回distance
+                if (x1 == m - 1 && y1 == n - 1) {
+                    return distance;
                 }
 
-                //节点(x1,y1)作为中间节点更新节点(0,0)到其他节点需要消除的最少障碍物数量，更新remove[x2][y2]，节点(x2,y2)入队
-                if (curRemove + grid[x2][y2] < remove[x2][y2]) {
-                    remove[x2][y2] = curRemove + grid[x2][y2];
-                    queue.offer(new int[]{x2, y2, curDistance + 1, remove[x2][y2], x1, y1});
-                }
+                //遍历节点(x1,y1)的邻接节点(x2,y2)
+                for (int j = 0; j < direction.length; j++) {
+                    //节点(x1,y1)的邻接节点(x2,y2)
+                    int x2 = x1 + direction[j][0];
+                    int y2 = y1 + direction[j][1];
 
+                    if (x2 < 0 || x2 >= m || y2 < 0 || y2 >= n) {
+                        continue;
+                    }
+
+                    //当前节点(x1,y1)的邻接节点(x2,y2)为节点(x1,y1)的父节点，则节点(x1,y1)到节点(x2,y2)的路径已经遍历过，避免重复遍历，直接进行下次循环
+                    if (x2 == parentX && y2 == parentY) {
+                        continue;
+                    }
+
+                    //节点(0,0)到节点(x2,y2)需要消除的障碍物数量小于节点(0,0)到节点(x2,y2)需要消除的最少障碍物数量remove[x2][y2]，
+                    //则当前路径可能是最多消除k个节点到达(m-1,n-1)的最短路径，不能跳过当前节点(x2,y2)，也需要对当前节点(x2,y2)进行dfs
+                    if (curRemove + grid[x2][y2] < remove[x2][y2]) {
+                        remove[x2][y2] = curRemove + grid[x2][y2];
+                        queue.offer(new int[]{x2, y2, curRemove + grid[x2][y2], x1, y1});
+                    }
+                }
             }
+
+            //bfs每次往外扩1层，最短路径长度加1
+            distance++;
         }
 
-        //遍历结束，result为int最大值，则节点(0,0)最多消除k个障碍物无法到达节点(m-1,n-1)，返回-1；否则返回result
-        return result == Integer.MAX_VALUE ? -1 : result;
+        //遍历结束，节点(0,0)最多消除k个障碍物无法到达节点(m-1,n-1)，返回-1
+        return -1;
     }
 
     /**
@@ -154,6 +165,11 @@ public class Problem1293 {
     public int shortestPath2(int[][] grid, int k) {
         int m = grid.length;
         int n = grid[0].length;
+
+        //能够消除的障碍物数量大于等于m+n-3，因为起点和终点都不是障碍物，则最短路径为m+n-2
+        if (k >= m + n - 3) {
+            return m + n - 2;
+        }
 
         //节点(0,0)到其他节点需要消除的最少障碍物数量数组
         int[][] remove = new int[m][n];
@@ -232,13 +248,9 @@ public class Problem1293 {
     }
 
     /**
-     * 动态规划(Bellman-Ford)
-     * 注意：图中边的权值为消除的障碍物数量，而不是经过的路径长度，
-     * 所以dp[i][j][k]不能定义为节点(0,0)消除k个障碍物到达节点(i,j)的最短路径长度，
-     * dp[i][j][k]只能定义为节点(0,0)经过的路径长度为k到达节点(i,j)最少消除的障碍物数量
-     * dp[i][j][k]：节点(0,0)经过的路径长度为k到达节点(i,j)最少消除的障碍物数量
-     * dp[i][j][k] = min(dp[x][y][k-1]+grid[i][j]) (节点(x,y)是节点(i,j)的邻接节点)
-     * 时间复杂度O((mn)^2)，空间复杂度O((mn)^2)
+     * 递归+记忆化搜索
+     * dp[i][j][k]：节点(i,j)最多消除k个障碍物到达节点(m-1,n-1)的最短路径长度
+     * 时间复杂度O(mnk)，空间复杂度O(mnk)
      *
      * @param grid
      * @param k
@@ -248,57 +260,155 @@ public class Problem1293 {
         int m = grid.length;
         int n = grid[0].length;
 
-        //从节点(0,0)出发经过的最大路径长度为m*n-1
-        int[][][] dp = new int[m][n][m * n];
-        int[][] direction = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        //能够消除的障碍物数量大于等于m+n-3，因为起点和终点都不是障碍物，则最短路径为m+n-2
+        if (k >= m + n - 3) {
+            return m + n - 2;
+        }
 
-        //dp初始化，节点(0,0)经过的路径长度为l无法到达节点(i,j)
+        int[][][] dp = new int[m][n][k + 1];
+        int INF = Integer.MAX_VALUE / 2;
+
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                for (int l = 0; l < m * n; l++) {
-                    dp[i][j][l] = Integer.MAX_VALUE;
+                for (int l = 0; l <= k; l++) {
+                    dp[i][j][l] = INF;
                 }
             }
         }
 
-        //初始化，节点(0,0)经过的路径长度为0到达节点(i,j)最少消除的障碍物数量为grid[0][0]
-        dp[0][0][0] = grid[0][0];
+        int[][] direction = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
-        //经过的路径长度i
-        for (int i = 0; i < m * n; i++) {
-            //当前节点(x1,y1)
-            for (int j = 0; j < m * n; j++) {
-                int x1 = j / n;
-                int y1 = j % n;
+        //访问数组保证访问过的节点不会再次访问，即保证不会产生环，导致dfs无法终止的情况
+        //注意：必须使用访问数组，不能使用dp作为访问数组
+        int result = dfs(0, 0, m, n, k, INF, grid, dp, new boolean[m][n], direction);
 
-                //节点(x1,y1)的邻接节点(x2,y2)
-                for (int l = 0; l < direction.length; l++) {
-                    int x2 = x1 + direction[l][0];
-                    int y2 = y1 + direction[l][1];
+        return result == INF ? -1 : result;
+    }
 
-                    if (x2 < 0 || x2 >= m || y2 < 0 || y2 >= n) {
-                        continue;
-                    }
+    /**
+     * 节点(i,j)最多消除k个障碍物到达节点(m-1,n-1)的最短路径长度
+     *
+     * @param i
+     * @param j
+     * @param m
+     * @param n
+     * @param k
+     * @param INF
+     * @param grid
+     * @param dp
+     * @param visited
+     * @param direction
+     * @return
+     */
+    private int dfs(int i, int j, int m, int n, int k, int INF, int[][] grid, int[][][] dp,
+                    boolean[][] visited, int[][] direction) {
+        if (i == m - 1 && j == n - 1) {
+            dp[i][j][k] = 0;
+            return 0;
+        }
 
-                    //节点(0,0)经过的路径长度为i-1能够到达节点(x2,y2)，才能更新节点(0,0)经过的路径长度为i到达节点(x1,y1)最少消除的障碍物数量
-                    if (i - 1 >= 0 && dp[x2][y2][i - 1] != Integer.MAX_VALUE) {
-                        dp[x1][y1][i] = Math.min(dp[x1][y1][i], dp[x2][y2][i - 1] + grid[x1][y1]);
-                    }
+        if (dp[i][j][k] != INF) {
+            return dp[i][j][k];
+        }
 
-                    //节点(0,0)经过的路径长度为i-1能够到达节点(x1,y1)，才能更新节点(0,0)经过的路径长度为i到达节点(x2,y2)最少消除的障碍物数量
-                    if (i - 1 >= 0 && dp[x1][y1][i - 1] != Integer.MAX_VALUE) {
-                        dp[x2][y2][i] = Math.min(dp[x2][y2][i], dp[x1][y1][i - 1] + grid[x2][y2]);
-                    }
-                }
+        if (visited[i][j]) {
+            return INF;
+        }
+
+        visited[i][j] = true;
+
+        for (int l = 0; l < direction.length; l++) {
+            int x = i + direction[l][0];
+            int y = j + direction[l][1];
+
+            if (x < 0 || x >= m || y < 0 || y >= n) {
+                continue;
             }
 
-            //节点(0,0)经过的路径长度为i到达节点(m-1,n-1)最少消除的障碍物数量小于等于k，则直接返回当前路径长度i
-            if (dp[m - 1][n - 1][i] <= k) {
-                return i;
+            if (k - grid[x][y] >= 0) {
+                dp[i][j][k] = Math.min(dp[i][j][k], dfs(x, y, m, n, k - grid[x][y], INF, grid, dp, visited, direction) + 1);
             }
         }
 
-        //遍历结束，节点(0,0)最多消除k个障碍物无法到达节点(m-1,n-1)，返回-1
-        return -1;
+        visited[i][j] = false;
+        return dp[i][j][k];
+    }
+
+    /**
+     * 动态规划(Bellman-Ford)
+     * 注意：不能使用dp，因为状态转移方程需要往上下左右四个方向寻找，不是只往右下两个方向寻找，导致本次状态方程使用到的状态方程未完全得到
+     * dp[i][j][k]：节点(0,0)消除k个障碍物到达节点(i,j)的最短路径长度
+     * dp[i][j][k] = min(dp[x][y][k-1]+1) (节点(x,y)是节点(i,j)的邻接节点，grid[i][j] == 1)
+     * dp[i][j][k] = min(dp[x][y][k]+1)   (节点(x,y)是节点(i,j)的邻接节点，grid[i][j] == 0)
+     * 时间复杂度O((mn)^2)，空间复杂度O((mn)^2)
+     *
+     * @param grid
+     * @param k
+     * @return
+     */
+    public int shortestPath4(int[][] grid, int k) {
+        int m = grid.length;
+        int n = grid[0].length;
+
+        //节点(0,0)到达其他节点最多消除k个障碍物
+        int[][][] dp = new int[m][n][k + 1];
+        int[][] direction = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        //节点(0,0)到达其他节点的最大路径长度，不能初始化为int最大值，避免相加溢出
+        int INF = Integer.MAX_VALUE / 2;
+
+        //dp初始化，节点(0,0)消除l个障碍物无法到达节点(i,j)
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                for (int l = 0; l <= k; l++) {
+                    dp[i][j][l] = INF;
+                }
+            }
+        }
+
+        //dp初始化，节点(0,0)消除grid[0][0]个障碍物到达节点(i,j)的最短路径长度为0
+        dp[0][0][grid[0][0]] = 0;
+
+        //消除的障碍物个数l
+        for (int l = 0; l <= k; l++) {
+            //当前节点(i,j)
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    for (int p = 0; p < direction.length; p++) {
+                        //节点(i,j)的邻接节点(x,y)
+                        int x = i + direction[p][0];
+                        int y = j + direction[p][1];
+
+                        if (x < 0 || x >= m || y < 0 || y >= n) {
+                            continue;
+                        }
+
+                        //当前节点(i,j)为0，则从节点(x,y)到节点(i,j)不需要消除障碍物
+                        if (grid[i][j] == 0) {
+                            dp[i][j][l] = Math.min(dp[i][j][l], dp[x][y][l] + 1);
+                        } else if (grid[i][j] == 1 && l - 1 >= 0) {
+                            //当前节点(i,j)为1，则从节点(x,y)到节点(i,j)需要消除障碍物
+                            dp[i][j][l] = Math.min(dp[i][j][l], dp[x][y][l - 1] + 1);
+                        }
+
+                        if (grid[x][y] == 0) {
+                            dp[x][y][l] = Math.min(dp[x][y][l], dp[i][j][l] + 1);
+                        } else if (grid[x][y] == 1 && l - 1 >= 0) {
+                            dp[x][y][l] = Math.min(dp[x][y][l], dp[i][j][l - 1] + 1);
+                        }
+                    }
+                }
+            }
+        }
+
+        //节点(0,0)最多消除k个障碍物到达节点(m-1,n-1)的最短路径长度
+        int result = INF;
+
+        //最短路径长度为dp[m-1][n-1][0]、dp[m-1][n-1][1]、...、dp[m-1][n-1][k]中的最小值
+        for (int i = 0; i <= k; i++) {
+            result = Math.min(result, dp[m - 1][n - 1][i]);
+        }
+
+        //result为INF，则节点(0,0)最多消除k个障碍物无法到达节点(m-1,n-1)，返回-1；否则返回result
+        return result == INF ? -1 : result;
     }
 }

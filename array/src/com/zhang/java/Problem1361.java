@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2024/1/27 08:40
  * @Author zsy
- * @Description 验证二叉树 入度出度类比Problem331、Problem685 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
+ * @Description 验证二叉树 入度出度类比Problem207、Problem210、Problem331、Problem685 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
  * 二叉树上有 n 个节点，按从 0 到 n - 1 编号，其中节点 i 的两个子节点分别是 leftChild[i] 和 rightChild[i]。
  * 只有 所有 节点能够形成且 只 形成 一颗 有效的二叉树时，返回 true；否则返回 false。
  * 如果节点 i 没有左子节点，那么 leftChild[i] 就等于 -1。右子节点也符合该规则。
@@ -192,9 +192,9 @@ public class Problem1361 {
 
     /**
      * 并查集
-     * 遍历过程中，父节点和子节点连通，或者当前子节点有多个父节点，则不是有效二叉树；
+     * 遍历过程中，父节点和子节点已经连通，或者当前子节点有多个父节点，则不是有效二叉树；
      * 遍历结束，连通分量的个数超过1个，则不是有效二叉树
-     * 注意：父节点和子节点合并的先后顺序
+     * 注意：父节点和子节点合并的先后顺序，即谁指向谁
      * 时间复杂度O(n*α(mn))，空间复杂度O(n) (find()和union()的时间复杂度为O(α(n))，可视为常数O(1))
      *
      * @param n
@@ -207,7 +207,7 @@ public class Problem1361 {
 
         for (int i = 0; i < n; i++) {
             if (leftChild[i] != -1) {
-                //父节点i和子节点leftChild[i]连通，或者当前子节点leftChild[i]有多个父节点，则不是有效二叉树，返回false
+                //父节点i和子节点leftChild[i]已经连通，或者当前子节点leftChild[i]有多个父节点，则不是有效二叉树，返回false
                 if (unionFind.isConnected(i, leftChild[i]) || unionFind.find(leftChild[i]) != leftChild[i]) {
                     return false;
                 } else {
@@ -217,7 +217,7 @@ public class Problem1361 {
             }
 
             if (rightChild[i] != -1) {
-                //父节点i和子节点rightChild[i]连通，或者当前子节点rightChild[i]有多个父节点，则不是有效二叉树，返回false
+                //父节点i和子节点rightChild[i]已经连通，或者当前子节点rightChild[i]有多个父节点，则不是有效二叉树，返回false
                 if (unionFind.isConnected(i, rightChild[i]) || unionFind.find(rightChild[i]) != rightChild[i]) {
                     return false;
                 } else {

@@ -63,6 +63,7 @@ public class Problem2203 {
      * 节点src2到中间节点的最短路径长度distance2，节点dest到中间节点的最短路径长度distance3，
      * distance1+distance2+distance3的最小值，即为节点src1和节点src2到节点dest子图的最小权值
      * 时间复杂度O(mlogm+n)，空间复杂度O(m+n) (m=edges.length，即图中边的个数，n为图中节点的个数)
+     * <p>
      * <    src1                  src2
      * <      \                    /
      * <       \                 /
@@ -81,8 +82,8 @@ public class Problem2203 {
      * <              |
      * <             dest
      * < 图中节点A不是distance1+distance2+distance3最小的中间节点，
-     * < 此时distance1+distance2+distance3=|src1和A之间距离|+|src2和C之间距离|+|A和C之间距离|+|dest和A之间距离|
-     * < =|src1和C之间距离|+|src2和C之间距离|+|dest和C之间距离|+|A和C之间距离|
+     * < 此时distance1+distance2+distance3=|src1和A之间距离|+|src2和C之间距离|+|A和C之间距离|+|dest和A之间距离|=
+     * < |src1和C之间距离|+|src2和C之间距离|+|dest和C之间距离|+|A和C之间距离|
      * < 图中节点C是distance1+distance2+distance3最小的中间节点，
      * < 此时distance1+distance2+distance3=|src1和C之间距离|+|src2和C之间距离|+|dest和C之间距离|
      *

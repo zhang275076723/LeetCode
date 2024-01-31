@@ -27,10 +27,10 @@ public class Problem164 {
     public static void main(String[] args) {
         Problem164 problem164 = new Problem164();
         int[] nums = {3, 6, 9, 1};
-//        //堆排修修改了原数组，避免影响
+//        //堆排修修改了原数组，需要重新赋值nums，避免影响
 //        System.out.println(problem164.maximumGap(nums));
 //        System.out.println(problem164.maximumGap2(nums));
-//        //基数排序修改了原数组，避免影响
+//        //基数排序修改了原数组，需要重新赋值nums，避免影响
 //        System.out.println(problem164.maximumGap3(nums));
         System.out.println(problem164.maximumGap4(nums));
     }
@@ -185,12 +185,14 @@ public class Problem164 {
 
     /**
      * 桶排序
+     * 难点：如果确定每个桶的大小
      * nums数组排序后相邻元素的最大差值大于等于(max-min)/(n-1)，(max：nums中最大值，min：nums中最小值，n：nums长度)
      * 反证法证明，假设nums数组排序后相邻元素的最大差值小于(max-min)/(n-1)，
      * 设nums数组排序后由小到大依次为nums[0]、nums[1]...nums[n-1]，
      * 则nums[n-1]-nums[0] = nums[n-1]-nums[n-2]+...+nums[1]-nums[0] < (n-1)*(max-min)/(n-1) = max-min，
      * 即nums[n-1]-nums[0] = max-min < max-min，产生矛盾
-     * 桶排序每个桶大小为(max-min)/(n-1)，即每个桶中相邻元素的差值不是最大差值，最大差值为当前桶的最小值和上一个桶差值的最大值
+     * 桶排序每个桶大小为(max-min)/(n-1)，即每个桶中相邻元素的差值小于(max-min)/(n-1)，即不是最大差值，
+     * 桶排序后，最大差值为当前桶的最小值和上一个桶的最大值的差值的最大值
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param nums
@@ -210,7 +212,7 @@ public class Problem164 {
         }
 
         //桶的大小：每个桶存放元素的范围，例如第一个桶存放的范围为[min,min+bucketSize)
-        //桶大小为(max-min)/(n-1)，确保每个桶中相邻元素的差值不是最大差值
+        //桶大小为(max-min)/(n-1)，确保每个桶中相邻元素的差值小于(max-min)/(n-1)，即不是最大差值
         //注意：桶的大小至少为1
         int bucketSize = Math.max(1, (max - min) / (nums.length - 1));
         //桶的数量
@@ -242,10 +244,8 @@ public class Problem164 {
         int maxDistance = 0;
         //前一个桶的最大元素，即前一个桶排好序的最后一个元素
         int preBucketMax = buckets.get(0).get(buckets.get(0).size() - 1);
-        //当前桶的最小元素，即当前桶排好序的第一个元素
-        int curBucketMin;
 
-        //最大差值为当前桶的最小值和上一个桶的最大值的差值
+        //最大差值为当前桶的最小值和上一个桶的最大值的差值的最大值
         for (int i = 1; i < bucketCount; i++) {
             //当前桶
             List<Integer> curBucket = buckets.get(i);
@@ -255,8 +255,8 @@ public class Problem164 {
                 continue;
             }
 
-            //更新当前桶的最小元素
-            curBucketMin = curBucket.get(0);
+            //当前桶的最小元素，即当前桶排好序的第一个元素
+            int curBucketMin = curBucket.get(0);
             maxDistance = Math.max(maxDistance, curBucketMin - preBucketMax);
             //更新前一个桶的最大元素为当前桶的最大值
             preBucketMax = curBucket.get(curBucket.size() - 1);

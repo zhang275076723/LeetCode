@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @Date 2023/9/22 08:57
  * @Author zsy
- * @Description 冗余连接 II 入度出度类比Problem331、Problem1361 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1361、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
+ * @Description 冗余连接 II 入度出度类比Problem207、Problem210、Problem331、Problem1361 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1361、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
  * 在本问题中，有根树指满足以下条件的 有向 图。
  * 该树只有一个根节点，所有其他节点都是该根节点的后继。
  * 该树除了根节点之外的每一个节点都有且只有一个父节点，而根节点没有父节点。

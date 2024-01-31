@@ -64,7 +64,7 @@ public class Problem1424 {
 
     /**
      * 模拟 (超时)
-     * 左上到右下对角线上的元素下标索引i+j相等
+     * 左下到右上对角线上的元素下标索引i+j相等
      * 时间复杂度O(mn)，空间复杂度O(1) (m=nums.size()，n=max(nums.get(i).size()))
      *
      * @param nums
@@ -108,7 +108,7 @@ public class Problem1424 {
 
     /**
      * 模拟优化
-     * 左上到右下对角线上的元素下标索引i+j相等
+     * 左下到右上对角线上的元素下标索引i+j相等
      * 顺序遍历nums中元素，下标索引i+j相等的元素中先遍历到的元素出现在后遍历到的元素之后，
      * 所以下标索引i+j相等的元素存放到同一个list中，当前元素在list中首添加
      * 时间复杂度O(m+n+total)，空间复杂度O(total) (m=nums.size()，n=max(nums.get(i).size())，total=nums中元素的个数)

@@ -81,7 +81,7 @@ public class Problem2662 {
             vertexSet.add(convert(x2, y2));
         }
 
-        //邻接表，key：当前一维节点，value：当前节点的邻接节点数组集合，arr[0]：当前节点的邻接节点，arr[1]：当前节点到邻接节点边的长度
+        //邻接表，有向图，key：当前一维节点，value：当前节点的邻接节点数组集合，arr[0]：当前节点的邻接节点，arr[1]：当前节点到邻接节点边的长度
         Map<Long, List<long[]>> edges = new HashMap<>();
 
         //建图，每个节点和其他节点都有边，即图为完全图
@@ -208,7 +208,7 @@ public class Problem2662 {
             vertexSet.add(convert(x2, y2));
         }
 
-        //邻接表，key：当前一维节点，value：当前节点的邻接节点数组集合，arr[0]：当前节点的邻接节点，arr[1]：当前节点到邻接节点边的长度
+        //邻接表，有向图，key：当前一维节点，value：当前节点的邻接节点数组集合，arr[0]：当前节点的邻接节点，arr[1]：当前节点到邻接节点边的长度
         Map<Long, List<long[]>> edges = new HashMap<>();
 
         //建图，每个节点和其他节点都有边，即图为完全图

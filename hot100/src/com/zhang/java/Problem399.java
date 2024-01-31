@@ -45,37 +45,39 @@ import java.util.*;
 public class Problem399 {
     public static void main(String[] args) {
         Problem399 problem399 = new Problem399();
-        List<List<String>> equations = new ArrayList<>();
-        List<String> list1 = new ArrayList<>();
-        List<String> list2 = new ArrayList<>();
-        list1.add("a");
-        list1.add("b");
-        list2.add("b");
-        list2.add("c");
-        equations.add(list1);
-        equations.add(list2);
+        List<List<String>> equations = new ArrayList<List<String>>() {{
+            add(new ArrayList<String>() {{
+                add("a");
+                add("b");
+            }});
+            add(new ArrayList<String>() {{
+                add("b");
+                add("c");
+            }});
+        }};
         double[] values = {2.0, 3.0};
-        List<List<String>> queries = new ArrayList<>();
-        list1 = new ArrayList<>();
-        list2 = new ArrayList<>();
-        List<String> list3 = new ArrayList<>();
-        List<String> list4 = new ArrayList<>();
-        List<String> list5 = new ArrayList<>();
-        list1.add("a");
-        list1.add("c");
-        list2.add("b");
-        list2.add("a");
-        list3.add("a");
-        list3.add("e");
-        list4.add("a");
-        list4.add("a");
-        list5.add("x");
-        list5.add("x");
-        queries.add(list1);
-        queries.add(list2);
-        queries.add(list3);
-        queries.add(list4);
-        queries.add(list5);
+        List<List<String>> queries = new ArrayList<List<String>>() {{
+            add(new ArrayList<String>() {{
+                add("a");
+                add("c");
+            }});
+            add(new ArrayList<String>() {{
+                add("b");
+                add("a");
+            }});
+            add(new ArrayList<String>() {{
+                add("a");
+                add("e");
+            }});
+            add(new ArrayList<String>() {{
+                add("a");
+                add("a");
+            }});
+            add(new ArrayList<String>() {{
+                add("x");
+                add("x");
+            }});
+        }};
         System.out.println(Arrays.toString(problem399.calcEquation(equations, values, queries)));
         System.out.println(Arrays.toString(problem399.calcEquation2(equations, values, queries)));
         System.out.println(Arrays.toString(problem399.calcEquation3(equations, values, queries)));

@@ -31,25 +31,39 @@ import java.util.*;
 public class Problem554 {
     public static void main(String[] args) {
         Problem554 problem554 = new Problem554();
-        List<List<Integer>> wall = new ArrayList<>();
         //第 1 行的间隙有 [1,3,5]
         //第 2 行的间隙有 [3,4]
         //第 3 行的间隙有 [1,4]
         //第 4 行的间隙有 [2]
         //第 5 行的间隙有 [3,4]
         //第 6 行的间隙有 [1,4,5]
-        List<Integer> list1 = Arrays.asList(1, 2, 2, 1);
-        List<Integer> list2 = Arrays.asList(3, 1, 2);
-        List<Integer> list3 = Arrays.asList(1, 3, 2);
-        List<Integer> list4 = Arrays.asList(2, 4);
-        List<Integer> list5 = Arrays.asList(3, 1, 2);
-        List<Integer> list6 = Arrays.asList(1, 3, 1, 1);
-        wall.add(list1);
-        wall.add(list2);
-        wall.add(list3);
-        wall.add(list4);
-        wall.add(list5);
-        wall.add(list6);
+        List<List<Integer>> wall = new ArrayList<List<Integer>>() {{
+            add(new ArrayList<Integer>() {{
+                add(1);
+                add(3);
+                add(5);
+            }});
+            add(new ArrayList<Integer>() {{
+                add(3);
+                add(4);
+            }});
+            add(new ArrayList<Integer>() {{
+                add(1);
+                add(4);
+            }});
+            add(new ArrayList<Integer>() {{
+                add(2);
+            }});
+            add(new ArrayList<Integer>() {{
+                add(3);
+                add(4);
+            }});
+            add(new ArrayList<Integer>() {{
+                add(1);
+                add(4);
+                add(5);
+            }});
+        }};
         System.out.println(problem554.leastBricks(wall));
     }
 

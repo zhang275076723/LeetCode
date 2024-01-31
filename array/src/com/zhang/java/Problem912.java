@@ -187,7 +187,7 @@ public class Problem912 {
                     int temp = nums[m];
                     int n = m - i;
 
-                    ////找到temp要插入的位置
+                    //找到temp要插入的位置
                     while (n >= j && nums[n] > temp) {
                         nums[n + i] = nums[n];
                         n = n - i;
@@ -310,6 +310,7 @@ public class Problem912 {
      * @return
      */
     public int[] sortArray10(int[] nums) {
+        //nums中绝对值最大的元素
         int max = nums[0];
 
         //找数组中最长元素的位数

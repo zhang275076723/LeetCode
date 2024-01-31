@@ -32,25 +32,26 @@ import java.util.List;
 public class Problem120 {
     public static void main(String[] args) {
         Problem120 problem120 = new Problem120();
-        List<List<Integer>> triangle = new ArrayList<>();
-        List<Integer> list1 = new ArrayList<>();
-        List<Integer> list2 = new ArrayList<>();
-        List<Integer> list3 = new ArrayList<>();
-        List<Integer> list4 = new ArrayList<>();
-        list1.add(2);
-        list2.add(3);
-        list2.add(4);
-        list3.add(6);
-        list3.add(5);
-        list3.add(7);
-        list4.add(4);
-        list4.add(1);
-        list4.add(8);
-        list4.add(3);
-        triangle.add(list1);
-        triangle.add(list2);
-        triangle.add(list3);
-        triangle.add(list4);
+        List<List<Integer>> triangle = new ArrayList<List<Integer>>() {{
+            add(new ArrayList<Integer>() {{
+                add(2);
+            }});
+            add(new ArrayList<Integer>() {{
+                add(3);
+                add(4);
+            }});
+            add(new ArrayList<Integer>() {{
+                add(6);
+                add(5);
+                add(7);
+            }});
+            add(new ArrayList<Integer>() {{
+                add(4);
+                add(1);
+                add(8);
+                add(3);
+            }});
+        }};
         System.out.println(problem120.minimumTotal(triangle));
         System.out.println(problem120.minimumTotal2(triangle));
         System.out.println(problem120.minimumTotal3(triangle));

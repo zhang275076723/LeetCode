@@ -48,7 +48,7 @@ public class Problem1568 {
      * dfs
      * dfs求岛屿数量，岛屿数量大于等于2或等于0，则不需要分离，陆地分离的最少天数为0；
      * 岛屿数量等于1，将其中一个陆地单元'1'修改为水单元'0'，dfs求此时岛屿数量，如果岛屿数量大于等于2或等于0，
-     * 则陆地分离的最少天数为1；否则，陆地分离的最少天数为2
+     * 则陆地分离的最少天数为1；否则，陆地分离的最少天数为2，即将某个角的2个相邻节点置为0
      * 时间复杂度O((mn)^2)，空间复杂度O(mn) (m=grid.length，n=grid[0].length)
      *
      * @param grid
@@ -105,7 +105,7 @@ public class Problem1568 {
             }
         }
 
-        //陆地分离的最少天数只能为0、1、2
+        //陆地分离的最少天数只能为0、1、2，不为0和1，则最少天数为2
         return 2;
     }
 
@@ -140,7 +140,7 @@ public class Problem1568 {
 
         //key：grid中节点的下标索引，value：图中节点的下标索引
         Map<Integer, Integer> map = new HashMap<>();
-        //陆地'1'的个数，即无向图中节点的个数
+        //陆地'1'的个数，即有向图中节点的个数
         int count = 0;
 
         for (int i = 0; i < grid.length; i++) {
@@ -152,7 +152,7 @@ public class Problem1568 {
             }
         }
 
-        //邻接表，无向图
+        //邻接表，有向图
         List<List<Integer>> edges = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
@@ -235,13 +235,13 @@ public class Problem1568 {
 
     /**
      * Tarjan求割点
-     * 注意：本题无向图中两个节点之间最多只存在一条边，则遍历当前节点时保存父节点parent，避免重复遍历
+     * 注意：有向图中两个节点之间最多只存在一条边，则遍历当前节点时保存父节点parent，避免重复遍历
      *
      * @param u      当前节点u
-     * @param parent 节点u的父节点，即节点u是从哪个节点遍历到的，本题无向图中两个节点之间最多只存在一条边，保存父节点，避免重复遍历
+     * @param parent 节点u的父节点，即节点u是从哪个节点遍历到的，有向图中两个节点之间最多只存在一条边，保存父节点，避免重复遍历
      * @param dfn    节点u第一次访问的时间戳，即节点在dfs的访问顺序，同时也作为节点访问数组
      * @param low    节点u不通过当前节点u到父节点的边能够访问到的祖先节点v的最小dfn[v]
-     * @param edges  邻接表，无向图
+     * @param edges  邻接表，有向图
      * @param list   存储割点的集合
      */
     private void dfs(int u, int parent, int[] dfn, int[] low, List<List<Integer>> edges, List<Integer> list) {
@@ -254,7 +254,7 @@ public class Problem1568 {
 
         //遍历节点u的邻接节点v
         for (int v : edges.get(u)) {
-            //本题无向图中两个节点之间最多只存在一条边，保存父节点，避免重复遍历
+            //有向图中两个节点之间最多只存在一条边，保存父节点，避免重复遍历
             if (v == parent) {
                 continue;
             }

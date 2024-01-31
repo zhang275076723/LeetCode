@@ -95,18 +95,18 @@ public class Problem1976 {
             int v = roads[i][1];
             int weight = roads[i][2];
 
-            //节点0到节点u的最短路径长度+节点u和节点v边的权值==节点0到节点v的最短路径长度，则有向图中存在节点u到节点v的边，不存在节点v到节点u的边
+            //节点u到节点v的边是节点0到节点n-1的最短路径
             if (distance[u] + weight == distance[v]) {
                 edges[u][v] = weight;
                 edges[v][u] = -1;
                 inDegree[v]++;
             } else if (distance[v] + weight == distance[u]) {
-                //点0到节点v的最短路径长度+节点u和节点v边的权值==节点0到节点u的最短路径长度，则有向图中存在节点v到节点u的边，不存在节点u到节点v的边
+                //节点v到节点u的边是节点0到节点n-1的最短路径
                 edges[v][u] = weight;
                 edges[u][v] = -1;
                 inDegree[u]++;
             } else {
-                //有向图不存在节点u到节点v的边，或者节点v到节点u的边，边赋值为-1
+                //节点u到节点v的边和节点v到节点u的边都不是节点0到节点n-1的最短路径
                 edges[u][v] = -1;
                 edges[v][u] = -1;
             }
