@@ -60,9 +60,9 @@ public class Problem2305 {
     /**
      * 二分查找+回溯+剪枝
      * 二分查找变形，使...最大值尽可能小，就要想到二分查找
-     * 对[left,right]进行二分查找，left为cookies中最大值，right为cookies元素之和，判断k个孩子分配零食得到的最小饼干数量是否超过mid，
-     * 如果超过mid，则分配零食得到的最小饼干数量在mid右边，left=mid+1；
-     * 如果不超过mid，则分配零食得到的最小饼干数量在mid或mid左边，right=mid
+     * 对[left,right]进行二分查找，left为cookies中最大值，right为cookies元素之和，判断k个孩子分配零食得到的最大饼干数量的最小值是否超过mid，
+     * 如果超过mid，则分配零食得到的最大饼干数量的最小值在mid右边，left=mid+1；
+     * 如果不超过mid，则分配零食得到的最大饼干数量的最小值在mid或mid左边，right=mid
      * 时间复杂度O(k^n*log(right-left))=O(k^n)，空间复杂度O(n+k) (n=cookies.length，left和right为int范围内的数，log(right-left)<32)
      *
      * @param cookies
@@ -84,11 +84,11 @@ public class Problem2305 {
         while (left < right) {
             mid = left + ((right - left) >> 1);
 
-            //k个孩子分配零食得到的最小饼干数量超过mid，则分配零食得到的最小饼干数量在mid右边，left=mid+1
+            //k个孩子分配零食得到的饼干数量超过mid，则分配零食得到的最大饼干数量的最小值在mid右边，left=mid+1
             if (!backtrack(0, cookies, new int[k], mid)) {
                 left = mid + 1;
             } else {
-                //k个孩子分配零食得到的最小饼干数量不超过mid，则分配零食得到的最小饼干数量在mid或mid左边，right=mid
+                //k个孩子分配零食得到的饼干数量不超过mid，则分配零食得到的最大饼干数量的最小值在mid或mid左边，right=mid
                 right = mid;
             }
         }
@@ -99,7 +99,7 @@ public class Problem2305 {
     /**
      * 动态规划+二进制状态压缩
      * sum[i]：二进制访问状态i的情况下，一个孩子得到的饼干数量
-     * dp[i][j]：前i个孩子(从0开始)分配零食的二进制访问状态j的情况下，得到饼干的最小数量
+     * dp[i][j]：前i个孩子(从0开始)分配零食的二进制访问状态j的情况下，得到的最大饼干数量的最小值
      * sum[i] = sum[j] + jobs[k] (i的二进制表示的最低位1置为0得到j(j=i&(i-1))，并且i的最低位1是从右往左数的第k位)
      * dp[i][j] = min(max(dp[i-1][k],sum[j-k])) (k为二进制访问状态j的子状态)
      * 时间复杂度O(k*3^n)，空间复杂度O(k*2^n)
@@ -114,7 +114,7 @@ public class Problem2305 {
         int n = cookies.length;
         //sum[i]：二进制访问状态i的情况下，一个孩子得到的饼干数量，即对应cookies相加
         int[] sum = new int[1 << n];
-        //dp[i][j]：前i个孩子(从0开始)分配零食的二进制访问状态j的情况下，得到饼干的最小数量
+        //dp[i][j]：前i个孩子(从0开始)分配零食的二进制访问状态j的情况下，得到的最大饼干数量的最小值
         int[][] dp = new int[k][1 << n];
 
         for (int i = 1; i < 1 << n; i++) {
@@ -156,7 +156,7 @@ public class Problem2305 {
 
     /**
      * @param t
-     * @param curMax  分配完第t-1个零食孩子得到的最小饼干数量
+     * @param curMax  分配完第t-1个零食孩子得到的最大饼干数量
      * @param cookies
      * @param child   每个孩子分配零食得到饼干的数量数组
      */
@@ -167,7 +167,7 @@ public class Problem2305 {
         }
 
         for (int i = 0; i < child.length; i++) {
-            //孩子i分配零食cookies[t]之后的饼干数量大于等于result，则孩子i分配零食cookies[t]的最小饼干数量肯定不会小于minTime，
+            //孩子i分配零食cookies[t]之后的饼干数量大于等于result，则当前情况得到的最大饼干数量的最小值不能更新result，
             //剪枝，直接进行下次循环
             if (child[i] + cookies[t] >= result) {
                 continue;
@@ -188,8 +188,8 @@ public class Problem2305 {
     }
 
     /**
-     * k个孩子分配零食得到的最小饼干数量是否超过limit
-     * 超过limit，返回false；不超过limit，返回true
+     * k个孩子分配零食得到的最大饼干数量的最小值是否超过limit
+     * 不超过limit，返回true；超过limit，返回false
      *
      * @param t
      * @param cookies
@@ -198,7 +198,7 @@ public class Problem2305 {
      * @return
      */
     private boolean backtrack(int t, int[] cookies, int[] child, int limit) {
-        //k个孩子分配零食得到的最小饼干数量不超过limit，返回true
+        //k个孩子分配零食得到的最大饼干数量的最小值不超过limit，返回true
         if (t == cookies.length) {
             return true;
         }
@@ -223,7 +223,7 @@ public class Problem2305 {
             child[i] = child[i] - cookies[t];
         }
 
-        //遍历结束，则k个孩子分配零食得到的最小饼干数量超过limit，返回false
+        //遍历结束，则k个孩子分配零食得到的最大饼干数量的最小值超过limit，返回false
         return false;
     }
 }

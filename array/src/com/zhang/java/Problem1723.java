@@ -53,9 +53,9 @@ public class Problem1723 {
     /**
      * 二分查找+回溯+剪枝
      * 二分查找变形，使...最大值尽可能小，就要想到二分查找
-     * 对[left,right]进行二分查找，left为jobs中最大值，right为jobs元素之和，判断k个工人完成任务需要的最小时间是否超过mid，
-     * 如果超过mid，则完成任务需要的最小时间在mid右边，left=mid+1；
-     * 如果不超过mid，则完成任务需要的最小时间在mid或mid左边，right=mid
+     * 对[left,right]进行二分查找，left为jobs中最大值，right为jobs元素之和，判断k个工人完成任务需要的最大时间的最小值是否超过mid，
+     * 如果超过mid，则完成任务需要的最大时间的最小值在mid右边，left=mid+1；
+     * 如果不超过mid，则完成任务需要的最大时间的最小值在mid或mid左边，right=mid
      * 时间复杂度O(k^n*log(right-left))=O(k^n)，空间复杂度O(n+k) (n=jobs.length，left和right为int范围内的数，log(right-left)<32)
      *
      * @param jobs
@@ -77,11 +77,11 @@ public class Problem1723 {
         while (left < right) {
             mid = left + ((right - left) >> 1);
 
-            //k个工人完成任务需要的最小时间超过mid，则完成任务需要的最小时间在mid右边，left=mid+1
+            //k个工人完成任务需要的最大时间的最小值超过mid，则完成任务需要的最大时间的最小值在mid右边，left=mid+1
             if (!backtrack(0, new int[k], jobs, mid)) {
                 left = mid + 1;
             } else {
-                //k个工人完成任务需要的最小时间不超过mid，则完成任务需要的最小时间在mid或mid左边，right=mid
+                //k个工人完成任务需要的最大时间的最小值不超过mid，则完成任务需要的最大时间的最小值在mid或mid左边，right=mid
                 right = mid;
             }
         }
@@ -92,7 +92,7 @@ public class Problem1723 {
     /**
      * 动态规划+二进制状态压缩
      * sum[i]：二进制访问状态i的情况下，一个工人完成任务需要的时间
-     * dp[i][j]：前i个工人(从0开始)分配任务的二进制访问状态j的情况下，完成任务需要的最小时间1
+     * dp[i][j]：前i个工人(从0开始)分配任务的二进制访问状态j的情况下，完成任务需要的最大时间的最小值
      * sum[i] = sum[j] + jobs[k] (i的二进制表示的最低位1置为0得到j(j=i&(i-1))，并且i的最低位1是从右往左数的第k位)
      * dp[i][j] = min(max(dp[i-1][k],sum[j-k])) (k为二进制访问状态j的子状态)
      * 时间复杂度O(k*3^n)，空间复杂度O(k*2^n)
@@ -107,7 +107,7 @@ public class Problem1723 {
         int n = jobs.length;
         //sum[i]：二进制访问状态i的情况下，一个工人完成任务需要的时间，即对应jobs相加
         int[] sum = new int[1 << n];
-        //dp[i][j]：前i个工人(从0开始)分配任务的二进制访问状态j的情况下，完成任务需要的最小时间
+        //dp[i][j]：前i个工人(从0开始)分配任务的二进制访问状态j的情况下，完成任务需要的最大时间的最小值
         int[][] dp = new int[k][1 << n];
 
         for (int i = 1; i < 1 << n; i++) {
@@ -149,7 +149,7 @@ public class Problem1723 {
 
     /**
      * @param t
-     * @param time   分配完第t-1个任务工人完成任务需要的最小时间
+     * @param time   分配完第t-1个任务工人完成任务需要的最大时间
      * @param worker 每个工人分配任务完成需要的时间数组
      * @param jobs
      */
@@ -160,7 +160,7 @@ public class Problem1723 {
         }
 
         for (int i = 0; i < worker.length; i++) {
-            //工人i执行任务jobs[t]之后的执行时间大于等于minTime，则工人i执行任务jobs[t]的最小时间肯定不会小于minTime，
+            //工人i执行任务jobs[t]之后的执行时间大于等于minTime，则当前情况得到的最大时间的最小值不能更新minTime，
             //剪枝，直接进行下次循环
             if (worker[i] + jobs[t] >= minTime) {
                 continue;
@@ -181,8 +181,8 @@ public class Problem1723 {
     }
 
     /**
-     * k个工人完成任务需要的最小时间是否超过limit
-     * 超过limit，返回false；不超过limit，返回true
+     * k个工人完成任务需要的最大时间的最小值是否超过limit
+     * 不超过limit，返回true；超过limit，返回false
      *
      * @param t
      * @param worker
@@ -191,7 +191,7 @@ public class Problem1723 {
      * @return
      */
     private boolean backtrack(int t, int[] worker, int[] jobs, int limit) {
-        //k个工人完成任务需要的最小时间不超过limit，返回true
+        //k个工人完成任务需要的最大时间的最小值不超过limit，返回true
         if (t == jobs.length) {
             return true;
         }
@@ -216,7 +216,7 @@ public class Problem1723 {
             worker[i] = worker[i] - jobs[t];
         }
 
-        //遍历结束，则k个工人完成任务需要的最小时间超过limit，返回false
+        //遍历结束，则k个工人完成任务需要的最大时间的最小值超过limit，返回false
         return false;
     }
 }

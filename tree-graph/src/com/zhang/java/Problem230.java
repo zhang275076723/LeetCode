@@ -53,8 +53,8 @@ public class Problem230 {
                 node = node.left;
             }
 
-            count++;
             node = stack.pop();
+            count++;
 
             //中序遍历中遍历到第k个节点，则直接返回节点值
             if (count == k) {
@@ -120,15 +120,15 @@ public class Problem230 {
             TreeNode node = root;
 
             //以当前节点左节点为根的数节点个数，考虑node.left为null，即当前节点没有左子树，count为0
-            int leftNodecount = nodeMap.getOrDefault(node.left, 0);
+            int leftNodeCount = nodeMap.getOrDefault(node.left, 0);
 
-            while (leftNodecount + 1 != k) {
+            while (leftNodeCount + 1 != k) {
                 //往左子树找
-                if (leftNodecount + 1 > k) {
+                if (leftNodeCount + 1 > k) {
                     node = node.left;
                 } else {
                     //往右子树找
-                    k = k - leftNodecount - 1;
+                    k = k - leftNodeCount - 1;
                     node = node.right;
                 }
 
@@ -138,7 +138,7 @@ public class Problem230 {
                 }
 
                 //考虑node.left为null，即当前节点没有左子树，count为0
-                leftNodecount = nodeMap.getOrDefault(node.left, 0);
+                leftNodeCount = nodeMap.getOrDefault(node.left, 0);
             }
 
             return node.val;
