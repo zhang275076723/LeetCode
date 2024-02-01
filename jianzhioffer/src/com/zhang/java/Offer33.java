@@ -98,7 +98,7 @@ public class Offer33 {
      * @param right     当前数组末尾索引
      */
     public boolean dfs(int[] postorder, int left, int right) {
-        //当前区间为空，或只有一个元素，返回true，即当前后序遍历数组是二叉搜索树的后序遍历结果
+        //当前区间为空，或只有一个元素，则当前后序遍历数组是二叉搜索树的后序遍历结果，返回true
         if (left >= right) {
             return true;
         }
