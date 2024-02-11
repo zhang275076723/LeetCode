@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2023/10/10 08:49
  * @Author zsy
- * @Description 最小高度树 快手面试题 类比Problem1162 拓扑排序类比Problem207、Problem210、Problem329、IsCircleDependency 图类比
+ * @Description 最小高度树 快手面试题 类比Problem1162 拓扑排序类比Problem207、Problem210、Problem329、IsCircleDependency
  * 树是一个无向图，其中任何两个顶点只通过一条路径连接。
  * 换句话说，一个任何没有简单环路的连通图都是一棵树。
  * 给你一棵包含 n 个节点的树，标记为 0 到 n - 1 。
@@ -43,7 +43,7 @@ public class Problem310 {
     }
 
     /**
-     * bfs(超时)
+     * 暴力bfs(超时)
      * 对每个节点进行bfs，得到每个节点节点作为根的树的高度，得到图中最小高度对应的根节点
      * 时间复杂度O(n^2)，空间复杂度O(n)
      *

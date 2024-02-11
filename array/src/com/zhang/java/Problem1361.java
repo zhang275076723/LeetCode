@@ -227,7 +227,7 @@ public class Problem1361 {
             }
         }
 
-        //遍历结束，连通分量的个数超过1个，则不是有效二叉树
+        //遍历结束，并查集中连通分量的个数超过1个，则不是有效二叉树
         return unionFind.count == 1;
     }
 
@@ -248,7 +248,7 @@ public class Problem1361 {
      */
     private static class UnionFind {
         private int count;
-        private int[] parent;
+        private final int[] parent;
 
         public UnionFind(int n) {
             count = n;

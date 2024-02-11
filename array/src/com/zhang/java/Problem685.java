@@ -104,7 +104,7 @@ public class Problem685 {
             int u = edges[i][0];
             int v = edges[i][1];
 
-            //有向图存在有向环，则list中的另一条边edge1即为要删除的冗余边
+            //删除edges2有向图存在有向环，则list中的另一条边edge1即为要删除的冗余边
             if (unionFind.isConnected(u, v)) {
                 return edge1;
             } else {
@@ -113,7 +113,7 @@ public class Problem685 {
             }
         }
 
-        //有向图不存在有向环，则edge2即为要删除的冗余边
+        //删除edges2有向图不存在有向环，则edge2即为要删除的冗余边
         return edge2;
     }
 
