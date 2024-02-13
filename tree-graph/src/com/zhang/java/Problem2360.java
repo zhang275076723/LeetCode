@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2023/10/15 08:29
  * @Author zsy
- * @Description 图中的最长环 拓扑排序类比 图类比
+ * @Description 图中的最长环 拓扑排序类比
  * 给你一个 n 个节点的 有向图 ，节点编号为 0 到 n - 1 ，其中每个节点 至多 有一条出边。
  * 图用一个大小为 n 下标从 0 开始的数组 edges 表示，节点 i 到节点 edges[i] 之间有一条有向边。
  * 如果节点 i 没有出边，那么 edges[i] == -1 。

@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2023/10/10 08:49
  * @Author zsy
- * @Description 最小高度树 快手面试题 类比Problem1162 拓扑排序类比Problem207、Problem210、Problem329、IsCircleDependency
+ * @Description 最小高度树 快手面试题 类比Problem1245 保存父节点类比Problem113、Problem126、Problem272、Problem863、Offer34 拓扑排序类比Problem207、Problem210、Problem329、IsCircleDependency
  * 树是一个无向图，其中任何两个顶点只通过一条路径连接。
  * 换句话说，一个任何没有简单环路的连通图都是一棵树。
  * 给你一棵包含 n 个节点的树，标记为 0 到 n - 1 。
@@ -36,15 +36,19 @@ import java.util.Queue;
 public class Problem310 {
     public static void main(String[] args) {
         Problem310 problem310 = new Problem310();
-        int n = 6;
-        int[][] edges = {{3, 0}, {3, 1}, {3, 2}, {3, 4}, {5, 4}};
+//        int n = 6;
+//        int[][] edges = {{3, 0}, {3, 1}, {3, 2}, {3, 4}, {5, 4}};
+        int n = 5;
+        int[][] edges = {{0, 1}, {0, 2}, {0, 3}, {3, 4}};
         System.out.println(problem310.findMinHeightTrees(n, edges));
         System.out.println(problem310.findMinHeightTrees2(n, edges));
+        System.out.println(problem310.findMinHeightTrees3(n, edges));
+        System.out.println(problem310.findMinHeightTrees4(n, edges));
     }
 
     /**
-     * 暴力bfs(超时)
-     * 对每个节点进行bfs，得到每个节点节点作为根的树的高度，得到图中最小高度对应的根节点
+     * 暴力dfs (超时)
+     * 对每个节点dfs，得到每个节点作为根节点的树的高度，得到图中最小高度对应的根节点
      * 时间复杂度O(n^2)，空间复杂度O(n)
      *
      * @param n
@@ -63,11 +67,7 @@ public class Problem310 {
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                if (i == j) {
-                    graph[i][j] = 1;
-                } else {
-                    graph[i][j] = -1;
-                }
+                graph[i][j] = -1;
             }
         }
 
@@ -80,11 +80,10 @@ public class Problem310 {
         //图中最小高度，初始化为int最大值
         int minHeight = Integer.MAX_VALUE;
 
-        //对每个节点进行bfs，得到每个节点节点作为根的树的高度，得到图中最小高度对应的根节点
+        //对每个节点dfs，得到每个节点作为根节点的树的高度，得到图中最小高度对应的根节点
         for (int i = 0; i < n; i++) {
-            int curHeight = bfs(i, n, graph);
+            int curHeight = dfs(i, n, graph, new boolean[n]);
 
-            //更新list和minHeight
             if (curHeight < minHeight) {
                 list.clear();
                 list.add(i);
@@ -98,18 +97,180 @@ public class Problem310 {
     }
 
     /**
-     * bfs拓扑排序
-     * 核心思想：像剪枝一样一层层把最外层节点删除，即删除最外层度为1的节点，最后剩下的1个或2个节点即为图中最小高度对应的根节点
-     * 图中最外层度为1的节点不是图中最小高度对应的根节点，图中度为1的节点入队，队列中节点出队，
-     * 删除当前节点相连的边，即邻接节点的度减1，邻接节点度为1的节点入队，
-     * 直至剩下1个或2个节点未访问，则剩下的这1个或2个节点为图中最小高度对应的根节点
-     * 时间复杂度O(n)，空间复杂度O(n)
+     * 暴力bfs (超时)
+     * 对每个节点bfs，得到每个节点作为根节点的树的高度，得到图中最小高度对应的根节点
+     * 时间复杂度O(n^2)，空间复杂度O(n)
      *
      * @param n
      * @param edges
      * @return
      */
     public List<Integer> findMinHeightTrees2(int n, int[][] edges) {
+        if (n == 1) {
+            return new ArrayList<Integer>() {{
+                add(0);
+            }};
+        }
+
+        //邻接矩阵
+        int[][] graph = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                graph[i][j] = -1;
+            }
+        }
+
+        for (int i = 0; i < edges.length; i++) {
+            graph[edges[i][0]][edges[i][1]] = 1;
+            graph[edges[i][1]][edges[i][0]] = 1;
+        }
+
+        List<Integer> list = new ArrayList<>();
+        //图中最小高度，初始化为int最大值
+        int minHeight = Integer.MAX_VALUE;
+
+        //对每个节点bfs，得到每个节点作为根节点的树的高度，得到图中最小高度对应的根节点
+        for (int i = 0; i < n; i++) {
+            int curHeight = bfs(i, n, graph);
+
+            if (curHeight < minHeight) {
+                list.clear();
+                list.add(i);
+                minHeight = curHeight;
+            } else if (curHeight == minHeight) {
+                list.add(i);
+            }
+        }
+
+        return list;
+    }
+
+    /**
+     * 两次bfs
+     * 任意一个节点bfs，得到距离当前节点最远的节点，再从最远的节点bfs，得到另一端的最远节点，
+     * 这两个最远节点之间的距离即为树的最长路径，最长路径的中间节点即为图中最小高度对应的根节点
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param n
+     * @param edges
+     * @return
+     */
+    public List<Integer> findMinHeightTrees3(int n, int[][] edges) {
+        if (n == 1) {
+            return new ArrayList<Integer>() {{
+                add(0);
+            }};
+        }
+
+        //邻接表，使用邻接矩阵，则超时
+        List<List<Integer>> graph = new ArrayList<>(n);
+
+        for (int i = 0; i < n; i++) {
+            graph.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < edges.length; i++) {
+            graph.get(edges[i][0]).add(edges[i][1]);
+            graph.get(edges[i][1]).add(edges[i][0]);
+        }
+
+        Queue<Integer> queue = new LinkedList<>();
+        boolean[] visited = new boolean[n];
+        //任意一个节点入队
+        queue.offer(0);
+        visited[0] = true;
+
+        //最远节点
+        int node1 = -1;
+        int node2 = -1;
+        //节点的父节点数组，用于求node1到node2的路径
+        int[] parent = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            parent[i] = -1;
+        }
+
+        //从该节点bfs，得到距离当前节点最远的节点node1
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+
+            for (int i = 0; i < size; i++) {
+                int u = queue.poll();
+                node1 = u;
+
+                for (int v : graph.get(u)) {
+                    if (visited[v]) {
+                        continue;
+                    }
+
+                    queue.offer(v);
+                    visited[v] = true;
+                }
+            }
+        }
+
+        visited = new boolean[n];
+        //最远节点入队
+        queue.offer(node1);
+        visited[node1] = true;
+
+        //从最远的节点node1bfs，得到另一端的节点node2
+        //注意：需要记录parent[i]，用于求node1到node2的路径
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+
+            for (int i = 0; i < size; i++) {
+                int u = queue.poll();
+                node2 = u;
+
+                for (int v : graph.get(u)) {
+                    if (visited[v]) {
+                        continue;
+                    }
+
+                    queue.offer(v);
+                    visited[v] = true;
+                    parent[v] = u;
+                }
+            }
+        }
+
+        //树的最长路径中的节点集合，即从node1到node2的路径
+        List<Integer> path = new ArrayList<>();
+        int node = node2;
+
+        //这两个最远节点之间的距离即为树的最长路径
+        while (node != -1) {
+            path.add(node);
+            node = parent[node];
+        }
+
+        List<Integer> list = new ArrayList<>();
+
+        //最长路径的中间节点即为图中最小高度对应的根节点
+        if (path.size() % 2 == 0) {
+            //偶数个节点，则中间的两个节点为图中最小高度对应的根节点
+            list.add(path.get(path.size() / 2 - 1));
+            list.add(path.get(path.size() / 2));
+        } else {
+            //奇数个节点，则中间的一个节点为图中最小高度对应的根节点
+            list.add(path.get(path.size() / 2));
+        }
+
+        return list;
+    }
+
+    /**
+     * bfs拓扑排序
+     * 删除度为1(无向图不区分入度出度)的节点，即删除叶节点，直至图中剩余1个或2个节点即为图中最小高度对应的根节点
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param n
+     * @param edges
+     * @return
+     */
+    public List<Integer> findMinHeightTrees4(int n, int[][] edges) {
         if (n == 1) {
             return new ArrayList<Integer>() {{
                 add(0);
@@ -176,8 +337,43 @@ public class Problem310 {
         return list;
     }
 
+    /**
+     * 得到节点u到最远节点的距离
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param u
+     * @param n
+     * @param graph
+     * @return
+     */
+    private int dfs(int u, int n, int[][] graph, boolean[] visited) {
+        if (visited[u]) {
+            return 0;
+        }
+
+        int distance = 0;
+        visited[u] = true;
+
+        for (int i = 0; i < n; i++) {
+            if (graph[u][i] != -1) {
+                distance = Math.max(distance, dfs(i, n, graph, visited) + 1);
+            }
+        }
+
+        return distance;
+    }
+
+    /**
+     * 得到节点u到最远节点的距离
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param u
+     * @param n
+     * @param graph
+     * @return
+     */
     private int bfs(int u, int n, int[][] graph) {
-        int height = 0;
+        int distance = 0;
         Queue<Integer> queue = new LinkedList<>();
         boolean[] visited = new boolean[n];
         queue.offer(u);
@@ -190,7 +386,7 @@ public class Problem310 {
                 int v = queue.poll();
                 visited[u] = true;
 
-                for (int j = 0; j < graph.length; j++) {
+                for (int j = 0; j < n; j++) {
                     if (graph[v][j] != -1 && !visited[j]) {
                         queue.offer(j);
                         visited[j] = true;
@@ -198,10 +394,10 @@ public class Problem310 {
                 }
             }
 
-            height++;
+            distance++;
         }
 
-        //高度不包含根节点，需要减1
-        return height - 1;
+        //节点u到最远节点的距离需要减1
+        return distance - 1;
     }
 }

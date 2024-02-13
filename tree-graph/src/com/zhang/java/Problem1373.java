@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/5/21 08:35
  * @Author zsy
- * @Description 二叉搜索子树的最大键值和 dfs类比Problem104、Problem110、Problem111、Problem124、Problem298、Problem337、Problem543、Problem687
+ * @Description 二叉搜索子树的最大键值和 dfs类比Problem104、Problem110、Problem111、Problem124、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979
  * 给你一棵以 root 为根的 二叉树 ，请你返回 任意 二叉搜索子树的最大键值和。
  * 二叉搜索树的定义如下：
  * 任意节点的左子树中的键值都 小于 此节点的键值。
@@ -98,8 +98,7 @@ public class Problem1373 {
 
         //返回当前节点作为二叉搜索树根节点对父节点的最大键值和数组，用于计算以当前节点父节点作为二叉搜索树根节点的最大键值和数组
         return new int[]{root.val + leftArr[0] + rightArr[0],
-                Math.max(root.val, rightArr[1]),
-                Math.min(root.val, leftArr[2])};
+                Math.max(root.val, rightArr[1]), Math.min(root.val, leftArr[2])};
     }
 
     private TreeNode buildTree(String[] data) {

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/10/12 08:50
  * @Author zsy
- * @Description 重新安排行程 欧拉回路类比Problem753 图类比
+ * @Description 重新安排行程 欧拉回路类比Problem753
  * 给你一份航线列表 tickets ，其中 tickets[i] = [fromi, toi] 表示飞机出发和降落的机场地点。
  * 请你对该行程进行重新规划排序。
  * 所有这些机票都属于一个从 JFK（肯尼迪国际机场）出发的先生，所以该行程必须从 JFK 开始。

@@ -39,10 +39,10 @@ public class Problem834 {
 
     public static void main(String[] args) {
         Problem834 problem834 = new Problem834();
-//        int n = 6;
-//        int[][] edges = {{0, 1}, {0, 2}, {2, 3}, {2, 4}, {2, 5}};
-        int n = 7;
-        int[][] edges = {{0, 1}, {0, 2}, {2, 3}, {2, 4}, {2, 5}, {5, 6}};
+        int n = 6;
+        int[][] edges = {{0, 1}, {0, 2}, {2, 3}, {2, 4}, {2, 5}};
+//        int n = 7;
+//        int[][] edges = {{0, 1}, {0, 2}, {2, 3}, {2, 4}, {2, 5}, {5, 6}};
         //[8, 12, 6, 10, 10, 10]
         System.out.println(Arrays.toString(problem834.sumOfDistancesInTree(n, edges)));
         //[8, 12, 6, 10, 10, 10]

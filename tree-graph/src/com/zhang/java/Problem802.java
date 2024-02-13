@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2023/10/22 08:07
  * @Author zsy
- * @Description 找到最终的安全状态 拓扑排序类比 图类比
+ * @Description 找到最终的安全状态 拓扑排序类比
  * 有一个有 n 个节点的有向图，节点按 0 到 n - 1 编号。
  * 图由一个 索引从 0 开始 的 2D 整数数组 graph表示，
  * graph[i]是与节点 i 相邻的节点的整数数组，这意味着从节点 i 到 graph[i]中的每个节点都有一条边。

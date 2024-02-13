@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/10/14 08:52
  * @Author zsy
- * @Description 序列重建 拓扑排序类比 图类比
+ * @Description 序列重建 拓扑排序类比
  * 给定一个长度为 n 的整数数组 nums ，其中 nums 是范围为 [1，n] 的整数的排列。
  * 还提供了一个 2D 整数数组 sequences ，其中 sequences[i] 是 nums 的子序列。
  * 检查 nums 是否是唯一的最短 超序列 。

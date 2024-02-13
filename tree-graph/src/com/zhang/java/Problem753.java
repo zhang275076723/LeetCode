@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2023/10/18 08:33
  * @Author zsy
- * @Description 破解保险箱 类比Problem89 类比Problem752 欧拉回路类比Problem332 图类比
+ * @Description 破解保险箱 类比Problem89 类比Problem752 欧拉回路类比Problem332
  * 有一个需要密码才能打开的保险箱。
  * 密码是 n 位数, 密码的每一位都是范围 [0, k - 1] 中的一个数字。
  * 保险箱有一种特殊的密码校验方法，你可以随意输入密码序列，保险箱会自动记住 最后 n 位输入 ，如果匹配，则能够打开保险箱。

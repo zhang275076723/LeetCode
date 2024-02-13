@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/10/27 08:17
  * @Author zsy
- * @Description 从给定原材料中找到所有可以做出的菜 拓扑排序类比 图类比
+ * @Description 从给定原材料中找到所有可以做出的菜 拓扑排序类比
  * 你有 n 道不同菜的信息。给你一个字符串数组 recipes 和一个二维字符串数组 ingredients 。
  * 第 i 道菜的名字为 recipes[i] ，如果你有它 所有 的原材料 ingredients[i] ，那么你可以 做出 这道菜。
  * 一道菜的原材料可能是 另一道 菜，也就是说 ingredients[i] 可能包含 recipes 中另一个字符串。
