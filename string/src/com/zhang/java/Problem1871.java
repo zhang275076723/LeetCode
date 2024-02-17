@@ -109,8 +109,7 @@ public class Problem1871 {
                 //更新前缀和
                 preSum[i + 1] = preSum[i];
             } else {
-                //s[i]为0，才有可能到达，如果s[i-maxJump]-num[i-minJump]有一个为0，
-                //并且s[i-maxJump]-num[i-minJump]可到达，则s[i]可到达
+                //s[i]为0，才有可能到达，如果s[i-maxJump]-num[i-minJump]有一个为0，并且s[i-maxJump]-num[i-minJump]可到达，则s[i]可到达
 
                 //preSum左右指针，right指针赋值-1，保证preSum[right+1]包括dp[right]
                 int left = Math.max(0, i - maxJump);
