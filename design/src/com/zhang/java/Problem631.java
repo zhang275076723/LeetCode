@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2024/2/6 08:39
  * @Author zsy
- * @Description 设计 Excel 求和公式 拓扑排序类比
+ * @Description 设计 Excel 求和公式 类比Problem168、Problem171 拓扑排序类比
  * 请你设计 Excel 中的基本功能，并实现求和公式。
  * 实现 Excel 类：
  * Excel(int height, char width)：用高度 height 和宽度 width 初始化对象。

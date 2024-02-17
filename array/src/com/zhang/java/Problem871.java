@@ -50,7 +50,7 @@ public class Problem871 {
      * 优先队列(大根堆)
      * 起点距离加油站的距离stations[i][0]已经按照由小到大排序，所以不需要进行排序，
      * 将能够访问到的加油站汽油stations[i][1]加入大根堆，此时并不急于加油，而是当汽车剩余油量不能到达下一个加油站时，
-     * 大根堆堆顶加油站汽油出堆，给汽车加油，到达终点的加油次数即为最少加油次数
+     * 大根堆堆顶元素出堆，即选择当前能够到达的加油站中stations[i][1]最大的加油站给汽车加油，则到达终点的加油次数即为最少加油次数
      * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
      * @param target
@@ -83,7 +83,7 @@ public class Problem871 {
             //汽车从上一个加油站到当前加油站剩余油量
             remainFuel = remainFuel - (stations[i][0] - lastStation);
 
-            //当前汽车剩余油量小于0，则大根堆堆顶加油站汽油出堆，给汽车加油
+            //当前汽车剩余油量小于0，则大根堆堆顶元素出堆，即选择当前能够到达的加油站中stations[i][1]最大的加油站给汽车加油
             while (remainFuel < 0 && !priorityQueue.isEmpty()) {
                 int fuel = priorityQueue.poll();
                 remainFuel = remainFuel + fuel;
@@ -101,7 +101,7 @@ public class Problem871 {
             priorityQueue.offer(stations[i][1]);
         }
 
-        //汽车从最后一个加油站到target剩余油量
+        //汽车从最后一个加油站到target
         remainFuel = remainFuel - (target - lastStation);
 
         //当前汽车剩余油量小于0，则大根堆堆顶加油站汽油出堆，给汽车加油

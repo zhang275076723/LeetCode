@@ -109,7 +109,7 @@ public class Problem632 {
 
     /**
      * 排序+滑动窗口，双指针
-     * arr[0]：nums中元素，arr[1]：当前nums元素所在行的下标索引，二维数组arr按照nums中元素由小到大排序，
+     * arr[0]：nums中元素，arr[1]：当前nums元素所在行的下标索引，二维数组arr按照nums中元素arr[0]由小到大排序，
      * 当left和right形成的窗口不满足每行至少包含一个nums元素时，right右移；
      * 当left和right形成的窗口满足每行至少包含一个nums元素时，更新最小区间，left左移
      * 时间复杂度O(nlogn+n)，空间复杂度O(n) (k=nums.size()，n：nums中所有元素的个数)
@@ -136,7 +136,7 @@ public class Problem632 {
             }
         }
 
-        //二维数组arr按照nums中元素由小到大排序
+        //二维数组arr按照nums中元素arr[0]由小到大排序
         Arrays.sort(arr, new Comparator<int[]>() {
             @Override
             public int compare(int[] arr1, int[] arr2) {

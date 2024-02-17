@@ -107,6 +107,7 @@ public class Problem851 {
 
                 inDegree[v]--;
 
+                //入度为0的节点入队
                 if (inDegree[v] == 0) {
                     queue.offer(v);
                 }

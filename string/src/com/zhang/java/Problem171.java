@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/4/26 10:14
  * @Author zsy
- * @Description Excel表列序号 进制转换类比Problem12、Problem13、Problem168、Add36Strings、Subtract36Strings
+ * @Description Excel表列序号 类比Problem168、Problem631 进制转换类比Problem12、Problem13、Problem168、Add36Strings、Subtract36Strings
  * 给你一个字符串 columnTitle ，表示 Excel 表格中的列名称。返回 该列名称对应的列序号 。
  * A -> 1
  * B -> 2
@@ -29,7 +29,8 @@ package com.zhang.java;
 public class Problem171 {
     public static void main(String[] args) {
         Problem171 problem171 = new Problem171();
-        String columnTitle = "ZY";
+        //702
+        String columnTitle = "ZZ";
         System.out.println(problem171.titleToNumber(columnTitle));
     }
 
