@@ -109,12 +109,12 @@ public class Problem676 {
             //当前字符searchWord[t]
             char c = searchWord.charAt(t);
 
-            //c不修改，继续往后遍历
+            //当前字符不修改，继续往后遍历
             if (node.children.containsKey(c) && backtrack(t + 1, node.children.get(c), searchWord, flag)) {
                 return true;
             }
 
-            //searchWord还没有修改，则修改searchWord[t]为'a'+i
+            //searchWord中还没有字符修改，则修改当前字符为'a'+i
             if (!flag) {
                 for (int i = 0; i < 26; i++) {
                     if (c != (char) ('a' + i) && node.children.containsKey((char) ('a' + i)) &&

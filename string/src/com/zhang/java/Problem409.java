@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/11/12 09:36
  * @Author zsy
- * @Description 最长回文串 类比Problem266、Problem267 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem516、Problem647、Problem680、Problem1312
+ * @Description 最长回文串 类比Problem767 类比Problem266、Problem267 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem516、Problem647、Problem680、Problem1312
  * 给定一个包含大写字母和小写字母的字符串 s ，返回 通过这些字母构造成的 最长的回文串 。
  * 在构造过程中，请注意 区分大小写 。比如 "Aa" 不能当做一个回文字符串。
  * <p>

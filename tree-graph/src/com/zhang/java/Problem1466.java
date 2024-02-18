@@ -43,7 +43,7 @@ public class Problem1466 {
 
     /**
      * dfs
-     * 核心思想：有向图当成无向图dfs，当前节点u相连的有向边如果存在节点u到节点v的边，则当前有向边需要修改方向
+     * 核心思想：有向图当成无向图dfs，当前节点u相连的有向边存在节点u到节点v的边，则当前有向边需要修改方向
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param n
@@ -106,12 +106,6 @@ public class Problem1466 {
             //当前节点u
             int u = queue.poll();
 
-            if (visited[u]) {
-                continue;
-            }
-
-            visited[u] = true;
-
             //遍历当前节点u相连的有向边
             for (int[] arr : list.get(u)) {
                 //有向边的起始节点
@@ -119,14 +113,17 @@ public class Problem1466 {
                 //有向边的终止节点
                 int end = arr[1];
 
-                //当前节点u相连的有向边存在节点u到节点v的边，则当前有向边需要修改方向
+                //存在start到end的边中节点u为start，则当前有向边需要修改方向
                 if (start == u) {
                     if (!visited[end]) {
                         count++;
+                        visited[end] = true;
                         queue.offer(end);
                     }
                 } else {
+                    //存在start到end的边中节点u为end，则当前有向边不需要修改方向
                     if (!visited[start]) {
+                        visited[start] = true;
                         queue.offer(start);
                     }
                 }
@@ -137,14 +134,8 @@ public class Problem1466 {
     }
 
     private int dfs(int u, boolean[] visited, List<List<int[]>> list) {
-        //当前节点u已访问，直接返回0
-        if (visited[u]) {
-            return 0;
-        }
-
         //从节点u开始dfs，有向边需要修改方向的最小个数
         int count = 0;
-        visited[u] = true;
 
         //遍历当前节点u相连的有向边
         for (int[] arr : list.get(u)) {
@@ -153,13 +144,16 @@ public class Problem1466 {
             //有向边的终止节点
             int end = arr[1];
 
-            //当前节点u相连的有向边存在节点u到节点v的边，则当前有向边需要修改方向
+            //存在start到end的边中节点u为start，则当前有向边需要修改方向
             if (u == start) {
                 if (!visited[end]) {
+                    visited[end] = true;
                     count = count + 1 + dfs(end, visited, list);
                 }
             } else {
+                //存在start到end的边中节点u为end，则当前有向边不需要修改方向
                 if (!visited[start]) {
+                    visited[start] = true;
                     count = count + dfs(start, visited, list);
                 }
             }
