@@ -78,7 +78,7 @@ public class Problem162 {
         int mid;
 
         while (left < right) {
-            //mid往左偏，所以nums[mid]和nums[mid + 1]才能比较
+            //mid往左偏，所以nums[mid]和nums[mid+1]才能比较
             mid = left + ((right - left) >> 1);
 
             //nums[mid]小于nums[mid+1]，峰值在nums[mid+1]-nums[right]

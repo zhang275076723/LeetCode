@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * @Date 2024/1/13 08:11
  * @Author zsy
- * @Description 会议室 III 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem352、Problem406、Problem435、Problem436、Problem632、Problem763、Problem986、Problem1288 优先队列类比
+ * @Description 会议室 III 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem352、Problem406、Problem435、Problem436、Problem632、Problem763、Problem855、Problem986、Problem1288 优先队列类比
  * 给你一个整数 n ，共有编号从 0 到 n - 1 的 n 个会议室。
  * 给你一个二维整数数组 meetings ，其中 meetings[i] = [starti, endi] 表示一场会议将会在 半闭 时间区间 [starti, endi) 举办。
  * 所有 starti 的值 互不相同 。
@@ -73,14 +73,14 @@ public class Problem2402 {
         //按照会议开始时间meetings[i][0]由小到大排序
         quickSort(meetings, 0, meetings.length - 1);
 
-        //优先队列，小根堆，存放空闲会议室编号
+        //优先队列，小根堆，存放空闲会议室编号，按照空闲会议室编号由小到大排序
         PriorityQueue<Integer> priorityQueue1 = new PriorityQueue<>(new Comparator<Integer>() {
             @Override
             public int compare(Integer a, Integer b) {
                 return a - b;
             }
         });
-        //优先队列，小根堆，存放正在使用会议室的会议结束时间和会议室编号
+        //优先队列，小根堆，存放正在使用会议室的会议结束时间和会议室编号，先按照会议结束时间由小到大排序，再按照会议室编号由小到大排序
         //arr[0]：正在使用会议室的会议结束时间，arr[1]：会议室编号
         PriorityQueue<int[]> priorityQueue2 = new PriorityQueue<>(new Comparator<int[]>() {
             @Override

@@ -8,7 +8,7 @@ import java.util.TreeSet;
 /**
  * @Date 2024/2/13 08:37
  * @Author zsy
- * @Description 考场就座 类比Problem849 有序集合类比Problem220、Problem352 区间类比
+ * @Description 考场就座 类比Problem849 有序集合类比Problem220、Problem352 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem352、Problem406、Problem435、Problem436、Problem632、Problem763、Problem986、Problem1288、Problem2402
  * 在考场里，一排有 N 个座位，分别编号为 0, 1, 2, ..., N-1 。
  * 当学生进入考场后，他必须坐在能够使他与离他最近的人之间的距离达到最大化的座位上。
  * 如果有多个这样的座位，他会坐在编号最小的座位上。
@@ -57,15 +57,16 @@ public class Problem855 {
         private final int n;
         //有序集合，存储空闲座位的区间，先按照区间大小由大到小排序，再按照区间左边界由小到大排序
         private final TreeSet<int[]> set;
-        //key：当前学生下标索引，value：当前学生左边相邻的学生下标索引
+        //key：当前学生下标索引，value：当前学生左边距离当前学生最近的学生下标索引
         private final Map<Integer, Integer> leftMap;
-        //key：当前学生下标索引，value：当前学生右边相邻的学生下标索引
+        //key：当前学生下标索引，value：当前学生右边距离当前学生最近的学生下标索引
         private final Map<Integer, Integer> rightMap;
 
         public ExamRoom(int n) {
             this.n = n;
 
             //先按照区间大小由大到小排序，再按照区间左边界由小到大排序
+            //注意：区间不存在左边界或者不存在右边界的特殊情况
             set = new TreeSet<>(new Comparator<int[]>() {
                 @Override
                 public int compare(int[] arr1, int[] arr2) {
@@ -117,6 +118,7 @@ public class Problem855 {
          * @return
          */
         public int seat() {
+            //first()：set中第一个区间
             //从set中获取区间大小最大，并且左边界最小的区间
             int[] arr = set.first();
 
@@ -156,9 +158,9 @@ public class Problem855 {
          * @param p
          */
         public void leave(int p) {
-            //当前学生左边相邻的学生下标索引
+            //当前学生左边距离当前学生最近的学生下标索引
             int leftIndex = leftMap.get(p);
-            //当前学生右边相邻的学生下标索引
+            //当前学生右边距离当前学生最近的学生下标索引
             int rightIndex = rightMap.get(p);
 
             //这两个区间从set中移除，同时移除leftMap和rightMap

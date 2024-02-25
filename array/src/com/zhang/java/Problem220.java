@@ -36,7 +36,7 @@ public class Problem220 {
 
     /**
      * 滑动窗口，双指针+有序集合
-     * 滑动窗口保证数组中两个元素的下标索引小于等于k，有序集合保证O(logk)得到大于nums[i]-t的最小元素
+     * 滑动窗口保证滑动窗口中元素和右指针的下标索引之差小于等于k，有序集合保证O(logk)得到有序集合中大于等于nums[i]-t的最小元素
      * 时间复杂度O(nlogk)，空间复杂度O(k)
      *
      * @param nums
@@ -72,8 +72,8 @@ public class Problem220 {
             set.add(nums[right]);
             right++;
 
-            //始终保持滑动窗口大小小于等于k，当滑动窗口大小大于k时，nums[left]从set中移除，左指针右移
-            //因为是right先右移再判断窗口大小，所以判断条件是大于k
+            //保持滑动窗口大小不超过k，即保证滑动窗口中元素和右指针的下标索引之差小于等于k，
+            //当不满足滑动窗口大小时nums[left]从set中移除，左指针右移
             if (right - left > k) {
                 set.remove(nums[left]);
                 left++;

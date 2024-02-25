@@ -56,6 +56,7 @@ public class Problem281 {
         listArr[2] = new ArrayList<Integer>() {{
             add(8);
             add(9);
+            add(10);
         }};
         ZigzagIterator2 zigzagIterator2 = new ZigzagIterator2(listArr);
         while (zigzagIterator2.hasNext()) {
@@ -88,7 +89,7 @@ public class Problem281 {
         }
 
         public int next() {
-            int value = -1;
+            int value;
 
             if (index == 0) {
                 value = list1.get(i);

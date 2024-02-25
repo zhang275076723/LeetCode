@@ -7,7 +7,8 @@ import java.util.*;
  * @Author zsy
  * @Description 二叉搜索树迭代器 II 迭代器类比Problem173、Problem251、Problem281、Problem284、Problem341、Problem604、Problem900、Problem1286
  * 实现二叉搜索树（BST）的中序遍历迭代器 BSTIterator 类：
- * BSTIterator(TreeNode root) 初始化 BSTIterator 类的实例。二叉搜索树的根节点 root 作为构造函数的参数传入。
+ * BSTIterator(TreeNode root) 初始化 BSTIterator 类的实例。
+ * 二叉搜索树的根节点 root 作为构造函数的参数传入。
  * 内部指针使用一个不存在于树中且小于树中任意值的数值来初始化。
  * boolean hasNext() 如果当前指针在中序遍历序列中，存在右侧数值，返回 true ，否则返回 false 。
  * int next() 将指针在中序遍历序列中向右移动，然后返回移动后指针所指数值。
@@ -118,7 +119,6 @@ public class Problem1586 {
         }
 
         public boolean hasPrev() {
-            //index指向
             return index >= 2;
         }
 

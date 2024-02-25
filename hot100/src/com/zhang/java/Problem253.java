@@ -5,7 +5,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2022/5/22 9:02
  * @Author zsy
- * @Description 会议室 II 携程机试题 优先队列类比Problem407、Problem630 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem352、Problem406、Problem435、Problem436、Problem632、Problem763、Problem986、Problem1288、Problem2402
+ * @Description 会议室 II 携程机试题 优先队列类比Problem407、Problem630 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem352、Problem406、Problem435、Problem436、Problem632、Problem763、Problem855、Problem986、Problem1288、Problem2402
  * 给定一个会议时间安排的数组，
  * 每个会议时间都会包括开始和结束的时间 [[s1,e1],[s2,e2],…] (si < ei)，
  * 为避免会议冲突，同时要考虑充分利用会议室资源，请你计算至少需要多少间会议室，才能满足这些会议安排。

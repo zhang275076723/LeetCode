@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/8/27 09:04
  * @Author zsy
- * @Description 3 的幂 位运算类比Problem29、Problem136、Problem137、Problem190、Problem191、Problem201、Problem231、Problem260、Problem271、Problem342、Problem371、Problem389、Problem405、Problem461、Problem477、Problem645、Problem898、Problem1290、Offer15、Offer56、Offer56_2、Offer64、Offer65、IpToInt
+ * @Description 3 的幂 类比Problem231、Problem342 位运算类比Problem29、Problem136、Problem137、Problem190、Problem191、Problem201、Problem231、Problem260、Problem271、Problem342、Problem371、Problem389、Problem405、Problem461、Problem477、Problem645、Problem898、Problem1290、Offer15、Offer56、Offer56_2、Offer64、Offer65、IpToInt
  * 给定一个整数，写一个函数来判断它是否是 3 的幂次方。
  * 如果是，返回 true ；否则，返回 false 。
  * 整数 n 是 3 的幂次方需满足：存在整数 x 使得 n == 3^x

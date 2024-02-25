@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @Date 2022/12/4 09:52
  * @Author zsy
- * @Description 区间列表的交集 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem352、Problem406、Problem435、Problem436、Problem632、Problem763、Problem1288、Problem2402
+ * @Description 区间列表的交集 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem352、Problem406、Problem435、Problem436、Problem632、Problem763、Problem855、Problem1288、Problem2402
  * 给定两个由一些 闭区间 组成的列表，firstList 和 secondList ，
  * 其中 firstList[i] = [starti, endi] 而 secondList[j] = [startj, endj] 。
  * 每个区间列表都是成对 不相交 的，并且 已经排序 。

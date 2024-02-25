@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/5/8 9:13
  * @Author zsy
- * @Description LFU 缓存 字节面试题 类比Problem146、Problem659
+ * @Description LFU 缓存 字节面试题 类比Problem146、Problem355、Problem432
  * 请你为 最不经常使用（LFU）缓存算法设计并实现数据结构。
  * 实现 LFUCache 类：
  * LFUCache(int capacity) - 用数据结构的容量 capacity 初始化对象
@@ -70,169 +70,178 @@ public class Problem460 {
     }
 
     /**
-     * 双哈希表+双向链表+使用频率计数器
-     * 一个哈希表存储key和缓存节点node的映射
-     * 另一个哈希表存储使用频率和当前使用频率链表
+     * 双哈希表+双向链表+最小访问次数计数器
+     * 一个哈希表存储key和节点node的映射，另一个哈希表存储访问次数和当前访问次数链表的映射
      */
     private static class LFUCache {
-        //缓存容量
+        //最大缓存大小
         private final int capacity;
-
-        //当前缓存容量
+        //当前缓存大小
         private int curSize;
-
-        //当前缓存中访问频率最少的节点频率，
-        //当前容量等于最大容量时，移除节点通过minFrequency对应的链表中移除节点
+        //节点的最小访问次数
+        //当前大小等于最大大小，并且put新节点时，从minFrequency对应链表中移除末尾节点
         private int minFrequency;
-
-        //缓存map，在O(1)找到当前缓存节点，key为缓存关键字，value为数据节点
-        private final Map<Integer, Node> cache;
-
-        //缓存使用频率map，在O(1)找到当前节点使用频率链表，key为缓存使用频率，value为使用频率相等的双向链表
-        private final Map<Integer, LinkedList> frequencyCache;
+        //key：缓存key，value：缓存节点
+        private final Map<Integer, Node> keyMap;
+        //key：访问次数，value：访问次数为key的双向链表
+        private final Map<Integer, LinkedList> frequencyMap;
 
         public LFUCache(int capacity) {
             this.capacity = capacity;
             this.curSize = 0;
             this.minFrequency = 0;
-            cache = new HashMap<>(capacity);
-            frequencyCache = new HashMap<>(capacity);
+            keyMap = new HashMap<>(capacity);
+            frequencyMap = new HashMap<>(capacity);
         }
 
         /**
-         * 1、如果key不在cache中，直接返回-1
-         * 2、如果key在cache，将当前节点从frequencyCache对应的链表中删除，并添加到当前节点frequency+1对应的链表的头，
-         * 注意更新最少使用的频率，返回当前节点的value
+         * 1、keyMap中不存在key，直接返回-1
+         * 2、keyMap中存在key，当前节点从对应的链表中删除，当前节点加入当前节点访问次数加1的链表的头结点，
+         * 更新当前节点访问次数，更新minFrequency，返回当前节点value
+         * 时间复杂度O(1)，空间复杂度O(1)
          *
          * @param key
          * @return
          */
         public int get(int key) {
-            //缓存容量为0，或当前节点不在缓存map中，直接返回-1
-            if (capacity == 0 || !cache.containsKey(key)) {
+            //最大缓存大小为0，或者keyMap中不存在key，直接返回-1
+            if (capacity == 0 || !keyMap.containsKey(key)) {
                 return -1;
             }
 
-            Node node = cache.get(key);
-            LinkedList linkedList = frequencyCache.get(node.frequency);
-            //当前节点从当前频率链表中删除
+            //当前节点
+            Node node = keyMap.get(key);
+            //当前节点所在链表
+            LinkedList linkedList = frequencyMap.get(node.frequency);
+            //当前节点从链表中删除
             linkedList.remove(node);
 
-            //当前频率链表为空，从frequencyCache中移除，更新minFrequency
+            //删除之后，当前链表为空，则当前链表从frequencyMap中删除
             if (linkedList.head.next == linkedList.tail) {
-                frequencyCache.remove(node.frequency);
+                frequencyMap.remove(node.frequency);
+                //更新minFrequency
                 if (node.frequency == minFrequency) {
                     minFrequency++;
                 }
             }
 
-            //当前节点访问频率加1
+            //当前节点访问次数加1
             node.frequency++;
 
-            //frequencyCache中没有当前节点的访问频率链表，创建当前节点访问频率链表
-            if (!frequencyCache.containsKey(node.frequency)) {
-                frequencyCache.put(node.frequency, new LinkedList());
+            if (!frequencyMap.containsKey(node.frequency)) {
+                frequencyMap.put(node.frequency, new LinkedList());
             }
 
-            LinkedList nextLinkedList = frequencyCache.get(node.frequency);
-            //当前节点放到新的访问频率链表头结点
+            //当前节点访问次数加1之后所在链表
+            LinkedList nextLinkedList = frequencyMap.get(node.frequency);
+            //当前节点加入链表的头结点
             nextLinkedList.addFirst(node);
 
             return node.value;
         }
 
         /**
-         * 1、如果key在cache中，将当前节点从frequencyCache对应的链表中删除，添加到当前节点frequency+1对应的链表头
-         * 修改该节点的value和frequency，要注意链表删除和添加是否为空的情况
-         * 2、如果key不在cache中，如果缓存已满，删除frequencyCache中minFrequency链表中尾结点的前一个节点，
-         * 删除cache中的当前节点，添加当前节点到使用频率为1链表的头结点和chache中
+         * 1、keyMap中存在key，当前节点从对应的链表中删除，当前节点加入当前节点访问次数加1的链表的头结点，
+         * 更新当前节点value和访问次数，更新minFrequency
+         * 2.1、keyMap中不存在key，并且缓存已满，删除访问次数最小的链表的末尾节点，同时要删除的节点在keyMap删除，
+         * 当前节点加入到访问次数为1的链表的头结点，同时当前节点加入到keyMap中，更新minFrequency
+         * 2.2、keyMap中不存在key，并且缓存未满，当前节点加入到访问次数为1的链表的头结点，同时当前节点加入到keyMap中，
+         * 更新minFrequency，当前缓存大小加1
+         * 时间复杂度O(1)，空间复杂度O(1)
          *
          * @param key
          * @param value
          */
         public void put(int key, int value) {
-            //当前节点在缓存map中
-            if (cache.containsKey(key)) {
-                Node node = cache.get(key);
+            //keyMap中存在key
+            if (keyMap.containsKey(key)) {
+                //当前节点
+                Node node = keyMap.get(key);
                 node.value = value;
-                LinkedList linkedList = frequencyCache.get(node.frequency);
-                //当前节点从当前频率链表中删除
+                //当前节点所在链表
+                LinkedList linkedList = frequencyMap.get(node.frequency);
+                //当前节点从链表中删除
                 linkedList.remove(node);
 
-                //当前频率链表为空，从frequencyCache中移除，更新minFrequency
+                //删除之后，当前链表为空，则当前链表从frequencyMap中删除
                 if (linkedList.head.next == linkedList.tail) {
-                    frequencyCache.remove(node.frequency);
+                    frequencyMap.remove(node.frequency);
+                    //更新minFrequency
                     if (node.frequency == minFrequency) {
                         minFrequency++;
                     }
                 }
 
-                //当前节点访问频率加1
+                //当前节点访问次数加1
                 node.frequency++;
 
-                //frequencyCache中没有当前节点的访问频率链表，创建当前节点访问频率链表
-                if (!frequencyCache.containsKey(node.frequency)) {
-                    frequencyCache.put(node.frequency, new LinkedList());
+                if (!frequencyMap.containsKey(node.frequency)) {
+                    frequencyMap.put(node.frequency, new LinkedList());
                 }
 
-                LinkedList nextLinkedList = frequencyCache.get(node.frequency);
-                //当前节点放到新的访问频率链表头结点
+                //当前节点访问次数加1之后所在链表
+                LinkedList nextLinkedList = frequencyMap.get(node.frequency);
+                //当前节点加入链表的头结点
                 nextLinkedList.addFirst(node);
             } else {
-                //当前节点不在缓存map中
-                //要加入cache和linkedList中的节点
+                //keyMap中不存在key
+
+                //当前节点
                 Node node = new Node(key, value, 1);
 
-                //缓存map已满，最小频率链表和缓存map中移除末尾节点，当前节点插入频率为1的链表中，更新缓存map和频率链表map
+                //缓存已满，当前缓存大小等于最大缓存大小
                 if (curSize == capacity) {
-                    //最少访问频率链表
-                    LinkedList linkedList = frequencyCache.get(minFrequency);
-                    //要删除的节点
+                    //访问次数最小的链表
+                    LinkedList linkedList = frequencyMap.get(minFrequency);
+                    //要删除的节点，即访问次数最小的链表的末尾节点
                     Node deleteNode = linkedList.tail.pre;
-                    //deleteNode中cache中删除
-                    cache.remove(deleteNode.key);
-                    //deleteNode从最少访问频率链表中删除
+                    //keyMap中移除deleteNode
+                    keyMap.remove(deleteNode.key);
+                    //访问次数最小的链表中移除deleteNode
                     linkedList.remove(deleteNode);
 
-                    //最少访问频率链表为空，从frequencyCache中移除
+                    //删除之后，当前链表为空，则当前链表从frequencyMap中删除
                     if (linkedList.head.next == linkedList.tail) {
-                        frequencyCache.remove(minFrequency);
+                        frequencyMap.remove(minFrequency);
                     }
 
-                    //frequencyCache中没有访问频率为1的链表，创建访问频率为1的链表
-                    if (!frequencyCache.containsKey(1)) {
-                        frequencyCache.put(1, new LinkedList());
+                    if (!frequencyMap.containsKey(1)) {
+                        frequencyMap.put(1, new LinkedList());
                     }
 
-                    LinkedList nextLinkedList = frequencyCache.get(1);
-                    //当前节点放到访问频率为1的链表头结点
+                    //访问次数为1的链表
+                    LinkedList nextLinkedList = frequencyMap.get(1);
+                    //当前节点加入链表的头结点
                     nextLinkedList.addFirst(node);
 
-                    //当前节点加入cache，设置minFrequency为1
-                    cache.put(key, node);
+                    //当前节点加入keyMap
+                    keyMap.put(key, node);
+                    //更新minFrequency为1
                     minFrequency = 1;
                 } else {
-                    //缓存map未满，当前节点放入频率为1的链表的头和缓存map中，更新频率链表map
+                    //缓存未满，当前缓存大小小于最大缓存大小
 
-                    //frequencyCache中没有访问频率为1的链表，创建访问频率为1的链表
-                    if (!frequencyCache.containsKey(1)) {
-                        frequencyCache.put(1, new LinkedList());
+                    if (!frequencyMap.containsKey(1)) {
+                        frequencyMap.put(1, new LinkedList());
                     }
 
-                    LinkedList linkedList = frequencyCache.get(1);
-                    //当前节点放到访问频率为1的链表头结点
+                    //访问次数为1的链表
+                    LinkedList linkedList = frequencyMap.get(1);
+                    //当前节点加入链表的头结点
                     linkedList.addFirst(node);
 
-                    //当前节点加入cache，设置minFrequency为1，当前缓存容量加1
-                    cache.put(key, node);
+                    //当前节点加入keyMap
+                    keyMap.put(key, node);
+                    //更新minFrequency为1
                     minFrequency = 1;
+                    //当前缓存大小加1
                     curSize++;
                 }
             }
         }
 
         /**
-         * 使用频率相等的数据节点链表
+         * 缓存双向链表
          */
         private static class LinkedList {
             //链表头结点，避免非空判断
@@ -240,7 +249,7 @@ public class Problem460 {
             //链表尾结点，避免非空判断
             public Node tail;
 
-            LinkedList() {
+            public LinkedList() {
                 head = new Node();
                 tail = new Node();
                 head.next = tail;
@@ -268,12 +277,12 @@ public class Problem460 {
         }
 
         /**
-         * 双向链表节点，也是cache中存放的节点
+         * 缓存节点，即双向链表节点
          */
         private static class Node {
             public int key;
             public int value;
-            //当前节点访问频率
+            //当前节点访问次数
             public int frequency;
             public Node pre;
             public Node next;

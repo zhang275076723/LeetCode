@@ -83,37 +83,24 @@ public class Problem645 {
             return null;
         }
 
-        int[] result = new int[2];
-        int index = 0;
-        //得到重复元素标志位
-        boolean flag = true;
-
         for (int i = 0; i < nums.length; i++) {
             //nums[i]和nums[nums[i]-1]不相等时，元素进行交换
             while (nums[i] != nums[nums[i] - 1]) {
                 swap(nums, i, nums[i] - 1);
             }
-
-            //当前nums[i]不在数组索引i+1位置上时，则nums[i]是重复元素，加入result中
-            if (flag && nums[i] != i + 1) {
-                result[index] = nums[i];
-                index++;
-                //找到重复元素之后置为false，避免result重复赋值
-                flag = false;
-            }
         }
 
-        //找1-n中丢失的元素
+        int[] result = new int[2];
+
         for (int i = 0; i < nums.length; i++) {
-            //nums[i]不等于i+1时，则i+1是丢失的元素，加入result中
+            //nums[i]不等于i+1，则nums[i]是重复元素，i+1为缺失的元素
             if (nums[i] != i + 1) {
-                result[index] = i + 1;
-                return result;
+                result[0] = nums[i];
+                result[1] = i + 1;
             }
         }
 
-        //没有找到，返回null
-        return null;
+        return result;
     }
 
     /**
@@ -172,7 +159,7 @@ public class Problem645 {
             }
         }
 
-        //确定num1和num2哪个是1-n中缺失的数和重复的数
+        //确定num1和num2哪个是1-n中缺失的数和哪个是重复的数
         for (int num : nums) {
             if (num1 == num) {
                 return new int[]{num1, num2};

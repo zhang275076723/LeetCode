@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2024/2/7 08:14
  * @Author zsy
- * @Description IPO
+ * @Description IPO 优先队列类比
  * 假设 力扣（LeetCode）即将开始 IPO 。
  * 为了以更高的价格将股票卖给风险投资公司，力扣 希望在 IPO 之前开展一些项目以增加其资本。
  * 由于资源有限，它只能在 IPO 之前完成最多 k 个不同的项目。

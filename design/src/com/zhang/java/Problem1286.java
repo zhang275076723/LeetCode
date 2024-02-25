@@ -65,10 +65,10 @@ public class Problem1286 {
         public CombinationIterator(String characters, int combinationLength) {
             list = new ArrayList<>();
             index = 0;
-            backtrack(0, characters, combinationLength, new StringBuilder(), list);
+            backtrack(0, characters, combinationLength, new StringBuilder());
         }
 
-        private void backtrack(int t, String s, int k, StringBuilder sb, List<String> list) {
+        private void backtrack(int t, String s, int k, StringBuilder sb) {
             if (sb.length() == k) {
                 list.add(sb.toString());
                 return;
@@ -77,7 +77,7 @@ public class Problem1286 {
             for (int i = t; i < s.length(); i++) {
                 char c = s.charAt(i);
                 sb.append(c);
-                backtrack(i + 1, s, k, sb, list);
+                backtrack(i + 1, s, k, sb);
                 sb.delete(sb.length() - 1, sb.length());
             }
         }
@@ -106,7 +106,7 @@ public class Problem1286 {
     static class CombinationIterator2 {
         //存储字符串characters
         private final String str;
-        //当前遍历到的长度为k的字母组合在characters中的下标索引数组
+        //当前遍历到的长度为k的字母组合在characters中的下标索引数组，arr每次右移最右边能够右移的arr[i]，得到下一个字母组合
         private final int[] arr;
         //是否存在下一个长度为k的字母组合标志位
         private boolean flag;

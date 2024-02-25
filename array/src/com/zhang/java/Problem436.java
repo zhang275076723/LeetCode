@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/12/3 12:03
  * @Author zsy
- * @Description 寻找右区间 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem352、Problem406、Problem435、Problem632、Problem763、Problem986、Problem1288、Problem2402
+ * @Description 寻找右区间 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem352、Problem406、Problem435、Problem632、Problem763、Problem855、Problem986、Problem1288、Problem2402
  * 给你一个区间数组 intervals ，其中 intervals[i] = [starti, endi] ，且每个 starti 都 不同 。
  * 区间 i 的 右侧区间 可以记作区间 j ，并满足 startj >= endi ，且 startj 最小化 。
  * 返回一个由每个区间 i 的 右侧区间 在 intervals 中对应下标组成的数组。

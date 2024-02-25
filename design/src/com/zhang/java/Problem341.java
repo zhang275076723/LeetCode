@@ -73,18 +73,18 @@ public class Problem341 {
 
         public NestedIterator(List<NestedInteger> nestedList) {
             list = new ArrayList<>();
-            dfs(nestedList, list);
+            dfs(nestedList);
             iterator = list.iterator();
         }
 
-        private void dfs(List<NestedInteger> nestedList, List<Integer> list) {
+        private void dfs(List<NestedInteger> nestedList) {
             for (NestedInteger nestedInteger : nestedList) {
                 //当前节点存储整数，加入list中
                 if (nestedInteger.isInteger()) {
                     list.add(nestedInteger.getInteger());
                 } else {
                     //当前节点存储列表，继续dfs
-                    dfs(nestedInteger.getList(), list);
+                    dfs(nestedInteger.getList());
                 }
             }
         }

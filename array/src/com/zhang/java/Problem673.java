@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/2 08:44
  * @Author zsy
- * @Description 最长递增子序列的个数 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
+ * @Description 最长递增子序列的个数 类比Problem300、Problem2407 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
  * 给定一个未排序的整数数组 nums ，返回最长递增子序列的个数 。
  * 注意 这个数列必须是 严格 递增的。
  * <p>

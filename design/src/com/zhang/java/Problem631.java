@@ -92,7 +92,7 @@ public class Problem631 {
         private final int[][] arr;
         //邻接矩阵，有向图
         //注意：共mn个节点，每个节点都可以其他节点存在边，即为稠密图，适用邻接矩阵，不适用邻接表
-        //注意：两个节点之间不止存在一条边
+        //注意：两个节点之间可以存在多条边
         private final int[][] graph;
 
         public Excel(int height, char width) {
@@ -126,7 +126,7 @@ public class Problem631 {
                 graph[i][index] = 0;
             }
 
-            //如果其他节点依赖当前节点，即存在当前节点指向其他节点的边，则从当前节点开始dfs，更新路径上节点的值
+            //3、如果其他节点依赖当前节点，即存在当前节点指向其他节点的边，则从当前节点开始dfs，更新路径上节点的值
             dfs(index, addValue);
         }
 
@@ -136,8 +136,9 @@ public class Problem631 {
 
         /**
          * 1、如果当前节点(row,column)是求和公式，则当前求和公式失效，即删除指向当前节点的所有边
-         * 2、遍历numbers，在图中添加指向当前节点的边
-         * 3、如果其他节点依赖当前节点，即存在当前节点指向其他节点的边，则从当前节点开始dfs，更新路径上节点的值
+         * 2、遍历numbers，在图中添加指向当前节点的边，并计算numbers中元素之和result
+         * 3、修改当前节点(row,column)值为result
+         * 4、如果其他节点依赖当前节点，即存在当前节点指向其他节点的边，则从当前节点开始dfs，更新路径上节点的值
          * 时间复杂度O((mn)^2)，空间复杂度O(mn)
          *
          * @param row
@@ -188,9 +189,10 @@ public class Problem631 {
 
             //从当前节点开始dfs，路径上的节点需要加上的值
             int addValue = result - arr[row - 1][column - 'A'];
+            //3、修改当前节点(row,column)值为result
             arr[row - 1][column - 'A'] = result;
 
-            //3、如果其他节点依赖当前节点，即存在当前节点指向其他节点的边，则从当前节点开始dfs，更新路径上节点的值
+            //4、如果其他节点依赖当前节点，即存在当前节点指向其他节点的边，则从当前节点开始dfs，更新路径上节点的值
             dfs(index, addValue);
 
             return result;

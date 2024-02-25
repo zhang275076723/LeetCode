@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/9/4 08:24
  * @Author zsy
- * @Description 将数据流变为多个不相交区间 有序集合类比Problem220、Problem855 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem406、Problem435、Problem436、Problem632、Problem763、Problem986、Problem1288、Problem2402
+ * @Description 将数据流变为多个不相交区间 有序集合类比Problem220、Problem855 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem406、Problem435、Problem436、Problem632、Problem763、Problem855、Problem986、Problem1288、Problem2402
  * 给你一个由非负整数 a1, a2, ..., an 组成的数据流输入，请你将到目前为止看到的数字总结为不相交的区间列表。
  * 实现 SummaryRanges 类：
  * SummaryRanges() 使用一个空数据流初始化对象。
@@ -151,8 +151,8 @@ public class Problem352 {
                     rightInterval[0] = value;
                 } else {
                     //情况7
-                    //注意：只能写成leftIntervalIndex+1，不能写成rightIntervalIndex，
-                    //避免leftIntervalIndex等于rightIntervalIndex，导致list中插入区间[value,value]之后无序
+                    //注意：不能写成list.add(rightIntervalIndex, new int[]{value, value});
+                    //避免leftIntervalIndex等于rightIntervalIndex，导致插入区间[value,value]之后list无序
                     list.add(leftIntervalIndex + 1, new int[]{value, value});
                 }
             }

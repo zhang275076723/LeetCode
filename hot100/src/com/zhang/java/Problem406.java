@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @Date 2022/6/5 9:38
  * @Author zsy
- * @Description 根据身高重建队列 中国人寿机试题 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem352、Problem435、Problem436、Problem632、Problem763、Problem986、Problem1288、Problem2402
+ * @Description 根据身高重建队列 中国人寿机试题 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem352、Problem435、Problem436、Problem632、Problem763、Problem855、Problem986、Problem1288、Problem2402
  * 假设有打乱顺序的一群人站成一个队列，数组 people 表示队列中一些人的属性（不一定按顺序）。
  * 每个 people[i] = [hi, ki] 表示第 i 个人的身高为 hi ，前面 正好 有 ki 个身高大于或等于 hi 的人。
  * 请你重新构造并返回输入数组 people 所表示的队列。
@@ -56,7 +56,7 @@ public class Problem406 {
             return people;
         }
 
-        //people一维降序，二维升序排序
+        //people按照一维降序，二维升序排序
         quickSort(people, 0, people.length - 1);
 
         int[][] result = new int[people.length][2];
@@ -103,7 +103,7 @@ public class Problem406 {
             return people;
         }
 
-        //people一维升序，二维降序排序
+        //people按照一维升序，二维降序排序
         Arrays.sort(people, new Comparator<int[]>() {
             @Override
             public int compare(int[] arr1, int[] arr2) {

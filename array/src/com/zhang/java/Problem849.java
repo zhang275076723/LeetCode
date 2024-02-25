@@ -40,7 +40,7 @@ public class Problem849 {
 
     /**
      * 双指针
-     * 最大距离为开始到第一个1的距离，最后一个1到末尾的距离，相邻两个1之间的距离中的最大值
+     * 距离最近1的最大距离为开始到第一个1的距离，最后一个1到末尾的距离，相邻两个1之间的距离的一半中的最大值
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param seats
@@ -58,7 +58,7 @@ public class Problem849 {
             left++;
         }
 
-        //开始到第一个1的距离
+        //开始到第一个1之间选择座位距离最近1的最大距离
         max = Math.max(max, left);
 
         while (right < seats.length) {
@@ -68,11 +68,11 @@ public class Problem849 {
                 right++;
             }
 
-            //最后一个1到末尾的距离
+            //最后一个1到末尾之间选择座位距离最近1的最大距离
             if (right == seats.length) {
                 max = Math.max(max, seats.length - left - 1);
             } else {
-                //相邻两个1之间的距离
+                //相邻两个1之间选择座位距离最近1的最大距离
                 max = Math.max(max, (right - left) / 2);
             }
 

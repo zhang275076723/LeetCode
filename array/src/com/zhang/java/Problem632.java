@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/1/14 09:05
  * @Author zsy
- * @Description 最小区间 南京大学机试题 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem352、Problem406、Problem435、Problem436、Problem763、Problem986、Problem1288、Problem2402 优先队列类比 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem567、Problem643、Problem713、Problem1004、Offer48、Offer57_2、Offer59
+ * @Description 最小区间 南京大学机试题 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem352、Problem406、Problem435、Problem436、Problem763、Problem855、Problem986、Problem1288、Problem2402 优先队列类比 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem567、Problem643、Problem713、Problem1004、Offer48、Offer57_2、Offer59
  * 你有 k 个 非递减排列 的整数列表。找到一个 最小 区间，使得 k 个列表中的每个列表至少有一个数包含在其中。
  * 我们定义如果 b-a < d-c 或者在 b-a == d-c 时 a < c，则区间 [a,b] 比 [c,d] 小。
  * <p>
