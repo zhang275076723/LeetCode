@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/6 08:05
  * @Author zsy
- * @Description 外观数列 类比Problem89、Problem481、Problem667
+ * @Description 外观数列 类比Problem89、Problem481、Problem667、Problem1286
  * 给定一个正整数 n ，输出外观数列的第 n 项。
  * 「外观数列」是一个整数序列，从数字 1 开始，序列中的每一项都是对前一项的描述。
  * 你可以将其视作是由递归公式定义的数字字符串序列：
@@ -44,9 +44,10 @@ package com.zhang.java;
 public class Problem38 {
     public static void main(String[] args) {
         Problem38 problem38 = new Problem38();
-        int n = 6;
         //312211
-        System.out.println(problem38.countAndSay(n));
+        System.out.println(problem38.countAndSay(6));
+        //13112221
+        System.out.println(problem38.countAndSay(7));
     }
 
     /**
