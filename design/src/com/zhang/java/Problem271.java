@@ -1,12 +1,13 @@
 package com.zhang.java;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * @Date 2023/5/6 08:20
  * @Author zsy
- * @Description 字符串的编码与解码 类比Problem394、Problem443、Problem604、Problem900 序列化类比Problem297、Problem331、Problem449、Offer37 位运算类比Problem29、Problem136、Problem137、Problem190、Problem191、Problem201、Problem231、Problem260、Problem326、Problem342、Problem371、Problem389、Problem405、Problem461、Problem477、Problem645、Problem898、Problem1290、Offer15、Offer56、Offer56_2、Offer64、Offer65、IpToInt
+ * @Description 字符串的编码与解码 类比Problem394、Problem443、Problem604、Problem900 类比Problem297、Problem331、Problem449、Problem535、Offer37 位运算类比Problem29、Problem136、Problem137、Problem190、Problem191、Problem201、Problem231、Problem260、Problem326、Problem342、Problem371、Problem389、Problem405、Problem461、Problem477、Problem645、Problem898、Problem1290、Offer15、Offer56、Offer56_2、Offer64、Offer65、IpToInt
  * 请你设计一个算法，可以将一个 字符串列表 编码成为一个 字符串。
  * 这个编码后的字符串是可以通过网络进行高效传送的，并且可以在接收端被解码回原来的字符串列表。
  * 1 号机（发送方）有如下函数：
@@ -182,15 +183,14 @@ public class Problem271 {
                 byte[] arr = s.substring(index, index + 4).getBytes();
                 //当前字符串的长度
                 int len = 0;
-                index = index + 4;
 
                 for (int i = 0; i < 4; i++) {
                     //每次往左移8位，即移动一个字节的长度
                     len = (len << 8) + arr[i];
                 }
 
-                list.add(s.substring(index, index + len));
-                index = index + len;
+                list.add(s.substring(index, index + 4 + len));
+                index = index + 4 + len;
             }
 
             return list;

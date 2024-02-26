@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/4/7 08:11
  * @Author zsy
- * @Description 设计哈希集合 类比Problem706
+ * @Description 设计哈希集合 类比Problem622、Problem641、Problem706、Problem707
  * 不使用任何内建的哈希表库设计一个哈希集合（HashSet）。
  * 实现 MyHashSet 类：
  * void add(key) 向哈希集合中插入值 key 。
@@ -60,7 +60,7 @@ public class Problem705 {
         private final LinkedList[] arr;
 
         public MyHashSet() {
-            //1009是大于1000的第一个质数，选择质数，在hash运算时能够均匀的分散到各个桶中
+            //1009是大于1000的第一个质数，选择一个大质数，在hash运算时能够均匀的分散到各个链表中
             arr = new LinkedList[1009];
 
             //链表数组初始化
@@ -70,61 +70,65 @@ public class Problem705 {
         }
 
         public void add(int key) {
-            //当前key映射到哪个桶中
+            //当前key映射的链表下标索引
             int index = hash(key);
-            //当前桶头结点
+            //当前链表头结点
             LinkedList.Node node = arr[index].head;
 
             //找到末尾节点，尾插法
             while (node.next != null) {
-                //当前桶中已经存在key，则直接返回
+                //当前链表中已经存在key，则直接返回
                 if (node.next.key == key) {
                     return;
                 }
+
                 node = node.next;
             }
 
+            //当前节点插入当前链表末尾
             node.next = new LinkedList.Node(key);
         }
 
         public void remove(int key) {
-            //当前key映射到哪个桶中
+            //当前key映射的链表下标索引
             int index = hash(key);
-            //当前桶头结点
+            //当前链表头结点
             LinkedList.Node node = arr[index].head;
 
             while (node.next != null) {
-                //找到要删除的key
+                //找到要删除的key的前驱节点
                 if (node.next.key == key) {
                     LinkedList.Node deleteNode = node.next;
                     node.next = deleteNode.next;
                     deleteNode.next = null;
                     return;
                 }
+
                 node = node.next;
             }
         }
 
         public boolean contains(int key) {
-            //当前key映射到哪个桶中
+            //当前key映射的链表下标索引
             int index = hash(key);
-            //当前桶头结点
-            LinkedList.Node node = arr[index].head;
+            //当前链表头结点
+            LinkedList.Node node = arr[index].head.next;
 
-            while (node.next != null) {
-                //当前桶中节点值等于key，则返回true
-                if (node.next.key == key) {
+            while (node != null) {
+                //当前节点值等于key，则返回true
+                if (node.key == key) {
                     return true;
                 }
+
                 node = node.next;
             }
 
-            //当前桶遍历完也没有找到，则返回false
+            //当前链表遍历完也没有找到key，则返回false
             return false;
         }
 
         /**
-         * 获取key映射的桶索引下标
+         * 获取key映射的链表下标索引
          *
          * @param key
          * @return

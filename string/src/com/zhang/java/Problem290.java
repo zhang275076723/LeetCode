@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/12/3 08:21
  * @Author zsy
- * @Description 单词规律 哈希表类比Problem1、Problem187、Problem205、Problem242、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem554、Problem763、Problem1640、Offer50
+ * @Description 单词规律 哈希表类比Problem1、Problem187、Problem205、Problem242、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem535、Problem554、Problem763、Problem1640、Offer50
  * 给定一种规律 pattern 和一个字符串 s ，判断 s 是否遵循相同的规律。
  * 这里的 遵循 指完全匹配，例如， pattern 里的每个字母和字符串 s 中的每个非空单词之间存在着双向连接的对应规律。
  * <p>
@@ -56,6 +56,7 @@ public class Problem290 {
         //pattern中字符到s中单词的映射map
         Map<Character, String> map1 = new HashMap<>();
         //s中单词到pattern中字符的映射map
+        //注意：必须使用2个map保证幂等性，即保证pattern中字符和s中单词存在双向一一对应关系
         Map<String, Character> map2 = new HashMap<>();
 
         for (int i = 0; i < pattern.length(); i++) {

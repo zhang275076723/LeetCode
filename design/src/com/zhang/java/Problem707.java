@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/4/6 10:58
  * @Author zsy
- * @Description 设计链表 类比Problem622、Problem641
+ * @Description 设计链表 类比Problem622、Problem641、Problem705、Problem706
  * 你可以选择使用单链表或者双链表，设计并实现自己的链表。
  * 单链表中的节点应该具备两个属性：val 和 next 。
  * val 是当前节点的值，next 是指向下一个节点的指针/引用。
@@ -63,23 +63,23 @@ public class Problem707 {
         }
 
         public int get(int index) {
-            return linkedList.getValue(index);
+            return linkedList.get(index);
         }
 
         public void addAtHead(int val) {
-            linkedList.addNode(0, val);
+            linkedList.addAtIndex(0, val);
         }
 
         public void addAtTail(int val) {
-            linkedList.addNode(linkedList.curSize, val);
+            linkedList.addAtIndex(linkedList.count, val);
         }
 
         public void addAtIndex(int index, int val) {
-            linkedList.addNode(index, val);
+            linkedList.addAtIndex(index, val);
         }
 
         public void deleteAtIndex(int index) {
-            linkedList.removeNode(index);
+            linkedList.removeAtIndex(index);
         }
 
         /**
@@ -90,52 +90,55 @@ public class Problem707 {
             private final Node head;
             //链表尾指针
             private final Node tail;
-            //链表链表大小
-            private int curSize;
+            //链表中元素个数
+            private int count;
 
             public LinkedList() {
                 head = new Node();
                 tail = new Node();
                 head.next = tail;
                 tail.pre = head;
-                curSize = 0;
+                count = 0;
             }
 
             /**
-             * 获取链表中下标索引index的节点值，index越界返回-1
+             * 获取链表中下标索引为index的节点值，index不合法，返回-1
              * 时间复杂度O(n)，空间复杂度O(1)
              *
              * @param index
              * @return
              */
-            private int getValue(int index) {
+            private int get(int index) {
                 //index索引无效，返回-1
-                if (index < 0 || index >= curSize) {
+                if (index < 0 || index >= count) {
                     return -1;
                 }
 
                 Node node = head.next;
+
                 for (int i = 0; i < index; i++) {
                     node = node.next;
                 }
+
                 return node.value;
             }
 
             /**
-             * 在链表下标索引index处添加节点，index越界直接返回
+             * 在链表下标索引index处添加节点，index不合法，直接返回
              * 时间复杂度O(n)，空间复杂度O(1)
              *
              * @param index
              * @param value
              */
-            private void addNode(int index, int value) {
+            private void addAtIndex(int index, int value) {
                 //index索引无效，直接返回
-                if (index < 0 || index > curSize) {
+                if (index < 0 || index > count) {
                     return;
                 }
 
                 //要添加节点的前驱节点
                 Node preNode = head;
+
                 for (int i = 0; i < index; i++) {
                     preNode = preNode.next;
                 }
@@ -146,22 +149,23 @@ public class Problem707 {
                 node.next = preNode.next;
                 preNode.next.pre = node;
                 preNode.next = node;
-                curSize++;
+                count++;
             }
 
             /**
-             * 删除链表下标索引index处节点，index越界直接返回
+             * 删除链表下标索引index处节点，index不合法，返回-1
              * 时间复杂度O(n)，空间复杂度O(1)
              *
              * @param index
              */
-            private void removeNode(int index) {
-                if (index < 0 || index >= curSize) {
+            private void removeAtIndex(int index) {
+                if (index < 0 || index >= count) {
                     return;
                 }
 
                 //要删除节点的前驱节点
                 Node preNode = head;
+
                 for (int i = 0; i < index; i++) {
                     preNode = preNode.next;
                 }
@@ -172,7 +176,7 @@ public class Problem707 {
                 preNode.next = node.next;
                 node.pre = null;
                 node.next = null;
-                curSize--;
+                count--;
             }
 
             /**

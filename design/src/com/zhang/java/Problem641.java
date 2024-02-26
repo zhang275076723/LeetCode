@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/4/6 09:12
  * @Author zsy
- * @Description 设计循环双端队列 类比Problem622、Problem707
+ * @Description 设计循环双端队列 类比Problem622、Problem705、Problem706、Problem707
  * 设计实现双端队列。
  * 实现 MyCircularDeque 类:
  * MyCircularDeque(int k) ：构造函数,双端队列最大为 k 。
@@ -87,7 +87,7 @@ public class Problem641 {
             }
 
             //首指针左移
-            front = (front + arr.length - 1) % arr.length;
+            front = (front - 1 + arr.length) % arr.length;
             arr[front] = value;
             return true;
         }
@@ -122,7 +122,7 @@ public class Problem641 {
             }
 
             //尾指针左移
-            rear = (rear + arr.length - 1) % arr.length;
+            rear = (rear - 1 + arr.length) % arr.length;
             return true;
         }
 
@@ -141,7 +141,7 @@ public class Problem641 {
                 return -1;
             }
 
-            return arr[(rear + arr.length - 1) % arr.length];
+            return arr[(rear - 1 + arr.length) % arr.length];
         }
 
         public boolean isEmpty() {
@@ -161,13 +161,10 @@ public class Problem641 {
         private final LinkedList linkedList;
         //队列容量
         private final int capacity;
-        //当前队列大小
-        private int curSize;
 
         public MyCircularDeque2(int k) {
             linkedList = new LinkedList();
             capacity = k;
-            curSize = 0;
         }
 
         public boolean insertFront(int value) {
@@ -177,7 +174,6 @@ public class Problem641 {
             }
 
             linkedList.addFirst(value);
-            curSize++;
             return true;
         }
 
@@ -188,7 +184,6 @@ public class Problem641 {
             }
 
             linkedList.addLast(value);
-            curSize++;
             return true;
         }
 
@@ -199,7 +194,6 @@ public class Problem641 {
             }
 
             linkedList.removeFirst();
-            curSize--;
             return true;
         }
 
@@ -210,7 +204,6 @@ public class Problem641 {
             }
 
             linkedList.removeLast();
-            curSize--;
             return true;
         }
 
@@ -233,11 +226,11 @@ public class Problem641 {
         }
 
         public boolean isEmpty() {
-            return curSize == 0;
+            return linkedList.count == 0;
         }
 
         public boolean isFull() {
-            return curSize == capacity;
+            return linkedList.count == capacity;
         }
 
         /**
@@ -248,12 +241,15 @@ public class Problem641 {
             private final Node head;
             //链表尾指针
             private final Node tail;
+            //链表中元素个数
+            private int count;
 
             public LinkedList() {
                 head = new Node();
                 tail = new Node();
                 head.next = tail;
                 tail.pre = head;
+                count = 0;
             }
 
             public void addFirst(int value) {
@@ -262,6 +258,7 @@ public class Problem641 {
                 node.next = head.next;
                 head.next.pre = node;
                 head.next = node;
+                count++;
             }
 
             public void addLast(int value) {
@@ -270,11 +267,12 @@ public class Problem641 {
                 node.next = tail;
                 tail.pre.next = node;
                 tail.pre = node;
+                count++;
             }
 
             public void removeFirst() {
                 //链表为空，直接返回-1
-                if (head.next == tail) {
+                if (count == 0) {
                     return;
                 }
 
@@ -284,11 +282,12 @@ public class Problem641 {
                 head.next = node.next;
                 node.pre = null;
                 node.next = null;
+                count--;
             }
 
             public void removeLast() {
                 //链表为空，直接返回-1
-                if (head.next == tail) {
+                if (count == 0) {
                     return;
                 }
 
@@ -298,6 +297,7 @@ public class Problem641 {
                 tail.pre = node.pre;
                 node.pre = null;
                 node.next = null;
+                count--;
             }
 
             /**

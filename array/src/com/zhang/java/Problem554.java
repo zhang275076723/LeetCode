@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/5/7 08:54
  * @Author zsy
- * @Description 砖墙 哈希表类比Problem1、Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem763、Problem1640、Offer50
+ * @Description 砖墙 哈希表类比Problem1、Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem535、Problem763、Problem1640、Offer50
  * 你的面前有一堵矩形的、由 n 行砖块组成的砖墙。
  * 这些砖块高度相同（也就是一个单位高）但是宽度不同。每一行砖块的宽度之和相等。
  * 你现在要画一条 自顶向下 的、穿过 最少 砖块的垂线。
@@ -77,7 +77,7 @@ public class Problem554 {
      * @return
      */
     public int leastBricks(List<List<Integer>> wall) {
-        //key：从左边界开始，距离左边界为key的直线，value：当前直线从砖块边缘经过的数量，
+        //key：从左边界开始，距离左边界为key的直线，value：当前直线从砖块边缘经过的数量
         //key=1，value=2，表示从左边界开始，距离左边界为1的直线，从砖块边缘经过的数量为2
         Map<Integer, Integer> map = new HashMap<>();
 

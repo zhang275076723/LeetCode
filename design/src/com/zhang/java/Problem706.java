@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/4/7 08:54
  * @Author zsy
- * @Description 设计哈希映射 类比Problem705
+ * @Description 设计哈希映射 类比Problem622、Problem641、Problem705、Problem707
  * 不使用任何内建的哈希表库设计一个哈希映射（HashMap）。
  * 实现 MyHashMap 类：
  * MyHashMap() 用空映射初始化对象
@@ -62,7 +62,7 @@ public class Problem706 {
         private final LinkedList[] arr;
 
         public MyHashMap() {
-            //1009是大于1000的第一个质数，选择质数，在hash运算时能够均匀的分散到各个桶中
+            //1009是大于1000的第一个质数，选择一个大质数，在hash运算时能够均匀的分散到各个链表中
             arr = new LinkedList[1009];
 
             //链表数组初始化
@@ -72,45 +72,48 @@ public class Problem706 {
         }
 
         public void put(int key, int value) {
-            //当前key映射到哪个桶中
+            //当前key映射的链表下标索引
             int index = hash(key);
-            //当前桶头结点
+            //当前链表头结点
             LinkedList.Node node = arr[index].head;
 
             //找到末尾节点，尾插法
             while (node.next != null) {
-                //当前桶中已经存在key，修改当前节点的value
+                //当前链表中已经存在key，修改当前节点的value
                 if (node.next.key == key) {
                     node.next.value = value;
                     return;
                 }
+
                 node = node.next;
             }
 
+            //当前节点插入当前链表末尾
             node.next = new LinkedList.Node(key, value);
         }
 
         public int get(int key) {
-            //当前key映射到哪个桶中
+            //当前key映射的链表下标索引
             int index = hash(key);
-            //当前桶头结点
-            LinkedList.Node node = arr[index].head;
+            //当前链表头结点
+            LinkedList.Node node = arr[index].head.next;
 
-            while (node.next != null) {
-                if (node.next.key == key) {
-                    return node.next.value;
+            while (node != null) {
+                if (node.key == key) {
+                    return node.value;
                 }
+
                 node = node.next;
             }
 
-            //当前桶中没有找到，放-1
+            //当前链表中没有找到，返回-1
             return -1;
         }
 
         public void remove(int key) {
-            //当前key映射到哪个桶中
+            //当前key映射的链表下标索引
             int index = hash(key);
-            //当前桶头结点
+            //当前链表头结点
             LinkedList.Node node = arr[index].head;
 
             while (node.next != null) {
@@ -121,12 +124,13 @@ public class Problem706 {
                     deleteNode.next = null;
                     return;
                 }
+
                 node = node.next;
             }
         }
 
         /**
-         * 获取key映射的桶索引下标
+         * 获取key映射的链表下标索引
          *
          * @param key
          * @return

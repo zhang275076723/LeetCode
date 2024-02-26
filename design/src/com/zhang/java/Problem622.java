@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/4/6 08:25
  * @Author zsy
- * @Description 设计循环队列 类比Problem641、Problem707
+ * @Description 设计循环队列 类比Problem641、Problem705、Problem706、Problem707
  * 设计你的循环队列实现。
  * 循环队列是一种线性数据结构，其操作表现基于 FIFO（先进先出）原则并且队尾被连接在队首之后以形成一个循环。
  * 它也被称为“环形缓冲器”。
@@ -115,7 +115,7 @@ public class Problem622 {
                 return -1;
             }
 
-            return arr[(rear + arr.length - 1) % arr.length];
+            return arr[(rear - 1 + arr.length) % arr.length];
         }
 
         public boolean isEmpty() {
@@ -135,13 +135,10 @@ public class Problem622 {
         private final LinkedList linkedList;
         //队列容量
         private final int capacity;
-        //当前队列大小
-        private int curSize;
 
         public MyCircularQueue2(int k) {
             linkedList = new LinkedList();
             capacity = k;
-            curSize = 0;
         }
 
         public boolean enQueue(int value) {
@@ -151,7 +148,6 @@ public class Problem622 {
             }
 
             linkedList.addLast(value);
-            curSize++;
             return true;
         }
 
@@ -162,7 +158,6 @@ public class Problem622 {
             }
 
             linkedList.removeFirst();
-            curSize--;
             return true;
         }
 
@@ -185,11 +180,11 @@ public class Problem622 {
         }
 
         public boolean isEmpty() {
-            return curSize == 0;
+            return linkedList.count == 0;
         }
 
         public boolean isFull() {
-            return curSize == capacity;
+            return linkedList.count == capacity;
         }
 
         /**
@@ -200,12 +195,15 @@ public class Problem622 {
             private final Node head;
             //链表尾指针
             private final Node tail;
+            //链表中元素个数
+            private int count;
 
             public LinkedList() {
                 head = new Node();
                 tail = new Node();
                 head.next = tail;
                 tail.pre = head;
+                count = 0;
             }
 
             public void addLast(int value) {
@@ -214,11 +212,12 @@ public class Problem622 {
                 node.next = tail;
                 tail.pre.next = node;
                 tail.pre = node;
+                count++;
             }
 
             public void removeFirst() {
                 //链表为空，直接返回-1
-                if (head.next == tail) {
+                if (count == 0) {
                     return;
                 }
 
@@ -228,6 +227,7 @@ public class Problem622 {
                 head.next = node.next;
                 node.pre = null;
                 node.next = null;
+                count--;
             }
 
             /**
