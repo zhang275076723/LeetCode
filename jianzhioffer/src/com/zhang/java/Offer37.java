@@ -168,10 +168,10 @@ public class Offer37 {
             //返回的是java.util.Arrays的内部类ArrayList，这个类没有重写add、remove等方法，调用这些方法会抛出异常
             List<String> list = new ArrayList<>(Arrays.asList(values));
 
-            return deserialize(list);
+            return dfs(list);
         }
 
-        private TreeNode deserialize(List<String> list) {
+        private TreeNode dfs(List<String> list) {
             if (list.isEmpty()) {
                 return null;
             }
@@ -183,8 +183,8 @@ public class Offer37 {
             }
 
             TreeNode root = new TreeNode(Integer.parseInt(value));
-            root.left = deserialize(list);
-            root.right = deserialize(list);
+            root.left = dfs(list);
+            root.right = dfs(list);
             return root;
         }
     }

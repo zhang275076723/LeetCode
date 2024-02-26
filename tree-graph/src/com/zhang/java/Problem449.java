@@ -97,7 +97,6 @@ public class Problem449 {
 
             while (!queue.isEmpty()) {
                 TreeNode node = queue.poll();
-
                 if (!list.isEmpty()) {
                     String leftValue = list.remove(0);
                     if (!"null".equals(leftValue)) {

@@ -142,20 +142,9 @@ public class Problem297 {
             }
 
             StringBuilder sb = new StringBuilder();
-            serialize(root, sb);
+            dfs(root, sb);
             //去除末尾','
             return sb.delete(sb.length() - 1, sb.length()).toString();
-        }
-
-        private void serialize(TreeNode root, StringBuilder sb) {
-            if (root == null) {
-                sb.append("null,");
-                return;
-            }
-
-            sb.append(root.val).append(',');
-            serialize(root.left, sb);
-            serialize(root.right, sb);
         }
 
         /**
@@ -176,10 +165,21 @@ public class Problem297 {
             //返回的是java.util.Arrays的内部类ArrayList，这个类没有重写add、remove等方法，调用这些方法会抛出异常
             List<String> list = new ArrayList<>(Arrays.asList(values));
 
-            return deserialize(list);
+            return dfs(list);
         }
 
-        private TreeNode deserialize(List<String> list) {
+        private void dfs(TreeNode root, StringBuilder sb) {
+            if (root == null) {
+                sb.append("null,");
+                return;
+            }
+
+            sb.append(root.val).append(',');
+            dfs(root.left, sb);
+            dfs(root.right, sb);
+        }
+
+        private TreeNode dfs(List<String> list) {
             if (list.isEmpty()) {
                 return null;
             }
@@ -191,8 +191,8 @@ public class Problem297 {
             }
 
             TreeNode root = new TreeNode(Integer.parseInt(value));
-            root.left = deserialize(list);
-            root.right = deserialize(list);
+            root.left = dfs(list);
+            root.right = dfs(list);
             return root;
         }
     }
