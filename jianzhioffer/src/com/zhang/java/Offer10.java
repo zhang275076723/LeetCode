@@ -172,16 +172,19 @@ public class Offer10 {
      * @return
      */
     public int quickPow2(int a, int n) {
+        if (n == 0) {
+            return 1;
+        }
+
         int result = 1;
 
         while (n != 0) {
-            //如果末位为1
             if ((n & 1) == 1) {
                 result = result * a;
             }
 
             a = a * a;
-            n = n >> 1;
+            n = n >>> 1;
         }
 
         return result;

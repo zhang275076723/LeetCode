@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * @Date 2024/2/16 08:20
  * @Author zsy
- * @Description TinyURL 的加密与解密 字节面试题 类比Problem271、Problem297、Problem331、Problem449、Offer37 哈希表类比Problem1、Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem554、Problem763、Problem1640、Offer50
+ * @Description TinyURL 的加密与解密 字节面试题 类比Problem271、Problem297、Problem331、Problem449、Offer37 哈希表类比Problem1、Problem166、Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem554、Problem763、Problem1640、Offer50
  * TinyURL 是一种 URL 简化服务， 比如：当你输入一个 URL https://leetcode.com/problems/design-tinyurl 时，
  * 它将返回一个简化的URL http://tinyurl.com/4e9iAk 。
  * 请你设计一个类来加密与解密 TinyURL 。
@@ -73,6 +73,7 @@ public class Problem535 {
                 StringBuilder sb = new StringBuilder(tinyUrlPrefix);
 
                 for (int i = 0; i < 6; i++) {
+                    //随机码长度为62
                     sb.append(randomCode.charAt(random.nextInt(62)));
                 }
 
