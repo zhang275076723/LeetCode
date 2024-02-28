@@ -43,6 +43,7 @@ public class Problem581 {
         }
 
         int[] newNums = Arrays.copyOf(nums, nums.length);
+        //由小到大排序
         heapSort(nums);
 
         int left = 0;

@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/5/3 10:06
  * @Author zsy
- * @Description 最长连续序列 字节面试题 子序列和子数组类比
+ * @Description 最长连续序列 字节面试题 类比Problem506、Problem539、Problem561、Problem628 哈希表类比Problem1、Problem166、Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem535、Problem554、Problem763、Problem1640、Offer50
  * 给定一个未排序的整数数组 nums ，找出数字连续的最长序列（不要求序列元素在原数组中连续）的长度。
  * 请你设计并实现时间复杂度为 O(n) 的算法解决此问题。
  * <p>
@@ -29,8 +29,8 @@ public class Problem128 {
     }
 
     /**
-     * 排序+计数
-     * 时间复杂度O(nlogn)，空间复杂度O(logn)
+     * 排序
+     * 时间复杂度O(nlogn)，空间复杂度O(logn) (快排的平均空间复杂度O(logn))
      *
      * @param nums
      * @return
@@ -43,7 +43,7 @@ public class Problem128 {
         quickSort(nums, 0, nums.length - 1);
 
         int maxLen = 1;
-        int tempLen = 1;
+        int curLen = 1;
 
         for (int i = 0; i < nums.length - 1; i++) {
             //两数相等的情况
@@ -52,10 +52,10 @@ public class Problem128 {
             }
 
             if (nums[i] + 1 == nums[i + 1]) {
-                tempLen++;
-                maxLen = Math.max(maxLen, tempLen);
+                curLen++;
+                maxLen = Math.max(maxLen, curLen);
             } else {
-                tempLen = 1;
+                curLen = 1;
             }
         }
 
@@ -65,9 +65,10 @@ public class Problem128 {
 
     /**
      * 哈希表
+     * 核心思想：nums[i]是连续序列的第一个元素，才nums[i]开始找最长连续序列
      * 将数组中所有元素加入哈希表，遍历数组判断nums[i]的前一个元素nums[i]-1是否在哈希表中：
-     * 1、如果在，则可以等到遍历到nums[i]-1时，才找最长连续序列
-     * 2、如果不在，则从nums[i]开始在哈希表中往后找，循环判断nums[i]+1是否在哈希表中，并更新最长连续序列
+     * 1、nums[i]-1在哈希表中，则可以等到遍历到nums[i]-1时，再找最长连续序列
+     * 2、nums[i]-1不在哈希表中，则nums[i]作为当前连续序列的第一个元素，从nums[i]开始找最长连续序列
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param nums
@@ -87,17 +88,17 @@ public class Problem128 {
         int maxLen = 0;
 
         for (int i = 0; i < nums.length; i++) {
-            //nums[i]的前一个元素nums[i]-1不在哈希表中，则说明nums[i]为连续元素的第一个元素，从nums[i]开始往后找
+            //nums[i]的前一个元素nums[i]-1不在哈希表中，则nums[i]作为当前连续序列的第一个元素，从nums[i]开始找最长连续序列
             if (!set.contains(nums[i] - 1)) {
-                int tempLen = 1;
-                int tempNum = nums[i];
+                int curLen = 1;
+                int curNum = nums[i];
 
-                while (set.contains(tempNum + 1)) {
-                    tempLen++;
-                    tempNum++;
+                while (set.contains(curNum + 1)) {
+                    curLen++;
+                    curNum++;
                 }
 
-                maxLen = Math.max(maxLen, tempLen);
+                maxLen = Math.max(maxLen, curLen);
             }
         }
 
