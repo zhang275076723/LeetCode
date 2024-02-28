@@ -4,7 +4,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/28 08:38
  * @Author zsy
- * @Description 数组中两个数的最大异或值 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem676、Problem677、Problem720、Problem1804 位运算类比
+ * @Description 数组中两个数的最大异或值 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem336、Problem676、Problem677、Problem720、Problem745、Problem1804 位运算类比
  * 给你一个整数数组 nums ，返回 nums[i] XOR nums[j] 的最大运算结果，其中 0 ≤ i ≤ j < n 。
  * <p>
  * 输入：nums = [3,10,5,25,2,8]
