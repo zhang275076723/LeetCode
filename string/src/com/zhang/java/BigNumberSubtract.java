@@ -18,7 +18,7 @@ public class BigNumberSubtract {
         BigNumberSubtract bigNumberSubtract = new BigNumberSubtract();
         String num1 = "11";
         String num2 = "123";
-        System.out.println(bigNumberSubtract.sub(num1, num2));
+        System.out.println(bigNumberSubtract.subtract(num1, num2));
     }
 
     /**
@@ -30,7 +30,7 @@ public class BigNumberSubtract {
      * @param num2
      * @return
      */
-    public String sub(String num1, String num2) {
+    public String subtract(String num1, String num2) {
         //num1和num2相等，相减结果为0
         if (num1.equals(num2)) {
             return "0";
