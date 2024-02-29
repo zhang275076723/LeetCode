@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/4/26 09:51
  * @Author zsy
- * @Description Excel表列名称 类比Problem171、Problem631 进制转换类比Problem12、Problem13、Problem171、Add36Strings、Subtract36Strings
+ * @Description Excel表列名称 类比Problem171、Problem631 类比Problem8、Problem12、Problem13、Problem171、Problem273、Offer67、ChineseToInteger
  * 给你一个整数 columnNumber ，返回它在 Excel 表中相对应的列名称。
  * A -> 1
  * B -> 2

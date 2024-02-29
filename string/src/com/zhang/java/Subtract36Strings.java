@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/15 09:17
  * @Author zsy
- * @Description 36进制减法 字节面试题 进制转换类比Problem12、Problem13、Problem168、Problem171、Add36Strings 加减乘除类比Problem29、Problem43、Problem166、Problem415、Add36Strings、BigNumberSubtract
+ * @Description 36进制减法 字节面试题 加减乘除类比Problem29、Problem43、Problem166、Problem415、Add36Strings、BigNumberSubtract
  * 36进制由0-9，a-z，共36个字符表示。
  * 要求按照减法规则计算出任意两个36进制正整数的差。
  * <p>

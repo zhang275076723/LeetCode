@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/1 09:05
  * @Author zsy
- * @Description 整数转罗马数字 类比Problem8、Problem13、Problem168、Problem171、Offer67、CharacterToInteger、Add36Strings、Subtract36Strings
+ * @Description 整数转罗马数字 类比类比Problem8、Problem13、Problem168、Problem171、Problem273、Offer67、ChineseToInteger
  * 罗马数字包含以下七种字符： I， V， X， L，C，D 和 M。
  * 字符          数值
  * I             1
@@ -53,7 +53,7 @@ public class Problem12 {
 
     /**
      * 模拟
-     * 创建罗马字符和对应值的数组，由大到小遍历数字，如果小于当前数字，则减去罗马数字，并用相应罗马字符表示
+     * 创建罗马字符和对应值的数组，由大到小遍历数字，优先减去较大的数字
      * 时间复杂度O(1)，空间复杂度O(1) (romans中每个罗马字符出现次数不会超过3次，所以循环有一个上限)
      *
      * @param num
@@ -64,7 +64,7 @@ public class Problem12 {
         int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
         StringBuilder sb = new StringBuilder();
 
-        //由大到小遍历数字
+        //由大到小遍历数字，优先减去较大的数字
         for (int i = 0; i < values.length; i++) {
             while (num >= values[i]) {
                 num = num - values[i];

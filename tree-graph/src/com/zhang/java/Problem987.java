@@ -65,7 +65,7 @@ public class Problem987 {
         //根节点坐标为(0,0)
         dfs(root, 0, 0, list);
 
-        //先按照纵坐标由小到大排序，纵坐标相等，则按照横坐标由小到大排序，横坐标相等，再按照节点值由小到大排序
+        //先按照纵坐标由小到大排序，再按照横坐标由小到大排序，最后按照节点值由小到大排序
         list.sort(new Comparator<int[]>() {
             @Override
             public int compare(int[] arr1, int[] arr2) {
@@ -113,7 +113,7 @@ public class Problem987 {
         //arr[0]：节点的横坐标，arr[1]：节点的纵坐标，arr[2]：节点值
         List<int[]> list = bfs(root);
 
-        //先按照纵坐标由小到大排序，纵坐标相等，则按照横坐标由小到大排序，横坐标相等，再按照节点值由小到大排序
+        //先按照纵坐标由小到大排序，再按照横坐标由小到大排序，最后按照节点值由小到大排序
         list.sort(new Comparator<int[]>() {
             @Override
             public int compare(int[] arr1, int[] arr2) {
@@ -214,6 +214,9 @@ public class Problem987 {
         return root;
     }
 
+    /**
+     * bfs节点
+     */
     private static class Pos {
         private TreeNode node;
         private int i;

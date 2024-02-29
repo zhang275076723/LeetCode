@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/11/1 09:05
  * @Author zsy
- * @Description 罗马数字转整数 微软面试题 类比Problem8、Problem12、Problem168、Problem171、Offer67、CharacterToInteger、Add36Strings、Subtract36Strings
+ * @Description 罗马数字转整数 微软面试题 类比类比Problem8、Problem12、Problem168、Problem171、Problem273、Offer67、ChineseToInteger
  * 罗马数字包含以下七种字符: I， V， X， L，C，D 和 M。
  * 字符          数值
  * I             1
@@ -70,15 +70,16 @@ public class Problem13 {
             return -1;
         }
 
-        //罗马数字和对应数值映射的map
-        Map<Character, Integer> map = new HashMap<>();
-        map.put('I', 1);
-        map.put('V', 5);
-        map.put('X', 10);
-        map.put('L', 50);
-        map.put('C', 100);
-        map.put('D', 500);
-        map.put('M', 1000);
+        //罗马数字和对应数字的映射map
+        Map<Character, Integer> map = new HashMap<Character, Integer>() {{
+            put('I', 1);
+            put('V', 5);
+            put('X', 10);
+            put('L', 50);
+            put('C', 100);
+            put('D', 500);
+            put('M', 1000);
+        }};
 
         int num = 0;
 

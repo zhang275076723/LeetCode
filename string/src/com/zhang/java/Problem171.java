@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/4/26 10:14
  * @Author zsy
- * @Description Excel表列序号 类比Problem168、Problem631 进制转换类比Problem12、Problem13、Problem168、Add36Strings、Subtract36Strings
+ * @Description Excel表列序号 类比Problem168、Problem631 类比Problem8、Problem12、Problem13、Problem168、Problem273、Offer67、ChineseToInteger
  * 给你一个字符串 columnTitle ，表示 Excel 表格中的列名称。返回 该列名称对应的列序号 。
  * A -> 1
  * B -> 2
