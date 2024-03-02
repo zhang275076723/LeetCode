@@ -30,15 +30,15 @@ public class Offer57_2 {
 
     /**
      * 暴力
-     * 时间复杂度O(target^2)，空间复杂度O(1) (精确时间复杂度O(target^(3/2)))
+     * 时间复杂度O(target^2)，空间复杂度O(1) (更准确时间复杂度O(target^(3/2)))
      *
      * @param target
      * @return
      */
     public int[][] findContinuousSequence(int target) {
-        //和为target至少包含两个数，target为1，直接返回null
-        if (target == 1) {
-            return null;
+        //和为target至少包含两个数，target为1或2，直接返回空数组
+        if (target == 1 || target == 2) {
+            return new int[][]{};
         }
 
         //List<List<Integer>>适用于：arr[][]一维和二维都不确定的情况
@@ -79,9 +79,9 @@ public class Offer57_2 {
      * @return
      */
     public int[][] findContinuousSequence2(int target) {
-        //和为target至少包含两个数，target为1，直接返回null
-        if (target == 1) {
-            return null;
+        //和为target至少包含两个数，target为1或2，直接返回空数组
+        if (target == 1 || target == 2) {
+            return new int[][]{};
         }
 
         //List<List<Integer>>适用于：arr[][]一维和二维都不确定的情况
@@ -105,7 +105,7 @@ public class Offer57_2 {
                 int j = (-1 + sqrtDelta) / 2;
                 int[] arr = new int[j - i + 1];
 
-                for (int k = 0; k <= arr.length; k++) {
+                for (int k = 0; k < arr.length; k++) {
                     arr[k] = i + k;
                 }
 
@@ -128,9 +128,9 @@ public class Offer57_2 {
      * @return
      */
     public int[][] findContinuousSequence3(int target) {
-        //和为target至少包含两个数，target为1，直接返回null
-        if (target == 1) {
-            return null;
+        //和为target至少包含两个数，target为1或2，直接返回空数组
+        if (target == 1 || target == 2) {
+            return new int[][]{};
         }
 
         //List<List<Integer>>适用于：arr[][]一维和二维都不确定的情况
@@ -175,9 +175,9 @@ public class Offer57_2 {
      * @return
      */
     public int[][] findContinuousSequence4(int target) {
-        //和为target至少包含两个数，target为1，直接返回null
-        if (target == 1) {
-            return null;
+        //和为target至少包含两个数，target为1或2，直接返回空数组
+        if (target == 1 || target == 2) {
+            return new int[][]{};
         }
 
         //List<List<Integer>>适用于：arr[][]一维和二维都不确定的情况
@@ -196,12 +196,12 @@ public class Offer57_2 {
 
             //map中key存在为preSum-target的区间和，则num+1到i的连续序列之和为target
             if (map.containsKey(preSum - target)) {
-                //和为target连续序列的起始元素的前一个元素
-                int num = map.get(preSum - target);
-                int[] arr = new int[i - num];
+                //和为target连续序列的起始元素
+                int num = map.get(preSum - target) + 1;
+                int[] arr = new int[i - num + 1];
 
                 for (int j = 0; j < arr.length; j++) {
-                    arr[j] = num + j + 1;
+                    arr[j] = num + j;
                 }
 
                 list.add(arr);
