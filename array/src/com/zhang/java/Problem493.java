@@ -70,9 +70,11 @@ public class Problem493 {
 
         int count = 0;
         int mid = left + ((right - left) >> 1);
+
         count = count + mergeSort(nums, left, mid, tempArr);
         count = count + mergeSort(nums, mid + 1, right, tempArr);
         count = count + merge(nums, left, mid, right, tempArr);
+
         return count;
     }
 

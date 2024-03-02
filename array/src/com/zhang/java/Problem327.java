@@ -93,8 +93,7 @@ public class Problem327 {
      * 线段树+数据离散化 (将范围较大的前缀和，离散化到较小的范围之内)
      * 对于每个preSum[i]，都找之前的preSum[j]，满足lower<=preSum[i]-preSum[j]<=upper (0 < j < i)，
      * 可变形为preSum[i]-upper <= preSum[j] <= preSum[i]-lower，
-     * 在线段树中找[preSum[i]-upper,preSum[i]-lower]区间范围内值的个数，
-     * 即为区间和在[lower,upper]的个数
+     * 在线段树中找[preSum[i]-upper,preSum[i]-lower]区间范围内值的个数，即为区间和在[lower,upper]的个数
      * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
      * @param nums
@@ -167,8 +166,7 @@ public class Problem327 {
      * 线段树+动态开点
      * 对于每个preSum[i]，都找之前的preSum[j]，满足lower<=preSum[i]-preSum[j]<=upper (0 < j < i)，
      * 可变形为preSum[i]-upper <= preSum[j] <= preSum[i]-lower，
-     * 在线段树中找[preSum[i]-upper,preSum[i]-lower]区间范围内值的个数，
-     * 即为区间和在[lower,upper]的个数
+     * 在线段树中找[preSum[i]-upper,preSum[i]-lower]区间范围内值的个数，即为区间和在[lower,upper]的个数
      * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
      * @param nums
@@ -514,7 +512,7 @@ public class Problem327 {
                 node.rightNode = new SegmentTreeNode(mid + 1, node.rightBound);
             }
 
-            //将当前节点懒标记值向下传递给左右子节点，更新左右子节点表示的区间元素之和、懒标记值，
+            //将当前节点懒标记值向下传递给左右子节点，更新左右子节点表示的区间元素出现次数之和、懒标记值，
             //并将当前节点的懒标记值置0
             if (node.lazyValue != 0) {
                 node.leftNode.value = node.leftNode.value + (int) (mid - node.leftBound + 1) * node.lazyValue;
@@ -542,9 +540,11 @@ public class Problem327 {
             private int value;
             //懒标记值，当前节点的所有子孙节点需要加上的值
             private int lazyValue;
-            //当前节点表示区间的左边界，使用long，避免int溢出
+            //当前节点表示区间的左边界
+            //使用long，避免int溢出
             private long leftBound;
-            //当前节点表示区间的右边界，使用long，避免int溢出
+            //当前节点表示区间的右边界
+            //使用long，避免int溢出
             private long rightBound;
             private SegmentTreeNode leftNode;
             private SegmentTreeNode rightNode;

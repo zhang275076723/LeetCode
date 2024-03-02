@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/4/4 16:36
  * @Author zsy
- * @Description 和为s的连续正数序列 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem567、Problem632、Problem643、Problem713、Problem1004、Offer48、Offer59 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem523、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1856、Problem1871 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42
+ * @Description 和为s的连续正数序列 类比Problem829 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem567、Problem632、Problem643、Problem713、Problem1004、Offer48、Offer59 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem523、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1856、Problem1871 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42
  * 输入一个正整数 target ，输出所有和为 target 的连续正整数序列（至少含有两个数）。
  * 序列内的数字由小到大排列，不同序列按照首个数字从小到大排列。
  * 1 <= target <= 10^5
@@ -21,10 +21,11 @@ import java.util.*;
 public class Offer57_2 {
     public static void main(String[] args) {
         Offer57_2 offer57_2 = new Offer57_2();
-        System.out.println(Arrays.deepToString(offer57_2.findContinuousSequence(15)));
-        System.out.println(Arrays.deepToString(offer57_2.findContinuousSequence2(15)));
-        System.out.println(Arrays.deepToString(offer57_2.findContinuousSequence3(15)));
-        System.out.println(Arrays.deepToString(offer57_2.findContinuousSequence4(15)));
+        int target = 15;
+        System.out.println(Arrays.deepToString(offer57_2.findContinuousSequence(target)));
+        System.out.println(Arrays.deepToString(offer57_2.findContinuousSequence2(target)));
+        System.out.println(Arrays.deepToString(offer57_2.findContinuousSequence3(target)));
+        System.out.println(Arrays.deepToString(offer57_2.findContinuousSequence4(target)));
     }
 
     /**
@@ -53,7 +54,7 @@ public class Offer57_2 {
 
                 if (sum == target) {
                     int[] arr = new int[j - i + 1];
-                    for (int k = 0; k <= arr.length; k++) {
+                    for (int k = 0; k < arr.length; k++) {
                         arr[k] = i + k;
                     }
                     list.add(arr);
@@ -70,8 +71,8 @@ public class Offer57_2 {
     }
 
     /**
-     * 暴力优化
-     * 如果i到j满足和为target，根据(i+j)(j-i+1)/2=target，得到j^2+j+i-i^2-2target=0，解方程组得到正整数j
+     * 数学
+     * i到j满足和为target，根据(i+j)(j-i+1)/2=target，得到j^2+j+i-i^2-2target=0，解方程组得到正整数j=(-1+(1+4(i^2-i+2target))^(1/2))/2
      * 时间复杂度O(target)，空间复杂度O(1)
      *
      * @param target
@@ -92,15 +93,15 @@ public class Offer57_2 {
             //使用long，避免int溢出
             long delta = 1 + 4 * ((long) i * i - i + 2L * target);
 
-            //如果delta小于等于0，说明不存在i对应的j，继续下次循环
+            //如果delta小于等于0，则不存在i到j的连续正整数序列之和为target，进行下次循环
             if (delta <= 0) {
                 continue;
             }
 
             int sqrtDelta = (int) Math.sqrt(delta);
 
-            //如果delta开方为整数，说明存在正整数j
-            if ((long) sqrtDelta * sqrtDelta == delta) {
+            //delta开方为整数，并且j为整数，则i到j的连续正整数序列之和为target
+            if ((long) sqrtDelta * sqrtDelta == delta && (-1 + sqrtDelta) % 2 == 0) {
                 int j = (-1 + sqrtDelta) / 2;
                 int[] arr = new int[j - i + 1];
 
@@ -120,7 +121,7 @@ public class Offer57_2 {
      * 左指针left为连续序列的左边界，右指针right为连续序列的右边界，
      * 如果当前连续序列之和sum小于target，右指针右移right++，sum加上right；
      * 如果当前连续序列之和sum大于target，sum减去left，左指针右移left++；
-     * 如果当前连续序列之和sum等于target，则找到了一种满足要求的情况，加入结果集合，sum减去left，左指针右移left++
+     * 如果当前连续序列之和sum等于target，则left到right的连续序列满足要求，sum减去left，左指针右移left++
      * 时间复杂度O(target)，空间复杂度O(1)
      *
      * @param target

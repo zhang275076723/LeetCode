@@ -93,12 +93,15 @@ public class Problem315 {
 
     private void mergeSort(int[] nums, int left, int right, int[] tempArr,
                            int[] indexArr, int[] tempIndexArr, int[] resultArr) {
-        if (left < right) {
-            int mid = left + ((right - left) >> 1);
-            mergeSort(nums, left, mid, tempArr, indexArr, tempIndexArr, resultArr);
-            mergeSort(nums, mid + 1, right, tempArr, indexArr, tempIndexArr, resultArr);
-            merge(nums, left, mid, right, tempArr, indexArr, tempIndexArr, resultArr);
+        if (left >= right) {
+            return;
         }
+
+        int mid = left + ((right - left) >> 1);
+
+        mergeSort(nums, left, mid, tempArr, indexArr, tempIndexArr, resultArr);
+        mergeSort(nums, mid + 1, right, tempArr, indexArr, tempIndexArr, resultArr);
+        merge(nums, left, mid, right, tempArr, indexArr, tempIndexArr, resultArr);
     }
 
     private void merge(int[] nums, int left, int mid, int right, int[] tempArr,

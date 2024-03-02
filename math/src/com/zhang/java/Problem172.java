@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/7/31 08:10
  * @Author zsy
- * @Description 阶乘后的零 小红书面试题 模拟类比Problem60、Problem233、Problem400、Offer43、Offer44
+ * @Description 阶乘后的零 小红书面试题 因子类比Problem829 模拟类比Problem60、Problem233、Problem400、Offer43、Offer44
  * 给定一个整数 n ，返回 n! 结果中尾随零的数量。
  * 提示 n! = n * (n - 1) * (n - 2) * ... * 3 * 2 * 1
  * <p>
