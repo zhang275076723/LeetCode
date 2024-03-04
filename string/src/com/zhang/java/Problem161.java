@@ -86,10 +86,10 @@ public class Problem161 {
         while (i < str1.length() && j < str2.length()) {
             if (str1.charAt(i) != str2.charAt(j)) {
                 return false;
+            } else {
+                i++;
+                j++;
             }
-
-            i++;
-            j++;
         }
 
         return i == str1.length() && j == str2.length();

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/2/17 08:44
  * @Author zsy
- * @Description 验证回文串 II 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem409、Problem516、Problem647、Problem1312
+ * @Description 验证回文串 II 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem647、Problem1312、Problem1332
  * 给你一个字符串 s，最多 可以从中删除一个字符。
  * 请你判断 s 是否能成为回文字符串：如果能，返回 true ；否则，返回 false 。
  * <p>
@@ -55,9 +55,10 @@ public class Problem680 {
                 if (s2.charAt(left) != s2.charAt(right)) {
                     flag = false;
                     break;
+                } else {
+                    left++;
+                    right--;
                 }
-                left++;
-                right--;
             }
 
             if (flag) {
@@ -112,9 +113,10 @@ public class Problem680 {
         while (left < right) {
             if (s.charAt(left) != s.charAt(right)) {
                 return false;
+            } else {
+                left++;
+                right--;
             }
-            left++;
-            right--;
         }
 
         return true;

@@ -3,7 +3,7 @@ package com.zhang.zhang;
 /**
  * @Date 2022/9/2 7:20
  * @Author zsy
- * @Description 旋转链表 旋转问题类比Problem186、Problem189、Problem459、Problem686、Problem796、Offer58_2 类比Problem143
+ * @Description 旋转链表 类比Problem143 旋转问题类比Problem186、Problem189、Problem459、Problem686、Problem796、Offer58_2
  * 给你一个链表的头节点 head ，旋转链表，将链表每个节点向右移动 k 个位置。
  * <p>
  * 输入：head = [1,2,3,4,5], k = 2
@@ -71,7 +71,7 @@ public class Problem61 {
 
         ListNode newHead = slow.next;
 
-        //断开链表
+        //断开链表，分为两个链表
         slow.next = null;
         //两个链表重新连接
         fast.next = head;

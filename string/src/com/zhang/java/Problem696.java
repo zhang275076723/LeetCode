@@ -102,10 +102,10 @@ public class Problem696 {
      */
     private int centerExtend(String s, int left, int right) {
         int count = 0;
-        char leftChar = s.charAt(left);
-        char rightChar = s.charAt(right);
+        char c1 = s.charAt(left);
+        char c2 = s.charAt(right);
 
-        while (left >= 0 && right < s.length() && s.charAt(left) == leftChar && s.charAt(right) == rightChar) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == c1 && s.charAt(right) == c2) {
             left--;
             right++;
             count++;

@@ -4,7 +4,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/17 11:20
  * @Author zsy
- * @Description 回文链表 字节面试题 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem266、Problem267、Problem409、Problem516、Problem674、Problem680、Problem1312 链表类比Problem143
+ * @Description 回文链表 字节面试题 链表类比Problem143 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem674、Problem680、Problem1312、Problem1332
  * 给你一个单链表的头节点 head ，请你判断该链表是否为回文链表。
  * 如果是，返回 true ；否则，返回 false 。
  * <p>
@@ -41,27 +41,17 @@ public class Problem234 {
 
         ListNode slow = head;
         ListNode fast = head;
-        //slow指针的前驱指针，用于找中间节点
-        ListNode pre = null;
 
         //快慢指针找到中间节点
-        while (fast != null && fast.next != null) {
-            pre = slow;
+        while (fast.next != null && fast.next.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
 
         //后半部分链表头
-        ListNode head2;
-
-        //根据fast指针是否为空，得到后半部分链表，并断开链表，分为两个链表
-        if (fast == null) {
-            head2 = slow;
-            pre.next = null;
-        } else {
-            head2 = slow.next;
-            slow.next = null;
-        }
+        ListNode head2 = slow.next;
+        //断开链表，分为两个链表
+        slow.next = null;
 
         //后半部分链表反转
         head2 = reverse(head2);
@@ -74,10 +64,10 @@ public class Problem234 {
             //两个链表中当前节点值不同，则不是回文链表，返回false
             if (node1.val != node2.val) {
                 return false;
+            } else {
+                node1 = node1.next;
+                node2 = node2.next;
             }
-
-            node1 = node1.next;
-            node2 = node2.next;
         }
 
         //链表遍历结束，则是回文链表，返回true
