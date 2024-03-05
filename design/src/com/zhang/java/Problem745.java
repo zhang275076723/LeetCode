@@ -80,6 +80,7 @@ public class Problem745 {
                 return -1;
             }
 
+            //从后往前找，优先找到满足前缀后缀的最大下标索引
             int i = list1.size() - 1;
             int j = list2.size() - 1;
 
@@ -106,7 +107,7 @@ public class Problem745 {
          * 前缀树
          */
         private static class Trie {
-            private TrieNode root;
+            private final TrieNode root;
 
             public Trie() {
                 root = new TrieNode();
