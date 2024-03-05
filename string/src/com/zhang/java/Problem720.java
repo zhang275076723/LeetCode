@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2024/1/18 09:02
  * @Author zsy
- * @Description 词典中最长的单词 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem336、Problem421、Problem676、Problem677、Problem745、Problem1804
+ * @Description 词典中最长的单词 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem336、Problem421、Problem676、Problem677、Problem745、Problem1804、Problem3043
  * 给出一个字符串数组 words 组成的一本英语词典。
  * 返回 words 中最长的一个单词，该单词是由 words 词典中其他单词逐步添加一个字母组成。
  * 若其中有多个可行的答案，则返回答案中字典序最小的单词。

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2024/2/20 08:46
  * @Author zsy
- * @Description 前缀和后缀搜索 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem336、Problem421、Problem676、Problem677、Problem720、Problem1804
+ * @Description 前缀和后缀搜索 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem336、Problem421、Problem676、Problem677、Problem720、Problem1804、Problem3043
  * 设计一个包含一些单词的特殊词典，并能够通过前缀和后缀来检索单词。
  * 实现 WordFilter 类：
  * WordFilter(string[] words) 使用词典中的单词 words 初始化对象。
