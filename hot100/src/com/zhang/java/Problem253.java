@@ -30,8 +30,8 @@ public class Problem253 {
     }
 
     /**
-     * 差分数组 (差分数组在O(1)进行区间修改，但区间查询需要O(n)；前缀数组在O(1)进行区间查询，但区间修改需要O(n))
-     * diff[i] = arr[i]-arr[i-1]
+     * 差分数组 (差分数组在O(1)进行区间修改，但区间查询需要O(n)；前缀数组在O(1)进行区间查询，但区间修改需要O(n)，两者互为逆操作)
+     * diff[i] = arr[i] - arr[i-1]
      * arr[i]=diff[0]+diff[1]+...+diff[i-1]+diff[i]
      * 区间[left,right]每个元素加上value，则diff[left]=diff[left]+value，diff[right]=diff[right]-value
      * 时间复杂度O(n)，空间复杂度O(max(intervals[i][1]))

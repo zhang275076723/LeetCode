@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/13 11:38
  * @Author zsy
- * @Description 区域和检索 - 数组可修改 类比Problem303、Problem304、Problem308 线段树类比Problem308、Problem327、Problem654、Problem715、Problem729、Problem731、Problem732、Problem2407 二分搜索树类比Problem4、Problem230、Problem378、Problem440
+ * @Description 区域和检索 - 数组可修改 类比Problem303、Problem304、Problem308 线段树类比Problem308、Problem327、Problem370、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1109、Problem2407 二分搜索树类比Problem4、Problem230、Problem378、Problem440
  * 给你一个数组 nums ，请你完成两类查询。
  * 1、其中一类查询要求 更新 数组 nums 下标对应的值
  * 2、另一类查询要求返回数组 nums 中索引 left 和索引 right 之间（ 包含 ）的nums元素的 和 ，其中 left <= right
@@ -106,13 +106,16 @@ public class Problem307 {
             private final int[] lazyValueArr;
 
             public SegmentTree(int[] nums) {
-                //区间元素之和数组长度至少为4n，确保区间元素之和数组能够覆盖nums中所有区间
+                //为什么线段树数组长度为4n?
+                //情况1：当线段树为满二叉树时，即所有区间长度为1的区间都在最底层，即最底层有n个元素，满二叉树最底层有2^(h-1)个元素，
+                //2^(h-1)=n，得到h=logn+1，满二叉树共有2^h-1个元素，即2^h-1=2^(logn+1)-1=2n-1个元素，近似为2n个元素
+                //情况2：当线段树不为满二叉树时，即区间长度为1的区间在最底层和倒数第二层，最极端的情况倒数第二层有n-1个长度为1的区间，
+                //最底层只有1个长度为1的区间，倒数第二层有2^(h-2)个元素，2^(h-2)=n-1，得到h=log(n-1)+2，共有2^h-1个元素，
+                //即2^h-1=2^(log(n-1)+2)-1=4n-3个元素，近似为4n个元素
+                //综上所述：线段树数组长度不超过4n
                 sumValueArr = new int[nums.length * 4];
-                //区间元素的最大值数组长度至少为4n，确保区间元素的最大值数组能够覆盖nums中所有区间
                 maxValueArr = new int[nums.length * 4];
-                //区间元素的最小值数组长度至少为4n，确保区间元素的最小值数组能够覆盖nums中所有区间
                 minValueArr = new int[nums.length * 4];
-                //懒标记数组长度至少为4n，确保懒标记数组能够覆盖nums中所有区间
                 lazyValueArr = new int[nums.length * 4];
 
                 //建立线段树

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/3 09:46
  * @Author zsy
- * @Description Range 模块 线段树类比Problem307、Problem308、Problem327、Problem654、Problem729、Problem731、Problem732、Problem2407
+ * @Description Range 模块 线段树类比Problem307、Problem308、Problem327、Problem370、Problem654、Problem729、Problem731、Problem732、Problem1109、Problem2407
  * Range模块是跟踪数字范围的模块。设计一个数据结构来跟踪表示为 半开区间 的范围并查询它们。
  * 半开区间 [left, right) 表示所有 left <= x < right 的实数 x 。
  * 实现 RangeModule 类:
