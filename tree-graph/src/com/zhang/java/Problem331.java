@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2023/5/22 08:40
  * @Author zsy
- * @Description 验证二叉树的前序序列化 入度出度类比类比Problem207、Problem210、Problem685、Problem1361 类比Problem271、Problem297、Problem449、Problem535、Offer37 栈类比Problem20、Problem71、Problem150、Problem224、Problem227、Problem341、Problem394、Problem678、Problem856、Problem946、Problem1003、Problem1047、Problem1096、Offer31、CharacterToInteger
+ * @Description 验证二叉树的前序序列化 入度出度类比类比Problem207、Problem210、Problem685、Problem1361 类比Problem271、Problem297、Problem449、Problem535、Problem820、Offer37 栈类比Problem20、Problem71、Problem150、Problem224、Problem227、Problem341、Problem394、Problem678、Problem856、Problem946、Problem1003、Problem1047、Problem1096、Offer31、CharacterToInteger
  * 序列化二叉树的一种方法是使用 前序遍历 。
  * 当我们遇到一个非空节点时，我们可以记录下这个节点的值。
  * 如果它是一个空节点，我们可以使用一个标记值记录，例如 #。

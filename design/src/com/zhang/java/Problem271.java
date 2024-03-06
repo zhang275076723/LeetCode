@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @Date 2023/5/6 08:20
  * @Author zsy
- * @Description 字符串的编码与解码 类比Problem394、Problem443、Problem604、Problem900 类比Problem297、Problem331、Problem449、Problem535、Offer37 位运算类比Problem29、Problem136、Problem137、Problem190、Problem191、Problem201、Problem231、Problem260、Problem326、Problem342、Problem371、Problem389、Problem405、Problem461、Problem477、Problem645、Problem898、Problem1290、Offer15、Offer56、Offer56_2、Offer64、Offer65、IpToInt
+ * @Description 字符串的编码与解码 类比Problem394、Problem443、Problem604、Problem900 类比Problem297、Problem331、Problem449、Problem535、Problem820、Offer37 位运算类比Problem29、Problem136、Problem137、Problem190、Problem191、Problem201、Problem231、Problem260、Problem326、Problem342、Problem371、Problem389、Problem405、Problem461、Problem477、Problem645、Problem898、Problem1290、Offer15、Offer56、Offer56_2、Offer64、Offer65、IpToInt
  * 请你设计一个算法，可以将一个 字符串列表 编码成为一个 字符串。
  * 这个编码后的字符串是可以通过网络进行高效传送的，并且可以在接收端被解码回原来的字符串列表。
  * 1 号机（发送方）有如下函数：
@@ -49,10 +49,11 @@ import java.util.List;
  */
 public class Problem271 {
     public static void main(String[] args) {
-        List<String> strs = new ArrayList<>();
-        strs.add("abcfe");
-        strs.add("uv");
-        strs.add("hij");
+        List<String> strs = new ArrayList<String>() {{
+            add("abcfe");
+            add("uv");
+            add("hij");
+        }};
 //        Codec encoder = new Codec();
 //        Codec decoder = new Codec();
         Codec2 encoder = new Codec2();
@@ -64,7 +65,7 @@ public class Problem271 {
     }
 
     /**
-     * 使用分隔符
+     * 使用非ASCII码的分隔符
      */
     static class Codec {
         //分隔符，每个字符串可能包含256个有效的ASCII码字符，所以用非ASCII字符作为分隔符
@@ -129,8 +130,8 @@ public class Problem271 {
      */
     static class Codec2 {
         /**
-         * 拼接4字节的当前字符串长度(16进制)，再拼接当前字符串
-         * 例如：["abcfe","uv","hij"]编码为0x00000005abcfe0x00000002uv0x00000003hij，其中0x00000005是16进制表示的4字节数
+         * 4字节的当前字符串长度(16进制)转换为4位字符串进行拼接，再拼接当前字符串
+         * 例如：["abcfe","uv","hij"]编码为0x00000005abcfe0x00000002uv0x00000003hij，其中0x00000005是16进制表示的4位字符串
          * 时间复杂度O(n)，空间复杂度O(n)
          *
          * @param strs
@@ -155,7 +156,7 @@ public class Problem271 {
                     len = len >>> 8;
                 }
 
-                //先拼接4字节的当前字符串长度，再拼接当前字符串
+                //4字节的当前字符串长度转换为4位字符串进行拼接，再拼接当前字符串
                 sb.append(new String(arr)).append(str);
             }
 
@@ -163,8 +164,8 @@ public class Problem271 {
         }
 
         /**
-         * 遍历编码后的字符串，每次读取4字节的字符串长度，再根据长度往后读取字符串
-         * 例如：0x00000005abcfe0x00000002uv0x00000003hij解码为["abcfe","uv","hij"]，其中0x00000005是16进制表示的4字节数
+         * 遍历编码后的字符串，每次读取4位字符串作为当前编码字符串长度，再根据长度往后读取字符串
+         * 例如：0x00000005abcfe0x00000002uv0x00000003hij解码为["abcfe","uv","hij"]，其中0x00000005是16进制表示的4位字符串
          * 时间复杂度O(n)，空间复杂度O(1)
          *
          * @param s
@@ -179,7 +180,7 @@ public class Problem271 {
             int index = 0;
 
             while (index < s.length()) {
-                //4字节的字符串长度数组
+                //4字节的字符串长度数组，4位字符串转换为4字节数组
                 byte[] arr = s.substring(index, index + 4).getBytes();
                 //当前字符串的长度
                 int len = 0;
@@ -189,7 +190,7 @@ public class Problem271 {
                     len = (len << 8) + arr[i];
                 }
 
-                list.add(s.substring(index, index + 4 + len));
+                list.add(s.substring(index + 4, index + 4 + len));
                 index = index + 4 + len;
             }
 
