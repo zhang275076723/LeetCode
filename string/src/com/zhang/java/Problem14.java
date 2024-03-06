@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/7/1 9:24
  * @Author zsy
- * @Description 最长公共前缀 小米机试题 前缀树类比Problem208、Problem211、Problem212、Problem336、Problem421、Problem676、Problem677、Problem720、Problem745、Problem820、Problem1804、Problem3043
+ * @Description 最长公共前缀 小米机试题 前缀树类比Problem208、Problem211、Problem212、Problem336、Problem421、Problem676、Problem677、Problem720、Problem745、Problem820、Problem1166、Problem1804、Problem3043
  * 编写一个函数来查找字符串数组中的最长公共前缀。
  * 如果不存在公共前缀，返回空字符串 ""。
  * <p>

@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @Date 2024/2/27 08:21
  * @Author zsy
- * @Description 最长公共前缀的长度 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem336、Problem421、Problem676、Problem677、Problem720、Problem745、Problem820、Problem1804
+ * @Description 最长公共前缀的长度 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem336、Problem421、Problem676、Problem677、Problem720、Problem745、Problem820、Problem1166、Problem1804
  * 给你两个 正整数 数组 arr1 和 arr2 。
  * 正整数的 前缀 是其 最左边 的一位或多位数字组成的整数。
  * 例如，123 是整数 12345 的前缀，而 234 不是 。

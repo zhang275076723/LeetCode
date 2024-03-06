@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @Date 2024/2/28 08:56
  * @Author zsy
- * @Description 单词的压缩编码 类比Problem271、Problem297、Problem331、Problem449、Problem535、Offer37 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem336、Problem421、Problem676、Problem677、Problem720、Problem745、Problem1804、Problem3043
+ * @Description 单词的压缩编码 类比Problem271、Problem297、Problem331、Problem449、Problem535、Offer37 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem336、Problem421、Problem676、Problem677、Problem720、Problem745、Problem1166、Problem1804、Problem3043
  * 单词数组 words 的 有效编码 由任意助记字符串 s 和下标数组 indices 组成，且满足：
  * words.length == indices.length
  * 助记字符串 s 以 '#' 字符结尾
