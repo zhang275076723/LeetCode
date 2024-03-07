@@ -1,49 +1,76 @@
 package com.zhang.java;
 
-import java.util.Arrays;
-
 /**
- * @Date 2024/2/26 08:35
+ * @Date 2024/3/1 08:59
  * @Author zsy
- * @Description 航班预订统计 华为面试题 差分数组类比Problem253、Problem370、Problem1893 线段树类比Problem307、Problem308、Problem327、Problem370、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1893、Problem2407
- * 这里有 n 个航班，它们分别从 1 到 n 进行编号。
- * 有一份航班预订表 bookings ，表中第 i 条预订记录 bookings[i] = [firsti, lasti, seatsi]
- * 意味着在从 firsti 到 lasti （包含 firsti 和 lasti ）的 每个航班 上预订了 seatsi 个座位。
- * 请你返回一个长度为 n 的数组 answer，里面的元素是每个航班预定的座位总数。
+ * @Description 检查是否区域内所有整数都被覆盖 差分数组类比Problem253、Problem370、Problem1109 线段树类比Problem307、Problem308、Problem327、Problem370、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1109、Problem2407
+ * 给你一个二维整数数组 ranges 和两个整数 left 和 right 。
+ * 每个 ranges[i] = [starti, endi] 表示一个从 starti 到 endi 的 闭区间 。
+ * 如果闭区间 [left, right] 内每个整数都被 ranges 中 至少一个 区间覆盖，那么请你返回 true ，否则返回 false 。
+ * 已知区间 ranges[i] = [starti, endi] ，如果整数 x 满足 starti <= x <= endi ，那么我们称整数x 被覆盖了。
  * <p>
- * 输入：bookings = [[1,2,10],[2,3,20],[2,5,25]], n = 5
- * 输出：[10,55,45,25,25]
- * 解释：
- * 航班编号        1   2   3   4   5
- * 预订记录 1 ：   10  10
- * 预订记录 2 ：       20  20
- * 预订记录 3 ：       25  25  25  25
- * 总座位数：      10  55  45  25  25
- * 因此，answer = [10,55,45,25,25]
+ * 输入：ranges = [[1,2],[3,4],[5,6]], left = 2, right = 5
+ * 输出：true
+ * 解释：2 到 5 的每个整数都被覆盖了：
+ * - 2 被第一个区间覆盖。
+ * - 3 和 4 被第二个区间覆盖。
+ * - 5 被第三个区间覆盖。
  * <p>
- * 输入：bookings = [[1,2,10],[2,2,15]], n = 2
- * 输出：[10,25]
- * 解释：
- * 航班编号        1   2
- * 预订记录 1 ：   10  10
- * 预订记录 2 ：       15
- * 总座位数：      10  25
- * 因此，answer = [10,25]
+ * 输入：ranges = [[1,10],[10,20]], left = 21, right = 21
+ * 输出：false
+ * 解释：21 没有被任何一个区间覆盖。
  * <p>
- * 1 <= n <= 2 * 10^4
- * 1 <= bookings.length <= 2 * 10^4
- * bookings[i].length == 3
- * 1 <= firsti <= lasti <= n
- * 1 <= seatsi <= 10^4
+ * 1 <= ranges.length <= 50
+ * 1 <= starti <= endi <= 50
+ * 1 <= left <= right <= 50
  */
-public class Problem1109 {
+public class Problem1893 {
     public static void main(String[] args) {
-        Problem1109 problem1109 = new Problem1109();
-        int[][] bookings = {{1, 2, 10}, {2, 3, 20}, {2, 5, 25}};
-        int n = 5;
-        System.out.println(Arrays.toString(problem1109.corpFlightBookings(bookings, n)));
-        System.out.println(Arrays.toString(problem1109.corpFlightBookings2(bookings, n)));
-        System.out.println(Arrays.toString(problem1109.corpFlightBookings3(bookings, n)));
+        Problem1893 problem1893 = new Problem1893();
+        int[][] ranges = {{1, 2}, {3, 4}, {5, 6}};
+        int left = 2;
+        int right = 5;
+        System.out.println(problem1893.isCovered(ranges, left, right));
+        System.out.println(problem1893.isCovered2(ranges, left, right));
+        System.out.println(problem1893.isCovered3(ranges, left, right));
+        System.out.println(problem1893.isCovered4(ranges, left, right));
+    }
+
+    /**
+     * 暴力
+     * 时间复杂度O(mn)，空间复杂度O(m) (n=ranges.length，m=max(ranges[i][1]))
+     *
+     * @param ranges
+     * @param left
+     * @param right
+     * @return
+     */
+    public boolean isCovered(int[][] ranges, int left, int right) {
+        //区间的最大右边界
+        int m = right;
+
+        for (int i = 0; i < ranges.length; i++) {
+            m = Math.max(m, ranges[i][1]);
+        }
+
+        //元素是否被覆盖数组
+        boolean[] arr = new boolean[m + 1];
+
+        for (int i = 0; i < ranges.length; i++) {
+            for (int j = ranges[i][0]; j <= ranges[i][1]; j++) {
+                arr[j] = true;
+            }
+        }
+
+        for (int i = left; i <= right; i++) {
+            //[left,right]中只要有一个元素未被覆盖，返回false
+            if (!arr[i]) {
+                return false;
+            }
+        }
+
+        //[left,right]中元素都被覆盖，返回true
+        return true;
     }
 
     /**
@@ -51,99 +78,124 @@ public class Problem1109 {
      * diff[i] = arr[i] - arr[i-1]
      * arr[i] = diff[0] + diff[1] + ... + diff[i-1] + diff[i]
      * 区间[left,right]每个元素加上value，则diff[left]=diff[left]+value，diff[right]=diff[right]-value
-     * 时间复杂度O(m+n)，空间复杂度O(1) (m=bookings.length)
+     * 时间复杂度O(n+m)，空间复杂度O(m) (n=ranges.length，m=max(ranges[i][1]))
      *
-     * @param bookings
-     * @param n
+     * @param ranges
+     * @param left
+     * @param right
      * @return
      */
-    public int[] corpFlightBookings(int[][] bookings, int n) {
+    public boolean isCovered2(int[][] ranges, int left, int right) {
+        //区间的最大右边界
+        int m = right;
+
+        for (int i = 0; i < ranges.length; i++) {
+            m = Math.max(m, ranges[i][1]);
+        }
+
         //差分数组
-        int[] diff = new int[n];
+        int[] diff = new int[m + 1];
 
-        for (int i = 0; i < bookings.length; i++) {
-            //因为是从1开始编号，减1变为从0开始编号
-            int left = bookings[i][0] - 1;
-            int right = bookings[i][1] - 1;
-            int value = bookings[i][2];
+        for (int i = 0; i < ranges.length; i++) {
+            diff[ranges[i][0]]++;
 
-            diff[left] = diff[left] + value;
-
-            if (right + 1 < n) {
-                diff[right + 1] = diff[right + 1] - value;
+            if (ranges[i][1] + 1 <= m) {
+                diff[ranges[i][1] + 1]--;
             }
         }
 
         //差分数组累加，还原为结果数组
-        for (int i = 1; i < n; i++) {
+        for (int i = 1; i <= m; i++) {
             diff[i] = diff[i] + diff[i - 1];
         }
 
-        return diff;
+        for (int i = left; i <= right; i++) {
+            //[left,right]中只要有一个元素未被覆盖，返回false
+            if (diff[i] <= 0) {
+                return false;
+            }
+        }
+
+        //[left,right]中元素都被覆盖，返回true
+        return true;
     }
 
     /**
      * 线段树，用数组表示线段树 (线段树在O(logn)进行区间查询和修改)
-     * 时间复杂度O(mlogn+nlogn)，空间复杂度O(n) (m=bookings.length)
+     * 时间复杂度O(nlogm+(right-left)logm)，空间复杂度O(m) (n=ranges.length，m=max(ranges[i][1]))
      *
-     * @param bookings
-     * @param n
+     * @param ranges
+     * @param left
+     * @param right
      * @return
      */
-    public int[] corpFlightBookings2(int[][] bookings, int n) {
+    public boolean isCovered3(int[][] ranges, int left, int right) {
+        //区间的最大右边界
+        int m = right;
+
+        for (int i = 0; i < ranges.length; i++) {
+            m = Math.max(m, ranges[i][1]);
+        }
+
         //线段树，用数组表示线段树
-        SegmentTree segmentTree = new SegmentTree(n);
+        SegmentTree segmentTree = new SegmentTree(m + 1);
         int leftBound = 0;
-        int rightBound = n - 1;
+        int rightBound = m;
 
-        for (int i = 0; i < bookings.length; i++) {
-            //因为是从1开始编号，减1变为从0开始编号
-            int updateLeft = bookings[i][0] - 1;
-            int updateRight = bookings[i][1] - 1;
-            int value = bookings[i][2];
+        for (int i = 0; i < ranges.length; i++) {
+            int updateLeft = ranges[i][0];
+            int updateRight = ranges[i][1];
 
-            segmentTree.update(0, leftBound, rightBound, updateLeft, updateRight, value);
+            segmentTree.update(0, leftBound, rightBound, updateLeft, updateRight, 1);
         }
 
-        //修改后的结果数组
-        int[] arr = new int[n];
-
-        for (int i = 0; i < n; i++) {
-            arr[i] = segmentTree.query(0, leftBound, rightBound, i, i);
+        for (int i = left; i <= right; i++) {
+            //[left,right]中只要有一个元素未被覆盖，返回false
+            if (segmentTree.query(0, leftBound, rightBound, i, i) <= 0) {
+                return false;
+            }
         }
 
-        return arr;
+        //[left,right]中元素都被覆盖，返回true
+        return true;
     }
 
     /**
      * 线段树，动态开点 (线段树在O(logn)进行区间查询和修改)
-     * 时间复杂度O(mlogn+nlogn)，空间复杂度O(n) (m=bookings.length)
+     * 时间复杂度O(nlogm+(right-left)logm)，空间复杂度O(m) (n=ranges.length，m=max(ranges[i][1]))
      *
-     * @param bookings
-     * @param n
+     * @param ranges
+     * @param left
+     * @param right
      * @return
      */
-    public int[] corpFlightBookings3(int[][] bookings, int n) {
+    public boolean isCovered4(int[][] ranges, int left, int right) {
+        //区间的最大右边界
+        int m = right;
+
+        for (int i = 0; i < ranges.length; i++) {
+            m = Math.max(m, ranges[i][1]);
+        }
+
         //线段树，动态开点
-        SegmentTree2 segmentTree2 = new SegmentTree2(0, n - 1);
+        SegmentTree2 segmentTree2 = new SegmentTree2(0, m);
 
-        for (int i = 0; i < bookings.length; i++) {
-            //因为是从1开始编号，减1变为从0开始编号
-            int updateLeft = bookings[i][0] - 1;
-            int updateRight = bookings[i][1] - 1;
-            int value = bookings[i][2];
+        for (int i = 0; i < ranges.length; i++) {
+            int updateLeft = ranges[i][0];
+            int updateRight = ranges[i][1];
 
-            segmentTree2.update(segmentTree2.root, updateLeft, updateRight, value);
+            segmentTree2.update(segmentTree2.root, updateLeft, updateRight, 1);
         }
 
-        //修改后的结果数组
-        int[] arr = new int[n];
-
-        for (int i = 0; i < n; i++) {
-            arr[i] = segmentTree2.query(segmentTree2.root, i, i);
+        for (int i = left; i <= right; i++) {
+            //[left,right]中只要有一个元素未被覆盖，返回false
+            if (segmentTree2.query(segmentTree2.root, i, i) <= 0) {
+                return false;
+            }
         }
 
-        return arr;
+        //[left,right]中元素都被覆盖，返回true
+        return true;
     }
 
     /**

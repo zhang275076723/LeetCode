@@ -129,7 +129,7 @@ public class Problem1166 {
                 TrieNode node = root;
                 String[] arr = path.split("/");
 
-                //arr[0]为空不考虑
+                //注意：i是从1开始遍历，arr[0]为空不考虑
                 for (int i = 1; i < arr.length; i++) {
                     if (!node.children.containsKey(arr[i])) {
                         return -1;

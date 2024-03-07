@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2024/2/24 09:02
  * @Author zsy
- * @Description 区间加法 差分数组类比Problem253、Problem1109 线段树类比Problem307、Problem308、Problem327、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1109、Problem2407
+ * @Description 区间加法 差分数组类比Problem253、Problem1109、Problem1893 线段树类比Problem307、Problem308、Problem327、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1109、Problem1893、Problem2407
  * 假设你有一个长度为 n 的数组，初始情况下所有的数字均为 0，你将会被给出 k 个更新的操作。
  * 其中，每个操作会被表示为一个三元组：[startIndex, endIndex, inc]，你需要将子数组 A[startIndex ... endIndex]
  * （包括 startIndex 和 endIndex）增加 inc。
@@ -32,7 +32,7 @@ public class Problem370 {
     /**
      * 差分数组 (差分数组在O(1)进行区间修改，但区间查询需要O(n)；前缀数组在O(1)进行区间查询，但区间修改需要O(n)，两者互为逆操作)
      * diff[i] = arr[i] - arr[i-1]
-     * arr[i]=diff[0]+diff[1]+...+diff[i-1]+diff[i]
+     * arr[i] = diff[0] + diff[1] + ... + diff[i-1] + diff[i]
      * 区间[left,right]每个元素加上value，则diff[left]=diff[left]+value，diff[right]=diff[right]-value
      * 时间复杂度O(n+length)，空间复杂度O(1) (n=updates.length)
      *
