@@ -68,12 +68,12 @@ public class Problem253 {
 
         //所有会议不冲突需要的最少会议室个数，初始化为时间0需要的会议室个数
         int count = diff[0];
-        //diff[0]-diff[i]之和，即为当前时间i需要的会议室个数
-        int sum = 0;
 
+        //差分数组累加，还原为结果数组
         for (int i = 1; i < max; i++) {
-            sum = sum + diff[i];
-            count = Math.max(count, sum);
+            //当前时间i需要的会议室个数
+            diff[i] = diff[i] + diff[i - 1];
+            count = Math.max(count, diff[i]);
         }
 
         return count;
