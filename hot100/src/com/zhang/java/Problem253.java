@@ -5,7 +5,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2022/5/22 9:02
  * @Author zsy
- * @Description 会议室 II 携程机试题 差分数组类比Problem370、Problem1109 优先队列类比Problem407、Problem630 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem352、Problem406、Problem435、Problem436、Problem632、Problem763、Problem855、Problem986、Problem1288、Problem2402
+ * @Description 会议室 II 携程机试题 差分数组类比Problem370、Problem1094、Problem1109、Problem1893 优先队列类比Problem407、Problem630 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem352、Problem406、Problem435、Problem436、Problem632、Problem763、Problem855、Problem986、Problem1288、Problem2402
  * 给定一个会议时间安排的数组，
  * 每个会议时间都会包括开始和结束的时间 [[s1,e1],[s2,e2],…] (si < ei)，
  * 为避免会议冲突，同时要考虑充分利用会议室资源，请你计算至少需要多少间会议室，才能满足这些会议安排。
@@ -32,7 +32,7 @@ public class Problem253 {
     /**
      * 差分数组 (差分数组在O(1)进行区间修改，但区间查询需要O(n)；前缀数组在O(1)进行区间查询，但区间修改需要O(n)，两者互为逆操作)
      * diff[i] = arr[i] - arr[i-1]
-     * arr[i]=diff[0]+diff[1]+...+diff[i-1]+diff[i]
+     * arr[i] = diff[0] + diff[1] + ... + diff[i-1] + diff[i]
      * 区间[left,right]每个元素加上value，则diff[left]=diff[left]+value，diff[right]=diff[right]-value
      * 时间复杂度O(n)，空间复杂度O(max(intervals[i][1]))
      *
@@ -56,16 +56,17 @@ public class Problem253 {
 
         for (int i = 0; i < intervals.length; i++) {
             int start = intervals[i][0];
-            int end = intervals[i][1];
+            //结束时间要减1，因为从结束时间开始的会议不会冲突
+            int end = intervals[i][1] - 1;
 
             diff[start]++;
 
-            if (end < diff.length) {
-                diff[end]--;
+            if (end + 1 < diff.length) {
+                diff[end + 1]--;
             }
         }
 
-        //所需的最少会议室个数，初始化为时间0需要的会议室个数
+        //所有会议不冲突需要的最少会议室个数，初始化为时间0需要的会议室个数
         int count = diff[0];
         //diff[0]-diff[i]之和，即为当前时间i需要的会议室个数
         int sum = 0;

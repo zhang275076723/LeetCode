@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/3/1 08:59
  * @Author zsy
- * @Description 检查是否区域内所有整数都被覆盖 差分数组类比Problem253、Problem370、Problem1109 线段树类比Problem307、Problem308、Problem327、Problem370、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1109、Problem2407
+ * @Description 检查是否区域内所有整数都被覆盖 差分数组类比Problem253、Problem370、Problem1094、Problem1109 线段树类比Problem307、Problem308、Problem327、Problem370、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1109、Problem2407
  * 给你一个二维整数数组 ranges 和两个整数 left 和 right 。
  * 每个 ranges[i] = [starti, endi] 表示一个从 starti 到 endi 的 闭区间 。
  * 如果闭区间 [left, right] 内每个整数都被 ranges 中 至少一个 区间覆盖，那么请你返回 true ，否则返回 false 。
@@ -38,7 +38,7 @@ public class Problem1893 {
 
     /**
      * 暴力
-     * 时间复杂度O(mn)，空间复杂度O(m) (n=ranges.length，m=max(ranges[i][1]))
+     * 时间复杂度O(mn)，空间复杂度O(m) (n=ranges.length，m=max(right,ranges[i][1]))
      *
      * @param ranges
      * @param left
@@ -78,7 +78,7 @@ public class Problem1893 {
      * diff[i] = arr[i] - arr[i-1]
      * arr[i] = diff[0] + diff[1] + ... + diff[i-1] + diff[i]
      * 区间[left,right]每个元素加上value，则diff[left]=diff[left]+value，diff[right]=diff[right]-value
-     * 时间复杂度O(n+m)，空间复杂度O(m) (n=ranges.length，m=max(ranges[i][1]))
+     * 时间复杂度O(n+m)，空间复杂度O(m) (n=ranges.length，m=max(right,ranges[i][1]))
      *
      * @param ranges
      * @param left
@@ -122,7 +122,7 @@ public class Problem1893 {
 
     /**
      * 线段树，用数组表示线段树 (线段树在O(logn)进行区间查询和修改)
-     * 时间复杂度O(nlogm+(right-left)logm)，空间复杂度O(m) (n=ranges.length，m=max(ranges[i][1]))
+     * 时间复杂度O(nlogm+(right-left)logm)，空间复杂度O(m) (n=ranges.length，m=max(right,ranges[i][1]))
      *
      * @param ranges
      * @param left
@@ -162,7 +162,7 @@ public class Problem1893 {
 
     /**
      * 线段树，动态开点 (线段树在O(logn)进行区间查询和修改)
-     * 时间复杂度O(nlogm+(right-left)logm)，空间复杂度O(m) (n=ranges.length，m=max(ranges[i][1]))
+     * 时间复杂度O(nlogm+(right-left)logm)，空间复杂度O(m) (n=ranges.length，m=max(right,ranges[i][1]))
      *
      * @param ranges
      * @param left

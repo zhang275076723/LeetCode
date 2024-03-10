@@ -1,49 +1,74 @@
 package com.zhang.java;
 
-import java.util.Arrays;
-
 /**
- * @Date 2024/2/26 08:35
+ * @Date 2024/3/2 09:07
  * @Author zsy
- * @Description 航班预订统计 华为面试题 差分数组类比Problem253、Problem370、Problem1094、Problem1893 线段树类比Problem307、Problem308、Problem327、Problem370、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1893、Problem2407
- * 这里有 n 个航班，它们分别从 1 到 n 进行编号。
- * 有一份航班预订表 bookings ，表中第 i 条预订记录 bookings[i] = [firsti, lasti, seatsi]
- * 意味着在从 firsti 到 lasti （包含 firsti 和 lasti ）的 每个航班 上预订了 seatsi 个座位。
- * 请你返回一个长度为 n 的数组 answer，里面的元素是每个航班预定的座位总数。
+ * @Description 拼车 差分数组类比Problem253、Problem370、Problem1109、Problem1893 线段树类比Problem307、Problem308、Problem327、Problem370、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1109、Problem1893、Problem2407
+ * 车上最初有 capacity 个空座位。车 只能 向一个方向行驶（也就是说，不允许掉头或改变方向）
+ * 给定整数 capacity 和一个数组 trips ,  trip[i] = [numPassengersi, fromi, toi] 表示第 i 次旅行有 numPassengersi 乘客，
+ * 接他们和放他们的位置分别是 fromi 和 toi 。
+ * 这些位置是从汽车的初始位置向东的公里数。
+ * 当且仅当你可以在所有给定的行程中接送所有乘客时，返回 true，否则请返回 false。
  * <p>
- * 输入：bookings = [[1,2,10],[2,3,20],[2,5,25]], n = 5
- * 输出：[10,55,45,25,25]
- * 解释：
- * 航班编号        1   2   3   4   5
- * 预订记录 1 ：   10  10
- * 预订记录 2 ：       20  20
- * 预订记录 3 ：       25  25  25  25
- * 总座位数：      10  55  45  25  25
- * 因此，answer = [10,55,45,25,25]
+ * 输入：trips = [[2,1,5],[3,3,7]], capacity = 4
+ * 输出：false
  * <p>
- * 输入：bookings = [[1,2,10],[2,2,15]], n = 2
- * 输出：[10,25]
- * 解释：
- * 航班编号        1   2
- * 预订记录 1 ：   10  10
- * 预订记录 2 ：       15
- * 总座位数：      10  25
- * 因此，answer = [10,25]
+ * 输入：trips = [[2,1,5],[3,3,7]], capacity = 5
+ * 输出：true
  * <p>
- * 1 <= n <= 2 * 10^4
- * 1 <= bookings.length <= 2 * 10^4
- * bookings[i].length == 3
- * 1 <= firsti <= lasti <= n
- * 1 <= seatsi <= 10^4
+ * 1 <= trips.length <= 1000
+ * trips[i].length == 3
+ * 1 <= numPassengersi <= 100
+ * 0 <= fromi < toi <= 1000
+ * 1 <= capacity <= 10^5
  */
-public class Problem1109 {
+public class Problem1094 {
     public static void main(String[] args) {
-        Problem1109 problem1109 = new Problem1109();
-        int[][] bookings = {{1, 2, 10}, {2, 3, 20}, {2, 5, 25}};
-        int n = 5;
-        System.out.println(Arrays.toString(problem1109.corpFlightBookings(bookings, n)));
-        System.out.println(Arrays.toString(problem1109.corpFlightBookings2(bookings, n)));
-        System.out.println(Arrays.toString(problem1109.corpFlightBookings3(bookings, n)));
+        Problem1094 problem1094 = new Problem1094();
+        int[][] trips = {{2, 1, 5}, {3, 3, 7}};
+        int capacity = 4;
+        System.out.println(problem1094.carPooling(trips, capacity));
+        System.out.println(problem1094.carPooling2(trips, capacity));
+        System.out.println(problem1094.carPooling3(trips, capacity));
+        System.out.println(problem1094.carPooling4(trips, capacity));
+    }
+
+    /**
+     * 暴力
+     * 时间复杂度O(mn)，空间复杂度O(m) (n=trips.length，m=max(trips[i][2]))
+     *
+     * @param trips
+     * @param capacity
+     * @return
+     */
+    public boolean carPooling(int[][] trips, int capacity) {
+        //汽车能到达的最远距离
+        int m = trips[0][2];
+
+        for (int i = 0; i < trips.length; i++) {
+            m = Math.max(m, trips[i][2]);
+        }
+
+        //当前距离乘车的乘客数量数组
+        int[] arr = new int[m + 1];
+
+        for (int i = 0; i < trips.length; i++) {
+            int passenger = trips[i][0];
+            int from = trips[i][1];
+            int to = trips[i][2];
+
+            for (int j = from; j <= to; j++) {
+                arr[j] = arr[j] + passenger;
+
+                //当前距离乘车的乘客数量大于capacity，则无法乘车，返回false
+                if (arr[j] > capacity) {
+                    return false;
+                }
+            }
+        }
+
+        //遍历结束，则可以乘车，返回true
+        return true;
     }
 
     /**
@@ -51,99 +76,127 @@ public class Problem1109 {
      * diff[i] = arr[i] - arr[i-1]
      * arr[i] = diff[0] + diff[1] + ... + diff[i-1] + diff[i]
      * 区间[left,right]每个元素加上value，则diff[left]=diff[left]+value，diff[right]=diff[right]-value
-     * 时间复杂度O(m+n)，空间复杂度O(1) (m=bookings.length)
+     * 时间复杂度O(m+n)，空间复杂度O(m) (n=trips.length，m=max(trips[i][2]))
      *
-     * @param bookings
-     * @param n
+     * @param trips
+     * @param capacity
      * @return
      */
-    public int[] corpFlightBookings(int[][] bookings, int n) {
+    public boolean carPooling2(int[][] trips, int capacity) {
+        //汽车能到达的最远距离
+        int m = trips[0][2];
+
+        for (int i = 0; i < trips.length; i++) {
+            m = Math.max(m, trips[i][2]);
+        }
+
         //差分数组
-        int[] diff = new int[n];
+        int[] diff = new int[m + 1];
 
-        for (int i = 0; i < bookings.length; i++) {
-            //因为是从1开始编号，减1变为从0开始编号
-            int left = bookings[i][0] - 1;
-            int right = bookings[i][1] - 1;
-            int value = bookings[i][2];
+        for (int i = 0; i < trips.length; i++) {
+            int passenger = trips[i][0];
+            int from = trips[i][1];
+            int to = trips[i][2];
 
-            diff[left] = diff[left] + value;
+            diff[from] = diff[from] + passenger;
 
-            if (right + 1 < n) {
-                diff[right + 1] = diff[right + 1] - value;
+            if (to + 1 <= m) {
+                diff[to + 1] = diff[to + 1] - passenger;
             }
         }
 
         //差分数组累加，还原为结果数组
-        for (int i = 1; i < n; i++) {
+        for (int i = 1; i <= m; i++) {
             diff[i] = diff[i] + diff[i - 1];
         }
 
-        return diff;
+        for (int i = 0; i <= m; i++) {
+            //当前距离乘车的乘客数量大于capacity，则无法乘车，返回false
+            if (diff[i] > capacity) {
+                return false;
+            }
+        }
+
+        //遍历结束，则可以乘车，返回true
+        return true;
     }
 
     /**
      * 线段树，用数组表示线段树 (线段树在O(logn)进行区间查询和修改)
-     * 时间复杂度O(mlogn+nlogn)，空间复杂度O(n) (m=bookings.length)
+     * 时间复杂度O(nlogm+mlogm)，空间复杂度O(m) (n=trips.length，m=max(trips[i][2]))
      *
-     * @param bookings
-     * @param n
+     * @param trips
+     * @param capacity
      * @return
      */
-    public int[] corpFlightBookings2(int[][] bookings, int n) {
+    public boolean carPooling3(int[][] trips, int capacity) {
+        //汽车能到达的最远距离
+        int m = trips[0][2];
+
+        for (int i = 0; i < trips.length; i++) {
+            m = Math.max(m, trips[i][2]);
+        }
+
         //线段树，用数组表示线段树
-        SegmentTree segmentTree = new SegmentTree(n);
+        SegmentTree segmentTree = new SegmentTree(m + 1);
         int leftBound = 0;
-        int rightBound = n - 1;
+        int rightBound = m;
 
-        for (int i = 0; i < bookings.length; i++) {
-            //因为是从1开始编号，减1变为从0开始编号
-            int updateLeft = bookings[i][0] - 1;
-            int updateRight = bookings[i][1] - 1;
-            int value = bookings[i][2];
+        for (int i = 0; i < trips.length; i++) {
+            int passenger = trips[i][0];
+            int updateLeft = trips[i][1];
+            int updateRight = trips[i][2];
 
-            segmentTree.update(0, leftBound, rightBound, updateLeft, updateRight, value);
+            segmentTree.update(0, leftBound, rightBound, updateLeft, updateRight, passenger);
         }
 
-        //修改后的结果数组
-        int[] arr = new int[n];
-
-        for (int i = 0; i < n; i++) {
-            arr[i] = segmentTree.query(0, leftBound, rightBound, i, i);
+        for (int i = 0; i <= m; i++) {
+            //当前距离乘车的乘客数量大于capacity，则无法乘车，返回false
+            if (segmentTree.query(0, leftBound, rightBound, i, i) > capacity) {
+                return false;
+            }
         }
 
-        return arr;
+        //遍历结束，则可以乘车，返回true
+        return true;
     }
 
     /**
      * 线段树，动态开点 (线段树在O(logn)进行区间查询和修改)
-     * 时间复杂度O(mlogn+nlogn)，空间复杂度O(n) (m=bookings.length)
+     * 时间复杂度O(nlogm+mlogm)，空间复杂度O(m) (n=trips.length，m=max(trips[i][2]))
      *
-     * @param bookings
-     * @param n
+     * @param trips
+     * @param capacity
      * @return
      */
-    public int[] corpFlightBookings3(int[][] bookings, int n) {
+    public boolean carPooling4(int[][] trips, int capacity) {
+        //汽车能到达的最远距离
+        int m = trips[0][2];
+
+        for (int i = 0; i < trips.length; i++) {
+            m = Math.max(m, trips[i][2]);
+        }
+
         //线段树，动态开点
-        SegmentTree2 segmentTree2 = new SegmentTree2(0, n - 1);
+        SegmentTree2 segmentTree2 = new SegmentTree2(0, m);
 
-        for (int i = 0; i < bookings.length; i++) {
-            //因为是从1开始编号，减1变为从0开始编号
-            int updateLeft = bookings[i][0] - 1;
-            int updateRight = bookings[i][1] - 1;
-            int value = bookings[i][2];
+        for (int i = 0; i < trips.length; i++) {
+            int passenger = trips[i][0];
+            int updateLeft = trips[i][1];
+            int updateRight = trips[i][2];
 
-            segmentTree2.update(segmentTree2.root, updateLeft, updateRight, value);
+            segmentTree2.update(segmentTree2.root, updateLeft, updateRight, passenger);
         }
 
-        //修改后的结果数组
-        int[] arr = new int[n];
-
-        for (int i = 0; i < n; i++) {
-            arr[i] = segmentTree2.query(segmentTree2.root, i, i);
+        for (int i = 0; i <= m; i++) {
+            //当前距离乘车的乘客数量大于capacity，则无法乘车，返回false
+            if (segmentTree2.query(segmentTree2.root, i, i) > capacity) {
+                return false;
+            }
         }
 
-        return arr;
+        //遍历结束，则可以乘车，返回true
+        return true;
     }
 
     /**

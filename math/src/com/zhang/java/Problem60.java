@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/3/18 08:14
  * @Author zsy
- * @Description 排列序列 类比Problem172、Problem1286 类比Problem1175、Problem1492 全排列类比Problem46、Problem47 模拟类比Problem172、Problem233、Problem400、Offer43、Offer44 回溯+剪枝类比
+ * @Description 排列序列 类比Problem172、Problem481、Problem667、Problem1286 类比Problem1175、Problem1492 全排列类比Problem46、Problem47 模拟类比Problem172、Problem233、Problem400、Offer43、Offer44 回溯+剪枝类比
  * 给出集合 [1,2,3,...,n]，其所有元素共有 n! 种排列。
  * 按大小顺序列出所有排列情况，并一一标记，当 n = 3 时, 所有排列如下：
  * "123"
@@ -73,10 +73,10 @@ public class Problem60 {
      * <p>
      * 例如：n=4，k=15
      * 首先k--，k=14
-     * 每一个第一位能够确定3!=6个全排列，14/6=2，则第一位为list中下标索引为2的数字，即为3，list中移除索引为2的数字，k=k-6*2=2
-     * 每一个第二位能够确定2!=2个全排列，2/2=1，则第二位为list中下标索引为1的数字，即为2，list中移除索引为1的数字，k=k-2*1=0
-     * 每一个第三位能够确定1!=1个全排列，0/1=0，则第三位为list中下标索引为0的数字，即为1，list中移除索引为0的数字，k=k-2*1=0
-     * 每一个第四位能够确定0!=1个全排列，0/1=0，则第四位为list中下标索引为0的数字，即为4，list中移除索引为0的数字，k=k-2*1=0
+     * 每一个第一位能够确定3!=6个全排列，14/6=2，则第一位为list中下标索引为2的数字，即为3，list中移除索引为2的数字，k=k%6=2
+     * 每一个第二位能够确定2!=2个全排列，2/2=1，则第二位为list中下标索引为1的数字，即为2，list中移除索引为1的数字，k=k%2=0
+     * 每一个第三位能够确定1!=1个全排列，0/1=0，则第三位为list中下标索引为0的数字，即为1，list中移除索引为0的数字，k=k%1=0
+     * 每一个第四位能够确定0!=1个全排列，0/1=0，则第四位为list中下标索引为0的数字，即为4，list中移除索引为0的数字，k=k%1=0
      * 最后得到n=4的第15个排列为3214
      *
      * @param n
@@ -114,8 +114,7 @@ public class Problem60 {
             //当前位的值，并且当前位在list中的下标索引index从list中移除
             int num = list.remove(index);
             sb.append(num);
-            //k减去在k之前的factorial[i]*index个全排列
-            k = k - factorial[i] * index;
+            k = k % factorial[i];
         }
 
         return sb.toString();
