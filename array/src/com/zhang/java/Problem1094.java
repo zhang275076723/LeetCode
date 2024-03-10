@@ -50,12 +50,13 @@ public class Problem1094 {
         }
 
         //当前距离乘车的乘客数量数组
-        int[] arr = new int[m + 1];
+        int[] arr = new int[m];
 
         for (int i = 0; i < trips.length; i++) {
             int passenger = trips[i][0];
             int from = trips[i][1];
-            int to = trips[i][2];
+            //放这批乘客的距离要减1，因为放这批乘客时接其他乘客不冲突
+            int to = trips[i][2] - 1;
 
             for (int j = from; j <= to; j++) {
                 arr[j] = arr[j] + passenger;
@@ -91,26 +92,27 @@ public class Problem1094 {
         }
 
         //差分数组
-        int[] diff = new int[m + 1];
+        int[] diff = new int[m];
 
         for (int i = 0; i < trips.length; i++) {
             int passenger = trips[i][0];
             int from = trips[i][1];
-            int to = trips[i][2];
+            //放这批乘客的距离要减1，因为放这批乘客时接其他乘客不冲突
+            int to = trips[i][2] - 1;
 
             diff[from] = diff[from] + passenger;
 
-            if (to + 1 <= m) {
+            if (to + 1 < m) {
                 diff[to + 1] = diff[to + 1] - passenger;
             }
         }
 
         //差分数组累加，还原为结果数组
-        for (int i = 1; i <= m; i++) {
+        for (int i = 1; i < m; i++) {
             diff[i] = diff[i] + diff[i - 1];
         }
 
-        for (int i = 0; i <= m; i++) {
+        for (int i = 0; i < m; i++) {
             //当前距离乘车的乘客数量大于capacity，则无法乘车，返回false
             if (diff[i] > capacity) {
                 return false;
@@ -138,19 +140,20 @@ public class Problem1094 {
         }
 
         //线段树，用数组表示线段树
-        SegmentTree segmentTree = new SegmentTree(m + 1);
+        SegmentTree segmentTree = new SegmentTree(m);
         int leftBound = 0;
-        int rightBound = m;
+        int rightBound = m - 1;
 
         for (int i = 0; i < trips.length; i++) {
             int passenger = trips[i][0];
             int updateLeft = trips[i][1];
-            int updateRight = trips[i][2];
+            //更新区间右边界要减1，因为放这批乘客时接其他乘客不冲突
+            int updateRight = trips[i][2] - 1;
 
             segmentTree.update(0, leftBound, rightBound, updateLeft, updateRight, passenger);
         }
 
-        for (int i = 0; i <= m; i++) {
+        for (int i = 0; i < m; i++) {
             //当前距离乘车的乘客数量大于capacity，则无法乘车，返回false
             if (segmentTree.query(0, leftBound, rightBound, i, i) > capacity) {
                 return false;
@@ -178,17 +181,18 @@ public class Problem1094 {
         }
 
         //线段树，动态开点
-        SegmentTree2 segmentTree2 = new SegmentTree2(0, m);
+        SegmentTree2 segmentTree2 = new SegmentTree2(0, m - 1);
 
         for (int i = 0; i < trips.length; i++) {
             int passenger = trips[i][0];
             int updateLeft = trips[i][1];
-            int updateRight = trips[i][2];
+            //更新区间右边界要减1，因为放这批乘客时接其他乘客不冲突
+            int updateRight = trips[i][2] - 1;
 
             segmentTree2.update(segmentTree2.root, updateLeft, updateRight, passenger);
         }
 
-        for (int i = 0; i <= m; i++) {
+        for (int i = 0; i < m; i++) {
             //当前距离乘车的乘客数量大于capacity，则无法乘车，返回false
             if (segmentTree2.query(segmentTree2.root, i, i) > capacity) {
                 return false;
