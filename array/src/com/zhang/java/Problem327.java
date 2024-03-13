@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/9/25 8:34
  * @Author zsy
- * @Description 区间和的个数 阿里机试题 归并排序类比Problem23、Problem148、Problem315、Problem493、Offer51、CalculateSmallSum 前缀和类比Problem209、Problem325、Problem437、Problem523、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1856、Problem1871、Offer57_2 线段树类比Problem218、Problem307、Problem308、Problem370、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1109、Problem1893、Problem2407
+ * @Description 区间和的个数 阿里机试题 归并排序类比Problem23、Problem148、Problem315、Problem493、Offer51、CalculateSmallSum 前缀和类比Problem209、Problem325、Problem437、Problem523、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1856、Problem1871、Offer57_2 线段树类比Problem218、Problem307、Problem308、Problem370、Problem654、Problem699、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1109、Problem1893、Problem2407
  * 给你一个整数数组 nums 以及两个整数 lower 和 upper 。
  * 求数组中，值位于范围 [lower, upper] （包含 lower 和 upper）之内的 区间和的个数 。
  * 区间和 S(i, j) 表示在 nums 中，位置从 i 到 j 的元素之和，包含 i 和 j (i ≤ j)。

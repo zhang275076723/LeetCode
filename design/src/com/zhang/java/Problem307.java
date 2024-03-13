@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/13 11:38
  * @Author zsy
- * @Description 区域和检索 - 数组可修改 类比Problem303、Problem304、Problem308 线段树类比Problem218、Problem308、Problem327、Problem370、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1109、Problem1893、Problem2407
+ * @Description 区域和检索 - 数组可修改 类比Problem303、Problem304、Problem308 线段树类比Problem218、Problem308、Problem327、Problem370、Problem654、Problem699、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1109、Problem1893、Problem2407
  * 给你一个数组 nums ，请你完成两类查询。
  * 1、其中一类查询要求 更新 数组 nums 下标对应的值
  * 2、另一类查询要求返回数组 nums 中索引 left 和索引 right 之间（ 包含 ）的nums元素的 和 ，其中 left <= right

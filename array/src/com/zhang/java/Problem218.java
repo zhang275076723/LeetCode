@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2024/3/3 09:09
  * @Author zsy
- * @Description 天际线问题 类比Problem42、Problem407 线段树类比Problem307、Problem308、Problem327、Problem370、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1109、Problem1893、Problem2407 优先队列类比
+ * @Description 天际线问题 类比Problem42、Problem407、Problem699 线段树类比Problem307、Problem308、Problem327、Problem370、Problem654、Problem699、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1109、Problem1893、Problem2407 优先队列类比
  * 城市的 天际线 是从远处观看该城市中所有建筑物形成的轮廓的外部轮廓。
  * 给你所有建筑物的位置和高度，请返回 由这些建筑物形成的 天际线 。
  * 每个建筑物的几何信息由数组 buildings 表示，其中三元组 buildings[i] = [lefti, righti, heighti] 表示：
@@ -145,7 +145,10 @@ public class Problem218 {
         SegmentTree segmentTree = new SegmentTree(leftBound, rightBound);
 
         for (int i = 0; i < buildings.length; i++) {
+            //更新区间[buildings[i][0],buildings[i][1]-1]的最大值为buildings[i][2]，
+            //如果区间[buildings[i][0],buildings[i][1]-1]的最大值大于buildings[i][2]，则不更新
             //注意：线段树中当前建筑的高度不包含当前建筑的右边界
+            //注意和699题中线段树update()的区别
             segmentTree.update(segmentTree.root, buildings[i][0], buildings[i][1] - 1, buildings[i][2]);
         }
 
@@ -295,7 +298,7 @@ public class Problem218 {
             }
 
             if (node.lazyValue != 0) {
-                //注意：lazyValue为当前节点的所有子孙节点表示区间的最大高度
+                //注意和699题中线段树update()的区别
                 node.leftNode.maxValue = Math.max(node.leftNode.maxValue, node.lazyValue);
                 node.rightNode.maxValue = Math.max(node.rightNode.maxValue, node.lazyValue);
                 node.leftNode.lazyValue = Math.max(node.leftNode.lazyValue, node.lazyValue);
@@ -311,7 +314,8 @@ public class Problem218 {
         }
 
         /**
-         * 更新区间[updateLeft,updateRight]所有最大值小于value的区间的最大值更新为value
+         * 更新区间[updateLeft,updateRight]的最大值为value，如果区间[updateLeft,updateRight]的最大值大于value，则不更新
+         * 注意和699题中线段树update()的区别
          * 时间复杂度O(logn)，空间复杂度O(logn)
          *
          * @param node
@@ -325,6 +329,7 @@ public class Problem218 {
             }
 
             if (updateLeft <= node.leftBound && node.rightBound <= updateRight) {
+                //注意和699题中线段树update()的区别
                 node.maxValue = Math.max(node.maxValue, value);
                 node.lazyValue = Math.max(node.lazyValue, value);
                 return;
@@ -343,7 +348,7 @@ public class Problem218 {
             }
 
             if (node.lazyValue != 0) {
-                //注意：lazyValue为当前节点的所有子孙节点表示区间的最大高度
+                //注意和699题中线段树update()的区别
                 node.leftNode.maxValue = Math.max(node.leftNode.maxValue, node.lazyValue);
                 node.rightNode.maxValue = Math.max(node.rightNode.maxValue, node.lazyValue);
                 node.leftNode.lazyValue = Math.max(node.leftNode.lazyValue, node.lazyValue);

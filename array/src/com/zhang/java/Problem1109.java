@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2024/2/26 08:35
  * @Author zsy
- * @Description 航班预订统计 华为面试题 差分数组类比Problem253、Problem370、Problem1094、Problem1893 线段树类比Problem218、Problem307、Problem308、Problem327、Problem370、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1893、Problem2407
+ * @Description 航班预订统计 华为面试题 差分数组类比Problem253、Problem370、Problem1094、Problem1893 线段树类比Problem218、Problem307、Problem308、Problem327、Problem370、Problem654、Problem699、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1893、Problem2407
  * 这里有 n 个航班，它们分别从 1 到 n 进行编号。
  * 有一份航班预订表 bookings ，表中第 i 条预订记录 bookings[i] = [firsti, lasti, seatsi]
  * 意味着在从 firsti 到 lasti （包含 firsti 和 lasti ）的 每个航班 上预订了 seatsi 个座位。
