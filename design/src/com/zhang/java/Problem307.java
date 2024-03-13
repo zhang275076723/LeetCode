@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/13 11:38
  * @Author zsy
- * @Description 区域和检索 - 数组可修改 类比Problem303、Problem304、Problem308 线段树类比Problem308、Problem327、Problem370、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1109、Problem1893、Problem2407 二分搜索树类比Problem4、Problem230、Problem378、Problem440
+ * @Description 区域和检索 - 数组可修改 类比Problem303、Problem304、Problem308 线段树类比Problem218、Problem308、Problem327、Problem370、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1109、Problem1893、Problem2407
  * 给你一个数组 nums ，请你完成两类查询。
  * 1、其中一类查询要求 更新 数组 nums 下标对应的值
  * 2、另一类查询要求返回数组 nums 中索引 left 和索引 right 之间（ 包含 ）的nums元素的 和 ，其中 left <= right
@@ -113,10 +113,10 @@ public class Problem307 {
                 //最底层只有1个长度为1的区间，倒数第二层有2^(h-2)个元素，2^(h-2)=n-1，得到h=log(n-1)+2，共有2^h-1个元素，
                 //即2^h-1=2^(log(n-1)+2)-1=4n-3个元素，近似为4n个元素
                 //综上所述：线段树数组长度不超过4n
-                sumValueArr = new int[nums.length * 4];
-                maxValueArr = new int[nums.length * 4];
-                minValueArr = new int[nums.length * 4];
-                lazyValueArr = new int[nums.length * 4];
+                sumValueArr = new int[4 * nums.length];
+                maxValueArr = new int[4 * nums.length];
+                minValueArr = new int[4 * nums.length];
+                lazyValueArr = new int[4 * nums.length];
 
                 //建立线段树
                 buildSegmentTree(nums, 0, 0, nums.length - 1);

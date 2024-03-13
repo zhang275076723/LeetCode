@@ -194,6 +194,7 @@ public class Problem2685 {
                 list.add(stack.pop());
             }
 
+            //节点u出栈
             list.add(stack.pop());
 
             //强连通分量中节点的个数

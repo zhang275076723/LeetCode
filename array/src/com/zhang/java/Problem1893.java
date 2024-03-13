@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/3/1 08:59
  * @Author zsy
- * @Description 检查是否区域内所有整数都被覆盖 差分数组类比Problem253、Problem370、Problem1094、Problem1109 线段树类比Problem307、Problem308、Problem327、Problem370、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1109、Problem2407
+ * @Description 检查是否区域内所有整数都被覆盖 差分数组类比Problem253、Problem370、Problem1094、Problem1109 线段树类比Problem218、Problem307、Problem308、Problem327、Problem370、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1109、Problem2407
  * 给你一个二维整数数组 ranges 和两个整数 left 和 right 。
  * 每个 ranges[i] = [starti, endi] 表示一个从 starti 到 endi 的 闭区间 。
  * 如果闭区间 [left, right] 内每个整数都被 ranges 中 至少一个 区间覆盖，那么请你返回 true ，否则返回 false 。

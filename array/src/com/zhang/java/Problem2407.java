@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/5 08:32
  * @Author zsy
- * @Description 最长递增子序列 II 类比Problem300、Problem673 线段树类比Problem307、Problem308、Problem327、Problem370、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1109、Problem1893 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
+ * @Description 最长递增子序列 II 类比Problem300、Problem673 线段树类比Problem218、Problem307、Problem308、Problem327、Problem370、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1109、Problem1893 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
  * 给你一个整数数组 nums 和一个整数 k 。
  * 找到 nums 中满足以下要求的最长子序列：
  * 子序列 严格递增
@@ -86,7 +86,7 @@ public class Problem2407 {
      * dp[i]：以nums[i]结尾的最长递增子序列的长度，保证最长子序列中相邻元素的差值不超过k
      * dp[i] = max(dp[j]+1) (0 <= j < i，nums[j] < nums[i]，nums[i] - nums[j] <= k)
      * 通过线段树O(logn)获取nums[i]对应[nums[i]-k,nums[i]-1]中dp的最大值
-     * 时间复杂度O(nlogm)，空间复杂度O(m) (n：数组长度，m：数组最大值)
+     * 时间复杂度O(nlogm)，空间复杂度O(m) (n=nums.length，m=max(nums[i]))
      *
      * @param nums
      * @param k
@@ -127,7 +127,7 @@ public class Problem2407 {
      * dp[i]：以nums[i]结尾的最长递增子序列的长度，保证最长子序列中相邻元素的差值不超过k
      * dp[i] = max(dp[j]+1) (0 <= j < i，nums[j] < nums[i]，nums[i] - nums[j] <= k)
      * 通过线段树O(logn)获取nums[i]对应[nums[i]-k,nums[i]-1]中dp的最大值
-     * 时间复杂度O(nlogm)，空间复杂度O(m) (n：数组长度，m：数组最大值)
+     * 时间复杂度O(nlogm)，空间复杂度O(m) (n=nums.length，m=max(nums[i]))
      *
      * @param nums
      * @param k
@@ -162,7 +162,7 @@ public class Problem2407 {
      * 线段树，用数组表示线段树
      */
     private static class SegmentTree {
-        //区间最大值数组
+        //i∈[leftBound,rightBound]，nums中以i结尾的最长递增子序列，并且相邻元素差值不超过k的最大长度数组
         private final int[] maxValueArr;
         //懒标记数组，所有子孙节点需要加上的值
         private final int[] lazyValueArr;
@@ -330,6 +330,7 @@ public class Problem2407 {
         }
 
         private static class SegmentTreeNode {
+            //i∈[leftBound,rightBound]，nums中以i结尾的最长递增子序列，并且相邻元素差值不超过k的最大长度
             private int maxValue;
             private int lazyValue;
             private int leftBound;

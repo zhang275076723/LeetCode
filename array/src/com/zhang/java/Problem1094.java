@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/3/2 09:07
  * @Author zsy
- * @Description 拼车 差分数组类比Problem253、Problem370、Problem1109、Problem1893 线段树类比Problem307、Problem308、Problem327、Problem370、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1109、Problem1893、Problem2407
+ * @Description 拼车 差分数组类比Problem253、Problem370、Problem1109、Problem1893 线段树类比Problem218、Problem307、Problem308、Problem327、Problem370、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1109、Problem1893、Problem2407
  * 车上最初有 capacity 个空座位。车 只能 向一个方向行驶（也就是说，不允许掉头或改变方向）
  * 给定整数 capacity 和一个数组 trips ,  trip[i] = [numPassengersi, fromi, toi] 表示第 i 次旅行有 numPassengersi 乘客，
  * 接他们和放他们的位置分别是 fromi 和 toi 。

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/3 09:46
  * @Author zsy
- * @Description Range 模块 线段树类比Problem307、Problem308、Problem327、Problem370、Problem654、Problem729、Problem731、Problem732、Problem1094、Problem1109、Problem1893、Problem2407
+ * @Description Range 模块 线段树类比Problem218、Problem307、Problem308、Problem327、Problem370、Problem654、Problem729、Problem731、Problem732、Problem1094、Problem1109、Problem1893、Problem2407
  * Range模块是跟踪数字范围的模块。设计一个数据结构来跟踪表示为 半开区间 的范围并查询它们。
  * 半开区间 [left, right) 表示所有 left <= x < right 的实数 x 。
  * 实现 RangeModule 类:
@@ -32,8 +32,9 @@ package com.zhang.java;
  */
 public class Problem715 {
     public static void main(String[] args) {
-        //注意：最大右边界为10^9，导致区间和数组和懒标记数组长度int溢出，所以不适用
+        //注意：最大右边界为10^9，用数组表示线段树导致区间出现次数数组和懒标记数组在int范围内溢出，所以不适用
 //        RangeModule rangeModule = new RangeModule();
+        //线段树，动态开点
         RangeModule2 rangeModule = new RangeModule2();
         rangeModule.addRange(10, 20);
         rangeModule.removeRange(14, 16);
@@ -47,7 +48,7 @@ public class Problem715 {
 
     /**
      * 线段树，用数组表示线段树
-     * 注意：最大右边界为10^9，导致区间和数组和懒标记数组长度int溢出，所以不适用
+     * 注意：最大右边界为10^9，用数组表示线段树导致区间出现次数数组和懒标记数组在int范围内溢出，所以不适用
      */
     static class RangeModule {
         private final SegmentTree segmentTree;

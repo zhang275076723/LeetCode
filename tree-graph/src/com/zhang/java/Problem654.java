@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/8/12 08:39
  * @Author zsy
- * @Description 最大二叉树 类比Problem998 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem241、Problem255、Problem395、Problem449、Problem617、Problem889、Problem1008、Offer7、Offer33 线段树类比Problem307、Problem308、Problem327、Problem370、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1109、Problem1893、Problem2407 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem739、Problem795、Problem907、Problem1019、Problem1856、Problem2104、Problem2454、Problem2487、Offer33、DoubleStackSort
+ * @Description 最大二叉树 类比Problem998 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem241、Problem255、Problem395、Problem449、Problem617、Problem889、Problem1008、Offer7、Offer33 线段树类比Problem218、Problem307、Problem308、Problem327、Problem370、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1109、Problem1893、Problem2407 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem739、Problem795、Problem907、Problem1019、Problem1856、Problem2104、Problem2454、Problem2487、Offer33、DoubleStackSort
  * 给定一个不重复的整数数组 nums 。
  * 最大二叉树 可以用下面的算法从 nums 递归地构建:
  * 创建一个根节点，其值为 nums 中的最大值。
@@ -235,7 +235,7 @@ public class Problem654 {
      * 线段树，用数组表示线段树
      */
     private static class SegmentTree {
-        //区间元素的最大值数组
+        //nums[leftBound]-nums[rightBound]的最大值数组
         private final int[] maxValueArr;
         //懒标记数组，当前节点的所有子孙节点需要加上的值
         private final int[] lazyValueArr;
@@ -458,6 +458,7 @@ public class Problem654 {
         }
 
         private static class SegmentTreeNode {
+            //nums[leftBound]-nums[rightBound]的最大值
             private int maxValue;
             private int lazyValue;
             private int leftBound;
