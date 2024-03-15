@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2024/3/4 08:23
  * @Author zsy
- * @Description 掉落的方块 类比Problem42、Problem218、Problem407 线段树类比Problem218、Problem307、Problem308、Problem327、Problem370、Problem654、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1109、Problem1893、Problem2407
+ * @Description 掉落的方块 类比Problem42、Problem218、Problem407 线段树类比Problem218、Problem307、Problem308、Problem327、Problem370、Problem654、Problem715、Problem729、Problem731、Problem732、Problem933、Problem1094、Problem1109、Problem1893、Problem2407
  * 在二维平面上的 x 轴上，放置着一些方块。
  * 给你一个二维整数数组 positions ，其中 positions[i] = [lefti, sideLengthi] 表示：
  * 第 i 个方块边长为 sideLengthi ，其左侧边与 x 轴上坐标点 lefti 对齐。

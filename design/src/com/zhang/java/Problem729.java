@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/12/11 09:20
  * @Author zsy
- * @Description 我的日程安排表 I 线段树类比Problem218、Problem307、Problem308、Problem327、Problem370、Problem654、Problem699、Problem715、Problem731、Problem732、Problem1094、Problem1109、Problem1893、Problem2407
+ * @Description 我的日程安排表 I 线段树类比Problem218、Problem307、Problem308、Problem327、Problem370、Problem654、Problem699、Problem715、Problem731、Problem732、Problem933、Problem1094、Problem1109、Problem1893、Problem2407
  * 实现一个 MyCalendar 类来存放你的日程安排。如果要添加的日程安排不会造成 重复预订 ，则可以存储这个新的日程安排。
  * 当两个日程安排有一些时间上的交叉时（例如两个日程安排都在同一时间内），就会产生 重复预订 。
  * 日程可以用一对整数 start 和 end 表示，这里的时间是半开区间，即 [start, end), 实数 x 的范围为， start <= x < end 。

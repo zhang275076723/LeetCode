@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2024/3/3 09:09
  * @Author zsy
- * @Description 天际线问题 类比Problem42、Problem407、Problem699 线段树类比Problem307、Problem308、Problem327、Problem370、Problem654、Problem699、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1109、Problem1893、Problem2407 优先队列类比
+ * @Description 天际线问题 类比Problem42、Problem407、Problem699 线段树类比Problem307、Problem308、Problem327、Problem370、Problem654、Problem699、Problem715、Problem729、Problem731、Problem732、Problem933、Problem1094、Problem1109、Problem1893、Problem2407 优先队列类比
  * 城市的 天际线 是从远处观看该城市中所有建筑物形成的轮廓的外部轮廓。
  * 给你所有建筑物的位置和高度，请返回 由这些建筑物形成的 天际线 。
  * 每个建筑物的几何信息由数组 buildings 表示，其中三元组 buildings[i] = [lefti, righti, heighti] 表示：
