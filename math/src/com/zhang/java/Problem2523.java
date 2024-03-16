@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @Date 2024/1/21 08:12
  * @Author zsy
- * @Description 范围内最接近的两个质数 质数类比Problem204、Problem952、Problem1175、Problem1998、Problem2614
+ * @Description 范围内最接近的两个质数 质数类比Problem204、Problem866、Problem952、Problem1175、Problem1998、Problem2614
  * 给你两个正整数 left 和 right ，请你找到两个整数 num1 和 num2 ，它们满足：
  * left <= nums1 < nums2 <= right  。
  * nums1 和 nums2 都是 质数 。

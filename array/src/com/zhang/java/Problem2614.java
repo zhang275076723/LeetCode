@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/1/25 08:20
  * @Author zsy
- * @Description 对角线上的质数 对角线类比Problem51、Problem52、Problem498、Problem1001、Problem1329、Problem1424、Problem1572、Problem2711、Problem3000 质数类比Problem204、Problem952、Problem1175、Problem1998、Problem2523
+ * @Description 对角线上的质数 对角线类比Problem51、Problem52、Problem498、Problem1001、Problem1329、Problem1424、Problem1572、Problem2711、Problem3000 质数类比Problem204、Problem866、Problem952、Problem1175、Problem1998、Problem2523
  * 给你一个下标从 0 开始的二维整数数组 nums 。
  * 返回位于 nums 至少一条 对角线 上的最大 质数 。
  * 如果任一对角线上均不存在质数，返回 0 。
@@ -75,18 +75,19 @@ public class Problem2614 {
     }
 
     /**
-     * 判断正整数n是否为质数
+     * 判断正整数n是否是质数
      * 时间复杂度O(n^(1/2))，空间复杂度O(1)
      *
      * @param n
      * @return
      */
     private boolean isPrime(int n) {
+        //1不是质数
         if (n == 1) {
             return false;
         }
 
-        //只要n整除[2,n^(1/2)]中任意一个数，则n不是质数
+        //只要n能够整除[2,n^(1/2)]中任意一个数，则n不是质数
         for (int i = 2; i * i <= n; i++) {
             if (n % i == 0) {
                 return false;

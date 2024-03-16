@@ -78,7 +78,7 @@ public class Problem166 {
             sb.append('-');
         }
 
-        //都取整数，避免考虑负数情况
+        //都取正数，避免考虑负数情况
         a = Math.abs(a);
         b = Math.abs(b);
 
