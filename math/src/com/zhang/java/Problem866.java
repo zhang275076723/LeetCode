@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/3/6 09:07
  * @Author zsy
- * @Description 回文质数 质数类比Problem204、Problem952、Problem1175、Problem1998、Problem2523、Problem2614 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem647、Problem680、Problem1312、Problem1332
+ * @Description 回文质数 质数类比Problem204、Problem952、Problem1175、Problem1998、Problem2523、Problem2614 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem647、Problem680、Problem1147、Problem1312、Problem1332
  * 给你一个整数 n ，返回大于或等于 n 的最小回文质数。
  * 一个整数如果恰好有两个除数：1 和它本身，那么它是 质数 。
  * 注意，1 不是质数。
@@ -49,9 +49,9 @@ public class Problem866 {
     }
 
     /**
-     * 暴力优化
-     * 判断回文数的时间复杂度O(logn)小于判断质数的时间复杂度O(n^(1/2))，所以先判断回文数，再判断质数，
+     * 模拟
      * 在判断回文数时，不是一个数一个数挨着判断，而是根据当前数得到大于等于当前数的下一个回文数
+     * 判断回文数的时间复杂度O(logn)小于判断质数的时间复杂度O(n^(1/2))，所以先判断回文数，再判断质数
      * 时间复杂度O(logn*n^(1/2))，空间复杂度O(logn)
      *
      * @param n

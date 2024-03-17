@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/10/7 08:13
  * @Author zsy
- * @Description 为运算表达式设计优先级 类比Problem282 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem255、Problem395、Problem449、Problem617、Problem654、Problem889、Problem1008、Offer7、Offer33
+ * @Description 为运算表达式设计优先级 类比Problem282、Problem1147 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem255、Problem395、Problem449、Problem617、Problem654、Problem889、Problem1008、Offer7、Offer33
  * 给你一个由数字和运算符组成的字符串 expression ，按不同优先级组合数字和运算符，计算并返回所有可能组合的结果。
  * 你可以 按任意顺序 返回答案。
  * 生成的测试用例满足其对应输出值符合 32 位整数范围，不同结果的数量不超过 10^4 。
@@ -77,6 +77,7 @@ public class Problem241 {
 
             for (int left : leftList) {
                 for (int right : rightList) {
+                    //运算符只有+、-、*，没有/
                     if (c == '+') {
                         list.add(left + right);
                     } else if (c == '-') {
