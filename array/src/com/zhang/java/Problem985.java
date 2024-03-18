@@ -62,25 +62,33 @@ public class Problem985 {
         int[] result = new int[queries.length];
 
         for (int i = 0; i < queries.length; i++) {
-            //情况1、情况2，nums[queries[i][1]]修改之前为偶数
-            if (nums[queries[i][1]] % 2 == 0) {
-                if ((nums[queries[i][1]] + queries[i][0]) % 2 == 0) {
-                    evenSum = evenSum + queries[i][0];
-                    nums[queries[i][1]] = nums[queries[i][1]] + queries[i][0];
+            int val = queries[i][0];
+            int index = queries[i][1];
+
+            //情况1、情况2，nums[index]修改之前为偶数
+            if (nums[index] % 2 == 0) {
+                //情况1，nums[index]修改之后为偶数
+                if ((nums[index] + val) % 2 == 0) {
+                    evenSum = evenSum + val;
+                    nums[index] = nums[index] + val;
                     result[i] = evenSum;
                 } else {
-                    evenSum = evenSum - nums[queries[i][1]];
-                    nums[queries[i][1]] = nums[queries[i][1]] + queries[i][0];
+                    //情况2，nums[index]修改之后为奇数
+                    evenSum = evenSum - nums[index];
+                    nums[index] = nums[index] + val;
                     result[i] = evenSum;
                 }
             } else {
                 //情况3、情况4，nums[queries[i][1]]修改之前为奇数
-                if ((nums[queries[i][1]] + queries[i][0]) % 2 == 0) {
-                    nums[queries[i][1]] = nums[queries[i][1]] + queries[i][0];
-                    evenSum = evenSum + nums[queries[i][1]];
+
+                //情况3，nums[index]修改之后为偶数
+                if ((nums[index] + val) % 2 == 0) {
+                    nums[index] = nums[index] + val;
+                    evenSum = evenSum + nums[index];
                     result[i] = evenSum;
                 } else {
-                    nums[queries[i][1]] = nums[queries[i][1]] + queries[i][0];
+                    //情况4，nums[index]修改之后为奇数
+                    nums[index] = nums[index] + val;
                     result[i] = evenSum;
                 }
             }

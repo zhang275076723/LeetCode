@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/2/17 08:17
  * @Author zsy
- * @Description 最大回文数乘积 因子类比 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem516、Problem647、Problem680、Problem866、Problem1147、Problem1312、Problem1332
+ * @Description 最大回文数乘积 因子类比 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem516、Problem647、Problem680、Problem866、Problem1147、Problem1177、Problem1312、Problem1332
  * 给定一个整数 n ，返回 可表示为两个 n 位整数乘积的 最大回文整数 。
  * 因为答案可能非常大，所以返回它对 1337 取余 。
  * <p>
