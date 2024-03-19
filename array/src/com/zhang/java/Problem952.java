@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/9/16 08:14
  * @Author zsy
- * @Description 按公因数计算最大组件大小 质数类比Problem204、Problem866、Problem1175、Problem1998、Problem2523、Problem2614 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem1135、Problem1254、Problem1319、Problem1361、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
+ * @Description 按公因数计算最大组件大小 质数类比Problem204、Problem762、Problem866、Problem1175、Problem1998、Problem2523、Problem2614 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem1135、Problem1254、Problem1319、Problem1361、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
  * 给定一个由不同正整数的组成的非空数组 nums ，考虑下面的图：
  * 有 nums.length 个节点，按从 nums[0] 到 nums[nums.length - 1] 标记；
  * 只有当 nums[i] 和 nums[j] 共用一个大于 1 的公因数时，nums[i] 和 nums[j]之间才有一条边。
@@ -15,7 +15,7 @@ import java.util.List;
  * 输入：nums = [4,6,15,35]
  * 输出：4
  * 解释：
- * [4,6,15,35]相互连通，4和6的公因数大于1，6和15的公因数大于1，15和35的公因数大于
+ * [4,6,15,35]相互连通，4和6的公因数大于1，6和15的公因数大于1，15和35的公因数大于1
  * <p>
  * 输入：nums = [20,50,9,63]
  * 输出：2
@@ -62,6 +62,7 @@ public class Problem952 {
 
         //nums[i]中的每个大于1的因子和nums[i]属于同一个连通分量
         for (int i = 0; i < nums.length; i++) {
+            //j*j<=nums[i]：取nums[i]较小的因子，因为当j为nums[i]因子时，nums[i]/j也为nums[i]因子
             for (int j = 2; j * j <= nums[i]; j++) {
                 if (nums[i] % j == 0) {
                     //j和nums[i]/j都是nums[i]的因子

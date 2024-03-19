@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Date 2023/9/17 08:35
+ * @Date 2023/9/16 08:45
  * @Author zsy
  * @Description 带阈值的图连通性 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1361、Problem1489、Problem1568、Problem1584、Problem1905、Problem1998、Problem2685
  * 有 n 座城市，编号从 1 到 n 。编号为 x 和 y 的两座城市直接连通的前提是：

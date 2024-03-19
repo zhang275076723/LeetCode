@@ -56,17 +56,17 @@ public class Problem201 {
      * @return
      */
     public int rangeBitwiseAnd2(int left, int right) {
-        //left和right二进制右移的次数
+        //left和right二进制表示的数右移的次数
         int count = 0;
 
-        //找left和right二进制表示的最长公共前缀
+        //找left和right二进制表示的数的最长公共前缀
         while (left != right) {
             left = left >>> 1;
             right = right >>> 1;
             count++;
         }
 
-        //右移之后再重新左移count次，得到[left,right]的与运算结果
+        //left和right二进制表示的数的最长公共前缀左移count次，得到[left,right]的与运算结果
         return left << count;
     }
 }

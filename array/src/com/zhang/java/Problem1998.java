@@ -8,7 +8,7 @@ import java.util.Random;
 /**
  * @Date 2023/9/15 08:49
  * @Author zsy
- * @Description 数组的最大公因数排序 质数类比Problem204、Problem866、Problem952、Problem1175、Problem2523、Problem2614 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1361、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem2685
+ * @Description 数组的最大公因数排序 质数类比Problem204、Problem762、Problem866、Problem952、Problem1175、Problem2523、Problem2614 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1361、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem2685
  * 给你一个整数数组 nums ，你可以在 nums 上执行下述操作 任意次 ：
  * 如果 gcd(nums[i], nums[j]) > 1 ，交换 nums[i] 和 nums[j] 的位置。
  * 其中 gcd(nums[i], nums[j]) 是 nums[i] 和 nums[j] 的最大公因数。
@@ -76,6 +76,7 @@ public class Problem1998 {
 
         //nums[i]中的每个大于1的因子和nums[i]属于同一个连通分量
         for (int i = 0; i < nums.length; i++) {
+            //j*j<=nums[i]：取nums[i]较小的因子，因为当j为nums[i]因子时，nums[i]/j也为nums[i]因子
             for (int j = 2; j * j <= nums[i]; j++) {
                 if (nums[i] % j == 0) {
                     //j和nums[i]/j都是nums[i]的因子

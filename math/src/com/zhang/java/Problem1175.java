@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Date 2023/9/16 08:40
+ * @Date 2023/9/17 08:40
  * @Author zsy
- * @Description 质数排列 类比Problem60、Problem1492 质数类比Problem204、Problem866、Problem952、Problem1998、Problem2523、Problem2614 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1201、Problem1291、Offer10、Offer49
+ * @Description 质数排列 类比Problem60、Problem1492 质数类比Problem204、Problem762、Problem866、Problem952、Problem1998、Problem2523、Problem2614 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1201、Problem1291、Offer10、Offer49
  * 请你帮忙给从 1 到 n 的数设计排列方案，使得所有的「质数」都应该被放在「质数索引」（索引从 1 开始）上；你需要返回可能的方案总数。
  * 让我们一起来回顾一下「质数」：质数一定是大于 1 的，并且不能用两个小于它的正整数的乘积来表示。
  * 由于答案可能会很大，所以请你返回答案 模 mod 10^9 + 7 之后的结果即可。
