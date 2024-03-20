@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2024/3/8 08:13
  * @Author zsy
- * @Description 构建回文串检测 类比Problem392 前缀和类比 状态压缩类比 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem647、Problem680、Problem866、Problem1147、Problem1312、Problem1328、Problem1332
+ * @Description 构建回文串检测 类比Problem392 前缀和类比 状态压缩类比 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem647、Problem680、Problem866、Problem1147、Problem1312、Problem1328、Problem1332、Problem1400
  * 给你一个字符串 s，请你对 s 的子串进行检测。
  * 每次检测，待检子串都可以表示为 queries[i] = [left, right, k]。
  * 我们可以 重新排列 子串 s[left], ..., s[right]，并从中选择 最多 k 项替换成任何小写英文字母。
@@ -81,7 +81,7 @@ public class Problem1177 {
             int right = queries[i][1];
             //可以修改的字符个数
             int k = queries[i][2];
-            //s[left]-s[right]中出现次数为奇数的字符有几种
+            //s[left]-s[right]中出现次数为奇数的字符个数
             int oddCount = 0;
 
             for (int j = 0; j < 26; j++) {
@@ -148,7 +148,7 @@ public class Problem1177 {
             int right = queries[i][1];
             //可以修改的字符个数
             int k = queries[i][2];
-            //s[left]-s[right]中出现次数为奇数的字符有几种
+            //s[left]-s[right]中出现次数为奇数的字符个数
             int oddCount = 0;
             //s[left]-s[right]中字符出现的奇偶次数二进制表示的数
             //例如：value=10010，即表示字符b和字符e出现次数为奇数

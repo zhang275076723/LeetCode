@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/3/12 08:25
  * @Author zsy
- * @Description 破坏回文串 类比Problem670 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem647、Problem680、Problem866、Problem1147、Problem1177、Problem1312、Problem1332
+ * @Description 破坏回文串 类比Problem670 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem647、Problem680、Problem866、Problem1147、Problem1177、Problem1312、Problem1332、Problem1400
  * 给你一个由小写英文字母组成的回文字符串 palindrome ，
  * 请你将其中 一个 字符用任意小写英文字母替换，使得结果字符串的 字典序最小 ，且 不是 回文串。
  * 请你返回结果字符串。如果无法做到，则返回一个 空串 。

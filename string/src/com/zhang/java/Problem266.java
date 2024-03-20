@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/10/6 08:08
  * @Author zsy
- * @Description 回文排列 类比Problem267、Problem409 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem267、Problem336、Problem409、Problem479、Problem516、Problem647、Problem680、Problem866、Problem1147、Problem1177、Problem1312、Problem1328、Problem1332
+ * @Description 回文排列 类比Problem267、Problem409 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem267、Problem336、Problem409、Problem479、Problem516、Problem647、Problem680、Problem866、Problem1147、Problem1177、Problem1312、Problem1328、Problem1332、Problem1400
  * 给定一个字符串，判断该字符串中是否可以通过重新排列组合，形成一个回文字符串。
  * <p>
  * 输入: "code"
