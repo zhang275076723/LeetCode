@@ -154,7 +154,7 @@ public class Problem1177 {
             //例如：value=10010，即表示字符b和字符e出现次数为奇数
             int value = preSum[right + 1] ^ preSum[left];
 
-            //统计value二进制表示的数中出现次数为奇数的字符的个数
+            //统计value二进制表示的数中出现次数为奇数的字符个数
             while (value != 0) {
                 oddCount = oddCount + (value & 1);
                 value = value >>> 1;
