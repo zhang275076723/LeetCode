@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2023/12/27 08:34
  * @Author zsy
- * @Description 反转字符串中的元音字母 类比Problem1119 类比Problem58、Problem151、Problem186、Problem344、Problem541、Problem557、Offer58、Offer58_2
+ * @Description 反转字符串中的元音字母 类比Problem1119、Problem1371 类比Problem58、Problem151、Problem186、Problem344、Problem541、Problem557、Offer58、Offer58_2
  * 给你一个字符串 s ，仅反转字符串中的所有元音字母，并返回结果字符串。
  * 元音字母包括 'a'、'e'、'i'、'o'、'u'，且可能以大小写两种形式出现不止一次。
  * <p>
@@ -31,8 +31,8 @@ public class Problem345 {
      * @return
      */
     public String reverseVowels(String s) {
-        //10个元音字符的集合
-        Set<Character> set = new HashSet<Character>() {{
+        //大写和小写共10个元音字符的集合
+        Set<Character> vowelSet = new HashSet<Character>() {{
             add('a');
             add('e');
             add('i');
@@ -50,11 +50,11 @@ public class Problem345 {
         int j = arr.length - 1;
 
         while (i < j) {
-            while (i < j && !set.contains(arr[i])) {
+            while (i < j && !vowelSet.contains(arr[i])) {
                 i++;
             }
 
-            while (i < j && !set.contains(arr[j])) {
+            while (i < j && !vowelSet.contains(arr[j])) {
                 j--;
             }
 

@@ -33,8 +33,8 @@ public class Problem1119 {
      * @return
      */
     public String removeVowels(String s) {
-        //5个元音字符的集合，不需要包含大写元音字母
-        Set<Character> set = new HashSet<Character>() {{
+        //5个小写元音字符的集合，不需要包含大写元音字母
+        Set<Character> vowelSet = new HashSet<Character>() {{
             add('a');
             add('e');
             add('i');
@@ -47,7 +47,7 @@ public class Problem1119 {
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
 
-            if (!set.contains(c)) {
+            if (!vowelSet.contains(c)) {
                 sb.append(c);
             }
         }
