@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * @Date 2024/3/15 09:06
  * @Author zsy
- * @Description 树中可以形成回文的路径数 类比Problem437 前缀和类比 状态压缩类比 回文类比
+ * @Description 树中可以形成回文的路径数 类比Problem437 类比Problem1177、Problem1371、Problem1457、Problem1542 前缀和类比 状态压缩类比 回文类比
  * 给你一棵 树（即，一个连通、无向且无环的图），根 节点为 0 ，由编号从 0 到 n - 1 的 n 个节点组成。
  * 这棵树用一个长度为 n 、下标从 0 开始的数组 parent 表示，其中 parent[i] 为节点 i 的父节点，
  * 由于节点 0 为根节点，所以 parent[0] == -1 。
@@ -88,14 +88,14 @@ public class Problem2791 {
     }
 
     /**
-     * @param u     当前遍历到的节点u
-     * @param path  根节点到当前节点u的路径中字符出现的奇偶次数二进制表示的数
-     * @param s     当前节点u和父节点的边的字符
-     * @param graph 邻接表
-     * @param map   存储dfs已经遍历过的路径中字符出现的奇偶次数二进制表示的数，用于统计已经遍历过的节点到当前节点的路径能否重新排列后形成回文
+     * @param u      当前遍历到的节点u
+     * @param preSum 根节点到当前节点u的路径中字符出现的奇偶次数二进制表示的数
+     * @param s      当前节点u和父节点的边的字符
+     * @param graph  邻接表
+     * @param map    存储dfs已经遍历过的路径中字符出现的奇偶次数二进制表示的数，用于统计已经遍历过的节点到当前节点的路径能否重新排列后形成回文
      * @return
      */
-    private long dfs(int u, int path, String s, List<List<Integer>> graph, Map<Integer, Integer> map) {
+    private long dfs(int u, int preSum, String s, List<List<Integer>> graph, Map<Integer, Integer> map) {
         long result = 0;
 
         //根节点0没有和父节点的边
@@ -104,29 +104,29 @@ public class Problem2791 {
             char c = s.charAt(u);
             //(1<<(c-'a'))：当前字符c存储在二进制表示的从右往左第(c-'a')位
             //注意：异或操作可以立刻得到当前字符c在当前位的奇偶次数
-            path = path ^ (1 << (c - 'a'));
+            preSum = preSum ^ (1 << (c - 'a'));
 
-            //map中存在已经遍历过的路径中字符出现的奇偶次数二进制表示的数path，
+            //map中存在已经遍历过的路径中字符出现的奇偶次数二进制表示的数preSum，
             //则map中的节点和当前节点u的路径中字符出现的次数均为偶数，即当前路径重新排列后形成回文
-            if (map.containsKey(path)) {
-                result = result + map.get(path);
+            if (map.containsKey(preSum)) {
+                result = result + map.get(preSum);
             }
 
-            //map中存在已经遍历过的路径中字符出现的奇偶次数二进制表示的数path^(1<<i)，即二进制表示的数path的某一位奇偶性取反，
+            //map中存在已经遍历过的路径中字符出现的奇偶次数二进制表示的数preSum^(1<<i)，即二进制表示的数preSum从右往左的第i位奇偶性取反，
             //则map中的节点和当前节点u的路径中字符出现的次数为奇数的字符只有1个，即当前路径重新排列后形成回文
             for (int i = 0; i < 26; i++) {
-                if (map.containsKey(path ^ (1 << i))) {
-                    result = result + map.get(path ^ (1 << i));
+                if (map.containsKey(preSum ^ (1 << i))) {
+                    result = result + map.get(preSum ^ (1 << i));
                 }
             }
         }
 
         //根节点到当前节点这条路径加入map，用于dfs
-        map.put(path, map.getOrDefault(path, 0) + 1);
+        map.put(preSum, map.getOrDefault(preSum, 0) + 1);
 
         //节点u的子节点v
         for (int v : graph.get(u)) {
-            result = result + dfs(v, path, s, graph, map);
+            result = result + dfs(v, preSum, s, graph, map);
         }
 
         //注意：dfs结束map不需要减去根节点到当前节点这条路径，因为和437题不同，没有要求必须是从父节点到子节点的路径

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/7 8:19
  * @Author zsy
- * @Description 路径总和 III 类比Problem112、Problem113、Problem257 前缀和类比Problem209、Problem325、Problem327、Problem523、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1856、Problem1871、Offer57_2
+ * @Description 路径总和 III 类比Problem112、Problem113、Problem257 类比Problem2791 前缀和类比Problem209、Problem325、Problem327、Problem523、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1856、Problem1871、Offer57_2
  * 给定一个二叉树的根节点 root ，和一个整数 targetSum ，求该二叉树里节点值之和等于 targetSum 的 路径 的数目。
  * 路径 不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。
  * <p>
@@ -81,7 +81,7 @@ public class Problem437 {
 
         int count = 0;
 
-        count = count + dfs2(root, targetSum, 0, map);
+        count = count + dfs(root, targetSum, 0, map);
 
         return count;
     }
@@ -119,7 +119,7 @@ public class Problem437 {
      * @param map       根节点到当前节点，除去当前节点的路径之和map
      * @return
      */
-    private int dfs2(TreeNode root, long sum, int targetSum, Map<Long, Integer> map) {
+    private int dfs(TreeNode root, long sum, int targetSum, Map<Long, Integer> map) {
         if (root == null) {
             return 0;
         }
@@ -137,10 +137,11 @@ public class Problem437 {
         //当前前缀和放入前缀和哈希表中
         map.put(sum, map.getOrDefault(sum, 0) + 1);
 
-        count = count + dfs2(root.left, sum, targetSum, map);
-        count = count + dfs2(root.right, sum, targetSum, map);
+        count = count + dfs(root.left, sum, targetSum, map);
+        count = count + dfs(root.right, sum, targetSum, map);
 
         //当前路径和从哈希表中删除，因为当前分叉已经遍历结束，要遍历另一分叉，所以当前分叉的路径和已经不能使用
+        //注意：dfs结束必须减去根节点到当前节点这条路径，因为和2791题不同，要求必须是从父节点到子节点的路径
         map.put(sum, map.get(sum) - 1);
 
         return count;
