@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2023/12/27 08:44
  * @Author zsy
- * @Description 删去字符串中的元音 类比Problem345、Problem1371
+ * @Description 删去字符串中的元音 类比Problem345、Problem824、Problem1371
  * 给你一个字符串 s ，请你删去其中的所有元音字母 'a'，'e'，'i'，'o'，'u'，并返回这个新字符串。
  * <p>
  * 输入：s = "leetcodeisacommunityforcoders"
