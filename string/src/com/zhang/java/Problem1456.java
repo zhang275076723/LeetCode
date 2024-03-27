@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2024/3/22 08:36
  * @Author zsy
- * @Description 定长子串中元音的最大数目 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1371 滑动窗口类比
+ * @Description 定长子串中元音的最大数目 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1371、Problem1839 滑动窗口类比
  * 给你字符串 s 和整数 k 。
  * 请返回字符串 s 中长度为 k 的单个子字符串中可能包含的最大元音字母数。
  * 英文中的 元音字母 为（a, e, i, o, u）。

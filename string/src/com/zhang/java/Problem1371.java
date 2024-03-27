@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2024/3/18 08:40
  * @Author zsy
- * @Description 每个元音包含偶数次的最长子字符串 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1456 类比Problem1177、Problem1457、Problem1542、Problem1915、Problem2791 前缀和类比 状态压缩类比
+ * @Description 每个元音包含偶数次的最长子字符串 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1456、Problem1839 类比Problem1177、Problem1457、Problem1542、Problem1915、Problem2791 前缀和类比 状态压缩类比
  * 给你一个字符串 s ，请你返回满足以下条件的最长子字符串的长度：
  * 每个元音字母，即 'a'，'e'，'i'，'o'，'u' ，在子字符串中都恰好出现了偶数次。
  * <p>
@@ -22,7 +22,7 @@ import java.util.Map;
  * 输出：6
  * 解释：这个示例中，字符串 "bcbcbc" 本身就是最长的，因为所有的元音 a，e，i，o，u 都出现了 0 次。
  * <p>
- * 1 <= s.length <= 5 x 10^5
+ * 1 <= s.length <= 5 * 10^5
  * s 只包含小写英文字母。
  */
 public class Problem1371 {
