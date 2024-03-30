@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2024/3/18 08:40
  * @Author zsy
- * @Description 每个元音包含偶数次的最长子字符串 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1456、Problem1704、Problem1839、Problem2062、Problem2063 类比Problem1177、Problem1457、Problem1542、Problem1915、Problem2791 前缀和类比 状态压缩类比
+ * @Description 每个元音包含偶数次的最长子字符串 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1456、Problem1704、Problem1839、Problem2062、Problem2063、Problem2559 类比Problem1177、Problem1457、Problem1542、Problem1915、Problem2791 前缀和类比 状态压缩类比
  * 给你一个字符串 s ，请你返回满足以下条件的最长子字符串的长度：
  * 每个元音字母，即 'a'，'e'，'i'，'o'，'u' ，在子字符串中都恰好出现了偶数次。
  * <p>

@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @Date 2024/3/25 08:56
  * @Author zsy
- * @Description 统计字符串中的元音子字符串 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1371、Problem1456、Problem1704、Problem1839、Problem2063 滑动窗口类比
+ * @Description 统计字符串中的元音子字符串 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1371、Problem1456、Problem1704、Problem1839、Problem2063、Problem2559 滑动窗口类比
  * 子字符串 是字符串中的一个连续（非空）的字符序列。
  * 元音子字符串 是 仅 由元音（'a'、'e'、'i'、'o' 和 'u'）组成的一个子字符串，且必须包含 全部五种 元音。
  * 给你一个字符串 word ，统计并返回 word 中 元音子字符串的数目 。

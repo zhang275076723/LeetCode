@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2024/3/20 08:25
  * @Author zsy
- * @Description 山羊拉丁文 元音类比Problem345、Problem966、Problem1119、Problem1371、Problem1456、Problem1704、Problem1839、Problem2062、Problem2063
+ * @Description 山羊拉丁文 元音类比Problem345、Problem966、Problem1119、Problem1371、Problem1456、Problem1704、Problem1839、Problem2062、Problem2063、Problem2559
  * 给你一个由若干单词组成的句子 sentence ，单词间由空格分隔。每个单词仅由大写和小写英文字母组成。
  * 请你将句子转换为 “山羊拉丁文（Goat Latin）”（一种类似于 猪拉丁文 - Pig Latin 的虚构语言）。
  * 山羊拉丁文的规则如下：
