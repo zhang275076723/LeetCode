@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2023/12/27 08:34
  * @Author zsy
- * @Description 反转字符串中的元音字母 元音类比Problem824、Problem966、Problem1119、Problem1371、Problem1456、Problem1704、Problem1839、Problem2062、Problem2063、Problem2559、Problem2586 类比Problem58、Problem151、Problem186、Problem344、Problem541、Problem557、Offer58、Offer58_2
+ * @Description 反转字符串中的元音字母 元音类比Problem824、Problem966、Problem1119、Problem1371、Problem1456、Problem1704、Problem1839、Problem2062、Problem2063、Problem2559、Problem2586、Problem2785 类比Problem58、Problem151、Problem186、Problem344、Problem541、Problem557、Offer58、Offer58_2
  * 给你一个字符串 s ，仅反转字符串中的所有元音字母，并返回结果字符串。
  * 元音字母包括 'a'、'e'、'i'、'o'、'u'，且可能以大小写两种形式出现不止一次。
  * <p>
