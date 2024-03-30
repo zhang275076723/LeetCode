@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2024/3/26 08:20
  * @Author zsy
- * @Description 所有子字符串中的元音 类比Problem795 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1371、Problem1456、Problem1704、Problem1839、Problem2062、Problem2559
+ * @Description 所有子字符串中的元音 类比Problem795 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1371、Problem1456、Problem1704、Problem1839、Problem2062、Problem2559、Problem2586
  * 给你一个字符串 word ，返回 word 的所有子字符串中 元音的总数 ，元音是指 'a'、'e'、'i'、'o' 和 'u' 。
  * 子字符串 是字符串中一个连续（非空）的字符序列。
  * 注意：由于对 word 长度的限制比较宽松，答案可能超过有符号 32 位整数的范围。

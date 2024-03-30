@@ -7,7 +7,7 @@ import java.util.Set;
 /**
  * @Date 2024/3/27 09:10
  * @Author zsy
- * @Description 统计范围内的元音字符串数 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1371、Problem1456、Problem1704、Problem1839、Problem2062、Problem2063 前缀和类比
+ * @Description 统计范围内的元音字符串数 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1371、Problem1456、Problem1704、Problem1839、Problem2062、Problem2063、Problem2586 前缀和类比
  * 给你一个下标从 0 开始的字符串数组 words 以及一个二维整数数组 queries 。
  * 每个查询 queries[i] = [li, ri] 会要求我们统计在 words 中下标在 li 到 ri 范围内（包含 这两个值）并且以元音开头和结尾的字符串的数目。
  * 返回一个整数数组，其中数组的第 i 个元素对应第 i 个查询的答案。
