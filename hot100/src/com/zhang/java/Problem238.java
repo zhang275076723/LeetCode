@@ -35,7 +35,7 @@ public class Problem238 {
      * left[i] = left[i-1] * nums[i-1]
      * right[i] = right[i+1] * nums[i+1]
      * result[i] = left[i] * right[i]
-     * 时间复杂度O(n)，空间复杂的O(n)
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param nums
      * @return

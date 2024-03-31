@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/3/29 08:31
  * @Author zsy
- * @Description 将字符串中的元音字母排序 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1371、Problem1456、Problem1704、Problem1839、Problem2062、Problem2063、Problem2559、Problem2586
+ * @Description 将字符串中的元音字母排序 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1371、Problem1456、Problem1641、Problem1704、Problem1839、Problem2062、Problem2063、Problem2559、Problem2586
  * 给你一个下标从 0 开始的字符串 s ，将 s 中的元素重新 排列 得到新的字符串 t ，它满足：
  * 所有辅音字母都在原来的位置上。
  * 更正式的，如果满足 0 <= i < s.length 的下标 i 处的 s[i] 是个辅音字母，那么 t[i] = s[i] 。

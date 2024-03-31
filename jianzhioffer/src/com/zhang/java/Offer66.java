@@ -29,7 +29,7 @@ public class Offer66 {
      * left[i]：a[0]-a[i-1]所有元素乘积
      * right[i]：a[i+1]-a[a.length-1]所有元素乘积
      * result[i] = left[i] * right[i]
-     * 时间复杂度O(n)，空间复杂的O(n)
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param a
      * @return
@@ -61,7 +61,7 @@ public class Offer66 {
     /**
      * 动态规划优化，使用滚动数组
      * result结果数组作为left数组，与right相乘，获得最终结果
-     * 时间复杂度O(n)，空间复杂的O(1)
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param a
      * @return

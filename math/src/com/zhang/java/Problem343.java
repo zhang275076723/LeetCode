@@ -53,7 +53,7 @@ public class Problem343 {
      * 最优：3
      * 次优：2
      * 最差：1
-     * 时间复杂度O(1)，空间复杂的O(1)
+     * 时间复杂度O(1)，空间复杂度O(1)
      *
      * @param n
      * @return

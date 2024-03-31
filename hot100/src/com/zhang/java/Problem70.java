@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/23 11:45
  * @Author zsy
- * @Description 爬楼梯 百度面试题 类比Problem509、Problem746、Problem1137、Offer10、Offer46、CircleBackToOrigin 记忆化搜索类比Problem62、Problem63、Problem64、Problem329、Problem509、Problem1340、Problem1388、Problem1444、Offer10、Offer10_2 同Offer10_2
+ * @Description 爬楼梯 百度面试题 类比Problem746、Offer10_2 矩阵快速幂类比Problem509、Problem1137、Problem1641、Offer10、Offer10_2 记忆化搜索类比Problem62、Problem63、Problem64、Problem329、Problem509、Problem1340、Problem1388、Problem1444、Offer10、Offer10_2 同Offer10_2
  * 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
  * 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
  * <p>
@@ -107,7 +107,7 @@ public class Problem70 {
      * 矩阵快速幂
      * [ f(n) ]         [1 1] ^ (n-1)       [f(1)]
      * [f(n-1)]    =    [1 0]          *    [f(0)]
-     * 时间复杂度O(logn)，空间复杂的O(1）
+     * 时间复杂度O(logn)，空间复杂度O(1）
      *
      * @param n
      * @return

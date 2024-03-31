@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/7/7 11:33
  * @Author zsy
- * @Description 验证IP地址 腾讯面试题 IP类比Problem93、IPToInt
+ * @Description 验证IP地址 腾讯面试题 类比Problem91、Problem93、IPToInt、Offer46
  * 给定一个字符串 queryIP。
  * 如果是有效的 IPv4 地址，返回 "IPv4" ；
  * 如果是有效的 IPv6 地址，返回 "IPv6" ；

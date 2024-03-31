@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/12/9 12:02
  * @Author zsy
- * @Description 解码方法 类比Problem93、Problem468、Offer46
+ * @Description 解码方法 类比Problem93、Problem468、Offer46、IpToInt
  * 一条包含字母 A-Z 的消息通过以下映射进行了 编码 ：
  * 'A' -> "1"
  * 'B' -> "2"

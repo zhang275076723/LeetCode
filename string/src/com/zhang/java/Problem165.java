@@ -47,7 +47,7 @@ public class Problem165 {
 
     /**
      * 模拟
-     * 时间复杂度为O(max(m,n))，空间复杂的为O(m+n)
+     * 时间复杂度O(max(m,n))，空间复杂度O(m+n)
      *
      * @param version1
      * @param version2
@@ -83,7 +83,7 @@ public class Problem165 {
     /**
      * 双指针
      * 每次比较version1和version2的修订号，如果不一致，则返回大小关系；如果一致，则继续往后面比较
-     * 时间复杂度为O(max(m,n))，空间复杂的为O(1)
+     * 时间复杂度O(max(m,n))，空间复杂度O(1)
      *
      * @param version1
      * @param version2

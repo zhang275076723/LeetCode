@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/13 21:31
  * @Author zsy
- * @Description 斐波那契数列 字节面试题 类比Problem70、Problem509、Problem746、Problem1137、Offer10_2、Offer46 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1175、Problem1201、Problem1291、Offer49 记忆化搜索类比Problem62、Problem63、Problem64、Problem70、Problem329、Problem509、Problem1340、Problem1388、Problem1444、Offer10_2 同Problem509
+ * @Description 斐波那契数列 字节面试题 矩阵快速幂类比Problem70、Problem509、Problem1137、Problem1641、Offer10_2 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1175、Problem1201、Problem1291、Offer49 记忆化搜索类比Problem62、Problem63、Problem64、Problem70、Problem329、Problem509、Problem1340、Problem1388、Problem1444、Offer10_2 同Problem509
  * 写一个函数，输入 n ，求斐波那契（Fibonacci）数列的第 n 项（即 F(N)）。
  * 斐波那契数列的定义如下：
  * F(0) = 0,   F(1) = 1
@@ -32,7 +32,7 @@ public class Offer10 {
 
     /**
      * 递归+记忆化搜索
-     * 时间复杂度O(n)，空间复杂的O(n)
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param n
      * @return
@@ -53,7 +53,7 @@ public class Offer10 {
 
     /**
      * 动态规划
-     * 时间复杂度O(n)，空间复杂的O(n)
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param n
      * @return
@@ -80,7 +80,7 @@ public class Offer10 {
 
     /**
      * 动态规划优化，使用滚动数组
-     * 时间复杂度O(n)，空间复杂的O(1)
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param n
      * @return
@@ -109,7 +109,7 @@ public class Offer10 {
      * 矩阵快速幂
      * [ F(n) ]         [1 1] ^ (n-1)       [F(1)]
      * [F(n-1)]    =    [1 0]          *    [F(0)]
-     * 时间复杂度O(logn)，空间复杂的O(1)
+     * 时间复杂度O(logn)，空间复杂度O(1)
      *
      * @param n
      * @return
