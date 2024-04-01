@@ -26,7 +26,7 @@ public class FindLeftBiggerRightLessIndex {
      * right[i]：nums[i]右边，即nums[i+1]-nums[nums.length-1]的最小值
      * left[i] = max(left[i-1],nums[i-1])
      * right[i] = min(right[i+1],nums[i+1])
-     * 时间复杂度O(n)，空间复杂的O(n)
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param nums
      * @return
