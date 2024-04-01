@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2024/3/24 08:20
  * @Author zsy
- * @Description 判断字符串的两半是否相似 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1371、Problem1456、Problem1641、Problem1839、Problem2062、Problem2063、Problem2559、Problem2586、Problem2785
+ * @Description 判断字符串的两半是否相似 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1220、Problem1371、Problem1456、Problem1641、Problem1839、Problem2062、Problem2063、Problem2559、Problem2586、Problem2785
  * 给你一个偶数长度的字符串 s 。
  * 将其拆分成长度相同的两半，前一半为 a ，后一半为 b 。
  * 两个字符串 相似 的前提是它们都含有相同数目的元音（'a'，'e'，'i'，'o'，'u'，'A'，'E'，'I'，'O'，'U'）。

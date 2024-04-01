@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/3/30 08:11
  * @Author zsy
- * @Description 统计字典序元音字符串的数目 类比Problem62 矩阵快速幂类比Problem70、Problem509、Problem1137、Offer10、Offer10_2 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1371、Problem1456、Problem1704、Problem1839、Problem2062、Problem2063、Problem2559、Problem2586、Problem2785
+ * @Description 统计字典序元音字符串的数目 类比Problem62 矩阵快速幂类比Problem70、Problem509、Problem1137、Problem1220、Offer10、Offer10_2 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1220、Problem1371、Problem1456、Problem1704、Problem1839、Problem2062、Problem2063、Problem2559、Problem2586、Problem2785
  * 给你一个整数 n，请返回长度为 n 、仅由元音 (a, e, i, o, u) 组成且按 字典序排列 的字符串数量。
  * 字符串 s 按 字典序排列 需要满足：对于所有有效的 i，s[i] 在字母表中的位置总是与 s[i+1] 相同或在 s[i+1] 之前。
  * <p>
@@ -170,6 +170,7 @@ public class Problem1641 {
 
         while (n != 0) {
             if ((n & 1) == 1) {
+                //注意乘积先后顺序
                 result = multiply(result, a);
             }
 
@@ -181,7 +182,7 @@ public class Problem1641 {
     }
 
     /**
-     * 矩阵a和矩阵b相乘
+     * 二维矩阵a和二维矩阵b相乘
      * 时间复杂度O(a.length*b[0].length*a[0].length)，空间复杂度O(1)
      *
      * @param a
