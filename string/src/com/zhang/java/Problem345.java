@@ -50,10 +50,12 @@ public class Problem345 {
         int j = arr.length - 1;
 
         while (i < j) {
+            //从前往后找第一个元音
             while (i < j && !vowelSet.contains(arr[i])) {
                 i++;
             }
 
+            //从后往前找最后一个元音
             while (i < j && !vowelSet.contains(arr[j])) {
                 j--;
             }

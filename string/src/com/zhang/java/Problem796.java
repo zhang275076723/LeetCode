@@ -3,8 +3,9 @@ package com.zhang.java;
 /**
  * @Date 2023/5/4 09:18
  * @Author zsy
- * @Description 旋转字符串 旋转问题类比Problem61、Problem186、Problem189、Problem459、Problem686、Offer58_2 kmp类比Problem28、Problem214、Problem459、Problem686
- * 给定两个字符串, s 和 goal。如果在若干次旋转操作之后，s 能变成 goal ，那么返回 true 。
+ * @Description 旋转字符串 kmp类比Problem28、Problem214、Problem459、Problem686 旋转问题类比Problem61、Problem186、Problem189、Problem459、Problem686、Offer58_2
+ * 给定两个字符串, s 和 goal。
+ * 如果在若干次旋转操作之后，s 能变成 goal ，那么返回 true 。
  * s 的 旋转操作 就是将 s 最左边的字符移动到最右边。
  * 例如, 若 s = 'abcde'，在旋转一次之后结果就是'bcdea' 。
  * <p>

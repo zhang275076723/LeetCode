@@ -87,21 +87,23 @@ public class Problem166 {
         a = a % b;
         map.put(a, sb.length());
 
+        //余数a为0，则说明结果为有限小数
         while (a != 0) {
             //每次循环之前a需要乘10，相当于找下一位小数
             a = a * 10;
             sb.append(a / b);
             a = a % b;
 
-            //余数在map中已经存在，则结果字符串为循环小数，[map.get(余数),sb.length()-1]为循环部分
+            //map中存在余数a，则结果字符串为循环小数，[map.get(余数),sb.length()-1]为循环部分，直接返回
             if (map.containsKey(a)) {
                 int index = map.get(a);
                 sb.insert(index, '(');
                 sb.append(')');
                 return sb.toString();
+            } else {
+                //map中不存在余数a，则余数a加入到map中
+                map.put(a, sb.length());
             }
-
-            map.put(a, sb.length());
         }
 
         //余数为0，则结果字符串为有限小数

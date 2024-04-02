@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @Date 2024/3/25 08:56
  * @Author zsy
- * @Description 统计字符串中的元音子字符串 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1220、Problem1371、Problem1456、Problem1641、Problem1704、Problem1839、Problem2063、Problem2559、Problem2586、Problem2785 滑动窗口类比
+ * @Description 统计字符串中的元音子字符串 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1220、Problem1371、Problem1456、Problem1641、Problem1704、Problem1839、Problem2063、Problem2559、Problem2586、Problem2785 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem567、Problem632、Problem643、Problem713、Problem1004、Problem1456、Problem1839、Offer48、Offer57_2、Offer59
  * 子字符串 是字符串中的一个连续（非空）的字符序列。
  * 元音子字符串 是 仅 由元音（'a'、'e'、'i'、'o' 和 'u'）组成的一个子字符串，且必须包含 全部五种 元音。
  * 给你一个字符串 word ，统计并返回 word 中 元音子字符串的数目 。
@@ -69,7 +69,7 @@ public class Problem2062 {
         }};
 
         for (int i = 0; i < word.length(); i++) {
-            //从i起始的字符串中包含的元音集合
+            //s[[i]-s[j]中包含的元音集合
             Set<Character> set = new HashSet<>();
 
             for (int j = i; j < word.length(); j++) {
@@ -93,7 +93,7 @@ public class Problem2062 {
 
     /**
      * 滑动窗口
-     * 滑动窗口分割word得到只包含元音字母的字符串，滑动窗口找每个只包含元音字母的字符串中最小的只包含5种元音的字符串区间[l,r]，
+     * 滑动窗口分割word得到只包含元音字母的字符串，对每个只包含元音字母的字符串滑动窗口找最小的只包含5种元音的字符串区间[l,r]，
      * 则[0,r]、[1,r]...[l-1,r]、[l,r]均为包含5种元音的字符串，即l+1个字符串满足要求
      * 时间复杂度O(mn)=O(n)，空间复杂度O(1) (n=word.length，m=word分割得到只包含元音字母的字符串的个数，m的个数应该远远小于n)
      *

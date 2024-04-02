@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2024/3/23 08:26
  * @Author zsy
- * @Description 所有元音按顺序排布的最长子字符串 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1220、Problem1371、Problem1456、Problem1641、Problem1704、Problem2062、Problem2063、Problem2559、Problem2586、Problem2785 滑动窗口类比
+ * @Description 所有元音按顺序排布的最长子字符串 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1220、Problem1371、Problem1456、Problem1641、Problem1704、Problem2062、Problem2063、Problem2559、Problem2586、Problem2785 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem567、Problem632、Problem643、Problem713、Problem1004、Problem1456、Problem2062、Offer48、Offer57_2、Offer59
  * 当一个字符串满足如下条件时，我们称它是 美丽的 ：
  * 所有 5 个英文元音字母（'a' ，'e' ，'i' ，'o' ，'u'）都必须 至少 出现一次。
  * 这些元音字母的顺序都必须按照 字典序 升序排布（也就是说所有的 'a' 都在 'e' 前面，所有的 'e' 都在 'i' 前面，以此类推）
