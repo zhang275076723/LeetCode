@@ -5,9 +5,11 @@ import java.util.*;
 /**
  * @Date 2022/11/13 10:24
  * @Author zsy
- * @Description 根据字符出现频率排序 类比Problem215、Problem347、Problem692、Problem703、Problem973、Offer40
- * 给定一个字符串 s ，根据字符出现的 频率 对其进行 降序排序 。一个字符出现的 频率 是它出现在字符串中的次数。
- * 返回 已排序的字符串 。如果有多个答案，返回其中任何一个。
+ * @Description 根据字符出现频率排序 优先队列类比
+ * 给定一个字符串 s ，根据字符出现的 频率 对其进行 降序排序 。
+ * 一个字符出现的 频率 是它出现在字符串中的次数。
+ * 返回 已排序的字符串 。
+ * 如果有多个答案，返回其中任何一个。
  * <p>
  * 输入: s = "tree"
  * 输出: "eert"
@@ -48,7 +50,7 @@ public class Problem451 {
             map.put(c, map.getOrDefault(c, 0) + 1);
         }
 
-        //大根堆
+        //大根堆，字符出现次数由大到小排序
         Queue<Map.Entry<Character, Integer>> queue = new PriorityQueue<>(new Comparator<Map.Entry<Character, Integer>>() {
             @Override
             public int compare(Map.Entry<Character, Integer> entry1, Map.Entry<Character, Integer> entry2) {

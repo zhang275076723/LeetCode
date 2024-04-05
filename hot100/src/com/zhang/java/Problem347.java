@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/2 10:09
  * @Author zsy
- * @Description 前 K 个高频元素 华为机试题 腾讯机试题 字节面试题 类比Problem215、Problem451、Problem692、Problem703、Problem973、Offer40
+ * @Description 前 K 个高频元素 华为机试题 腾讯机试题 字节面试题 快排划分类比Problem215、Problem324、Problem973、Offer40
  * 给你一个整数数组 nums 和一个整数 k ，请你返回其中出现频率前 k 高的元素。你可以按 任意顺序 返回答案。
  * <p>
  * 输入: nums = [1,1,1,2,2,3], k = 2
@@ -30,7 +30,7 @@ public class Problem347 {
     }
 
     /**
-     * 快排划分变形
+     * 快排划分
      * 使用哈希表统计数组中元素出现次数，使用数组放元素，arr[i][0]：当前元素，arr[i][1]：出现次数
      * 根据快排划分思想，得到前k大的元素
      * 平均时间复杂度O(n)，最坏时间复杂度O(n^2)，空间复杂度O(n)，
@@ -188,7 +188,7 @@ public class Problem347 {
     }
 
     /**
-     * 快排划分变形
+     * 快排划分
      * 平均时间复杂度O(n)，最坏时间复杂度O(n^2)，最好空间复杂度O(logn)，最坏空间复杂度O(n)
      *
      * @param arr   当前排序数组

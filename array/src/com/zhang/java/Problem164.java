@@ -61,7 +61,7 @@ public class Problem164 {
     }
 
     /**
-     * 计数排序 (因为int返回大，导致超出空间限制)
+     * 计数排序 (空间溢出)
      * 时间复杂度O(n)，空间复杂度O(max(nums)-min(nums))
      *
      * @param nums

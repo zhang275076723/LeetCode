@@ -79,7 +79,7 @@ public class Problem912 {
                 }
             }
 
-            //本轮没有进行交换，则说明已经有序，直接返回
+            //本轮没有进行交换，则说明nums已经有序，直接返回
             if (!flag) {
                 return nums;
             }
@@ -262,24 +262,25 @@ public class Problem912 {
             min = Math.min(min, num);
         }
 
-        //桶的大小：每个桶存放元素的范围，例如第一个桶存放的范围为[min,min+bucketSize)
+        //每个桶的大小，例如第一个桶存放[min,min+bucketSize)的元素
         int bucketSize = 10;
         //桶的数量
         int bucketCount = (max - min) / bucketSize + 1;
-        //bucketCount个桶
+        //共bucketCount个桶
         List<List<Integer>> buckets = new ArrayList<>(bucketCount);
 
         for (int i = 0; i < bucketCount; i++) {
             buckets.add(new ArrayList<>());
         }
 
+        //nums中元素放入对应桶中
         for (int num : nums) {
             //当前元素所在的桶索引下标
             int index = (num - min) / bucketSize;
             buckets.get(index).add(num);
         }
 
-        //对每一个桶中元素使用某种排序算法进行排序
+        //每个桶中元素使用某种排序算法进行排序
         for (int i = 0; i < bucketCount; i++) {
             buckets.get(i).sort(new Comparator<Integer>() {
                 @Override
@@ -319,19 +320,19 @@ public class Problem912 {
             max = Math.max(max, Math.abs(num));
         }
 
-        //数组中最长元素的位数
-        int len = 0;
+        //max的长度，需要根据数组中元素的每一位进行排序
+        int maxLen = 0;
 
         while (max != 0) {
             max = max / 10;
-            len++;
+            maxLen++;
         }
 
         //数组中元素需要除的值，确定当前对数组中元素哪一位进行排序
         int bitCount = 1;
 
         //由低到高对数组中每一位进行排序，排序之后重新赋值回原数组nums中
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < maxLen; i++) {
             //存在负数，共19个桶，从小到大分别为-9、-8...-1、0、1...8、9
             List<List<Integer>> radix = new ArrayList<>(19);
 
@@ -374,9 +375,9 @@ public class Problem912 {
         //随机取一个元素作为划分基准，避免性能倒退为O(n^2)
         int randomIndex = new Random().nextInt(right - left + 1) + left;
 
-        int value = nums[randomIndex];
-        nums[randomIndex] = nums[left];
-        nums[left] = value;
+        int value = nums[left];
+        nums[left] = nums[randomIndex];
+        nums[randomIndex] = value;
 
         int temp = nums[left];
 

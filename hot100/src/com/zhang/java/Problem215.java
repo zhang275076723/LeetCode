@@ -9,7 +9,7 @@ import java.util.Random;
 /**
  * @Date 2022/5/15 8:30
  * @Author zsy
- * @Description 数组中的第K个最大元素 字节面试题 类比Problem347、Problem451、Problem692、Problem703、Problem973、Offer40
+ * @Description 数组中的第K个最大元素 字节面试题 快排划分类比Problem324、Problem347、Problem973、Offer40
  * 给定整数数组 nums 和整数 k，请返回数组中第 k 个最大的元素。
  * 请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
  * <p>
@@ -33,7 +33,7 @@ public class Problem215 {
     }
 
     /**
-     * 快排划分变形
+     * 快排划分
      * 快排的每次划分都能确定一个元素所在的位置，通过该位置和index比较，判断是否是第k大元素
      * 期望时间复杂度O(n)，空间复杂度O(logn)
      * 最坏时间复杂度O(n^2)，最坏空间复杂度O(n)
@@ -137,7 +137,7 @@ public class Problem215 {
     }
 
     /**
-     * 快排划分变形
+     * 快排划分
      * 平均时间复杂度O(n)，最坏时间复杂度O(n^2)，空间复杂度O(logn)
      *
      * @param nums  当前要排序数组

@@ -6,8 +6,9 @@ import java.util.PriorityQueue;
 /**
  * @Date 2023/4/4 08:05
  * @Author zsy
- * @Description 数据流中的第 K 大元素 Amazon面试题 类比Problem295、Problem346、Problem480、Offer41 类比Problem215、Problem347、Problem451、Problem692、Problem973、Offer40
- * 设计一个找到数据流中第 k 大元素的类（class）。注意是排序后的第 k 大元素，不是第 k 个不同的元素。
+ * @Description 数据流中的第 K 大元素 Amazon面试题 类比Problem295、Problem346、Problem480、Offer41 优先队列类比
+ * 设计一个找到数据流中第 k 大元素的类（class）。
+ * 注意是排序后的第 k 大元素，不是第 k 个不同的元素。
  * 请实现 KthLargest 类：
  * KthLargest(int k, int[] nums) 使用整数 k 和整数流 nums 初始化对象。
  * int add(int val) 将 val 插入数据流 nums 后，返回当前数据流中第 k 大的元素。
@@ -55,7 +56,7 @@ public class Problem703 {
      */
     static class KthLargest {
         //小根堆，优先队列
-        private final PriorityQueue<Integer> queue;
+        private final PriorityQueue<Integer> priorityQueue;
         //小根堆大小
         private final int k;
 
@@ -68,7 +69,7 @@ public class Problem703 {
         public KthLargest(int k, int[] nums) {
             this.k = k;
             //小根堆
-            queue = new PriorityQueue<>(k, new Comparator<Integer>() {
+            priorityQueue = new PriorityQueue<>(k, new Comparator<Integer>() {
                 @Override
                 public int compare(Integer a, Integer b) {
                     return a - b;
@@ -76,10 +77,11 @@ public class Problem703 {
             });
 
             for (int i = 0; i < nums.length; i++) {
-                queue.offer(nums[i]);
+                priorityQueue.offer(nums[i]);
+
                 //小根堆大小超过k时，堆顶元素出堆
-                if (queue.size() > k) {
-                    queue.poll();
+                if (priorityQueue.size() > k) {
+                    priorityQueue.poll();
                 }
             }
         }
@@ -91,13 +93,14 @@ public class Problem703 {
          * @return
          */
         public int add(int val) {
-            queue.offer(val);
+            priorityQueue.offer(val);
+
             //小根堆大小超过k时，堆顶元素出堆
-            if (queue.size() > k) {
-                queue.poll();
+            if (priorityQueue.size() > k) {
+                priorityQueue.poll();
             }
 
-            return queue.peek();
+            return priorityQueue.peek();
         }
     }
 

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/7/15 08:50
  * @Author zsy
- * @Description 最接近原点的 K 个点 类比Problem215、Problem347、Problem451、Problem692、Problem703、Offer40
+ * @Description 最接近原点的 K 个点 快排划分类比Problem215、Problem324、Problem347、Offer40 优先队列类比
  * 给定一个数组 points ，其中 points[i] = [xi, yi] 表示 X-Y 平面上的一个点，
  * 并且是一个整数 k ，返回离原点 (0,0) 最近的 k 个点。
  * 这里，平面上两点之间的距离是 欧几里德距离((x1-x2)^2+(y1-y2)^2)^(1/2)。
@@ -38,7 +38,7 @@ public class Problem973 {
     }
 
     /**
-     * 快排划分变形
+     * 快排划分
      * 左边都小于划分值，右边都大于划分值，即一次划分可以确定数组前k小元素的值
      * 期望时间复杂度O(n)，期望空间复杂度O(logn)
      * 最坏时间复杂度O(n^2)，最坏空间复杂度O(n)
