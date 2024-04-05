@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/3/25 9:04
  * @Author zsy
- * @Description 最小的k个数 字节面试题 类比Problem215、Problem347、Problem451、Problem692、Problem703、Problem973
+ * @Description 最小的k个数 字节面试题 快排划分类比Problem215、Problem324、Problem347、Problem973
  * 输入整数数组 arr ，找出其中最小的 k 个数。
  * 例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。
  * 0 <= k <= arr.length <= 10000
@@ -30,7 +30,7 @@ public class Offer40 {
     }
 
     /**
-     * 快排划分变形
+     * 快排划分
      * 左边都小于划分值，右边都大于划分值，即一次划分可以确定数组第k小元素的值
      * 期望时间复杂度O(n)，期望空间复杂度O(logn)
      * 最坏时间复杂度O(n^2)，最坏空间复杂度O(n)
