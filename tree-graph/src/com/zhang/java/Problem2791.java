@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * @Date 2024/3/15 09:06
  * @Author zsy
- * @Description 树中可以形成回文的路径数 类比Problem437 类比Problem1177、Problem1371、Problem1457、Problem1542、Problem1915 前缀和类比 状态压缩类比 回文类比
+ * @Description 树中可以形成回文的路径数 类比Problem437 类比Problem1177、Problem1371、Problem1457、Problem1542、Problem1915、Problem1930 前缀和类比 状态压缩类比 回文类比
  * 给你一棵 树（即，一个连通、无向且无环的图），根 节点为 0 ，由编号从 0 到 n - 1 的 n 个节点组成。
  * 这棵树用一个长度为 n 、下标从 0 开始的数组 parent 表示，其中 parent[i] 为节点 i 的父节点，
  * 由于节点 0 为根节点，所以 parent[0] == -1 。

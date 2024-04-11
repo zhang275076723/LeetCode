@@ -59,7 +59,7 @@ public class Problem125 {
         int right = sb.length() - 1;
 
         //双指针从两端判断是否是回文串
-        while (left <= right) {
+        while (left < right) {
             if (sb.charAt(left) == sb.charAt(right)) {
                 left++;
                 right--;

@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2024/3/19 09:04
  * @Author zsy
- * @Description 最美子字符串的数目 类比Problem1177、Problem1371、Problem1457、Problem1542、Problem2791 前缀和类比 状态压缩类比
+ * @Description 最美子字符串的数目 类比Problem1177、Problem1371、Problem1457、Problem1542、Problem1930、Problem2791 前缀和类比 状态压缩类比
  * 如果某个字符串中 至多一个 字母出现 奇数 次，则称其为 最美 字符串。
  * 例如，"ccjjc" 和 "abab" 都是最美字符串，但 "ab" 不是。
  * 给你一个字符串 word ，该字符串由前十个小写英文字母组成（'a' 到 'j'）。

@@ -75,7 +75,7 @@ public class Problem647 {
 
     /**
      * 动态规划
-     * dp[i][j]：s[i]到s[j]是否是回文串
+     * dp[i][j]：s[i]-s[j]是否是回文串
      * dp[i][j] = false (s[i] != s[j])
      * dp[i][j] = true  (s[i] == s[j] && dp[i+1][j-1] == true)
      * 时间复杂度O(n^2)，空间复杂度O(n^2)

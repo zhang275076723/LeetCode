@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2024/3/8 08:13
  * @Author zsy
- * @Description 构建回文串检测 类比Problem1371、Problem1457、Problem1542、Problem1915、Problem2791 前缀和类比 状态压缩类比 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem647、Problem680、Problem866、Problem1147、Problem1312、Problem1328、Problem1332、Problem1400、Problem1457、Problem1542、Problem1616、Problem2791
+ * @Description 构建回文串检测 类比Problem1371、Problem1457、Problem1542、Problem1915、Problem1930、Problem2791 前缀和类比 状态压缩类比 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem647、Problem680、Problem866、Problem1147、Problem1312、Problem1328、Problem1332、Problem1400、Problem1457、Problem1542、Problem1616、Problem2791
  * 给你一个字符串 s，请你对 s 的子串进行检测。
  * 每次检测，待检子串都可以表示为 queries[i] = [left, right, k]。
  * 我们可以 重新排列 子串 s[left], ..., s[right]，并从中选择 最多 k 项替换成任何小写英文字母。
@@ -118,7 +118,7 @@ public class Problem1177 {
      * 如果当前子串出现次数为奇数的字符有a、b、c，即修改3/2=1个字符，则只需要将一个b修改成a就可以构成回文；
      * 如果当前子串出现次数为奇数的字符有a、b、c、d，即修改4/2=2个字符，则只需要将一个b修改成a，一个d修改成c就可以构成回文；
      * <p>
-     * 例如：s=abcda
+     * 例如：s="abcda"
      * preSum[1]=0001(a出现1次，则二进制表示的从右往左第0位为1)
      * preSum[2]=0011(b出现1次，则二进制表示的从右往左第1位为1)
      * preSum[3]=0111(c出现1次，则二进制表示的从右往左第2位为1)
