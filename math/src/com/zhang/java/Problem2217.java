@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2024/4/8 08:49
  * @Author zsy
- * @Description 找到指定长度的回文数 类比Problem479 回文类比
+ * @Description 找到指定长度的回文数 类比Problem479、Problem564 回文类比
  * 给你一个整数数组 queries 和一个 正 整数 intLength ，请你返回一个数组 answer ，
  * 其中 answer[i] 是长度为 intLength 的 正回文数 中第 queries[i] 小的数字，
  * 如果不存在这样的回文数，则为 -1 。
@@ -70,28 +70,28 @@ public class Problem2217 {
 
                 StringBuilder sb = new StringBuilder();
                 //长度为intLength的第queries[i]小回文的前一半值
-                int pre;
+                int preHalf;
 
                 //n为奇数，最小的前一半值为10^(n/2)，第queries[i]小回文需要加上queries[i]-1
                 if (intLength % 2 == 1) {
-                    pre = quickPow(10, intLength / 2) + queries[i] - 1;
+                    preHalf = quickPow(10, intLength / 2) + queries[i] - 1;
                 } else {
                     //n为偶数，最小的前一半值为10^(n/2-1)，第queries[i]小回文需要加上queries[i]-1
-                    pre = quickPow(10, intLength / 2 - 1) + queries[i] - 1;
+                    preHalf = quickPow(10, intLength / 2 - 1) + queries[i] - 1;
                 }
 
                 //拼接前一半值
-                sb.append(pre);
+                sb.append(preHalf);
 
-                //n为奇数，拼接后一半时不考虑pre的最后一位
+                //n为奇数，拼接后一半时不考虑preHalf的最后一位
                 if (intLength % 2 == 1) {
-                    pre = pre / 10;
+                    preHalf = preHalf / 10;
                 }
 
                 //拼接后一半值
-                while (pre != 0) {
-                    sb.append(pre % 10);
-                    pre = pre / 10;
+                while (preHalf != 0) {
+                    sb.append(preHalf % 10);
+                    preHalf = preHalf / 10;
                 }
 
                 result[i] = Long.parseLong(sb.toString());
