@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2024/4/7 09:05
  * @Author zsy
- * @Description 连接两字母单词得到的最长回文串 回文类比
+ * @Description 连接两字母单词得到的最长回文串 类比Problem266、Problem267、Problem409 回文类比
  * 给你一个字符串数组 words 。
  * words 中每个元素都是一个包含 两个 小写英文字母的单词。
  * 请你从 words 中选择一些元素并按 任意顺序 连接它们，并得到一个 尽可能长的回文串 。
