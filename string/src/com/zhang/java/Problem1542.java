@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * @Date 2024/3/17 09:11
  * @Author zsy
- * @Description 找出最长的超赞子字符串 类比Problem1177、Problem1371、Problem1457、Problem1915、Problem1930、Problem2791 前缀和类比 状态压缩类比 回文类比
+ * @Description 找出最长的超赞子字符串 类比Problem1177、Problem1371、Problem1457、Problem1915、Problem1930、Problem2484、Problem2791 前缀和类比 状态压缩类比 回文类比
  * 给你一个字符串 s 。
  * 请返回 s 中最长的 超赞子字符串 的长度。
  * 「超赞子字符串」需满足满足下述两个条件：
