@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/2/17 08:44
  * @Author zsy
- * @Description 验证回文串 II 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem647、Problem866、Problem1147、Problem1177、Problem1312、Problem1328、Problem1332、Problem1400
+ * @Description 验证回文串 II 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem647、Problem866、Problem1147、Problem1177、Problem1312、Problem1328、Problem1332、Problem1400 双指针类比
  * 给你一个字符串 s，最多 可以从中删除一个字符。
  * 请你判断 s 是否能成为回文字符串：如果能，返回 true ；否则，返回 false 。
  * <p>
