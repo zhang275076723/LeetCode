@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/11/14 08:09
  * @Author zsy
- * @Description 字母组合迭代器 类比Problem38、Problem60、Problem172、Problem481、Problem667 迭代器类比Problem173、Problem251、Problem281、Problem284、Problem341、Problem604、Problem900、Problem1586
+ * @Description 字母组合迭代器 类比Problem2663 类比Problem38、Problem60、Problem172、Problem481、Problem667 迭代器类比Problem173、Problem251、Problem281、Problem284、Problem341、Problem604、Problem900、Problem1586
  * 请你设计一个迭代器类 CombinationIterator ，包括以下内容：
  * CombinationIterator(string characters, int combinationLength) 一个构造函数，
  * 输入参数包括：用一个 有序且字符唯一 的字符串 characters（该字符串只包含小写英文字母）和一个数字 combinationLength 。
