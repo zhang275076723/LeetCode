@@ -3,8 +3,9 @@ package com.zhang.java;
 /**
  * @Date 2023/2/17 08:23
  * @Author zsy
- * @Description 验证回文串 回文类比Problem5、Problem9、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem647、Problem680、Problem866、Problem1147、Problem1177、Problem1312、Problem1328、Problem1332、Problem1400
- * 如果在将所有大写字符转换为小写字符、并移除所有非字母数字字符之后，短语正着读和反着读都一样。则可以认为该短语是一个 回文串 。
+ * @Description 验证回文串 类比Problem680、Problem1216、Problem2330 回文类比Problem5、Problem9、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem564、Problem647、Problem680、Problem866、Problem1147、Problem1177、Problem1312、Problem1328、Problem1332、Problem1400、Problem1457、Problem1542、Problem1616、Problem1930、Problem2002、Problem2108、Problem2131、Problem2217、Problem2384、Problem2396、Problem2484、Problem2490、Problem2663、Problem2697、Problem2791、Problem3035
+ * 如果在将所有大写字符转换为小写字符、并移除所有非字母数字字符之后，短语正着读和反着读都一样。
+ * 则可以认为该短语是一个 回文串 。
  * 字母和数字都属于字母数字字符。
  * 给你一个字符串 s，如果它是 回文串 ，返回 true ；否则，返回 false 。
  * <p>
@@ -32,8 +33,8 @@ public class Problem125 {
     }
 
     /**
-     * 双指针
-     * 字符串s去掉非字母数字字符，大写字符转换为小写字符之后，双指针判断是否是回文串
+     * 模拟
+     * 字符串s去掉非字母数字字符，并将大写字母转换为小写字母之后，双指针判断是否是回文串
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param s

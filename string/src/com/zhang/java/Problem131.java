@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/6/23 8:39
  * @Author zsy
- * @Description 分割回文串 动态规划预处理类比Problem140 回文类比Problem5、Problem9、Problem125、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem647、Problem680、Problem866、Problem1147、Problem1177、Problem1312、Problem1328、Problem1332、Problem1400
+ * @Description 分割回文串 动态规划预处理类比Problem140 类比Problem132、Problem1278、Problem1745 回文类比Problem5、Problem9、Problem125、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem564、Problem647、Problem680、Problem866、Problem1147、Problem1177、Problem1312、Problem1328、Problem1332、Problem1400、Problem1457、Problem1542、Problem1616、Problem1930、Problem2002、Problem2108、Problem2131、Problem2217、Problem2384、Problem2396、Problem2484、Problem2490、Problem2663、Problem2697、Problem2791、Problem3035
  * 给你一个字符串 s，请你将 s 分割成一些子串，使每个子串都是 回文串 。
  * 返回 s 所有可能的分割方案。
  * 回文串 是正着读和反着读都一样的字符串。
@@ -30,8 +30,7 @@ public class Problem131 {
     /**
      * 回溯+剪枝+动态规划预处理字符串s
      * dp[i][j]：s[i]-s[j]是否是回文串
-     * dp[i][j] = false (s[i] != s[j])
-     * dp[i][j] = true  (s[i] == s[j] && dp[i+1][j-1] == true)
+     * dp[i][j] = dp[i+1][j-1] && (s[i] == s[j])
      * 时间复杂度O(n*2^n)，空间复杂度O(n^2) (最坏有2^(n-1)种可能，每种可能需要O(n)放入结果集合，栈深度O(n)，dp数组O(n^2))
      *
      * @param s
@@ -44,13 +43,13 @@ public class Problem131 {
 
         boolean[][] dp = new boolean[s.length()][s.length()];
 
+        //只有一个字符是回文串的特殊情况
         for (int i = 0; i < s.length(); i++) {
-            //只有一个字符也是回文串
             dp[i][i] = true;
         }
 
+        //s[i]-s[i+1]是回文串的特殊情况
         for (int i = 1; i < s.length(); i++) {
-            //用于s[i]-s[i+1]，即两个字符的情况
             dp[i][i - 1] = true;
         }
 

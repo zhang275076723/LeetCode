@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/1 17:13
  * @Author zsy
- * @Description 回文数 回文类比Problem5、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem647、Problem680、Problem866、Problem1147、Problem1177、Problem1312、Problem1328、Problem1332、Problem1400
+ * @Description 回文数 回文类比Problem5、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem564、Problem647、Problem680、Problem866、Problem1147、Problem1177、Problem1312、Problem1328、Problem1332、Problem1400、Problem1457、Problem1542、Problem1616、Problem1930、Problem2002、Problem2108、Problem2131、Problem2217、Problem2384、Problem2396、Problem2484、Problem2490、Problem2663、Problem2697、Problem2791、Problem3035
  * 给你一个整数 x ，如果 x 是一个回文整数，返回 true ；否则，返回 false 。
  * 回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。
  * 例如，121 是回文，而 123 不是。
@@ -88,6 +88,6 @@ public class Problem9 {
         }
 
         //判断反转之后是否和x相等
-        return x == reverse;
+        return reverse == x;
     }
 }

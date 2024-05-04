@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/4/17 10:51
  * @Author zsy
- * @Description 下一个排列 字节面试题 类比Problem556、Problem670、Problem738、Problem1323
+ * @Description 下一个排列 字节面试题 类比Problem556、Problem670、Problem738、Problem1323、Problem1842
  * 整数数组的一个 排列 就是将其所有成员以序列或线性顺序排列。
  * 例如，arr = [1,2,3] ，以下这些都可以视作 arr 的排列：[1,2,3]、[1,3,2]、[3,1,2]、[2,3,1] 。
  * 整数数组的 下一个排列 是指其整数的下一个字典序更大的排列。
@@ -49,30 +49,31 @@ public class Problem31 {
             return;
         }
 
-        //逆序的第一个下标索引
+        //最长递减数组的末尾下标索引
         int i = nums.length - 1;
 
-        //从后往前找最长递减序列，必须是大于等于，不能是大于，需要包含两者相同的情况
+        //从后往前找最长递减数组
+        //注意：最长递减数组包含相邻元素相等的情况，即为大于等于
         while (i > 0 && nums[i - 1] >= nums[i]) {
             i--;
         }
 
-        //整个数组为逆序，即为最大值，下一个排列是最小值，反转整个数组，得到下一个排列
+        //nums整体为递减数组，则不存在比nums大的下一个排列，反转整个数组得到最小排列
         if (i == 0) {
             reverse(nums, 0, nums.length - 1);
             return;
         }
 
-        //翻转从后往前的最长递减数组，使之成为递增数组
+        //递减数组nums[i]-nums[nums.length-1]反转，变为递增数组
         reverse(nums, i, nums.length - 1);
 
-        //从后往前的最长递减数组的前一个元素下标索引
+        //i的前一位下标索引
         int j = i - 1;
 
-        //从前往后找第一个比nums[j]大的元素进行交换，即得到下个一排列
+        //从前往后找第一个大于nums[j]的元素nums[k]，两者进行交换，得到下个一排列
         for (int k = i; k < nums.length; k++) {
-            if (nums[j] < nums[k]) {
-                swap(nums, j, k);
+            if (nums[k] < nums[j]) {
+                swap(nums, k, j);
                 return;
             }
         }

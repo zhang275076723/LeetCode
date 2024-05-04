@@ -140,6 +140,7 @@ public class Problem4 {
 
     /**
      * 获取有序数组nums1和nums2中的第k小元素的值 (k从1开始)
+     * 核心思想：找nums1和nums2中的第k小，则每次可以跳过k/2-1个元素的比较
      * 时间复杂度O(log(m+n))，空间复杂度O(1) (m=nums1.length, n=nums2.length)
      *
      * @param nums1

@@ -76,8 +76,7 @@ public class Problem647 {
     /**
      * 动态规划
      * dp[i][j]：s[i]-s[j]是否是回文串
-     * dp[i][j] = false (s[i] != s[j])
-     * dp[i][j] = true  (s[i] == s[j] && dp[i+1][j-1] == true)
+     * dp[i][j] = dp[i+1][j-1] && (s[i] == s[j])
      * 时间复杂度O(n^2)，空间复杂度O(n^2)
      *
      * @param s
@@ -95,13 +94,13 @@ public class Problem647 {
         int count = 0;
         boolean[][] dp = new boolean[s.length()][s.length()];
 
-        //s[i]-s[i]是回文串
+        //只有一个字符是回文串的特殊情况
         for (int i = 0; i < s.length(); i++) {
             dp[i][i] = true;
             count++;
         }
 
-        //用于s[i]-s[i+1]，即两个字符的情况
+        //s[i]-s[i+1]是回文串的特殊情况
         for (int i = 1; i < s.length(); i++) {
             dp[i][i - 1] = true;
         }

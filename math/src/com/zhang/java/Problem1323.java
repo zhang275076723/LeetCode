@@ -49,10 +49,11 @@ public class Problem1323 {
         for (int i = 0; i < strArr.length; i++) {
             if (strArr[i] == '6') {
                 strArr[i] = '9';
-                break;
+                return Integer.parseInt(new String(strArr));
             }
         }
 
-        return Integer.parseInt(new String(strArr));
+        //遍历结束，则num都为9，不需要修改，已经是最大的数字，直接返回
+        return num;
     }
 }

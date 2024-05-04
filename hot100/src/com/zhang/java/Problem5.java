@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/13 9:32
  * @Author zsy
- * @Description 最长回文子串 (注意和最长回文子序列的区别) 腾讯面试题 中心扩散类比Problem267、Problem647、Problem696 回文类比Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem647、Problem680、Problem866、Problem1147、Problem1177、Problem1312、Problem1328、Problem1332、Problem1400
+ * @Description 最长回文子串 腾讯面试题 类比Problem516 中心扩散类比Problem267、Problem647、Problem696 回文类比Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem564、Problem647、Problem680、Problem866、Problem1147、Problem1177、Problem1312、Problem1328、Problem1332、Problem1400、Problem1457、Problem1542、Problem1616、Problem1930、Problem2002、Problem2108、Problem2131、Problem2217、Problem2384、Problem2396、Problem2484、Problem2490、Problem2663、Problem2697、Problem2791、Problem3035
  * 给你一个字符串 s，找到 s 中最长的回文子串。
  * <p>
  * 输入：s = "babad"
@@ -74,8 +74,7 @@ public class Problem5 {
     /**
      * 动态规划
      * dp[i][j]：s[i]-s[j]是否是回文串
-     * dp[i][j] = false (s[i] != s[j])
-     * dp[i][j] = true  (s[i] == s[j] && dp[i+1][j-1] == true)
+     * dp[i][j] = dp[i+1][j-1] && (s[i] == s[j])
      * 时间复杂度O(n^2)，空间复杂度O(n^2)
      *
      * @param s
@@ -92,13 +91,13 @@ public class Problem5 {
 
         boolean[][] dp = new boolean[s.length()][s.length()];
 
+        //只有一个字符是回文串的特殊情况
         for (int i = 0; i < s.length(); i++) {
-            //只有一个字符也是回文串
             dp[i][i] = true;
         }
 
+        //s[i]-s[i+1]是回文串的特殊情况
         for (int i = 1; i < s.length(); i++) {
-            //用于s[i]-s[i+1]，即两个字符的情况
             dp[i][i - 1] = true;
         }
 

@@ -33,8 +33,8 @@ public class Problem1312 {
     /**
      * 动态规划
      * dp[i][j]：s[i]-s[j]成为回文串最少插入字符的次数
-     * dp[i][j] = dp[i+1][j-1]                 (s[i] == s[j])
-     * dp[i][j] = min(dp[i+1][j],dp[i][j-1])+1 (s[i] != s[j])
+     * dp[i][j] = dp[i+1][j-1]                   (s[i] == s[j])
+     * dp[i][j] = min(dp[i+1][j],dp[i][j-1]) + 1 (s[i] != s[j])
      * 时间复杂度O(n^2)，空间复杂度O(n^2)
      *
      * @param s

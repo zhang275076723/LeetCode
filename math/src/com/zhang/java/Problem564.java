@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/4/9 08:35
  * @Author zsy
- * @Description 寻找最近的回文数 字节面试题 tplink面试题 类比Problem479、Problem2217 回文类比
+ * @Description 寻找最近的回文数 字节面试题 tplink面试题 类比Problem479、Problem866、Problem1842、Problem2217、Problem2967 回文类比
  * 给定一个表示整数的字符串 n ，返回与它最近的回文整数（不包括自身）。
  * 如果不止一个，返回较小的那个。
  * “最近的”定义为两个整数差的绝对值最小。
@@ -31,8 +31,8 @@ public class Problem564 {
     /**
      * 模拟
      * 长度为n的回文只需要考虑前一半，拼接上后半部分得到n位回文
-     * 假设n的前一半值为a，只需要考虑a-1、a、a+1作为回文前一半值构成回文的情况，取三者距离n最近且不为n的值，即为距离n最近的回文数
-     * 同时要考虑前一半值为999或100的特殊情况
+     * 假设n的前一半值为a，只需要考虑a-1、a、a+1作为回文前一半值构成回文的情况，三者距离n最近且不为n的值，即为距离n最近的回文数
+     * 注意：需要考虑前一半值为99...99或10...00的特殊情况
      * 时间复杂度O(n.length())，空间复杂度O(n.length())
      *
      * @param n
@@ -57,7 +57,7 @@ public class Problem564 {
             preHalf = Integer.parseInt(n.substring(0, n.length() / 2));
         }
 
-        //前一半值为999的特殊情况
+        //前一半值为99...99的特殊情况
         if (preHalf == quickPow(10, (preHalf + "").length()) - 1) {
             int a1 = preHalf - 1;
             int a2 = preHalf;
@@ -100,7 +100,7 @@ public class Problem564 {
             long abs2 = Math.abs(num - palindrome2);
             long abs3 = Math.abs(num - palindrome3);
 
-            //取三者距离n最近且不为n的值，即为距离n最近的回文数
+            //三者距离n最近且不为n的值，即为距离n最近的回文数
             if (abs2 != 0) {
                 if (abs1 < abs2 && abs1 < abs3) {
                     return sb1.toString();
@@ -127,7 +127,7 @@ public class Problem564 {
             }
         }
 
-        //前一半值为100的特殊情况
+        //前一半值为10...00的特殊情况
         if (preHalf == quickPow(10, (preHalf + "").length() - 1)) {
             int a1 = preHalf - 1;
             int a2 = preHalf;
@@ -175,16 +175,14 @@ public class Problem564 {
 
             //最近接n的3个回文
             //使用long避免溢出
-            //n长度只有2位，并且第一位为1的情况，例如：sb1的回文为9
-            long palindrome1 = flag ? 9 : Long.parseLong(sb1.toString());
+            long palindrome1 = Long.parseLong(sb1.toString());
             long palindrome2 = Long.parseLong(sb2.toString());
             long palindrome3 = Long.parseLong(sb3.toString());
-
             long abs1 = Math.abs(num - palindrome1);
             long abs2 = Math.abs(num - palindrome2);
             long abs3 = Math.abs(num - palindrome3);
 
-            //取三者距离n最近且不为n的值，即为距离n最近的回文数
+            //三者距离n最近且不为n的值，即为距离n最近的回文数
             if (abs2 != 0) {
                 if (abs1 < abs2 && abs1 < abs3) {
                     return sb1.toString();
@@ -249,7 +247,7 @@ public class Problem564 {
         long abs2 = Math.abs(num - palindrome2);
         long abs3 = Math.abs(num - palindrome3);
 
-        //取三者距离n最近且不为n的值，即为距离n最近的回文数
+        //三者距离n最近且不为n的值，即为距离n最近的回文数
         if (abs2 != 0) {
             if (abs1 < abs2 && abs1 < abs3) {
                 return sb1.toString();

@@ -35,28 +35,30 @@ public class Problem556 {
     public int nextGreaterElement(int n) {
         char[] numArr = (n + "").toCharArray();
 
+        //最长递减数组的末尾下标索引
         int i = numArr.length - 1;
 
-        //从后往前找最长递减序列
+        //从后往前找最长递减数组
+        //注意：最长递减数组包含相邻元素相等的情况，即为大于等于
         while (i > 0 && numArr[i - 1] >= numArr[i]) {
             i--;
         }
 
-        //numArr整体为递减序列，即n是单调递减，没有下一个更大元素，返回-1
+        //nums整体为递减数组，则不存在下一个更大元素，返回-1
         if (i == 0) {
             return -1;
         }
 
-        //翻转递减序列，成为单调递增序列
+        //递减数组nums[i]-nums[nums.length-1]反转，变为递增数组
         reverse(numArr, i, numArr.length - 1);
 
-        //递减序列的前一个元素下标索引
+        //i的前一位下标索引
         int j = i - 1;
 
+        //从前往后找第一个大于nums[j]的元素nums[k]，两者进行交换，得到下一个更大元素
         for (int k = i; k < numArr.length; k++) {
-            //numArr[j]和第一个大于numArr[j]的元素numArr[k]交换
-            if (numArr[j] < numArr[k]) {
-                swap(numArr, j, k);
+            if (numArr[k] > numArr[j]) {
+                swap(numArr, k, j);
                 break;
             }
         }
