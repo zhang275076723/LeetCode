@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2024/4/8 08:49
  * @Author zsy
- * @Description 找到指定长度的回文数 类比Problem479、Problem564、Problem866、Problem1842、Problem2967 回文类比
+ * @Description 找到指定长度的回文数 类比Problem479、Problem564、Problem866、Problem906、Problem1842、Problem2967 回文类比
  * 给你一个整数数组 queries 和一个 正 整数 intLength ，请你返回一个数组 answer ，
  * 其中 answer[i] 是长度为 intLength 的 正回文数 中第 queries[i] 小的数字，
  * 如果不存在这样的回文数，则为 -1 。

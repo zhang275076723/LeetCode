@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/3/6 09:07
  * @Author zsy
- * @Description 回文质数 类比Problem479、Problem564、Problem1842、Problem2217、Problem2967 质数类比Problem204、Problem762、Problem952、Problem1175、Problem1998、Problem2523、Problem2614 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem647、Problem680、Problem1147、Problem1177、Problem1312、Problem1328、Problem1332、Problem1400
+ * @Description 回文质数 类比Problem479、Problem564、Problem906、Problem1842、Problem2217、Problem2967 质数类比Problem204、Problem762、Problem952、Problem1175、Problem1998、Problem2523、Problem2614 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem647、Problem680、Problem1147、Problem1177、Problem1312、Problem1328、Problem1332、Problem1400
  * 给你一个整数 n ，返回大于或等于 n 的最小回文质数。
  * 一个整数如果恰好有两个除数：1 和它本身，那么它是 质数 。
  * 注意，1 不是质数。

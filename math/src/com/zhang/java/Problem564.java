@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/4/9 08:35
  * @Author zsy
- * @Description 寻找最近的回文数 字节面试题 tplink面试题 类比Problem479、Problem866、Problem1842、Problem2217、Problem2967 回文类比
+ * @Description 寻找最近的回文数 字节面试题 tplink面试题 类比Problem479、Problem866、Problem906、Problem1842、Problem2217、Problem2967 回文类比
  * 给定一个表示整数的字符串 n ，返回与它最近的回文整数（不包括自身）。
  * 如果不止一个，返回较小的那个。
  * “最近的”定义为两个整数差的绝对值最小。
