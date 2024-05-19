@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/11 09:46
  * @Author zsy
- * @Description 分割回文串 II 腾讯机试题 类比Problem131、Problem1278、Problem1745 动态规划类比Problem72、Problem97、Problem115、Problem139、Problem221、Problem392、Problem516、Problem1143、Problem1312 回文类比Problem5、Problem9、Problem125、Problem131、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem564、Problem647、Problem680、Problem866、Problem1147、Problem1177、Problem1312、Problem1328、Problem1332、Problem1400、Problem1457、Problem1542、Problem1616、Problem1930、Problem2002、Problem2108、Problem2131、Problem2217、Problem2384、Problem2396、Problem2484、Problem2490、Problem2663、Problem2697、Problem2791、Problem3035
+ * @Description 分割回文串 II 腾讯机试题 类比Problem131 类比Problem1278、Problem1745、Problem1960、Problem2472 动态规划类比Problem72、Problem97、Problem115、Problem139、Problem221、Problem392、Problem516、Problem1143、Problem1312 回文类比Problem5、Problem9、Problem125、Problem131、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem564、Problem647、Problem680、Problem866、Problem1147、Problem1177、Problem1312、Problem1328、Problem1332、Problem1400、Problem1457、Problem1542、Problem1616、Problem1930、Problem2002、Problem2108、Problem2131、Problem2217、Problem2384、Problem2396、Problem2484、Problem2490、Problem2663、Problem2697、Problem2791、Problem3035
  * 给你一个字符串 s，请你将 s 分割成一些子串，使每个子串都是回文。
  * 返回符合要求的 最少分割次数 。
  * <p>
@@ -32,8 +32,8 @@ public class Problem132 {
      * dp1[i][j]：s[i]-s[j]是否是回文串
      * dp2[i]：s[0]-s[i]分割成回文子串的最少分割次数
      * dp1[i][j] = dp1[i+1][j-1] && (s[i] == s[j])
-     * dp2[i] = min(dp2[j]+1) (0 <= j < i，s[j+1]-s[i]是回文串)
-     * dp2[i] = 0             (s[0]-s[j]是回文串)
+     * dp2[i] = min(dp2[j]+1)                      (0 <= j < i，s[j+1]-s[i]是回文串)
+     * dp2[i] = 0                                  (s[0]-s[j]是回文串)
      * 时间复杂度O(n^2)，空间复杂度O(n^2)
      *
      * @param s
@@ -56,13 +56,11 @@ public class Problem132 {
             dp1[i][i - 1] = true;
         }
 
-        //当前字符串长度
+        //当前字符串长度为i
         for (int i = 2; i <= s.length(); i++) {
-            //当前字符串起始字符索引
+            //当前字符串的起始下标索引为j
             for (int j = 0; j <= s.length() - i; j++) {
-                if (s.charAt(j) == s.charAt(j + i - 1) && dp1[j + 1][j + i - 2]) {
-                    dp1[j][j + i - 1] = true;
-                }
+                dp1[j][j + i - 1] = dp1[j + 1][j + i - 2] && (s.charAt(j) == s.charAt(j + i - 1));
             }
         }
 

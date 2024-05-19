@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/12 08:23
  * @Author zsy
- * @Description 计数二进制子串 类比Problem525 中心扩散类比Problem5、Problem267、Problem647 双指针类比
+ * @Description 计数二进制子串 类比Problem525 中心扩散类比Problem5、Problem267、Problem647、Problem1960 双指针类比
  * 给定一个字符串 s，统计并返回具有相同数量 0 和 1 的非空（连续）子字符串的数量，
  * 并且这些子字符串中的所有 0 和所有 1 都是成组连续的。
  * 重复出现（不同位置）的子串也要统计它们出现的次数。
@@ -47,7 +47,7 @@ public class Problem696 {
         for (int i = 0; i < s.length() - 1; i++) {
             //找到两个相邻的不同元素，这两个元素作为中心向两边扩散
             if (s.charAt(i) != s.charAt(i + 1)) {
-                count = count + centerExtend(s, i, i + 1);
+                count = count + centerExpand(s, i, i + 1);
             }
         }
 
@@ -100,7 +100,7 @@ public class Problem696 {
      * @param right
      * @return
      */
-    private int centerExtend(String s, int left, int right) {
+    private int centerExpand(String s, int left, int right) {
         int count = 0;
         char c1 = s.charAt(left);
         char c2 = s.charAt(right);

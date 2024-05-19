@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/5/2 08:49
  * @Author zsy
- * @Description 不同的子序列 II 类比Problem115、Problem730 动态规划类比 子序列和子数组类比
+ * @Description 不同的子序列 II 类比Problem115、Problem730、Problem1682、Problem1987 动态规划类比 子序列和子数组类比
  * 给定一个字符串 s，计算 s 的 不同非空子序列 的个数。
  * 因为结果可能很大，所以返回答案需要对 10^9 + 7 取余 。
  * 字符串的 子序列 是经由原字符串删除一些（也可能不删除）字符但不改变剩余字符相对位置的一个新字符串。
