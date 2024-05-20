@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/4/11 08:34
  * @Author zsy
- * @Description 严格回文的数字 类比Problem483 回文类比
+ * @Description 严格回文的数字 类比Problem483、Problem1689 回文类比
  * 如果一个整数 n 在 b 进制下（b 为 2 到 n - 2 之间的所有整数）对应的字符串 全部 都是 回文的 ，
  * 那么我们称这个数 n 是 严格回文 的。
  * 给你一个整数 n ，如果 n 是 严格回文 的，请返回 true ，否则返回 false 。

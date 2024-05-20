@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/4/12 08:23
  * @Author zsy
- * @Description 最小好进制 类比Problem2396
+ * @Description 最小好进制 类比Problem1689、Problem2396
  * 以字符串的形式给出 n , 以字符串的形式返回 n 的最小 好进制  。
  * 如果 n 的  k(k>=2) 进制数的所有数位全为1，则称 k(k>=2) 是 n 的一个 好进制 。
  * <p>
