@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/2/8 00:54
  * @Author zsy
- * @Description 设计推特 类比Problem146、Problem432、Problem460 优先队列类比
+ * @Description 设计推特 类比Problem1348 类比Problem146、Problem432、Problem460 优先队列类比
  * 设计一个简化版的推特(Twitter)，可以让用户实现发送推文，关注/取消关注其他用户，能够看见关注人（包括自己）的最近 10 条推文。
  * 实现 Twitter 类：
  * Twitter() 初始化简易版推特对象

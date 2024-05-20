@@ -8,7 +8,7 @@ import java.util.TreeSet;
 /**
  * @Date 2024/2/13 08:37
  * @Author zsy
- * @Description 考场就座 类比Problem849 有序集合类比Problem220、Problem352、Problem363 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem352、Problem406、Problem435、Problem436、Problem632、Problem763、Problem986、Problem1288、Problem2402
+ * @Description 考场就座 类比Problem849 有序集合类比Problem220、Problem352、Problem363、Problem1348 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem352、Problem406、Problem435、Problem436、Problem632、Problem763、Problem986、Problem1288、Problem2402
  * 在考场里，一排有 N 个座位，分别编号为 0, 1, 2, ..., N-1 。
  * 当学生进入考场后，他必须坐在能够使他与离他最近的人之间的距离达到最大化的座位上。
  * 如果有多个这样的座位，他会坐在编号最小的座位上。
