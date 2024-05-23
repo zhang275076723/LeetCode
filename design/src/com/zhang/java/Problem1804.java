@@ -157,7 +157,7 @@ public class Problem1804 {
             private final Map<Character, TrieNode> children;
             //根节点到当前节点的字符串个数
             private int count;
-            //根节点到当前节点作为前缀，前缀树中满足当前前缀的字符串个数
+            //根节点到当前节点作为前缀的字符串个数
             private int preCount;
             //当前节点是否是一个添加到前缀树的字符串的结尾节点
             private boolean isEnd;

@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2024/2/29 08:55
  * @Author zsy
- * @Description 设计文件系统 类比Problem71 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem336、Problem421、Problem676、Problem677、Problem720、Problem745、Problem820、Problem1804、Problem3043
+ * @Description 设计文件系统 类比Problem71、Problem588、Problem1500 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem336、Problem421、Problem676、Problem677、Problem720、Problem745、Problem820、Problem1804、Problem3043
  * 你需要设计一个文件系统，你可以创建新的路径并将它们与不同的值关联。
  * 路径的格式是一个或多个连接在一起的字符串，形式为： / ，后面跟着一个或多个小写英文字母。
  * 例如， " /leetcode" 和 "/leetcode/problems" 是有效路径，而空字符串 "" 和 "/" 不是。
@@ -61,6 +61,7 @@ public class Problem1166 {
      * 前缀树
      */
     static class FileSystem {
+        //前缀树
         private final Trie trie;
 
         public FileSystem() {
@@ -89,6 +90,9 @@ public class Problem1166 {
             return trie.search(path);
         }
 
+        /**
+         * 前缀树
+         */
         private static class Trie {
             private final TrieNode root;
 
@@ -128,6 +132,7 @@ public class Problem1166 {
 
             private int search(String path) {
                 TrieNode node = root;
+                //路径数组
                 String[] arr = path.split("/");
 
                 //注意：i是从1开始遍历，arr[0]为空不考虑
@@ -142,7 +147,11 @@ public class Problem1166 {
                 return node.value;
             }
 
+            /**
+             * 前缀树节点
+             */
             private static class TrieNode {
+                //注意：key为String类型，而不是Character类型
                 private final Map<String, TrieNode> children;
                 //根节点到当前节点的路径关联的值
                 private int value;

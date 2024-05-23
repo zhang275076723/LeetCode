@@ -39,9 +39,9 @@ public class Problem483 {
      * 假设k进制m位全为1的值为n，即1+k+k^2+...+k^(m-1)=n，得到k^(m-1)<n，
      * 根据二项式定理1+C(1,m-1)*k+...+k^(m-1)=(1+k)^(m-1)，得到(1+k)^(m-1)>1+k+k^2+...+k^(m-1)=n，即(k+1)^(m-1)>n，
      * 综上，得到k^(m-1)<n<(k+1)^(m-1)，即k<n^(1/(m-1))<k+1，则对于确定的m，就能确定唯一的k=n^(1/(m-1))
-     * 1+k+k^2+...+k^(m-1)=n，得到(k^m-1)/(k-1)=n，当k=2时，2^m-1=n，m=log(n+1)/log2，即得到m的上限，下限位2进制
+     * 1+k+k^2+...+k^(m-1)=n，得到(k^m-1)/(k-1)=n，当k=2时，2^m-1=n，m=log(n+1)/log2，即得到m的上限，m的下限为n-1进制2位
      * 同时要得到最小的k进制，需要m越大越好，所以m从上限开始遍历，判断当前m位k进制全1的值是否为n，如果为n，则直接返回当前k
-     * 注意：n的n-1进制数为11，m遍历结束没有符合的k，则返回n-1
+     * 注意：n的n-1进制数为11，m遍历结束没有符合的k，则返回n-1进制
      * 时间复杂度O((logn)^2)，空间复杂度O(1)
      *
      * @param n
@@ -66,12 +66,12 @@ public class Problem483 {
 //            //1+k+k^2+...+k^(m-1)=result，result=(k^m-1)/(k-1)
 //            long result = (long) (Math.pow(k, m) - 1) / (k - 1);
 
-            //1+k+k^2+...+k^(m-1)=result
-            //注意：不能通过result=(k^m-1)/(k-1)求result，避免long溢出
             //使用long，避免int相乘溢出
             long result = 0;
             long temp = 1;
 
+            //1+k+k^2+...+k^(m-1)=result
+            //注意：不能通过result=(k^m-1)/(k-1)求result，只能通过相加求result，避免long溢出
             for (int i = 0; i < m; i++) {
                 result = result + temp;
                 temp = temp * k;

@@ -143,7 +143,7 @@ public class Problem677 {
             private static class TrieNode {
                 //当前节点的子节点map
                 private final Map<Character, TrieNode> children;
-                //根节点到当前节点作为前缀，前缀树中满足当前前缀的所有字符串值之和，即当前节点所有子节点sum之和
+                //根节点到当前节点作为前缀的字符串值之和，即当前节点所有子节点sum之和
                 private int sum;
                 //当前节点是否是一个添加到前缀树的字符串的结尾节点
                 private boolean isEnd;

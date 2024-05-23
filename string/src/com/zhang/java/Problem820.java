@@ -112,7 +112,7 @@ public class Problem820 {
         }
 
         /**
-         * 查询word的逆序字符串的末尾前缀树节点
+         * 返回word的逆序字符串的末尾前缀树节点
          * 时间复杂度O(n)，空间复杂度O(1)
          *
          * @param word

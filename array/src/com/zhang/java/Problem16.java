@@ -35,7 +35,7 @@ public class Problem16 {
     /**
      * 排序+双指针
      * 先排序，确定第一个元素，左右指针分别指向剩下的两个元素
-     * 时间复杂度O(n^2)，空间复杂度O(logn) (快排的空间复杂度为O(logn))
+     * 时间复杂度O(n^2)，空间复杂度O(logn) (快排的平均空间复杂度为O(logn))
      *
      * @param nums
      * @param target

@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/5/3 10:06
  * @Author zsy
- * @Description 最长连续序列 字节面试题 类比Problem506、Problem539、Problem561、Problem628 哈希表类比Problem1、Problem166、Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem535、Problem554、Problem763、Problem1640、Offer50
+ * @Description 最长连续序列 字节面试题 类比Problem506、Problem539、Problem561、Problem628 哈希表类比Problem1、Problem166、Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem535、Problem554、Problem763、Problem1500、Problem1640、Offer50
  * 给定一个未排序的整数数组 nums ，找出数字连续的最长序列（不要求序列元素在原数组中连续）的长度。
  * 请你设计并实现时间复杂度为 O(n) 的算法解决此问题。
  * <p>
@@ -30,7 +30,7 @@ public class Problem128 {
 
     /**
      * 排序
-     * 时间复杂度O(nlogn)，空间复杂度O(logn) (快排的平均空间复杂度O(logn))
+     * 时间复杂度O(nlogn)，空间复杂度O(logn) (快排的平均空间复杂度为O(logn))
      *
      * @param nums
      * @return

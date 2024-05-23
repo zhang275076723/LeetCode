@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/6/26 08:38
  * @Author zsy
- * @Description 数组中的 k-diff 数对 类比Problem220 哈希表类比Problem1、Problem128、Problem166、Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem535、Problem554、Problem763、Problem1640、Offer50 双指针类比
+ * @Description 数组中的 k-diff 数对 类比Problem220 哈希表类比Problem1、Problem128、Problem166、Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem535、Problem554、Problem763、Problem1500、Problem1640、Offer50 双指针类比
  * 给你一个整数数组 nums 和一个整数 k，请你在数组中找出 不同的 k-diff 数对，并返回不同的 k-diff 数对 的数目。
  * k-diff 数对定义为一个整数对 (nums[i], nums[j]) ，并满足下述全部条件：
  * 0 <= i, j < nums.length
