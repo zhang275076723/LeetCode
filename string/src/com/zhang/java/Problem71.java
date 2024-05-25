@@ -6,7 +6,7 @@ import java.util.LinkedList;
 /**
  * @Date 2022/11/10 12:10
  * @Author zsy
- * @Description 简化路径 类比Problem588、Problem1166、Problem1500 栈类比Problem20、Problem150、Problem224、Problem227、Problem331、Problem341、Problem394、Problem678、Problem856、Problem946、Problem1003、Problem1047、Problem1096、Offer31、CharacterToInteger
+ * @Description 简化路径 类比Problem588、Problem609、Problem1166、Problem1500 栈类比Problem20、Problem150、Problem224、Problem227、Problem331、Problem341、Problem394、Problem678、Problem856、Problem946、Problem1003、Problem1047、Problem1096、Offer31、CharacterToInteger
  * 给你一个字符串 path ，表示指向某一文件或目录的 Unix 风格 绝对路径 （以 '/' 开头），请你将其转化为更加简洁的规范路径。
  * 在 Unix 风格的文件系统中，一个点（.）表示当前目录本身；
  * 此外，两个点 （..） 表示将目录切换到上一级（指向父目录）；

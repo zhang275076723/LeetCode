@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/11/13 09:50
  * @Author zsy
- * @Description 字符串中的第一个唯一字符 哈希表类比Problem1、Problem128、Problem166、Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem389、Problem454、Problem532、Problem535、Problem554、Problem763、Problem1500、Problem1640、Offer50 同Offer50
+ * @Description 字符串中的第一个唯一字符 哈希表类比Problem1、Problem128、Problem166、Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem389、Problem454、Problem532、Problem535、Problem554、Problem609、Problem763、Problem1500、Problem1640、Offer50 同Offer50
  * 给定一个字符串 s ，找到 它的第一个不重复的字符，并返回它的索引 。
  * 如果不存在，则返回 -1 。
  * <p>

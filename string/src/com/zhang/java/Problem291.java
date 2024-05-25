@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/12/4 08:25
  * @Author zsy
- * @Description 单词规律 II 哈希表类比Problem1、Problem128、Problem166、Problem187、Problem205、Problem242、Problem290、Problem383、Problem387、Problem389、Problem454、Problem532、Problem535、Problem554、Problem763、Problem1500、Problem1640、Offer50 回溯+剪枝类比
+ * @Description 单词规律 II 哈希表类比Problem1、Problem128、Problem166、Problem187、Problem205、Problem242、Problem290、Problem383、Problem387、Problem389、Problem454、Problem532、Problem535、Problem554、Problem609、Problem763、Problem1500、Problem1640、Offer50 回溯+剪枝类比
  * 给你一种规律 pattern 和一个字符串 s，请你判断 s 是否和 pattern 的规律相匹配。
  * 如果存在单个字符到 非空 字符串的 双射映射 ，那么字符串 s 匹配 pattern ，
  * 即：如果 pattern 中的每个字符都被它映射到的字符串替换，那么最终的字符串则为 s 。
