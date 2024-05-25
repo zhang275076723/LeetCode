@@ -6,7 +6,7 @@ import java.util.*;
 /**
  * @Date 2024/5/16 08:38
  * @Author zsy
- * @Description 设计内存文件系统 类比Problem71、Problem609、Problem1166、Problem1500 前缀树类比
+ * @Description 设计内存文件系统 类比Problem71、Problem609、Problem1166、Problem1233、Problem1500 前缀树类比
  * 设计一个内存文件系统，模拟以下功能：
  * 实现文件系统类:
  * FileSystem() 初始化系统对象

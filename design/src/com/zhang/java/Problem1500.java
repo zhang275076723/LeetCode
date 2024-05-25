@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/5/17 09:02
  * @Author zsy
- * @Description 设计文件分享系统 类比Problem71、Problem588、Problem609、Problem1166 哈希表类比Problem1、Problem128、Problem166、Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem535、Problem554、Problem609、Problem763、Problem1640、Offer50 优先队列类比
+ * @Description 设计文件分享系统 类比Problem71、Problem588、Problem609、Problem1166、Problem1233 哈希表类比Problem1、Problem128、Problem166、Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem535、Problem554、Problem609、Problem763、Problem1640、Offer50 优先队列类比
  * 我们需要使用一套文件分享系统来分享一个非常大的文件，该文件由 m 个从 1 到 m 编号的文件块组成。
  * 当用户加入系统时，系统应为其注册一个独有的 ID。
  * 这个独有的 ID 应当被相应的用户使用一次，但是当用户离开系统时，其 ID 应可以被（后续新注册的用户）再次使用。

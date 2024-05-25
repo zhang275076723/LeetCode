@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2024/1/17 08:27
  * @Author zsy
- * @Description 实现一个魔法字典 类比Problem211、Problem472 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem336、Problem421、Problem677、Problem720、Problem745、Problem820、Problem1166、Problem1804、Problem3043
+ * @Description 实现一个魔法字典 类比Problem211、Problem472、Problem1233 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem336、Problem421、Problem677、Problem720、Problem745、Problem820、Problem1166、Problem1804、Problem3043
  * 设计一个使用单词列表进行初始化的数据结构，单词列表中的单词 互不相同 。
  * 如果给出一个单词，请判定能否只将这个单词中一个字母换成另一个字母，使得所形成的新单词存在于你构建的字典中。
  * 实现 MagicDictionary 类：
