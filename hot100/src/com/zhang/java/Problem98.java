@@ -134,17 +134,17 @@ public class Problem98 {
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
             if (!list.isEmpty()) {
-                String leftNodeValue = list.remove(0);
-                if (!"null".equals(leftNodeValue)) {
-                    TreeNode leftNode = new TreeNode(Integer.parseInt(leftNodeValue));
+                String leftValue = list.remove(0);
+                if (!"null".equals(leftValue)) {
+                    TreeNode leftNode = new TreeNode(Integer.parseInt(leftValue));
                     node.left = leftNode;
                     queue.offer(leftNode);
                 }
             }
             if (!list.isEmpty()) {
-                String rightNodeValue = list.remove(0);
-                if (!"null".equals(rightNodeValue)) {
-                    TreeNode rightNode = new TreeNode(Integer.parseInt(rightNodeValue));
+                String rightValue = list.remove(0);
+                if (!"null".equals(rightValue)) {
+                    TreeNode rightNode = new TreeNode(Integer.parseInt(rightValue));
                     node.right = rightNode;
                     queue.offer(rightNode);
                 }

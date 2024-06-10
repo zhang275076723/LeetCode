@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * @Date 2023/10/1 08:25
  * @Author zsy
- * @Description 重复的DNA序列 状态压缩类比Problem294、Problem464、Problem473、Problem526、Problem638、Problem698、Problem847、Problem1723、Problem1908、Problem2305 哈希表类比Problem1、Problem128、Problem166、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem535、Problem554、Problem609、Problem763、Problem1500、Problem1640、Offer50
+ * @Description 重复的DNA序列 字符串哈希类比Problem1698 状态压缩类比Problem294、Problem464、Problem473、Problem526、Problem638、Problem698、Problem847、Problem1723、Problem1908、Problem2305 哈希表类比Problem1、Problem128、Problem166、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem535、Problem554、Problem609、Problem763、Problem1500、Problem1640、Offer50
  * DNA序列 由一系列核苷酸组成，缩写为 'A', 'C', 'G' 和 'T'.。
  * 例如，"ACGAATTCCG" 是一个 DNA序列 。
  * 在研究 DNA 时，识别 DNA 中的重复序列非常有用。
@@ -30,6 +30,7 @@ public class Problem187 {
         String s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT";
         System.out.println(problem187.findRepeatedDnaSequences(s));
         System.out.println(problem187.findRepeatedDnaSequences2(s));
+        System.out.println(problem187.findRepeatedDnaSequences3(s));
     }
 
     /**
@@ -104,6 +105,55 @@ public class Problem187 {
 
             //当前字符串第一次重复出现，加入list集合中，避免重复添加
             if (map.get(key) == 2) {
+                list.add(s.substring(i, i + 10));
+            }
+        }
+
+        return list;
+    }
+
+    /**
+     * 字符串哈希
+     * hash[i]：s[0]-s[i-1]的哈希值
+     * prime[i]：p^i的值
+     * hash[j+1]-hash[i]*prime[j-i+1]：s[i]-s[j]的哈希值
+     * 将字符串看成P进制数，再对MOD取余，作为当前字符串的哈希值，只要两个字符串哈希值相等，则认为两个字符串相等
+     * 一般取P为较大的质数，P=131或P=13331或P=131313，此时产生的哈希冲突低；
+     * 一般取MOD=2^63(long类型最大值+1)，在计算时不处理溢出问题，产生溢出相当于自动对MOD取余；
+     * 如果产生哈希冲突，则使用双哈希来减少冲突
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param s
+     * @return
+     */
+    public List<String> findRepeatedDnaSequences3(String s) {
+        //大质数，p进制
+        int p = 131;
+        long[] hash = new long[s.length() + 1];
+        long[] prime = new long[s.length() + 1];
+
+        //p^0初始化
+        prime[0] = 1;
+
+        for (int i = 1; i <= s.length(); i++) {
+            char c = s.charAt(i - 1);
+            //注意：不需要进行取模运算，产生溢出相当于自动对MOD取模
+            hash[i] = hash[i - 1] * p + c;
+            prime[i] = prime[i - 1] * p;
+        }
+
+        List<String> list = new ArrayList<>();
+        //key：当前长度为10的字符串的哈希值，value：当前长度为10的字符串出现的次数
+        Map<Long, Integer> map = new HashMap<>();
+
+        for (int i = 0; i <= s.length() - 10; i++) {
+            //s[i]-s[i+9]的哈希值
+            //乘以prime[10]相当于hash[i]在p进制情况下左移10位
+            long h = hash[i + 10] - hash[i] * prime[10];
+            map.put(h, map.getOrDefault(h, 0) + 1);
+
+            //当前字符串第一次重复出现，加入list集合中，避免重复添加
+            if (map.get(h) == 2) {
                 list.add(s.substring(i, i + 10));
             }
         }

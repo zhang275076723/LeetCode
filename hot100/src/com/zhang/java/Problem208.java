@@ -108,7 +108,7 @@ public class Problem208 {
         }
 
         /**
-         * 时间复杂度O(|S|)，|S|是word的长度
+         * 时间复杂度O(|S|)，|S|是prefix的长度
          *
          * @param prefix
          * @return

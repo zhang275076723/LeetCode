@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/4/12 09:10
  * @Author zsy
- * @Description 判断子序列 类比Problem522、Problem524 类比Problem1177、Problem1371、Problem1457、Problem1542、Problem1915、Problem1930、Problem2484、Problem2791 动态规划类比Problem72、Problem97、Problem115、Problem132、Problem139、Problem221、Problem516、Problem1143、Problem1312 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
+ * @Description 判断子序列 类比Problem522、Problem524、Problem792、Problem1023 类比Problem1177、Problem1371、Problem1457、Problem1542、Problem1915、Problem1930、Problem2484、Problem2791 动态规划类比Problem72、Problem97、Problem115、Problem132、Problem139、Problem221、Problem516、Problem1143、Problem1312 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
  * 给定字符串 s 和 t ，判断 s 是否为 t 的子序列。
  * 字符串的一个子序列是原始字符串删除一些（也可以不删除）字符而不改变剩余字符相对位置形成的新字符串。
  * （例如，"ace"是"abcde"的一个子序列，而"aec"不是）。
@@ -32,8 +32,8 @@ public class Problem392 {
 
     /**
      * 双指针
-     * 遍历字符串t，如果s[i]==s[j]，则i指针右移，最后判断i是否遍历到字符串s末尾，即i是否等于s.length()
-     * 时间复杂度O(n)，空间复杂度O(1) (n=t.length())
+     * 遍历字符串t，如果s[i]==t[j]，则i指针右移，最后判断i是否遍历到字符串s末尾，即i是否等于s.length()
+     * 时间复杂度O(n)，空间复杂度O(1) (m=s.length()，n=t.length())
      *
      * @param s
      * @param t
@@ -49,16 +49,16 @@ public class Problem392 {
         }
 
         //字符串s的下标索引
-        int index = 0;
+        int i = 0;
 
-        for (int i = 0; i < t.length(); i++) {
-            //s[index]和t[i]相等，index后移
-            if (s.charAt(index) == t.charAt(i)) {
-                index++;
+        for (int j = 0; j < t.length(); j++) {
+            //s[i]和t[j]相等，i后移
+            if (s.charAt(i) == t.charAt(j)) {
+                i++;
             }
 
-            //index已经遍历完，则s是t的子序列，返回true
-            if (index == s.length()) {
+            //i已经遍历完，则s是t的子序列，返回true
+            if (i == s.length()) {
                 return true;
             }
         }

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/1/2 08:50
  * @Author zsy
- * @Description 最长特殊序列 II 类比Problem521 类比Problem392、Problem524 双指针类比 子序列和子数组类比
+ * @Description 最长特殊序列 II 类比Problem521 类比Problem392、Problem524、Problem792、Problem1023 双指针类比 子序列和子数组类比
  * 给定字符串列表 strs ，返回其中 最长的特殊序列 的长度。如果最长特殊序列不存在，返回 -1 。
  * 特殊序列 定义如下：该序列为某字符串 独有的子序列（即不能是其他字符串的子序列）。
  * s 的 子序列可以通过删去字符串 s 中的某些字符实现。
@@ -74,15 +74,15 @@ public class Problem522 {
         }
 
         //字符串str1的下标索引
-        int index = 0;
+        int i = 0;
 
-        for (int i = 0; i < str2.length(); i++) {
-            if (str1.charAt(index) == str2.charAt(i)) {
-                index++;
+        for (int j = 0; j < str2.length(); j++) {
+            if (str1.charAt(i) == str2.charAt(j)) {
+                i++;
             }
 
             //index已经遍历完，则str1是str2的子序列，返回true
-            if (index == str1.length()) {
+            if (i == str1.length()) {
                 return true;
             }
         }

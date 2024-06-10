@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/5/18 08:23
  * @Author zsy
- * @Description 在系统中查找重复文件 华为面试题 类比Problem71、Problem588、Problem1166、Problem1233、Problem1500 哈希表类比Problem1、Problem128、Problem166、Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem535、Problem554、Problem763、Problem1500、Problem1640、Offer50
+ * @Description 在系统中查找重复文件 华为面试题 类比Problem71、Problem588、Problem642、Problem1166、Problem1233、Problem1268、Problem1500、Problem1948 哈希表类比Problem1、Problem128、Problem166、Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem535、Problem554、Problem763、Problem1500、Problem1640、Offer50
  * 给你一个目录信息列表 paths ，包括目录路径，以及该目录中的所有文件及其内容，请你按路径返回文件系统中的所有重复文件。
  * 答案可按 任意顺序 返回。
  * 一组重复的文件至少包括 两个 具有完全相同内容的文件。

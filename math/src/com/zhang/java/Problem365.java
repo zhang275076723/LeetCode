@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @Date 2024/4/3 09:15
  * @Author zsy
- * @Description 水壶问题 美团面试题 类比Interview_08_06 最大公因数和最小公倍数类比 dfs和bfs类比
+ * @Description 水壶问题 美团面试题 类比Interview_08_06 最大公因数和最小公倍数类比 dfs和bfs类比529
  * 有两个水壶，容量分别为 x 和 y 升。水的供应是无限的。确定是否有可能使用这两个壶准确得到 target 升。
  * 你可以：
  * 装满任意一个水壶
