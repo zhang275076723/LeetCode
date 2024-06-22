@@ -4,7 +4,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/28 08:38
  * @Author zsy
- * @Description 数组中两个数的最大异或值 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem336、Problem676、Problem677、Problem720、Problem745、Problem820、Problem1166、Problem1804、Problem3043 位运算类比
+ * @Description 数组中两个数的最大异或值 类比Problem1707、Problem1803、Problem2429 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem336、Problem676、Problem677、Problem720、Problem745、Problem820、Problem1166、Problem1804、Problem3043 位运算类比
  * 给你一个整数数组 nums ，返回 nums[i] XOR nums[j] 的最大运算结果，其中 0 ≤ i ≤ j < n 。
  * <p>
  * 输入：nums = [3,10,5,25,2,8]
@@ -46,8 +46,8 @@ public class Problem421 {
 
     /**
      * 前缀树
-     * 一个数和其他数求异或的最大值，如果当前数当前位为1，则需要找当前位为0的数，接着往低位找，直至找到和当前数异或的最大值对应的数
-     * 时间复杂度O(nlogC)=O(n*32)=O(n)，空间复杂度O(n) (C：int表示的最大数)
+     * 一个数和其他数求异或的最大值，如果当前数当前位为1，则需要找当前位为0的数；如果当前数当前位为0，则需要找当前位为1的数
+     * 时间复杂度O(nlogC)=O(n)，空间复杂度O(n) (C：int表示的最大数)
      *
      * @param nums
      * @return
@@ -64,10 +64,7 @@ public class Problem421 {
 
         //找前缀树中和nums[i]异或的最大值对应的数
         for (int i = 0; i < nums.length; i++) {
-            //前缀树中从nums[i]表示的二进制数中从高位到低位尽可能不同的数，
-            //即nums[i]当前位为0，则要找前缀树中当前位为1的值；nums[i]当前位为1，则要找前缀树中当前位为0的值
-            int num = trie.search(nums[i]);
-            maxXorResult = Math.max(maxXorResult, nums[i] ^ num);
+            maxXorResult = Math.max(maxXorResult, trie.search(nums[i]));
         }
 
         return maxXorResult;
@@ -84,15 +81,15 @@ public class Problem421 {
         }
 
         /**
-         * 将num表示的二进制数由高位到低位(num都大于等于0，不考虑最高位符号位，共31位)插入前缀树
-         * 时间复杂度O(logC)，空间复杂度O(1)
+         * num二进制表示的每一位插入前缀树中
+         * 时间复杂度O(logC)=O(1)，空间复杂度O(1) (C：int表示的最大数)
          *
          * @param num
          */
         public void insert(int num) {
             TrieNode node = root;
 
-            //num表示的二进制数由高位到低位(num都大于等于0，不考虑最高位符号位，共31位)插入前缀树
+            //num都为正数，不需要考虑最高位符号位
             for (int i = 30; i >= 0; i--) {
                 //num当前位的值
                 int cur = (num >>> i) & 1;
@@ -108,7 +105,7 @@ public class Problem421 {
         }
 
         /**
-         * 找前缀树中和num异或的最大值对应的数
+         * 查询前缀树中和num异或的最大值
          * num当前位为0，则需要找前缀树中当前位为1的节点，如果前缀树中不存在当前位为1的节点，则只能找前缀树中当前位为0的节点；
          * num当前位为1，则需要找前缀树中当前位为0的节点，如果前缀树中不存在当前位为0的节点，则只能找前缀树中当前位为1的节点
          * 时间复杂度O(logC)，空间复杂度O(1)
@@ -117,37 +114,27 @@ public class Problem421 {
          * @return
          */
         public int search(int num) {
-            //前缀树中和num异或的最大值对应的数
-            int result = 0;
+            //前缀树中和num异或的最大值
+            int xor = 0;
             TrieNode node = root;
 
-            //找前缀树中和num表示的二进制数由高位到低位(num都大于等于0，不考虑最高位符号位，共31位)异或的最大值对应的数
+            //num都为正数，不需要考虑最高位符号位
             for (int i = 30; i >= 0; i--) {
                 //num当前位的值
                 int cur = (num >>> i) & 1;
 
-                //num当前位为0，则需要找前缀树中当前位为1的节点，如果前缀树中不存在当前位为1的节点，则只能找前缀树中当前位为0的节点
-                if (cur == 0) {
-                    if (node.children[1] != null) {
-                        node = node.children[1];
-                        result = (result << 1) + 1;
-                    } else {
-                        node = node.children[0];
-                        result = result << 1;
-                    }
+                //当前节点存在cur的异或值cur^1，则xor当前位为1
+                if (node.children[cur ^ 1] != null) {
+                    node = node.children[cur ^ 1];
+                    xor = (xor << 1) + 1;
                 } else {
-                    //num当前位为1，则需要找前缀树中当前位为0的节点，如果前缀树中不存在当前位为0的节点，则只能找前缀树中当前位为1的节点
-                    if (node.children[0] != null) {
-                        node = node.children[0];
-                        result = result << 1;
-                    } else {
-                        node = node.children[1];
-                        result = (result << 1) + 1;
-                    }
+                    //当前节点存在和cur的相同值cur，则xor当前位为0
+                    node = node.children[cur];
+                    xor = xor << 1;
                 }
             }
 
-            return result;
+            return xor;
         }
 
         /**

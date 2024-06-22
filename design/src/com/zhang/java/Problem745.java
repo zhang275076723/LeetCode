@@ -215,7 +215,7 @@ public class Problem745 {
              * 前缀树节点
              */
             private static class TrieNode {
-                private TrieNode[] children;
+                private final TrieNode[] children;
                 //存储words中字符串的下标索引，根节点到当前节点的字符串是words中的字符串前缀或后缀
                 private List<Integer> list;
                 private boolean isEnd;
