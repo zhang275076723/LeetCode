@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/1/11 08:25
  * @Author zsy
- * @Description 有效单词缩写 双指针类比
+ * @Description 有效单词缩写 类比Problem320、Problem527 双指针类比
  * 字符串可以用 缩写 进行表示，缩写 的方法是将任意数量的 不相邻 的子字符串替换为相应子串的长度。
  * 例如，字符串 "substitution" 可以缩写为（不止这几种方法）：
  * "s10n" ("s ubstitutio n")
