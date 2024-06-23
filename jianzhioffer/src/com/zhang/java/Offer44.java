@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/27 8:49
  * @Author zsy
- * @Description 数字序列中某一位的数字 模拟类比Problem60、Problem172、Problem233、Offer43 同Problem400
+ * @Description 数字序列中某一位的数字 类比Problem60、Problem172、Problem233、Problem400、Offer43、Interview_17_06 同Problem400
  * 数字以0123456789101112131415…的格式序列化到一个字符序列中。
  * 在这个序列中，第5位（从下标0开始计数）是5，第13位是1，第19位是4，等等。
  * 请写一个函数，求任意第n位对应的数字。

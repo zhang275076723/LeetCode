@@ -1,46 +1,44 @@
 package com.zhang.java;
 
 /**
- * @Date 2022/11/6 08:58
+ * @Date 2024/6/22 08:57
  * @Author zsy
- * @Description 数字 1 的个数 类比Problem60、Problem172、Problem400、Offer43、Offer44、Interview_17_06 同Offer43
- * 给定一个整数 n，计算所有小于等于 n 的非负整数中数字 1 出现的个数。
+ * @Description 2出现的次数 类比Problem60、Problem172、Problem233、Problem400、Offer43、Offer44
+ * 编写一个方法，计算从 0 到 n (含 n) 中数字 2 出现的次数。
  * <p>
- * 输入：n = 13
- * 输出：6
+ * 输入: 25
+ * 输出: 9
+ * 解释: (2, 12, 20, 21, 22, 23, 24, 25)(注意 22 应该算作两次)
  * <p>
- * 输入：n = 0
- * 输出：0
- * <p>
- * 0 <= n <= 10^9
+ * n <= 10^9
  */
-public class Problem233 {
+public class Interview_17_06 {
     public static void main(String[] args) {
-        Problem233 problem233 = new Problem233();
+        Interview_17_06 interview_17_06 = new Interview_17_06();
         int n = 123;
-        System.out.println(problem233.countDigitOne(n));
+        System.out.println(interview_17_06.numberOf2sInRange(n));
     }
 
     /**
      * 模拟
-     * 计算n的每一位为1的情况
+     * 计算n的每一位为2的情况
      * 时间复杂度O(logn)=O(1)，空间复杂度O(1)
      * <p>
      * 例如：n=123
-     * 个位为1，00(1)-12(1)，共13个
-     * 十位为1，0(1)0-0(1)9，1(1)0-1(1)9，共20个
-     * 百位为1，(1)00-(1)23，共24个
-     * 所以，共出现13+20+24=57次
+     * 个位为2，00(2)-12(2)，共13个
+     * 十位为2，0(2)0-0(2)9，1(2)0-1(2)3，共14个
+     * 百位为2，共0个
+     * 所以，共出现13+14+0=27次
      *
      * @param n
      * @return
      */
-    public int countDigitOne(int n) {
+    public int numberOf2sInRange(int n) {
         if (n == 0) {
             return 0;
         }
 
-        //1出现的次数
+        //2出现的次数
         int count = 0;
         //当前剩余数字，每次除以10，相当于判断n的最低位
         int num = n;
@@ -54,15 +52,15 @@ public class Problem233 {
         int high = n / 10;
 
         while (num != 0) {
-            if (cur == 0) {
-                //当前cur为0，高位值0到high-1，共high种取值，乘上低位0到9..9，共lowCount种取值
+            //当前cur小于2，高位值0到high-1，共high种取值，乘上低位0到9..9，共lowCount种取值
+            if (cur < 2) {
                 count = count + high * lowCount;
-            } else if (cur == 1) {
-                //当前cur为1，高位先取0到high-1，共high种取值，乘上低位0到9..9，共lowCount种取值；
+            } else if (cur == 2) {
+                //当前cur为2，高位先取0到high-1，共high种取值，乘上低位0到9..9，共lowCount种取值；
                 //再加上高位取high，乘上低位取0到low，共low+1种取值
                 count = count + high * lowCount + low + 1;
             } else {
-                //当前cur大于1，高位取0-high，共high+1种取值，乘上低位0到9..9，共lowCount种取值
+                //当前cur大于2，高位取0-high，共high+1种取值，乘上低位0到9..9，共lowCount种取值
                 count = count + (high + 1) * lowCount;
             }
 
