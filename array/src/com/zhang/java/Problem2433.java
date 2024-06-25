@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2024/7/5 09:07
  * @Author zsy
- * @Description 找出前缀异或的原始数组 类比Problem1310、Problem1442
+ * @Description 找出前缀异或的原始数组 类比Problem1310、Problem1442、Problem1720
  * 给你一个长度为 n 的 整数 数组 pref 。
  * 找出并返回满足下述条件且长度为 n 的数组 arr ：
  * pref[i] = arr[0] ^ arr[1] ^ ... ^ arr[i].
