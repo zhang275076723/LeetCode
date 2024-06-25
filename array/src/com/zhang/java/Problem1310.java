@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2024/6/26 08:35
  * @Author zsy
- * @Description 子数组异或查询 前缀和类比 位运算类比
+ * @Description 子数组异或查询 类比Problem1442、Problem2433 前缀和类比 位运算类比
  * 有一个正整数数组 arr，现给你一个对应的查询数组 queries，其中 queries[i] = [Li, Ri]。
  * 对于每个查询 i，请你计算从 Li 到 Ri 的 XOR 值（即 arr[Li] xor arr[Li+1] xor ... xor arr[Ri]）作为本次查询的结果。
  * 并返回一个包含给定查询 queries 所有结果的数组。
@@ -42,10 +42,10 @@ public class Problem1310 {
     }
 
     /**
-     * 前缀和+位运算
+     * 异或前缀和
      * preSum[i]：arr[0]-arr[i-1]异或运算结果
-     * preSum[left]^preSum[right]=(arr[0]^arr[1]^...^arr[left-1])^(arr[0]^arr[1]^...^arr[left]^...^arr[right-1])
-     * =arr[left]^arr[left+1]^...^arr[right-1]
+     * preSum[left]^preSum[right]=(arr[0]^arr[1]^...^arr[left-1])^(arr[0]^arr[1]^...^arr[left]^...^arr[right-1])=
+     * arr[left]^arr[left+1]^...^arr[right-1]
      * 时间复杂度O(n+m)，空间复杂度O(n) (n=arr.length，m=queries.length)
      *
      * @param arr
