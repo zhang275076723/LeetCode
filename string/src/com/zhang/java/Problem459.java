@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/4 08:49
  * @Author zsy
- * @Description 重复的子字符串 类比Problem1071 kmp类比Problem28、Problem214、Problem686、Problem796 旋转问题类比Problem61、Problem186、Problem189、Problem686、Problem796、Offer58_2
+ * @Description 重复的子字符串 类比Problem1071 kmp类比Problem28、Problem214、Problem686、Problem796、Problem1408 旋转问题类比Problem61、Problem186、Problem189、Problem686、Problem796、Offer58_2
  * 给定一个非空的字符串 s ，检查是否可以通过由它的一个子串重复多次构成。
  * <p>
  * 输入: s = "abab"
@@ -147,6 +147,7 @@ public class Problem459 {
         int[] next = new int[s.length()];
         int j = 0;
 
+        //注意：i从1开始遍历，因为s[0]-s[0]不存在公共前缀和后缀
         for (int i = 1; i < s.length(); i++) {
             while (j > 0 && s.charAt(i) != s.charAt(j)) {
                 j = next[j - 1];

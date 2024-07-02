@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/6/18 11:50
  * @Author zsy
- * @Description 格雷编码 模拟类比Problem38 类比Problem753 回溯+剪枝类比Problem17、Problem22、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem90、Problem97、Problem216、Problem301、Problem377、Problem491、Problem679、Problem698、Offer17、Offer38
+ * @Description 格雷编码 模拟类比Problem38 类比Problem1238 类比Problem753 回溯+剪枝类比Problem17、Problem22、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem90、Problem97、Problem216、Problem301、Problem377、Problem491、Problem679、Problem698、Offer17、Offer38
  * n 位格雷码序列 是一个由 2^n 个整数组成的序列，其中：
  * 每个整数都在范围 [0, 2^n - 1] 内（含 0 和 2^n - 1）
  * 第一个整数是 0
@@ -47,9 +47,10 @@ public class Problem89 {
      * 模拟
      * 从n=1开始，根据n位格雷码得到n+1位格雷码，
      * n+1位格雷码中，前2^n位格雷码是正序n位格雷码最高位补0，后2^n位格雷码是逆序n位格雷码最高位补1
+     * 时间复杂度O(2^n)，空间复杂度O(1)
+     * <p>
      * 例如：n=2，4位格雷码为：00、01、11、10
      * n=3，前4位格雷码为：0(00)，0(01)，0(11)，0(10)，后4位格雷码为：1(10)，1(11)，1(01)，1(00)
-     * 时间复杂度O(2^n)，空间复杂度O(1)
      *
      * @param n
      * @return
@@ -73,12 +74,13 @@ public class Problem89 {
      * 公式
      * 由n位二进制码得到n位格雷码，
      * 保留二进制码的最高位作为格雷码的最高位，二进制码的最高位和次高位异或，作为格雷码的次高位，以此类推，得到格雷码
+     * 时间复杂度O(2^n)，空间复杂度O(1)
+     * <p>
      * 例如；n=4，二进制码1001，对应的格雷码为1101
      * < 1  0  0  1 (二进制码)
      * < 0  1  0  0 (二进制码无符号右移一位)
      * < ^          (异或)
      * < 1  1  0  1 (格雷码)
-     * 时间复杂度O(2^n)，空间复杂度O(1)
      *
      * @param n
      * @return
@@ -96,6 +98,8 @@ public class Problem89 {
 
     /**
      * 回溯+剪枝
+     * 时间复杂度O(2^n)，空间复杂度O(n)
+     * <p>
      * 例如：n=3
      * <                 根节点
      * <              /        \
@@ -107,7 +111,6 @@ public class Problem89 {
      * <   /  \   / \        /  \   / \
      * <  0   1  1   0      0   1  1   0
      * < 000 001 011 010   110 111 101 100
-     * 时间复杂度O(2^n)，空间复杂度O(n)
      *
      * @param n
      * @return
@@ -115,48 +118,32 @@ public class Problem89 {
     public List<Integer> grayCode3(int n) {
         List<Integer> list = new ArrayList<>();
 
-        //flag标志位表示当前节点是左子树还是右子树，0：当前节点是左子树，1：当前节点是右子树
-        //左子树的子节点添加顺序为01；右子树的子节点添加顺序为10
-        backtrack(0, n, 0, new StringBuilder(), list);
+        //flag标志位表示当前节点是父节点的左子节点还是右子节点，0：当前节点是左子节点，1：当前节点是右子节点
+        //左子节点添加顺序为01；右子节点添加顺序为10
+        backtrack(0, n, 0, 0, list);
 
         return list;
     }
 
-    private void backtrack(int t, int n, int flag, StringBuilder sb, List<Integer> list) {
+    private void backtrack(int t, int n, int flag, int cur, List<Integer> list) {
         if (t == n) {
-            int num = 0;
-
-            //二进制sb转换为十进制数字保存到list中
-            for (int i = 0; i < n; i++) {
-                num = (num << 1) + (sb.charAt(i) - '0');
-            }
-
-            list.add(num);
+            list.add(cur);
             return;
         }
 
-        //当前节点是左子树，子节点添加顺序为0、1
+        //当前节点是左子节点，添加顺序为0、1
         if (flag == 0) {
-            sb.append(0);
             //flag为0，表示左子树
-            backtrack(t + 1, n, 0, sb, list);
-            sb.delete(sb.length() - 1, sb.length());
-
-            sb.append(1);
+            backtrack(t + 1, n, 0, cur << 1, list);
             //flag为1，表示右子树
-            backtrack(t + 1, n, 1, sb, list);
-            sb.delete(sb.length() - 1, sb.length());
+            backtrack(t + 1, n, 1, (cur << 1) + 1, list);
         } else {
-            //当前节点是右子树，子节点添加顺序为1、0
-            sb.append(1);
-            //flag为0，表示左子树
-            backtrack(t + 1, n, 0, sb, list);
-            sb.delete(sb.length() - 1, sb.length());
+            //当前节点是右子节点，添加顺序为1、0
 
-            sb.append(0);
+            //flag为0，表示左子树
+            backtrack(t + 1, n, 0, (cur << 1) + 1, list);
             //flag为1，表示右子树
-            backtrack(t + 1, n, 1, sb, list);
-            sb.delete(sb.length() - 1, sb.length());
+            backtrack(t + 1, n, 1, cur << 1, list);
         }
     }
 }

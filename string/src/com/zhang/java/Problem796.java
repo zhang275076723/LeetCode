@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/4 09:18
  * @Author zsy
- * @Description 旋转字符串 kmp类比Problem28、Problem214、Problem459、Problem686 旋转问题类比Problem61、Problem186、Problem189、Problem459、Problem686、Offer58_2
+ * @Description 旋转字符串 kmp类比Problem28、Problem214、Problem459、Problem686、Problem1408 旋转问题类比Problem61、Problem186、Problem189、Problem459、Problem686、Offer58_2
  * 给定两个字符串, s 和 goal。
  * 如果在若干次旋转操作之后，s 能变成 goal ，那么返回 true 。
  * s 的 旋转操作 就是将 s 最左边的字符移动到最右边。
@@ -100,6 +100,7 @@ public class Problem796 {
         int[] next = new int[s.length()];
         int j = 0;
 
+        //注意：i从1开始遍历，因为s[0]-s[0]不存在公共前缀和后缀
         for (int i = 1; i < s.length(); i++) {
             while (j > 0 && s.charAt(i) != s.charAt(j)) {
                 j = next[j - 1];

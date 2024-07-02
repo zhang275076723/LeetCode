@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/4 08:24
  * @Author zsy
- * @Description 重复叠加字符串匹配 kmp类比Problem28、Problem214、Problem459、Problem796 旋转问题类比Problem61、Problem186、Problem189、Problem459、Problem796、Offer58_2
+ * @Description 重复叠加字符串匹配 kmp类比Problem28、Problem214、Problem459、Problem796、Problem1408 旋转问题类比Problem61、Problem186、Problem189、Problem459、Problem796、Offer58_2
  * 给定两个字符串 a 和 b，寻找重复叠加字符串 a 的最小次数，使得字符串 b 成为叠加后的字符串 a 的子串，如果不存在则返回 -1。
  * 注意：字符串 "abc" 重复叠加 0 次是 ""，重复叠加 1 次是 "abc"，重复叠加 2 次是 "abcabc"。
  * <p>
@@ -97,6 +97,7 @@ public class Problem686 {
         int[] next = new int[s.length()];
         int j = 0;
 
+        //注意：i从1开始遍历，因为s[0]-s[0]不存在公共前缀和后缀
         for (int i = 1; i < s.length(); i++) {
             while (j > 0 && s.charAt(i) != s.charAt(j)) {
                 j = next[j - 1];
