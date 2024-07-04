@@ -73,12 +73,13 @@ public class Problem1456 {
             //更新maxCount
             if (vowelSet.contains(c)) {
                 curCount++;
-                maxCount = Math.max(maxCount, curCount);
             }
 
             //窗口大小等于k时，左指针右移
             if (right - left + 1 == k) {
-                if (vowelSet.contains(s.charAt(left)) && curCount > 0) {
+                maxCount = Math.max(maxCount, curCount);
+
+                if (vowelSet.contains(s.charAt(left))) {
                     curCount--;
                 }
 

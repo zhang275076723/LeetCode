@@ -142,7 +142,7 @@ public class Problem532 {
     }
 
     /**
-     * 排序+滑动窗口(双指针)
+     * 排序+双指针
      * 先按照由小到大排序，如果nums[right]-nums[left]等于k，则找到一个diff，left++；
      * 如果nums[right]-nums[left]大于k，left++；如果nums[right]-nums[left]小于k，right++
      * 时间复杂度O(nlogn)，空间复杂度O(logn) (堆排序的空间复杂度为O(logn))

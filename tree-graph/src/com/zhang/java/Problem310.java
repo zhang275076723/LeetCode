@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2023/10/10 08:49
  * @Author zsy
- * @Description 最小高度树 快手面试题 类比Problem1245 换根dp类比Problem834 保存父节点类比Problem113、Problem126、Problem272、Problem863、Offer34 拓扑排序类比Problem207、Problem210、Problem329、IsCircleDependency
+ * @Description 最小高度树 快手面试题 类比Problem1245 类比Problem834 保存父节点类比Problem113、Problem126、Problem272、Problem863、Offer34 拓扑排序类比Problem207、Problem210、Problem329、IsCircleDependency
  * 树是一个无向图，其中任何两个顶点只通过一条路径连接。
  * 换句话说，一个任何没有简单环路的连通图都是一棵树。
  * 给你一棵包含 n 个节点的树，标记为 0 到 n - 1 。
