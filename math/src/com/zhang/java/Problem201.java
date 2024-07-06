@@ -49,7 +49,7 @@ public class Problem201 {
      * 模拟
      * 只要有一个数二进制的当前位是0，则当前位的与运算结果为0
      * 找left和right二进制表示的最长公共前缀，即为[left,right]的与运算结果
-     * 时间复杂度O(logn)=O(1)，空间复杂度O(1) (n=32，int范围长度为32)
+     * 时间复杂度O(logC)=O(1)，空间复杂度O(1) (C=2^31-1)
      *
      * @param left
      * @param right
