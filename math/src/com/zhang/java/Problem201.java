@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/7/14 08:20
  * @Author zsy
- * @Description 数字范围按位与 位运算类比Problem29、Problem136、Problem137、Problem190、Problem191、Problem231、Problem260、Problem271、Problem326、Problem342、Problem371、Problem389、Problem405、Problem461、Problem477、Problem645、Problem898、Problem1290、Offer15、Offer56、Offer56_2、Offer64、Offer65、IpToInt
+ * @Description 数字范围按位与 类比Problem1523 位运算类比Problem29、Problem136、Problem137、Problem190、Problem191、Problem231、Problem260、Problem271、Problem326、Problem342、Problem371、Problem389、Problem405、Problem461、Problem477、Problem645、Problem898、Problem1290、Offer15、Offer56、Offer56_2、Offer64、Offer65、IpToInt
  * 给你两个整数 left 和 right ，表示区间 [left, right] ，
  * 返回此区间内所有数字 按位与 的结果（包含 left 、right 端点）。
  * <p>
