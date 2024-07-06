@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * @Date 2024/2/9 09:03
  * @Author zsy
- * @Description 相对名次 Problem128、Problem539、Problem561、Problem628
+ * @Description 相对名次 Problem128、Problem539、Problem561、Problem628、Problem747
  * 给你一个长度为 n 的整数数组 score ，其中 score[i] 是第 i 位运动员在比赛中的得分。
  * 所有得分都 互不相同 。
  * 运动员将根据得分 决定名次 ，其中名次第 1 的运动员得分最高，名次第 2 的运动员得分第 2 高，依此类推。

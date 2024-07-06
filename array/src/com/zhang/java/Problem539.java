@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2024/2/19 09:03
  * @Author zsy
- * @Description 最小时间差 类比Problem401 类比Problem128、Problem506、Problem561、Problem628
+ * @Description 最小时间差 类比Problem401 类比Problem128、Problem506、Problem561、Problem628、Problem747
  * 给定一个 24 小时制（小时:分钟 "HH:MM"）的时间列表，找出列表中任意两个时间的最小时间差并以分钟数表示。
  * <p>
  * 输入：timePoints = ["23:59","00:00"]
