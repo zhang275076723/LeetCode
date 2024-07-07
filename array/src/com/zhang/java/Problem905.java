@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2024/8/24 08:48
  * @Author zsy
- * @Description 按奇偶排序数组 类比Problem922、Problem2149、Problem2164、Offer21 双指针类比
+ * @Description 按奇偶排序数组 类比Problem922、Problem2149、Problem2161、Problem2164、Offer21 双指针类比
  * 给你一个整数数组 nums，将 nums 中的的所有偶数元素移动到数组的前面，后跟所有奇数元素。
  * 返回满足此条件的 任一数组 作为答案。
  * <p>

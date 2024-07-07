@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/3/18 18:01
  * @Author zsy
- * @Description 调整数组顺序使奇数位于偶数前面 类比Problem905、Problem922、Problem2149、Problem2164 双指针类比
+ * @Description 调整数组顺序使奇数位于偶数前面 类比Problem905、Problem922、Problem2149、Problem2161、Problem2164 双指针类比
  * 输入一个整数数组，实现一个函数来调整该数组中数字的顺序，
  * 使得所有奇数在数组的前半部分，所有偶数在数组的后半部分
  * <p>
