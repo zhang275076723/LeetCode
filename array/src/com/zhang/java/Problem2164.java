@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @Date 2024/8/25 08:55
  * @Author zsy
- * @Description 对奇偶下标分别排序 类比Problem905、Problem922、Offer21
+ * @Description 对奇偶下标分别排序 类比Problem905、Problem922、Problem2149、Offer21
  * 给你一个下标从 0 开始的整数数组 nums 。
  * 根据下述规则重排 nums 中的值：
  * 按 非递增 顺序排列 nums 奇数下标 上的所有值。
