@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/2/21 10:35
  * @Author zsy
- * @Description 最大交换 字节面试题 类比Problem1328 类比Problem31、Problem556、Problem738、Problem1323
+ * @Description 最大交换 字节面试题 类比Problem31、Problem556、Problem738、Problem1323、Problem1328、Problem1842、Problem2231
  * 给定一个非负整数，你至多可以交换一次数字中的任意两位。
  * 返回你能得到的最大值。
  * <p>

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/12 08:07
  * @Author zsy
- * @Description 6 和 9 组成的最大数字 类比Problem31、Problem556、Problem670、Problem738
+ * @Description 6 和 9 组成的最大数字 类比Problem31、Problem556、Problem670、Problem738、Problem1328、Problem1842、Problem2231
  * 给你一个仅由数字 6 和 9 组成的正整数 num。
  * 你最多只能翻转一位数字，将 6 变成 9，或者把 9 变成 6 。
  * 请返回你可以得到的最大数字。

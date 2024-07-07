@@ -67,6 +67,7 @@ public class Problem2161 {
             }
         }
 
+        //result[left]-result[right]为pivot
         for (int i = left; i <= right; i++) {
             result[i] = pivot;
         }
