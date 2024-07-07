@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2022/4/17 10:51
  * @Author zsy
- * @Description 下一个排列 字节面试题 类比Problem556、Problem670、Problem738、Problem1323、Problem1842
+ * @Description 下一个排列 字节面试题 类比Problem556、Problem670、Problem738、Problem1323、Problem1328、Problem1842、Problem2231
  * 整数数组的一个 排列 就是将其所有成员以序列或线性顺序排列。
  * 例如，arr = [1,2,3] ，以下这些都可以视作 arr 的排列：[1,2,3]、[1,3,2]、[3,1,2]、[2,3,1] 。
  * 整数数组的 下一个排列 是指其整数的下一个字典序更大的排列。
@@ -72,7 +72,7 @@ public class Problem31 {
 
         //从前往后找第一个大于nums[j]的元素nums[k]，两者进行交换，得到下个一排列
         for (int k = i; k < nums.length; k++) {
-            if (nums[k] < nums[j]) {
+            if (nums[k] > nums[j]) {
                 swap(nums, k, j);
                 return;
             }
