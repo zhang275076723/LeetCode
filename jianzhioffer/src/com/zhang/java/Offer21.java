@@ -81,13 +81,15 @@ public class Offer21 {
                 right--;
             }
 
-            //交换
-            int temp = nums[left];
-            nums[left] = nums[right];
-            nums[right] = temp;
+            if (left < right) {
+                //交换
+                int temp = nums[left];
+                nums[left] = nums[right];
+                nums[right] = temp;
 
-            left++;
-            right--;
+                left++;
+                right--;
+            }
         }
 
         return nums;

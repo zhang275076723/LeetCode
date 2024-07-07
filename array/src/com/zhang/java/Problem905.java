@@ -38,20 +38,24 @@ public class Problem905 {
         int right = nums.length - 1;
 
         while (left < right) {
+            //从前往后找第一个奇数
             while (left < right && nums[left] % 2 == 0) {
                 left++;
             }
 
+            //从后往前找第一个偶数
             while (left < right && nums[right] % 2 == 1) {
                 right--;
             }
 
-            int temp = nums[left];
-            nums[left] = nums[right];
-            nums[right] = temp;
+            if (left < right) {
+                int temp = nums[left];
+                nums[left] = nums[right];
+                nums[right] = temp;
 
-            left++;
-            right--;
+                left++;
+                right--;
+            }
         }
 
         return nums;
