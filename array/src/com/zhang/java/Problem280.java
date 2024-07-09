@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * @Date 2024/4/1 08:55
  * @Author zsy
- * @Description 摆动排序 类比Problem324
+ * @Description 摆动排序 类比Problem324、Problem376
  * 给你一个的整数数组 nums, 将该数组重新排序后使 nums[0] <= nums[1] >= nums[2] <= nums[3]...
  * 输入数组总是有一个有效的答案。
  * 进阶：你能在 O(n) 时间复杂度下解决这个问题吗？

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/4/2 09:10
  * @Author zsy
- * @Description 摆动排序 II 类比Problem280 类比Problem164、Problem912 三指针类比Problem75、Problem264、Problem313、Problem1201、Offer49 快排划分类比Problem215、Problem347、Problem462、Problem973、Offer40
+ * @Description 摆动排序 II 类比Problem280、Problem376 类比Problem164、Problem912 三指针类比Problem75、Problem264、Problem313、Problem1201、Offer49 快排划分类比Problem215、Problem347、Problem462、Problem973、Offer40
  * 给你一个整数数组 nums，将它重新排列成 nums[0] < nums[1] > nums[2] < nums[3]... 的顺序。
  * 你可以假设所有输入数组都可以得到满足题目要求的结果。
  * 进阶：你能用 O(n) 时间复杂度和 / 或原地 O(1) 额外空间来实现吗？

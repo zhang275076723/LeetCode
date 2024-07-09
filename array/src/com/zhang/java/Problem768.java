@@ -37,7 +37,8 @@ public class Problem768 {
      * right[i]：arr[i]右边，即arr[i+1]-arr[arr.length-1]的最小值
      * left[i] = max(left[i-1],arr[i])
      * right[i] = min(right[i+1],arr[i+1])
-     * left[i] <= right[i]，则当前下标索引i可以划分为一个区间，即可以在下标索引i和i+1分割
+     * left[i]<=right[i]，则arr[0]-arr[i]中的最大值left[i]排序后放在arr[i]，
+     * arr[i+1]-arr[arr.length-1]中的最小值排序后放在arr[i+1]，满足由小到大排序，即可以在下标索引i和i+1分割
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param arr
@@ -62,7 +63,8 @@ public class Problem768 {
         int count = 0;
 
         for (int i = 0; i < arr.length; i++) {
-            //left[i] <= right[i]，则当前下标索引i可以划分为一个区间，即可以在下标索引i和i+1分割
+            //left[i]<=right[i]，则arr[0]-arr[i]中的最大值left[i]排序后放在arr[i]，
+            //arr[i+1]-arr[arr.length-1]中的最小值排序后放在arr[i+1]，满足由小到大排序，即可以在下标索引i和i+1分割
             if (left[i] <= right[i]) {
                 count++;
             }
