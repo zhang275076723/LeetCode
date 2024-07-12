@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/12/3 08:21
  * @Author zsy
- * @Description 单词规律 哈希表类比Problem1、Problem128、Problem166、Problem187、Problem205、Problem242、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem535、Problem554、Problem609、Problem763、Problem1500、Problem1640、Problem2657、Offer50
+ * @Description 单词规律 幂等性类比Problem205、Problem291、Problem535、Problem1500 哈希表类比Problem1、Problem128、Problem166、Problem187、Problem205、Problem242、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem535、Problem554、Problem609、Problem763、Problem1500、Problem1640、Problem2657、Offer50
  * 给定一种规律 pattern 和一个字符串 s ，判断 s 是否遵循相同的规律。
  * 这里的 遵循 指完全匹配，例如， pattern 里的每个字母和字符串 s 中的每个非空单词之间存在着双向连接的对应规律。
  * <p>

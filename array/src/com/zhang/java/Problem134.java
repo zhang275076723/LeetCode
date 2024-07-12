@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/4/29 10:34
  * @Author zsy
- * @Description 加油站 字节面试题 网易机试题 类比Problem871 类比Problem277、Problem898、Problem1640
+ * @Description 加油站 字节面试题 网易机试题 类比Problem871 类比Problem277、Problem898、Problem1386、Problem1640
  * 在一条环路上有 n 个加油站，其中第 i 个加油站有汽油 gas[i] 升。
  * 你有一辆油箱容量无限的的汽车，从第 i 个加油站开往第 i+1 个加油站需要消耗汽油 cost[i] 升。
  * 你从其中的一个加油站出发，开始时油箱为空。

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/10/11 08:23
  * @Author zsy
- * @Description 搜寻名人 类比Problem134
+ * @Description 搜寻名人 类比Problem134、Problem1386
  * 假设你是一个专业的狗仔，参加了一个 n 人派对，其中每个人被从 0 到 n - 1 标号。
  * 在这个派对人群当中可能存在一位 “名人”。
  * 所谓 “名人” 的定义是：其他所有 n - 1 个人都认识他/她，而他/她并不认识其他任何人。

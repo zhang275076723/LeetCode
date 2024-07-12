@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/4/26 10:39
  * @Author zsy
- * @Description 子集 类比Problem320、Problem784、Problem1863 回溯+剪枝类比Problem17、Problem22、Problem37、Problem39、Problem40、Problem46、Problem47、Problem51、Problem52、Problem60、Problem77、Problem89、Problem90、Problem91、Problem93、Problem97、Problem216、Problem254、Problem282、Problem301、Problem306、Problem357、Problem377、Problem386、Problem491、Problem494、Problem679、Problem698、Problem784、Problem842、Problem967、Problem980、Problem1087、Problem1096、Problem1291、Offer17、Offer38、Offer46
+ * @Description 子集 类比Problem320、Problem784、Problem1601、Problem1863 状态压缩类比 回溯+剪枝类比Problem17、Problem22、Problem37、Problem39、Problem40、Problem46、Problem47、Problem51、Problem52、Problem60、Problem77、Problem89、Problem90、Problem91、Problem93、Problem97、Problem216、Problem254、Problem282、Problem301、Problem306、Problem357、Problem377、Problem386、Problem491、Problem494、Problem679、Problem698、Problem784、Problem842、Problem967、Problem980、Problem1087、Problem1096、Problem1291、Offer17、Offer38、Offer46
  * 给你一个整数数组 nums ，数组中的元素 互不相同 。返回该数组所有可能的子集（幂集）。
  * 解集 不能 包含重复的子集。你可以按 任意顺序 返回解集。
  * <p>
@@ -26,6 +26,7 @@ public class Problem78 {
         int[] nums = {1, 2, 3};
         System.out.println(problem78.subsets(nums));
         System.out.println(problem78.subsets2(nums));
+        System.out.println(problem78.subsets3(nums));
     }
 
     /**
@@ -76,6 +77,32 @@ public class Problem78 {
                 //list作为新的子集重新添加回result
                 result.add(list);
             }
+        }
+
+        return result;
+    }
+
+    /**
+     * 二进制状态压缩
+     * nums的长度为10，可以使用int表示nums中元素是否存在，当前位为1，则当前元素存在；当前位为0，则当前元素不存在
+     * 时间复杂度O(n*2^n)，空间复杂度O(1)
+     *
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> subsets3(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+
+        for (int i = 0; i < (1 << nums.length); i++) {
+            List<Integer> list = new ArrayList<>();
+
+            for (int j = 0; j < nums.length; j++) {
+                if (((i >>> j) & 1) == 1) {
+                    list.add(nums[j]);
+                }
+            }
+
+            result.add(list);
         }
 
         return result;
