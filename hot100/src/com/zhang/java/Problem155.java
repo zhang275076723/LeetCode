@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2022/5/10 9:33
  * @Author zsy
- * @Description 最小栈 类比Problem225、Problem232、Problem295、Problem716、Offer9、Offer31、Offer41、Offer59_2 同Offer30
+ * @Description 最小栈 类比Problem225、Problem232、Problem622、Problem641、Problem705、Problem706、Problem707、Problem716、Problem1381、Problem1670、Problem2296、Offer9、Offer30、Offer59_2 同Offer30
  * 设计一个支持 push ，pop ，top 操作，并能在常数时间内检索到最小元素的栈。
  * 实现 MinStack 类:
  * MinStack() 初始化堆栈对象。

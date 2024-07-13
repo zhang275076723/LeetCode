@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/4/7 08:11
  * @Author zsy
- * @Description 设计哈希集合 类比Problem622、Problem641、Problem706、Problem707、Problem2296
+ * @Description 设计哈希集合 类比Problem155、Problem225、Problem232、Problem622、Problem641、Problem706、Problem707、Problem716、Problem1381、Problem1670、Problem2296、Offer9、Offer30、Offer59_2
  * 不使用任何内建的哈希表库设计一个哈希集合（HashSet）。
  * 实现 MyHashSet 类：
  * void add(key) 向哈希集合中插入值 key 。

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/9/5 08:38
  * @Author zsy
- * @Description 设计一个文本编辑器 类比Problem622、Problem641、Problem705、Problem706、Problem707
+ * @Description 设计一个文本编辑器 类比Problem155、Problem225、Problem232、Problem622、Problem641、Problem705、Problem706、Problem707、Problem716、Problem1381、Problem1670、Offer9、Offer30、Offer59_2
  * 请你设计一个带光标的文本编辑器，它可以实现以下功能：
  * 添加：在光标所在处添加文本。
  * 删除：在光标所在处删除文本（模拟键盘的删除键）。

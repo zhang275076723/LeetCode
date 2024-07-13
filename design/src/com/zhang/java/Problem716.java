@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2022/10/27 09:39
  * @Author zsy
- * @Description 最大栈 类比Problem155、Problem225、Problem232、Problem295、Offer9、Offer30、Offer31、Offer41、Offer59_2
+ * @Description 最大栈 类比Problem155、Problem225、Problem232、Problem622、Problem641、Problem705、Problem706、Problem707、Problem1381、Problem1670、Problem2296、Offer9、Offer30、Offer59_2
  * 设计一个最大栈数据结构，既支持栈操作，又支持查找栈中最大元素。
  * 实现 MaxStack 类：
  * MaxStack() 初始化栈对象；
@@ -46,8 +46,7 @@ public class Problem716 {
 
     /**
      * 双栈
-     * 一个栈保存元素
-     * 另一个栈作为单调递增栈，保存当前最大元素
+     * 一个栈保存元素，另一个栈作为单调递增栈，保存当前最大元素
      */
     static class MaxStack {
         //保存元素的栈

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/4/7 08:54
  * @Author zsy
- * @Description 设计哈希映射 类比Problem622、Problem641、Problem705、Problem707、Problem2296
+ * @Description 设计哈希映射 类比Problem155、Problem225、Problem232、Problem622、Problem641、Problem705、Problem707、Problem716、Problem1381、Problem1670、Problem2296、Offer9、Offer30、Offer59_2
  * 不使用任何内建的哈希表库设计一个哈希映射（HashMap）。
  * 实现 MyHashMap 类：
  * MyHashMap() 用空映射初始化对象

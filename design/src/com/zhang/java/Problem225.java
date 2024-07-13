@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2022/10/27 09:01
  * @Author zsy
- * @Description 用队列实现栈 字节面试题 拼多多面试题 类比Problem155、Problem232、Problem295、Problem716、Offer9、Offer30、Offer31、Offer41、Offer59_2
+ * @Description 用队列实现栈 字节面试题 拼多多面试题 类比Problem155、Problem232、Problem622、Problem641、Problem705、Problem706、Problem707、Problem716、Problem1381、Problem1670、Problem2296、Offer9、Offer30、Offer59_2
  * 请你仅使用两个队列实现一个后入先出（LIFO）的栈，并支持普通栈的全部四种操作（push、top、pop 和 empty）。
  * 实现 MyStack 类：
  * void push(int x) 将元素 x 压入栈顶。
@@ -48,74 +48,54 @@ public class Problem225 {
 
     /**
      * 两个队列实现栈
-     * 一个队列始终保持为空，作为当前元素的入队队列，然后将另一个队列中元素依次出队，加入当前队列
+     * queue2始终为空，每次新元素入queue2中，再将queue1中元素依次出队，入queue2中，在交换queue1和queue2
      */
     static class MyStack {
-        private final Queue<Integer> queue1;
-
-        private final Queue<Integer> queue2;
-
-        /**
-         * 当前元素入哪个队列的标志位
-         */
-        private int flag;
+        private Queue<Integer> queue1;
+        private Queue<Integer> queue2;
 
         public MyStack() {
             queue1 = new LinkedList<>();
             queue2 = new LinkedList<>();
-            flag = 1;
         }
 
         public void push(int x) {
-            //x入队queue1
-            if (flag == 1) {
-                queue1.offer(x);
-                while (!queue2.isEmpty()) {
-                    queue1.offer(queue2.poll());
-                }
-                flag = 2;
-            } else {
-                //x入队queue2
-                queue2.offer(x);
-                while (!queue1.isEmpty()) {
-                    queue2.offer(queue1.poll());
-                }
-                flag = 1;
+            queue2.offer(x);
+
+            while (!queue1.isEmpty()) {
+                queue2.offer(queue1.poll());
             }
+
+            //交换queue1和queue2，始终保持queue2为空
+            Queue<Integer> temp = queue1;
+            queue1 = queue2;
+            queue2 = temp;
         }
 
         public int pop() {
-            if (!queue1.isEmpty()) {
-                return queue1.poll();
+            if (queue1.isEmpty()) {
+                return -1;
             }
 
-            if (!queue2.isEmpty()) {
-                return queue2.poll();
-            }
-
-            return -1;
+            return queue1.poll();
         }
 
         public int top() {
-            if (!queue1.isEmpty()) {
-                return queue1.peek();
+            if (queue1.isEmpty()) {
+                return -1;
             }
 
-            if (!queue2.isEmpty()) {
-                return queue2.peek();
-            }
-
-            return -1;
+            return queue1.peek();
         }
 
         public boolean empty() {
-            return queue1.isEmpty() && queue2.isEmpty();
+            return queue1.isEmpty();
         }
     }
 
     /**
      * 一个队列实现栈
-     * 每次需要记录当前队列中元素个数，将当前元素入队之后，再将之前队列中元素依次出队对队
+     * 每次新元素入队之前需要记录当前队列中元素个数，新元素入队之后，再将队列中之前元素依次出队再入队
      */
     static class MyStack2 {
         private final Queue<Integer> queue;
@@ -129,7 +109,7 @@ public class Problem225 {
             int size = queue.size();
             queue.offer(x);
 
-            //x入队之前的元素依次出队，再入队
+            //x入队之前的元素依次出队再入队
             for (int i = 0; i < size; i++) {
                 queue.offer(queue.poll());
             }
