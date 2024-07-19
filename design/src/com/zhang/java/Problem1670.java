@@ -169,7 +169,7 @@ public class Problem1670 {
         private static class LinkedList {
             private final Node head;
             private final Node tail;
-            //链表中元素的个数
+            //链表中节点的个数
             private int count;
 
             public LinkedList() {

@@ -241,7 +241,7 @@ public class Problem641 {
             private final Node head;
             //链表尾指针
             private final Node tail;
-            //链表中元素个数
+            //链表中节点的个数
             private int count;
 
             public LinkedList() {
