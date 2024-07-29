@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * @Date 2024/7/10 08:55
  * @Author zsy
- * @Description 金字塔转换矩阵 类比Problem397 记忆化搜索类比
+ * @Description 金字塔转换矩阵 类比Problem397、Problem1908 记忆化搜索类比
  * 你正在把积木堆成金字塔。每个块都有一个颜色，用一个字母表示。
  * 每一行的块比它下面的行 少一个块 ，并且居中。
  * 为了使金字塔美观，只有特定的 三角形图案 是允许的。

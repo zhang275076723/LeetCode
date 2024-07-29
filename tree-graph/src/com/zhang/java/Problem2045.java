@@ -97,7 +97,7 @@ public class Problem2045 {
         int[] distance1 = new int[n + 1];
         //节点1到其他节点的第二短路径数组
         int[] distance2 = new int[n + 1];
-        //图中节点的最大距离，不能初始化为int最大值，避免相加溢出
+        //图中节点之间的最大距离，表示节点之间不连通，不能初始化为int最大值，避免相加溢出
         int INF = Integer.MAX_VALUE / 2;
 
         //distance数组初始化，初始化为INF表示节点1无法到达节点i

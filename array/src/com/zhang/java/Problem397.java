@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2024/6/15 09:04
  * @Author zsy
- * @Description 整数替换 类比Problem756 类比Problem338、Problem1342、Problem1404、Problem2139、Problem2571 记忆化搜索类比
+ * @Description 整数替换 类比Problem756、Problem1908 类比Problem338、Problem1342、Problem1404、Problem2139、Problem2571 记忆化搜索类比
  * 给定一个正整数 n ，你可以做如下操作：
  * 如果 n 是偶数，则用 n / 2替换 n 。
  * 如果 n 是奇数，则可以用 n + 1或n - 1替换 n 。

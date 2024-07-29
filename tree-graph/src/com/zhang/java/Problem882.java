@@ -91,7 +91,7 @@ public class Problem882 {
         int[] distance = new int[n];
         //细分前节点访问数组，visited[u]为true，表示已经得到细分前节点0到节点u的最短路径长度
         boolean[] visited = new boolean[n];
-        //图中节点的最大距离，不能初始化为int最大值，避免相加溢出
+        //图中节点之间的最大距离，表示节点之间不连通，不能初始化为int最大值，避免相加溢出
         int INF = Integer.MAX_VALUE / 2;
 
         //distance数组初始化，初始化为INF表示细分前节点0无法到达节点i
