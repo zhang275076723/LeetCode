@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2022/10/27 09:01
  * @Author zsy
- * @Description 用队列实现栈 字节面试题 拼多多面试题 类比Problem155、Problem232、Problem622、Problem641、Problem705、Problem706、Problem707、Problem716、Problem1381、Problem1670、Problem2296、Offer9、Offer30、Offer59_2
+ * @Description 用队列实现栈 字节面试题 拼多多面试题 类比Problem155、Problem232、Problem622、Problem641、Problem705、Problem706、Problem707、Problem716、Problem895、Problem1172、Problem1381、Problem1670、Offer9、Offer30、Offer59_2
  * 请你仅使用两个队列实现一个后入先出（LIFO）的栈，并支持普通栈的全部四种操作（push、top、pop 和 empty）。
  * 实现 MyStack 类：
  * void push(int x) 将元素 x 压入栈顶。

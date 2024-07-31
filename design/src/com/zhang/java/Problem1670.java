@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/9/7 08:25
  * @Author zsy
- * @Description 设计前中后队列 类比Problem295 类比Problem155、Problem225、Problem232、Problem622、Problem641、Problem705、Problem706、Problem707、Problem716、Problem1381、Problem2296、Offer9、Offer30、Offer59_2
+ * @Description 设计前中后队列 类比Problem295 类比Problem155、Problem225、Problem232、Problem622、Problem641、Problem705、Problem706、Problem707、Problem716、Problem895、Problem1172、Problem1381、Offer9、Offer30、Offer59_2
  * 请你设计一个队列，支持在前，中，后三个位置的 push 和 pop 操作。
  * 请你完成 FrontMiddleBack 类：
  * FrontMiddleBack() 初始化队列。

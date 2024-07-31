@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/9/6 09:02
  * @Author zsy
- * @Description 设计一个支持增量操作的栈 星环科技面试题 类比Problem155、Problem225、Problem232、Problem622、Problem641、Problem705、Problem706、Problem707、Problem716、Problem1670、Problem2296、Offer9、Offer30、Offer59_2
+ * @Description 设计一个支持增量操作的栈 星环科技面试题 类比Problem155、Problem225、Problem232、Problem622、Problem641、Problem705、Problem706、Problem707、Problem716、Problem895、Problem1172、Problem1670、Offer9、Offer30、Offer59_2
  * 请你设计一个支持对其元素进行增量操作的栈。
  * 实现自定义栈类 CustomStack ：
  * CustomStack(int maxSize)：用 maxSize 初始化对象，maxSize 是栈中最多能容纳的元素数量。
@@ -72,14 +72,14 @@ public class Problem1381 {
     static class CustomStack {
         //栈数组
         private final int[] stack;
-        //add[i]：stack[0]-stack[i]需要添加的值
-        private final int[] add;
+        //addArr[i]：stack[0]-stack[i]需要添加的值
+        private final int[] addArr;
         //栈顶指针
         private int top;
 
         public CustomStack(int maxSize) {
             stack = new int[maxSize];
-            add = new int[maxSize];
+            addArr = new int[maxSize];
             top = 0;
         }
 
@@ -100,15 +100,15 @@ public class Problem1381 {
             }
 
             top--;
-            int result = stack[top] + add[top];
+            int result = stack[top] + addArr[top];
 
-            //栈顶元素出栈，更新add[top-1]
+            //栈顶元素出栈，更新addArr[top-1]
             if (top - 1 >= 0) {
-                add[top - 1] = add[top - 1] + add[top];
+                addArr[top - 1] = addArr[top - 1] + addArr[top];
             }
 
-            //栈顶元素出栈，add[top]已经添加到add[top-1]中，add[top]赋值为0，用于之后调用increment()时更新
-            add[top] = 0;
+            //栈顶元素出栈，addArr[top]已经添加到addArr[top-1]中，addArr[top]赋值为0，用于之后调用increment()时更新
+            addArr[top] = 0;
 
             return result;
         }
@@ -121,10 +121,10 @@ public class Problem1381 {
 
             //k大于栈中元素，则栈中所有元素都加val
             if (k > top) {
-                add[top - 1] = add[top - 1] + val;
+                addArr[top - 1] = addArr[top - 1] + val;
             } else {
                 //栈底k个元素加val
-                add[k - 1] = add[k - 1] + val;
+                addArr[k - 1] = addArr[k - 1] + val;
             }
         }
     }

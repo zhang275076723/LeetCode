@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/5/8 9:13
  * @Author zsy
- * @Description LFU 缓存 字节面试题 类比Problem146、Problem355、Problem432
+ * @Description LFU 缓存 字节面试题 类比Problem146、Problem355、Problem432、Problem895
  * 请你为 最不经常使用（LFU）缓存算法设计并实现数据结构。
  * 实现 LFUCache 类：
  * LFUCache(int capacity) - 用数据结构的容量 capacity 初始化对象
@@ -70,8 +70,9 @@ public class Problem460 {
     }
 
     /**
-     * 双哈希表+双向链表+最小访问次数计数器
+     * 哈希表+双向链表(分段链表)+最小访问次数计数器
      * 一个哈希表存储key和节点node的映射，另一个哈希表存储访问次数和当前访问次数链表的映射
+     * 根据访问次数将元素放到不同的链表中，每次移除最小访问次数链表中的尾结点即为最不经常使用节点
      */
     private static class LFUCache {
         //最大缓存大小

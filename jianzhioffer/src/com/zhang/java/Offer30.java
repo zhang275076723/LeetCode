@@ -6,7 +6,7 @@ import java.util.Stack;
 /**
  * @Date 2022/3/20 16:41
  * @Author zsy
- * @Description 包含min函数的栈 类比Problem155、Problem225、Problem232、Problem622、Problem641、Problem705、Problem706、Problem707、Problem716、Problem1381、Problem1670、Problem2296、Offer9、Offer59_2 同Problem155
+ * @Description 包含min函数的栈 类比Problem155、Problem225、Problem232、Problem622、Problem641、Problem705、Problem706、Problem707、Problem716、Problem895、Problem1172、Problem1381、Problem1670、Offer9、Offer59_2 同Problem155
  * 定义栈的数据结构，请在该类型中实现一个能够得到栈的最小元素的 min 函数在该栈中，
  * 调用 min、push 及 pop 的时间复杂度都是 O(1)。
  * <p>

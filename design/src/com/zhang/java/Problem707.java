@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/4/6 10:58
  * @Author zsy
- * @Description 设计链表 类比Problem155、Problem225、Problem232、Problem622、Problem641、Problem705、Problem706、Problem716、Problem1381、Problem1670、Problem2296、Offer9、Offer30、Offer59_2
+ * @Description 设计链表 类比Problem155、Problem225、Problem232、Problem622、Problem641、Problem705、Problem706、Problem716、Problem895、Problem1172、Problem1381、Problem1670、Offer9、Offer30、Offer59_2
  * 你可以选择使用单链表或者双链表，设计并实现自己的链表。
  * 单链表中的节点应该具备两个属性：val 和 next 。
  * val 是当前节点的值，next 是指向下一个节点的指针/引用。

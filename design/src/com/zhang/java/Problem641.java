@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/4/6 09:12
  * @Author zsy
- * @Description 设计循环双端队列 类比Problem155、Problem225、Problem232、Problem622、Problem705、Problem706、Problem707、Problem716、Problem1381、Problem1670、Problem2296、Offer9、Offer30、Offer59_2
+ * @Description 设计循环双端队列 类比Problem155、Problem225、Problem232、Problem622、Problem705、Problem706、Problem707、Problem716、Problem895、Problem1172、Problem1381、Problem1670、Offer9、Offer30、Offer59_2
  * 设计实现双端队列。
  * 实现 MyCircularDeque 类:
  * MyCircularDeque(int k) ：构造函数,双端队列最大为 k 。
