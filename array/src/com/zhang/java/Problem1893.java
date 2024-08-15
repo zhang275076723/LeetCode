@@ -77,7 +77,7 @@ public class Problem1893 {
      * 差分数组 (差分数组在O(1)进行区间修改，但区间查询需要O(n)；前缀数组在O(1)进行区间查询，但区间修改需要O(n)，两者互为逆操作)
      * diff[i] = arr[i] - arr[i-1]
      * arr[i] = diff[0] + diff[1] + ... + diff[i-1] + diff[i]
-     * 区间[left,right]每个元素加上value，则diff[left]=diff[left]+value，diff[right]=diff[right]-value
+     * 区间[left,right]每个元素加上value，则diff[left]=diff[left]+value，diff[right+1]=diff[right+1]-value
      * 时间复杂度O(n+m)，空间复杂度O(m) (n=ranges.length，m=max(right,ranges[i][1]))
      *
      * @param ranges

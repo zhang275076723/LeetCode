@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/9/2 08:59
  * @Author zsy
- * @Description 到家的最少跳跃次数 跳跃问题类比Problem45、Problem55、Problem403、Problem1306、Problem1340、Problem1345、Problem1696、Problem1871、Problem2498
+ * @Description 到家的最少跳跃次数 跳跃问题类比Problem45、Problem55、Problem403、Problem1306、Problem1340、Problem1345、Problem1696、Problem1871、Problem2297、Problem2498
  * 有一只跳蚤的家在数轴上的位置 x 处。请你帮助它从位置 0 出发，到达它的家。
  * 跳蚤跳跃的规则如下：
  * 它可以 往前 跳恰好 a 个位置（即往右跳）。
@@ -41,10 +41,14 @@ public class Problem1654 {
 //        int a = 3;
 //        int b = 15;
 //        int x = 9;
-        int[] forbidden = {1998};
-        int a = 1999;
-        int b = 2000;
-        int x = 2000;
+//        int[] forbidden = {1998};
+//        int a = 1999;
+//        int b = 2000;
+//        int x = 2000;
+        int[] forbidden = {162, 118, 178, 152, 167, 100, 40, 74, 199, 186, 26, 73, 200, 127, 30, 124, 193, 84, 184, 36, 103, 149, 153, 9, 54, 154, 133, 95, 45, 198, 79, 157, 64, 122, 59, 71, 48, 177, 82, 35, 14, 176, 16, 108, 111, 6, 168, 31, 134, 164, 136, 72, 98};
+        int a = 29;
+        int b = 98;
+        int x = 80;
         System.out.println(problem1654.minimumJumps(forbidden, a, b, x));
     }
 
@@ -58,7 +62,7 @@ public class Problem1654 {
      * 所以整体上每次最少往左跳跃b-a步(先往右跳跃a步，再往左跳跃b步)，如果从x+b能跳跃到x，则需要从x+b先往右跳跃a步，再往左跳跃b步，
      * 即右边界为x+a+b，有可能forbidden数组中的最大值超过x，则右边界取x和forbidden数组中较大值，再加上a，加上b，
      * 综上所述：能够跳跃到的右边界为max(x,max(forbidden))+a+b
-     * 时间复杂度O(n)，空间复杂度O(n)
+     * 时间复杂度O(max(x,max(forbidden))+a+b)，空间复杂度O(max(x,max(forbidden))+a+b) (向左或向右跳跃到当前节点的2种不同状态)
      *
      * @param forbidden
      * @param a
@@ -73,6 +77,8 @@ public class Problem1654 {
 
         //arr[0]：当前跳跃到的下标索引，arr[1]：上一个位置怎样跳跃到当前位置，1：往右跳，-1：往左跳
         Queue<int[]> queue = new LinkedList<>();
+        //节点访问集合
+        //注意：通过正负号区分向左或向右跳跃到当前节点的2种不同状态
         Set<Integer> visitedSet = new HashSet<>();
         //不能跳跃到的下标索引集合，O(1)判断当前位置是否能跳跃到
         Set<Integer> forbiddenSet = new HashSet<>();
@@ -112,7 +118,8 @@ public class Problem1654 {
                 int[] arr = queue.poll();
 
                 //当前位置小于0，或者位置超过右边界，或者当前位置已访问，或者当前位置不能跳跃到，直接进行下次循环
-                if (arr[0] < 0 || arr[0] > rightBound || visitedSet.contains(arr[0]) || forbiddenSet.contains(arr[0])) {
+                //注意：visitedSet中要乘以访问的方向，区分向左或向右跳跃到当前节点
+                if (arr[0] < 0 || arr[0] > rightBound || visitedSet.contains(arr[0] * arr[1]) || forbiddenSet.contains(arr[0])) {
                     continue;
                 }
 
@@ -122,7 +129,8 @@ public class Problem1654 {
                 }
 
                 //当前下标索引已访问
-                visitedSet.add(arr[0]);
+                //注意：visitedSet中要乘以访问的方向，区分向左或向右跳跃到当前节点
+                visitedSet.add(arr[0] * arr[1]);
 
                 //上一个位置往左跳跃到当前位置，则不能往左跳跃，只能往右跳
                 if (arr[1] == -1) {

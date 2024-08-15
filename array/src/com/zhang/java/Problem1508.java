@@ -49,7 +49,7 @@ public class Problem1508 {
     /**
      * 暴力
      * 先得到n(n+1)/2个区间和，再进行排序，取[left,right]的元素之和
-     * 时间复杂度O(n^2logn)，空间复杂度O(n^2)
+     * 时间复杂度O(n^2*logn)，空间复杂度O(n^2)
      *
      * @param nums
      * @param n
@@ -88,7 +88,7 @@ public class Problem1508 {
      * 小根堆，优先队列，多路归并排序
      * 每个nums[i]和下标索引i作为初始子数组的区间和和右边界加入小根堆，小根堆堆顶元素出堆，
      * 如果i后面还有元素，则累加当前子数组区间和作为下一个元素加入小根堆
-     * 时间复杂度O(n^2logn)，空间复杂度O(n)
+     * 时间复杂度O(n^2*logn)，空间复杂度O(n)
      *
      * @param nums
      * @param n

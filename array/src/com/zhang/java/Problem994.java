@@ -109,7 +109,7 @@ public class Problem994 {
                 }
             }
 
-            //count加1，表示bfs每次往外扩一层
+            //time加1，表示bfs每次往外扩一层
             time++;
         }
 

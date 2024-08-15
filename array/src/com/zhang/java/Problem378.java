@@ -170,7 +170,7 @@ public class Problem378 {
                 i--;
             }
 
-            //统计当前列小于等于mid的个数
+            //matrix[0][j]-matrix[i][j]都小于等于num
             count = count + i + 1;
             j++;
         }

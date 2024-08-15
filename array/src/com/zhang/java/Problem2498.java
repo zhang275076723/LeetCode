@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/2 09:42
  * @Author zsy
- * @Description 青蛙过河 II 类比Problem561、Problem717 跳跃问题类比Problem45、Problem55、Problem403、Problem1306、Problem1340、Problem1345、Problem1654、Problem1696、Problem1871 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 青蛙过河 II 类比Problem561、Problem717 跳跃问题类比Problem45、Problem55、Problem403、Problem1306、Problem1340、Problem1345、Problem1654、Problem1696、Problem1871、Problem2297 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、CutWood、FindMaxArrayMinAfterKMinus
  * 给你一个下标从 0 开始的整数数组 stones ，数组中的元素 严格递增 ，表示一条河中石头的位置。
  * 一只青蛙一开始在第一块石头上，它想到达最后一块石头，然后回到第一块石头。同时每块石头 至多 到达 一次。
  * 一次跳跃的 长度 是青蛙跳跃前和跳跃后所在两块石头之间的距离。
@@ -70,11 +70,11 @@ public class Problem2498 {
 
     /**
      * 二分查找，使...最大值尽可能小，就要想到二分查找
-     * 对[left,right]进行二分查找，left为1，right为最后一个石头和第一个石头的距离，
+     * 对[left,right]进行二分查找，left为1，right为stones[stones.length-1]-stones[0]，
      * 判断能否从第一块石头跳跃到达最后一块石头，再回到第一块石头，并且每次跳跃距离小于等于mid，每块石头最多只能跳到1次，
-     * 如果存在mid可以跳到，则right=mid，继续往左边找；
-     * 如果不存在mid可以跳到，则left=mid+1，继续往右边找
-     * 时间复杂度O(n*log(right-left))=O(n)，空间复杂度O(1) (left和right为int范围内的数，log(right-left)<32)
+     * 如果mid作为最大跳跃长度可以跳跃，则最小的最大跳跃长度在mid或mid左边，right=mid；
+     * 如果mid作为最大跳跃长度不能跳跃，则最小的最大跳跃长度在mid右边，left=mid+1
+     * 时间复杂度O(n*log(stones[stones.length-1]-stones[0]-1))=O(n)，空间复杂度O(1)
      *
      * @param stones
      * @return
@@ -95,7 +95,7 @@ public class Problem2498 {
             mid = left + ((right - left) >> 1);
 
             //判断能否从第一块石头跳跃到达最后一块石头，再回到第一块石头，并且每次跳跃距离小于等于mid，每块石头最多只能跳到1次
-            if (isLessEqualThanStepJump(stones, mid)) {
+            if (canJump(stones, mid)) {
                 right = mid;
             } else {
                 left = mid + 1;
@@ -106,55 +106,56 @@ public class Problem2498 {
     }
 
     /**
-     * 能否从第一块石头跳跃到达最后一块石头，再回到第一块石头，并且每次跳跃距离小于等于step，每块石头最多只能跳到1次
+     * 能否从第一块石头跳跃到达最后一块石头，再回到第一块石头，并且每次跳跃距离小于等于maxDistance，每块石头最多只能跳到1次
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param stones
-     * @param step
+     * @param maxDistance
      * @return
      */
-    private boolean isLessEqualThanStepJump(int[] stones, int step) {
+    private boolean canJump(int[] stones, int maxDistance) {
         //访问数组，用于判断当前石头是否被访问过
         boolean[] visited = new boolean[stones.length];
         //当前跳跃到石头的下标索引
-        int curIndex = 0;
+        int i = 0;
 
-        //从前往后每次跳跃距离都要尽可能大，尽可能接近step
-        while (curIndex < stones.length - 1) {
-            //从curIndex能够跳到的最远石头的下标索引
-            int nextIndex = curIndex;
+        //从前往后每次跳跃距离都要尽可能大，尽可能接近maxDistance
+        while (i < stones.length - 1) {
+            //从i往后能够跳到的最远石头的下标索引
+            int j = i;
 
-            while (nextIndex + 1 < stones.length && stones[nextIndex + 1] - stones[curIndex] <= step) {
-                nextIndex++;
+            while (j + 1 < stones.length && stones[j + 1] - stones[i] <= maxDistance) {
+                j++;
             }
 
-            //当前石头无法跳到下一个石头，即curIndex和下一个石头距离大于step，无法跳跃，返回false
-            if (curIndex == nextIndex) {
+            //当前石头无法跳到下一个石头，即i和下一个石头距离大于maxDistance，无法跳跃，返回false
+            if (j == i) {
                 return false;
             }
 
-            curIndex = nextIndex;
-            visited[nextIndex] = true;
+            visited[j] = true;
+            i = j;
         }
 
-        //从后往前每次跳跃距离都要尽可能小，不遗漏未访问的石头，保证每次跳跃距离都小于等于step
-        while (curIndex > 0) {
-            //从curIndex能够跳到的最近石头的下标索引
-            int nextIndex = curIndex;
+        //从后往前每次跳跃距离都要尽可能小，判断第一个未访问的石头，保证每次跳跃距离都小于等于maxDistance
+        while (i > 0) {
+            //从i往前能够跳到的最近未访问石头的下标索引
+            int j = i - 1;
 
-            while (nextIndex >= 0 && visited[nextIndex]) {
-                nextIndex--;
+            while (j >= 0 && visited[j]) {
+                j--;
             }
 
-            //当前石头和下一个石头距离大于step，无法跳跃，返回false
-            if (stones[curIndex] - stones[nextIndex] > step) {
+            //当前石头和往前能够跳到的最近未访问石头的距离大于maxDistance，无法跳跃，返回false
+            if (stones[i] - stones[j] > maxDistance) {
                 return false;
             }
 
-            curIndex = nextIndex;
-            visited[nextIndex] = true;
+            visited[j] = true;
+            i = j;
         }
 
+        //遍历结束，则能够跳跃，返回true
         return true;
     }
 }

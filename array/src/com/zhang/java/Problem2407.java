@@ -115,7 +115,7 @@ public class Problem2407 {
             int max = segmentTree.query(0, leftBound, rightBound, queryLeft, queryRight);
             //更新maxLen
             maxLen = Math.max(maxLen, max + 1);
-            //更新区间[nums[i],nums[i]]值为max+1
+            //更新以nums[i]结尾的最长递增子序列的长度为max+1
             segmentTree.update(0, leftBound, rightBound, nums[i], max + 1);
         }
 
@@ -152,6 +152,7 @@ public class Problem2407 {
             int queryRight = nums[i] - 1;
             int max = segmentTree.query(segmentTree.root, queryLeft, queryRight);
             maxLen = Math.max(maxLen, max + 1);
+            //更新以nums[i]结尾的最长递增子序列的长度为max+1
             segmentTree.update(segmentTree.root, nums[i], max + 1);
         }
 

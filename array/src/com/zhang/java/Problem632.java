@@ -89,6 +89,7 @@ public class Problem632 {
         while (true) {
             int[] arr = priorityQueue.poll();
 
+            //更新最小区间
             if (max - arr[0] < minRightBound - minLeftBound) {
                 minLeftBound = arr[0];
                 minRightBound = max;
@@ -160,6 +161,7 @@ public class Problem632 {
 
             //当前滑动窗口满足每行至少包含一个nums元素时，更新最小区间，left左移
             while (map.size() == nums.size()) {
+                //更新最小区间
                 if (arr[right][0] - arr[left][0] < minRightBound - minLeftBound) {
                     minLeftBound = arr[left][0];
                     minRightBound = arr[right][0];
@@ -167,6 +169,8 @@ public class Problem632 {
 
                 //left指针所指元素从map中移除
                 map.put(arr[left][1], map.get(arr[left][1]) - 1);
+
+                //注意：arr[left][1]必须从map中移除，因为是通过map.size()判断滑动窗口中是否每个列表中都包含元素
                 if (map.get(arr[left][1]) == 0) {
                     map.remove(arr[left][1]);
                 }

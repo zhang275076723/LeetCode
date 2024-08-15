@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/7/21 08:22
  * @Author zsy
- * @Description 跳跃游戏 V 跳跃问题类比Problem45、Problem55、Problem403、Problem1306、Problem1345、Problem1654、Problem1696、Problem1871、Problem2498 动态规划类比Problem198、Problem213、Problem256、Problem265、Problem279、Problem322、Problem338、Problem343、Problem377、Problem416、Problem474、Problem494、Problem518、Problem746、Problem983、Problem1388、Problem1444、Problem1473、Offer14、Offer14_2、Offer60、CircleBackToOrigin、Knapsack 记忆化搜索类比Problem62、Problem63、Problem64、Problem70、Problem329、Problem509、Problem1388、Problem1444、Offer10、Offer10_2
+ * @Description 跳跃游戏 V 类比Problem406、Problem975 跳跃问题类比Problem45、Problem55、Problem403、Problem1306、Problem1345、Problem1654、Problem1696、Problem1871、Problem2297、Problem2498 动态规划类比Problem198、Problem213、Problem256、Problem265、Problem279、Problem322、Problem338、Problem343、Problem377、Problem416、Problem474、Problem494、Problem518、Problem746、Problem983、Problem1388、Problem1444、Problem1473、Offer14、Offer14_2、Offer60、CircleBackToOrigin、Knapsack 记忆化搜索类比Problem62、Problem63、Problem64、Problem70、Problem329、Problem509、Problem1388、Problem1444、Offer10、Offer10_2
  * 给你一个整数数组 arr 和一个整数 d 。每一步你可以从下标 i 跳到：
  * i + x ，其中 i + x < arr.length 且 0 < x <= d 。
  * i - x ，其中 i - x >= 0 且 0 < x <= d 。
@@ -49,27 +49,6 @@ public class Problem1340 {
     }
 
     /**
-     * 递归+记忆化搜索
-     * dp[i]：从i开始最多可以跳跃到的下标索引数量
-     * 时间复杂度O(nd)，空间复杂度O(n)
-     *
-     * @param arr
-     * @param d
-     * @return
-     */
-    public int maxJumps(int[] arr, int d) {
-        int[] dp = new int[arr.length];
-        int max = 1;
-
-        for (int i = 0; i < arr.length; i++) {
-            dfs(i, arr, d, dp);
-            max = Math.max(max, dp[i]);
-        }
-
-        return max;
-    }
-
-    /**
      * 排序+动态规划
      * 按照arr数组的高度由小到大排序，即从当前位置开始最多可以跳跃到的下标索引数量，可以由小于当前位置高度，
      * 即当前位置左边的元素，得到当前位置dp
@@ -81,7 +60,7 @@ public class Problem1340 {
      * @param d
      * @return
      */
-    public int maxJumps2(int[] arr, int d) {
+    public int maxJumps(int[] arr, int d) {
         //tempArr[0]：当前位置高度，tempArr[1]：当前位置高度在arr数组的下标索引
         int[][] tempArr = new int[arr.length][2];
 
@@ -123,6 +102,27 @@ public class Problem1340 {
             }
 
             max = Math.max(max, dp[index]);
+        }
+
+        return max;
+    }
+
+    /**
+     * 递归+记忆化搜索
+     * dp[i]：从i开始最多可以跳跃到的下标索引数量
+     * 时间复杂度O(nd)，空间复杂度O(n)
+     *
+     * @param arr
+     * @param d
+     * @return
+     */
+    public int maxJumps2(int[] arr, int d) {
+        int[] dp = new int[arr.length];
+        int max = 1;
+
+        for (int i = 0; i < arr.length; i++) {
+            dfs(i, arr, d, dp);
+            max = Math.max(max, dp[i]);
         }
 
         return max;

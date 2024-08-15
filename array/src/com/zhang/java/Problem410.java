@@ -26,54 +26,55 @@ package com.zhang.java;
 public class Problem410 {
     public static void main(String[] args) {
         Problem410 problem410 = new Problem410();
-//        int[] nums = {7, 2, 5, 10, 8};
-//        int m = 2;
-        int[] nums = {1, 4, 4};
-        int m = 3;
+        int[] nums = {7, 2, 5, 10, 8};
+        int m = 2;
+//        int[] nums = {1, 4, 4};
+//        int m = 3;
         System.out.println(problem410.splitArray(nums, m));
     }
 
     /**
      * 二分查找变形，使...最大值尽可能小，就要想到二分查找
      * 对[left,right]进行二分查找，left为数组中最大值，right为数组元素之和，统计数组中分割的子数组元素之和小于等于mid的个数count，
-     * 如果count大于m，则最小的子数组元素之和在mid右边，left=mid+1；
-     * 如果count小于等于m，则最小的子数组元素之和在mid或mid左边，right=mid
-     * 时间复杂度O(n*log(right-left))，空间复杂度O(1) (n:nums长度，left:nums中最大值，right:nums元素之和)
+     * 如果count大于m，则最大的子数组元素之和的最小值在mid右边，left=mid+1；
+     * 如果count小于等于m，则最大的子数组元素之和的最小值在mid或mid左边，right=mid
+     * 时间复杂度O(n*log(sum(nums[i])-max(nums[i])))=O(n)，空间复杂度O(1)
      *
      * @param nums
      * @param m
      * @return
      */
     public int splitArray(int[] nums, int m) {
-        //二分查找左边界，初始化为数组中最大值
-        int left = nums[0];
-        //二分查找右边界，初始化为数组之和
-        int right = 0;
-        int mid;
+        int max = nums[0];
+        int sum = 0;
 
         for (int num : nums) {
-            left = Math.max(left, num);
-            right = right + num;
+            max = Math.max(max, num);
+            sum = sum + num;
         }
 
-        //二分查找当前子数组之和mid
+        int left = max;
+        int right = sum;
+        int mid;
+
         while (left < right) {
             mid = left + ((right - left) >> 1);
 
-            //子数组元素之和小于等于mid的数量
+            //数组中分割的子数组元素之和小于等于mid的个数
             int count = 0;
-            int sum = 0;
+            //当前子数组元素之和
+            int curSum = 0;
 
             for (int num : nums) {
-                sum = sum + num;
+                curSum = curSum + num;
 
-                if (sum > mid) {
+                if (curSum > mid) {
                     count++;
-                    sum = num;
+                    curSum = num;
                 }
             }
 
-            //最后一个数组也要统计上
+            //统计最后一个子数组
             count++;
 
             if (count > m) {

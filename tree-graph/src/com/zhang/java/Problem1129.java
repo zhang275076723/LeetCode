@@ -70,76 +70,69 @@ public class Problem1129 {
         int[] distance1 = new int[n];
         //节点0到其他节点的最短路径长度数组，并且遍历到当前节点的最短路径最后一条边的颜色为蓝色
         int[] distance2 = new int[n];
+        //distance1和distance2初始化
+        distance1[0] = 0;
+        distance2[0] = 0;
 
         //distance1和distance2初始化，初始化为int最大值表示无法到达节点i
-        for (int i = 0; i < n; i++) {
+        for (int i = 1; i < n; i++) {
             distance1[i] = Integer.MAX_VALUE;
             distance2[i] = Integer.MAX_VALUE;
         }
 
-        //arr[0]：当前节点，arr[1]：遍历到当前节点路径最后一条边的颜色，1为红色，2为蓝色
+        //arr[0]：当前节点，arr[1]：遍历到当前节点路径最后一条边的颜色，1为红色，2为蓝色，
+        //arr[2]：节点0到节点arr[0]的路径，最后一条边颜色为arr[1]的最短路径长度
         Queue<int[]> queue = new LinkedList<>();
         //节点访问数组，并且遍历到当前节点的最后一条边的颜色为红色
         boolean[] visited1 = new boolean[n];
         //节点访问数组，并且遍历到当前节点的最后一条边的颜色为蓝色
         boolean[] visited2 = new boolean[n];
 
-        queue.offer(new int[]{0, 1});
-        queue.offer(new int[]{0, 2});
+        queue.offer(new int[]{0, 1, 0});
+        queue.offer(new int[]{0, 2, 0});
         visited1[0] = true;
         visited2[0] = true;
 
-        int distance = 0;
-
         while (!queue.isEmpty()) {
-            int size = queue.size();
+            int[] arr = queue.poll();
+            //当前节点
+            int u = arr[0];
+            //遍历到当前节点的最短路径最后一条边的颜色
+            int lastColor = arr[1];
+            //节点0到节点u的路径，最后一条边颜色为lastColor的最短路径长度
+            int curDistance = arr[2];
 
-            for (int i = 0; i < size; i++) {
-                int[] arr = queue.poll();
-                //当前节点
-                int u = arr[0];
-                //遍历到当前节点的最短路径最后一条边的颜色
-                int lastColor = arr[1];
-
-                //最后一条边为红色
-                if (lastColor == 1) {
-                    distance1[u] = distance;
-
-                    //交替出现的下一条边为蓝色
-                    for (int v = 0; v < n; v++) {
-                        if (edges2[u][v] == 2 && !visited2[v]) {
-                            queue.offer(new int[]{v, 2});
-                            visited2[v] = true;
-                        }
+            //最后一条边为红色
+            if (lastColor == 1) {
+                //交替出现的下一条边为蓝色
+                for (int v = 0; v < n; v++) {
+                    if (edges2[u][v] == 2 && !visited2[v] && curDistance + 1 < distance2[v]) {
+                        distance2[v] = curDistance + 1;
+                        queue.offer(new int[]{v, 2, distance2[v]});
+                        visited2[v] = true;
                     }
-                } else {
-                    //最后一条边为蓝色
+                }
+            } else {
+                //最后一条边为蓝色
 
-                    distance2[u] = distance;
-
-                    //交替出现的下一条边为红色
-                    for (int v = 0; v < n; v++) {
-                        if (edges1[u][v] == 1 && !visited1[v]) {
-                            queue.offer(new int[]{v, 1});
-                            visited1[v] = true;
-                        }
+                //交替出现的下一条边为红色
+                for (int v = 0; v < n; v++) {
+                    if (edges1[u][v] == 1 && !visited1[v] && curDistance + 1 < distance1[v]) {
+                        distance1[v] = curDistance + 1;
+                        queue.offer(new int[]{v, 1, distance1[v]});
+                        visited1[v] = true;
                     }
                 }
             }
-
-            distance++;
         }
 
         int[] result = new int[n];
 
-        //遍历到当前节点i的最后一条边的颜色为红色或蓝色中的较小值，即为路径中颜色交替出现的最短路径长度
         for (int i = 0; i < n; i++) {
-            result[i] = Math.min(distance1[i], distance2[i]);
-
-            //当前节点不可达，赋值为-1
-            if (result[i] == Integer.MAX_VALUE) {
-                result[i] = -1;
-            }
+            //当前节点i的最后一条边的颜色为红色或蓝色中的较小值，即为路径中颜色交替出现的最短路径长度
+            int distance = Math.min(distance1[i], distance2[i]);
+            //当前节点不可达，则赋值为-1
+            result[i] = distance == Integer.MAX_VALUE ? -1 : distance;
         }
 
         return result;

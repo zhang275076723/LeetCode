@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2024/1/8 08:54
  * @Author zsy
- * @Description 乘法表中第k小的数 优先队列类比 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem441、Problem644、Problem658、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 乘法表中第k小的数 类比Problem2040 优先队列类比 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem441、Problem644、Problem658、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
  * 几乎每一个人都用 乘法表。但是你能在乘法表中快速找到第 k 小的数字吗？
  * 乘法表是大小为 m x n 的一个整数矩阵，其中 mat[i][j] == i * j（下标从 1 开始）。
  * 给你三个整数 m、n 和 k，请你在大小为 m x n 的乘法表中，找出并返回第 k 小的数字。
@@ -42,17 +42,18 @@ public class Problem668 {
      * @return
      */
     public int findKthNumber(int m, int n, int k) {
-        //小根堆，arr[0]：1-m中的值，arr[1]：1-n中的值
+        //小根堆，arr[0]：1-m中的值，arr[1]：1-n中的值，arr[2]：arr[0]*arr[1]
         PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(new Comparator<int[]>() {
             @Override
             public int compare(int[] arr1, int[] arr2) {
-                return arr1[0] * arr1[1] - arr2[0] * arr2[1];
+                //arr[0]*arr[1]由小到大排序
+                return arr1[2] - arr2[2];
             }
         });
 
-        //1-m每个值和1-n中第一个值1组成的arr入小根堆，作为二维数组
+        //1-m每个值和1-n中第一个值1组成的数组加入小根堆
         for (int i = 1; i <= m; i++) {
-            priorityQueue.offer(new int[]{i, 1});
+            priorityQueue.offer(new int[]{i, 1, i * 1});
         }
 
         //小根堆移除k-1个元素，堆顶元素即为第k小的数
@@ -60,13 +61,13 @@ public class Problem668 {
             int[] arr = priorityQueue.poll();
 
             if (arr[1] + 1 <= n) {
-                priorityQueue.offer(new int[]{arr[0], arr[1] + 1});
+                priorityQueue.offer(new int[]{arr[0], arr[1] + 1, arr[0] * (arr[1] + 1)});
             }
         }
 
         int[] arr = priorityQueue.poll();
 
-        return arr[0] * arr[1];
+        return arr[2];
     }
 
     /**
@@ -93,7 +94,7 @@ public class Problem668 {
             int count = 0;
 
             for (int i = 1; i <= m; i++) {
-                //第i行的数都是i的倍数，第i行小于等于mid的个数有min(mid/i,n)
+                //第i行的数都是i的倍数，第i行小于等于mid的个数为min(mid/i,n)
                 count = count + Math.min(mid / i, n);
             }
 

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/4/22 8:37
  * @Author zsy
- * @Description 跳跃游戏 跳跃问题类比Problem45、Problem403、Problem1306、Problem1340、Problem1345、Problem1654、Problem1696、Problem1871、Problem2498
+ * @Description 跳跃游戏 跳跃问题类比Problem45、Problem403、Problem1306、Problem1340、Problem1345、Problem1654、Problem1696、Problem1871、Problem2297、Problem2498
  * 给定一个非负整数数组 nums ，你最初位于数组的 第一个下标 。
  * 数组中的每个元素代表你在该位置可以跳跃的最大长度。
  * 判断你是否能够到达最后一个下标。
@@ -72,23 +72,23 @@ public class Problem55 {
         }
 
         //当前可以跳到的最远下标索引
-        int maxJumpDistance = 0;
+        int maxIndex = 0;
 
         for (int i = 0; i < nums.length; i++) {
             //可以跳到的最远位置小于当前位置，当前位置不可达，返回false
-            if (i > maxJumpDistance) {
+            if (i > maxIndex) {
                 return false;
             }
 
             //更新可跳的最远下标索引
-            maxJumpDistance = Math.max(maxJumpDistance, i + nums[i]);
+            maxIndex = Math.max(maxIndex, i + nums[i]);
 
             //可以跳到最后一个元素下标索引，返回true
-            if (maxJumpDistance >= nums.length - 1) {
+            if (maxIndex >= nums.length - 1) {
                 return true;
             }
         }
 
-        return true;
+        return false;
     }
 }

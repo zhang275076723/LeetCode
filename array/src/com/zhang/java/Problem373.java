@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2024/1/6 08:18
  * @Author zsy
- * @Description 查找和最小的 K 对数字 优先队列类比 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 查找和最小的 K 对数字 类比Problem1439 优先队列类比 二分查找类比Problem4、Problem287、Problem378、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
  * 给定两个以 非递减顺序排列 的整数数组 nums1 和 nums2 , 以及一个整数 k 。
  * 定义一对值 (u,v)，其中第一个元素来自 nums1，第二个元素来自 nums2 。
  * 请找到和最小的 k 个数对 (u1,v1),  (u2,v2)  ...  (uk,vk) 。
@@ -56,18 +56,18 @@ public class Problem373 {
      * @return
      */
     public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
-        //小根堆，arr[0]：nums1中下标索引，arr[1]：nums2中下标索引
+        //小根堆，arr[0]：nums1中下标索引，arr[1]：nums2中下标索引，arr[2]：nums1[arr[0]]+nums2[arr[1]]
         PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(new Comparator<int[]>() {
             @Override
             public int compare(int[] arr1, int[] arr2) {
-                return (nums1[arr1[0]] + nums2[arr1[1]]) - (nums1[arr2[0]] + nums2[arr2[1]]);
+                //nums1[i]+nums2[j]由小到大排序
+                return arr1[2] - arr2[2];
             }
         });
 
-        //nums1中每个下标索引和nums2中下标索引0组成的arr作为二维数组入小根堆
-        //即每行第一个元素入堆
+        //nums1中每个下标索引i和nums2中下标索引0组成的数组加入小根堆
         for (int i = 0; i < nums1.length; i++) {
-            priorityQueue.offer(new int[]{i, 0});
+            priorityQueue.offer(new int[]{i, 0, nums1[i] + nums2[0]});
         }
 
         List<List<Integer>> result = new ArrayList<>();
@@ -85,10 +85,9 @@ public class Problem373 {
             list.add(nums2[arr[1]]);
             result.add(list);
 
-            //arr[1]后面还有nums2的下标索引，arr[0]和arr[1]的下一个下标索引组成的arr入小根堆
-            //即当前行的下一个元素入堆
+            //arr[1]后面还有nums2的下标索引，arr[0]和arr[1]的下一个下标索引组成的数组加入小根堆
             if (arr[1] + 1 < nums2.length) {
-                priorityQueue.offer(new int[]{arr[0], arr[1] + 1});
+                priorityQueue.offer(new int[]{arr[0], arr[1] + 1, nums1[arr[0]] + nums2[arr[1] + 1]});
             }
         }
 
@@ -97,13 +96,13 @@ public class Problem373 {
 
     /**
      * 二分查找+双指针
-     * 对[left,right]进行二分查找，left为nums1[i]+nums2[j]最小值，right为nums1[i]+nums2[j]最大值，统计nums1[i]+nums2[j]小于等于mid的个数count，
+     * 对[left,right]进行二分查找，left为nums1[i]的最小值+nums2[j]的最小值，right为nums1[i]的最大值+nums2[j]的最大值，统计nums1[i]+nums2[j]小于等于mid的个数count，
      * 如果count小于k，则第k小nums1[i]+nums2[j]在mid右边，left=mid+1；
      * 如果count大于等于k，则第k小nums1[i]+nums2[j]在mid或mid左边，right=mid
-     * 当left==right时，则找到第k小nums1[i]+nums2[j]的sum，将每列小于sum的nums1[i]+nums2[j]加入结果集合，
-     * 再根据结果集合中元素的个数，将每列等于sum的nums1[i]+nums2[j]加入结果集合，得到有k个元素的结果集合
-     * 注意：不能一次性将小于和等于sum的nums1[i]+nums2[j]一起加入结果集合，因为小于sum的nums1[i]+nums2[j]是前k小元素，
-     * 但加上全部等于sum的nums1[i]+nums2[j]有可能大于前k小元素，所以只需要加上分部等于sum的nums1[i]+nums2[j]得到前k小元素
+     * 当left==right时，则找到第k小nums1[i]+nums2[j]的sum，先将小于sum的nums1[i]+nums2[j]加入结果集合，
+     * 再根据结果集合中元素的个数，再将等于sum的nums1[i]+nums2[j]加入结果集合，最终得到有k个元素的结果集合
+     * 注意：不能一次性将小于等于sum的nums1[i]+nums2[j]一起加入结果集合，因为小于sum的nums1[i]+nums2[j]一定是前k小元素，
+     * 但加上全部等于sum的nums1[i]+nums2[j]有可能大于前k小元素，所以只需要加上分部等于sum的nums1[i]+nums2[j]即得到前k小元素
      * 时间复杂度O((m+n)*log(right-left)+max(nlogm,k))=O(m+n+max(nlogm,k))，空间复杂度O(1)
      * (m=nums1.length，n=nums2.length，left=nums1[0]+nums2[0]，right=nums1[m-1]+nums2[n-1])
      * (找等于sum的nums1[i]+nums2[j]加入结果集合要通过二分查找，时间复杂度O(max(nlogm,k)))
@@ -140,7 +139,7 @@ public class Problem373 {
         int i = nums1.length - 1;
         int j = 0;
 
-        //将每列小于sum的nums1[i]+nums2[j]加入结果集合
+        //将小于sum的nums1[i]+nums2[j]加入结果集合
         while (i >= 0 && j < nums2.length) {
             while (i >= 0 && nums1[i] + nums2[j] >= sum) {
                 i--;
@@ -156,11 +155,8 @@ public class Problem373 {
             j++;
         }
 
-        //nums1[i]重新初始化
-        i = nums1.length - 1;
-
-        //将每列等于sum的nums1[i]+nums2[j]加入结果集合，得到有k个元素的结果集合
-        //注意：找等于sum的nums1[i]+nums2[j]加入结果集合要通过二分查找，如果线性查找会超时
+        //再将等于sum的nums1[i]+nums2[j]加入结果集合，最终得到有k个元素的结果集合
+        //注意：要通过二分查找找等于sum的nums1[i]+nums2[j]加入结果集合，如果线性查找会超时
         for (j = 0; j < nums2.length; j++) {
             //已经找到前k小元素，直接跳出循环
             if (result.size() >= k) {
@@ -172,7 +168,7 @@ public class Problem373 {
             //当前j列最后一个等于sum的nums1[i]+nums2[j]的nums1下标索引
             int last = -1;
             left = 0;
-            right = i;
+            right = nums1.length - 1;
 
             //找第一个等于sum的nums1[i]+nums2[j]的nums1下标索引first
             while (left <= right) {
@@ -195,7 +191,7 @@ public class Problem373 {
 
             last = first;
             left = first + 1;
-            right = i;
+            right = nums1.length - 1;
 
             //找最后一个等于sum的nums1[i]+nums2[j]的nums1下标索引last
             while (left <= right) {
@@ -244,12 +240,13 @@ public class Problem373 {
         int i = nums1.length - 1;
         int j = 0;
 
+        //从左下往右上遍历
         while (i >= 0 && j < nums2.length) {
             while (i >= 0 && nums1[i] + nums2[j] > num) {
                 i--;
             }
 
-            //统计当前列nums1[i]+nums2[j]小于等于num的元素个数
+            //nums1[0]+nums[j]到nums1[i]+nums2[j]都小于等于num
             count = count + i + 1;
             j++;
         }

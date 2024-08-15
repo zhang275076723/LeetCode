@@ -3,7 +3,6 @@ package com.zhang.java;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Deque;
-import java.util.LinkedList;
 
 /**
  * @Date 2022/9/12 8:32
@@ -48,6 +47,7 @@ public class Problem321 {
      * 单调栈
      * nums1中取出长度为x的最大数子序列，nums2中取出长度为k-x的最大数子序列，两个子序列合并，成为长度为k的最大数
      * 时间复杂度O(k*(m+n+k^2))，空间复杂度O(k) (m=nums1.length, n=nums2.length) (临时最大数数组需要O(k))
+     * (nums1中取i个，nums2中取k-i个，则有k种情况，即O(k)，得到nums1和nums2最大数组需要O(m+n)，合并两个最大数组需要O(k^2))
      *
      * @param nums1
      * @param nums2

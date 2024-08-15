@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2023/11/5 08:10
  * @Author zsy
- * @Description 连接所有点的最小费用 最小生成树类比Problem1135、Problem1489、Prim 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1361、Problem1489、Problem1568、Problem1627、Problem1905、Problem1998、Problem2685
+ * @Description 连接所有点的最小费用 最小生成树类比Problem778、Problem1135、Problem1168、Problem1489、Problem1631、Prim 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1361、Problem1489、Problem1568、Problem1627、Problem1905、Problem1998、Problem2685
  * 给你一个points 数组，表示 2D 平面上的一些点，其中 points[i] = [xi, yi] 。
  * 连接点 [xi, yi] 和点 [xj, yj] 的费用为它们之间的 曼哈顿距离 ：|xi - xj| + |yi - yj| ，其中 |val| 表示 val 的绝对值。
  * 请你返回将所有点连接的最小总费用。
@@ -49,7 +49,7 @@ public class Problem1584 {
      * 图中边的权值由小到大排序，由小到大遍历排好序的边，当前边两个节点已经连通，即当前边作为最小生成树的边会成环，
      * 当前边不能作为最小生成树的边，直接进行下次循环；当前边两个节点不连通，则当前边能够作为最小生成树的边，当前边的两个节点相连，
      * 遍历结束，判断所有节点是否连通，即只有一个连通分量，则能得到最小生成树；否则不能得到最小生成树
-     * 时间复杂度O(mlogm+m*α(n))=O(mlogm+m)=O(mlogm)=O(n^2log(n^2))=O(n^2logn)，空间复杂度O(m+n)=O(n^2)
+     * 时间复杂度O(mlogm+m*α(n))=O(mlogm+m)=O(mlogm)=O(n^2*log(n^2))=O(n^2*logn)，空间复杂度O(m+n)=O(n^2)
      * (n=points.length，即图中节点的个数) (m=n^2，即图中边的个数，完全图中存在n*(n-1)/2条边)
      * (find()和union()的时间复杂度为O(α(n))，可视为常数O(1))
      *

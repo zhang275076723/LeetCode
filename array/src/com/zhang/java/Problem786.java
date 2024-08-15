@@ -52,7 +52,7 @@ public class Problem786 {
         PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(new Comparator<int[]>() {
             @Override
             public int compare(int[] arr1, int[] arr2) {
-                //分数不好比较大小，则同分之后比较分子的大小
+                //分数不好比较大小，则通分之后比较分子的大小
                 //a/b和c/d比较大小，转换为(ad-bc)/bd，即比较分子ad-bc的大小
                 return arr[arr1[0]] * arr[arr2[1]] - arr[arr1[1]] * arr[arr2[0]];
             }
@@ -63,6 +63,7 @@ public class Problem786 {
             priorityQueue.offer(new int[]{0, j});
         }
 
+        //小根堆移除k-1个元素，堆顶元素即为第k小的分数
         for (int i = 0; i < k - 1; i++) {
             int[] tempArr = priorityQueue.poll();
 

@@ -53,17 +53,18 @@ public class Problem719 {
         //由小到大排序
         mergeSort(nums, 0, nums.length - 1, new int[nums.length]);
 
-        //小根堆，arr[0]：nums[i]的下标索引，arr[1]：nums[i]后面nums[j]的下标索引
+        //小根堆，arr[0]：nums[i]的下标索引，arr[1]：nums[i]后面nums[j]的下标索引，arr[2]：nums[arr[1]]+nums[arr[0]]
         PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(new Comparator<int[]>() {
             @Override
             public int compare(int[] arr1, int[] arr2) {
-                return (nums[arr1[1]] - nums[arr1[0]]) - (nums[arr2[1]] - nums[arr2[0]]);
+                //nums[arr[1]]-nums[arr[0]]由小到大排序
+                return arr1[2] - arr2[2];
             }
         });
 
         //排序后每个nums[i]和后面nums[j]作为数对距离加入小根堆
         for (int i = 0; i < nums.length - 1; i++) {
-            priorityQueue.offer(new int[]{i, i + 1});
+            priorityQueue.offer(new int[]{i, i + 1, nums[i + 1] - nums[i]});
         }
 
         for (int i = 0; i < k - 1; i++) {
@@ -71,21 +72,21 @@ public class Problem719 {
 
             //nums[i]后面nums[j]的下标索引不越界，则nums[arr[0]]和nums[arr[1]+1]作为下一个数对距离加入小根堆
             if (arr[1] + 1 < nums.length) {
-                priorityQueue.offer(new int[]{arr[0], arr[1] + 1});
+                priorityQueue.offer(new int[]{arr[0], arr[1] + 1, nums[arr[1] + 1] - nums[arr[0]]});
             }
         }
 
         int[] arr = priorityQueue.poll();
 
-        return nums[arr[1]] - nums[arr[0]];
+        return arr[2];
     }
 
     /**
      * 排序+二分查找
-     * 先排序，对[left,right]进行二分查找，left为0，right为nums[nums.length-1]-nums[0]，统计数对距离小于等于mid的个数count，
+     * 先由小到大排序，对[left,right]进行二分查找，left为0，right为nums[nums.length-1]-nums[0]，统计数对距离小于等于mid的个数count，
      * 如果count小于k，则第k小的数对距离在mid右边，left=mid+1；
      * 如果count大于等于k，则第k小的数对距离在mid或mid左边，right=mid
-     * 其中通过二分查找，往右找和每一个nums[i]构成数对距离小于等于mid的个数
+     * 通过二分查找，往右找和nums[i]构成数对距离小于等于mid的个数
      * 时间复杂度O(nlogn+log(right-left)*nlogn)=O(nlogn)，空间复杂度O(n) (归并排序的空间复杂度O(n))
      *
      * @param nums
@@ -106,7 +107,7 @@ public class Problem719 {
             //数对距离小于等于mid的个数
             int count = 0;
 
-            //对每一个nums[i]往右边找和nums[i]构成数对距离小于等于mid的个数
+            //通过二分查找，往右找和nums[i]构成数对距离小于等于mid的个数
             for (int i = 0; i < nums.length; i++) {
                 count = count + binarySearch(nums, i + 1, nums.length - 1, mid + nums[i]);
             }
@@ -122,7 +123,7 @@ public class Problem719 {
     }
 
     /**
-     * 使用二分查找，在nums[left]-nums[right]范围内统计小于等于target的个数
+     * 通过二分查找，在nums[left]-nums[right]范围内统计小于等于target的个数
      * 时间复杂度O(logn)，空间复杂度O(1)
      *
      * @param nums
