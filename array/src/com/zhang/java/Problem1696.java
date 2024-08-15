@@ -6,7 +6,7 @@ import java.util.Deque;
 /**
  * @Date 2023/2/3 11:29
  * @Author zsy
- * @Description 跳跃游戏 VI 超参数面试题 字节面试题 跳跃问题类比Problem45、Problem55、Problem403、Problem1306、Problem1340、Problem1345、Problem1654、Problem1871、Problem2297、Problem2498 单调队列类比Problem209、Problem239、Problem862、Offer59、Offer59_2
+ * @Description 跳跃游戏 VI 超参数面试题 字节面试题 跳跃问题类比Problem45、Problem55、Problem403、Problem975、Problem1306、Problem1340、Problem1345、Problem1377、Problem1654、Problem1871、Problem2297、Problem2498、Problem2770、LCP09 单调队列类比Problem209、Problem239、Problem862、Offer59、Offer59_2
  * 给你一个下标从 0 开始的整数数组 nums 和一个整数 k 。
  * 一开始你在下标 0 处。每一步，你最多可以往前跳 k 步，但你不能跳出数组的边界。
  * 也就是说，你可以从下标 i 跳到 [i + 1， min(n - 1, i + k)] 包含 两个端点的任意位置。

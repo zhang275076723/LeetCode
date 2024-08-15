@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/9/2 08:59
  * @Author zsy
- * @Description 到家的最少跳跃次数 跳跃问题类比Problem45、Problem55、Problem403、Problem1306、Problem1340、Problem1345、Problem1696、Problem1871、Problem2297、Problem2498
+ * @Description 到家的最少跳跃次数 跳跃问题类比Problem45、Problem55、Problem403、Problem975、Problem1306、Problem1340、Problem1345、Problem1377、Problem1696、Problem1871、Problem2297、Problem2498、Problem2770、LCP09
  * 有一只跳蚤的家在数轴上的位置 x 处。请你帮助它从位置 0 出发，到达它的家。
  * 跳蚤跳跃的规则如下：
  * 它可以 往前 跳恰好 a 个位置（即往右跳）。
