@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/7/4 08:45
  * @Author zsy
- * @Description 滑动窗口中位数 招商银行机试题 美团机试题 类比Problem4、Problem239 类比Problem295、Problem346、Problem703、Offer41 延迟删除类比Problem2349、Problem2353
+ * @Description 滑动窗口中位数 招商银行机试题 美团机试题 类比Problem4、Problem239 类比Problem295、Problem346、Problem703、Offer41 延迟删除类比Problem2034、Problem2349、Problem2353
  * 中位数是有序序列最中间的那个数。如果序列的长度是偶数，则没有最中间的数；此时中位数是最中间的两个数的平均数。
  * 例如：
  * [2,3,4]，中位数是 3
@@ -104,7 +104,7 @@ public class Problem480 {
     }
 
     /**
-     * 对顶堆+延迟删除(大根堆+小根堆)
+     * 对顶堆(大根堆+小根堆)+延迟删除
      * 大根堆，维护所有元素中较小的一半
      * 小根堆，维护所有元素中较大的一半
      * 1、大根堆为空，或者当前元素小于大根堆堆顶元素，则当前元素入大根堆，此时如果大根堆元素数量大于小根堆元素数量加1，

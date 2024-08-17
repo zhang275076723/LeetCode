@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/2 11:35
  * @Author zsy
- * @Description 买卖股票的最佳时机 股票类比Problem122、Problem123、Problem188、Problem309、Problem714、Offer63 同Offer63
+ * @Description 买卖股票的最佳时机 股票类比Problem122、Problem123、Problem188、Problem309、Problem714、Problem901、Problem2034、Problem2110、Problem2291、Offer63 同Offer63
  * 给定一个数组 prices ，它的第 i 个元素 prices[i] 表示一支给定股票第 i 天的价格。
  * 你只能选择 某一天 买入这只股票，并选择在 未来的某一个不同的日子 卖出该股票。设计一个算法来计算你所能获取的最大利润。
  * 返回你可以从这笔交易中获取的最大利润。如果你不能获取任何利润，返回 0 。
@@ -59,10 +59,7 @@ public class Problem121 {
     }
 
     /**
-     * 动态规划优化，滚动数组
-     * dp：当前天的最大最大利润
-     * dp = dp                          (prices[i] <= minPrice)
-     * dp = max(dp, prices[i]-minPrice) (prices[i] > minPrice)
+     * 模拟
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param prices
@@ -73,17 +70,19 @@ public class Problem121 {
             return 0;
         }
 
-        int dp = 0;
+        //遍历到第i天的最大利润
+        int max = 0;
+        //遍历到第i天的最低股票价格
         int minPrice = prices[0];
 
         for (int i = 1; i < prices.length; i++) {
             if (prices[i] < minPrice) {
                 minPrice = prices[i];
             } else {
-                dp = Math.max(dp, prices[i] - minPrice);
+                max = Math.max(max, prices[i] - minPrice);
             }
         }
 
-        return dp;
+        return max;
     }
 }
