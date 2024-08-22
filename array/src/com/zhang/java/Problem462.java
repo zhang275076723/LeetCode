@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * @Date 2024/4/30 08:57
  * @Author zsy
- * @Description 最小操作次数使数组元素相等 II 类比Problem453、Problem2967 快排划分类比Problem215、Problem324、Problem347、Problem973、Offer40
+ * @Description 最小操作次数使数组元素相等 II 类比Problem453、Problem1685、Problem2448、Problem2602、Problem2607、Problem2615、Problem2967 快排划分类比Problem215、Problem324、Problem347、Problem973、Offer40
  * 给你一个长度为 n 的整数数组 nums ，返回使所有数组元素相等需要的最小操作数。
  * 在一次操作中，你可以使数组中的一个元素加 1 或者减 1 。
  * <p>
@@ -27,7 +27,7 @@ public class Problem462 {
         Problem462 problem462 = new Problem462();
         int[] nums = {1, 10, 2, 9};
         System.out.println(problem462.minMoves2(nums));
-        System.out.println(problem462.minMoves22(nums));
+        System.out.println(problem462.minMoves2_2(nums));
     }
 
     /**
@@ -59,11 +59,11 @@ public class Problem462 {
 
         int count = 0;
         //nums中位数
-        int value = nums[nums.length / 2];
+        int median = nums[nums.length / 2];
 
         //数组中元素都变为中位数value的操作次数即为所有数组元素相等需要的最小操作数
         for (int num : nums) {
-            count = count + Math.abs(num - value);
+            count = count + Math.abs(num - median);
         }
 
         return count;
@@ -78,14 +78,14 @@ public class Problem462 {
      * @param nums
      * @return
      */
-    public int minMoves22(int[] nums) {
+    public int minMoves2_2(int[] nums) {
         //中位数即为数组中第nums.length/2+1大元素(最大元素为第1大元素)
         int k = nums.length / 2 + 1;
         int left = 0;
         int right = nums.length - 1;
         int pivot = partition(nums, left, right);
 
-        //当前基准不是第k大元素
+        //nums[pivot]不是第k大元素时，更新pivot
         while (pivot != nums.length - k) {
             if (pivot < nums.length - k) {
                 left = pivot + 1;
@@ -98,11 +98,11 @@ public class Problem462 {
 
         int count = 0;
         //nums中位数
-        int value = nums[pivot];
+        int median = nums[pivot];
 
         //数组中元素都变为中位数value的操作次数即为所有数组元素相等需要的最小操作数
         for (int num : nums) {
-            count = count + Math.abs(num - value);
+            count = count + Math.abs(num - median);
         }
 
         return count;

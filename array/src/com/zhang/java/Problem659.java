@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/9/9 8:43
  * @Author zsy
- * @Description 分割数组为连续子序列 类比Offer61 分割类比Problem698、Problem725 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
+ * @Description 分割数组为连续子序列 类比Problem846、Offer61 分割类比Problem698、Problem725 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
  * 给你一个按升序排序的整数数组 num（可能包含重复数字），
  * 请你将它们分割成一个或多个长度至少为 3 的子序列，其中每个子序列都由连续整数组成。
  * 如果可以完成上述分割，则返回 true ；否则，返回 false 。
