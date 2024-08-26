@@ -6,7 +6,7 @@ import java.util.Stack;
 /**
  * @Date 2024/11/13 08:42
  * @Author zsy
- * @Description 奇偶跳 类比Problem406、Problem1340 跳跃问题类比Problem45、Problem55、Problem403、Problem1306、Problem1340、Problem1345、Problem1377、Problem1654、Problem1696、Problem1871、Problem2297、Problem2498、Problem2770、LCP09 单调栈类比
+ * @Description 奇偶跳 类比Problem354、Problem406、Problem1340 跳跃问题类比Problem45、Problem55、Problem403、Problem1306、Problem1340、Problem1345、Problem1377、Problem1654、Problem1696、Problem1871、Problem2297、Problem2498、Problem2770、LCP09 单调栈类比
  * 给定一个整数数组 A，你可以从某一起始索引出发，跳跃一定次数。
  * 在你跳跃的过程中，第 1、3、5... 次跳跃称为奇数跳跃，而第 2、4、6... 次跳跃称为偶数跳跃。
  * 你可以按以下方式从索引 i 向后跳转到索引 j（其中 i < j）：

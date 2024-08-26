@@ -35,7 +35,7 @@ public class Problem410 {
 
     /**
      * 二分查找变形，使...最大值尽可能小，就要想到二分查找
-     * 对[left,right]进行二分查找，left为数组中最大值，right为数组元素之和，统计数组中分割的子数组元素之和小于等于mid的个数count，
+     * 对[left,right]进行二分查找，left为数组中最大值，right为数组元素之和，统计数组中分割的子数组元素之和小于等于mid的最大个数count，
      * 如果count大于m，则最大的子数组元素之和的最小值在mid右边，left=mid+1；
      * 如果count小于等于m，则最大的子数组元素之和的最小值在mid或mid左边，right=mid
      * 时间复杂度O(n*log(sum(nums[i])-max(nums[i])))=O(n)，空间复杂度O(1)
@@ -60,7 +60,7 @@ public class Problem410 {
         while (left < right) {
             mid = left + ((right - left) >> 1);
 
-            //数组中分割的子数组元素之和小于等于mid的个数
+            //数组中分割的子数组元素之和小于等于mid的最大个数
             int count = 0;
             //当前子数组元素之和
             int curSum = 0;

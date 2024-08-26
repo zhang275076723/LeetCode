@@ -39,9 +39,9 @@ public class Problem275 {
      * @return
      */
     public int hIndex(int[] citations) {
-        //左边界，h指数最小为0
+        //左边界，h指数最小为0，即发表的论文数量最小为0
         int left = 0;
-        //右边界，h指数最大为数组长度
+        //右边界，h指数最大为数组长度，即发表的论文数量最大为citations.length
         int right = citations.length;
         int mid;
 

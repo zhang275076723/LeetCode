@@ -29,6 +29,7 @@ public class Problem252 {
     }
 
     /**
+     * 排序
      * 按照会议开始时间intervals[i][0]由小到大排序，
      * 如果当前会议的开始时间intervals[i][0]小于当前不重叠的区间最右边界end，则会议有重叠，返回false；
      * 如果当前会议的开始时间intervals[i][0]大于等于当前不重叠的区间最右边界end，则会议没有重叠，更新end为intervals[i][1]

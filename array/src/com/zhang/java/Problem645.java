@@ -7,7 +7,7 @@ import java.util.Set;
 /**
  * @Date 2023/9/1 08:44
  * @Author zsy
- * @Description 错误的集合 原地哈希类比Problem41、Problem268、Problem287、Problem442、Problem448、Offer3 位运算类比Problem29、Problem136、Problem137、Problem190、Problem191、Problem201、Problem231、Problem260、Problem271、Problem326、Problem342、Problem371、Problem389、Problem405、Problem461、Problem477、Problem898、Problem1290、Offer15、Offer56、Offer56_2、Offer64、Offer65、IpToInt
+ * @Description 错误的集合 原地哈希类比Problem41、Problem268、Problem287、Problem442、Problem448、Problem1528、Offer3 位运算类比Problem29、Problem136、Problem137、Problem190、Problem191、Problem201、Problem231、Problem260、Problem271、Problem326、Problem342、Problem371、Problem389、Problem405、Problem461、Problem477、Problem898、Problem1290、Offer15、Offer56、Offer56_2、Offer64、Offer65、IpToInt
  * 集合 s 包含从 1 到 n 的整数。不幸的是，因为数据错误，导致集合里面某一个数字复制了成了集合里面的另外一个数字的值，
  * 导致集合 丢失了一个数字 并且 有一个数字重复 。
  * 给定一个数组 nums 代表了集合 S 发生错误后的结果。
@@ -72,7 +72,7 @@ public class Problem645 {
     }
 
     /**
-     * 原地哈希，原数组作为哈希表，正整数i和nums[i-1]建立映射关系
+     * 原地哈希，原数组作为哈希表，下标索引i处放置的nums[i]等于i+1
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -84,7 +84,7 @@ public class Problem645 {
         }
 
         for (int i = 0; i < nums.length; i++) {
-            //nums[i]和nums[nums[i]-1]不相等时，元素进行交换
+            //nums[i]和nums[nums[i]-1]不相等时，nums[i]和nums[nums[i]-1]进行交换
             while (nums[i] != nums[nums[i] - 1]) {
                 swap(nums, i, nums[i] - 1);
             }
@@ -93,7 +93,7 @@ public class Problem645 {
         int[] result = new int[2];
 
         for (int i = 0; i < nums.length; i++) {
-            //nums[i]不等于i+1，则nums[i]是重复元素，i+1为缺失的元素
+            //nums[i]不等于i+1，则nums[i]为重复的元素，i+1为缺失的元素
             if (nums[i] != i + 1) {
                 result[0] = nums[i];
                 result[1] = i + 1;
@@ -118,7 +118,7 @@ public class Problem645 {
             return null;
         }
 
-        //nums数组元素和1-n中异或结果
+        //nums数组元素和1-n中异或结果，即缺失的数和重复的数异或结果
         int result = 0;
 
         for (int num : nums) {
@@ -137,7 +137,7 @@ public class Problem645 {
             bit = bit << 1;
         }
 
-        //1-n中缺失的数和重复的数
+        //1-n中重复的数和缺失的数
         int num1 = 0;
         int num2 = 0;
 
@@ -159,7 +159,7 @@ public class Problem645 {
             }
         }
 
-        //确定num1和num2哪个是1-n中缺失的数和哪个是重复的数
+        //确定num1和num2哪个是1-n中重复的数和缺失的数
         for (int num : nums) {
             if (num1 == num) {
                 return new int[]{num1, num2};

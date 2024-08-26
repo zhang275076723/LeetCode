@@ -74,7 +74,7 @@ public class Problem878 {
      * 二分查找+容斥原理
      * 对[left,right]进行二分查找，left为a、b中的较小值，right为n*left，统计小于等于mid的神奇数个数count，
      * 如果count小于n，则第n个神奇数在mid右边，left=mid+1；
-     * 如果count大于等于n，则则第n个丑数在mid或mid左边，right=mid
+     * 如果count大于等于n，则第n个神奇数在mid或mid左边，right=mid
      * 小于等于n能被a整除的神奇数记为A，小于等于n能被b整除的神奇数记为B，其中|A|=n/a，|B|=n/b，
      * 则小于等于n能被a或b整除的神奇数个数为|A∪B|=|A|+|B|-|A∩B|=n/a+n/b-n/lcm(a,b) (容斥原理)
      * 时间复杂度O(log(right-left))=O(1)，空间复杂度O(1) (left:min(a,b)，right:n*left)

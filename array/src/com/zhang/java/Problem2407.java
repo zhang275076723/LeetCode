@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/5 08:32
  * @Author zsy
- * @Description 最长递增子序列 II 类比Problem300、Problem673 线段树类比Problem218、Problem307、Problem308、Problem327、Problem370、Problem654、Problem699、Problem715、Problem729、Problem731、Problem732、Problem933、Problem1094、Problem1109、Problem1893 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
+ * @Description 最长递增子序列 II 类比Problem300、Problem354、Problem491、Problem673、Problem674、Problem1143、Problem2771 线段树类比Problem218、Problem307、Problem308、Problem327、Problem370、Problem654、Problem699、Problem715、Problem729、Problem731、Problem732、Problem933、Problem1094、Problem1109、Problem1893 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
  * 给你一个整数数组 nums 和一个整数 k 。
  * 找到 nums 中满足以下要求的最长子序列：
  * 子序列 严格递增

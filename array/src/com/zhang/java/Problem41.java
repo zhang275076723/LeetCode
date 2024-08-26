@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/4/21 10:30
  * @Author zsy
- * @Description 缺失的第一个正数 字节面试题 原地哈希类比Problem268、Problem287、Problem442、Problem448、Problem645、Offer3
+ * @Description 缺失的第一个正数 字节面试题 原地哈希类比Problem268、Problem287、Problem442、Problem448、Problem645、Problem1528、Offer3
  * 给你一个未排序的整数数组 nums ，请你找出其中没有出现的最小的正整数。
  * 请你实现时间复杂度为 O(n) 并且只使用常数级别额外空间的解决方案。
  * <p>
@@ -64,7 +64,7 @@ public class Problem41 {
     }
 
     /**
-     * 原地哈希，原数组作为哈希表，正整数i和nums[i-1]建立映射关系
+     * 原地哈希，原数组作为哈希表，下标索引i处放置的nums[i]等于i+1
      * 遍历数组nums[i]和i+1是否相等，如果不等，则说明找到了出现的最小的正整数；
      * 如果数组遍历结束，则说明数组nums[i]和i+1都相等，返回nums.length+1
      * 例如：[(3), 4, (-1), 1]
@@ -82,8 +82,7 @@ public class Problem41 {
         }
 
         for (int i = 0; i < nums.length; i++) {
-            //nums[i]为正数，且nums[i]不超过数组能够存放的范围，nums[i]和nums[nums[i]-1]不相等时，元素进行交换
-            //将数组元素nums[i]放到nums[nums[i]-1]，数组下标nums[i]-1和数组元素nums[i]对应，例如元素3放到下标2
+            //nums[i]为正数，且nums[i]不超过数组能够存放的范围，nums[i]和nums[nums[i]-1]不相等时，nums[i]和nums[nums[i]-1]进行交换
             while (nums[i] > 0 && nums[i] <= nums.length && nums[i] != nums[nums[i] - 1]) {
                 swap(nums, i, nums[i] - 1);
             }

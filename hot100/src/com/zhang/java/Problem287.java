@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/5/26 10:15
  * @Author zsy
- * @Description 寻找重复数 美团面试题 原地哈希类比Problem41、Problem268、Problem442、Problem448、Problem645、Offer3 循环链表找环类比Problem141、Problem142 二分查找类比Problem4、Problem373、Problem378、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 寻找重复数 美团面试题 原地哈希类比Problem41、Problem268、Problem442、Problem448、Problem645、Problem1528、Offer3 循环链表找环类比Problem141、Problem142 二分查找类比Problem4、Problem373、Problem378、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
  * 给定一个包含n + 1 个整数的数组nums ，其数字都在[1, n]范围内（包括 1 和 n），可知至少存在一个重复的整数。
  * 假设 nums 只有 一个重复的整数 ，返回 这个重复的数 。
  * 你设计的解决方案必须 不修改 数组 nums 且只用常量级 O(1) 的额外空间。
@@ -57,8 +57,7 @@ public class Problem287 {
     }
 
     /**
-     * 原地哈希，原数组作为哈希表，正整数i和nums[i-1]建立映射关系
-     * 正整数i存放在nums[i-1]的位置上
+     * 原地哈希，原数组作为哈希表，下标索引i处放置的nums[i]等于i+1
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -70,12 +69,12 @@ public class Problem287 {
         }
 
         for (int i = 0; i < nums.length; i++) {
-            //nums[i]和nums[nums[i]-1]不相等时，元素进行交换
+            //nums[i]和nums[nums[i]-1]不相等时，nums[i]和nums[nums[i]-1]进行交换
             while (nums[i] != nums[nums[i] - 1]) {
                 swap(nums, i, nums[i] - 1);
             }
 
-            //当前nums[i]不在数组索引i+1位置上时，说明有重复元素
+            //nums[i]不等于i+1时，nums[i]为重复元素
             if (nums[i] != i + 1) {
                 return nums[i];
             }
@@ -86,10 +85,10 @@ public class Problem287 {
 
     /**
      * 二分查找变形
-     * 对[left,right]进行二分查找，left为数组中最小值，right为数组中最大值，统计数组中小于等于mid的个数count，
+     * 对[left,right]进行二分查找，left为nums最小值，right为nums最大值，统计数组中小于等于mid的个数count，
      * 如果count小于等于mid，则重复元素在mid右边，left=mid+1；
      * 如果count大于mid，则重复元素在mid或mid左边，right=mid
-     * 时间复杂度O(n*log(right-left))=O(n)，空间复杂度O(1) (left:数组中最小值，right:数组中最大值)
+     * 时间复杂度O(n*log(max(nums[i])-min(nums[i])))=O(n)，空间复杂度O(1)
      *
      * @param nums
      * @return
@@ -101,7 +100,7 @@ public class Problem287 {
 
         //二分查找左边界，初始化为nums中最小元素1
         int left = 1;
-        //二分查找右边界，初始化为nums中最大元素n-1
+        //二分查找右边界，初始化为nums中最大元素nums.length-1
         int right = nums.length - 1;
         int mid;
 
@@ -116,11 +115,11 @@ public class Problem287 {
                 }
             }
 
-            //count小于等于mid，说明重复元素在mid右边
+            //count小于等于mid，则重复元素在mid右边
             if (count <= mid) {
                 left = mid + 1;
             } else {
-                //count大于mid，说明重复元素在mid或mid左边
+                //count大于mid，则重复元素在mid或mid左边
                 right = mid;
             }
         }

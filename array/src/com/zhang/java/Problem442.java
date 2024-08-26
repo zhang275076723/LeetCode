@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/4/10 10:21
  * @Author zsy
- * @Description 数组中重复的数据 原地哈希类比Problem41、Problem268、Problem287、Problem448、Problem645、Offer3
+ * @Description 数组中重复的数据 原地哈希类比Problem41、Problem268、Problem287、Problem448、Problem645、Problem1528、Offer3
  * 给你一个长度为 n 的整数数组 nums ，其中 nums 的所有整数都在范围 [1, n] 内，且每个整数出现 一次 或 两次 。
  * 请你找出所有出现 两次 的整数，并以数组形式返回。
  * 你必须设计并实现一个时间复杂度为 O(n) 且仅使用常量额外空间的算法解决此问题。
@@ -34,8 +34,7 @@ public class Problem442 {
     }
 
     /**
-     * 原地哈希，原数组作为哈希表，正整数i和nums[i-1]建立映射关系
-     * 将nums[i]放到nums[nums[i]-1]，例如将元素3放到数组索引下标2的位置
+     * 原地哈希，原数组作为哈希表，下标索引i处放置的nums[i]等于i+1
      * 从原地哈希中找出nums[i]和i+1不相同的元素nums[i]，即为出现两次的元素
      * 时间复杂度O(n)，空间复杂度O(1)
      *
@@ -48,7 +47,7 @@ public class Problem442 {
         }
 
         for (int i = 0; i < nums.length; i++) {
-            //nums[i]和nums[nums[i]-1]不相等时，元素进行交换
+            //nums[i]和nums[nums[i]-1]不相等时，nums[i]和nums[nums[i]-1]进行交换
             while (nums[i] != nums[nums[i] - 1]) {
                 swap(nums, i, nums[i] - 1);
             }
@@ -57,7 +56,7 @@ public class Problem442 {
         List<Integer> list = new ArrayList<>();
 
         for (int i = 0; i < nums.length; i++) {
-            //nums[i]和i+1不相等时，说明nums[i]出现两次，加入结果集合list中
+            //nums[i]和i+1不相等时，则nums[i]为出现两次的元素，加入结果集合list中
             if (nums[i] != i + 1) {
                 list.add(nums[i]);
             }

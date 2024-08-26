@@ -68,7 +68,7 @@ public class Offer56 {
      * @return
      */
     public int[] singleNumbers2(int[] nums) {
-        //nums数组元素异或结果
+        //nums数组元素异或结果，即只出现一次的两个元素异或结果
         int result = 0;
 
         for (int num : nums) {

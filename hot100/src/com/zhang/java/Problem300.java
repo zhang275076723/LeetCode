@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/27 11:43
  * @Author zsy
- * @Description 最长递增子序列 华为面试题 思科面试题 类比Problem673、Problem2407 类比Problem376 动态规划类比Problem132、Problem139、Problem435 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
+ * @Description 最长递增子序列 华为面试题 思科面试题 类比Problem354、Problem491、Problem673、Problem674、Problem1143、Problem2407、Problem2771 类比Problem376 动态规划类比Problem132、Problem139、Problem435 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
  * 给你一个整数数组 nums ，找到其中最长严格递增子序列的长度。
  * 子序列 是由数组派生而来的序列，删除（或不删除）数组中的元素而不改变其余元素的顺序。
  * 例如，[3,6,2,7] 是数组 [0,3,1,6,2,2,7] 的子序列。
@@ -74,8 +74,11 @@ public class Problem300 {
 
     /**
      * 二分查找变形
-     * 新建一个数组，保证其中的元素严格递增，遍历原数组，通过二分查找找到当前元素在新数组中的位置，
-     * 如果当前元素比新数组中元素都大，则放在尾部；如果在新数组中间，则进行替换
+     * 严格递增数组arr作为nums中的最长递增子序列，遍历nums，通过二分查找找arr中大于等于nums[i]的最小值，
+     * 如果arr中不存在大于等于nums[i]的最小值，则nums[i]插入arr末尾；如果存在，则nums[i]替换arr中元素
+     * 时间复杂度O(nlogn)，空间复杂度O(n)
+     * <p>
+     * 例如：
      * nums = [0, 6, 7, 8, 4, 5, 9]
      * 新数组 = [0]
      * 新数组 = [0, 6]
@@ -85,7 +88,6 @@ public class Problem300 {
      * 新数组 = [0, 4, 5, 8]
      * 新数组 = [0, 4, 5, 8, 9]
      * 则最长递增子序列长度为5
-     * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
      * @param nums
      * @return
@@ -99,25 +101,25 @@ public class Problem300 {
             return 1;
         }
 
-        //严格递增数组
+        //严格递增数组，作为nums中的最长递增子序列
         int[] arr = new int[nums.length];
         arr[0] = nums[0];
-        //初始化严格递增数组长度为1
+        //初始化arr数组长度为1
         int maxLen = 1;
 
         for (int i = 1; i < nums.length; i++) {
-            //当前元素nums[i]大于严格递增数组末尾元素，则nums[i]作为严格递增数组新的末尾元素
+            //当前元素nums[i]大于arr末尾元素，则nums[i]插入arr末尾
             if (arr[maxLen - 1] < nums[i]) {
                 arr[maxLen] = nums[i];
                 maxLen++;
                 continue;
             }
 
-            //当前元素替换严格递增数组中的元素
             int left = 0;
             int right = maxLen - 1;
             int mid;
 
+            //二分查找找arr中大于等于nums[i]的最小值
             while (left < right) {
                 mid = left + ((right - left) >> 1);
 
@@ -128,7 +130,7 @@ public class Problem300 {
                 }
             }
 
-            //当前元素nums[i]替换arr[left]
+            //arr中大于等于nums[i]的最小值arr[left]替换为nums[i]
             arr[left] = nums[i];
         }
 
