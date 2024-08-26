@@ -85,10 +85,10 @@ public class Problem287 {
 
     /**
      * 二分查找变形
-     * 对[left,right]进行二分查找，left为nums最小值，right为nums最大值，统计数组中小于等于mid的个数count，
+     * 对[left,right]进行二分查找，left为1，right为nums.length-1，统计数组中小于等于mid的个数count，
      * 如果count小于等于mid，则重复元素在mid右边，left=mid+1；
      * 如果count大于mid，则重复元素在mid或mid左边，right=mid
-     * 时间复杂度O(n*log(max(nums[i])-min(nums[i])))=O(n)，空间复杂度O(1)
+     * 时间复杂度O(nlogn)，空间复杂度O(1)
      *
      * @param nums
      * @return
@@ -98,15 +98,16 @@ public class Problem287 {
             return -1;
         }
 
-        //二分查找左边界，初始化为nums中最小元素1
+        //二分查找左边界，初始化为1
         int left = 1;
-        //二分查找右边界，初始化为nums中最大元素nums.length-1
+        //二分查找右边界，初始化为nums.length-1
         int right = nums.length - 1;
         int mid;
 
         while (left < right) {
             mid = left + ((right - left) >> 1);
-            //小于等于mid的个数
+
+            //数组中小于等于mid的个数
             int count = 0;
 
             for (int num : nums) {

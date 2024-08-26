@@ -6,9 +6,10 @@ import java.util.Set;
 /**
  * @Date 2022/3/13 10:27
  * @Author zsy
- * @Description 数组中重复的数字 原地哈希类比Problem41、Problem268、Problem287、Problem442、Problem448、Problem645、Problem1528
- * 在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。数组中某些数字是重复的，
- * 但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字
+ * @Description 数组中重复的数字 原地哈希类比Problem41、Problem268、Problem287、Problem442、Problem448、Problem645、Problem1528 二分查找类比
+ * 在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。
+ * 数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。
+ * 请找出数组中任意一个重复的数字
  * <p>
  * 输入：[2, 3, 1, 0, 2, 5, 3]
  * 输出：2 或 3
@@ -21,27 +22,6 @@ public class Offer3 {
         int[] nums = new int[]{2, 3, 1, 0, 2, 5, 3};
         System.out.println(offer3.findRepeatNumber(nums));
         System.out.println(offer3.findRepeatNumber2(nums));
-        System.out.println(offer3.findRepeatNumber3(nums));
-    }
-
-    /**
-     * 计数排序，找数组中元素大于1的下标索引
-     * 时间复杂度O(n)，空间复杂度O(n)
-     *
-     * @param nums
-     * @return
-     */
-    public int findRepeatNumber(int[] nums) {
-        int[] a = new int[nums.length];
-
-        for (int i = 0; i < nums.length; i++) {
-            a[nums[i]]++;
-            if (a[nums[i]] > 1) {
-                return nums[i];
-            }
-        }
-
-        return -1;
     }
 
     /**
@@ -51,7 +31,7 @@ public class Offer3 {
      * @param nums
      * @return
      */
-    public int findRepeatNumber2(int[] nums) {
+    public int findRepeatNumber(int[] nums) {
         Set<Integer> set = new HashSet<>(nums.length);
 
         for (int num : nums) {
@@ -76,7 +56,7 @@ public class Offer3 {
      * @param nums
      * @return
      */
-    public int findRepeatNumber3(int[] nums) {
+    public int findRepeatNumber2(int[] nums) {
         for (int i = 0; i < nums.length; i++) {
             //nums[i]和nums[nums[i]]不相等时，nums[i]和nums[nums[i]]进行交换
             while (nums[i] != nums[nums[i]]) {
