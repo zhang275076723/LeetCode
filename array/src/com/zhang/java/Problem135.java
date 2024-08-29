@@ -32,10 +32,13 @@ public class Problem135 {
 
     /**
      * 动态规划，两次遍历
-     * dp1[i]：从左往右遍历，当前孩子i分发糖果的最少个数
-     * dp2[i]：从右往左遍历，当前孩子i分发糖果的最少个数
-     * 如果当前评分大于前一个评分，则当前糖果个数dp是前一个糖果个数加1；如果当前评分小于等于前一个评分，则当前糖果个数dp为1
-     * 总的分发糖果的最少个数：sum(max(dp1[i],dp2[i]))
+     * dp1[i]：从左往右遍历过程中，当前孩子i分发糖果的最少个数
+     * dp2[i]：从右往左遍历过程中，当前孩子i分发糖果的最少个数
+     * dp1[i] = dp1[i-1]+1 (ratings[i]>ratings[i-1])
+     * dp1[i] = 1          (ratings[i]<=ratings[i-1])
+     * dp2[i] = dp2[i+1]+1 (ratings[i]>ratings[i+1])
+     * dp2[i] = 1          (ratings[i]<=ratings[i+1])
+     * 最少分发糖果的总数量=sum(max(dp1[i],dp2[i]))
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param ratings
@@ -66,10 +69,9 @@ public class Problem135 {
             }
         }
 
-        //总的分发糖果的最少个数
+        //最少分发糖果的总数量
         int count = 0;
 
-        //dp1和dp2中最大值相加，即为所需的分发糖果的最少个数
         for (int i = 0; i < ratings.length; i++) {
             count = count + Math.max(dp1[i], dp2[i]);
         }

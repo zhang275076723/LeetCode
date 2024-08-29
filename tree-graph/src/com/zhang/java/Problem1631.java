@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/11/24 08:08
  * @Author zsy
- * @Description 最小体力消耗路径 bfs类比Problem407、Problem499、Problem505、Problem847、Problem1129、Problem1293、Problem1368、Problem2045、Problem2290 二分查找类比778 最小生成树类比Problem778、Problem1135、Problem1168、Problem1489、Problem1584、Prim 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra
+ * @Description 最小体力消耗路径 bfs类比Problem407、Problem499、Problem505、Problem778、Problem847、Problem1129、Problem1293、Problem1368、Problem2045、Problem2290 二分查找类比778 最小生成树类比Problem778、Problem1135、Problem1168、Problem1489、Problem1584、Prim 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra
  * 你准备参加一场远足活动。给你一个二维 rows x columns 的地图 heights ，其中 heights[row][col] 表示格子 (row, col) 的高度。
  * 一开始你在最左上角的格子 (0, 0) ，且你希望去最右下角的格子 (rows-1, columns-1) （注意下标从 0 开始编号）。
  * 你每次可以往 上，下，左，右 四个方向之一移动，你想要找到耗费 体力 最小的一条路径。
@@ -62,7 +62,7 @@ public class Problem1631 {
         int m = heights.length;
         int n = heights[0].length;
 
-        //节点(0,0)到其他节点最小消耗的体力值数组
+        //节点(0,0)到其他节点最小消耗的体力值数组，即节点(0,0)到当前节点路径中相邻节点差的最大值
         int[][] cost = new int[m][n];
         int[][] direction = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
@@ -119,149 +119,6 @@ public class Problem1631 {
     }
 
     /**
-     * 二分查找变形，使...最大值尽可能小，就要想到二分查找
-     * 对[left,right]进行二分查找，left为0，right为数组的最大值-数组的最小值，判断节点(0,0)到节点(m-1,n-1)的路径中相邻节点差的绝对值的最大值(体力消耗值)是否大于mid，
-     * 如果体力消耗值大于mid，则节点(0,0)到节点(m-1,n-1)的最小体力消耗值在mid右边，left=mid+1；
-     * 如果体力消耗值小于等于mid，则节点(0,0)到节点(m-1,n-1)的最小体力消耗值在mid或mid左边，right=mid
-     * 时间复杂度O(mn*log(max(heights[i])-min(heights[i])))=O(mn)，空间复杂度O(mn)
-     *
-     * @param heights
-     * @return
-     */
-    public int minimumEffortPath2(int[][] heights) {
-        int m = heights.length;
-        int n = heights[0].length;
-
-        int max = heights[0][0];
-        int min = heights[0][0];
-
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                max = Math.max(max, heights[i][j]);
-                min = Math.min(min, heights[i][j]);
-            }
-        }
-
-        int left = 0;
-        int right = max - min;
-        int mid;
-
-        while (left < right) {
-            mid = left + ((right - left) >> 1);
-
-            //arr[0]：节点的横坐标，arr[1]：节点的纵坐标
-            Queue<int[]> queue = new LinkedList<>();
-            boolean[][] visited = new boolean[m][n];
-            int[][] direction = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-
-            queue.offer(new int[]{0, 0});
-            visited[0][0] = true;
-
-            while (!queue.isEmpty()) {
-                int[] arr = queue.poll();
-                int x1 = arr[0];
-                int y1 = arr[1];
-
-                //遍历节点(x1,y1)的邻接节点(x2,y2)
-                for (int i = 0; i < direction.length; i++) {
-                    //节点(x1,y1)的邻接节点(x2,y2)
-                    int x2 = x1 + direction[i][0];
-                    int y2 = y1 + direction[i][1];
-
-                    //邻接节点(x2,y2)越界，或者邻接节点(x2,y2)已访问，或者节点(x1,y1)和节点(x2,y2)差的绝对值大于mid，
-                    //则不合法，直接进行下次循环
-                    if (x2 < 0 || x2 >= m || y2 < 0 || y2 >= n || visited[x2][y2] ||
-                            Math.abs(heights[x1][y1] - heights[x2][y2]) > mid) {
-                        continue;
-                    }
-
-                    queue.offer(new int[]{x2, y2});
-                    visited[x2][y2] = true;
-                }
-            }
-
-            //节点(0,0)到节点(m-1,n-1)的路径中相邻节点差的绝对值的最大值(体力消耗值)小于等于mid，
-            //则最小体力消耗值在mid或mid左边，right=mid
-            if (visited[m - 1][n - 1]) {
-                right = mid;
-            } else {
-                //节点(0,0)到节点(m-1,n-1)的路径中相邻节点差的绝对值的最大值(体力消耗值)大于mid，
-                //则最小体力消耗值在mid右边，left=mid+1
-                left = mid + 1;
-            }
-        }
-
-        return left;
-    }
-
-    /**
-     * Kruskal求最小生成树
-     * 核心思想：节点(0,0)到节点(m-1,n-1)的最小生成树路径中相邻节点差的绝对值的最大值，即为最小体力消耗值
-     * 图中边的权值由小到大排序，由小到大遍历排好序的边，当前边两个节点已经连通，即当前边作为最小生成树的边会成环，
-     * 当前边不能作为最小生成树的边，直接进行下次循环；当前边两个节点不连通，则当前边能够作为最小生成树的边，当前边的两个节点相连，
-     * 遍历结束，判断所有节点是否连通，即只有一个连通分量，则能得到最小生成树；否则不能得到最小生成树
-     * 时间复杂度O(mnlog(mn)+mn*α(mn))=O(mnlog(mn))，空间复杂度O(mn) (find()和union()的时间复杂度为O(α(mn))，可视为常数O(1))
-     *
-     * @param heights
-     * @return
-     */
-    public int minimumEffortPath3(int[][] heights) {
-        int m = heights.length;
-        int n = heights[0].length;
-
-        //arr[0]：当前边的节点u，arr[1]：当前边的节点v，arr[1]：当前边的长度，即节点u和节点v差的绝对值
-        List<int[]> list = new ArrayList<>();
-
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                //只考虑当前节点(i,j)和右边节点(i,j+1)的边
-                if (j + 1 < n) {
-                    list.add(new int[]{i * n + j, i * n + j + 1, Math.abs(heights[i][j] - heights[i][j + 1])});
-                }
-
-                //只考虑当前节点(i,j)和下边节点(i+1,j)的边
-                if (i + 1 < m) {
-                    list.add(new int[]{i * n + j, (i + 1) * n + j, Math.abs(heights[i][j] - heights[i + 1][j])});
-                }
-            }
-        }
-
-        //图中边的权值由小到大排序
-        list.sort(new Comparator<int[]>() {
-            @Override
-            public int compare(int[] arr1, int[] arr2) {
-                return arr1[2] - arr2[2];
-            }
-        });
-
-        UnionFind unionFind = new UnionFind(m * n);
-        //节点(0,0)到节点(m-1,n-1)的最小生成树路径中相邻节点差的绝对值的最大值，即为最小体力消耗值
-        int result = 0;
-
-        for (int i = 0; i < list.size(); i++) {
-            int[] arr = list.get(i);
-            int u = arr[0];
-            int v = arr[1];
-            int weight = arr[2];
-
-            //节点(0,0)和节点(m-1,n-1)已经连通，则已经找到节点(0,0)到节点(m-1,n-1)的最小体力消耗值
-            if (unionFind.isConnected(0, m * n - 1)) {
-                break;
-            }
-
-            //当前边作为最小生成树的边成环，则当前边不能作为最小生成树的边，直接进行下次循环
-            if (unionFind.isConnected(u, v)) {
-                continue;
-            }
-
-            unionFind.union(u, v);
-            result = Math.max(result, weight);
-        }
-
-        return result;
-    }
-
-    /**
      * Dijkstra求节点(0,0)到节点(m-1,n-1)最小消耗的体力值
      * 当前节点到邻接节点边的权值为两者的高度差
      * 时间复杂度O((mn)^2)，空间复杂度O(mn)
@@ -269,7 +126,7 @@ public class Problem1631 {
      * @param heights
      * @return
      */
-    public int minimumEffortPath4(int[][] heights) {
+    public int minimumEffortPath2(int[][] heights) {
         int m = heights.length;
         int n = heights[0].length;
 
@@ -319,14 +176,15 @@ public class Problem1631 {
                 int x2 = x1 + direction[j][0];
                 int y2 = y1 + direction[j][1];
 
-                if (x2 < 0 || x2 >= m || y2 < 0 || y2 >= n) {
+                if (x2 < 0 || x2 >= m || y2 < 0 || y2 >= n || visited[x2][y2]) {
                     continue;
                 }
 
-                if (!visited[x2][y2]) {
-                    //节点(x1,y1)到邻接节点(x2,y2)消耗的体力值
-                    int curCost = Math.abs(heights[x1][y1] - heights[x2][y2]);
-                    cost[x2][y2] = Math.min(cost[x2][y2], Math.max(cost[x1][y1], curCost));
+                //节点(x1,y1)到邻接节点(x2,y2)消耗的体力值
+                int curCost = Math.abs(heights[x1][y1] - heights[x2][y2]);
+
+                if (Math.max(cost[x1][y1], curCost) < cost[x2][y2]) {
+                    cost[x2][y2] = Math.max(cost[x1][y1], curCost);
                 }
             }
         }
@@ -344,7 +202,7 @@ public class Problem1631 {
      * @param heights
      * @return
      */
-    public int minimumEffortPath5(int[][] heights) {
+    public int minimumEffortPath3(int[][] heights) {
         int m = heights.length;
         int n = heights[0].length;
 
@@ -414,6 +272,150 @@ public class Problem1631 {
 
         //遍历结束，没有找到节点(0,0)到节点(m-1,n-1)最小消耗的体力值，则返回-1
         return -1;
+    }
+
+    /**
+     * Kruskal求最小生成树
+     * 核心思想：节点(0,0)到节点(m-1,n-1)的最小生成树路径中相邻节点差的绝对值的最大值，即为最小体力消耗值
+     * 图中边的权值由小到大排序，由小到大遍历排好序的边，当前边两个节点已经连通，即当前边作为最小生成树的边会成环，
+     * 当前边不能作为最小生成树的边，直接进行下次循环；当前边两个节点不连通，则当前边能够作为最小生成树的边，当前边的两个节点相连，
+     * 遍历结束，判断所有节点是否连通，即只有一个连通分量，则能得到最小生成树；否则不能得到最小生成树
+     * 时间复杂度O(mnlog(mn)+mn*α(mn))=O(mnlog(mn))，空间复杂度O(mn) (find()和union()的时间复杂度为O(α(mn))，可视为常数O(1))
+     *
+     * @param heights
+     * @return
+     */
+    public int minimumEffortPath4(int[][] heights) {
+        int m = heights.length;
+        int n = heights[0].length;
+
+        //arr[0]：当前边的节点u，arr[1]：当前边的节点v，arr[1]：当前边的长度，即节点u和节点v差的绝对值
+        List<int[]> list = new ArrayList<>();
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                //只考虑当前节点(i,j)和右边节点(i,j+1)的边
+                if (j + 1 < n) {
+                    list.add(new int[]{i * n + j, i * n + j + 1, Math.abs(heights[i][j] - heights[i][j + 1])});
+                }
+
+                //只考虑当前节点(i,j)和下边节点(i+1,j)的边
+                if (i + 1 < m) {
+                    list.add(new int[]{i * n + j, (i + 1) * n + j, Math.abs(heights[i][j] - heights[i + 1][j])});
+                }
+            }
+        }
+
+        //图中边的权值由小到大排序
+        list.sort(new Comparator<int[]>() {
+            @Override
+            public int compare(int[] arr1, int[] arr2) {
+                return arr1[2] - arr2[2];
+            }
+        });
+
+        UnionFind unionFind = new UnionFind(m * n);
+        //节点(0,0)到节点(m-1,n-1)的最小生成树路径中相邻节点差的绝对值的最大值，即为最小体力消耗值
+        int result = 0;
+
+        for (int i = 0; i < list.size(); i++) {
+            int[] arr = list.get(i);
+            int u = arr[0];
+            int v = arr[1];
+            int weight = arr[2];
+
+            //节点(0,0)和节点(m-1,n-1)已经连通，则已经找到节点(0,0)到节点(m-1,n-1)的最小体力消耗值
+            if (unionFind.isConnected(0, m * n - 1)) {
+                break;
+            }
+
+            //当前边作为最小生成树的边成环，则当前边不能作为最小生成树的边，直接进行下次循环
+            if (unionFind.isConnected(u, v)) {
+                continue;
+            }
+
+            unionFind.union(u, v);
+            result = Math.max(result, weight);
+        }
+
+        return result;
+    }
+
+    /**
+     * 二分查找+bfs
+     * 二分查找变形，使...最大值尽可能小，就要想到二分查找
+     * 对[left,right]进行二分查找，left为0，right为heights最大值-heights最小值，判断节点(0,0)到节点(m-1,n-1)的路径中相邻节点差的绝对值的最大值(体力消耗值)是否大于mid，
+     * 如果体力消耗值大于mid，则节点(0,0)到节点(m-1,n-1)的最小体力消耗值在mid右边，left=mid+1；
+     * 如果体力消耗值小于等于mid，则节点(0,0)到节点(m-1,n-1)的最小体力消耗值在mid或mid左边，right=mid
+     * 时间复杂度O(mn*log(max(heights[i])-min(heights[i])))=O(mn)，空间复杂度O(mn)
+     *
+     * @param heights
+     * @return
+     */
+    public int minimumEffortPath5(int[][] heights) {
+        int m = heights.length;
+        int n = heights[0].length;
+
+        int max = heights[0][0];
+        int min = heights[0][0];
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                max = Math.max(max, heights[i][j]);
+                min = Math.min(min, heights[i][j]);
+            }
+        }
+
+        int left = 0;
+        int right = max - min;
+        int mid;
+
+        while (left < right) {
+            mid = left + ((right - left) >> 1);
+
+            //arr[0]：节点的横坐标，arr[1]：节点的纵坐标
+            Queue<int[]> queue = new LinkedList<>();
+            boolean[][] visited = new boolean[m][n];
+            int[][] direction = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+            queue.offer(new int[]{0, 0});
+            visited[0][0] = true;
+
+            while (!queue.isEmpty()) {
+                int[] arr = queue.poll();
+                int x1 = arr[0];
+                int y1 = arr[1];
+
+                //遍历节点(x1,y1)的邻接节点(x2,y2)
+                for (int i = 0; i < direction.length; i++) {
+                    //节点(x1,y1)的邻接节点(x2,y2)
+                    int x2 = x1 + direction[i][0];
+                    int y2 = y1 + direction[i][1];
+
+                    //邻接节点(x2,y2)越界，或者邻接节点(x2,y2)已访问，或者节点(x1,y1)和节点(x2,y2)差的绝对值大于mid，
+                    //则不合法，直接进行下次循环
+                    if (x2 < 0 || x2 >= m || y2 < 0 || y2 >= n || visited[x2][y2] ||
+                            Math.abs(heights[x1][y1] - heights[x2][y2]) > mid) {
+                        continue;
+                    }
+
+                    queue.offer(new int[]{x2, y2});
+                    visited[x2][y2] = true;
+                }
+            }
+
+            //节点(0,0)到节点(m-1,n-1)的路径中相邻节点差的绝对值的最大值(体力消耗值)小于等于mid，
+            //则最小体力消耗值在mid或mid左边，right=mid
+            if (visited[m - 1][n - 1]) {
+                right = mid;
+            } else {
+                //节点(0,0)到节点(m-1,n-1)的路径中相邻节点差的绝对值的最大值(体力消耗值)大于mid，
+                //则最小体力消耗值在mid右边，left=mid+1
+                left = mid + 1;
+            }
+        }
+
+        return left;
     }
 
     /**

@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/7/30 08:54
  * @Author zsy
- * @Description 和可被 K 整除的子数组 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem523、Problem525、Problem560、Problem862、Problem1171、Problem1856、Problem1871、Offer57_2
+ * @Description 和可被 K 整除的子数组 类比Problem523、Problem1590、Problem2598 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem523、Problem525、Problem560、Problem862、Problem1171、Problem1856、Problem1871、Offer57_2
  * 给定一个整数数组 nums 和一个整数 k ，返回其中元素之和可被 k 整除的（连续、非空） 子数组 的数目。
  * 子数组 是数组的 连续 部分。
  * <p>
@@ -64,7 +64,8 @@ public class Problem974 {
 
     /**
      * 前缀和+哈希表
-     * 哈希表中存在当前前缀和除以k的余数，则存在和可被k整除的子数组
+     * preSum[j] mod k = preSum[i] mod k
+     * 则nums[i]-nums[j-1]子数组元素之和能被k整除
      * 时间复杂度O(n)，空间复杂度O(min(n,k))
      *
      * @param nums
@@ -88,7 +89,8 @@ public class Problem974 {
             //注意：nums[i]有可能小于0，导致余数为负数，所以余数需要加上k再取余数
             preSum = ((preSum + nums[i]) % k + k) % k;
 
-            //map中存在preSum，即之前存在相同余数，则存在和可被k整除的子数组
+            //preSum[j] mod k = preSum[i] mod k
+            //则nums[i]-nums[j-1]子数组元素之和能被k整除
             if (map.containsKey(preSum)) {
                 count = count + map.get(preSum);
             }

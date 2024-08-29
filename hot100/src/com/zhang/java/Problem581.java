@@ -78,9 +78,9 @@ public class Problem581 {
         int left = -1;
         //无序子数组右边界
         int right = -1;
-        //nums[0]-nums[i-1]的最大值
+        //从前往后遍历过程中，nums[0]-nums[i-1]的最大值
         int max = Integer.MIN_VALUE;
-        //nums[i+1]-nums[nums.length-1]的最小值
+        //从后往前遍历过程中，nums[i+1]-nums[nums.length-1]的最小值
         int min = Integer.MAX_VALUE;
 
         //从左往右遍历，找中间部分的右边界，nums[i]比nums[0]-nums[i-1]的最大值max还小，说明存在无序子数组，更新right

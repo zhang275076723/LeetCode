@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/7/27 08:07
  * @Author zsy
- * @Description 连续的子数组和 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1856、Problem1871、Offer57_2
+ * @Description 连续的子数组和 类比Problem974、Problem1590、Problem2598 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1856、Problem1871、Offer57_2
  * 给你一个整数数组 nums 和一个整数 k ，编写一个函数来判断该数组是否含有同时满足下述条件的连续子数组：
  * 子数组大小 至少为 2 ，且子数组元素总和为 k 的倍数。
  * 如果存在，返回 true ；否则，返回 false 。
@@ -71,7 +71,8 @@ public class Problem523 {
 
     /**
      * 前缀和+哈希表
-     * 哈希表中存在当前前缀和除以k的余数，则存在和为k倍数的子数组
+     * preSum[j] mod k = preSum[i] mod k
+     * 则nums[i]-nums[j-1]子数组元素之和能被k整除，即nums[i]-nums[j-1]子数组元素之和为k倍数
      * 时间复杂度O(n)，空间复杂度O(min(n,k))
      *
      * @param nums
@@ -91,12 +92,15 @@ public class Problem523 {
         int preSum = 0;
 
         for (int i = 0; i < nums.length; i++) {
-            //注意：nums[i]>=0，所以preSum除以k的余数不可能为负数，如果为负数，则余数需要加上k再取余数
+            //注意：如果nums[i]小于0，导致余数为负数，则余数需要加上k再取余数
             preSum = (preSum + nums[i]) % k;
 
-            //map中存在preSum，即之前存在相同余数，即nums[map.get(preSum)+1]-nums[i]之和为k的倍数，则存在和为k倍数的子数组
+            //preSum[j] mod k = preSum[i] mod k
+            //则nums[i]-nums[j-1]子数组元素之和能被k整除，即nums[i]-nums[j-1]子数组元素之和为k倍数
             if (map.containsKey(preSum)) {
+                //nums[index+1]-nums[i]子数组元素之和为k倍数
                 int index = map.get(preSum);
+
                 //判断和为k倍数的子数组长度是否超过2
                 if (i - index >= 2) {
                     return true;

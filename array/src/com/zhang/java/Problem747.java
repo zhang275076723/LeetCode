@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * @Date 2024/8/22 08:26
  * @Author zsy
- * @Description 至少是其他数字两倍的最大数 类比Problem628 类比Problem128、Problem506、Problem539、Problem561、Problem628
+ * @Description 至少是其他数字两倍的最大数 类比Problem628、Problem1131、Problem1509 类比Problem128、Problem506、Problem539、Problem561、Problem628、Problem1200、Problem1509、Problem2144
  * 给你一个整数数组 nums ，其中总是存在 唯一的 一个最大整数 。
  * 请你找出数组中的最大元素并检查它是否 至少是数组中每个其他数字的两倍 。
  * 如果是，则返回 最大元素的下标 ，否则返回 -1 。
@@ -63,11 +63,11 @@ public class Problem747 {
      * @return
      */
     public int dominantIndex2(int[] nums) {
-        //nums中的最大元素
+        //nums中最大值
         int max1 = Integer.MIN_VALUE;
-        //nums中的第二大元素
+        //nums中第二大的值
         int max2 = Integer.MIN_VALUE;
-        //nums中的最大元素下标索引
+        //nums中最大值的下标索引
         int index = -1;
 
         for (int i = 0; i < nums.length; i++) {

@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * @Date 2023/8/3 08:45
  * @Author zsy
- * @Description 三个数的最大乘积 类比Problem581 类比Problem747 类比Problem128、Problem506、Problem539、Problem561、Problem747
+ * @Description 三个数的最大乘积 类比Problem581 类比Problem747、Problem1131、Problem1509 类比Problem128、Problem506、Problem539、Problem561、Problem747、Problem1200、Problem1509、Problem2144
  * 给你一个整型数组 nums ，在数组中找出由三个数组成的最大乘积，并输出这个乘积。
  * <p>
  * 输入：nums = [1,2,3]
@@ -62,12 +62,15 @@ public class Problem628 {
             return -1;
         }
 
-        //数组中最大的三个数，max1最大，max3第三大
+        //nums中最大值
         int max1 = Integer.MIN_VALUE;
+        //nums中第二大的值
         int max2 = Integer.MIN_VALUE;
+        //nums中第三大的值
         int max3 = Integer.MIN_VALUE;
-        //数组中最小的两个数，min1最小，min2第二小
+        //nums中最小值
         int min1 = Integer.MAX_VALUE;
+        //nums中第二小的值
         int min2 = Integer.MAX_VALUE;
 
         for (int num : nums) {
@@ -95,7 +98,7 @@ public class Problem628 {
             }
         }
 
-        //最大乘积的三个数要么是最大的三个数相乘，要么是最小的两个数和最大的数相乘
+        //nums中三个数的最大乘积是最大的三个数相乘与最小的两个数和最大的数相乘中的较大值
         return Math.max(max1 * max2 * max3, min1 * min2 * max1);
     }
 

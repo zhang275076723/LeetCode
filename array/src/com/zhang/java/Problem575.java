@@ -38,7 +38,7 @@ public class Problem575 {
     }
 
     /**
-     * 哈希表去重
+     * 哈希表
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param candyType
