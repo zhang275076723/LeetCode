@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/1/23 08:22
  * @Author zsy
- * @Description 对角线遍历 II 对角线类比Problem51、Problem52、Problem498、Problem1001、Problem1329、Problem1572、Problem2614、Problem2711、Problem3000 优先队列类比
+ * @Description 对角线遍历 II 对角线类比Problem51、Problem52、Problem498、Problem1001、Problem1329、Problem1572、Problem2319、Problem2614、Problem2711、Problem3000 优先队列类比
  * 给你一个列表 nums ，里面每一个元素都是一个整数列表。
  * 请你依照下面各图的规则，按顺序返回 nums 中对角线上的整数。
  * <p>
@@ -128,7 +128,7 @@ public class Problem1424 {
             total = total + nums.get(i).size();
         }
 
-        //lists.get(k)：第k个对角线上的元素的集合，下标索引i+j=k
+        //lists.get(k)：第k个对角线上的元素集合，下标索引i+j=k
         List<List<Integer>> lists = new ArrayList<>();
 
         //对角线初始化，共m+n-1条对角线
@@ -139,6 +139,7 @@ public class Problem1424 {
 
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < nums.get(i).size(); j++) {
+                //第i+j条左下到右上对角线的元素集合
                 LinkedList<Integer> list = (LinkedList<Integer>) lists.get(i + j);
                 //下标索引i+j相等的点中先遍历到的元素出现在后遍历到的元素之后，即当前元素在list中首添加
                 list.addFirst(nums.get(i).get(j));

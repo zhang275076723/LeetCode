@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/1/28 10:10
  * @Author zsy
- * @Description 网格照明 对角线类比Problem51、Problem52、Problem498、Problem1329、Problem1424、Problem1572、Problem2614、Problem2711、Problem3000
+ * @Description 网格照明 类比Problem36、Problem37、Problem51、Problem52、Problem2133 对角线类比Problem51、Problem52、Problem498、Problem1329、Problem1424、Problem1572、Problem2319、Problem2614、Problem2711、Problem3000
  * 在大小为 n x n 的网格 grid 上，每个单元格都有一盏灯，最初灯都处于 关闭 状态。
  * 给你一个由灯的位置组成的二维数组 lamps ，其中 lamps[i] = [rowi, coli] 表示 打开 位于 grid[rowi][coli] 的灯。
  * 即便同一盏灯可能在 lamps 中多次列出，不会影响这盏灯处于 打开 状态。
@@ -46,8 +46,8 @@ public class Problem1001 {
     }
 
     /**
-     * 模拟
-     * 核心思想：左上到右下对角线上的元素的下标索引j-i相等，左下到右上对角线上的元素下标索引i+j相等
+     * 模拟+哈希表
+     * 核心思想：左上到右下对角线上的元素的下标索引j-i相等，左下到右上对角线上的元素的下标索引i+j相等
      * 统计每盏灯(i,j)照亮的行(第i行)、列(第j列)、左上到右下对角线(第j-i+n-1个对角线)、左下到右上对角线(第i+j个对角线)
      * 遍历queries，当前位置(i,j)对应的行、列、左上到右下的对角线、左下到右上的对角线，如果存在灯时，则被照亮，
      * 并关闭(i,j)周围9个位置存在的灯照亮的行、列、左上到右下对角线、左下到右上对角线
@@ -59,7 +59,7 @@ public class Problem1001 {
      * @return
      */
     public int[] gridIllumination(int n, int[][] lamps, int[][] queries) {
-        //当前灯(i,j)所在位置的set集合，用于去重，key：i*n+j，使用long，避免int溢出
+        //当前灯(i,j)所在位置的set集合，用于去重，避免lamps中存在相同的灯，key：i*n+j，使用long，避免int溢出
         Set<Long> lightSet = new HashSet<>();
         //key：灯照亮的行，value：灯照亮当前行的次数
         Map<Integer, Integer> rowMap = new HashMap<>();
@@ -91,7 +91,8 @@ public class Problem1001 {
         }
 
         int[] result = new int[queries.length];
-        //当前位置周围9个相邻位置(包含当前位置本身)
+        //当前位置周围9个相邻位置
+        //注意：包含当前位置本身
         int[][] direction = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 0}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
 
         //判断当前位置(x,y)是否被照亮，并关闭当前位置(x,y)周围9盏灯(如果周围存在灯的话)
@@ -108,7 +109,7 @@ public class Problem1001 {
             result[i] = 1;
 
             //当前位置(x,y)被照亮，关闭当前位置(x,y)周围9个位置存在的灯(x2,y2)，
-            //并且关闭灯(x2,y2)照亮的行、列、对角线、反对角线
+            //同时关闭灯(x2,y2)照亮的行、列、对角线、反对角线
             for (int k = 0; k < direction.length; k++) {
                 //当前位置(x,y)周围的9个位置(x2,y2)
                 int x2 = x + direction[k][0];

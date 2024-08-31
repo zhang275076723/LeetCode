@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @Date 2023/5/20 08:24
  * @Author zsy
- * @Description 有效的数独 类比Problem37、Problem51、Problem52、Problem1001
+ * @Description 有效的数独 类比Problem37、Problem51、Problem52、Problem1001、Problem2133
  * 请你判断一个 9 x 9 的数独是否有效。只需要 根据以下规则 ，验证已经填入的数字是否有效即可。
  * 数字 1-9 在每一行只能出现一次。
  * 数字 1-9 在每一列只能出现一次。
@@ -69,8 +69,8 @@ public class Problem36 {
     }
 
     /**
-     * 模拟
-     * 记录每行、每列、每个3x3格子中包含的字符，如果存在相同字符，则不是有效的数独
+     * 模拟+哈希表
+     * 存储每行、每列、每个3x3格子中包含的字符，如果存在相同字符，则不是有效的数独
      * 时间复杂度O(mn)，空间复杂度O(mn) (m=board.length, m=board[0].length)
      *
      * @param board

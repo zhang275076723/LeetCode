@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/8/8 7:57
  * @Author zsy
- * @Description N 皇后 II 类比Problem36、Problem37、Problem51、Problem1001 对角线类比Problem51、Problem498、Problem1001、Problem1329、Problem1424、Problem1572、Problem2614、Problem2711、Problem3000 回溯+剪枝类比
+ * @Description N 皇后 II 类比Problem36、Problem37、Problem51、Problem1001、Problem2133 对角线类比Problem51、Problem498、Problem1001、Problem1329、Problem1424、Problem1572、Problem2319、Problem2614、Problem2711、Problem3000 回溯+剪枝类比
  * n 皇后问题 研究的是如何将 n 个皇后放置在 n × n 的棋盘上，并且使皇后彼此之间不能相互攻击。
  * 给你一个整数 n ，返回 n 皇后问题 不同的解决方案的数量。
  * <p>
@@ -51,7 +51,7 @@ public class Problem52 {
 
     /**
      * 回溯+剪枝
-     * 核心思想：左上到右下对角线上的元素的下标索引j-i相等，左下到右上对角线上的元素下标索引i+j相等
+     * 核心思想：左上到右下对角线上的元素的下标索引j-i相等，左下到右上对角线上的元素的下标索引i+j相等
      * 使用set存储皇后影响的行(可以省略)、列、左上到右下对角线(第j-i+n-1个对角线)、左下到右上对角线(第i+j个对角线)，判断是否冲突
      * 时间复杂度O(n!)，空间复杂度O(n)
      *

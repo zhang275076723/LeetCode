@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/1/24 08:18
  * @Author zsy
- * @Description 矩阵对角线元素的和 对角线类比Problem51、Problem52、Problem498、Problem1001、Problem1329、Problem1424、Problem2614、Problem2711、Problem3000
+ * @Description 矩阵对角线元素的和 对角线类比Problem51、Problem52、Problem498、Problem1001、Problem1329、Problem1424、Problem2319、Problem2614、Problem2711、Problem3000
  * 给你一个正方形矩阵 mat，请你返回矩阵对角线元素的和。
  * 请你返回在矩阵主对角线上的元素和副对角线上且不在主对角线上元素的和。
  * <p>
@@ -41,7 +41,7 @@ public class Problem1572 {
 
     /**
      * 模拟
-     * 左上到右下对角线上的元素的下标索引j-i相等，左下到右上对角线上的元素下标索引i+j相等
+     * 左上到右下对角线上的元素的下标索引j-i相等，左下到右上对角线上的元素的下标索引i+j相等
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param mat

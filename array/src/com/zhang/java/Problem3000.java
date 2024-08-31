@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/1/25 08:55
  * @Author zsy
- * @Description 对角线最长的矩形的面积 对角线类比Problem51、Problem52、Problem498、Problem1001、Problem1329、Problem1424、Problem1572、Problem2614、Problem2711
+ * @Description 对角线最长的矩形的面积 对角线类比Problem51、Problem52、Problem498、Problem1001、Problem1329、Problem1424、Problem1572、Problem2319、Problem2614、Problem2711
  * 给你一个下标从 0 开始的二维整数数组 dimensions。
  * 对于所有下标 i（0 <= i < dimensions.length），dimensions[i][0] 表示矩形 i 的长度，而 dimensions[i][1] 表示矩形 i 的宽度。
  * 返回对角线最 长 的矩形的 面积 。

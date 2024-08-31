@@ -7,7 +7,7 @@ import java.util.Set;
 /**
  * @Date 2024/1/25 08:30
  * @Author zsy
- * @Description 对角线上不同值的数量差 对角线类比Problem51、Problem52、Problem498、Problem1001、Problem1329、Problem1424、Problem1572、Problem2614、Problem3000 前缀和类比
+ * @Description 对角线上不同值的数量差 对角线类比Problem51、Problem52、Problem498、Problem1001、Problem1329、Problem1424、Problem1572、Problem2319、Problem2614、Problem3000 前缀和类比
  * 给你一个下标从 0 开始、大小为 m x n 的二维矩阵 grid ，请你求解大小同样为 m x n 的答案矩阵 answer 。
  * 矩阵 answer 中每个单元格 (r, c) 的值可以按下述方式进行计算：
  * 令 topLeft[r][c] 为矩阵 grid 中单元格 (r, c) 左上角对角线上 不同值 的数量。
@@ -142,6 +142,7 @@ public class Problem2711 {
             //第i条左上到右下对角线的最右下元素纵坐标
             y = Math.min(i, n - 1);
             //第i条左上到右下对角线的最右下元素横坐标
+            //第i条对角线满足y-x+m-1=i，即x=y+m-1-i
             x = y + m - 1 - i;
 
             while (x >= 0 && y >= 0) {

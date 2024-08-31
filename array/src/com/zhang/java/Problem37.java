@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/5/20 08:57
  * @Author zsy
- * @Description 解数独 类比Problem36、Problem51、Problem52、Problem1001 回溯+剪枝类比
+ * @Description 解数独 类比Problem36、Problem51、Problem52、Problem1001、Problem2133 回溯+剪枝类比
  * 编写一个程序，通过填充空格来解决数独问题。
  * 数独的解法需 遵循如下规则：
  * 数字 1-9 在每一行只能出现一次。
