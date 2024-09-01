@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2024/12/18 08:54
  * @Author zsy
- * @Description 检查是否每一行每一列都包含全部整数 类比Problem36、Problem37、Problem51、Problem52、Problem1001
+ * @Description 检查是否每一行每一列都包含全部整数 类比Problem36 类比Problem1582、Problem2482、Problem2661
  * 对一个大小为 n x n 的矩阵而言，如果其每一行和每一列都包含从 1 到 n 的 全部 整数（含 1 和 n），则认为该矩阵是一个 有效 矩阵。
  * 给你一个大小为 n x n 的整数矩阵 matrix ，请你判断矩阵是否为一个有效矩阵：如果是，返回 true ；否则，返回 false 。
  * <p>
@@ -53,6 +53,7 @@ public class Problem2133 {
             set.clear();
 
             for (int j = 0; j < n; j++) {
+                //当前行存在相同数字，则不是有效矩阵，返回false
                 if (set.contains(matrix[i][j])) {
                     return false;
                 }
@@ -66,6 +67,7 @@ public class Problem2133 {
             set.clear();
 
             for (int i = 0; i < n; i++) {
+                //当前列存在相同数字，则不是有效矩阵，返回false
                 if (set.contains(matrix[i][j])) {
                     return false;
                 }
