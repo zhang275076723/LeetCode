@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/11/24 08:08
  * @Author zsy
- * @Description 最小体力消耗路径 bfs类比Problem407、Problem499、Problem505、Problem778、Problem847、Problem1129、Problem1293、Problem1368、Problem2045、Problem2290 二分查找类比778 最小生成树类比Problem778、Problem1135、Problem1168、Problem1489、Problem1584、Prim 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra
+ * @Description 最小体力消耗路径 类比Problem778、Problem2812 bfs类比Problem407、Problem499、Problem505、Problem778、Problem847、Problem1129、Problem1293、Problem1368、Problem2045、Problem2290 二分查找类比778 最小生成树类比Problem778、Problem1135、Problem1168、Problem1489、Problem1584、Prim 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra
  * 你准备参加一场远足活动。给你一个二维 rows x columns 的地图 heights ，其中 heights[row][col] 表示格子 (row, col) 的高度。
  * 一开始你在最左上角的格子 (0, 0) ，且你希望去最右下角的格子 (rows-1, columns-1) （注意下标从 0 开始编号）。
  * 你每次可以往 上，下，左，右 四个方向之一移动，你想要找到耗费 体力 最小的一条路径。
@@ -62,7 +62,7 @@ public class Problem1631 {
         int m = heights.length;
         int n = heights[0].length;
 
-        //节点(0,0)到其他节点最小消耗的体力值数组，即节点(0,0)到当前节点路径中相邻节点差的最大值
+        //节点(0,0)到其他节点最小消耗的体力值数组，即节点(0,0)到当前节点路径中相邻节点差的最大值的最小值
         int[][] cost = new int[m][n];
         int[][] direction = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
@@ -120,7 +120,7 @@ public class Problem1631 {
 
     /**
      * Dijkstra求节点(0,0)到节点(m-1,n-1)最小消耗的体力值
-     * 当前节点到邻接节点边的权值为两者的高度差
+     * 当前节点和邻接节点边的权值为两者的高度差
      * 时间复杂度O((mn)^2)，空间复杂度O(mn)
      *
      * @param heights
@@ -130,7 +130,7 @@ public class Problem1631 {
         int m = heights.length;
         int n = heights[0].length;
 
-        //节点(0,0)到其他节点最小消耗的体力值数组
+        //节点(0,0)到其他节点最小消耗的体力值数组，即节点(0,0)到当前节点路径中相邻节点差的最大值的最小值
         int[][] cost = new int[m][n];
         //节点访问数组，visited[i][j]为true，表示已经得到节点(0,0)到节点(i,j)最小消耗的体力值
         boolean[][] visited = new boolean[m][n];
@@ -165,9 +165,9 @@ public class Problem1631 {
             //设置节点(x1,y1)已访问，表示已经得到节点(0,0)到节点(x1,y1)最小消耗的体力值
             visited[x1][y1] = true;
 
-            //已经得到节点(0,0)到节点(m-1,n-1)最小消耗的体力值，直接返回cost[m-1][n-1]
+            //已经得到节点(0,0)到节点(m-1,n-1)最小消耗的体力值，直接跳出循环
             if (x1 == m - 1 && y1 == n - 1) {
-                return cost[x1][y1];
+                break;
             }
 
             //节点(x1,y1)作为中间节点更新节点(0,0)到其他节点最小消耗的体力值
@@ -189,13 +189,12 @@ public class Problem1631 {
             }
         }
 
-        //遍历结束，没有找到节点(0,0)到节点(m-1,n-1)最小消耗的体力值，则返回-1
-        return -1;
+        return cost[m - 1][n - 1];
     }
 
     /**
      * 堆优化Dijkstra求节点(0,0)到节点(m-1,n-1)最小消耗的体力值
-     * 当前节点到邻接节点边的权值为两者的高度差
+     * 当前节点和邻接节点边的权值为两者的高度差
      * 时间复杂度O(mn*log(mn))，空间复杂度O(mn)
      * (堆优化Dijkstra的时间复杂度O(mlogm)，其中m为图中边的个数，本题边的个数O(mn)，所以时间复杂度O(mn*log(mn)))
      *
@@ -206,7 +205,7 @@ public class Problem1631 {
         int m = heights.length;
         int n = heights[0].length;
 
-        //节点(0,0)到其他节点最小消耗的体力值数组
+        //节点(0,0)到其他节点最小消耗的体力值数组，即节点(0,0)到当前节点路径中相邻节点差的最大值的最小值
         int[][] cost = new int[m][n];
         int[][] direction = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
@@ -244,9 +243,9 @@ public class Problem1631 {
                 continue;
             }
 
-            //小根堆保证第一次访问到节点(m-1,n-1)，则得到节点(0,0)到节点(m-1,n-1)最小消耗的体力值，直接返回curCost
+            //已经得到节点(0,0)到节点(m-1,n-1)最小消耗的体力值，直接跳出循环
             if (x1 == m - 1 && y1 == n - 1) {
-                return curCost;
+                break;
             }
 
             //遍历节点(x1,y1)的邻接节点(x2,y2)
@@ -270,8 +269,7 @@ public class Problem1631 {
             }
         }
 
-        //遍历结束，没有找到节点(0,0)到节点(m-1,n-1)最小消耗的体力值，则返回-1
-        return -1;
+        return cost[m - 1][n - 1];
     }
 
     /**
@@ -392,15 +390,16 @@ public class Problem1631 {
                     int x2 = x1 + direction[i][0];
                     int y2 = y1 + direction[i][1];
 
-                    //邻接节点(x2,y2)越界，或者邻接节点(x2,y2)已访问，或者节点(x1,y1)和节点(x2,y2)差的绝对值大于mid，
-                    //则不合法，直接进行下次循环
-                    if (x2 < 0 || x2 >= m || y2 < 0 || y2 >= n || visited[x2][y2] ||
-                            Math.abs(heights[x1][y1] - heights[x2][y2]) > mid) {
+                    //邻接节点(x2,y2)越界，或者邻接节点(x2,y2)已访问，则不合法，直接进行下次循环
+                    if (x2 < 0 || x2 >= m || y2 < 0 || y2 >= n || visited[x2][y2]) {
                         continue;
                     }
 
-                    queue.offer(new int[]{x2, y2});
-                    visited[x2][y2] = true;
+                    //节点(x1,y1)和节点(x2,y2)差的绝对值小于等于mid，则当前路径消耗的体力值小于等于mid，节点(x2,y2)加入队列
+                    if (Math.abs(heights[x1][y1] - heights[x2][y2]) <= mid) {
+                        queue.offer(new int[]{x2, y2});
+                        visited[x2][y2] = true;
+                    }
                 }
             }
 

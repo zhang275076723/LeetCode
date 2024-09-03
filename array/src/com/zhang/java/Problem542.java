@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * @Date 2024/12/15 08:08
  * @Author zsy
- * @Description 01 矩阵 类比Problem1162
+ * @Description 01 矩阵 多源bfs类比Problem994、Problem1162、Problem2812
  * 给定一个由 0 和 1 组成的矩阵 mat ，请输出一个大小相同的矩阵，其中每一个格子是 mat 中对应位置元素到最近的 0 的距离。
  * 两个相邻元素间的距离为 1 。
  * <p>
@@ -36,8 +36,8 @@ public class Problem542 {
     }
 
     /**
-     * bfs
-     * 从1开始bfs，如果从0开始bfs时间复杂度O((mn)^2)，超时
+     * 多源bfs
+     * 注意：如果从0开始bfs，则时间复杂度O((mn)^2)，超时
      * 时间复杂度O(mn)，空间复杂度O(mn)
      *
      * @param mat

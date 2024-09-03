@@ -151,6 +151,7 @@ public class Problem827 {
             for (int j = 0; j < grid[0].length; j++) {
                 //对未被访问为1的节点进行bfs，得到每个岛屿面积，放入map中
                 if (grid[i][j] == 1 && visited[i][j] == 0) {
+                    //(i,j)所在岛屿的标记，必须要额外加1，避免左上角元素dfs无法跳出循环
                     int key = i * grid[0].length + j + 1;
                     int area = bfs(i, j, key, grid, visited);
                     map.put(key, area);

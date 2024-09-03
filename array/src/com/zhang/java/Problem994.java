@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2023/2/15 08:10
  * @Author zsy
- * @Description 腐烂的橘子 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem490、Problem499、Problem505、Problem529、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem1034、Problem1162、Problem1254、Problem1568、Problem1905、Offer12
+ * @Description 腐烂的橘子 多源bfs类比Problem542、Problem1162、Problem2812 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem490、Problem499、Problem505、Problem529、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem1034、Problem1162、Problem1254、Problem1568、Problem1905、Offer12
  * 在给定的 m x n 网格 grid 中，每个单元格可以有以下三个值之一：
  * 值 0 代表空单元格；
  * 值 1 代表新鲜橘子；
@@ -48,7 +48,7 @@ public class Problem994 {
     }
 
     /**
-     * bfs
+     * 多源bfs
      * 将为2的节点(腐烂的橘子)加入队列，作为bfs的起始元素，每次出队的元素个数为上次队列中元素的个数，每次相当于往外扩一层，
      * 遍历到为1的节点(新鲜的橘子)置为2(腐烂的橘子)，遍历完之后判断是否还存在为1的节点(新鲜的橘子)，
      * 如果不存在，返回需要的时间；如果存在，返回-1
