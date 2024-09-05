@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2023/2/15 08:10
  * @Author zsy
- * @Description 腐烂的橘子 多源bfs类比Problem286、Problem542、Problem1162、Problem2812 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem490、Problem499、Problem505、Problem529、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem1034、Problem1162、Problem1254、Problem1568、Problem1905、Offer12
+ * @Description 腐烂的橘子 多源bfs类比Problem286、Problem542、Problem1162、Problem1765、Problem2812 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem490、Problem499、Problem505、Problem529、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem1034、Problem1162、Problem1254、Problem1568、Problem1905、Offer12
  * 在给定的 m x n 网格 grid 中，每个单元格可以有以下三个值之一：
  * 值 0 代表空单元格；
  * 值 1 代表新鲜橘子；
@@ -49,25 +49,27 @@ public class Problem994 {
 
     /**
      * 多源bfs
-     * 将为2的节点(腐烂的橘子)加入队列，作为bfs的起始元素，每次出队的元素个数为上次队列中元素的个数，每次相当于往外扩一层，
-     * 遍历到为1的节点(新鲜的橘子)置为2(腐烂的橘子)，遍历完之后判断是否还存在为1的节点(新鲜的橘子)，
-     * 如果不存在，返回需要的时间；如果存在，返回-1
+     * 值为2的节点(腐烂的橘子)入列，bfs每次往外扩一层，相当于经过一分钟，得到将要变为腐烂橘子的新鲜橘子，
+     * 统计bfs结束后新鲜橘子的个数，如果不存在新鲜的橘子，则返回需要的时间；如果存在新鲜的橘子，则返回-1
      * 时间复杂度O(mn)，空间复杂度O(mn)
      *
      * @param grid
      * @return
      */
     public int orangesRotting(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
         Queue<int[]> queue = new LinkedList<>();
-        boolean[][] visited = new boolean[grid.length][grid[0].length];
+        boolean[][] visited = new boolean[m][n];
         //新鲜的橘子个数
         int freshOrangesCount = 0;
 
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
                 if (grid[i][j] == 1) {
                     freshOrangesCount++;
                 } else if (grid[i][j] == 2) {
+                    //腐烂的橘子入队
                     queue.offer(new int[]{i, j});
                     visited[i][j] = true;
                 }
@@ -89,21 +91,22 @@ public class Problem994 {
             //每次往外扩一层
             for (int i = 0; i < size; i++) {
                 int[] arr = queue.poll();
+                int x1 = arr[0];
+                int y1 = arr[1];
 
-                //当前节点(arr[0],arr[1])上下左右未被访问的新鲜的橘子节点(x,y)加入队列，表示为已腐烂
+                //遍历当前节点的邻接节点，未被访问的新鲜橘子邻接节点入队，表示为已腐烂
                 for (int j = 0; j < direction.length; j++) {
-                    int x = arr[0] + direction[j][0];
-                    int y = arr[1] + direction[j][1];
+                    int x2 = x1 + direction[j][0];
+                    int y2 = y1 + direction[j][1];
 
-                    //节点(x,y)不在矩阵范围之内，或者节点(x,y)已被访问，节点(x,y)不是新鲜的橘子，则直接进行下次循环
-                    if (x < 0 || x >= grid.length || y < 0 || y >= grid[0].length ||
-                            visited[x][y] || grid[x][y] != 1) {
+                    //邻接节点越界，或者邻接节点已被访问，或者邻接节点不是新鲜的橘子，则直接进行下次循环
+                    if (x2 < 0 || x2 >= m || y2 < 0 || y2 >= n || visited[x2][y2] || grid[x2][y2] != 1) {
                         continue;
                     }
 
-                    //新鲜的橘子(x,y)加入队列，并置为已访问，表示当前橘子已腐烂
-                    queue.offer(new int[]{x, y});
-                    visited[x][y] = true;
+                    //未被访问的新鲜橘子邻接节点入队，并置为已访问，表示当前橘子已腐烂
+                    queue.offer(new int[]{x2, y2});
+                    visited[x2][y2] = true;
                     //新鲜橘子个数减1
                     freshOrangesCount--;
                 }

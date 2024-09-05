@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * @Date 2024/12/15 08:08
  * @Author zsy
- * @Description 01 矩阵 多源bfs类比Problem286、Problem994、Problem1162、Problem2812
+ * @Description 01 矩阵 多源bfs类比Problem286、Problem994、Problem1162、Problem1765、Problem2812
  * 给定一个由 0 和 1 组成的矩阵 mat ，请输出一个大小相同的矩阵，其中每一个格子是 mat 中对应位置元素到最近的 0 的距离。
  * 两个相邻元素间的距离为 1 。
  * <p>
@@ -37,6 +37,7 @@ public class Problem542 {
 
     /**
      * 多源bfs
+     * 值为0的节点入队，bfs每次往外扩一层，得到当前值为1的节点到最近值为0的节点的最近距离
      * 注意：如果从0开始bfs，则时间复杂度O((mn)^2)，超时
      * 时间复杂度O(mn)，空间复杂度O(mn)
      *
@@ -52,6 +53,7 @@ public class Problem542 {
 
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
+                //值为0的节点入队
                 if (mat[i][j] == 0) {
                     queue.offer(new int[]{i, j});
                     visited[i][j] = true;
@@ -77,6 +79,7 @@ public class Problem542 {
                     int x2 = x + direction[j][0];
                     int y2 = y + direction[j][1];
 
+                    //邻接节点越界，或者邻接节点已访问，直接进行下次循环
                     if (x2 < 0 || x2 >= m || y2 < 0 || y2 >= n || visited[x2][y2]) {
                         continue;
                     }
