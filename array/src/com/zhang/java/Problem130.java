@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * @Date 2022/11/29 15:53
  * @Author zsy
- * @Description 被围绕的区域 标志位类比Problem73、Problem289、Problem1582 dfs和bfs类比Problem79、Problem200、Problem212、Problem463、Problem490、Problem499、Problem505、Problem529、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Problem1568、Problem1905、Offer12 并查集类比Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1361、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
+ * @Description 被围绕的区域 类比Problem1020 标志位类比Problem73、Problem289、Problem1582 dfs和bfs类比Problem79、Problem200、Problem212、Problem463、Problem490、Problem499、Problem505、Problem529、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Problem1568、Problem1905、Offer12 并查集类比Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1361、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
  * 给你一个 m x n 的矩阵 board ，由若干字符 'X' 和 'O' ，
  * 找到所有被 'X' 围绕的区域，并将这些区域里所有的 'O' 用 'X' 填充。
  * <p>
@@ -152,8 +152,8 @@ public class Problem130 {
 
     /**
      * 并查集
-     * 边界'O'和dummyIndex相连，遍历除边界外为'O'的节点，和相邻为'O'节点相连，遍历除边界外为'O'且不和dummyIndex相连的节点，
-     * 将当前为'O'的节点置为'X'
+     * 边界'O'和dummyIndex相连，遍历除边界外为'O'的节点，和相邻为'O'节点相连，
+     * 再次遍历除边界外为'O'且不和dummyIndex相连的节点，将当前为'O'的节点置为'X'
      * 时间复杂度O(mn*α(mn))=O(mn)，空间复杂度O(mn) (find()和union()的时间复杂度为O(α(mn))，可视为常数O(1))
      *
      * @param board
@@ -305,8 +305,11 @@ public class Problem130 {
 
         public void unionDummy(int i) {
             int rootI = find(i);
-            parent[rootI] = dummyIndex;
-            weight[dummyIndex] = Math.max(weight[dummyIndex], weight[rootI]);
+
+            if (rootI != dummyIndex) {
+                parent[rootI] = dummyIndex;
+                weight[dummyIndex] = Math.max(weight[dummyIndex], weight[rootI]);
+            }
         }
 
         public int find(int i) {

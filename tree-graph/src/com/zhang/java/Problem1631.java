@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/11/24 08:08
  * @Author zsy
- * @Description 最小体力消耗路径 类比Problem778、Problem2812 bfs类比Problem407、Problem499、Problem505、Problem778、Problem847、Problem1129、Problem1293、Problem1368、Problem2045、Problem2290 二分查找类比778 最小生成树类比Problem778、Problem1135、Problem1168、Problem1489、Problem1584、Prim 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra
+ * @Description 最小体力消耗路径 类比Problem778、Problem1102、Problem2812 bfs类比Problem407、Problem499、Problem505、Problem778、Problem847、Problem1129、Problem1293、Problem1368、Problem2045、Problem2290 二分查找类比778 最小生成树类比Problem778、Problem1135、Problem1168、Problem1489、Problem1584、Prim 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra
  * 你准备参加一场远足活动。给你一个二维 rows x columns 的地图 heights ，其中 heights[row][col] 表示格子 (row, col) 的高度。
  * 一开始你在最左上角的格子 (0, 0) ，且你希望去最右下角的格子 (rows-1, columns-1) （注意下标从 0 开始编号）。
  * 你每次可以往 上，下，左，右 四个方向之一移动，你想要找到耗费 体力 最小的一条路径。
@@ -53,6 +53,7 @@ public class Problem1631 {
 
     /**
      * bfs
+     * 当前节点和邻接节点边的权值为两者的高度差
      * 时间复杂度O((mn)^2)，空间复杂度O(mn)
      *
      * @param heights
@@ -274,6 +275,7 @@ public class Problem1631 {
 
     /**
      * Kruskal求最小生成树
+     * 当前节点和邻接节点边的权值为两者的高度差
      * 核心思想：节点(0,0)到节点(m-1,n-1)的最小生成树路径中相邻节点差的绝对值的最大值，即为最小体力消耗值
      * 图中边的权值由小到大排序，由小到大遍历排好序的边，当前边两个节点已经连通，即当前边作为最小生成树的边会成环，
      * 当前边不能作为最小生成树的边，直接进行下次循环；当前边两个节点不连通，则当前边能够作为最小生成树的边，当前边的两个节点相连，
@@ -341,6 +343,7 @@ public class Problem1631 {
 
     /**
      * 二分查找+bfs
+     * 当前节点和邻接节点边的权值为两者的高度差
      * 二分查找变形，使...最大值尽可能小，就要想到二分查找
      * 对[left,right]进行二分查找，left为0，right为heights最大值-heights最小值，判断节点(0,0)到节点(m-1,n-1)的路径中相邻节点差的绝对值的最大值(体力消耗值)是否大于mid，
      * 如果体力消耗值大于mid，则节点(0,0)到节点(m-1,n-1)的最小体力消耗值在mid右边，left=mid+1；
@@ -383,6 +386,11 @@ public class Problem1631 {
                 int[] arr = queue.poll();
                 int x1 = arr[0];
                 int y1 = arr[1];
+
+                //已经访问到节点(m-1,n-1)，则跳出循环
+                if (visited[m - 1][n - 1]) {
+                    break;
+                }
 
                 //遍历节点(x1,y1)的邻接节点(x2,y2)
                 for (int i = 0; i < direction.length; i++) {

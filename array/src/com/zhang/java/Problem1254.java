@@ -314,8 +314,11 @@ public class Problem1254 {
 
         public void unionDummy(int i) {
             int rootI = find(i);
-            parent[rootI] = dummyIndex;
-            weight[dummyIndex] = Math.max(weight[dummyIndex], weight[rootI]);
+
+            if (rootI != dummyIndex) {
+                parent[rootI] = dummyIndex;
+                weight[dummyIndex] = Math.max(weight[dummyIndex], weight[rootI]);
+            }
         }
 
         public int find(int i) {
