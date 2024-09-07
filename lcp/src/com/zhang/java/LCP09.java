@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2024/11/14 08:21
  * @Author zsy
- * @Description 最小跳跃次数 网易机试题 华为面试题 跳跃问题类比Problem45、Problem55、Problem403、Problem975、Problem1306、Problem1340、Problem1345、Problem1377、Problem1654、Problem1696、Problem1871、Problem2297、Problem2498、Problem2770 线段树类比
+ * @Description 最小跳跃次数 网易机试题 华为面试题 类比Problem815、Problem1654、Problem2059 跳跃问题类比Problem45、Problem55、Problem403、Problem975、Problem1306、Problem1340、Problem1345、Problem1377、Problem1654、Problem1696、Problem1871、Problem2297、Problem2498、Problem2770 线段树类比
  * 为了给刷题的同学一些奖励，力扣团队引入了一个弹簧游戏机。
  * 游戏机由 N 个特殊弹簧排成一排，编号为 0 到 N-1。
  * 初始有一个小球在编号 0 的弹簧处。
@@ -88,7 +88,7 @@ public class LCP09 {
             step++;
         }
 
-        //bfs遍历节点，即无法跳跃到大于等于jump.length的下标索引，则返回-1
+        //bfs遍历结束，即无法跳跃到大于等于jump.length的下标索引，则返回-1
         return -1;
     }
 

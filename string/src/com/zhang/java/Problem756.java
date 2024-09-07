@@ -118,7 +118,7 @@ public class Problem756 {
 
             //当前层无法得到上一层字母，则不能构建到金字塔顶部，返回false
             if (!convertMap.containsKey(s)) {
-                bottomMap.put(s, false);
+                bottomMap.put(bottom, false);
                 return false;
             }
 

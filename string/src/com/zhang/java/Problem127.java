@@ -57,16 +57,17 @@ public class Problem127 {
      * @return
      */
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-        //wordList中不包含endWord，则beginWord无法转换为endWord，返回0
-        if (!wordList.contains(endWord)) {
+        //有效单词集合，存储wordList中单词，O(1)判断当前单词是否是wordList中的单词
+        Set<String> wordSet = new HashSet<>(wordList);
+
+        //wordSet中不包含endWord，则beginWord无法转换为endWord，返回0
+        if (!wordSet.contains(endWord)) {
             return 0;
         }
 
         Queue<String> queue = new LinkedList<>();
         //访问集合，存储当前已经访问到的单词
         Set<String> visitedSet = new HashSet<>();
-        //有效单词集合，存储wordList中单词，O(1)判断当前单词是否是wordList中的单词
-        Set<String> wordSet = new HashSet<>(wordList);
         queue.offer(beginWord);
         visitedSet.add(beginWord);
 
@@ -99,16 +100,16 @@ public class Problem127 {
                     for (char k = 'a'; k <= 'z'; k++) {
                         wordArr[j] = k;
                         //变化word中的第j位为k得到的单词
-                        String newWord = new String(wordArr);
+                        String nextWord = new String(wordArr);
 
-                        //newWord已经访问过，或者newWord不是wordSet中的单词，直接进行下次循环
-                        if (visitedSet.contains(newWord) || !wordSet.contains(newWord)) {
+                        //nextWord已经访问过，或者nextWord不是wordSet中的单词，直接进行下次循环
+                        if (visitedSet.contains(nextWord) || !wordSet.contains(nextWord)) {
                             continue;
                         }
 
-                        //newWord加入队列，并且设置newWord已访问
-                        queue.offer(newWord);
-                        visitedSet.add(newWord);
+                        //nextWord加入队列，并且设置nextWord已访问
+                        queue.offer(nextWord);
+                        visitedSet.add(nextWord);
                     }
 
                     //word中的第j位复原，用于第j+1位变化
@@ -137,8 +138,11 @@ public class Problem127 {
      * @return
      */
     public int ladderLength2(String beginWord, String endWord, List<String> wordList) {
-        //wordList中不包含endWord，则beginWord无法转换为endWord，返回0
-        if (!wordList.contains(endWord)) {
+        //有效单词集合，存储wordList中单词，O(1)判断当前单词是否是wordList中的单词
+        Set<String> wordSet = new HashSet<>(wordList);
+
+        //wordSet中不包含endWord，则beginWord无法转换为endWord，返回0
+        if (!wordSet.contains(endWord)) {
             return 0;
         }
 
@@ -150,8 +154,6 @@ public class Problem127 {
         Set<String> visitedSet1 = new HashSet<>();
         //从后往前遍历的访问集合，存储queue2已经访问到的单词
         Set<String> visitedSet2 = new HashSet<>();
-        //有效单词集合，存储wordList中单词，O(1)判断当前单词是否是wordList中的单词
-        Set<String> wordSet = new HashSet<>(wordList);
         queue1.offer(beginWord);
         queue2.offer(endWord);
         //注意：双向bfs，必须先将首尾节点在对应的set中设置为已访问，不能每次出队元素的时候再标记节点已访问
@@ -196,16 +198,16 @@ public class Problem127 {
                     for (char k = 'a'; k <= 'z'; k++) {
                         wordArr[j] = k;
                         //变化word中的第j位为k得到的单词
-                        String newWord = new String(wordArr);
+                        String nextWord = new String(wordArr);
 
-                        //newWord已经访问过，或者newWord不是wordSet中的单词，直接进行下次循环
-                        if (visitedSet1.contains(newWord) || !wordSet.contains(newWord)) {
+                        //nextWord已经访问过，或者nextWord不是wordSet中的单词，直接进行下次循环
+                        if (visitedSet1.contains(nextWord) || !wordSet.contains(nextWord)) {
                             continue;
                         }
 
-                        //newWord加入队列queue1，并且设置newWord已访问
-                        queue1.offer(newWord);
-                        visitedSet1.add(newWord);
+                        //nextWord加入队列queue1，并且设置nextWord已访问
+                        queue1.offer(nextWord);
+                        visitedSet1.add(nextWord);
                     }
 
                     //word中的第j位复原，用于第j+1位变化

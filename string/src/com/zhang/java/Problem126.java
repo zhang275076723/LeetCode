@@ -66,16 +66,17 @@ public class Problem126 {
      * @return
      */
     public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
-        //wordList中不包含endWord，则beginWord无法转换为endWord，返回空集合
-        if (!wordList.contains(endWord)) {
+        //有效单词集合，存储wordList中单词，O(1)判断当前单词是否是wordList中的单词
+        Set<String> wordSet = new HashSet<>(wordList);
+
+        //wordSet中不包含endWord，则beginWord无法转换为endWord，返回空集合
+        if (!wordSet.contains(endWord)) {
             return new ArrayList<>();
         }
 
         Queue<String> queue = new LinkedList<>();
         //访问集合，存储当前已经访问到的单词
         Set<String> visitedSet = new HashSet<>();
-        //有效单词集合，存储wordList中单词，O(1)判断当前单词是否是wordList中的单词
-        Set<String> wordSet = new HashSet<>(wordList);
         queue.offer(beginWord);
         visitedSet.add(beginWord);
 
@@ -114,45 +115,43 @@ public class Problem126 {
                     for (char k = 'a'; k <= 'z'; k++) {
                         wordArr[j] = k;
                         //变化word中的第j位为k得到的单词
-                        String newWord = new String(wordArr);
+                        String nextWord = new String(wordArr);
 
-                        //newWord已经转换为了endWord，则存在最短转换路径，flag置为true
-                        //注意：如果break，则得到的最短路径长度不充分，需要把当前bfs向外扩展层中单词全部遍历完，得到所有的最短路径
-                        if (newWord.equals(endWord)) {
+                        //nextWord已经转换为了endWord，则存在最短转换路径，flag置为true
+                        //注意：此时不能break，如果break，则有可能会遗漏最短路径，需要bfs当前层中单词全部遍历完，得到所有的最短路径
+                        if (nextWord.equals(endWord)) {
                             flag = true;
                         }
 
-                        //newWord不是wordSet中的单词，直接进行下次循环
-                        if (!wordSet.contains(newWord)) {
+                        //nextWord不是wordSet中的单词，直接进行下次循环
+                        if (!wordSet.contains(nextWord)) {
                             continue;
                         }
 
-                        //newWord已经遍历过，原本应该直接进行下次循环，但此时由word转换为newWord也是一条最短路径，也要加入convertMap，避免遗漏其他最短转换路径
-                        if (stepMap.containsKey(newWord) && stepMap.get(newWord) == count + 1) {
-                            List<String> list = convertMap.get(newWord);
-                            list.add(word);
+                        //nextWord已经遍历过，原本应该直接进行下次循环，但此时由word转换为nextWord也是一条最短路径，也要加入convertMap，避免遗漏其他最短转换路径
+                        if (stepMap.containsKey(nextWord) && stepMap.get(nextWord) == count + 1) {
+                            convertMap.get(nextWord).add(word);
                             continue;
                         }
 
-                        //newWord已经访问过，直接进行下次循环
-                        if (visitedSet.contains(newWord)) {
+                        //nextWord已经访问过，直接进行下次循环
+                        if (visitedSet.contains(nextWord)) {
                             continue;
                         }
 
-                        //beginWord转换为newWord的最少转换次数为count+1，加入stepMap
-                        stepMap.put(newWord, count + 1);
+                        //beginWord转换为nextWord的最少转换次数为count+1，加入stepMap
+                        stepMap.put(nextWord, count + 1);
 
-                        if (!convertMap.containsKey(newWord)) {
-                            convertMap.put(newWord, new ArrayList<>());
+                        if (!convertMap.containsKey(nextWord)) {
+                            convertMap.put(nextWord, new ArrayList<>());
                         }
 
-                        //word转换为newWord是一条最短路径，加入convertMap
-                        List<String> list = convertMap.get(newWord);
-                        list.add(word);
+                        //word转换为nextWord是一条最短路径，加入convertMap
+                        convertMap.get(nextWord).add(word);
 
-                        //newWord加入队列，并且设置newWord已访问
-                        queue.offer(newWord);
-                        visitedSet.add(newWord);
+                        //nextWord加入队列，并且设置nextWord已访问
+                        queue.offer(nextWord);
+                        visitedSet.add(nextWord);
                     }
 
                     //word中的第j位复原，用于第j+1位变化
@@ -163,22 +162,25 @@ public class Problem126 {
             //count加1，表示bfs每次往外扩一层
             count++;
 
-            //当前bfs向外扩展层中单词已经全部遍历完，存在beginWord转换为endWord的最短转换路径，
-            //直接跳出bfs，根据convertMap通过dfs复原最短转换路径
+            //bfs当前层中单词全部遍历完，如果存在beginWord转换为endWord的最短转换路径，
+            //则convertMap中已经保存所有beginWord转换为endWord的最短转换路径中的父节点，
+            //跳出bfs，根据convertMap通过dfs复原最短转换路径
             if (flag) {
                 break;
             }
         }
 
-        List<List<String>> result = new ArrayList<>();
-
         //存在beginWord转换为endWord的最短转换路径，根据convertMap通过dfs复原最短转换路径
         if (flag) {
-            //因为convertMap存储当前单词可由哪些单词转换而来，类似当前单词的父节点，需要首添加，所以使用LinkedList
-            backtrack(beginWord, endWord, convertMap, new LinkedList<>(), result);
-        }
+            List<List<String>> result = new ArrayList<>();
 
-        return result;
+            //因为convertMap存储当前单词可由哪些单词转换而来，类似当前单词的父节点，需要首添加，所以使用LinkedList
+            dfs(beginWord, endWord, convertMap, new LinkedList<>(), result);
+
+            return result;
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     /**
@@ -196,8 +198,11 @@ public class Problem126 {
      * @return
      */
     public List<List<String>> findLadders2(String beginWord, String endWord, List<String> wordList) {
-        //wordList中不包含endWord，则beginWord无法转换为endWord，返回空集合
-        if (!wordList.contains(endWord)) {
+        //有效单词集合，存储wordList中单词，O(1)判断当前单词是否是wordList中的单词
+        Set<String> wordSet = new HashSet<>(wordList);
+
+        //wordSet中不包含endWord，则beginWord无法转换为endWord，返回空集合
+        if (!wordSet.contains(endWord)) {
             return new ArrayList<>();
         }
 
@@ -209,8 +214,6 @@ public class Problem126 {
         Set<String> visitedSet1 = new HashSet<>();
         //从后往前遍历的访问集合，存储queue2已经访问到的单词
         Set<String> visitedSet2 = new HashSet<>();
-        //有效单词集合，存储wordList中单词，O(1)判断当前单词是否是wordList中的单词
-        Set<String> wordSet = new HashSet<>(wordList);
         queue1.offer(beginWord);
         queue2.offer(endWord);
         //注意：双向bfs，必须先将首尾节点在对应的set中设置为已访问，不能每次出队元素的时候再标记节点已访问
@@ -273,58 +276,55 @@ public class Problem126 {
                     for (char k = 'a'; k <= 'z'; k++) {
                         wordArr[j] = k;
                         //变化word中的第j位为k得到的单词
-                        String newWord = new String(wordArr);
+                        String nextWord = new String(wordArr);
 
-                        //newWord已经存在visitedSet2中，即双向bfs相交，则存在最短转换路径，flag置为true
-                        //注意：如果break，则得到的最短路径长度不充分，需要把当前bfs向外扩展层中单词全部遍历完，得到所有的最短路径
-                        if (visitedSet2.contains(newWord)) {
+                        //nextWord已经存在visitedSet2中，即双向bfs相交，则存在最短转换路径，flag置为true
+                        //注意：此时不能break，如果break，则有可能会遗漏最短路径，需要bfs当前层中单词全部遍历完，得到所有的最短路径
+                        if (visitedSet2.contains(nextWord)) {
                             flag = true;
                         }
 
-                        //newWord不是wordSet中的单词，直接进行下次循环
-                        if (!wordSet.contains(newWord)) {
+                        //nextWord不是wordSet中的单词，直接进行下次循环
+                        if (!wordSet.contains(nextWord)) {
                             continue;
                         }
 
-                        //从前往后bfs，word转换为newWord
+                        //从前往后bfs，word转换为nextWord
                         if (direction == 1) {
-                            //newWord已经遍历过，原本应该直接进行下次循环，但此时由word转换为newWord也是一条最短路径，也要加入convertMap，避免遗漏其他最短转换路径
-                            if (stepMap1.containsKey(newWord) && stepMap1.get(newWord) == count1 + 1) {
-                                List<String> list = convertMap.get(newWord);
-                                list.add(word);
+                            //nextWord已经遍历过，原本应该直接进行下次循环，但此时由word转换为nextWord也是一条最短路径，也要加入convertMap，避免遗漏其他最短转换路径
+                            if (stepMap1.containsKey(nextWord) && stepMap1.get(nextWord) == count1 + 1) {
+                                convertMap.get(nextWord).add(word);
                             }
                         } else {
-                            //从后往前bfs，newWord转换为word
+                            //从后往前bfs，nextWord转换为word
 
-                            //newWord已经遍历过，原本应该直接进行下次循环，但此时由newWord转换为word也是一条最短路径，也要加入convertMap，避免遗漏其他最短转换路径
-                            if (stepMap2.containsKey(newWord) && stepMap2.get(newWord) == count2 + 1) {
+                            //nextWord已经遍历过，原本应该直接进行下次循环，但此时由nextWord转换为word也是一条最短路径，也要加入convertMap，避免遗漏其他最短转换路径
+                            if (stepMap2.containsKey(nextWord) && stepMap2.get(nextWord) == count2 + 1) {
                                 //从后往前bfs，convertMap中有可能没有word，则需要将word放入convertMap中
                                 if (!convertMap.containsKey(word)) {
                                     convertMap.put(word, new ArrayList<>());
                                 }
 
-                                List<String> list = convertMap.get(word);
-                                list.add(newWord);
+                                convertMap.get(word).add(nextWord);
                             }
                         }
 
-                        //newWord已经访问过，直接进行下次循环
-                        if (visitedSet1.contains(newWord)) {
+                        //nextWord已经访问过，直接进行下次循环
+                        if (visitedSet1.contains(nextWord)) {
                             continue;
                         }
 
                         //从前往后bfs，更新convertMap和stepMap1
                         if (direction == 1) {
-                            if (!convertMap.containsKey(newWord)) {
-                                convertMap.put(newWord, new ArrayList<>());
+                            if (!convertMap.containsKey(nextWord)) {
+                                convertMap.put(nextWord, new ArrayList<>());
                             }
 
-                            //word转换为newWord是一条最短路径，加入convertMap
-                            List<String> list = convertMap.get(newWord);
-                            list.add(word);
+                            //word转换为nextWord是一条最短路径，加入convertMap
+                            convertMap.get(nextWord).add(word);
 
-                            //beginWord转换为newWord的最少转换次数为count1+1，加入stepMap1
-                            stepMap1.put(newWord, count1 + 1);
+                            //beginWord转换为nextWord的最少转换次数为count1+1，加入stepMap1
+                            stepMap1.put(nextWord, count1 + 1);
                         } else {
                             //从后往前bfs，更新convertMap和stepMap2
 
@@ -332,17 +332,16 @@ public class Problem126 {
                                 convertMap.put(word, new ArrayList<>());
                             }
 
-                            //newWord转换为word是一条最短路径，加入convertMap
-                            List<String> list = convertMap.get(word);
-                            list.add(newWord);
+                            //nextWord转换为word是一条最短路径，加入convertMap
+                            convertMap.get(word).add(nextWord);
 
-                            //newWord转换为endWord的最少转换次数为count2+1，加入stepMap2
-                            stepMap2.put(newWord, count2 + 1);
+                            //nextWord转换为endWord的最少转换次数为count2+1，加入stepMap2
+                            stepMap2.put(nextWord, count2 + 1);
                         }
 
-                        //newWord加入队列queue1，并且设置newWord已访问
-                        queue1.offer(newWord);
-                        visitedSet1.add(newWord);
+                        //nextWord加入队列queue1，并且设置nextWord已访问
+                        queue1.offer(nextWord);
+                        visitedSet1.add(nextWord);
                     }
 
                     //word中的第j位复原，用于第j+1位变化
@@ -358,22 +357,25 @@ public class Problem126 {
                 count2++;
             }
 
-            //当前bfs向外扩展层中单词已经全部遍历完，存在beginWord转换为endWord的最短转换路径，
-            //直接跳出bfs，根据convertMap通过dfs复原最短转换路径
+            //bfs当前层中单词全部遍历完，如果存在beginWord转换为endWord的最短转换路径，
+            //则convertMap中已经保存所有beginWord转换为endWord的最短转换路径中的父节点，
+            //跳出bfs，根据convertMap通过dfs复原最短转换路径
             if (flag) {
                 break;
             }
         }
 
-        List<List<String>> result = new ArrayList<>();
-
         //存在beginWord转换为endWord的最短转换路径，根据convertMap通过dfs复原最短转换路径
         if (flag) {
-            //因为convertMap存储当前单词可由哪些单词转换而来，类似当前单词的父节点，需要首添加，所以使用LinkedList
-            backtrack(beginWord, endWord, convertMap, new LinkedList<>(), result);
-        }
+            List<List<String>> result = new ArrayList<>();
 
-        return result;
+            //因为convertMap存储当前单词可由哪些单词转换而来，类似当前单词的父节点，需要首添加，所以使用LinkedList
+            dfs(beginWord, endWord, convertMap, new LinkedList<>(), result);
+
+            return result;
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     /**
@@ -385,8 +387,8 @@ public class Problem126 {
      * @param path
      * @param result
      */
-    private void backtrack(String beginWord, String endWord, Map<String, List<String>> convertMap,
-                           LinkedList<String> path, List<List<String>> result) {
+    private void dfs(String beginWord, String endWord, Map<String, List<String>> convertMap,
+                     LinkedList<String> path, List<List<String>> result) {
         //beginWord和endWord相等，则找到了一条最短转换路径，加入result
         if (beginWord.equals(endWord)) {
             //单词首添加
@@ -396,17 +398,20 @@ public class Problem126 {
             return;
         }
 
-        //当前endWord不存在转换为beginWord的list集合，直接返回，避免convertMap.get(endWord)空指针异常
-        if (!convertMap.containsKey(endWord)) {
+        //最短转换路径中转换为endWord的单词集合
+        List<String> nextWordList = convertMap.get(endWord);
+
+        //最短转换路径中不存在转换为endWord的单词集合，直接返回
+        if (nextWordList == null) {
             return;
         }
 
         //因为convertMap存储当前单词可由哪些单词转换而来，类似当前单词的父节点，需要首添加
         path.addFirst(endWord);
 
-        //newWord转换为endWord
-        for (String newWord : convertMap.get(endWord)) {
-            backtrack(beginWord, newWord, convertMap, path, result);
+        //最短转换路径中转换为endWord的单词nextWord
+        for (String nextWord : convertMap.get(endWord)) {
+            dfs(beginWord, nextWord, convertMap, path, result);
         }
 
         path.removeFirst();
