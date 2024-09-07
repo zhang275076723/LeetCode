@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/2/12 08:10
  * @Author zsy
- * @Description 单词接龙 双向bfs类比Problem126、Problem433、Problem752、Problem1345
+ * @Description 单词接龙 双向bfs类比Problem126、Problem433、Problem752、Problem815、Problem1345、Problem2059
  * 字典 wordList 中从单词 beginWord 和 endWord 的 转换序列 是一个按下述规格形成的序列 beginWord -> s1 -> s2 -> ... -> sk：
  * 每一对相邻的单词只差一个字母。
  * 对于 1 <= i <= k 时，每个 si 都在 wordList 中。
@@ -126,7 +126,7 @@ public class Problem127 {
 
     /**
      * 双向bfs (bfs确保最先得到最短转换序列中的单词个数)
-     * 从beginWord和endWord同时开始bfs，bfs每次往外扩一层，将当前队列当前层中所有单词通过wordList变化能够得到的单词全部加入另一个队列中，
+     * 从beginWord和endWord同时开始bfs，bfs每次往外扩一层，将当前队列当前层中所有单词通过wordList变化能够得到的单词加入当前队列中，
      * 直至一个队列中包含了另一个队列中的单词，即双向bfs相交，或者全部遍历完都没有找到endWord，返回-1
      * 注意：双向bfs优先遍历两个队列中较少的队列，因为较少的队列，扩展一层得到的元素少，能够加快查询速度
      * 时间复杂度O(m^2*n)，空间复杂度O(mn) (m=beginWord.length()=endWord.length()，n=wordList.size())

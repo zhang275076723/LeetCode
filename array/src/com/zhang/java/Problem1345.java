@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/2/5 08:34
  * @Author zsy
- * @Description 跳跃游戏 IV 双向bfs类比Problem126、Problem127、Problem433、Problem752 跳跃问题类比Problem45、Problem55、Problem403、Problem975、Problem1306、Problem1340、Problem1377、Problem1654、Problem1696、Problem1871、Problem2297、Problem2498、Problem2770、LCP09
+ * @Description 跳跃游戏 IV 双向bfs类比Problem126、Problem127、Problem433、Problem752、Problem815、Problem2059 跳跃问题类比Problem45、Problem55、Problem403、Problem975、Problem1306、Problem1340、Problem1377、Problem1654、Problem1696、Problem1871、Problem2297、Problem2498、Problem2770、LCP09
  * 给你一个整数数组 arr ，你一开始在数组的第一个元素处（下标为 0）。
  * 每一步，你可以从下标 i 跳到下标 i + 1 、i - 1 或者 j ：
  * i + 1 需满足：i + 1 < arr.length
@@ -122,7 +122,7 @@ public class Problem1345 {
 
     /**
      * 双向bfs (bfs确保最先得到跳跃到末尾元素的最少跳跃次数)
-     * 从0和arr.length-1同时开始bfs，bfs每次往外扩一层，将当前队列当前层中所有下标索引的相邻下标索引和同值下标索引全部加入另一个队列中，
+     * 从0和arr.length-1同时开始bfs，bfs每次往外扩一层，将当前队列当前层中所有下标索引的相邻下标索引和同值下标索引加入当前队列中，
      * 直至一个队列中包含了另一个队列中的下标索引，即双向bfs相交，或者全部遍历完都没有找到跳跃到末尾下标索引，返回-1
      * 注意：双向bfs优先遍历两个队列中较少的队列，因为较少的队列，扩展一层得到的元素少，能够加快查询速度
      * 时间复杂度O(n)，空间复杂度O(n)

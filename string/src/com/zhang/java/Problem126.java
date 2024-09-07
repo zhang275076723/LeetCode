@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/2/13 08:28
  * @Author zsy
- * @Description 单词接龙 II Amazon面试题 双向bfs类比Problem127、Problem433、Problem752、Problem1345 保存父节点类比Problem113、Problem272、Problem310、Problem863、Offer34
+ * @Description 单词接龙 II Amazon面试题 双向bfs类比Problem127、Problem433、Problem752、Problem815、Problem1345、Problem2059 保存父节点类比Problem113、Problem272、Problem310、Problem863、Offer34
  * 按字典 wordList 完成从单词 beginWord 到单词 endWord 转化，
  * 一个表示此过程的 转换序列 是形式上像 beginWord -> s1 -> s2 -> ... -> sk 这样的单词序列，并满足：
  * 每对相邻的单词之间仅有单个字母不同。
@@ -183,7 +183,7 @@ public class Problem126 {
 
     /**
      * 双向bfs+dfs (有用例在交换队列取较小队列时超时，但正确)
-     * 从beginWord和endWord同时开始bfs，bfs每次往外扩一层，将当前队列当前层中所有单词通过wordList变化能够得到的单词全部加入另一个队列中，
+     * 从beginWord和endWord同时开始bfs，bfs每次往外扩一层，将当前队列当前层中所有单词通过wordList变化能够得到的单词加入当前队列中，
      * 直至一个队列中包含了另一个队列中的单词，即双向bfs相交，或者全部遍历完都没有找到endWord，即不存在最短转换路径
      * convertMap存储当前单词可由哪些单词转换而来，类似当前单词的父节点，用于dfs复原beginWord转换为endWord的最短转换路径；
      * stepMap1存储beginWord转换为当前单词的最少转换次数，stepMap2存储当前单词转换为endWord的最少转换次数，

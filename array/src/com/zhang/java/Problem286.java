@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * @Date 2024/12/24 08:39
  * @Author zsy
- * @Description 墙与门 多源bfs类比Problem542、Problem994、Problem1162、Problem2812
+ * @Description 墙与门 多源bfs类比Problem542、Problem994、Problem1162、Problem1765、Problem2812
  * 你被给定一个 m × n 的二维网格 rooms ，网格中有以下三种可能的初始化值：
  * -1 表示墙或是障碍物
  * 0 表示一扇门
@@ -48,6 +48,7 @@ public class Problem286 {
 
     /**
      * 多源bfs
+     * 值为0的节点入队，bfs每次往外扩一层，得到当前空房间到门的最小距离
      * 时间复杂度O(mn)，空间复杂度O(mn)
      *
      * @param rooms
@@ -64,6 +65,7 @@ public class Problem286 {
 
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
+                //值为0的节点入队
                 if (rooms[i][j] == 0) {
                     queue.offer(new int[]{i, j});
                     visited[i][j] = true;
@@ -71,7 +73,7 @@ public class Problem286 {
             }
         }
 
-        //bfs遍历过程中当前为INF的节点到最近门节点的最小距离
+        //bfs遍历过程中，当前为INF的节点到最近门节点的最小距离
         int distance = 0;
 
         while (!queue.isEmpty()) {
@@ -87,6 +89,7 @@ public class Problem286 {
                     int x2 = x1 + direction[j][0];
                     int y2 = y1 + direction[j][1];
 
+                    //邻接节点越界，或者邻接节点已访问，直接进行下次循环
                     if (x2 < 0 || x2 >= m || y2 < 0 || y2 >= n || visited[x2][y2]) {
                         continue;
                     }

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/8/15 08:59
  * @Author zsy
- * @Description 打开转盘锁 类比Problem753 双向bfs类比Problem126、Problem127、Problem433、Problem1345
+ * @Description 打开转盘锁 类比Problem753 双向bfs类比Problem126、Problem127、Problem433、Problem815、Problem1345、Problem2059
  * 你有一个带有四个圆形拨轮的转盘锁。每个拨轮都有10个数字： '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' 。
  * 每个拨轮可以自由旋转：例如把 '9' 变为 '0'，'0' 变为 '9' 。每次旋转都只能旋转一个拨轮的一位数字。
  * 锁的初始数字为 '0000' ，一个代表四个拨轮的数字的字符串。
@@ -142,7 +142,7 @@ public class Problem752 {
 
     /**
      * 双向bfs
-     * 从"0000"和target同时开始bfs，bfs每次往外扩一层，将当前队列当前层中所有数字通过旋转能够得到的数字全部加入另一个队列中，
+     * 从"0000"和target同时开始bfs，bfs每次往外扩一层，将当前队列当前层中所有数字通过旋转能够得到的数字加入当前队列中，
      * 直至一个队列中包含了另一个队列中的数字，即双向bfs相交，或者全部遍历完都没有找到target，返回-1
      * 注意：双向bfs优先遍历两个队列中较少的队列，因为较少的队列，扩展一层得到的元素少，能够加快查询速度
      * 时间复杂度O(m^2*10^m)，空间复杂度O(m*10^m) (m=target.length()，n=deadends.length)

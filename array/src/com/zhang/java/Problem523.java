@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/7/27 08:07
  * @Author zsy
- * @Description 连续的子数组和 类比Problem974、Problem1590、Problem2598 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1856、Problem1871、Offer57_2
+ * @Description 连续的子数组和 同余类比Problem974、Problem1590、Problem2598 前缀和类比Problem209、Problem325、Problem327、Problem437、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1856、Problem1871、Offer57_2
  * 给你一个整数数组 nums 和一个整数 k ，编写一个函数来判断该数组是否含有同时满足下述条件的连续子数组：
  * 子数组大小 至少为 2 ，且子数组元素总和为 k 的倍数。
  * 如果存在，返回 true ；否则，返回 false 。

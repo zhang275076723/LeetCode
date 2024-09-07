@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/8/16 08:11
  * @Author zsy
- * @Description 最小基因变化 双向bfs类比Problem126、Problem127、Problem752、Problem1345
+ * @Description 最小基因变化 双向bfs类比Problem126、Problem127、Problem752、Problem815、Problem1345、Problem2059
  * 基因序列可以表示为一条由 8 个字符组成的字符串，其中每个字符都是 'A'、'C'、'G' 和 'T' 之一。
  * 假设我们需要调查从基因序列 start 变为 end 所发生的基因变化。
  * 一次基因变化就意味着这个基因序列中的一个字符发生了变化。
@@ -121,7 +121,7 @@ public class Problem433 {
 
     /**
      * 双向bfs
-     * 从startGene和endGene同时开始bfs，bfs每次往外扩一层，将当前队列当前层中所有基因通过基因库bank变化能够得到的基因全部加入另一个队列中，
+     * 从startGene和endGene同时开始bfs，bfs每次往外扩一层，将当前队列当前层中所有基因通过基因库bank变化能够得到的基因加入当前队列中，
      * 直至一个队列中包含了另一个队列中的基因，即双向bfs相交，或者全部遍历完都没有找到endGene，返回-1
      * 注意：双向bfs优先遍历两个队列中较少的队列，因为较少的队列，扩展一层得到的元素少，能够加快查询速度
      * 时间复杂度O(Cmn)，空间复杂度O(mn) (m=startGene.length()=endGene.length()，n=bank.length) (C=4，基因变化只能是'A'、'C'、'G'、'T')
