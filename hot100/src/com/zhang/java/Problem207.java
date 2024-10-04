@@ -61,7 +61,10 @@ public class Problem207 {
         int[] visited = new int[numCourses];
 
         for (int i = 0; i < prerequisites.length; i++) {
-            edges[prerequisites[i][1]][prerequisites[i][0]] = 1;
+            int u = prerequisites[i][0];
+            int v = prerequisites[i][1];
+
+            edges[v][u] = 1;
         }
 
         for (int i = 0; i < numCourses; i++) {
@@ -99,8 +102,11 @@ public class Problem207 {
         int[] inDegree = new int[numCourses];
 
         for (int i = 0; i < prerequisites.length; i++) {
-            edges[prerequisites[i][1]][prerequisites[i][0]] = 1;
-            inDegree[prerequisites[i][0]]++;
+            int u = prerequisites[i][0];
+            int v = prerequisites[i][1];
+
+            edges[v][u] = 1;
+            inDegree[u]++;
         }
 
         //存放入度为0节点的队列
@@ -111,15 +117,15 @@ public class Problem207 {
         for (int i = 0; i < numCourses; i++) {
             if (inDegree[i] == 0) {
                 queue.offer(i);
+                count++;
             }
         }
 
         while (!queue.isEmpty()) {
             int u = queue.poll();
-            count++;
 
             //遍历节点u的邻接节点v
-            for (int v = 0; v < edges[0].length; v++) {
+            for (int v = 0; v < numCourses; v++) {
                 if (edges[u][v] != 0) {
                     //v入度减1
                     inDegree[v]--;
@@ -127,6 +133,7 @@ public class Problem207 {
                     //邻接节点v的入度为0，则入队
                     if (inDegree[v] == 0) {
                         queue.offer(v);
+                        count++;
                     }
                 }
             }

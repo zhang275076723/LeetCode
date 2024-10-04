@@ -1,9 +1,11 @@
 package com.zhang.java;
 
+import java.util.Random;
+
 /**
  * @Date 2023/12/17 08:36
  * @Author zsy
- * @Description 公平分发饼干 集合划分类比Problem416、Problem473、Problem698、Problem1723 状态压缩类比Problem187、Problem294、Problem464、Problem473、Problem526、Problem638、Problem698、Problem847、Problem1723、Problem1908 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 公平分发饼干 类比Problem1723、Problem2002 集合划分类比Problem416、Problem473、Problem698、Problem1723 状态压缩类比Problem187、Problem294、Problem464、Problem473、Problem526、Problem638、Problem698、Problem847、Problem1723、Problem1908 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
  * 给你一个整数数组 cookies ，其中 cookies[i] 表示在第 i 个零食包中的饼干数量。
  * 另给你一个整数 k 表示等待分发零食包的孩子数量，所有 零食包都需要分发。
  * 在同一个零食包中的所有饼干都必须分发给同一个孩子，不能分开。
@@ -45,7 +47,7 @@ public class Problem2305 {
 
     /**
      * 回溯+剪枝
-     * 时间复杂度O(k^n)，空间复杂度O(n+k) (n=cookies.length)
+     * 时间复杂度O(k^n)，空间复杂度O(n+k)
      *
      * @param cookies
      * @param k
@@ -58,37 +60,39 @@ public class Problem2305 {
     }
 
     /**
-     * 二分查找+回溯+剪枝
+     * 二分查找+回溯+剪枝，难点在于如何剪枝
      * 二分查找变形，使...最大值尽可能小，就要想到二分查找
-     * 对[left,right]进行二分查找，left为cookies中最大值，right为cookies元素之和，判断k个孩子分配零食得到的最大饼干数量的最小值是否超过mid，
-     * 如果超过mid，则分配零食得到的最大饼干数量的最小值在mid右边，left=mid+1；
-     * 如果不超过mid，则分配零食得到的最大饼干数量的最小值在mid或mid左边，right=mid
-     * 时间复杂度O(k^n*log(right-left))=O(k^n)，空间复杂度O(n+k) (n=cookies.length，left和right为int范围内的数，log(right-left)<32)
+     * cookies由大到小排序，对[left,right]进行二分查找，left为cookies最大值，right为cookies元素之和，判断k个孩子分配零食得到的最大饼干数量是否小于等于mid，
+     * 如果k个孩子分配零食得到的最大饼干数量大于mid，则k个孩子分配零食得到的最大饼干数量的最小值在mid右边，left=mid+1；
+     * 如果k个孩子分配零食得到的最大饼干数量小于等于mid，则k个孩子分配零食得到的最大饼干数量的最小值在mid或mid左边，right=mid
+     * 时间复杂度O(nlogn+k^n*log(sum(cookies[i])-max(cookies[i])))=O(k^n)，空间复杂度O(n+k)
      *
      * @param cookies
      * @param k
      * @return
      */
     public int distributeCookies2(int[] cookies, int k) {
-        //二分查找左边界，初始化为cookies中最大值
-        int left = cookies[0];
-        //二分查找右边界，初始化为cookies元素之和
-        int right = 0;
-        int mid;
+        //由大到小排序，优先分配饼干数量大的零食
+        quickSort(cookies, 0, cookies.length - 1);
+
+        int sum = 0;
 
         for (int cookie : cookies) {
-            left = Math.max(left, cookie);
-            right = right + cookie;
+            sum = sum + cookie;
         }
+
+        int left = cookies[0];
+        int right = sum;
+        int mid;
 
         while (left < right) {
             mid = left + ((right - left) >> 1);
 
-            //k个孩子分配零食得到的饼干数量超过mid，则分配零食得到的最大饼干数量的最小值在mid右边，left=mid+1
+            //k个孩子分配零食得到的最大饼干数量大于mid，则k个孩子分配零食得到的最大饼干数量的最小值在mid右边，left=mid+1
             if (!backtrack(0, cookies, new int[k], mid)) {
                 left = mid + 1;
             } else {
-                //k个孩子分配零食得到的饼干数量不超过mid，则分配零食得到的最大饼干数量的最小值在mid或mid左边，right=mid
+                //k个孩子分配零食得到的最大饼干数量小于等于mid，则k个孩子分配零食得到的最大饼干数量的最小值在mid或mid左边，right=mid
                 right = mid;
             }
         }
@@ -156,9 +160,9 @@ public class Problem2305 {
 
     /**
      * @param t
-     * @param curMax  分配完第t-1个零食孩子得到的最大饼干数量
+     * @param curMax  分配完cookies[t]后所有孩子得到的最大饼干数量，即max(child[i])
      * @param cookies
-     * @param child   每个孩子分配零食得到饼干的数量数组
+     * @param child   每个孩子分配零食得到的饼干数量数组
      */
     private void backtrack(int t, int curMax, int[] cookies, int[] child) {
         if (t == cookies.length) {
@@ -167,42 +171,33 @@ public class Problem2305 {
         }
 
         for (int i = 0; i < child.length; i++) {
-            //孩子i分配零食cookies[t]之后的饼干数量大于等于result，则当前情况得到的最大饼干数量的最小值不能更新result，
+            //孩子i分配cookies[t]之后的饼干数量大于等于result，则当前情况得到的最大饼干数量的最小值不能更新result，
             //剪枝，直接进行下次循环
             if (child[i] + cookies[t] >= result) {
                 continue;
             }
 
-            //当前孩子i和前一个孩子i-1分配饼干的数量相等，则说明前一个孩子i-1已经考虑过零食cookies[t]，则当前孩子i不需要再考虑零食cookies[t]，
-            //剪枝，直接进行下次循环
-            if (i > 0 && child[i] == child[i - 1]) {
-                continue;
-            }
-
             child[i] = child[i] + cookies[t];
-
             backtrack(t + 1, Math.max(curMax, child[i]), cookies, child);
-
             child[i] = child[i] - cookies[t];
         }
     }
 
     /**
-     * k个孩子分配零食得到的最大饼干数量的最小值是否超过limit
-     * 不超过limit，返回true；超过limit，返回false
+     * 判断k个孩子分配零食得到的最大饼干数量是否小于等于limit
      *
      * @param t
      * @param cookies
-     * @param child
+     * @param child   每个孩子分配零食得到的饼干数量数组
      * @param limit
      * @return
      */
     private boolean backtrack(int t, int[] cookies, int[] child, int limit) {
-        //k个孩子分配零食得到的最大饼干数量的最小值不超过limit，返回true
         if (t == cookies.length) {
             return true;
         }
 
+        //优先分配饼干数量大的零食
         for (int i = 0; i < child.length; i++) {
             if (child[i] + cookies[t] > limit) {
                 continue;
@@ -223,7 +218,45 @@ public class Problem2305 {
             child[i] = child[i] - cookies[t];
         }
 
-        //遍历结束，则k个孩子分配零食得到的最大饼干数量的最小值超过limit，返回false
+        //遍历结束，则k个孩子分配零食得到的最大饼干数量大于limit，返回false
         return false;
+    }
+
+    private void quickSort(int[] arr, int left, int right) {
+        if (left >= right) {
+            return;
+        }
+
+        int pivot = partition(arr, left, right);
+        quickSort(arr, left, pivot - 1);
+        quickSort(arr, pivot + 1, right);
+    }
+
+    private int partition(int[] arr, int left, int right) {
+        int randomIndex = new Random().nextInt(right - left + 1) + left;
+
+        int value = arr[left];
+        arr[left] = arr[randomIndex];
+        arr[randomIndex] = value;
+
+        int temp = arr[left];
+
+        while (left < right) {
+            while (left < right && arr[right] <= temp) {
+                right--;
+            }
+
+            arr[left] = arr[right];
+
+            while (left < right && arr[left] >= temp) {
+                left++;
+            }
+
+            arr[right] = arr[left];
+        }
+
+        arr[left] = temp;
+
+        return left;
     }
 }

@@ -6,6 +6,7 @@ package com.zhang.java;
  * @Description 分割数组的最大值 美团机试题 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem441、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
  * 给定一个非负整数数组 nums 和一个整数 m ，你需要将这个数组分成 m 个非空的连续子数组。
  * 设计一个算法使得这 m 个子数组各自和的最大值最小。
+ * <p>
  * 输入：nums = [7,2,5,10,8], m = 2
  * 输出：18
  * 解释：
@@ -35,9 +36,9 @@ public class Problem410 {
 
     /**
      * 二分查找变形，使...最大值尽可能小，就要想到二分查找
-     * 对[left,right]进行二分查找，left为数组中最大值，right为数组元素之和，统计数组中分割的子数组元素之和小于等于mid的最大个数count，
-     * 如果count大于m，则最大的子数组元素之和的最小值在mid右边，left=mid+1；
-     * 如果count小于等于m，则最大的子数组元素之和的最小值在mid或mid左边，right=mid
+     * 对[left,right]进行二分查找，left为nums最大值，right为nums元素之和，统计nums中分割的子数组元素之和小于等于mid的最小个数count，
+     * 如果count大于m，则nums中分割m个的子数组元素之和的最大值的最小值在mid右边，left=mid+1；
+     * 如果count小于等于m，则nums中分割m个的子数组元素之和的最大值的最小值在mid或mid左边，right=mid
      * 时间复杂度O(n*log(sum(nums[i])-max(nums[i])))=O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -60,7 +61,7 @@ public class Problem410 {
         while (left < right) {
             mid = left + ((right - left) >> 1);
 
-            //数组中分割的子数组元素之和小于等于mid的最大个数
+            //nums中分割的子数组元素之和小于等于mid的最小个数
             int count = 0;
             //当前子数组元素之和
             int curSum = 0;

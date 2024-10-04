@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/2/12 08:45
  * @Author zsy
- * @Description 到最近的人的最大距离 类比Problem855 双指针类比
+ * @Description 到最近的人的最大距离 类比Problem855 类比Problem1437 双指针类比
  * 给你一个数组 seats 表示一排座位，其中 seats[i] = 1 代表有人坐在第 i 个座位上，
  * seats[i] = 0 代表座位 i 上是空的（下标从 0 开始）。
  * 至少有一个空座位，且至少有一人已经坐在座位上。
@@ -47,23 +47,20 @@ public class Problem849 {
      * @return
      */
     public int maxDistToClosest(int[] seats) {
-        int max = 0;
         //当前为1的下标索引
         int left = 0;
-        //下一个为1的下标索引
-        int right = 0;
 
-        //注意：seat中至少有一个1
         while (left < seats.length && seats[left] != 1) {
             left++;
         }
 
-        //开始到第一个1之间选择座位距离最近1的最大距离
-        max = Math.max(max, left);
+        //距离最近1的最大距离
+        //初始化为seats[0]到seats[left]的距离
+        int max = left;
+        //下一个为1的下标索引
+        int right = left + 1;
 
         while (right < seats.length) {
-            right = left + 1;
-
             while (right < seats.length && seats[right] != 1) {
                 right++;
             }
@@ -77,6 +74,7 @@ public class Problem849 {
             }
 
             left = right;
+            right = left + 1;
         }
 
         return max;

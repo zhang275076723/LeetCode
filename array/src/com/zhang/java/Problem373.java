@@ -47,7 +47,7 @@ public class Problem373 {
     }
 
     /**
-     * 小根堆，优先队列，多路归并排序
+     * 优先队列，小根堆，多路归并排序
      * 时间复杂度O(klogm)，空间复杂度O(m) (m=nums1.length，n=nums2.length)
      *
      * @param nums1
@@ -73,11 +73,6 @@ public class Problem373 {
         List<List<Integer>> result = new ArrayList<>();
 
         for (int i = 0; i < k; i++) {
-            //k比较大，此时小根堆中所有元素都已经遍历完，直接跳出循环
-            if (priorityQueue.isEmpty()) {
-                break;
-            }
-
             int[] arr = priorityQueue.poll();
 
             List<Integer> list = new ArrayList<>();
@@ -96,15 +91,14 @@ public class Problem373 {
 
     /**
      * 二分查找+双指针
-     * 对[left,right]进行二分查找，left为nums1[i]的最小值+nums2[j]的最小值，right为nums1[i]的最大值+nums2[j]的最大值，统计nums1[i]+nums2[j]小于等于mid的个数count，
+     * 对[left,right]进行二分查找，left为nums1最小值+nums2最小值，right为nums1最大值+nums2最大值，统计nums1[i]+nums2[j]小于等于mid的个数count，
      * 如果count小于k，则第k小nums1[i]+nums2[j]在mid右边，left=mid+1；
      * 如果count大于等于k，则第k小nums1[i]+nums2[j]在mid或mid左边，right=mid
      * 当left==right时，则找到第k小nums1[i]+nums2[j]的sum，先将小于sum的nums1[i]+nums2[j]加入结果集合，
      * 再根据结果集合中元素的个数，再将等于sum的nums1[i]+nums2[j]加入结果集合，最终得到有k个元素的结果集合
      * 注意：不能一次性将小于等于sum的nums1[i]+nums2[j]一起加入结果集合，因为小于sum的nums1[i]+nums2[j]一定是前k小元素，
      * 但加上全部等于sum的nums1[i]+nums2[j]有可能大于前k小元素，所以只需要加上分部等于sum的nums1[i]+nums2[j]即得到前k小元素
-     * 时间复杂度O((m+n)*log(right-left)+max(nlogm,k))=O(m+n+max(nlogm,k))，空间复杂度O(1)
-     * (m=nums1.length，n=nums2.length，left=nums1[0]+nums2[0]，right=nums1[m-1]+nums2[n-1])
+     * 时间复杂度O((m+n)*log((nums1[m-1]+nums2[n-1])-(nums1[0]+nums2[0]))+max(nlogm,k))=O(m+n+max(nlogm,k))，空间复杂度O(1) (m=nums1.length，n=nums2.length)
      * (找等于sum的nums1[i]+nums2[j]加入结果集合要通过二分查找，时间复杂度O(max(nlogm,k)))
      *
      * @param nums1
@@ -113,10 +107,10 @@ public class Problem373 {
      * @return
      */
     public List<List<Integer>> kSmallestPairs2(int[] nums1, int[] nums2, int k) {
-        //二分左边界，初始化为nums1[i]+nums2[j]最小值
+        //二分左边界，初始化为nums1最小值+nums2最小值
         //使用long，避免int溢出
         long left = nums1[0] + nums2[0];
-        //二分右边界，初始化为nums1[i]+nums2[j]最大值
+        //二分右边界，初始化为nums1最大值+nums2最大值
         long right = nums1[nums1.length - 1] + nums2[nums2.length - 1];
         long mid;
 
@@ -156,7 +150,7 @@ public class Problem373 {
         }
 
         //再将等于sum的nums1[i]+nums2[j]加入结果集合，最终得到有k个元素的结果集合
-        //注意：要通过二分查找找等于sum的nums1[i]+nums2[j]加入结果集合，如果线性查找会超时
+        //注意：线性查找O(n)会超时，要通过二分查找O(logn)找等于sum的nums1[i]+nums2[j]加入结果集合
         for (j = 0; j < nums2.length; j++) {
             //已经找到前k小元素，直接跳出循环
             if (result.size() >= k) {

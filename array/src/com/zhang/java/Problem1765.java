@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * @Date 2024/12/29 08:22
  * @Author zsy
- * @Description 地图中的最高点 多源bfs类比Problem286、Problem542、Problem994、Problem1162、Problem2812
+ * @Description 地图中的最高点 多源bfs类比Problem286、Problem542、Problem994、Problem1162、Problem2258、Problem2812
  * 给你一个大小为 m x n 的整数矩阵 isWater ，它代表了一个由 陆地 和 水域 单元格组成的地图。
  * 如果 isWater[i][j] == 0 ，格子 (i, j) 是一个 陆地 格子。
  * 如果 isWater[i][j] == 1 ，格子 (i, j) 是一个 水域 格子。

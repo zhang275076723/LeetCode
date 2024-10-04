@@ -53,11 +53,11 @@ public class Problem1482 {
     }
 
     /**
-     * 二分查找变形，使...最大值尽可能小，就要想到二分查找
-     * 对[left,right]进行二分查找，left为数组中最小值，right为数组中最大值，统计在mid那天能够制作花的数量flower，
+     * 二分查找
+     * 对[left,right]进行二分查找，left为bloomDay最小值，right为bloomDay最大值，统计mid那天能够制作花的数量flower，
      * 如果flower小于m，则制作m朵花的最小天数在mid右边，left=mid+1；
      * 如果flower大于等于m，则制作m朵花的最小天数在mid或mid左边，right=mid
-     * 时间复杂度O(n*log(right-left))=O(n)，空间复杂度O(1) (n:bloomDay长度，left:bloomDay中最小值，right:bloomDay中最大值)
+     * 时间复杂度O(n*log(max(bloomDay[i])-min(bloomDay[i])))=O(n)，空间复杂度O(1)
      *
      * @param bloomDay
      * @param m
@@ -65,26 +65,28 @@ public class Problem1482 {
      * @return
      */
     public int minDays(int[] bloomDay, int m, int k) {
-        //至少需要m*k朵花，使用long避免m*k在int范围内溢出
+        //至少需要m*k朵花
+        //使用long，避免m*k在int范围内溢出
         if (bloomDay == null || bloomDay.length == 0 || (long) m * k > bloomDay.length) {
             return -1;
         }
 
-        //二分查找左边界，初始化为数组中最小天数
-        int left = bloomDay[0];
-        //二分查找右边界，初始化为数组中最大天数
-        int right = bloomDay[0];
-        int mid;
+        int min = bloomDay[0];
+        int max = bloomDay[0];
 
         for (int day : bloomDay) {
-            left = Math.min(left, day);
-            right = Math.max(right, day);
+            min = Math.min(min, day);
+            max = Math.max(max, day);
         }
+
+        int left = min;
+        int right = max;
+        int mid;
 
         while (left < right) {
             mid = left + ((right - left) >> 1);
 
-            //当前天数mid能够制作花的数量
+            //mid那天能够制作花的数量
             int flower = 0;
             //当前天数mid中连续盛开花的数量
             int count = 0;
@@ -96,7 +98,7 @@ public class Problem1482 {
                     count = 0;
                 }
 
-                //count等于k，则能够制作一朵花
+                //连续盛开的k朵花制作成1束花
                 if (count == k) {
                     flower++;
                     count = 0;

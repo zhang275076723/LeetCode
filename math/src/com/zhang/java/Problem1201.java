@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/7 08:00
  * @Author zsy
- * @Description 丑数 III 类比Problem878、Problem2513 三指针类比Problem75、Problem264、Problem313、Problem324、Offer49 最大公因数和最小公倍数类比 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1175、Problem1291、Offer10、Offer49
+ * @Description 丑数 III 容斥原理类比Problem878、Problem2513、Problem3116 三指针类比Problem75、Problem264、Problem313、Problem324、Offer49 最大公因数和最小公倍数类比 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1175、Problem1291、Offer10、Offer49
  * 给你四个整数：n 、a 、b 、c ，请你设计一个算法来找出第 n 个丑数。
  * 丑数是可以被 a 或 b 或 c 整除的 正整数 。
  * <p>
@@ -59,7 +59,7 @@ public class Problem1201 {
         }
 
         int result = 0;
-        //a、b、c需要乘上的倍数指针
+        //a、b、c分别需要乘上的倍数
         int i = 1;
         int j = 1;
         int k = 1;
@@ -99,10 +99,10 @@ public class Problem1201 {
      * 对[left,right]进行二分查找，left为a、b、c中的最小值，right为n*left，统计小于等于mid的丑数个数count，
      * 如果count小于n，则第n个丑数在mid右边，left=mid+1；
      * 如果count大于等于n，则则第n个丑数在mid或mid左边，right=mid
-     * 小于等于n能被a整除的丑数记为A，小于等于n能被b整除的丑数记为B，小于等于n能被c整除的丑数记为C，
+     * 小于等于n能被a整除的丑数个数记为A，小于等于n能被b整除的丑数个数记为B，小于等于n能被c整除的丑数个数记为C，
      * 其中|A|=n/a，|B|=n/b，|C|=n/c，则小于等于n能被a或b或c整除的丑数个数为|A∪B∪C|=|A|+|B|+|C|-|A∩B|-|B∩C|-|A∩C|+|A∩B∩C|=
      * n/a+n/b+n/c-n/lcm(a,b)-n/lcm(b,c)-n/lcm(a,c)+n/lcm(a,b,c) (容斥原理)
-     * 时间复杂度O(log(right-left))=O(1)，空间复杂度O(1) (left:min(a,b,c)，right:n*left)
+     * 时间复杂度O(log(n*min(a,b,c)-min(a,b,c)))=O(logn)，空间复杂度O(1)
      *
      * @param n
      * @param a
@@ -115,9 +115,7 @@ public class Problem1201 {
             return -1;
         }
 
-        //二分查找左边界，初始化为a、b、c中的最小值
         int left = Math.min(a, Math.min(b, c));
-        //二分查找右边界，初始化为n*left
         int right = n * left;
         int mid;
 

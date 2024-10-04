@@ -40,7 +40,7 @@ public class Problem719 {
     }
 
     /**
-     * 排序+小根堆，优先队列，多路归并排序 (超时)
+     * 排序+优先队列，小根堆，多路归并排序 (超时)
      * 先排序，排序后每个nums[i]和后面nums[j]作为数对距离加入小根堆，
      * 小根堆堆顶元素出堆，如果arr[1]后面还有元素，则nums[arr[0]]和nums[arr[1]+1]作为下一个数对距离加入小根堆
      * 时间复杂度O(nlogn+klogn)，空间复杂度O(n) (归并排序的空间复杂度O(n)，小根堆中最多存放n个arr)
@@ -53,7 +53,7 @@ public class Problem719 {
         //由小到大排序
         mergeSort(nums, 0, nums.length - 1, new int[nums.length]);
 
-        //小根堆，arr[0]：nums[i]的下标索引，arr[1]：nums[i]后面nums[j]的下标索引，arr[2]：nums[arr[1]]+nums[arr[0]]
+        //小根堆，arr[0]：nums[i]的下标索引，arr[1]：nums[i]后面nums[j]的下标索引，arr[2]：nums[arr[1]]-nums[arr[0]]
         PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(new Comparator<int[]>() {
             @Override
             public int compare(int[] arr1, int[] arr2) {
@@ -83,11 +83,10 @@ public class Problem719 {
 
     /**
      * 排序+二分查找
-     * 先由小到大排序，对[left,right]进行二分查找，left为0，right为nums[nums.length-1]-nums[0]，统计数对距离小于等于mid的个数count，
+     * nums由小到大排序，对[left,right]进行二分查找，left为0，right为nums最大值-nums最小值，统计nums中数对距离小于等于mid的个数count，
      * 如果count小于k，则第k小的数对距离在mid右边，left=mid+1；
      * 如果count大于等于k，则第k小的数对距离在mid或mid左边，right=mid
-     * 通过二分查找，往右找和nums[i]构成数对距离小于等于mid的个数
-     * 时间复杂度O(nlogn+log(right-left)*nlogn)=O(nlogn)，空间复杂度O(n) (归并排序的空间复杂度O(n))
+     * 时间复杂度O(nlogn+log(max(nums[i])-min(nums[i]))*nlogn)=O(nlogn)，空间复杂度O(n) (归并排序的空间复杂度O(n))
      *
      * @param nums
      * @param k
@@ -104,7 +103,7 @@ public class Problem719 {
         while (left < right) {
             mid = left + ((right - left) >> 1);
 
-            //数对距离小于等于mid的个数
+            //nums中数对距离小于等于mid的个数
             int count = 0;
 
             //通过二分查找，往右找和nums[i]构成数对距离小于等于mid的个数
@@ -133,28 +132,29 @@ public class Problem719 {
      * @return
      */
     private int binarySearch(int[] nums, int left, int right, int target) {
-        if (left > right || nums[left] > target) {
+        if (left > right || nums[left] > target || nums[right] < target) {
             return 0;
         }
 
-        //第一个小于等于target元素的下标索引
-        int first = left;
-        //最后一个小于等于target元素的下标索引
+        //nums[left]-nums[right]最后一个小于等于target的下标索引
         int last = left;
+        int l = left;
+        int r = right;
         int mid;
 
-        while (left <= right) {
-            mid = left + ((right - left) >> 1);
+        while (l <= r) {
+            mid = l + ((r - l) >> 1);
 
             if (nums[mid] <= target) {
                 last = mid;
-                left = mid + 1;
+                l = mid + 1;
             } else {
-                right = mid - 1;
+                r = mid - 1;
             }
         }
 
-        return last - first + 1;
+        //nums[left]-nums[last]都小于等于target
+        return last - left + 1;
     }
 
     private void mergeSort(int[] arr, int left, int right, int[] tempArr) {

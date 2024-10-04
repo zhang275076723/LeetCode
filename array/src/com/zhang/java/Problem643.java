@@ -49,7 +49,8 @@ public class Problem643 {
             preSum[i] = preSum[i - 1] + nums[i - 1];
         }
 
-        //长度为k的子数组之和的最大值，初始化为第一个长度为k的子数组之和
+        //长度为k的子数组之和的最大值
+        //初始化为第一个长度为k的子数组之和
         int maxSum = preSum[k] - preSum[0];
 
         for (int i = 0; i <= nums.length - k; i++) {

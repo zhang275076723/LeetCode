@@ -33,7 +33,7 @@ public class Problem668 {
     }
 
     /**
-     * 小根堆，优先队列，多路归并排序 (超时)
+     * 优先队列，小根堆，多路归并排序 (超时)
      * 时间复杂度O(klogk)，空间复杂度O(k)
      *
      * @param m
@@ -46,7 +46,7 @@ public class Problem668 {
         PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(new Comparator<int[]>() {
             @Override
             public int compare(int[] arr1, int[] arr2) {
-                //arr[0]*arr[1]由小到大排序
+                //arr[2]由小到大排序
                 return arr1[2] - arr2[2];
             }
         });
@@ -72,7 +72,7 @@ public class Problem668 {
 
     /**
      * 二分查找
-     * 对[left,right]进行二分查找，left为1，right为m*n，统计小于等于mid的个数count，
+     * 对[left,right]进行二分查找，left为1，right为m*n，统计m*n乘法表中小于等于mid的个数count，
      * 如果count小于k，则第k小的数在mid右边，left=mid+1；
      * 如果count大于等于k，则第k小的数在mid或mid左边，right=mid
      * 时间复杂度O(m*log(mn))，空间复杂度O(1)
@@ -90,11 +90,11 @@ public class Problem668 {
         while (left < right) {
             mid = left + ((right - left) >> 1);
 
-            //小于等于mid的个数
+            //m*n乘法表中小于等于mid的个数
             int count = 0;
 
             for (int i = 1; i <= m; i++) {
-                //第i行的数都是i的倍数，第i行小于等于mid的个数为min(mid/i,n)
+                //第i行的数都是i的倍数，并且第i行只有n个数
                 count = count + Math.min(mid / i, n);
             }
 

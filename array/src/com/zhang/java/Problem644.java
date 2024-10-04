@@ -55,11 +55,14 @@ public class Problem644 {
             preSum[i] = preSum[i - 1] + nums[i - 1];
         }
 
-        //长度大于等于k的子数组之和的最大平均值，初始化为第一个长度为k的子数组之和的平均值
-        double maxAvg = ((double) preSum[k] - preSum[0]) / k;
+        //长度大于等于k的子数组之和的最大平均值
+        //初始化为第一个长度为k的子数组之和的平均值
+        double maxAvg = (double) (preSum[k] - preSum[0]) / k;
 
+        //当前子数组的长度i
         for (int i = k; i <= nums.length; i++) {
-            //长度为i的子数组之和的最大值，初始化为第一个长度为i的子数组之和
+            //长度为i的子数组之和的最大值
+            //初始化为第一个长度为i的子数组之和
             int sum = preSum[i] - preSum[0];
 
             for (int j = 0; j <= nums.length - i; j++) {
@@ -73,12 +76,12 @@ public class Problem644 {
     }
 
     /**
-     * 二分查找变形
-     * 对[left,right]进行二分查找，left为数组中的最小值，right为数组中的最大值，
-     * 判断数组中是否存在长度大于等于k，平均值大于等于mid的子数组，
-     * 如果存在，则长度大于等于k，平均值大于等于mid的子数组在mid或mid右边，left=mid；
-     * 如果不存在，则长度大于等于k，平均值大于等于mid的子数组在mid左边，但mid为double类型，right不能赋值为mid-1，right=mid
-     * 时间复杂度O(n*log(right-left))=O(n)，空间复杂度O(1) (left和right为int范围内的数，log(right-left)<32)
+     * 二分查找+滑动窗口
+     * 对[left,right]进行二分查找，left为nums最小值，right为nums最大值，判断nums中是否存在长度大于等于k，平均值大于等于mid的子数组，
+     * 如果存在，则nums中长度大于等于k的最大平均值在mid或mid右边，left=mid；
+     * 如果不存在，则nums中长度大于等于k的最大平均值在mid左边，right=mid
+     * 注意：mid为double类型，所以二分时，right不能赋值为mid-1，right只能赋值为mid
+     * 时间复杂度O(n*log(max(nums[i])-min(nums[i])))=O(n)，空间复杂度O(1)
      *
      * @param nums
      * @param k
@@ -97,22 +100,21 @@ public class Problem644 {
             min = Math.min(min, num);
         }
 
-        //二分查找左边界，初始化为nums数组的最小值，长度大于等于k的子数组之和的最小平均值
         double left = min;
-        //二分查找右边界，初始化为nums数组的最大值，长度大于等于k的子数组之和的最大平均值
         double right = max;
         double mid;
 
-        //误差小于10^-5，则认为找到了长度大于等于k的子数组之和的最大平均值
+        //误差小于10^-5，则认为找到了nums中长度大于等于k的最大平均值
         while (right - left >= 1e-5) {
-            //判断nums数组中是否存在长度大于等于k，平均值大于等于mid的子数组
+            //注意：double类型不能使用>>来除以2
             mid = left + ((right - left) / 2);
 
-            //nums数组中存在长度大于等于k，平均值大于等于mid的子数组，则长度大于等于k，平均值大于等于mid的子数组在mid或mid右边，left=mid
+            //nums中存在长度大于等于k，平均值大于等于mid的子数组，则nums中长度大于等于k的最大平均值在mid或mid右边，left=mid
             if (isBiggerEqualThanAvg(nums, k, mid)) {
                 left = mid;
             } else {
-                //nums数组中不存在长度大于等于k，平均值大于等于mid的子数组，则长度大于等于k，平均值大于等于mid的子数组在mid左边，但mid为double类型，right不能赋值为mid-1，right=mid
+                //nums中不存在长度大于等于k，平均值大于等于mid的子数组，则nums中长度大于等于k的最大平均值在mid左边，right=mid
+                //注意：mid为double类型，所以二分时，right不能赋值为mid-1，right只能赋值为mid
                 right = mid;
             }
         }
@@ -121,10 +123,9 @@ public class Problem644 {
     }
 
     /**
-     * nums数组中是否存在长度大于等于k，平均值大于等于avg的子数组
-     * 注意：求子数组之和的平均值和avg之间的大小关系，不是先求子数组之和再除以数组长度，
-     * 而是加上当前元素的时候减去avg，得到的结果和0进行比较，
-     * 如果大于等于0，则子数组之和的平均值大于等于avg；否则，子数组之和的平均值小于avg
+     * 滑动窗口判断nums中是否存在长度大于等于k，平均值大于等于avg的子数组
+     * 核心思想：判断nums中子数组平均值和avg之间的大小关系，不是直接求出子数组平均值，而是判断子数组之和减去子数组长度个avg和0之间的大小关系，
+     * 如果大于等于0，则子数组平均值大于等于avg；否则，子数组平均值小于avg
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -133,36 +134,38 @@ public class Problem644 {
      * @return
      */
     private boolean isBiggerEqualThanAvg(int[] nums, int k, double avg) {
-        //nums[i]-nums[j](数组长度大于等于k)之和减去(j-i+1)个avg，如果curSum大于等于0，则存在长度大于等于k，平均值大于等于avg的子数组
+        //当前子数组nums[0]-nums[i]之和减去子数组长度个avg
         double curSum = 0;
 
         for (int i = 0; i < k; i++) {
             curSum = curSum + nums[i] - avg;
         }
 
+        //curSum大于等于0，则存在长度大于等于k，平均值大于等于avg的子数组，返回true
         if (curSum >= 0) {
             return true;
         }
 
-        //nums[0]-nums[i-k]之和减去(i-k+1)个avg
+        //当前子数组nums[0]-nums[i]之前nums[0]-nums[i-k]之和减去(i-k+1)个avg
+        //curSum-preSum得到当前遍历到nums[i]，长度大于等于k的子数组平均值
         double preSum = 0;
-        //nums[0]-nums[0]、nums[0]-nums[1]、...、nums[0]-nums[i-k]之和减去相对应个avg中的最小值，
-        //通过minPreSum得到nums[0]-nums[i]中长度大于等于k的最大子数组
+        //preSum中的最小值
+        //curSum-minPreSum得到当前遍历到nums[i]，长度大于等于k的最大子数组平均值
         double minPreSum = 0;
 
         for (int i = k; i < nums.length; i++) {
             curSum = curSum + nums[i] - avg;
-            //只考虑nums[i-k]，保证curSum-minPreSum子数组长度大于等于k
             preSum = preSum + nums[i - k] - avg;
             minPreSum = Math.min(minPreSum, preSum);
 
-            //存在平均值大于等于avg的子数组，返回true
+            //curSum-minPreSum得到当前遍历到nums[i]，长度大于等于k的最大子数组平均值，最大的平均值大于等于0，
+            //则存在长度大于等于k，平均值大于等于avg的子数组，返回true
             if (curSum - minPreSum >= 0) {
                 return true;
             }
         }
 
-        //遍历结束还没有找到长度大于等于k，则不存在平均值大于等于avg的子数组，返回false
+        //遍历结束，则不存在长度大于等于k，平均值大于等于avg的子数组，返回false
         return false;
     }
 }

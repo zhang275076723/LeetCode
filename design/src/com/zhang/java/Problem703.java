@@ -55,7 +55,7 @@ public class Problem703 {
      * 小根堆
      */
     static class KthLargest {
-        //小根堆，优先队列
+        //优先队列，小根堆
         private final PriorityQueue<Integer> priorityQueue;
         //小根堆大小
         private final int k;

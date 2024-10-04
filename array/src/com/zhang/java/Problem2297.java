@@ -68,7 +68,7 @@ public class Problem2297 {
 
         //单调递减栈，用于情况1
         Stack<Integer> stack1 = new Stack<>();
-        //单调递减栈，用于情况2
+        //单调递增栈，用于情况2
         Stack<Integer> stack2 = new Stack<>();
 
         for (int i = 0; i < nums.length; i++) {

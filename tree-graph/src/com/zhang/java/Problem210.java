@@ -74,7 +74,10 @@ public class Problem210 {
         }
 
         for (int i = 0; i < prerequisites.length; i++) {
-            edges.get(prerequisites[i][1]).add(prerequisites[i][0]);
+            int u = prerequisites[i][0];
+            int v = prerequisites[i][1];
+
+            edges.get(v).add(u);
         }
 
         //拓扑排序数组
@@ -125,8 +128,11 @@ public class Problem210 {
         }
 
         for (int i = 0; i < prerequisites.length; i++) {
-            edges.get(prerequisites[i][1]).add(prerequisites[i][0]);
-            inDegree[prerequisites[i][0]]++;
+            int u = prerequisites[i][0];
+            int v = prerequisites[i][1];
+
+            edges.get(v).add(u);
+            inDegree[u]++;
         }
 
         //存放入度为0节点的队列
@@ -135,13 +141,13 @@ public class Problem210 {
         for (int i = 0; i < numCourses; i++) {
             if (inDegree[i] == 0) {
                 queue.offer(i);
+                result[index] = i;
+                index++;
             }
         }
 
         while (!queue.isEmpty()) {
             int u = queue.poll();
-            result[index] = u;
-            index++;
 
             //遍历节点u的邻接节点v
             for (int v : edges.get(u)) {
@@ -150,6 +156,8 @@ public class Problem210 {
                 //邻接节点v的入度为0，则入队
                 if (inDegree[v] == 0) {
                     queue.offer(v);
+                    result[index] = v;
+                    index++;
                 }
             }
         }

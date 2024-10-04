@@ -93,8 +93,8 @@ public class Problem313 {
      * 动态规划，多指针
      * 核心思想：一个超级丑数乘上primes[i]也是超级丑数
      * dp[i]：第i+1个超级丑数
-     * index[i]：primes[i]指向dp的下标索引，即通过dp[index[i]]*primes[i]得到下一个超级丑数
-     * dp[i] = min(dp[index[j]]*primes[j]) (0 < j < primes.length)
+     * indexArr[i]：primes[i]指向dp的下标索引，即通过min(dp[indexArr[i]]*primes[i])得到下一个超级丑数
+     * dp[i] = min(dp[indexArr[j]]*primes[j]) (0 < j < primes.length)
      * 时间复杂度O(mn)，空间复杂度O(n+m) (m=primes.length)
      *
      * @param n
@@ -107,8 +107,8 @@ public class Problem313 {
         }
 
         int[] dp = new int[n];
-        //指向dp的下标索引数组，即通过dp[index[i]]*primes[i]得到下一个超级丑数
-        int[] index = new int[primes.length];
+        //指向dp的下标索引数组，即通过min(dp[indexArr[i]]*primes[i])得到下一个超级丑数
+        int[] indexArr = new int[primes.length];
         //dp初始化
         dp[0] = 1;
 
@@ -116,17 +116,17 @@ public class Problem313 {
             //下一个超级丑数，初始化为long最大值，使用long，避免int相乘溢出
             long nextSuperUglyNum = Long.MAX_VALUE;
 
-            //通过dp[index[i]]*primes[i]中的最小值得到下一个超级丑数
+            //通过dp[indexArr[i]]*primes[i]中的最小值得到下一个超级丑数
             for (int j = 0; j < primes.length; j++) {
-                nextSuperUglyNum = Math.min(nextSuperUglyNum, (long) dp[index[j]] * primes[j]);
+                nextSuperUglyNum = Math.min(nextSuperUglyNum, (long) dp[indexArr[j]] * primes[j]);
             }
 
             dp[i] = (int) nextSuperUglyNum;
 
             //index数组指针后移
             for (int j = 0; j < primes.length; j++) {
-                if (nextSuperUglyNum == (long) dp[index[j]] * primes[j]) {
-                    index[j]++;
+                if (nextSuperUglyNum == (long) dp[indexArr[j]] * primes[j]) {
+                    indexArr[j]++;
                 }
             }
         }

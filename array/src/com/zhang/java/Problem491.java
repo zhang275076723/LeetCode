@@ -30,7 +30,12 @@ public class Problem491 {
 
     /**
      * 回溯+剪枝，难点在于如何去重(不建议使用set去重，因为数组顺序不能变，所以不能先排序再去重)
+     * 核心思想：当前递增子序列末尾元素和当前元素相等，为了去重，只能添加当前元素，不能不添加当前元素
      * 时间复杂度O(n*2^n)，空间复杂度O(n) (共有2^n种状态，每种状态需要O(n)复制到结果集合中)
+     * <p>
+     * 例如：nums=[2,2,3]
+     * 当前递增子序列为[2]，当前元素为2，两者相等，则只能添加当前元素2，得到[2,2]；
+     * 如果不添加当前元素2，得到[2,-,3]和[2,-,-]，如果当前子序列为[-]，同样能得到[-,2,3]和[-,2,-]，则产生重复递增子序列
      *
      * @param nums
      * @return
@@ -42,14 +47,14 @@ public class Problem491 {
 
         List<List<Integer>> result = new ArrayList<>();
 
-        //last表示list集合中最后一个选择的元素，初始化list中最后一个选择的元素为int最小值，使添加nums[0]满足递增子序列
-        //当前元素和last不相等，当前元素才能不添加
-        backtrack(0, nums, Integer.MIN_VALUE, new ArrayList<>(), result);
+        //last：当前递增子序列list的最后一个元素，当前元素和last相等，为了去重，只能添加当前元素，不能不添加当前元素
+        //初始化last为int最小值，表示当前递增子序列为空
+        backtrack(0, Integer.MIN_VALUE, nums, new ArrayList<>(), result);
 
         return result;
     }
 
-    private void backtrack(int t, int[] nums, int last, List<Integer> list, List<List<Integer>> result) {
+    private void backtrack(int t, int last, int[] nums, List<Integer> list, List<List<Integer>> result) {
         if (t == nums.length) {
             //递增子序列中至少有2个元素
             if (list.size() >= 2) {
@@ -58,19 +63,21 @@ public class Problem491 {
             return;
         }
 
-        //当前元素和last不相等，nums[t]才能不添加
-        if (nums[t] != last) {
-            backtrack(t + 1, nums, last, list, result);
-        }
+        //当前元素和last相等，为了去重，只能添加当前元素，不能不添加当前元素
+        if (last == nums[t]) {
+            list.add(nums[t]);
+            backtrack(t + 1, nums[t], nums, list, result);
+            list.remove(list.size() - 1);
+        } else if (last < nums[t]) {
+            //当前元素大于last，可以添加当前元素，也可以不添加当前元素
+            backtrack(t + 1, last, nums, list, result);
 
-        //last大于nums[t]，则添加nums[t]构不成递增子序列，直接返回
-        if (last > nums[t]) {
-            return;
+            list.add(nums[t]);
+            backtrack(t + 1, nums[t], nums, list, result);
+            list.remove(list.size() - 1);
+        } else {
+            //当前元素大于last，只能不添加当前元素
+            backtrack(t + 1, last, nums, list, result);
         }
-
-        list.add(nums[t]);
-        //添加nums[t]
-        backtrack(t + 1, nums, nums[t], list, result);
-        list.remove(list.size() - 1);
     }
 }

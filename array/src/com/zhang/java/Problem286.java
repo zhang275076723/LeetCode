@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * @Date 2024/12/24 08:39
  * @Author zsy
- * @Description 墙与门 多源bfs类比Problem542、Problem994、Problem1162、Problem1765、Problem2812
+ * @Description 墙与门 多源bfs类比Problem542、Problem994、Problem1162、Problem1765、Problem2258、Problem2812
  * 你被给定一个 m × n 的二维网格 rooms ，网格中有以下三种可能的初始化值：
  * -1 表示墙或是障碍物
  * 0 表示一扇门

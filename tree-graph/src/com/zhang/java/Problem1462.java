@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2023/10/20 08:10
  * @Author zsy
- * @Description 课程表 IV 类比Problem207、Problem210、Problem630 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra 拓扑排序类比
+ * @Description 课程表 IV 类比Problem207、Problem210、Problem630 拓扑排序类比 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2045、Problem2093、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra
  * 你总共需要上 numCourses 门课，课程编号依次为 0 到 numCourses-1 。
  * 你会得到一个数组 prerequisite ，其中 prerequisites[i] = [ai, bi] 表示如果你想选 bi 课程，你 必须 先选 ai 课程。
  * 有的课会有直接的先修课程，比如如果想上课程 1 ，你必须先上课程 0 ，那么会以 [0,1] 数对的形式给出先修课程数对。
@@ -77,7 +77,10 @@ public class Problem1462 {
         }
 
         for (int i = 0; i < prerequisites.length; i++) {
-            edges.get(prerequisites[i][0]).add(prerequisites[i][1]);
+            int u = prerequisites[i][0];
+            int v = prerequisites[i][1];
+
+            edges.get(u).add(v);
         }
 
         for (int i = 0; i < numCourses; i++) {
@@ -89,7 +92,10 @@ public class Problem1462 {
         List<Boolean> list = new ArrayList<>();
 
         for (int i = 0; i < queries.length; i++) {
-            list.add(dp[queries[i][0]][queries[i][1]]);
+            int u = queries[i][0];
+            int v = queries[i][1];
+
+            list.add(dp[u][v]);
         }
 
         return list;
@@ -122,8 +128,11 @@ public class Problem1462 {
         }
 
         for (int i = 0; i < prerequisites.length; i++) {
-            edges.get(prerequisites[i][0]).add(prerequisites[i][1]);
-            inDegree[prerequisites[i][1]]++;
+            int u = prerequisites[i][0];
+            int v = prerequisites[i][1];
+
+            edges.get(u).add(v);
+            inDegree[v]++;
         }
 
         Queue<Integer> queue = new LinkedList<>();
@@ -141,6 +150,7 @@ public class Problem1462 {
             for (int v : edges.get(u)) {
                 inDegree[v]--;
 
+                //邻接节点v的入度为0，则入队
                 if (inDegree[v] == 0) {
                     queue.offer(v);
                 }
@@ -158,7 +168,10 @@ public class Problem1462 {
         List<Boolean> list = new ArrayList<>();
 
         for (int i = 0; i < queries.length; i++) {
-            list.add(dp[queries[i][0]][queries[i][1]]);
+            int u = queries[i][0];
+            int v = queries[i][1];
+
+            list.add(dp[u][v]);
         }
 
         return list;
@@ -180,7 +193,10 @@ public class Problem1462 {
 
         //dp数组初始化
         for (int i = 0; i < prerequisites.length; i++) {
-            dp[prerequisites[i][0]][prerequisites[i][1]] = true;
+            int u = prerequisites[i][0];
+            int v = prerequisites[i][1];
+
+            dp[u][v] = true;
         }
 
         for (int k = 0; k < numCourses; k++) {
@@ -194,7 +210,10 @@ public class Problem1462 {
         List<Boolean> list = new ArrayList<>();
 
         for (int i = 0; i < queries.length; i++) {
-            list.add(dp[queries[i][0]][queries[i][1]]);
+            int u = queries[i][0];
+            int v = queries[i][1];
+
+            list.add(dp[u][v]);
         }
 
         return list;
@@ -215,7 +234,7 @@ public class Problem1462 {
             dfs(v, dp, edges, visited);
 
             //节点u通过节点v作为中间节点还能到达哪些节点i
-            for (int i = 0; i < dp.length; i++) {
+            for (int i = 0; i < edges.size(); i++) {
                 dp[u][i] = dp[u][i] || dp[v][i];
             }
         }

@@ -3,10 +3,10 @@ package com.zhang.java;
 /**
  * @Date 2022/4/12 11:15
  * @Author zsy
- * @Description 寻找两个正序数组的中位数 字节面试题 类比Problem239、Problem480 二分查找类比Problem287、Problem373、Problem378、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus 二分搜索树类比Problem230、Problem378、Problem440
+ * @Description 寻找两个正序数组的中位数 字节面试题 类比Problem239、Problem480 二分搜索树类比Problem230、Problem378、Problem440 二分查找类比Problem287、Problem373、Problem378、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
  * 给定两个大小分别为 m 和 n 的正序（从小到大）数组 nums1 和 nums2。
  * 请你找出并返回这两个正序数组的 中位数 。
- * 算法的时间复杂度应该为 O(log (m+n)) 。
+ * 算法的时间复杂度应该为 O(log(m+n)) 。
  * <p>
  * 输入：nums1 = [1,3], nums2 = [2]
  * 输出：2.00000
@@ -100,9 +100,9 @@ public class Problem4 {
 
     /**
      * 二分查找变形，看到有序数组，就要想到二分查找
-     * 求第k小的数，则比较nums1中从起始位置开始第k/2个元素和nums2中从起始位置开始第k/2个元素，
-     * 把较小的值和它之前的元素去掉，即去掉了较小的k/2个元素，因为这些数不可能是第k小的数，
-     * 然后再求删除后的两个数组第(k-删除的元素个数)小的数，直至找到第k小的数
+     * 核心思想：求有序数组nums1和nums2中第k小的数，则判断nums1和nums2中第k/2小的数的大小关系，
+     * 如果nums1中第k/2小的数小于nums2中第k/2小的数，则nums1中第1小到第k/2小的数不可能是第k小的数，即继续求第(k-删除的个数)小的数；
+     * 如果nums1中第k/2小的数大于等于nums2中第k/2小的数，则nums2中第1小到第k/2小的数不可能是第k小的数，即继续求第(k-删除的个数)小的数
      * 时间复杂度O(log(m+n))，空间复杂度O(1) (m=nums1.length, n=nums2.length)
      *
      * @param nums1
@@ -139,8 +139,9 @@ public class Problem4 {
     }
 
     /**
-     * 获取有序数组nums1和nums2中的第k小元素的值 (k从1开始)
-     * 核心思想：找nums1和nums2中的第k小，则每次可以跳过k/2-1个元素的比较
+     * 返回有序数组nums1和nums2中第k小的数
+     * 核心思想：求有序数组nums1和nums2中第k小的数，则判断nums1和nums2中第k/2小的数的大小关系
+     * 注意：k从1开始
      * 时间复杂度O(log(m+n))，空间复杂度O(1) (m=nums1.length, n=nums2.length)
      *
      * @param nums1

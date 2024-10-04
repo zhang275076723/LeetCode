@@ -7,9 +7,9 @@ import java.util.PriorityQueue;
 /**
  * @Date 2024/1/9 08:49
  * @Author zsy
- * @Description 第 K 个最小的素数分数 优先队列类比 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 第 K 个最小的质数分数 优先队列类比 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
  * 给你一个按递增顺序排序的数组 arr 和一个整数 k 。
- * 数组 arr 由 1 和若干 素数  组成，且其中所有整数互不相同。
+ * 数组 arr 由 1 和若干 质数 组成，且其中所有整数互不相同。
  * 对于每对满足 0 <= i < j < arr.length 的 i 和 j ，可以得到分数 arr[i] / arr[j] 。
  * 那么第 k 个最小的分数是多少呢?
  * 以长度为 2 的整数数组返回你的答案, 这里 answer[0] == arr[i] 且 answer[1] == arr[j] 。
@@ -26,7 +26,7 @@ import java.util.PriorityQueue;
  * 2 <= arr.length <= 1000
  * 1 <= arr[i] <= 3 * 10^4
  * arr[0] == 1
- * arr[i] 是一个 素数 ，i > 0
+ * arr[i] 是一个 质数 ，i > 0
  * arr 中的所有数字 互不相同 ，且按 严格递增 排序
  * 1 <= k <= arr.length * (arr.length - 1) / 2
  */
@@ -40,7 +40,7 @@ public class Problem786 {
     }
 
     /**
-     * 小根堆，优先队列，多路归并排序
+     * 优先队列，小根堆，多路归并排序
      * 时间复杂度O(klogn)，空间复杂度O(n)
      *
      * @param arr
@@ -59,8 +59,8 @@ public class Problem786 {
         });
 
         //因为每列第一个分数是当前列最小的分数，所以每列的第一个分数入小根堆
-        for (int j = 1; j < arr.length; j++) {
-            priorityQueue.offer(new int[]{0, j});
+        for (int i = 1; i < arr.length; i++) {
+            priorityQueue.offer(new int[]{0, i});
         }
 
         //小根堆移除k-1个元素，堆顶元素即为第k小的分数
@@ -81,13 +81,13 @@ public class Problem786 {
 
     /**
      * 二分查找+双指针
-     * 对[left,right]进行二分查找，left为数组中构成分数的最小值，right为数组中构成分数的最大值，统计数组中构成分数小于等于mid的个数count，
+     * 对[left,right]进行二分查找，left为arr中构成的最小分数0，right为arr中构成的最大分数1，统计arr中构成的分数小于等于mid的个数count，
      * 如果count小于k，则第k小分数在mid右边，left=mid；
      * 如果count大于k，则第k小分数在mid左边，right=mid；
      * 如果count等于k，则第k小分数在统计数组中构成分数小于等于mid的个数count的同时，记录下了数组中小于等于mid的最大分数a/b，直接返回a和b
      * 其中通过双指针，对每一个arr[j]统计构成分数arr[i]/arr[j]小于等于mid的个数
      * 时间复杂度O(n*logC)=O(n)，空间复杂度O(1)
-     * (left=0，right=1，数组中的最大值为3*10^4，则任意两个分数差的最小值大于1/(3*10^4)^2，每次二分区间长度减半，
+     * (arr中的最大值为3*10^4，则任意两个分数差的最小值大于1/(3*10^4)^2，每次二分区间长度减半，
      * 即需要log((3*10^4)^2)=30次二分，logC=30，区间长度小于1/(3*10^4)^2，即得到了第k小分数left)
      *
      * @param arr
@@ -101,6 +101,7 @@ public class Problem786 {
 
         //数组中的最大值为3*10^4，则任意两个分数差的最小值大于1/(3*10^4)^2，每次二分区间长度减半，即需要log((3*10^4)^2)=30次二分
         while (true) {
+            //注意：double类型不能使用>>来除以2
             mid = left + ((right - left) / 2);
 
             int[] tempArr = getLessEqualThanNumCount(arr, mid);
@@ -140,25 +141,27 @@ public class Problem786 {
         int a = 0;
         int b = 0;
 
-        while (j < arr.length) {
+        //从左上往右下遍历，只遍历右上三角(i<j)
+        while (i < arr.length - 1 && j < arr.length) {
             //始终保持i<j
-            while (i + 1 < j && (double) arr[i + 1] / arr[j] <= num) {
-                i++;
+            if (i >= j) {
+                j = i + 1;
             }
 
-            if ((double) arr[i] / arr[j] <= num) {
-                //更新小于等于num的最大分数a/b
-                if (curMax < (double) arr[i] / arr[j]) {
-                    a = arr[i];
-                    b = arr[j];
-                    curMax = (double) arr[i] / arr[j];
-                }
-
-                //当分数arr[i]/arr[j]小于等于num时，arr[0]/arr[j]到arr[i]/arr[j]都小于等于num
-                count = count + i + 1;
+            while (j < arr.length && (double) arr[i] / arr[j] > num) {
+                j++;
             }
 
-            j++;
+            //更新小于等于num的最大分数a/b
+            if (j < arr.length && (double) arr[i] / arr[j] > curMax) {
+                curMax = (double) arr[i] / arr[j];
+                a = arr[i];
+                b = arr[j];
+            }
+
+            //arr[i]/arr[j]到arr[i]/arr[arr.length-1]都小于等于num
+            count = count + (arr.length - j);
+            i++;
         }
 
         return new int[]{count, a, b};

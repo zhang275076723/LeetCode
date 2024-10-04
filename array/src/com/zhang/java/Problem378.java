@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * @Date 2022/8/17 8:07
  * @Author zsy
- * @Description 有序矩阵中第 K 小的元素 类比Problem23、Problem74、Problem240、Offer4 二分查找类比Problem4、Problem287、Problem373、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus 二分搜索树类比Problem4、Problem230、Problem440
+ * @Description 有序矩阵中第 K 小的元素 类比Problem23、Problem74、Problem240、Offer4 二分搜索树类比Problem4、Problem230、Problem440 二分查找类比Problem4、Problem287、Problem373、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
  * 给你一个 n x n 矩阵 matrix ，其中每行和每列元素均按升序排序，找到矩阵中第 k 小的元素。
  * 请注意，它是 排序后 的第 k 小元素，而不是第 k 个 不同 的元素。
  * <p>
@@ -40,7 +40,7 @@ public class Problem378 {
     }
 
     /**
-     * 小根堆，优先队列，多路归并排序
+     * 优先队列，小根堆，多路归并排序
      * 时间复杂度O(nlogn+klogn)，空间复杂度O(n) (n=matrix.length)
      *
      * @param matrix
@@ -116,21 +116,19 @@ public class Problem378 {
 
     /**
      * 二分查找变形
-     * 对[left,right]进行二分查找，left为数组中最小值，right为数组中最大值，统计数组中小于等于mid的个数count，
-     * 如果count小于k，则第k小元素在mid右边，left=mid+1；
-     * 如果count大于等于k，则第k小元素在mid或mid左边，right=mid
-     * 时间复杂度O(n*log(right-left))=O(n)，空间复杂度O(1)
-     * (n=matrix.length，n=matrix[0].length，left=matrix[0][0]，right=matrix[n-1][n-1])
+     * 对[left,right]进行二分查找，left为matrix最小值，right为matrix最大值，统计matrix中小于等于mid的个数count，
+     * 如果count小于k，则matrix中第k小元素在mid右边，left=mid+1；
+     * 如果count大于等于k，则matrix中第k小元素在mid或mid左边，right=mid
+     * 时间复杂度O(n*log(matrix[n-1][n-1]-matrix[0][0]))=O(n)，空间复杂度O(1)
      *
      * @param matrix
      * @param k
      * @return
      */
     public int kthSmallest3(int[][] matrix, int k) {
-        //二分左边界，初始化为matrix中最小元素
+        int n = matrix.length;
         int left = matrix[0][0];
-        //二分右边界，初始化为matrix中最大元素
-        int right = matrix[matrix.length - 1][matrix[0].length - 1];
+        int right = matrix[n - 1][n - 1];
         int mid;
 
         while (left < right) {
@@ -165,8 +163,8 @@ public class Problem378 {
 
         //从左下往右上遍历
         while (i >= 0 && j < matrix[0].length) {
-            //mid小于当前元素matrix[i][j]时，i指针上移
-            while (i >= 0 && num < matrix[i][j]) {
+            //matrix[i][j]大于num时，i指针上移
+            while (i >= 0 && matrix[i][j] > num) {
                 i--;
             }
 

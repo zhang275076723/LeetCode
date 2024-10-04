@@ -5,7 +5,8 @@ package com.zhang.java;
  * @Author zsy
  * @Description 青蛙过河 II 类比Problem561、Problem717 跳跃问题类比Problem45、Problem55、Problem403、Problem975、Problem1306、Problem1340、Problem1345、Problem1377、Problem1654、Problem1696、Problem1871、Problem2297、Problem2770、LCP09 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、CutWood、FindMaxArrayMinAfterKMinus
  * 给你一个下标从 0 开始的整数数组 stones ，数组中的元素 严格递增 ，表示一条河中石头的位置。
- * 一只青蛙一开始在第一块石头上，它想到达最后一块石头，然后回到第一块石头。同时每块石头 至多 到达 一次。
+ * 一只青蛙一开始在第一块石头上，它想到达最后一块石头，然后回到第一块石头。
+ * 同时每块石头 至多 到达 一次。
  * 一次跳跃的 长度 是青蛙跳跃前和跳跃后所在两块石头之间的距离。
  * 更正式的，如果青蛙从 stones[i] 跳到 stones[j] ，跳跃的长度为 |stones[i] - stones[j]| 。
  * 一条路径的 代价 是这条路径里的 最大跳跃长度 。
@@ -69,11 +70,11 @@ public class Problem2498 {
     }
 
     /**
-     * 二分查找，使...最大值尽可能小，就要想到二分查找
+     * 二分查找变形，使...最大值尽可能小，就要想到二分查找
      * 对[left,right]进行二分查找，left为1，right为stones[stones.length-1]-stones[0]，
-     * 判断能否从第一块石头跳跃到达最后一块石头，再回到第一块石头，并且每次跳跃距离小于等于mid，每块石头最多只能跳到1次，
-     * 如果mid作为最大跳跃长度可以跳跃，则最小的最大跳跃长度在mid或mid左边，right=mid；
-     * 如果mid作为最大跳跃长度不能跳跃，则最小的最大跳跃长度在mid右边，left=mid+1
+     * 判断能否从第一块石头跳跃到最后一块石头，再回到第一块石头，并且每次跳跃距离小于等于mid，每块石头最多只能跳到1次，
+     * 如果mid作为最大跳跃长度可以跳跃，则最大跳跃长度的的最小值在mid或mid左边，right=mid；
+     * 如果mid作为最大跳跃长度不能跳跃，则最大跳跃长度的的最小值在mid右边，left=mid+1
      * 时间复杂度O(n*log(stones[stones.length-1]-stones[0]-1))=O(n)，空间复杂度O(1)
      *
      * @param stones
@@ -84,9 +85,7 @@ public class Problem2498 {
             return 0;
         }
 
-        //二分查找左边界，初始化为1
         int left = 1;
-        //二分查找右边界，初始化为最后一个石头和第一个石头的距离
         int right = stones[stones.length - 1] - stones[0];
         int mid;
 
@@ -94,7 +93,7 @@ public class Problem2498 {
             //mid作为每次跳跃的最大距离
             mid = left + ((right - left) >> 1);
 
-            //判断能否从第一块石头跳跃到达最后一块石头，再回到第一块石头，并且每次跳跃距离小于等于mid，每块石头最多只能跳到1次
+            //判断能否从第一块石头跳跃到最后一块石头，再回到第一块石头，并且每次跳跃距离小于等于mid，每块石头最多只能跳到1次
             if (canJump(stones, mid)) {
                 right = mid;
             } else {
@@ -106,7 +105,7 @@ public class Problem2498 {
     }
 
     /**
-     * 能否从第一块石头跳跃到达最后一块石头，再回到第一块石头，并且每次跳跃距离小于等于maxDistance，每块石头最多只能跳到1次
+     * 能否从第一块石头跳跃到最后一块石头，再回到第一块石头，并且每次跳跃距离小于等于maxDistance，每块石头最多只能跳到1次
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param stones

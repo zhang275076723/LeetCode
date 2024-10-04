@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/10 08:40
  * @Author zsy
- * @Description 第 N 个神奇数字 类比Problem1201、Problem2513 最大公因数和最小公倍数类比 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem786、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem1175、Problem1201、Problem1291、Offer10、Offer49
+ * @Description 第 N 个神奇数字 容斥原理类比Problem1201、Problem2513、Problem3116 最大公因数和最小公倍数类比 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem441、Problem644、Problem658、Problem668、Problem719、Problem786、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem1175、Problem1201、Problem1291、Offer10、Offer49
  * 一个正整数如果能被 a 或 b 整除，那么它是神奇的。
  * 给定三个整数 n , a , b ，返回第 n 个神奇的数字。
  * 因为答案可能很大，所以返回答案 对 10^9 + 7 取模 后的值。
@@ -47,7 +47,7 @@ public class Problem878 {
         }
 
         int result = 0;
-        //a、b分别需要乘上的指针倍数
+        //a、b分别需要乘上的倍数
         int i = 1;
         int j = 1;
 
@@ -75,9 +75,9 @@ public class Problem878 {
      * 对[left,right]进行二分查找，left为a、b中的较小值，right为n*left，统计小于等于mid的神奇数个数count，
      * 如果count小于n，则第n个神奇数在mid右边，left=mid+1；
      * 如果count大于等于n，则第n个神奇数在mid或mid左边，right=mid
-     * 小于等于n能被a整除的神奇数记为A，小于等于n能被b整除的神奇数记为B，其中|A|=n/a，|B|=n/b，
+     * 小于等于n能被a整除的神奇数个数记为A，小于等于n能被b整除的神奇数个数记为B，其中|A|=n/a，|B|=n/b，
      * 则小于等于n能被a或b整除的神奇数个数为|A∪B|=|A|+|B|-|A∩B|=n/a+n/b-n/lcm(a,b) (容斥原理)
-     * 时间复杂度O(log(right-left))=O(1)，空间复杂度O(1) (left:min(a,b)，right:n*left)
+     * 时间复杂度O(log(n*min(a,b)-min(a,b)))=O(logn)，空间复杂度O(1)
      *
      * @param n
      * @param a

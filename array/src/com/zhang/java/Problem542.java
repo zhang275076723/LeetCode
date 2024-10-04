@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * @Date 2024/12/15 08:08
  * @Author zsy
- * @Description 01 矩阵 多源bfs类比Problem286、Problem994、Problem1162、Problem1765、Problem2812
+ * @Description 01 矩阵 多源bfs类比Problem286、Problem994、Problem1162、Problem1765、Problem2258、Problem2812
  * 给定一个由 0 和 1 组成的矩阵 mat ，请输出一个大小相同的矩阵，其中每一个格子是 mat 中对应位置元素到最近的 0 的距离。
  * 两个相邻元素间的距离为 1 。
  * <p>

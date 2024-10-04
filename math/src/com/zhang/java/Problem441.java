@@ -42,10 +42,10 @@ public class Problem441 {
 
     /**
      * 二分查找
-     * 对[left,right]进行二分查找，left为第1行，right为第n行，统计前mid行放满硬币的个数count，
+     * 对[left,right]进行二分查找，left为1，right为n，统计前mid行放满所需的硬币个数count，
      * 如果count小于等于n，则n个硬币能够放满的行数在mid或mid右边，left=mid；
      * 如果count大于n，则n个硬币能够放满的行数在mid左边，right=mid-1
-     * 时间复杂度O(logn)，空间复杂度O(1)
+     * 时间复杂度O(logn)=O(1)，空间复杂度O(1)
      *
      * @param n
      * @return
@@ -58,7 +58,9 @@ public class Problem441 {
         while (left < right) {
             //mid往右偏移，因为转移条件是right=mid-1，避免无法跳出循环
             mid = left + ((right - left) >> 1) + 1;
-            //前mid行放满硬币的个数，使用long，避免int溢出
+
+            //前mid行放满所需的硬币个数
+            //使用long，避免int溢出
             long count = (long) mid * (mid + 1) / 2;
 
             if (count > n) {

@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2023/10/23 08:09
  * @Author zsy
- * @Description 并行课程 拓扑排序类比
+ * @Description 并行课程 类比Problem1494、Problem2050 拓扑排序类比
  * 给你一个整数 n ，表示编号从 1 到 n 的 n 门课程。
  * 另给你一个数组 relations ，其中 relations[i] = [prevCoursei, nextCoursei] ，
  * 表示课程 prevCoursei 和课程 nextCoursei 之间存在先修关系：课程 prevCoursei 必须在 nextCoursei 之前修读完成。

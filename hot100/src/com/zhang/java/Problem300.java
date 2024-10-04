@@ -108,30 +108,31 @@ public class Problem300 {
         int maxLen = 1;
 
         for (int i = 1; i < nums.length; i++) {
-            //当前元素nums[i]大于arr末尾元素，则nums[i]插入arr末尾
+            //arr末尾元素小于nums[i]，则nums[i]插入arr末尾，作为最长递增子序列中的元素
             if (arr[maxLen - 1] < nums[i]) {
                 arr[maxLen] = nums[i];
                 maxLen++;
-                continue;
-            }
+            } else {
+                //arr末尾元素大于等于nums[i]，则二分查找找arr中大于等于nums[i]的最小值，替换为nums[i]
 
-            int left = 0;
-            int right = maxLen - 1;
-            int mid;
+                int left = 0;
+                int right = maxLen - 1;
+                int mid;
 
-            //二分查找找arr中大于等于nums[i]的最小值
-            while (left < right) {
-                mid = left + ((right - left) >> 1);
+                //二分查找找arr中大于等于nums[i]的最小值
+                while (left < right) {
+                    mid = left + ((right - left) >> 1);
 
-                if (arr[mid] < nums[i]) {
-                    left = mid + 1;
-                } else {
-                    right = mid;
+                    if (arr[mid] < nums[i]) {
+                        left = mid + 1;
+                    } else {
+                        right = mid;
+                    }
                 }
-            }
 
-            //arr中大于等于nums[i]的最小值arr[left]替换为nums[i]
-            arr[left] = nums[i];
+                //arr中大于等于nums[i]的最小值arr[left]替换为nums[i]
+                arr[left] = nums[i];
+            }
         }
 
         return maxLen;
