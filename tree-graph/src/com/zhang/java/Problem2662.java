@@ -270,7 +270,7 @@ public class Problem2662 {
         PriorityQueue<long[]> priorityQueue = new PriorityQueue<>(new Comparator<long[]>() {
             @Override
             public int compare(long[] arr1, long[] arr2) {
-                //arr[1]是int类型转换为long的，所以相减之后再转换为int不会溢出，也就不必要写为Long.compare(a, b);
+                //arr[1]是int类型转换为long的，所以相减之后再转换为int不会溢出，也就不必要写为Long.compare(arr1[1], arr2[1]);
                 return (int) (arr1[1] - arr2[1]);
             }
         });
