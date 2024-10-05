@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2022/6/16 9:12
  * @Author zsy
- * @Description 任务调度器 字节面试题 类比Problem1834 类比Problem358、Problem767 优先队列类比
+ * @Description 任务调度器 字节面试题 类比Problem2365 类比Problem1834、Problem1882、Problem2402 类比Problem358、Problem767 优先队列类比
  * 给你一个用字符数组 tasks 表示的 CPU 需要执行的任务列表。
  * 其中每个字母表示一种不同种类的任务。
  * 任务可以以任意顺序执行，并且每个任务都可以在 1 个单位时间内执行完。

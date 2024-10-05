@@ -7,7 +7,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2025/1/13 08:16
  * @Author zsy
- * @Description 使用服务器处理任务 类比Problem2402 优先队列类比
+ * @Description 使用服务器处理任务 类比Problem621、Problem1834、Problem2402 优先队列类比
  * 给你两个 下标从 0 开始 的整数数组 servers 和 tasks ，长度分别为 n 和 m 。
  * servers[i] 是第 i 台服务器的 权重 ，而 tasks[j] 是处理第 j 项任务 所需要的时间（单位：秒）。
  * 你正在运行一个仿真系统，在处理完所有任务后，该系统将会关闭。
