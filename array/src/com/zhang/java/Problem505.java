@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2023/11/29 08:19
  * @Author zsy
- * @Description 迷宫 II 类比Problem490、Problem499、Problem2258 bfs类比Problem407、Problem499、Problem778、Problem847、Problem1129、Problem1293、Problem1368、Problem1631、Problem2045、Problem2290 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem490、Problem499、Problem529、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Problem1568、Problem1905、Offer12
+ * @Description 迷宫 II 类比Problem490、Problem499、Problem1730、Problem2258 bfs类比Problem407、Problem499、Problem778、Problem847、Problem1129、Problem1293、Problem1368、Problem1631、Problem2045、Problem2290 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem490、Problem499、Problem529、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Problem1568、Problem1905、Offer12
  * 迷宫中有一个球，它有空地 (表示为 0) 和墙 (表示为 1)。
  * 球可以向上、向下、向左或向右滚过空地，但直到撞上墙之前它都不会停止滚动。
  * 当球停止时，它才可以选择下一个滚动方向。

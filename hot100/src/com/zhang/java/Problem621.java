@@ -100,7 +100,7 @@ public class Problem621 {
         int circle = n + 1;
 
         while (!priorityQueue.isEmpty()) {
-            //存储每轮中执行的任务，每轮每个任务只能执行一次
+            //存储每轮中执行的任务的队列，每轮每个任务只能执行一次
             Queue<Task> queue = new LinkedList<>();
             //队列的大小，即当前轮中执行的任务个数
             int count = 0;
