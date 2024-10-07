@@ -48,7 +48,7 @@ public class Problem2290 {
 
     /**
      * bfs
-     * 当前节点的邻接节点grid为1，则邻接节点为障碍物，当前节点到邻接节点边的权值为1；否则，权值为0
+     * 当前节点的邻接节点grid为1，则邻接节点为障碍物，当前节点到邻接节点边的权值为1；否则，当前节点到邻接节点边的权值为0
      * 时间复杂度O((mn)^2)，空间复杂度O(mn)
      *
      * @param grid
@@ -114,7 +114,7 @@ public class Problem2290 {
 
     /**
      * Dijkstra求节点(0,0)到节点(m-1,n-1)需要移除的最小障碍物数量
-     * 当前节点的邻接节点grid为1，则邻接节点为障碍物，当前节点到邻接节点边的权值为1；否则，权值为0
+     * 当前节点的邻接节点grid为1，则邻接节点为障碍物，当前节点到邻接节点边的权值为1；否则，当前节点到邻接节点边的权值为0
      * 时间复杂度O((mn)^2)，空间复杂度O(mn)
      *
      * @param grid
@@ -174,8 +174,8 @@ public class Problem2290 {
                     continue;
                 }
 
-                if (!visited[x2][y2]) {
-                    remove[x2][y2] = Math.min(remove[x2][y2], remove[x1][y1] + grid[x2][y2]);
+                if (!visited[x2][y2] && remove[x1][y1] + grid[x2][y2] < remove[x2][y2]) {
+                    remove[x2][y2] =remove[x1][y1] + grid[x2][y2];
                 }
             }
         }
@@ -186,7 +186,7 @@ public class Problem2290 {
 
     /**
      * 堆优化Dijkstra求节点(0,0)到节点(m-1,n-1)需要移除的最小障碍物数量
-     * 当前节点的邻接节点grid为1，则邻接节点为障碍物，当前节点到邻接节点边的权值为1；否则，权值为0
+     * 当前节点的邻接节点grid为1，则邻接节点为障碍物，当前节点到邻接节点边的权值为1；否则，当前节点到邻接节点边的权值为0
      * 时间复杂度O(mn*log(mn))，空间复杂度O(mn)
      * (堆优化Dijkstra的时间复杂度O(mlogm)，其中m为图中边的个数，本题边的个数O(mn)，所以时间复杂度O(mn*log(mn)))
      *

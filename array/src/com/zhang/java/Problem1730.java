@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2025/1/14 08:55
  * @Author zsy
- * @Description 获取食物的最短路径 类比Problem490、Problem499、Problem505、Problem2258
+ * @Description 获取食物的最短路径 类比Problem490、Problem499、Problem505、Problem2258 bfs类比
  * 你现在很饿，想要尽快找东西吃。
  * 你需要找到最短的路径到达一个食物所在的格子。
  * 给定一个 m x n 的字符矩阵 grid ，包含下列不同类型的格子：

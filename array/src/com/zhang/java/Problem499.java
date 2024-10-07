@@ -12,8 +12,10 @@ import java.util.Queue;
  * 当球停下时，可以选择下一个方向。
  * 迷宫中还有一个洞，当球运动经过洞时，就会掉进洞里。
  * 给定球的起始位置，目的地和迷宫，找出让球以最短距离掉进洞里的路径。
- * 距离的定义是球从起始位置（不包括）到目的地（包括）经过的空地个数。通过'u', 'd', 'l' 和 'r'输出球的移动方向。
- * 由于可能有多条最短路径， 请输出字典序最小的路径。如果球无法进入洞，输出"impossible"。
+ * 距离的定义是球从起始位置（不包括）到目的地（包括）经过的空地个数。
+ * 通过'u', 'd', 'l' 和 'r'输出球的移动方向。
+ * 由于可能有多条最短路径， 请输出字典序最小的路径。
+ * 如果球无法进入洞，输出"impossible"。
  * 迷宫由一个0和1的二维数组表示。
  * 1表示墙壁，0表示空地。
  * 你可以假定迷宫的边缘都是墙壁。
@@ -168,6 +170,7 @@ public class Problem499 {
 
                 //找到更小的distance[x][y]，或路径长度相等的情况下，当前路径的字典序更小，
                 //更新distance[x][y]和path[x][y]，节点(x,y)加入队列
+                //注意：direction[k][2]为int类型，必须转换为char类型拼接，否则拼接的是一个int整形数字
                 if ((distance[i][j] + curDistance < distance[x][y]) ||
                         (distance[i][j] + curDistance == distance[x][y] &&
                                 (path[i][j] + (char) direction[k][2]).compareTo(path[x][y]) < 0)) {
@@ -203,6 +206,7 @@ public class Problem499 {
 
             //找到更小的distance[x][y]，或路径长度相等的情况下，当前路径的字典序更小，
             //更新distance[x][y]和path[x][y]，节点(x,y)加入队列
+            //注意：direction[k][2]为int类型，必须转换为char类型拼接，否则拼接的是一个int整形数字
             if ((distance[i][j] + curDistance < distance[x][y]) ||
                     (distance[i][j] + curDistance == distance[x][y] &&
                             (path[i][j] + (char) direction[k][2]).compareTo(path[x][y]) < 0)) {
