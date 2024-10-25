@@ -1,14 +1,11 @@
 package com.zhang.java;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 /**
  * @Date 2023/11/18 08:48
  * @Author zsy
- * @Description 前往目标城市的最小费用 带限制条件的单元最短路径类比Problem787、Problem1293、Problem1928 Bellman-Ford类比Problem568、Problem787、Problem1928 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2045、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra
+ * @Description 前往目标城市的最小费用 带限制条件的最短路径类比Problem787、Problem1293、Problem1928 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2045、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra
  * 一组公路连接 n 个城市，城市编号为从 0 到 n - 1 。
  * 输入包含一个二维数组 highways ，其中 highways[i] = [city1i, city2i, tolli] 表示有一条连接城市 city1i 和 city2i 的双向公路，
  * 允许汽车缴纳值为 tolli 的费用从  city1i 前往 city2i 或 从  city2i 前往 city1i 。
@@ -58,14 +55,13 @@ public class Problem2093 {
         int discounts = 20;
         System.out.println(problem2093.minimumCost(n, highways, discounts));
         System.out.println(problem2093.minimumCost2(n, highways, discounts));
+//        //注意：不能使用Bellman-Ford，因为状态转移方程中dp[i][j]中的j次折扣会使用到dp[u][j]，如果只使用到dp[u][j-1]，则可以使用Bellman-Ford
+//        System.out.println(problem2093.minimumCost3(n, highways, discounts));
     }
 
     /**
-     * 堆优化Dijkstra求节点0最多使用discounts次折扣到达节点n-1的最少费用
-     * 注意：无向图Dijkstra保存当前节点的父节点，避免重复遍历
-     * 时间复杂度O(n*discounts*log(n*discounts))，空间复杂度O(m+n) (m=highways.length，即图中边的个数，n为图中节点的个数)
-     * (最多使用discounts次折扣，每使用1次折扣，最多将n个节点入堆，最多会将n*discounts个节点入堆)
-     * (堆优化Dijkstra的时间复杂度O(mlogm)，其中m为图中边的个数，本题边的个数O(n*discounts)，所以时间复杂度O(n*discounts*log(n*discounts)))
+     * bfs
+     * 时间复杂度O((n*discounts)^2)，空间复杂度O(m+n+n*discounts) (m=highways.length，即图中边的个数，n为图中节点的个数)
      *
      * @param n
      * @param highways
@@ -83,97 +79,86 @@ public class Problem2093 {
         for (int i = 0; i < highways.length; i++) {
             int u = highways[i][0];
             int v = highways[i][1];
-            //节点u和节点v边的权值
             int weight = highways[i][2];
 
             edges.get(u).add(new int[]{v, weight});
             edges.get(v).add(new int[]{u, weight});
         }
 
-        //节点0到其他节点需要的最少费用
-        int[] cost = new int[n];
+        //节点0到其他节点使用折扣的最小费用数组
+        int[][] cost = new int[n][discounts + 1];
 
-        //cost初始化，初始化为int最大值表示节点0无法到达节点i
+        //cost初始化，初始化为int最大值表示节点0无法到节点i使用j次折扣
         for (int i = 0; i < n; i++) {
-            cost[i] = Integer.MAX_VALUE;
+            for (int j = 0; j <= discounts; j++) {
+                cost[i][j] = Integer.MAX_VALUE;
+            }
         }
 
-        //初始化，节点0到节点0的最少费用为0
-        cost[0] = 0;
+        //初始化，节点0到节点0使用0次折扣的最小费用为0
+        cost[0][0] = 0;
 
-        //小根堆，arr[0]：当前节点，arr[1]：节点0使用arr[2]次折扣到达节点arr[0]的费用，注意：当前费用不一定是最少费用，
-        //arr[2]：节点0到节点arr[0]使用的折扣次数，arr[3]：节点arr[0]的父节点，避免重复遍历
-        PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(new Comparator<int[]>() {
-            @Override
-            public int compare(int[] arr1, int[] arr2) {
-                return arr1[1] - arr2[1];
-            }
-        });
+        //arr[0]：当前节点，arr[1]：节点0到当前节点使用的折扣次数，
+        //arr[2]：节点0到当前节点使用arr[1]次折扣的费用，注意：当前费用不一定是最少费用
+        Queue<int[]> queue = new LinkedList<>();
+        //节点0入队
+        queue.offer(new int[]{0, 0, cost[0][0]});
 
-        //起始节点0入堆
-        priorityQueue.offer(new int[]{0, 0, 0, -1});
-
-        while (!priorityQueue.isEmpty()) {
-            int[] arr = priorityQueue.poll();
-            //当前节点u
+        while (!queue.isEmpty()) {
+            int[] arr = queue.poll();
+            //当前节点
             int u = arr[0];
-            //节点0使用curDiscount次折扣到达节点u的费用，注意：当前费用不一定是最少费用
-            int curCost = arr[1];
-            //节点0到达节点u使用的折扣次数
-            int curDiscount = arr[2];
-            //节点u的父节点，即无向图保存父节点，避免重复遍历
-            int parent = arr[3];
+            //节点0到当前节点使用的折扣次数
+            int curDiscount = arr[1];
+            //节点0到当前节点使用arr[1]次折扣的费用，注意：当前费用不一定是最少费用
+            int curCost = arr[2];
 
-            //节点0到达节点u使用的折扣次数大于discounts，则不合法，直接进行下次循环
+            //节点0到当前节点使用的折扣次数大于最大折扣次数，则不合法，直接进行下次循环
             if (curDiscount > discounts) {
                 continue;
             }
 
-            if (curCost > cost[u]) {
+            //节点0到当前节点使用arr[1]次折扣的费用大于节点0到当前节点使用arr[1]次折扣的最小费用，
+            //则当前节点不能作为中间节点更新节点0到其他节点使用折扣的最小费用，直接进行下次循环
+            if (curCost > cost[u][curDiscount]) {
                 continue;
             }
 
-            //小根堆保证第一次访问到节点n-1，则得到节点0最多使用discounts折扣到达节点n-1的最少费用，直接返回curCost
-            //注意：如果使用变量保存curCost取最小值，在小根堆遍历结束时再返回，会超时
-            if (u == n - 1) {
-                return curCost;
-            }
+            //遍历节点u的邻接节点v
+            for (int i = 0; i < edges.get(u).size(); i++) {
+                int v = edges.get(u).get(i)[0];
+                int weight = edges.get(u).get(i)[1];
 
-            //遍历节点u的邻接节点，节点u作为中间节点更新节点0到其他节点的最少费用
-            for (int[] arr2 : edges.get(u)) {
-                //节点u的邻接节点
-                int v = arr2[0];
-                //节点u和节点v边的权值，即节点u到节点v需要费用
-                int weight = arr2[1];
-
-                //当前节点u的邻接节点v为节点u的父节点，则节点u到节点v的路径已经遍历过，避免重复遍历，直接进行下次循环
-                if (v == parent) {
-                    continue;
+                //不使用折扣找到更小的cost[v][curDiscount]，更新cost[v][curDiscount]，节点v入队
+                if (curCost + weight < cost[v][curDiscount]) {
+                    cost[v][curDiscount] = curCost + weight;
+                    queue.offer(new int[]{v, curDiscount, cost[v][curDiscount]});
                 }
 
-                //不使用折扣找到更小的cost[v]，更新cost[v]，节点v入堆
-                if (curCost + weight < cost[v]) {
-                    cost[v] = curCost + weight;
-                    priorityQueue.offer(new int[]{v, cost[v], curDiscount, u});
-                }
-
-                //使用折扣找到更小的cost[v]，并且使用的折扣次数加1不超过discounts，更新cost[v]，节点v入堆
-                if (curCost + weight / 2 < cost[v] && curDiscount + 1 <= discounts) {
-                    cost[v] = curCost + weight / 2;
-                    priorityQueue.offer(new int[]{v, cost[v], curDiscount + 1, u});
+                //使用折扣找到更小的cost[v][curDiscount+1]，更新cost[v][curDiscount+1]，节点v入队
+                if (curDiscount + 1 <= discounts && curCost + weight / 2 < cost[v][curDiscount + 1]) {
+                    cost[v][curDiscount + 1] = curCost + weight / 2;
+                    queue.offer(new int[]{v, curDiscount + 1, cost[v][curDiscount + 1]});
                 }
             }
         }
 
-        //遍历结束，没有找到节点0最多使用discounts次折扣到达节点n-1的最少费用，则返回-1
-        return -1;
+        //节点0到节点n-1最多使用discounts次折扣的最小费用
+        int result = Integer.MAX_VALUE;
+
+        for (int i = 0; i <= discounts; i++) {
+            result = Math.min(result, cost[n - 1][i]);
+        }
+
+        //result为int最大值，则节点0无法到节点n-1最多使用discounts次折扣，返回-1；否则返回result
+        return result == Integer.MAX_VALUE ? -1 : result;
     }
 
     /**
-     * 动态规划(Bellman-Ford)
-     * dp[i][j]：节点0使用j次折扣到达节点i的最少费用
-     * dp[i][j] = min(dp[k][j]+weight,dp[k][j-1]+weight/2) (存在节点k到节点i的边，并且边的权值为weight)
-     * 时间复杂度O(n*discounts+m*discounts)，空间复杂度O(n*discounts) (m=highways.length，即图中边的个数，n为图中节点的个数)
+     * 堆优化Dijkstra求节点0到节点n-1最多使用discounts次折扣的最小费用
+     * 时间复杂度O(n*discounts*log(n*discounts))，空间复杂度O(m+n) (m=highways.length，即图中边的个数，n为图中节点的个数)
+     * (最多使用discounts次折扣，每使用1次折扣，最多将n个节点入堆，最多会将n*discounts个节点入堆)
+     * (堆优化Dijkstra的时间复杂度O(mlogm)，其中m为图中边的个数，本题边的个数O(n*discounts)，所以时间复杂度O(n*discounts*log(n*discounts)))
      *
      * @param n
      * @param highways
@@ -181,57 +166,157 @@ public class Problem2093 {
      * @return
      */
     public int minimumCost2(int n, int[][] highways, int discounts) {
+        //邻接表，无向图，arr[0]：当前节点的邻接节点，arr[1]：当前节点和邻接节点边的权值
+        List<List<int[]>> edges = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            edges.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < highways.length; i++) {
+            int u = highways[i][0];
+            int v = highways[i][1];
+            int weight = highways[i][2];
+
+            edges.get(u).add(new int[]{v, weight});
+            edges.get(v).add(new int[]{u, weight});
+        }
+
+        //节点0到其他节点使用折扣的最小费用数组
+        int[][] cost = new int[n][discounts + 1];
+
+        //cost初始化，初始化为int最大值表示节点0无法到节点i使用j次折扣
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j <= discounts; j++) {
+                cost[i][j] = Integer.MAX_VALUE;
+            }
+        }
+
+        //初始化，节点0到节点0使用0次折扣的最小费用为0
+        cost[0][0] = 0;
+
+        //小根堆，arr[0]：当前节点，arr[1]：节点0到当前节点使用的折扣次数，
+        //arr[2]：节点0到当前节点使用arr[1]次折扣的费用，注意：当前费用不一定是最少费用
+        PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(new Comparator<int[]>() {
+            @Override
+            public int compare(int[] arr1, int[] arr2) {
+                return arr1[2] - arr2[2];
+            }
+        });
+        //节点0入堆
+        priorityQueue.offer(new int[]{0, 0, cost[0][0]});
+
+        while (!priorityQueue.isEmpty()) {
+            int[] arr = priorityQueue.poll();
+            //当前节点
+            int u = arr[0];
+            //节点0到当前节点使用的折扣次数
+            int curDiscount = arr[1];
+            //节点0到当前节点使用arr[1]次折扣的费用，注意：当前费用不一定是最少费用
+            int curCost = arr[2];
+
+            //节点0到当前节点使用的折扣次数大于最大折扣次数，则不合法，直接进行下次循环
+            if (curDiscount > discounts) {
+                continue;
+            }
+
+            //节点0到当前节点使用arr[1]次折扣的费用大于节点0到当前节点使用arr[1]次折扣的最小费用，
+            //则当前节点不能作为中间节点更新节点0到其他节点使用折扣的最小费用，直接进行下次循环
+            if (curCost > cost[u][curDiscount]) {
+                continue;
+            }
+
+            //小根堆保证第一次访问到节点n-1，则得到节点0到节点n-1最多使用discounts折扣的最小费用，直接返回curCost
+            if (u == n - 1) {
+                return curCost;
+            }
+
+            //遍历节点u的邻接节点v
+            for (int i = 0; i < edges.get(u).size(); i++) {
+                int v = edges.get(u).get(i)[0];
+                int weight = edges.get(u).get(i)[1];
+
+                //不使用折扣找到更小的cost[v][curDiscount]，更新cost[v][curDiscount]，节点v入堆
+                if (curCost + weight < cost[v][curDiscount]) {
+                    cost[v][curDiscount] = curCost + weight;
+                    priorityQueue.offer(new int[]{v, curDiscount, cost[v][curDiscount]});
+                }
+
+                //使用折扣找到更小的cost[v][curDiscount+1]，更新cost[v][curDiscount+1]，节点v入堆
+                if (curDiscount + 1 <= discounts && curCost + weight / 2 < cost[v][curDiscount + 1]) {
+                    cost[v][curDiscount + 1] = curCost + weight / 2;
+                    priorityQueue.offer(new int[]{v, curDiscount + 1, cost[v][curDiscount + 1]});
+                }
+            }
+        }
+
+        //遍历结束，没有找到节点0到节点n-1最多使用discounts次折扣的最小费用，则返回-1
+        return -1;
+    }
+
+    /**
+     * 动态规划(Bellman-Ford)
+     * 注意：不能使用Bellman-Ford，因为状态转移方程中dp[i][j]中的j次折扣会使用到dp[u][j]，如果只使用到dp[u][j-1]，则可以使用Bellman-Ford
+     * dp[i][j]：节点0到节点i使用j次折扣的最小费用
+     * dp[i][j] = min(dp[k][j]+weight,dp[k][j-1]+weight/2) (节点i和节点k边的权值为weight)
+     * 时间复杂度O(n*discounts+m*discounts)，空间复杂度O(n*discounts) (m=highways.length，即图中边的个数，n为图中节点的个数)
+     *
+     * @param n
+     * @param highways
+     * @param discounts
+     * @return
+     */
+    public int minimumCost3(int n, int[][] highways, int discounts) {
+        //节点0到节点i使用j次折扣的最小费用
         int[][] dp = new int[n][discounts + 1];
 
-        //dp初始化，节点0使用j次折扣无法到达节点i
+        //dp初始化，节点0无法到节点i使用j次折扣
         for (int i = 0; i < n; i++) {
             for (int j = 0; j <= discounts; j++) {
                 dp[i][j] = Integer.MAX_VALUE;
             }
         }
 
-        //初始化，节点0使用0次折扣到达节点0的最少费用为0
+        //dp初始化，节点0到节点0使用0次折扣的最小费用为0
         dp[0][0] = 0;
 
         //使用的折扣次数i
         for (int i = 0; i <= discounts; i++) {
-            //当前节点u、v
             for (int j = 0; j < highways.length; j++) {
                 int u = highways[j][0];
                 int v = highways[j][1];
                 int weight = highways[j][2];
 
-                //节点0使用i次折扣能够到达节点u，才能更新节点0使用i次折扣到达节点v的最少费用
+                //节点0使用i次折扣能够到节点u，才能更新节点0使用i次折扣到节点v的最小费用
                 if (dp[u][i] != Integer.MAX_VALUE) {
                     dp[v][i] = Math.min(dp[v][i], dp[u][i] + weight);
                 }
 
-                //节点0使用i-1次折扣能够到达节点u，才能更新节点0使用i次折扣到达节点v的最少费用
+                //节点0使用i-1次折扣能够到节点u，才能更新节点0使用i次折扣到节点v的最小费用
                 if (i - 1 >= 0 && dp[u][i - 1] != Integer.MAX_VALUE) {
                     dp[v][i] = Math.min(dp[v][i], dp[u][i - 1] + weight / 2);
                 }
 
-                //节点0使用i次折扣能够到达节点v，才能更新节点0使用i次折扣到达节点u的最少费用
+                //节点0使用i次折扣能够到节点v，才能更新节点0使用i次折扣到节点u的最小费用
                 if (dp[v][i] != Integer.MAX_VALUE) {
                     dp[u][i] = Math.min(dp[u][i], dp[v][i] + weight);
                 }
 
-                //节点0使用i-1次折扣能够到达节点v，才能更新节点0使用i次折扣到达节点u的最少费用
+                //节点0使用i-1次折扣能够到节点v，才能更新节点0使用i次折扣到节点u的最小费用
                 if (i - 1 >= 0 && dp[v][i - 1] != Integer.MAX_VALUE) {
                     dp[u][i] = Math.min(dp[u][i], dp[v][i - 1] + weight / 2);
                 }
             }
         }
 
-        //节点0最多使用discounts次折扣到达节点n-1的最少费用
+        //节点0到节点n-1最多使用discounts次折扣的最小费用
         int result = Integer.MAX_VALUE;
 
-        //最少费用为dp[n-1][0]、dp[n-1][1]、...、dp[n-1][discounts-1]、dp[n-1][discounts]中的最小值
         for (int i = 0; i <= discounts; i++) {
             result = Math.min(result, dp[n - 1][i]);
         }
 
-        //result为int最大值，则节点0最多使用discounts次折扣无法到达节点n-1，返回-1；否则返回result
+        //result为int最大值，则节点0无法到节点n-1最多使用discounts次折扣，返回-1；否则返回result
         return result == Integer.MAX_VALUE ? -1 : result;
     }
 }

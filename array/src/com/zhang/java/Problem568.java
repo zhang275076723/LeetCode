@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/12/1 08:56
  * @Author zsy
- * @Description 最大休假天数 Bellman-Ford类比Problem787、Problem1928、Problem2093 动态规划类比
+ * @Description 最大休假天数 Bellman-Ford类比Problem787、Problem1293、Problem1928 动态规划类比
  * 力扣想让一个最优秀的员工在 N 个城市间旅行来收集算法问题。
  * 但只工作不玩耍，聪明的孩子也会变傻，所以您可以在某些特定的城市和星期休假。
  * 您的工作就是安排旅行使得最大化你可以休假的天数，但是您需要遵守一些规则和限制。
@@ -64,8 +64,9 @@ public class Problem568 {
 
     /**
      * 动态规划(Bellman-Ford)
-     * dp[i][j]：第j周在节点i休假的最长天数
-     * dp[i][j] = max(dp[k][j-1]+days[i][j]) (存在节点k到节点i的边)
+     * dp[i][j]：节点i在第j周休假的最长天数
+     * dp[i][j] = max(dp[k][j-1]+days[i][j-1]) (flights[k][i]为1，即存在节点k到节点i的边)
+     * (节点i在第j周休假的天数为days[i][j-1]，而不是days[i][j]，因为days第1周休假的天数是从下标索引0开始)
      * 时间复杂度O(k*n^2)，空间复杂度O(nk)
      *
      * @param flights
@@ -77,6 +78,7 @@ public class Problem568 {
         int n = days.length;
         //旅行的周数
         int k = days[0].length;
+        //节点i在第j周休假的最长天数
         int[][] dp = new int[n][k + 1];
 
         //dp初始化，第j周无法到达节点i
@@ -86,26 +88,25 @@ public class Problem568 {
             }
         }
 
-        //初始化，第0周在节点0休假的最长天数为0
+        //初始化，节点0在第0周休假的最长天数为0
         dp[0][0] = 0;
 
-        //第i周
-        for (int i = 1; i <= k; i++) {
-            //当前节点j、m
-            for (int j = 0; j < n; j++) {
-                for (int m = 0; m < n; m++) {
-                    //存在节点j到节点m的路径
-                    if (j != m && flights[j][m] == 1) {
-                        dp[m][i] = Math.max(dp[m][i], dp[j][i - 1] + days[m][i - 1]);
+        //由节点j在第l-1周休假的最长天数求节点i在第l周休假的最长天数
+        for (int l = 0; l <= k; l++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    //存在节点j到节点i的边
+                    if (flights[i][j] == 1 && l - 1 >= 0 && dp[j][l - 1] != Integer.MAX_VALUE) {
+                        //注意：节点i在第l周休假的天数为days[i][l-1]，而不是days[i][l]，因为days第1周休假的天数是从下标索引0开始
+                        dp[i][l] = Math.max(dp[i][l], dp[j][l - 1] + days[i][l - 1]);
                     }
                 }
             }
         }
 
-        //第k周在某个节点休假的最长天数
+        //第k周休假的最长天数
         int result = 0;
 
-        //休假的最长天数为dp[0][k]、dp[1][k]、...、dp[n-1][k]中的最大值
         for (int i = 0; i < n; i++) {
             result = Math.max(result, dp[i][k]);
         }

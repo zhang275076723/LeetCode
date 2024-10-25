@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2024/11/12 09:02
  * @Author zsy
- * @Description T 秒后青蛙的位置 跳跃问题类比Problem45、Problem55、Problem403、Problem975、Problem1306、Problem1340、Problem1345、Problem1654、Problem1696、Problem1871、Problem2297、Problem2498、Problem2770、LCP09
+ * @Description T 秒后青蛙的位置 类比Problem2065 跳跃问题类比Problem45、Problem55、Problem403、Problem975、Problem1306、Problem1340、Problem1345、Problem1654、Problem1696、Problem1871、Problem2297、Problem2498、Problem2770、LCP09
  * 给你一棵由 n 个顶点组成的无向树，顶点编号从 1 到 n。青蛙从 顶点 1 开始起跳。
  * 规则如下：
  * 在一秒内，青蛙从它所在的当前顶点跳到另一个 未访问 过的顶点（如果它们直接相连）。
