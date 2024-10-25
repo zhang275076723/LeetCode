@@ -54,7 +54,7 @@ public class Problem1377 {
 
     /**
      * 图的dfs
-     * 如果当前节点u有a个子节点，则访问节点u的子节点v的概率为1/a，如果子节点v有b个子节点，则访问子节点v的子节点p的概率为1/a*b
+     * 当前节点u有a个子节点，则访问节点u的子节点v的概率为1/a，子节点v有b个子节点，则当前节点u访问子节点v的子节点p的概率为1/a*b
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param n
@@ -64,28 +64,29 @@ public class Problem1377 {
      * @return
      */
     public double frogPosition(int n, int[][] edges, int t, int target) {
-        //邻接表
+        //邻接表，无向图
         List<List<Integer>> graph = new ArrayList<>();
 
-        //因为节点从1开始，所以长度要加1
-        for (int i = 0; i < n + 1; i++) {
+        //因为节点从1开始，所以邻接表长度要加1
+        for (int i = 0; i <= n; i++) {
             graph.add(new ArrayList<>());
         }
 
         for (int i = 0; i < edges.length; i++) {
             int u = edges[i][0];
             int v = edges[i][1];
+
             graph.get(u).add(v);
             graph.get(v).add(u);
         }
 
-        //因为节点从1开始，所以长度要加1
-        return dfs(1, target, 0, t, graph, new boolean[n + 1]);
+        //因为节点从1开始，所以访问数组长度要加1
+        return dfs(1, 0, target, t, new boolean[n + 1], graph);
     }
 
     /**
      * 图的bfs
-     * 如果当前节点u有a个子节点，则访问节点u的子节点v的概率为1/a，如果子节点v有b个子节点，则访问子节点v的子节点p的概率为1/a*b
+     * 当前节点u有a个子节点，则访问节点u的子节点v的概率为1/a，子节点v有b个子节点，则当前节点u访问子节点v的子节点p的概率为1/a*b
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param n
@@ -95,25 +96,27 @@ public class Problem1377 {
      * @return
      */
     public double frogPosition2(int n, int[][] edges, int t, int target) {
-        //邻接表
+        //邻接表，无向图
         List<List<Integer>> graph = new ArrayList<>();
 
-        //因为节点从1开始，所以长度要加1
-        for (int i = 0; i < n + 1; i++) {
+        //因为节点从1开始，所以邻接表长度要加1
+        for (int i = 0; i <= n; i++) {
             graph.add(new ArrayList<>());
         }
 
         for (int i = 0; i < edges.length; i++) {
             int u = edges[i][0];
             int v = edges[i][1];
+
             graph.get(u).add(v);
             graph.get(v).add(u);
         }
 
-        //arr[0]：当前节点，arr[1]：从节点1跳跃到当前节点的时间，arr[2]：从节点1跳跃到当前节点的概率
+        //arr[0]：当前节点，arr[1]：节点1跳跃到当前节点的时间，arr[2]：节点1跳跃到当前节点的概率
         Queue<double[]> queue = new LinkedList<>();
-        //因为节点从1开始，所以长度要加1
+        //因为节点从1开始，所以访问数组长度要加1
         boolean[] visited = new boolean[n + 1];
+
         queue.offer(new double[]{1, 0, 1});
         visited[1] = true;
 
@@ -121,28 +124,29 @@ public class Problem1377 {
             double[] arr = queue.poll();
             //当前节点u
             int u = (int) arr[0];
-            //从节点1跳跃到当前节点u的时间
-            int time = (int) arr[1];
-            //从节点1跳跃到当前节点u的概率
+            //节点1跳跃到当前节点u的时间
+            int curTime = (int) arr[1];
+            //节点1跳跃到当前节点u的概率
             double probability = arr[2];
 
-            //time大于t，则无法跳跃到当前节点，直接进行下次循环
-            if (time > t) {
+            //curTime大于t，则无法跳跃到节点target，直接进行下次循环
+            if (curTime > t) {
                 continue;
             }
 
-            //节点u未访问的邻接节点的个数
+            //节点u沿着节点1往下的邻接节点的个数
             int count;
 
-            //起始节点节点1未访问的邻接节点的个数不需要减1
+            //节点1往下的邻接节点的个数不需要减1
             if (u == 1) {
                 count = graph.get(u).size();
             } else {
                 count = graph.get(u).size() - 1;
             }
 
-            //遍历到节点target，并且时间等于t，或者时间小于t，但是当前节点u没有未访问的邻接节点，则返回从节点1跳跃到节点target的时间
-            if (u == target && (time == t || count == 0)) {
+            //遍历到节点target，并且当前时间等于t，或者当前时间小于t，但是当前节点u往下没有邻接节点，
+            //则返回节点1跳跃到节点target的概率
+            if (u == target && (curTime == t || count == 0)) {
                 return probability;
             }
 
@@ -152,51 +156,52 @@ public class Problem1377 {
                     continue;
                 }
 
-                //节点1跳跃到节点u邻接节点v的概率=节点1跳跃到节点u的概率/节点u未访问邻接节点的个数
-                queue.offer(new double[]{v, time + 1, probability / count});
+                //节点1跳跃到节点u邻接节点v的概率=节点1跳跃到节点u的概率/节点u往下的邻接节点的个数
+                queue.offer(new double[]{v, curTime + 1, probability / count});
                 visited[v] = true;
             }
         }
 
-        //bfs结束无法遍历到节点target，则遍历到节点target的概率为0
+        //bfs结束，则无法遍历到节点target，返回遍历到节点target的概率为0
         return 0;
     }
 
     /**
-     * time时间节点u出发跳跃到t时间节点target的概率
+     * curTime时间节点u出发跳跃到targetTime时间节点target的概率
      *
      * @param u
+     * @param curTime
      * @param target
-     * @param time
-     * @param t
-     * @param graph
+     * @param targetTime
      * @param visited
+     * @param graph
      * @return
      */
-    private double dfs(int u, int target, int time, int t, List<List<Integer>> graph, boolean[] visited) {
-        //time大于t，则无法跳跃到节点target，返回0
-        if (time > t) {
+    private double dfs(int u, int curTime, int target, int targetTime, boolean[] visited, List<List<Integer>> graph) {
+        //curTime大于targetTime，则无法跳跃到节点target，返回0
+        if (curTime > targetTime) {
             return 0;
         }
 
-        //节点u未访问的邻接节点的个数
+        //节点u沿着节点1往下的邻接节点的个数
         int count;
 
-        //起始节点节点1未访问的邻接节点的个数不需要减1
+        //节点1往下的邻接节点的个数不需要减1
         if (u == 1) {
             count = graph.get(u).size();
         } else {
             count = graph.get(u).size() - 1;
         }
 
-        //遍历到节点target，并且时间等于t，或者时间小于t，但是当前节点u没有未访问的邻接节点，则节点u在时间time跳跃到节点target的概率为1
-        if (u == target && (time == t || count == 0)) {
+        //遍历到节点target，并且当前时间等于targetTime，或者当前时间小于targetTime，但是当前节点u往下没有邻接节点，
+        //则curTime时间节点u出发跳跃到targetTime时间节点target的概率为1
+        if (u == target && (curTime == targetTime || count == 0)) {
             return 1;
         }
 
         visited[u] = true;
 
-        //节点u在时间time跳跃到节点target的概率
+        //curTime时间节点u出发跳跃到targetTime时间节点target的概率
         double probability = 0;
 
         //遍历节点u的邻接节点v
@@ -205,9 +210,8 @@ public class Problem1377 {
                 continue;
             }
 
-            //节点u跳跃到节点target的概率=邻接节点v跳跃到节点target的概率/节点u未访问的邻接节点的个数
-            probability = Math.max(probability, dfs(v, target, time + 1, t, graph, visited) / count);
-            visited[v] = true;
+            //节点u跳跃到节点target的概率=邻接节点v跳跃到节点target的概率/节点u往下的邻接节点的个数
+            probability = Math.max(probability, dfs(v, curTime + 1, target, targetTime, visited, graph) / count);
         }
 
         return probability;
