@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2024/1/30 08:35
  * @Author zsy
- * @Description 树的直径 类比Problem543 类比Problem310
+ * @Description 树的直径 类比Problem310 类比Problem543 拓扑排序类比
  * 给你这棵「无向树」，请你测算并返回它的「直径」：这棵树上最长简单路径的 边数。
  * 我们用一个由所有「边」组成的数组 edges 来表示一棵无向树，其中 edges[i] = [u, v] 表示节点 u 和 v 之间的双向边。
  * 树上的节点都已经用 {0, 1, ..., edges.length} 中的数做了标记，每个节点上的标记都是独一无二的。
@@ -45,6 +45,7 @@ public class Problem1245 {
         System.out.println(problem1245.treeDiameter(edges));
         System.out.println(problem1245.treeDiameter2(edges));
         System.out.println(problem1245.treeDiameter3(edges));
+        System.out.println(problem1245.treeDiameter4(edges));
     }
 
     /**
@@ -204,6 +205,77 @@ public class Problem1245 {
 
         //此时diameter为最长路径访问的节点个数，而树的直径是路径中边的个数，所以要减1
         return diameter - 1;
+    }
+
+    /**
+     * bfs拓扑排序
+     * 删除度为1(无向图不区分入度出度)的节点，即删除叶节点，直至图中剩余1个或2个节点，
+     * 最后图中剩余1个节点，则bfs删除节点的层数*2即为树的直径；最后图中剩余2个节点，则bfs删除节点的层数*2+1即为树的直径
+     * 时间复杂度O(n)，空间复杂度O(n)
+     *
+     * @param edges
+     * @return
+     */
+    public int treeDiameter4(int[][] edges) {
+        //节点的个数
+        int n = edges.length + 1;
+        //邻接表，无向图
+        List<List<Integer>> graph = new ArrayList<>();
+        //无向图不分出度入度，统称为度
+        int[] degree = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            graph.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < edges.length; i++) {
+            int u = edges[i][0];
+            int v = edges[i][1];
+
+            graph.get(u).add(v);
+            graph.get(v).add(u);
+            degree[u]++;
+            degree[v]++;
+        }
+
+        Queue<Integer> queue = new LinkedList<>();
+        //bfs拓扑排序未访问到的节点的个数
+        int count = n;
+        //bfs的层数
+        int level = 0;
+
+        //度为1的节点入队
+        for (int i = 0; i < n; i++) {
+            if (degree[i] == 1) {
+                queue.offer(i);
+            }
+        }
+
+        //未访问到的节点的个数不超过2个，则找到了树的直径
+        while (!queue.isEmpty() && count > 2) {
+            //bfs当前层遍历的节点个数
+            int size = queue.size();
+
+            for (int i = 0; i < size; i++) {
+                int u = queue.poll();
+
+                //删除当前节点相连的边，即邻接节点的度减1，邻接节点度为1的节点入队
+                for (int v : graph.get(u)) {
+                    degree[v]--;
+
+                    if (degree[v] == 1) {
+                        queue.offer(v);
+                    }
+                }
+            }
+
+            //删除bfs当前层遍历的节点个数
+            count = count - size;
+            level++;
+        }
+
+        //最后图中剩余1个节点，则bfs删除节点的层数*2即为树的直径；最后图中剩余2个节点，则bfs删除节点的层数*2+1即为树的直径
+        return count == 1 ? level * 2 : level * 2 + 1;
     }
 
     /**

@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @Date 2023/9/22 08:57
  * @Author zsy
- * @Description 冗余连接 II 入度出度类比Problem207、Problem210、Problem331、Problem1361 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1361、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
+ * @Description 冗余连接 II 类比Problem684 入度出度类比Problem331、Problem1361、Problem1557 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1361、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
  * 在本问题中，有根树指满足以下条件的 有向 图。
  * 该树只有一个根节点，所有其他节点都是该根节点的后继。
  * 该树除了根节点之外的每一个节点都有且只有一个父节点，而根节点没有父节点。
@@ -49,8 +49,10 @@ public class Problem685 {
      * @return
      */
     public int[] findRedundantDirectedConnection(int[][] edges) {
+        //图中节点的个数
+        int n = edges.length;
         //因为节点是从1开始，所以要多申请一个长度
-        int[] inDegree = new int[edges.length + 1];
+        int[] inDegree = new int[n + 1];
 
         for (int i = 0; i < edges.length; i++) {
             inDegree[edges[i][1]]++;
@@ -86,8 +88,10 @@ public class Problem685 {
      * @return
      */
     private int[] findWithInDegree2(int[][] edges, List<int[]> list) {
+        //图中节点的个数
+        int n = edges.length;
         //因为节点是从1开始，所以要多申请一个长度
-        UnionFind unionFind = new UnionFind(edges.length + 1);
+        UnionFind unionFind = new UnionFind(n + 1);
         //list中存放指向入度为2的节点的两条边
         int[] edge1 = list.get(0);
         int[] edge2 = list.get(1);
@@ -125,8 +129,10 @@ public class Problem685 {
      * @return
      */
     private int[] findWithoutInDegree2(int[][] edges) {
+        //图中节点的个数
+        int n = edges.length;
         //因为节点是从1开始，所以要多申请一个长度
-        UnionFind unionFind = new UnionFind(edges.length + 1);
+        UnionFind unionFind = new UnionFind(n + 1);
 
         for (int i = 0; i < edges.length; i++) {
             //当前边edges[i]的两个节点

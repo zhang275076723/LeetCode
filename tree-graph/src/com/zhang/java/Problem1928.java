@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/11/17 08:14
  * @Author zsy
- * @Description 规定时间内到达终点的最小花费 花旗银行机试题 带限制条件的最短路径类比Problem787、Problem1293、Problem2093 Bellman-Ford类比Problem568、Problem787、Problem1293 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1976、Problem2045、Problem2093、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra
+ * @Description 规定时间内到达终点的最小花费 花旗银行机试题 带限制条件的最短路径类比Problem787、Problem1293、Problem2093 Bellman-Ford类比Problem568、Problem787、Problem1293 bfs类比 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1976、Problem2045、Problem2093、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra
  * 一个国家有 n 个城市，城市编号为 0 到 n - 1 ，题目保证 所有城市 都由双向道路 连接在一起 。
  * 道路由二维整数数组 edges 表示，其中 edges[i] = [xi, yi, timei] 表示城市 xi 和 yi 之间有一条双向道路，耗费时间为 timei 分钟。
  * 两个城市之间可能会有多条耗费时间不同的道路，但是不会有道路两头连接着同一座城市。

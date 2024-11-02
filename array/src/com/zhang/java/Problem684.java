@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2023/9/22 08:32
  * @Author zsy
- * @Description 冗余连接 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1361、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
+ * @Description 冗余连接 类比Problem685 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1361、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
  * 树可以看成是一个连通且 无环 的 无向 图。
  * 给定往一棵 n 个节点 (节点值 1～n) 的树中添加一条边后的图。
  * 添加的边的两个顶点包含在 1 到 n 中间，且这条附加的边不属于树中已存在的边。
@@ -46,8 +46,10 @@ public class Problem684 {
      * @return
      */
     public int[] findRedundantConnection(int[][] edges) {
+        //图中节点的个数
+        int n = edges.length;
         //因为节点是从1开始，所以要多申请一个长度
-        UnionFind unionFind = new UnionFind(edges.length + 1);
+        UnionFind unionFind = new UnionFind(n + 1);
 
         for (int i = 0; i < edges.length; i++) {
             //当前边edges[i]的两个节点

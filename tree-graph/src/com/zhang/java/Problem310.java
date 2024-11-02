@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2023/10/10 08:49
  * @Author zsy
- * @Description 最小高度树 快手面试题 类比Problem1245 类比Problem834 保存父节点类比Problem113、Problem126、Problem272、Problem863、Offer34 拓扑排序类比Problem207、Problem210、Problem329、IsCircleDependency
+ * @Description 最小高度树 快手面试题 类比Problem1245 类比Problem834 保存父节点类比Problem113、Problem126、Problem272、Problem863、Offer34 拓扑排序类比
  * 树是一个无向图，其中任何两个顶点只通过一条路径连接。
  * 换句话说，一个任何没有简单环路的连通图都是一棵树。
  * 给你一棵包含 n 个节点的树，标记为 0 到 n - 1 。
@@ -163,7 +163,7 @@ public class Problem310 {
             }};
         }
 
-        //邻接表，使用邻接矩阵，则超时
+        //邻接表，因为是稀疏图，所以要使用邻接表，如果使用邻接矩阵，则超时
         List<List<Integer>> graph = new ArrayList<>(n);
 
         for (int i = 0; i < n; i++) {
@@ -263,7 +263,7 @@ public class Problem310 {
 
     /**
      * bfs拓扑排序
-     * 删除度为1(无向图不区分入度出度)的节点，即删除叶节点，直至图中剩余1个或2个节点即为图中最小高度对应的根节点
+     * 删除度为1(无向图不区分入度出度)的节点，即删除叶节点，直至图中剩余1个或2个节点，即为图中最小高度对应的根节点
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param n
@@ -277,7 +277,7 @@ public class Problem310 {
             }};
         }
 
-        //邻接表
+        //邻接表，因为是稀疏图，所以要使用邻接表，如果使用邻接矩阵，则超时
         List<List<Integer>> graph = new ArrayList<>(n);
         //无向图不分出度入度，统称为度
         int[] degree = new int[n];
@@ -294,7 +294,7 @@ public class Problem310 {
         }
 
         Queue<Integer> queue = new LinkedList<>();
-        //未访问到的节点的个数
+        //bfs拓扑排序未访问到的节点的个数
         int count = n;
 
         //度为1的节点入队
@@ -305,13 +305,10 @@ public class Problem310 {
         }
 
         //未访问到的节点的个数不超过2个，则找到了图中最小高度对应的根节点
-        while (count > 2) {
-            //当前层需要删除的度为1的节点
+        while (!queue.isEmpty() && count > 2) {
+            //bfs当前层遍历的节点个数
             int size = queue.size();
-            count = count - size;
 
-            //不能一个节点一个节点删除度为1的节点，只能一层一层删除度为1的节点，
-            //否则只能得到2个图中最小高度对应的根节点，没有考虑到只有1个图中最小高度对应的根节点的情况
             for (int i = 0; i < size; i++) {
                 int u = queue.poll();
 
@@ -324,6 +321,9 @@ public class Problem310 {
                     }
                 }
             }
+
+            //删除bfs当前层遍历的节点个数
+            count = count - size;
         }
 
         List<Integer> list = new ArrayList<>();

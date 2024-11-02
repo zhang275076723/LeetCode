@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2023/10/19 08:12
  * @Author zsy
- * @Description 课程表 III 类比Problem207、Problem210、Problem1462 优先队列类比Problem253、Problem407 451 692 703 23 264 313 373 378 668 658 719 786 1508 871 973 2402 1882 632 239 1424 502 659 621 1834 767 358 355 218 1500 1268 642 2231 1642 1439 2386
+ * @Description 课程表 III 类比Problem207、Problem210、Problem1462 优先队列类比Problem253、Problem407 451 692 703 23 264 313 373 378 668 658 719 786 1508 871 973 2402 1882 632 239 1424 502 659 621 1834 767 358 355 218 1500 1268 642 2231 1642 1439 2386 2503
  * 这里有 n 门不同的在线课程，按从 1 到 n 编号。
  * 给你一个数组 courses ，其中 courses[i] = [durationi, lastDayi] 表示第 i 门课将会 持续 上 durationi 天课，
  * 并且必须在不晚于 lastDayi 的时候完成。

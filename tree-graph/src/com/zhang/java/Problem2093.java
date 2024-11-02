@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/11/18 08:48
  * @Author zsy
- * @Description 前往目标城市的最小费用 带限制条件的最短路径类比Problem787、Problem1293、Problem1928 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2045、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra
+ * @Description 前往目标城市的最小费用 带限制条件的最短路径类比Problem787、Problem1293、Problem1928 bfs类比 图中最短路径类比Problem399、Problem743、Problem787、Problem882、Problem1293、Problem1334、Problem1368、Problem1462、Problem1514、Problem1631、Problem1786、Problem1928、Problem1976、Problem2045、Problem2203、Problem2290、Problem2473、Problem2662、Dijkstra
  * 一组公路连接 n 个城市，城市编号为从 0 到 n - 1 。
  * 输入包含一个二维数组 highways ，其中 highways[i] = [city1i, city2i, tolli] 表示有一条连接城市 city1i 和 city2i 的双向公路，
  * 允许汽车缴纳值为 tolli 的费用从  city1i 前往 city2i 或 从  city2i 前往 city1i 。

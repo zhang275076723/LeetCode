@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/4/5 08:43
  * @Author zsy
- * @Description 两个回文子序列长度的最大乘积 类比Problem1723、Problem2305 状态压缩类比 回文类比
+ * @Description 两个回文子序列长度的最大乘积 类比Problem1723、Problem2305 类比Problem982、Problem1178、Problem1494、Problem1723、Problem2305 状态压缩类比 回文类比
  * 给你一个字符串 s ，请你找到 s 中两个 不相交回文子序列 ，使得它们长度的 乘积最大 。
  * 两个子序列在原字符串中如果没有任何相同下标的字符，则它们是 不相交 的。
  * 请你返回两个回文子序列长度可以达到的 最大乘积 。

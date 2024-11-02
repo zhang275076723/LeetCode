@@ -116,8 +116,8 @@ public class Problem1514 {
                 //节点u到邻接节点v的成功概率
                 double probability = pos.probability;
 
-                if (!visited[v]) {
-                    probArr[v] = Math.max(probArr[v], probArr[u] * probability);
+                if (!visited[v] && probArr[u] * probability > probArr[v]) {
+                    probArr[v] = probArr[u] * probability;
                 }
             }
         }
@@ -175,7 +175,6 @@ public class Problem1514 {
                 return Double.compare(pos2.probability, pos1.probability);
             }
         });
-
         //节点start入堆
         priorityQueue.offer(new Pos(start, probArr[start]));
 

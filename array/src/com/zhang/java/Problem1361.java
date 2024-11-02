@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2024/1/27 08:40
  * @Author zsy
- * @Description 验证二叉树 入度出度类比Problem207、Problem210、Problem331、Problem685 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
+ * @Description 验证二叉树 入度出度类比Problem331、Problem685、Problem1557 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem886、Problem952、Problem1135、Problem1254、Problem1319、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
  * 二叉树上有 n 个节点，按从 0 到 n - 1 编号，其中节点 i 的两个子节点分别是 leftChild[i] 和 rightChild[i]。
  * 只有 所有 节点能够形成且 只 形成 一颗 有效的二叉树时，返回 true；否则返回 false。
  * 如果节点 i 没有左子节点，那么 leftChild[i] 就等于 -1。右子节点也符合该规则。
@@ -49,6 +49,7 @@ public class Problem1361 {
 
     /**
      * dfs
+     * 有效二叉树：只有一个根节点，每个节点至多有两个子节点，每个节点只有一个父节点，所有节点之间连通
      * 计算每个节点的入度，只有根节点的入度为0，其他节点入度为都为1，
      * 如果入度为0的节点个数大于1，或者不存在入度为0的节点，或者存在入度大于1的节点，则不是有效二叉树；
      * 从入度为0的节点，即根节点开始dfs，如果不能访问到所有节点，则不是有效二叉树
@@ -110,6 +111,7 @@ public class Problem1361 {
 
     /**
      * bfs
+     * 有效二叉树：只有一个根节点，每个节点至多有两个子节点，每个节点只有一个父节点，所有节点之间连通
      * 计算每个节点的入度，只有根节点的入度为0，其他节点入度为都为1，
      * 如果入度为0的节点个数大于1，或者不存在入度为0的节点，或者存在入度大于1的节点，则不是有效二叉树；
      * 从入度为0的节点，即根节点开始bfs，如果不能访问到所有节点，则不是有效二叉树
@@ -192,6 +194,7 @@ public class Problem1361 {
 
     /**
      * 并查集
+     * 有效二叉树：只有一个根节点，每个节点至多有两个子节点，每个节点只有一个父节点，所有节点之间连通
      * 遍历过程中，父节点和子节点已经连通，或者当前子节点有多个父节点，则不是有效二叉树；
      * 遍历结束，连通分量的个数超过1个，则不是有效二叉树
      * 注意：父节点和子节点合并的先后顺序，即谁指向谁
