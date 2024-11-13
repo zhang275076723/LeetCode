@@ -47,7 +47,7 @@ public class Problem168 {
         StringBuilder sb = new StringBuilder();
 
         while (columnNumber != 0) {
-            //因为A对应1，所以每次要先减1
+            //因为A对应1，而不是正常进制数对应0，所以每次要先减1
             columnNumber--;
             sb.append((char) (columnNumber % 26 + 'A'));
             columnNumber = columnNumber / 26;

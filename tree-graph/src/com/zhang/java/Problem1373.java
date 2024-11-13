@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/5/21 08:35
  * @Author zsy
- * @Description 二叉搜索子树的最大键值和 dfs类比Problem104、Problem110、Problem111、Problem124、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979
+ * @Description 二叉搜索子树的最大键值和 类比Problem337、Problem968、Problem979、Problem2378 dfs类比Problem104、Problem110、Problem111、Problem124、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem2246、Problem2378
  * 给你一棵以 root 为根的 二叉树 ，请你返回 任意 二叉搜索子树的最大键值和。
  * 二叉搜索树的定义如下：
  * 任意节点的左子树中的键值都 小于 此节点的键值。
@@ -36,7 +36,7 @@ import java.util.*;
 public class Problem1373 {
     /**
      * 二叉搜索子树的最大键值和
-     * 注意：初始化为0，不能初始化为int最小值，如果二叉搜索树为负数，则其子树空树也是二叉搜索树，其最大键值和为0，即二叉搜索子树的最大键值和最小为0
+     * 注意：不能初始化为int最小值，因为空子树也是二叉搜索树，其键值和为0
      */
     private int sum = 0;
 
@@ -52,6 +52,9 @@ public class Problem1373 {
      * dfs
      * 计算当前节点左右子节点作为二叉搜索树根节点的最大键值和数组，更新二叉搜索子树的最大键值和，
      * 返回当前节点作为二叉搜索树根节点对父节点的最大键值和数组，用于计算以当前节点父节点作为二叉搜索树根节点的最大键值和数组
+     * arr[0]：当前二叉搜索树的最大键值和，如果当前节点作为根节点的二叉树不是二叉搜索树，则为-1
+     * arr[1]：当前二叉搜索树中节点的最大值，如果当前节点作为根节点的二叉树不是二叉搜索树，则为int最大值
+     * arr[2]：当前二叉搜索树中节点的最小值，如果当前节点作为根节点的二叉树不是二叉搜索树，则为int最小值
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -77,7 +80,7 @@ public class Problem1373 {
      * @return
      */
     private int[] dfs(TreeNode root) {
-        //当前节点为空，是特殊的二叉搜索树，赋值树中节点的最大值为int最小值，树中节点的最小值为int最大值
+        //空子树是特殊的二叉搜索树，赋值键值和为0，树中节点的最大值为int最小值，树中节点的最小值为int最大值
         if (root == null) {
             return new int[]{0, Integer.MIN_VALUE, Integer.MAX_VALUE};
         }
@@ -88,7 +91,7 @@ public class Problem1373 {
         int[] rightArr = dfs(root.right);
 
         //根节点的值大于左子树的最大值，并且根节点的值小于右子树的最小值，则是二叉搜索树；
-        //否则不是二叉搜索树，赋值树中节点的最大值为int最大值，树中节点的最小值为int最小值，表示不是二叉搜索树
+        //否则不是二叉搜索树，赋值键值和为-1，树中节点的最大值为int最大值，树中节点的最小值为int最小值
         if (!(root.val > leftArr[1] && root.val < rightArr[2])) {
             return new int[]{-1, Integer.MAX_VALUE, Integer.MIN_VALUE};
         }

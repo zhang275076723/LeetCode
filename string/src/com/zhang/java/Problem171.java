@@ -46,7 +46,7 @@ public class Problem171 {
         int num = 0;
 
         for (char c : columnTitle.toCharArray()) {
-            //因为A对应1，所以当前字符对应数字要加1
+            //因为A对应1，而不是正常进制数对应0，所以当前字符对应数字要加1
             num = num * 26 + (c - 'A' + 1);
         }
 

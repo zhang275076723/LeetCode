@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/12 9:43
  * @Author zsy
- * @Description 二叉树的直径 类比Problem1245 dfs类比Problem104、Problem110、Problem111、Problem124、Problem298、Problem337、Problem687、Problem968、Problem979、Problem1373
+ * @Description 二叉树的直径 类比Problem1245、Problem2246 dfs类比Problem104、Problem110、Problem111、Problem124、Problem298、Problem337、Problem687、Problem968、Problem979、Problem1245、Problem1373、Problem2246、Problem2378
  * 给你一棵二叉树的根节点，返回该树的 直径 。
  * 二叉树的 直径 是指树中任意两个节点之间最长路径的 长度 。
  * 这条路径可能经过也可能不经过根节点 root 。

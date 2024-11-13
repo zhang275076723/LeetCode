@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2023/10/10 08:49
  * @Author zsy
- * @Description 最小高度树 快手面试题 类比Problem1245 类比Problem834 保存父节点类比Problem113、Problem126、Problem272、Problem863、Offer34 拓扑排序类比
+ * @Description 最小高度树 快手面试题 类比Problem1245、Problem2603 保存父节点类比Problem113、Problem126、Problem272、Problem863、Offer34 拓扑排序类比
  * 树是一个无向图，其中任何两个顶点只通过一条路径连接。
  * 换句话说，一个任何没有简单环路的连通图都是一棵树。
  * 给你一棵包含 n 个节点的树，标记为 0 到 n - 1 。
@@ -279,7 +279,7 @@ public class Problem310 {
 
         //邻接表，因为是稀疏图，所以要使用邻接表，如果使用邻接矩阵，则超时
         List<List<Integer>> graph = new ArrayList<>(n);
-        //无向图不分出度入度，统称为度
+        //bfs拓扑排序统计入度，所以无向图当做有向图
         int[] degree = new int[n];
 
         for (int i = 0; i < n; i++) {
@@ -287,10 +287,13 @@ public class Problem310 {
         }
 
         for (int i = 0; i < edges.length; i++) {
-            graph.get(edges[i][0]).add(edges[i][1]);
-            graph.get(edges[i][1]).add(edges[i][0]);
-            degree[edges[i][0]]++;
-            degree[edges[i][1]]++;
+            int u = edges[i][0];
+            int v = edges[i][1];
+
+            graph.get(u).add(v);
+            graph.get(v).add(u);
+            degree[u]++;
+            degree[v]++;
         }
 
         Queue<Integer> queue = new LinkedList<>();

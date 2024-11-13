@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/2/3 08:04
  * @Author zsy
- * @Description 在二叉树中分配硬币 dfs类比Problem104、Problem110、Problem111、Problem124、Problem298、Problem337、Problem543、Problem687、Problem968、Problem1373
+ * @Description 在二叉树中分配硬币 Problem337、Problem968、Problem1373、Problem2378 dfs类比Problem104、Problem110、Problem111、Problem124、Problem298、Problem337、Problem543、Problem687、Problem968、Problem1245、Problem1373、Problem2246、Problem2378
  * 给你一个有 n 个结点的二叉树的根结点 root ，其中树中每个结点 node 都对应有 node.val 枚硬币。
  * 整棵树上一共有 n 枚硬币。
  * 在一次移动中，我们可以选择两个相邻的结点，然后将一枚硬币从其中一个结点移动到另一个结点。
@@ -27,26 +27,22 @@ import java.util.*;
  */
 public class Problem979 {
     /**
-     * dfs中需要移动的最少硬币次数
+     * 树种每个节点只有1个硬币需要的最少移动次数
      */
     private int result = 0;
-
-    /**
-     * dfs2中需要移动的最少硬币次数
-     */
-    private int result2 = 0;
 
     public static void main(String[] args) {
         Problem979 problem979 = new Problem979();
         String[] data = {"3", "0", "0"};
         TreeNode root = problem979.buildTree(data);
         System.out.println(problem979.distributeCoins(root));
-        System.out.println(problem979.distributeCoins2(root));
     }
 
     /**
      * dfs
-     * 核心思想：计算每一条边需要需要移动的最少硬币次数
+     * 当前节点作为根节点的树中硬币个数和节点个数的差值，即为当前节点和父节点的边需要的最少移动次数
+     * arr[0]：当前节点作为根节点的树中硬币的个数
+     * arr[1]：当前节点作为根节点的树中节点的个数
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -63,26 +59,9 @@ public class Problem979 {
     }
 
     /**
-     * dfs
-     * 核心思想：计算每一条边需要需要移动的最少硬币次数
-     * 时间复杂度O(n)，空间复杂度O(n)
-     *
-     * @param root
-     * @return
-     */
-    public int distributeCoins2(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-
-        dfs2(root);
-
-        return result2;
-    }
-
-    /**
-     * 返回以root为根节点的树中硬币的个数arr[0]，树中节点的个数arr[1]
-     * root和父节点的边需要移动的最少硬币次数为abs(arr[0]-arr[1])
+     * 返回当前节点作为根节点的树中硬币的个数和节点的个数
+     * arr[0]：当前节点作为根节点的树中硬币的个数
+     * arr[1]：当前节点作为根节点的树中节点的个数
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -97,41 +76,15 @@ public class Problem979 {
         int[] leftArr = dfs(root.left);
         //root右子树数组
         int[] rightArr = dfs(root.right);
+
         //以root为根节点的树中硬币的个数
-        int coin = leftArr[0] + rightArr[0] + root.val;
+        int coinCount = leftArr[0] + rightArr[0] + root.val;
         //以root为根节点的树中节点的个数
-        int count = leftArr[1] + rightArr[1] + 1;
+        int nodeCount = leftArr[1] + rightArr[1] + 1;
+        //root和父节点的边需要的最少移动次数
+        result = result + Math.abs(coinCount - nodeCount);
 
-        //root和父节点的边需要移动的最少硬币次数
-        result = result + Math.abs(coin - count);
-
-        //返回当前节点为根节点的树中硬币的个数arr[0]，树中节点的个数arr[1]
-        return new int[]{coin, count};
-    }
-
-    /**
-     * 返回以root为根节点的树中硬币的个数减去树中节点的个数
-     * root和父节点的边需要移动的最少硬币次数为abs(dfs2(root.left)+dfs2(root.right)+root.val-1)
-     * 时间复杂度O(n)，空间复杂度O(n)
-     *
-     * @param root
-     * @return
-     */
-    private int dfs2(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-
-        //root左子树中硬币的个数减去树中节点的个数
-        int leftCount = dfs2(root.left);
-        //root右子树中硬币的个数减去树中节点的个数
-        int rightCount = dfs2(root.right);
-
-        //root和父节点的边需要移动的最少硬币次数
-        result2 = result2 + Math.abs(leftCount + rightCount + root.val - 1);
-
-        //返回以root为根节点的树中硬币的个数减去树中节点的个数
-        return leftCount + rightCount + root.val - 1;
+        return new int[]{coinCount, nodeCount};
     }
 
     private TreeNode buildTree(String[] data) {

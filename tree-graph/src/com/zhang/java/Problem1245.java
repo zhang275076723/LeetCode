@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2024/1/30 08:35
  * @Author zsy
- * @Description 树的直径 类比Problem310 类比Problem543 拓扑排序类比
+ * @Description 树的直径 类比Problem543、Problem2246 类比Problem310、Problem2603 dfs类比Problem104、Problem110、Problem111、Problem124、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1373、Problem2246、Problem2378 拓扑排序类比
  * 给你这棵「无向树」，请你测算并返回它的「直径」：这棵树上最长简单路径的 边数。
  * 我们用一个由所有「边」组成的数组 edges 来表示一棵无向树，其中 edges[i] = [u, v] 表示节点 u 和 v 之间的双向边。
  * 树上的节点都已经用 {0, 1, ..., edges.length} 中的数做了标记，每个节点上的标记都是独一无二的。
@@ -30,14 +30,19 @@ import java.util.Queue;
  */
 public class Problem1245 {
     /**
-     * dfs中树的直径
+     * treeDiameter2中dfs树的直径
      */
     private int diameter = 0;
 
     /**
-     * dfs中树的直径中一端的节点
+     * treeDiameter2中dfs树的直径中一端的节点
      */
     private int diameterNode = -1;
+
+    /**
+     * treeDiameter3中dfs树的直径
+     */
+    private int diameter2 = 0;
 
     public static void main(String[] args) {
         Problem1245 problem1245 = new Problem1245();
@@ -121,9 +126,9 @@ public class Problem1245 {
     }
 
     /**
-     * 两次bfs
-     * 任意一个节点bfs，得到距离当前节点最远的节点，最远节点即为树的直径中一端的节点，
-     * 再从树的直径中一端的节点bfs，得到树的直径中另一端的节点
+     * dfs
+     * 计算当前节点子节点作为路径起点的最大单侧路径长度，更新树的直径，
+     * 返回当前节点对父节点的最大单侧路径长度，用于计算以当前节点父节点作为根节点的树的直径
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param edges
@@ -147,64 +152,10 @@ public class Problem1245 {
             graph.get(v).add(u);
         }
 
-        Queue<Integer> queue = new LinkedList<>();
-        boolean[] visited = new boolean[n];
-        //任意一个节点入队
-        queue.offer(0);
-        visited[0] = true;
+        //从任意节点开始dfs都可以，这里就从0开始dfs
+        dfs2(0, graph, new boolean[n]);
 
-        //树的直径中一端的节点
-        int diameterNode = -1;
-
-        //从该节点bfs，得到距离当前节点最远的节点，最远节点即为树的直径中一端的节点
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-
-            for (int i = 0; i < size; i++) {
-                int u = queue.poll();
-                diameterNode = u;
-
-                for (int v : graph.get(u)) {
-                    if (visited[v]) {
-                        continue;
-                    }
-
-                    queue.offer(v);
-                    visited[v] = true;
-                }
-            }
-        }
-
-        visited = new boolean[n];
-        //树的直径中一端的节点入队
-        queue.offer(diameterNode);
-        visited[diameterNode] = true;
-
-        //树的直径
-        int diameter = 0;
-
-        //再从树的直径中一端的节点bfs，得到树的直径中另一端的节点
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-
-            for (int i = 0; i < size; i++) {
-                int u = queue.poll();
-
-                for (int v : graph.get(u)) {
-                    if (visited[v]) {
-                        continue;
-                    }
-
-                    queue.offer(v);
-                    visited[v] = true;
-                }
-            }
-
-            diameter++;
-        }
-
-        //此时diameter为最长路径访问的节点个数，而树的直径是路径中边的个数，所以要减1
-        return diameter - 1;
+        return diameter2;
     }
 
     /**
@@ -221,7 +172,7 @@ public class Problem1245 {
         int n = edges.length + 1;
         //邻接表，无向图
         List<List<Integer>> graph = new ArrayList<>();
-        //无向图不分出度入度，统称为度
+        //bfs拓扑排序统计入度，所以无向图当做有向图
         int[] degree = new int[n];
 
         for (int i = 0; i < n; i++) {
@@ -279,7 +230,7 @@ public class Problem1245 {
     }
 
     /**
-     * 节点u到其他节点的路径中最多能访问到的节点个数
+     * treeDiameter中节点u到其他节点的路径中最多能访问到的节点个数
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param u
@@ -303,7 +254,7 @@ public class Problem1245 {
     }
 
     /**
-     * 节点u最远能访问到的节点，同时diameterNode记录树的直径中一端的节点，diameter更新树的直径
+     * treeDiameter2中节点u最远能访问到的节点，同时diameterNode记录树的直径中一端的节点，diameter更新树的直径
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param u
@@ -318,15 +269,39 @@ public class Problem1245 {
         }
 
         visited[u] = true;
+        count++;
 
-        //访问个数减1，即为当前路径的直径
-        if (count > diameter) {
-            diameter = count;
+        //更新树的直径中一端的节点，访问个数减1，即为当前路径的直径
+        if (count - 1 > diameter) {
+            diameter = count - 1;
             diameterNode = u;
         }
 
         for (int v : graph.get(u)) {
-            dfs(v, count + 1, graph, visited);
+            dfs(v, count, graph, visited);
         }
+    }
+
+    private int dfs2(int u, List<List<Integer>> graph, boolean[] visited) {
+        if (visited[u]) {
+            return 0;
+        }
+
+        visited[u] = true;
+
+        //节点v对父节点u的最大单侧路径长度
+        int maxVLen = 0;
+
+        for (int v : graph.get(u)) {
+            //节点v对父节点u的单侧路径长度
+            int vLen = dfs2(v, graph, visited);
+            //更新树的直径
+            diameter2 = Math.max(diameter2, maxVLen + vLen);
+            //更新maxVLen
+            maxVLen = Math.max(maxVLen, vLen);
+        }
+
+        //返回当前节点u对父节点的最大单侧路径长度，用于计算以当前节点父节点作为根节点的树的直径
+        return maxVLen + 1;
     }
 }

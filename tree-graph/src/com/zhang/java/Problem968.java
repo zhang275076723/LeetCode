@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/2/4 08:29
  * @Author zsy
- * @Description 监控二叉树 dfs类比Problem104、Problem110、Problem111、Problem124、Problem298、Problem337、Problem543、Problem687、Problem979、Problem1373
+ * @Description 监控二叉树 华为机试题 类比Problem337、Problem979、Problem1373、Problem2378 dfs类比Problem104、Problem110、Problem111、Problem124、Problem298、Problem337、Problem543、Problem687、Problem979、Problem1245、Problem1373、Problem2246、Problem2378
  * 给定一个二叉树，我们在树的节点上安装摄像头。
  * 节点上的每个摄影头都可以监视其父对象、自身及其直接子对象。
  * 计算监控树的所有节点所需的最小摄像头数量。
@@ -33,8 +33,8 @@ public class Problem968 {
      * dfs
      * 得到根节点所需的最小摄像头数量数组，根节点没有父节点，即arr[0]和arr[2]中的较大值，即为所需的最小摄像头数量
      * arr[0]：当前节点放置摄像头，当前节点为根节点的树中所需的最小摄像头数量
-     * arr[1]：当前节点不放置摄像头，并且当前节点父节点放置摄像头，当前节点为根节点的树中所需的最小摄像头数量
-     * arr[2]：当前节点不放置摄像头，并且当前节点子节点放置摄像头，当前节点为根节点的树中所需的最小摄像头数量
+     * arr[1]：当前节点父节点放置摄像头，当前节点为根节点的树中所需的最小摄像头数量
+     * arr[2]：当前节点子节点放置摄像头，当前节点为根节点的树中所需的最小摄像头数量
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -54,14 +54,14 @@ public class Problem968 {
     /**
      * 返回当前节点所需的最小摄像头数量数组
      * arr[0]：当前节点放置摄像头，当前节点为根节点的树中所需的最小摄像头数量
-     * arr[1]：当前节点不放置摄像头，并且当前节点父节点放置摄像头，当前节点为根节点的树中所需的最小摄像头数量
-     * arr[2]：当前节点不放置摄像头，并且当前节点子节点放置摄像头，当前节点为根节点的树中所需的最小摄像头数量
+     * arr[1]：当前节点父节点放置摄像头，当前节点为根节点的树中所需的最小摄像头数量
+     * arr[2]：当前节点子节点放置摄像头，当前节点为根节点的树中所需的最小摄像头数量
      *
      * @param root
      * @return
      */
     private int[] dfs(TreeNode root) {
-        //空节点不能放置摄像头，则arr[0]=Integer.MAX_VALUE/2，空节点父节点和子节点放置摄像头，则arr[1]=arr[2]=0
+        //空节点不能放置摄像头，arr[0]-arr[2]的值是根据向上节点返回所需要的值确定
         //最大值使用Integer.MAX_VALUE/2，避免相加int溢出
         if (root == null) {
             return new int[]{Integer.MAX_VALUE / 2, 0, 0};
@@ -75,9 +75,9 @@ public class Problem968 {
         //当前节点放置摄像头，当前节点为根节点的树中所需的最小摄像头数量
         int curChoose = Math.min(leftArr[0], Math.min(leftArr[1], leftArr[2])) +
                 Math.min(rightArr[0], Math.min(rightArr[1], rightArr[2])) + 1;
-        //当前节点不放置摄像头，并且当前节点父节点放置摄像头，当前节点为根节点的树中所需的最小摄像头数量
+        //当前节点父节点放置摄像头，当前节点为根节点的树中所需的最小摄像头数量
         int parentChoose = Math.min(leftArr[0], leftArr[2]) + Math.min(rightArr[0], rightArr[2]);
-        //当前节点不放置摄像头，并且当前节点子节点放置摄像头，当前节点为根节点的树中所需的最小摄像头数量
+        //当前节点子节点放置摄像头，当前节点为根节点的树中所需的最小摄像头数量
         int childChoose = Math.min(leftArr[0] + rightArr[0],
                 Math.min(leftArr[0] + rightArr[2], leftArr[2] + rightArr[0]));
 

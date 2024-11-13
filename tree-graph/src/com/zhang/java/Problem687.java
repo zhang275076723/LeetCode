@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/2/21 09:23
  * @Author zsy
- * @Description 最长同值路径 dfs类比Problem104、Problem110、Problem111、Problem124、Problem298、Problem337、Problem543、Problem968、Problem979、Problem1373
+ * @Description 最长同值路径 类比Problem298 dfs类比Problem104、Problem110、Problem111、Problem124、Problem298、Problem337、Problem543、Problem968、Problem979、Problem1245、Problem1373、Problem2246、Problem2378
  * 给定一个二叉树的 root ，返回 最长的路径的长度 ，这个路径中的 每个节点具有相同值 。
  * 这条路径可以经过也可以不经过根节点。
  * 两个节点之间的路径长度 由它们之间的边数表示。
