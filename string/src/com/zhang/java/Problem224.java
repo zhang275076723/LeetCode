@@ -60,13 +60,12 @@ public class Problem224 {
      * @return
      */
     public int calculate(String s) {
-        //数字栈
-        Deque<Integer> numStack = new LinkedList<>();
-        //操作符栈
-        Deque<Character> opsStack = new LinkedList<>();
-
         //去除所有空格，不能在遍历过程中跳过空格，例如"( -3)"
         s = s.replaceAll(" ", "");
+        //数字栈
+        Stack<Integer> numStack = new Stack<>();
+        //操作符栈
+        Stack<Character> opsStack = new Stack<>();
 
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
@@ -74,54 +73,54 @@ public class Problem224 {
             //数字
             if (c >= '0' && c <= '9') {
                 int num = c - '0';
+
                 while (i + 1 < s.length() && s.charAt(i + 1) >= '0' && s.charAt(i + 1) <= '9') {
                     num = num * 10 + s.charAt(i + 1) - '0';
                     i++;
                 }
-                numStack.offerLast(num);
+
+                numStack.push(num);
             } else if (c == '(') {
                 //左括号，直接入操作符栈
 
-                opsStack.offerLast(c);
+                opsStack.push(c);
             } else if (c == ')') {
                 //右括号，数字栈出栈两个元素，操作符栈出栈一个运算符，进行运算，再将结果入数字栈，直至操作符栈遇到左括号
 
-                while (!opsStack.isEmpty() && opsStack.peekLast() != '(') {
-                    int num = operation(numStack, opsStack);
-                    numStack.offerLast(num);
+                while (!opsStack.isEmpty() && opsStack.peek() != '(') {
+                    int num = operate(numStack, opsStack);
+                    numStack.push(num);
                 }
 
                 //左括号出栈
-                opsStack.pollLast();
+                opsStack.pop();
             } else {
                 //运算符，+-*/
 
-                //首位为'-'或存在"(-"这种情况，数字栈需要补0
-                if (c == '-' && (i == 0 || s.charAt(i - 1) == '(')) {
-                    numStack.offerLast(0);
-                    opsStack.offerLast(c);
-                } else {
-                    //如果操作符栈顶运算符优先级大于等于当前运算符优先级，则操作符栈顶运算符出栈，数字栈出栈，
-                    //进行运算，再将运算结果重新入数字栈
-                    while (!opsStack.isEmpty() && getPriority(opsStack.peekLast()) >= getPriority(c)) {
-                        int num = operation(numStack, opsStack);
-                        numStack.offerLast(num);
-                    }
-
-                    //当前运算符入操作符栈
-                    opsStack.offerLast(c);
+                //存在"-num"、"+num"、"(-"、"(+"的情况，数字栈需要补0
+                if ((c == '-' || c == '+') && (i == 0 || s.charAt(i - 1) == '(')) {
+                    numStack.push(0);
                 }
+
+                //操作符栈顶运算符优先级大于等于当前运算符优先级，则操作符栈顶运算符出栈，数字栈出栈，进行运算，再将运算结果重新入数字栈
+                while (!opsStack.isEmpty() && getPriority(opsStack.peek()) >= getPriority(c)) {
+                    int num = operate(numStack, opsStack);
+                    numStack.push(num);
+                }
+
+                //当前运算符入操作符栈
+                opsStack.push(c);
             }
         }
 
         //操作符栈非空，即存在未运算的运算符，操作符栈中剩余运算符出栈运算，再将结果入数字栈
         while (!opsStack.isEmpty()) {
-            int num = operation(numStack, opsStack);
-            numStack.offerLast(num);
+            int num = operate(numStack, opsStack);
+            numStack.push(num);
         }
 
         //数字栈中剩余的最后一个元素，即为运算结果
-        return numStack.pollLast();
+        return numStack.pop();
     }
 
     /**
@@ -223,11 +222,11 @@ public class Problem224 {
      * @param opsStack
      * @return
      */
-    private int operation(Deque<Integer> numStack, Deque<Character> opsStack) {
+    private int operate(Stack<Integer> numStack, Stack<Character> opsStack) {
         //先出栈的元素为num2，后出栈的元素为num1
-        int num2 = numStack.pollLast();
-        int num1 = numStack.pollLast();
-        char c = opsStack.pollLast();
+        int num2 = numStack.pop();
+        int num1 = numStack.pop();
+        char c = opsStack.pop();
 
         if (c == '+') {
             return num1 + num2;
@@ -336,7 +335,7 @@ public class Problem224 {
      * 2、遇到符号，则出栈两个数进行拼接，结果重新入栈
      * 时间复杂度O(n)，空间复杂度O(n)
      *
-     * @param token
+     * @param suffix
      * @return
      */
     private String suffixToInfix(String[] suffix) {
