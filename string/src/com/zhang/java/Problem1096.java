@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/10/4 08:50
  * @Author zsy
- * @Description 花括号展开 II 括号类比Problem20、Problem22、Problem32、Problem301、Problem678、Problem856、Problem1087 栈类比Problem20、Problem71、Problem150、Problem224、Problem227、Problem331、Problem341、Problem394、Problem678、Problem856、Problem946、Problem1003、Problem1047、Offer31、CharacterToInteger 回溯+剪枝类比
+ * @Description 花括号展开 II 类比Problem770 括号类比Problem20、Problem22、Problem32、Problem301、Problem678、Problem856、Problem1087 栈类比Problem20、Problem71、Problem150、Problem224、Problem227、Problem331、Problem341、Problem394、Problem678、Problem856、Problem946、Problem1003、Problem1047、Offer31、CharacterToInteger 回溯+剪枝类比
  * 如果你熟悉 Shell 编程，那么一定了解过花括号展开，它可以用来生成任意字符串。
  * 花括号展开的表达式可以看作一个由 花括号、逗号 和 小写英文字母 组成的字符串，定义下面几条语法规则：
  * 如果只给出单一的元素 x，那么表达式表示的字符串就只有 "x"。R(x) = {x}

@@ -1,39 +1,36 @@
 package com.zhang.java;
 
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.Stack;
 
 /**
- * @Date 2022/7/8 7:29
+ * @Date 2025/1/30 08:51
  * @Author zsy
- * @Description 基本计算器 II 栈类比Problem20、Problem71、Problem150、Problem224、Problem331、Problem341、Problem394、Problem678、Problem856、Problem946、Problem1003、Problem1047、Problem1096、Offer31、CharacterToInteger
- * 给你一个字符串表达式 s ，请你实现一个基本计算器来计算并返回它的值。
- * 整数除法仅保留整数部分。
- * 你可以假设给定的表达式总是有效的。所有中间结果将在 [-2^31, 2^31 - 1] 的范围内。
- * 注意：不允许使用任何将字符串作为数学表达式计算的内置函数，比如 eval() 。
+ * @Description 基本计算器 III 栈类比
+ * 实现一个基本的计算器来计算简单的表达式字符串。
+ * 表达式字符串只包含非负整数，算符 +、-、*、/ ，左括号 ( 和右括号 ) 。整数除法需要 向下截断 。
+ * 你可以假定给定的表达式总是有效的。所有的中间结果的范围均满足 [-2^31, 2^31 - 1] 。
+ * 注意：你不能使用任何将字符串作为表达式求值的内置函数，比如 eval() 。
  * <p>
- * 输入：s = "3+2*2"
- * 输出：7
+ * 输入：s = "1+1"
+ * 输出：2
+ * 示例 2：
  * <p>
- * 输入：s = " 3/2 "
- * 输出：1
+ * 输入：s = "6-4/2"
+ * 输出：4
+ * 示例 3：
  * <p>
- * 输入：s = " 3+5 / 2 "
- * 输出：5
+ * 输入：s = "2*(5+5*2)/3+(6/2+8)"
+ * 输出：21
  * <p>
- * 1 <= s.length <= 3 * 10^5
- * s 由整数和算符 ('+', '-', '*', '/') 组成，中间由一些空格隔开
- * s 表示一个 有效表达式
- * 表达式中的所有整数都是非负整数，且在范围 [0, 2^31 - 1] 内
- * 题目数据保证答案是一个 32-bit 整数
+ * 1 <= s <= 10^4
+ * s 由整数、'+'、'-'、'*'、'/'、'(' 和 ')' 组成
+ * s 是一个 有效的 表达式
  */
-public class Problem227 {
+public class Problem772 {
     public static void main(String[] args) {
-        Problem227 problem227 = new Problem227();
-        String s = " 3+5 / 2 ";
-        System.out.println(problem227.calculate(s));
-        System.out.println(problem227.calculate2(s));
+        Problem772 problem772 = new Problem772();
+        String s = "2*(5+5*2)/3+(6/2+8)";
+        System.out.println(problem772.calculate(s));
     }
 
     /**
@@ -114,74 +111,6 @@ public class Problem227 {
 
         //数字栈中剩余的最后一个元素，即为运算结果
         return numStack.pop();
-    }
-
-    /**
-     * 一个栈，数字栈和符号栈都使用这个栈
-     * 1、如果遇到空格，则跳过
-     * 2、如果遇到数字，则保存连续的数字
-     * 3、如果遇到'+'，则将当前数字入栈
-     * 4、如果遇到'-'，则将当前数字的相反数入栈
-     * 5、如果遇到'*'，则将当前数字和栈顶元素相乘，并将结果入栈
-     * 6、如果遇到'/'，则将当前数字和栈顶元素相除，并将结果入栈
-     * 7、遍历完之后如果操作符栈不为空，则依次出栈进行相加
-     * 时间复杂度O(n)，空间复杂度O(n)
-     *
-     * @param s
-     * @return
-     */
-    public int calculate2(String s) {
-        Deque<Integer> stack = new LinkedList<>();
-        s = s.trim();
-
-        int num = 0;
-        char sign = '+';
-
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-
-            //空格
-            if (c == ' ') {
-                continue;
-            }
-
-            //数字
-            if (c >= '0' && c <= '9') {
-                num = num + c - '0';
-                while (i < s.length() - 1 && s.charAt(i + 1) >= '0' && s.charAt(i + 1) <= '9') {
-                    num = num * 10 + s.charAt(i + 1) - '0';
-                    i++;
-                }
-            }
-
-            //操作符，i == s.length() - 1确保最后一个数字能够和操作符运算
-            if (c < '0' || c > '9' || i == s.length() - 1) {
-                switch (sign) {
-                    case '+':
-                        stack.offerLast(num);
-                        break;
-                    case '-':
-                        stack.offerLast(-num);
-                        break;
-                    case '*':
-                        stack.offerLast(stack.pollLast() * num);
-                        break;
-                    default:
-                        stack.offerLast(stack.pollLast() / num);
-                }
-
-                num = 0;
-                sign = c;
-            }
-        }
-
-        int result = 0;
-
-        while (!stack.isEmpty()) {
-            result = result + stack.pollLast();
-        }
-
-        return result;
     }
 
     /**
