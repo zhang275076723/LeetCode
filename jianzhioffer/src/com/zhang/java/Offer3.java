@@ -63,7 +63,7 @@ public class Offer3 {
                 swap(nums, i, nums[i]);
             }
 
-            //nums[i]不等于i+1，则nums[i]为重复的元素
+            //nums[i]不等于i，则nums[i]为重复的元素
             if (nums[i] != i) {
                 return nums[i];
             }
