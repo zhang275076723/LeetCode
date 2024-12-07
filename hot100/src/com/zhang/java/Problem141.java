@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/5/5 11:20
  * @Author zsy
- * @Description 环形链表 类比Problem142、Problem160、Problem202、Problem457、Offer52
+ * @Description 环形链表 类比Problem142、Problem160、Problem202、Problem457、Problem565、Offer52
  * 给你一个链表的头节点 head ，判断链表中是否有环。
  * 如果链表中有某个节点，可以通过连续跟踪 next 指针再次到达，则链表中存在环。
  * 为了表示给定链表中的环，评测系统内部使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。
@@ -61,6 +61,7 @@ public class Problem141 {
         ListNode node = head;
 
         while (node != null) {
+            //当前节点在set中，则存在环，返回true
             if (set.contains(node)) {
                 return true;
             }
@@ -69,6 +70,7 @@ public class Problem141 {
             node = node.next;
         }
 
+        //遍历结束，则不存在环，返回false
         return false;
     }
 
@@ -92,12 +94,13 @@ public class Problem141 {
             slow = slow.next;
             fast = fast.next.next;
 
-            //快慢指针相遇，说明有环
+            //快慢指针相遇，则存在环，返回true
             if (slow == fast) {
                 return true;
             }
         }
 
+        //遍历结束，则不存在环，返回false
         return false;
     }
 

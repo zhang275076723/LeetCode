@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/11/12 08:52
  * @Author zsy
- * @Description 扁平化嵌套列表迭代器 迭代器类比Problem173、Problem251、Problem281、Problem284、Problem604、Problem900、Problem1286、Problem1586 栈类比Problem20、Problem71、Problem150、Problem224、Problem227、Problem331、Problem394、Problem678、Problem856、Problem946、Problem1003、Problem1047、Problem1096、Offer31、CharacterToInteger
+ * @Description 扁平化嵌套列表迭代器 类比Problem385 迭代器类比Problem173、Problem251、Problem281、Problem284、Problem604、Problem900、Problem1286、Problem1586 栈类比Problem20、Problem71、Problem150、Problem224、Problem227、Problem331、Problem394、Problem678、Problem856、Problem946、Problem1003、Problem1047、Problem1096、Offer31、CharacterToInteger
  * 给你一个嵌套的整数列表 nestedList 。每个元素要么是一个整数，要么是一个列表；该列表的元素也可能是整数或者是其他列表。
  * 请你实现一个迭代器将其扁平化，使之能够遍历这个列表中的所有整数。
  * 实现扁平迭代器类 NestedIterator ：
@@ -33,28 +33,35 @@ import java.util.*;
  */
 public class Problem341 {
     public static void main(String[] args) {
-        List<NestedInteger> nestedList = new ArrayList<>();
-        Node node1 = new Node(1);
-        Node node2 = new Node(2);
-        Node node3 = new Node(3);
-        Node node4 = new Node(4);
-        Node node5 = new Node(5);
-        Node node6 = new Node(6);
-        Node node7 = new Node();
-        Node node8 = new Node();
-        Node node9 = new Node();
-        node7.list.add(node1);
-        node7.list.add(node2);
-        node8.list.add(node5);
-        node8.list.add(node6);
-        node9.list.add(node4);
-        node9.list.add(node8);
-        nestedList.add(node7);
-        nestedList.add(node3);
-        nestedList.add(node9);
+//        //[[1,1],2,[1,1]]
+//        List<NestedInteger> nestedList = new ArrayList<NestedInteger>(){{
+//            add(new Node(new ArrayList<NestedInteger>(){{
+//                add(new Node(1));
+//                add(new Node(1));
+//            }}));
+//            add(new Node(2));
+//            add(new Node(new ArrayList<NestedInteger>(){{
+//                add(new Node(1));
+//                add(new Node(1));
+//            }}));
+//        }};
+        //[[1,2],3,[4,[5,6]]]
+        List<NestedInteger> nestedList = new ArrayList<NestedInteger>() {{
+            add(new Node(new ArrayList<NestedInteger>() {{
+                add(new Node(1));
+                add(new Node(2));
+            }}));
+            add(new Node(3));
+            add(new Node(new ArrayList<NestedInteger>() {{
+                add(new Node(4));
+                add(new Node(new ArrayList<NestedInteger>() {{
+                    add(new Node(5));
+                    add(new Node(6));
+                }}));
+            }}));
+        }};
 //        NestedIterator nestedIterator = new NestedIterator(nestedList);
         NestedIterator2 nestedIterator = new NestedIterator2(nestedList);
-        //[[1,2],3,[4,[5,6]]]
         while (nestedIterator.hasNext()) {
             System.out.println(nestedIterator.next());
         }
@@ -73,19 +80,24 @@ public class Problem341 {
 
         public NestedIterator(List<NestedInteger> nestedList) {
             list = new ArrayList<>();
-            dfs(nestedList);
+
+            for (NestedInteger nestedInteger : nestedList) {
+                dfs(nestedInteger);
+            }
+
             iterator = list.iterator();
         }
 
-        private void dfs(List<NestedInteger> nestedList) {
-            for (NestedInteger nestedInteger : nestedList) {
-                //当前节点存储整数，加入list中
-                if (nestedInteger.isInteger()) {
-                    list.add(nestedInteger.getInteger());
-                } else {
-                    //当前节点存储列表，继续dfs
-                    dfs(nestedInteger.getList());
-                }
+        private void dfs(NestedInteger nestedInteger) {
+            //当前节点存储整数，加入list中
+            if (nestedInteger.isInteger()) {
+                list.add(nestedInteger.getInteger());
+                return;
+            }
+
+            //当前节点存储列表，继续dfs
+            for (NestedInteger nestedInteger2 : nestedInteger.getList()) {
+                dfs(nestedInteger2);
             }
         }
 
@@ -112,10 +124,8 @@ public class Problem341 {
         public NestedIterator2(List<NestedInteger> nestedList) {
             stack = new LinkedList<>();
 
-            //nestedList中元素逆序入栈，保证nestedList中前面元素优先出栈，保证迭代器遍历顺序
-            for (int i = nestedList.size() - 1; i >= 0; i--) {
-                NestedInteger nestedInteger = nestedList.get(i);
-                stack.offerFirst(nestedInteger);
+            for (NestedInteger nestedInteger : nestedList) {
+                stack.offerLast(nestedInteger);
             }
         }
 
@@ -128,21 +138,17 @@ public class Problem341 {
         @Override
         public boolean hasNext() {
             while (!stack.isEmpty()) {
-                //栈顶元素
-                NestedInteger nestedInteger = stack.peekFirst();
-
                 //当前元素为整数，则存在下一个整数，直接返回true
-                if (nestedInteger.isInteger()) {
+                if (stack.peekFirst().isInteger()) {
                     return true;
                 }
 
                 //当前元素为列表
-                nestedInteger = stack.pollFirst();
-                List<NestedInteger> list = nestedInteger.getList();
+                NestedInteger nestedInteger = stack.pollFirst();
 
-                //list中元素逆序入栈，保证list中前面元素优先出栈，保证迭代器遍历顺序
-                for (int i = list.size() - 1; i >= 0; i--) {
-                    stack.offerFirst(list.get(i));
+                //list中元素从后往前遍历入栈，保证list中前面元素优先出栈，保证迭代器遍历顺序
+                for (int i = nestedInteger.getList().size() - 1; i >= 0; i--) {
+                    stack.offerFirst(nestedInteger.getList().get(i));
                 }
             }
 
@@ -156,14 +162,15 @@ public class Problem341 {
      * list为空，则表示当前节点存储整数；list不为空，则表示当前节点存储列表
      */
     public static class Node implements NestedInteger {
-        //存储整数
-        private int value;
+        //存储的整形必须为Integer，不能是int，通过value是否为空，判断当前节点存储的是整形还是列表
+        private Integer value;
         //存储列表，列表中元素可以是整数，也可以是一个列表
         private final List<NestedInteger> list;
 
         //当前节点存储列表
-        public Node() {
-            list = new ArrayList<>();
+        public Node(List<NestedInteger> list) {
+            value = null;
+            this.list = list;
         }
 
         //当前节点存储整数
@@ -174,7 +181,7 @@ public class Problem341 {
 
         @Override
         public boolean isInteger() {
-            return list.isEmpty();
+            return value != null;
         }
 
         @Override
@@ -190,21 +197,21 @@ public class Problem341 {
 
     public interface NestedInteger {
         /**
-         * 当前节点是否是一个整数
+         * 当前节点是否是存储整数
          *
          * @return
          */
         public boolean isInteger();
 
         /**
-         * 返回当前节点整数
+         * 返回当前节点存储的整数
          *
          * @return
          */
         public Integer getInteger();
 
         /**
-         * 返回当前节点的NestedInteger集合
+         * 返回当前节点存储的NestedInteger集合
          *
          * @return
          */

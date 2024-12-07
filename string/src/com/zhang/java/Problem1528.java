@@ -63,7 +63,7 @@ public class Problem1528 {
         for (int i = 0; i < arr.length; i++) {
             //indices[i]和indices[indices[i]]不相等时，arr[i]和arr[indices[i]]进行交换，indices[i]和indices[indices[i]]进行交换
             while (indices[i] != indices[indices[i]]) {
-                //注意：要先交换arr，再交换indices
+                //注意：要先交换arr，再交换indices，因为交换arr中使用到了indices
                 swap(arr, i, indices[i]);
                 swap(indices, i, indices[i]);
             }

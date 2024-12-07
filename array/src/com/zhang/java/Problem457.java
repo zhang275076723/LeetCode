@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2024/1/1 08:42
  * @Author zsy
- * @Description 环形数组是否存在循环 虾皮机试题 类比Problem141、Problem142、Problem160、Problem202、Offer52
+ * @Description 环形数组是否存在循环 虾皮机试题 类比Problem141、Problem142、Problem160、Problem202、Problem565、Offer52
  * 存在一个不含 0 的 环形 数组 nums ，每个 nums[i] 都表示位于下标 i 的角色应该向前或向后移动的下标个数：
  * 如果 nums[i] 是正数，向前（下标递增方向）移动 |nums[i]| 步
  * 如果 nums[i] 是负数，向后（下标递减方向）移动 |nums[i]| 步
@@ -46,7 +46,7 @@ public class Problem457 {
     /**
      * 哈希表
      * 合法环的2个条件：
-     * 1、环中值nums[i]不是全正就是全负，环只能沿着同一个方向，不能一会向前一会向后；
+     * 1、环中值nums[i]不是全正就是全负，环只能沿着同一个方向，不能一会向前一会向后
      * 2、k>1，环的大小大于1，不存在自己到自己的环
      * 时间复杂度O(n)，空间复杂度O(n)
      *
@@ -54,11 +54,6 @@ public class Problem457 {
      * @return
      */
     public boolean circularArrayLoop(int[] nums) {
-        //自己到自己的环不是合法环
-        if (nums.length == 1) {
-            return false;
-        }
-
         boolean[] visited = new boolean[nums.length];
 
         for (int i = 0; i < nums.length; i++) {
@@ -70,17 +65,17 @@ public class Problem457 {
             Set<Integer> set = new HashSet<>();
 
             //当前下标索引
-            int curIndex = i;
-            visited[curIndex] = true;
-            set.add(curIndex);
+            int index = i;
+            visited[index] = true;
+            set.add(index);
 
             while (true) {
-                //下一个下标索引
-                int nextIndex = nextIndex(nums, curIndex);
+                //index的下一个位置的下标索引
+                int nextIndex = getNextIndex(nums, index);
 
                 //存在自己到自己的环，或者环没有沿着同一个方向，则不是合法环，直接跳出循环
-                //nums[curIndex]*nums[nextIndex]<0，则说明环没有沿着同一个方向
-                if (curIndex == nextIndex || nums[curIndex] * nums[nextIndex] < 0) {
+                //nums[index]*nums[nextIndex]<0，则说明环没有沿着同一个方向
+                if (index == nextIndex || nums[index] * nums[nextIndex] < 0) {
                     break;
                 }
 
@@ -92,7 +87,7 @@ public class Problem457 {
                 //设置nextIndex节点已访问，避免重复遍历
                 visited[nextIndex] = true;
                 set.add(nextIndex);
-                curIndex = nextIndex;
+                index = nextIndex;
             }
         }
 
@@ -101,22 +96,17 @@ public class Problem457 {
     }
 
     /**
-     * 快慢指针
+     * 快慢指针+原地标记
      * 合法环的2个条件：
-     * 1、环中值nums[i]不是全正就是全负，环只能沿着同一个方向，不能一会向前一会向后；
+     * 1、环中值nums[i]不是全正就是全负，环只能沿着同一个方向，不能一会向前一会向后
      * 2、k>1，环的大小大于1，不存在自己到自己的环
-     * 因为nums[i]都不为0，所以原数组作为访问数组，当nums[i]访问过，设置nums[i]为0
+     * nums[i]都不为0，原数组可以作为访问数组，nums[i]访问过，则设置nums[i]为0
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
      * @return
      */
     public boolean circularArrayLoop2(int[] nums) {
-        //自己到自己的环不是合法环
-        if (nums.length == 1) {
-            return false;
-        }
-
         for (int i = 0; i < nums.length; i++) {
             //当前节点i已访问，则当前节点i不是环中节点，直接进行下次循环
             if (nums[i] == 0) {
@@ -124,36 +114,38 @@ public class Problem457 {
             }
 
             int slow = i;
-            //注意：必须初始化i的下一个位置，不能初始化为i
-            int fast = nextIndex(nums, i);
+            int fast = i;
 
             while (true) {
-                int nextSlow = nextIndex(nums, slow);
-                int nextFast = nextIndex(nums, nextIndex(nums, fast));
+                int nextSlow = getNextIndex(nums, slow);
+                int nextFast = getNextIndex(nums, getNextIndex(nums, fast));
 
                 //存在自己到自己的环，或者环没有沿着同一个方向，则不是合法环，直接跳出循环
                 //nums[slow]*nums[nextIndex(nums, slow)]<0，则说明环没有沿着同一个方向
-                if (slow == nextSlow || fast == nextIndex(nums, fast) ||
-                        nums[slow] * nums[nextIndex(nums, slow)] < 0 ||
-                        nums[fast] * nums[nextIndex(nums, fast)] < 0) {
+                if (slow == nextSlow ||
+                        nums[slow] * nums[nextSlow] < 0 ||
+                        nums[fast] * nums[getNextIndex(nums, fast)] < 0 ||
+                        nums[getNextIndex(nums, fast)] * nums[nextFast] < 0) {
                     break;
                 }
 
                 slow = nextSlow;
                 fast = nextFast;
 
-                if (slow == fast) {
+                //快慢指针相遇，并且不存在自己到自己的环，则返回true
+                if (slow == fast && slow != getNextIndex(nums, slow)) {
                     return true;
                 }
             }
 
-            //注意：不能在上面快慢指针循环过程中修改节点为0，会导致快慢指针无法找到下一个快慢指针
             int index = i;
 
-            //从节点i发出不能成环，设置访问到的节点为0，避免重复遍历
+            //从节点index发出不能成环，设置访问到的节点为0，避免重复遍历
+            //注意：不能在上面快慢指针循环过程中修改节点为0，会导致快慢指针无法找到下一个快慢指针
             while (true) {
-                //节点index的下一个节点
-                int nextIndex = nextIndex(nums, index);
+                //index的下一个位置的下标索引
+                //先记录index的下一个位置的下标索引，避免nums[index]置为0之后无法得到下一个位置
+                int nextIndex = getNextIndex(nums, index);
 
                 //存在自己到自己的环，或者环没有沿着同一个方向，则不是合法环，直接跳出循环
                 //nums[index]*nums[nextIndex]<0，则说明环没有沿着同一个方向
@@ -178,9 +170,10 @@ public class Problem457 {
      * @param i
      * @return
      */
-    private int nextIndex(int[] nums, int i) {
+    private int getNextIndex(int[] nums, int i) {
         int n = nums.length;
         //((i + nums[i]) % n)此时有可能为负数，加上n再模n，保证下标索引i的下一个位置的下标索引在[0,n)范围内
-        return (((i + nums[i]) % n) + n) % n;
+        //注意：不能写成return (i+nums[i]+n)%n;，因为i+nums[i]+n有可能仍为负数
+        return (((i + -nums[i]) % n) + n) % n;
     }
 }

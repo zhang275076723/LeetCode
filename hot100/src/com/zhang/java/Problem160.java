@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/5/10 10:41
  * @Author zsy
- * @Description 相交链表 类比Problem141、Problem142、Problem202、Problem457、Offer52 同Offer52
+ * @Description 相交链表 类比Problem141、Problem142、Problem202、Problem457、Problem565、Offer52 同Offer52
  * 给你两个单链表的头节点 headA 和 headB ，请你找出并返回两个单链表相交的起始节点。
  * 如果两个链表不存在相交节点，返回 null 。
  * 注意，函数返回结果后，链表必须 保持其原始结构 。
@@ -96,8 +96,8 @@ public class Problem160 {
 
         node = headB;
 
-        //B链表中找哈希表中存在的节点，即为相交节点
         while (node != null) {
+            //B链表中存在A链表中的节点，则存在相交节点
             if (set.contains(node)) {
                 return node;
             }
@@ -105,6 +105,7 @@ public class Problem160 {
             node = node.next;
         }
 
+        //遍历结束，则不存在相交节点，返回null
         return null;
     }
 
@@ -126,13 +127,6 @@ public class Problem160 {
         int lenB = 0;
         ListNode nodeA = headA;
         ListNode nodeB = headB;
-
-        while (nodeA != null && nodeB != null) {
-            lenA++;
-            lenB++;
-            nodeA = nodeA.next;
-            nodeB = nodeB.next;
-        }
 
         while (nodeA != null) {
             lenA++;
@@ -167,6 +161,7 @@ public class Problem160 {
             nodeB = nodeB.next;
         }
 
+        //遍历结束，则不存在相交节点，返回null
         return null;
     }
 

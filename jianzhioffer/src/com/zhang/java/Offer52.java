@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2022/4/1 10:12
  * @Author zsy
- * @Description 两个链表的第一个公共节点 类比Problem141、Problem142、Problem160、Problem202、Problem457 同Problem160
+ * @Description 两个链表的第一个公共节点 类比Problem141、Problem142、Problem160、Problem202、Problem457、Problem565 同Problem160
  * 输入两个链表，找出它们的第一个公共节点。
  * <p>
  * 输入：intersectVal = 8, listA = [4,1,8,4,5], listB = [5,0,1,8,4,5], skipA = 2, skipB = 3
@@ -84,8 +84,8 @@ public class Offer52 {
 
         node = headB;
 
-        //B链表中找哈希表中存在的节点，即为相交节点
         while (node != null) {
+            //B链表中存在A链表中的节点，则存在相交节点
             if (set.contains(node)) {
                 return node;
             }
@@ -93,6 +93,7 @@ public class Offer52 {
             node = node.next;
         }
 
+        //遍历结束，则不存在相交节点，返回null
         return null;
     }
 
@@ -130,11 +131,11 @@ public class Offer52 {
 
         //长链表指针往后移动链表之差步，让两个链表起始位置对齐
         if (lenA < lenB) {
-            for (int i = lenB - lenA; i > 0; i--) {
+            for (int i = 0; i < lenB - lenA; i++) {
                 nodeB = nodeB.next;
             }
         } else {
-            for (int i = lenA - lenB; i > 0; i--) {
+            for (int i = 0; i < lenA - lenB; i++) {
                 nodeA = nodeA.next;
             }
         }
@@ -148,6 +149,7 @@ public class Offer52 {
             nodeB = nodeB.next;
         }
 
+        //遍历结束，则不存在相交节点，返回null
         return null;
     }
 
