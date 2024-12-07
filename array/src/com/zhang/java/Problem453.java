@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/4/29 08:35
  * @Author zsy
- * @Description 最小操作次数使数组元素相等 深信服机试题 类比Problem462
+ * @Description 最小操作次数使数组元素相等 深信服机试题 类比Problem462 类比Problem397、Problem991、Problem1342、Problem1404、Problem2139、Problem2571
  * 给你一个长度为 n 的整数数组，每次操作将会使 n - 1 个元素增加 1 。
  * 返回让数组所有元素相等的最小操作次数。
  * <p>
@@ -30,7 +30,8 @@ public class Problem453 {
 
     /**
      * 模拟
-     * 数组中n-1个元素加1相当于数组中1个元素减1，则数组中元素都相等的最小操作次数即为数组中元素都减少为数组中最小元素的操作次数
+     * 逆向思维：数组中n-1个元素加1，相当于数组中1个元素减1，
+     * 则数组中元素都相等的最小操作次数即为数组中元素都减少为数组中最小元素的操作次数
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -45,6 +46,7 @@ public class Problem453 {
 
         int count = 0;
 
+        //数组中元素都减少为数组中最小元素
         for (int num : nums) {
             count = count + (num - min);
         }

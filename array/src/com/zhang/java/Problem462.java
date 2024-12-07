@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * @Date 2024/4/30 08:57
  * @Author zsy
- * @Description 最小操作次数使数组元素相等 II 类比Problem453、Problem1685、Problem2448、Problem2602、Problem2607、Problem2615、Problem2967 快排划分类比Problem215、Problem324、Problem347、Problem973、Offer40
+ * @Description 最小操作次数使数组元素相等 II 类比Problem453 类比Problem1685、Problem2448、Problem2602、Problem2607、Problem2615、Problem2967 快排划分类比Problem215、Problem324、Problem347、Problem973、Offer40
  * 给你一个长度为 n 的整数数组 nums ，返回使所有数组元素相等需要的最小操作数。
  * 在一次操作中，你可以使数组中的一个元素加 1 或者减 1 。
  * <p>
