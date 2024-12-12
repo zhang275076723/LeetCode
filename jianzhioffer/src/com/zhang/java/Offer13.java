@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2022/3/16 16:06
  * @Author zsy
- * @Description 机器人的运动范围 类比Problem62、Problem63、Problem64、Problem874、Problem980
+ * @Description 机器人的运动范围 类比Problem62、Problem63、Problem64、Problem174、Problem874、Problem980
  * 地上有一个m行n列的方格，从坐标 [0,0] 到坐标 [m-1,n-1] 。
  * 一个机器人从坐标 [0, 0] 的格子开始移动，它每次可以向左、右、上、下移动一格（不能移动到方格外），
  * 也不能进入行坐标和列坐标的数位之和大于k的格子。
@@ -73,19 +73,21 @@ public class Offer13 {
 
         while (!queue.isEmpty()) {
             int[] arr = queue.poll();
+            //当前节点(x,y)
+            int x = arr[0];
+            int y = arr[1];
 
             //当前节点超过矩阵范围，或者当前节点已被访问，或者当前节点行列坐标的数位之和大于k，则不合法，直接进行下次循环
-            if (arr[0] < 0 || arr[0] >= m || arr[1] < 0 || arr[1] >= n || visited[arr[0]][arr[1]] ||
-                    getNumSum(arr[0], arr[1]) > k) {
+            if (x < 0 || x >= m || y < 0 || y >= n || visited[x][y] || getNumSum(x, y) > k) {
                 continue;
             }
 
-            visited[arr[0]][arr[1]] = true;
+            visited[x][y] = true;
             count++;
 
             //因为从(0,0)开始往右下角走，所以只需要考虑向下和向右这两种情况
-            queue.offer(new int[]{arr[0] + 1, arr[1]});
-            queue.offer(new int[]{arr[0], arr[1] + 1});
+            queue.offer(new int[]{x + 1, y});
+            queue.offer(new int[]{x, y + 1});
         }
 
         return count;
