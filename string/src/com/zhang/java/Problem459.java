@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/4 08:49
  * @Author zsy
- * @Description 重复的子字符串 类比Problem1071 kmp类比Problem28、Problem214、Problem686、Problem796、Problem1408 旋转问题类比Problem61、Problem186、Problem189、Problem686、Problem796、Offer58_2
+ * @Description 重复的子字符串 类比Problem471 类比Problem1071 kmp类比Problem28、Problem214、Problem471、Problem686、Problem796、Problem1408
  * 给定一个非空的字符串 s ，检查是否可以通过由它的一个子串重复多次构成。
  * <p>
  * 输入: s = "abab"
@@ -73,8 +73,9 @@ public class Problem459 {
     }
 
     /**
-     * s拼接s，再去除首尾字符，得到的新字符串str，str中包含了s旋转的各种情况，
-     * 如果s通过旋转能够得到s，等价于str中包含s，则s由重复的子字符串构成
+     * 模拟
+     * 如果s由其子串重复多次构成，并且假设构成s的子串为x，则s可以写成xx...xx的形式，s拼接s，移除首尾字符得到的新字符串str，
+     * 如果str中存在s，则s由重复的子字符串x构成，假设str中s第一次出现的下标索引为index，则重复的子字符串x为s[0]-s[index]
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param s
@@ -85,19 +86,17 @@ public class Problem459 {
             return false;
         }
 
-        //s拼接s，再去除首尾字符，得到的新字符串str，str中包含了s旋转的各种情况
-        //注意：去除首尾字符得到的字符串str，保证首元素起始和末尾元素截止的字符串不包含s，避免str误判是否包含s
+        //s拼接s，再去除首尾字符，得到的新字符串str，如果str中存在s，则s由重复的子字符串构成
         String str = (s + s).substring(1, (s + s).length() - 1);
-        //如果s通过旋转能够得到s，等价于str中包含s，则s由重复的子字符串构成
+
         return str.contains(s);
     }
 
     /**
      * kmp
-     * s拼接s，再去除首尾字符(如果不去除首尾字符，则s拼接s得到的字符串为ss，其中肯定包含s，为了避免原始s的影响，所以要去除首尾字符)，
-     * 得到的新字符串str，str中包含了s旋转的各种情况，
-     * 如果s通过旋转能够得到s，等价于str中包含s，则s由重复的子字符串构成。
-     * 通过kmp判断str中是否包含s
+     * 如果s由其子串重复多次构成，并且假设构成s的子串为x，则s可以写成xx...xx的形式，s拼接s，移除首尾字符得到的新字符串str，
+     * 如果str中存在s，则s由重复的子字符串x构成，假设str中s第一次出现的下标索引为index，则重复的子字符串x为s[0]-s[index]
+     * kmp判断str中是否包含s
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param s
@@ -108,7 +107,7 @@ public class Problem459 {
             return false;
         }
 
-        //s拼接s，再去除首尾字符，得到的新字符串str，str中包含了s旋转的各种情况
+        //s拼接s，再去除首尾字符，得到的新字符串str，如果str中存在s，则s由重复的子字符串构成
         String str = (s + s).substring(1, (s + s).length() - 1);
         //next数组
         int[] next = getNext(s);

@@ -58,7 +58,6 @@ public class Problem497 {
         System.out.println(Arrays.toString(solution.pick()));
     }
 
-
     /**
      * 蓄水池抽样，从n个元素中随机等概率的抽取k个元素，n未知
      * 时间换空间，适用于nums数组很大，无法将nums元素下标索引全部保存到内存中的情况
@@ -92,7 +91,7 @@ public class Problem497 {
                 int area = (rects[i][2] - rects[i][0] + 1) * (rects[i][3] - rects[i][1] + 1);
                 sum = sum + area;
 
-                //[0,sum-1]的随机值小于当前矩形面积，则选择当前矩形的下标索引
+                //生成[0,sum-1]的随机数，如果随机数小于当前矩形面积，则选择当前矩形的下标索引作为结果矩阵
                 if (random.nextInt(sum) < area) {
                     index = i;
                 }
@@ -119,7 +118,6 @@ public class Problem497 {
         //矩阵面积总和，即preSum[rects.length]
         private final int n;
         private final Random random;
-
 
         public Solution2(int[][] rects) {
             this.rects = rects;

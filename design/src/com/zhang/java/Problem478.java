@@ -38,6 +38,10 @@ public class Problem478 {
         System.out.println(Arrays.toString(solution.randPoint()));
     }
 
+    /**
+     * 模拟
+     * 相当于在(xCenter,yCenter)为中心，生成长度为2radius的正方形内的点，判断生成的点是否在圆内
+     */
     static class Solution {
         private final double radius;
         private final double xCenter;
@@ -59,8 +63,10 @@ public class Problem478 {
          */
         public double[] randPoint() {
             while (true) {
-                double x = random.nextDouble() * (2 * radius) + xCenter - radius;
-                double y = random.nextDouble() * (2 * radius) + yCenter - radius;
+                //x在范围[xCenter-radius,xCenter+radius]
+                double x = random.nextDouble() * (2 * radius) - radius + xCenter;
+                //y在范围[yCenter-radius,yCenter+radius]
+                double y = random.nextDouble() * (2 * radius) - radius + yCenter;
                 //判断生成的点是否在圆内
                 if ((x - xCenter) * (x - xCenter) + (y - yCenter) * (y - yCenter) <= radius * radius) {
                     return new double[]{x, y};

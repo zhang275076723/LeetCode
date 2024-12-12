@@ -95,7 +95,7 @@ public class Problem528 {
             for (int i = 0; i < w.length; i++) {
                 sum = sum + w[i];
 
-                //[0,sum-1]的随机值小于当前权值，则选择当前下标索引
+                //生成[0,sum-1]的随机数，如果随机数小于当前矩形面积，则选择当前下标索引作为结果
                 if (random.nextInt(sum) < w[i]) {
                     index = i;
                 }

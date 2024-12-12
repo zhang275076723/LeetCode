@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * @Date 2022/7/25 6:50
  * @Author zsy
- * @Description 生成100个1-100不重复的随机数 蔚来面试题 类比Problem384、Problem519
+ * @Description 生成100个1-100不重复的随机数 蔚来面试题 类比Problem384、Problem519、Problem710
  */
 public class Random1_100 {
     public static void main(String[] args) {
@@ -16,6 +16,7 @@ public class Random1_100 {
     }
 
     /**
+     * 生成n个1-n不重复的随机数
      * 使用随机数组，每次选[0,i]的随机下标索引和当前下标索引i交换
      * 时间复杂度O(n)，空间复杂度O(1)
      *

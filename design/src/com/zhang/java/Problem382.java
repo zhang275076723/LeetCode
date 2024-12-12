@@ -50,7 +50,6 @@ public class Problem382 {
     static class Solution {
         //存储链表中节点
         private final List<ListNode> list;
-
         //获取随机值
         private final Random random;
 
@@ -82,7 +81,6 @@ public class Problem382 {
     static class Solution2 {
         //链表头结点
         private final ListNode head;
-
         //获取随机值
         private final Random random;
 
@@ -109,7 +107,7 @@ public class Problem382 {
             while (node != null) {
                 count++;
 
-                //选择当前节点值作为结果
+                //生成[0,count-1]的随机数，如果随机数为0，则选择当前节点值作为结果
                 if (random.nextInt(count) == 0) {
                     value = node.val;
                 }

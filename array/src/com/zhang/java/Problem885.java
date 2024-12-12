@@ -70,7 +70,7 @@ public class Problem885 {
         int y = cStart;
 
         while (index < rows * cols) {
-            //当前位置在矩阵中，加入result
+            //当前位置在矩阵范围内，加入result
             if (x >= 0 && x < rows && y >= 0 && y < cols) {
                 result[index] = new int[]{x, y};
                 index++;

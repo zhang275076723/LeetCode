@@ -6,13 +6,14 @@ import java.util.Set;
 /**
  * @Date 2023/12/19 08:53
  * @Author zsy
- * @Description 模拟行走机器人 改变方向类比Problem885 类比Problem62、Problem63、Problem64、Problem980、Offer13
+ * @Description 模拟行走机器人 改变方向类比Problem885 类比Problem62、Problem63、Problem64、Problem174、Problem980、Offer13
  * 机器人在一个无限大小的 XY 网格平面上行走，从点 (0, 0) 处开始出发，面向北方。
  * 该机器人可以接收以下三种类型的命令 commands ：
  * -2 ：向左转 90 度
  * -1 ：向右转 90 度
  * 1 <= x <= 9 ：向前移动 x 个单位长度
- * 在网格上有一些格子被视为障碍物 obstacles 。第 i 个障碍物位于网格点  obstacles[i] = (xi, yi) 。
+ * 在网格上有一些格子被视为障碍物 obstacles 。
+ * 第 i 个障碍物位于网格点  obstacles[i] = (xi, yi) 。
  * 机器人无法走到障碍物上，它将会停留在障碍物的前一个网格方块上，并继续执行下一个命令。
  * 返回机器人距离原点的 最大欧式距离 的 平方 。（即，如果距离为 5 ，则返回 25 ）
  * 注意：

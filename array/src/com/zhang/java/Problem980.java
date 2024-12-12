@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/8/5 08:41
  * @Author zsy
- * @Description 不同路径 III 类比Problem62、Problem63、Problem64、Problem874、Offer13
+ * @Description 不同路径 III 类比Problem62、Problem63、Problem64、Problem174、Problem874、Offer13
  * 在二维网格 grid 上，有 4 种类型的方格：
  * 1 表示起始方格。且只有一个起始方格。
  * 2 表示结束方格，且只有一个结束方格。
@@ -73,21 +73,21 @@ public class Problem980 {
         //空节点的数量
         int count0 = 0;
         //起始下标
-        int startIndex0 = -1;
         int startIndex1 = -1;
+        int startIndex2 = -1;
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j] == 0) {
                     count0++;
                 } else if (grid[i][j] == 1) {
-                    startIndex0 = i;
-                    startIndex1 = j;
+                    startIndex1 = i;
+                    startIndex2 = j;
                 }
             }
         }
 
-        return dfs(startIndex0, startIndex1, count0, 0,
+        return dfs(startIndex1, startIndex2, count0, 0,
                 grid, new boolean[grid.length][grid[0].length]);
     }
 
@@ -99,7 +99,7 @@ public class Problem980 {
 
         //到达结尾位置，判断所有0是否都遍历过
         if (grid[i][j] == 2) {
-            //起始位置(startIndex0,startIndex1)也当作一个0，即多算了一个0，需要减去一个0
+            //dfs过程中将起始位置(startIndex1,startIndex2)也作为0，即多算了一个0，需要减去一个0
             if (curCount0 - 1 == count0) {
                 return 1;
             } else {

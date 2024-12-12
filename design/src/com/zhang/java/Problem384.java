@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * @Date 2023/4/22 08:33
  * @Author zsy
- * @Description 打乱数组 腾讯面试题 字节面试题 类比Problem519、Random1_100
+ * @Description 打乱数组 腾讯面试题 字节面试题 类比Problem519、Problem710、Random1_100
  * 给你一个整数数组 nums ，设计算法来打乱一个没有重复元素的数组。打乱后，数组的所有排列应该是 等可能 的。
  * 实现 Solution class:
  * Solution(int[] nums) 使用整数数组 nums 初始化对象

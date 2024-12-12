@@ -46,7 +46,6 @@ public class Problem398 {
     static class Solution {
         //存储nums中元素和对应元素在nums数组下标索引的list集合
         private final Map<Integer, List<Integer>> map;
-
         //获取随机值
         private final Random random;
 
@@ -76,7 +75,6 @@ public class Problem398 {
     static class Solution2 {
         //含有重复元素的数组
         private final int[] nums;
-
         //获取随机值
         private final Random random;
 
@@ -104,7 +102,7 @@ public class Problem398 {
                 if (nums[i] == target) {
                     count++;
 
-                    //选择当前下标索引作为结果
+                    //生成[0,count-1]的随机数，如果随机数为0，则选择当前下标索引作为结果
                     if (random.nextInt(count) == 0) {
                         index = i;
                     }
