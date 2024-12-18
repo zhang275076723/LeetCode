@@ -53,7 +53,7 @@ public class Problem380 {
         //存储元素的list集合
         private final List<Integer> list;
 
-        //key：list集合中元素，value：元素在list集合中的下标索引
+        //key：list中的元素，value：key在list中的下标索引
         private final Map<Integer, Integer> map;
 
         //获取随机值，用于随机访问
@@ -71,8 +71,9 @@ public class Problem380 {
                 return false;
             }
 
-            map.put(val, list.size());
+            int index = list.size();
             list.add(val);
+            map.put(val, index);
 
             return true;
         }
@@ -104,7 +105,10 @@ public class Problem380 {
         }
 
         public int getRandom() {
-            return list.get(random.nextInt(list.size()));
+            //[0,list.size()-1]的随机数
+            int index = random.nextInt(list.size());
+
+            return list.get(index);
         }
     }
 }

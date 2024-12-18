@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/1 09:05
  * @Author zsy
- * @Description 整数转罗马数字 类比类比Problem8、Problem13、Problem168、Problem171、Problem273、Offer67、ChineseToInteger
+ * @Description 整数转罗马数字 类比Problem8、Problem13、Problem168、Problem171、Problem273、Offer67、ChineseToInteger
  * 罗马数字包含以下七种字符： I， V， X， L，C，D 和 M。
  * 字符          数值
  * I             1

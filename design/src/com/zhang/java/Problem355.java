@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/2/8 00:54
  * @Author zsy
- * @Description 设计推特 类比Problem1348 类比Problem146、Problem432、Problem460 优先队列类比
+ * @Description 设计推特 类比Problem1348 优先队列类比
  * 设计一个简化版的推特(Twitter)，可以让用户实现发送推文，关注/取消关注其他用户，能够看见关注人（包括自己）的最近 10 条推文。
  * 实现 Twitter 类：
  * Twitter() 初始化简易版推特对象
@@ -56,14 +56,14 @@ public class Problem355 {
     }
 
     /**
-     * 哈希表+双向链表+优先队列，大根堆
+     * 双向链表+优先队列，大根堆
      */
     static class Twitter {
         //key：用户id，value：用户节点
         private final Map<Integer, User> userMap;
         //下一条推文时间，每发一条推文，time++
         private static int time;
-        //检索用户推文的最大值
+        //检索用户推文的最大值，即每个用户只需要检索当前用户和关注的用户的最近maxCount条推文
         private final int maxCount;
 
         public Twitter() {
@@ -80,7 +80,7 @@ public class Problem355 {
          */
         public void postTweet(int userId, int tweetId) {
             if (!userMap.containsKey(userId)) {
-                userMap.put(userId, new User());
+                userMap.put(userId, new User(userId));
             }
 
             //当前用户节点
@@ -110,28 +110,28 @@ public class Problem355 {
                 return new ArrayList<>();
             }
 
-            //优先队列，大根堆，存储用户发布的推文节点，按照推文节点的发布时间由大到小排序
-            PriorityQueue<Tweet> priorityQueue = new PriorityQueue<>(new Comparator<Tweet>() {
-                @Override
-                public int compare(Tweet tweet1, Tweet tweet2) {
-                    return tweet2.time - tweet1.time;
-                }
-            });
-
             //当前用户
             User user = userMap.get(userId);
 
-            //当前用户有推文才加入priorityQueue
-            if (user.tweetLinkedList.head.next != user.tweetLinkedList.tail) {
+            //优先队列，大根堆，存储用户发布的推文节点，按照推文节点的发布时间由大到小排序
+            PriorityQueue<TweetNode> priorityQueue = new PriorityQueue<>(new Comparator<TweetNode>() {
+                @Override
+                public int compare(TweetNode tweetNode1, TweetNode tweetNode2) {
+                    return tweetNode2.time - tweetNode1.time;
+                }
+            });
+
+            //当前用户有推文才入堆
+            if (user.tweetLinkedList.count != 0) {
                 priorityQueue.offer(user.tweetLinkedList.head.next);
             }
 
-            //当前用户关注的用户有推文才加入priorityQueue
+            //当前用户关注的用户有推文才入堆
             for (int followeeId : user.followeeSet) {
                 //当前用户关注的用户
                 User followeeUser = userMap.get(followeeId);
 
-                if (followeeUser.tweetLinkedList.head.next != followeeUser.tweetLinkedList.tail) {
+                if (followeeUser.tweetLinkedList.count != 0) {
                     priorityQueue.offer(followeeUser.tweetLinkedList.head.next);
                 }
             }
@@ -141,12 +141,12 @@ public class Problem355 {
             //最多检索当前用户maxCount条推文
             while (!priorityQueue.isEmpty() && list.size() < maxCount) {
                 //当前推文
-                Tweet tweet = priorityQueue.poll();
-                list.add(tweet.id);
+                TweetNode tweetNode = priorityQueue.poll();
+                list.add(tweetNode.id);
 
-                //当前推文链表的下一个推文id不为-1，则当前推文链表没有遍历到尾结点还存在下一个推文节点
-                if (tweet.next.id != -1) {
-                    priorityQueue.offer(tweet.next);
+                //当前推文链表没有遍历到尾结点，则下一个推文节点入堆
+                if (tweetNode.next.next != null) {
+                    priorityQueue.offer(tweetNode.next);
                 }
             }
 
@@ -160,17 +160,17 @@ public class Problem355 {
          * @param followeeId
          */
         public void follow(int followerId, int followeeId) {
-            //自己不能关注自己
-            if (followerId == followeeId) {
-                return;
-            }
-
             if (!userMap.containsKey(followerId)) {
-                userMap.put(followerId, new User());
+                userMap.put(followerId, new User(followerId));
             }
 
             if (!userMap.containsKey(followeeId)) {
-                userMap.put(followeeId, new User());
+                userMap.put(followeeId, new User(followeeId));
+            }
+
+            //自己不能关注自己
+            if (followerId == followeeId) {
+                return;
             }
 
             //followerId已经关注了followeeId，直接返回
@@ -205,12 +205,15 @@ public class Problem355 {
          * 用户节点
          */
         private static class User {
+            //用户id
+            private final int id;
             //用户发布的推文链表
             private final TweetLinkedList tweetLinkedList;
             //用户关注的用户哈希集合
             private final Set<Integer> followeeSet;
 
-            public User() {
+            public User(int userId) {
+                this.id = userId;
                 tweetLinkedList = new TweetLinkedList();
                 followeeSet = new HashSet<>();
             }
@@ -221,39 +224,39 @@ public class Problem355 {
          */
         private static class TweetLinkedList {
             //头结点
-            private final Tweet head;
+            private final TweetNode head;
             //尾结点
-            private final Tweet tail;
-            //推文链表的大小
+            private final TweetNode tail;
+            //推文链表的大小，即推文链表中推文的个数
             private int count;
 
             public TweetLinkedList() {
-                head = new Tweet();
-                tail = new Tweet();
+                head = new TweetNode();
+                tail = new TweetNode();
                 count = 0;
                 head.next = tail;
                 tail.pre = head;
             }
 
             public void addFirst(int tweetId) {
-                Tweet tweet = new Tweet(tweetId);
-                Tweet nextTweet = head.next;
-                tweet.next = nextTweet;
-                nextTweet.pre = tweet;
-                head.next = tweet;
-                tweet.pre = head;
+                TweetNode tweetNode = new TweetNode(tweetId);
+                TweetNode nextTweetNode = head.next;
+                tweetNode.next = nextTweetNode;
+                nextTweetNode.pre = tweetNode;
+                head.next = tweetNode;
+                tweetNode.pre = head;
                 count++;
             }
 
             public void removeLast() {
                 //要删除的推文节点
-                Tweet removeTweet = tail.pre;
+                TweetNode removeTweetNode = tail.pre;
                 //要删除的推文节点的前驱节点
-                Tweet preTweet = removeTweet.pre;
-                preTweet.next = tail;
-                tail.pre = preTweet;
-                removeTweet.pre = null;
-                removeTweet.next = null;
+                TweetNode preTweetNode = removeTweetNode.pre;
+                preTweetNode.next = tail;
+                tail.pre = preTweetNode;
+                removeTweetNode.pre = null;
+                removeTweetNode.next = null;
                 count--;
             }
         }
@@ -261,21 +264,18 @@ public class Problem355 {
         /**
          * 推文节点，即双向链表节点
          */
-        private static class Tweet {
+        private static class TweetNode {
             //推文id
             private int id;
             //推文时间
             private int time;
-            private Tweet pre;
-            private Tweet next;
+            private TweetNode pre;
+            private TweetNode next;
 
-            public Tweet() {
-                //首尾节点推文id和推文时间都为-1
-                id = -1;
-                time = -1;
+            public TweetNode() {
             }
 
-            public Tweet(int id) {
+            public TweetNode(int id) {
                 this.id = id;
                 this.time = Twitter.time;
             }

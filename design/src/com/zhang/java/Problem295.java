@@ -2,12 +2,11 @@ package com.zhang.java;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
-import java.util.Queue;
 
 /**
  * @Date 2022/10/27 09:07
  * @Author zsy
- * @Description 数据流的中位数 类比Problem1670 类比Problem346、Problem480、Problem703、Offer41 同Offer41
+ * @Description 数据流的中位数 类比Problem346、Problem480、Problem703、Problem1670、Offer41 同Offer41
  * 中位数是有序列表中间的数。如果列表长度是偶数，中位数则是中间两个数的平均值。
  * 例如 arr = [2,3,4] 的中位数是 3 。
  * 例如 arr = [2,3] 的中位数是 (2 + 3) / 2 = 2.5 。
@@ -38,73 +37,12 @@ import java.util.Queue;
  */
 public class Problem295 {
     public static void main(String[] args) {
-//        MedianFinder medianFinder = new MedianFinder();
-        MedianFinder2 medianFinder = new MedianFinder2();
+        MedianFinder medianFinder = new MedianFinder();
         medianFinder.addNum(1);
         medianFinder.addNum(2);
         System.out.println(medianFinder.findMedian());
         medianFinder.addNum(3);
         System.out.println(medianFinder.findMedian());
-    }
-
-    /**
-     * 大根堆+小根堆(对顶堆)
-     * 大根堆，维护所有元素中较小的一半
-     * 小根堆，维护所有元素中较大的一半
-     * 每次先将元素放入大根堆，再将大根堆堆顶元素出堆，入小根堆，如果当前小根堆大小大于大根堆大小，小根堆堆顶元素出堆，入大根堆
-     * 注意：始终保持大根堆元素数量 >= 小根堆元素数量
-     * <p>
-     * 进阶1：如果数据都在[0,100]之间，则通过计数排序统计每个元素出现的次数，使用双指针维护中位数
-     * 进阶2：如果数据99%在[0,100]之间，则仍可以通过计数排序统计每个元素出现的次数，使用双指针维护中位数；
-     * 对于超过[0,100]的数据，使用额外的数组存储，当中位数不在[0,100]之间时，对于大于100的数组暴力查询即可
-     */
-    static class MedianFinder {
-        //大根堆，维护所有元素中较小的一半
-        private final Queue<Integer> maxQueue;
-        //小根堆，维护所有元素中较大的一半
-        private final Queue<Integer> minQueue;
-
-        public MedianFinder() {
-            maxQueue = new PriorityQueue<>(new Comparator<Integer>() {
-                @Override
-                public int compare(Integer o1, Integer o2) {
-                    return o2 - o1;
-                }
-            });
-
-            minQueue = new PriorityQueue<>(new Comparator<Integer>() {
-                @Override
-                public int compare(Integer o1, Integer o2) {
-                    return o1 - o2;
-                }
-            });
-        }
-
-        /**
-         * 1、将元素放入大根堆，取出大根堆堆顶元素放入小根堆
-         * 2、如果大根堆大小 < 小根堆大小，则将小根堆堆顶元素放入大根堆
-         * 注意：始终保持大根堆元素数量 >= 小根堆元素数量
-         * 时间复杂度O(logn)，空间复杂度O(1)
-         *
-         * @param num
-         */
-        public void addNum(int num) {
-            maxQueue.offer(num);
-            minQueue.offer(maxQueue.poll());
-
-            //当大根堆元素个数小于小根堆元素个数时，小根堆堆顶元素出堆，大根堆入堆，始终保证大根堆元素数量大于等于小根堆元素数量
-            if (maxQueue.size() < minQueue.size()) {
-                maxQueue.offer(minQueue.poll());
-            }
-        }
-
-        public double findMedian() {
-            if (maxQueue.size() == minQueue.size()) {
-                return (maxQueue.peek() + minQueue.peek()) / 2.0;
-            } else {
-                return maxQueue.peek();
-            }
-        }
     }
 
     /**
@@ -120,24 +58,24 @@ public class Problem295 {
      * 进阶2：如果数据99%在[0,100]之间，则仍可以通过计数排序统计每个元素出现的次数，使用双指针维护中位数；
      * 对于超过[0,100]的数据，使用额外的数组存储，当中位数不在[0,100]之间时，对于大于100的数组暴力查询即可
      */
-    static class MedianFinder2 {
+    static class MedianFinder {
         //大根堆，维护所有元素中较小的一半
-        private final Queue<Integer> maxQueue;
+        private final PriorityQueue<Integer> maxPriorityQueue;
         //小根堆，维护所有元素中较大的一半
-        private final Queue<Integer> minQueue;
+        private final PriorityQueue<Integer> minPriorityQueue;
 
-        public MedianFinder2() {
-            maxQueue = new PriorityQueue<>(new Comparator<Integer>() {
+        public MedianFinder() {
+            maxPriorityQueue = new PriorityQueue<>(new Comparator<Integer>() {
                 @Override
-                public int compare(Integer o1, Integer o2) {
-                    return o2 - o1;
+                public int compare(Integer a, Integer b) {
+                    return b - a;
                 }
             });
 
-            minQueue = new PriorityQueue<>(new Comparator<Integer>() {
+            minPriorityQueue = new PriorityQueue<>(new Comparator<Integer>() {
                 @Override
-                public int compare(Integer o1, Integer o2) {
-                    return o1 - o2;
+                public int compare(Integer a, Integer b) {
+                    return a - b;
                 }
             });
         }
@@ -152,24 +90,27 @@ public class Problem295 {
          * @param num
          */
         public void addNum(int num) {
-            if (maxQueue.isEmpty() || num <= maxQueue.peek()) {
-                maxQueue.offer(num);
-                if (maxQueue.size() > minQueue.size() + 1) {
-                    minQueue.offer(maxQueue.poll());
+            //注意：必须是小于等于，不能是小于，因为始终保持大根堆元素数量大于等于小根堆元素数量
+            if (maxPriorityQueue.isEmpty() || num <= maxPriorityQueue.peek()) {
+                maxPriorityQueue.offer(num);
+
+                if (maxPriorityQueue.size() > minPriorityQueue.size() + 1) {
+                    minPriorityQueue.offer(maxPriorityQueue.poll());
                 }
             } else {
-                minQueue.offer(num);
-                if (maxQueue.size() < minQueue.size()) {
-                    maxQueue.offer(minQueue.poll());
+                minPriorityQueue.offer(num);
+
+                if (maxPriorityQueue.size() < minPriorityQueue.size()) {
+                    maxPriorityQueue.offer(minPriorityQueue.poll());
                 }
             }
         }
 
         public double findMedian() {
-            if (maxQueue.size() == minQueue.size()) {
-                return (maxQueue.peek() + minQueue.peek()) / 2.0;
+            if (maxPriorityQueue.size() == minPriorityQueue.size()) {
+                return (maxPriorityQueue.peek() + minPriorityQueue.peek()) / 2.0;
             } else {
-                return maxQueue.peek();
+                return maxPriorityQueue.peek();
             }
         }
     }

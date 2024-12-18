@@ -60,6 +60,7 @@ public class Problem1206 {
     /**
      * 跳表是多层有序链表，每一层都是一个有序链表，且满足每个位于第i层的节点有p的概率出现在第i+1层，其中p为常数。
      * 跳表在O(logn)时间复杂度内完成增加、删除、搜索操作，空间复杂度O(n)
+     * 查询效率接近二分查找O(logn)，在空间复杂度上，假设每层元素都是上一层元素的一半，则n+n/2+4/n+...=O(n)
      * <p>
      * head                                                  tail
      * head                       9                   15     tail
@@ -71,19 +72,21 @@ public class Problem1206 {
     static class Skiplist {
         //跳表头结点
         private final Node head;
-        //跳表最大高度，redis中设置为32
-        private final int maxLevel = 32;
-        //跳表节点从当前层晋升为高一层的概率，每个节点有factor的概率晋升为高一层的节点，redis中设置为25%
-        private final double factor = 0.25;
+        //跳表的最大高度，redis中为32
+        private final int maxLevel;
         //跳表的高度
-        private int level;
-        //确定每个跳表节点的随机值
+        private int curLevel;
+        //跳表节点从当前层晋升为高一层的概率，每个节点有factor的概率晋升为高一层的节点，redis中为25%
+        private final double factor;
+        //确定每个跳表节点高度的随机值
         private final Random random;
 
         public Skiplist() {
+            maxLevel = 32;
+            factor = 0.25;
             //跳表头结点值要小于所有节点的值，保证是有序链表，并且设置跳表头结点高度为跳表最大高度
             head = new Node(Integer.MIN_VALUE, maxLevel);
-            level = 0;
+            curLevel = 0;
             random = new Random();
         }
 
@@ -98,7 +101,7 @@ public class Problem1206 {
             Node node = head;
 
             //从跳表高层往低层找target所在位置，每次判断当前节点的下一个节点是否小于target，如果小于，当前节点指向下一个节点
-            for (int i = level - 1; i >= 0; i--) {
+            for (int i = curLevel - 1; i >= 0; i--) {
                 while (node.next[i] != null && node.next[i].value < target) {
                     node = node.next[i];
                 }
@@ -120,32 +123,29 @@ public class Problem1206 {
          * @param num
          */
         public void add(int num) {
-            //从跳表高层往低层每层中的遍历节点路径数组update，确保插入到每一层的链表有序
-            //注意：添加节点时，update数组是maxLevel，而不是level，因为新增节点的高度有可能会大于当前跳表的高度
+            //获取要加入跳表的跳表节点高度
+            int nodeLevel = getLevel();
+            //更新跳表的高度
+            curLevel = Math.max(curLevel, nodeLevel);
+            //要加入跳表的跳表节点
+            Node addNode = new Node(num, nodeLevel);
+
+            //从跳表高层往低层每层中的遍历节点路径数组update，确保加入到每一层的链表有序
             //redis中还记录了update数组中跳表节点在当前层中距离跳表头节点的距离数组rank
-            Node[] update = new Node[maxLevel];
-
-            //路径数组update赋初值为head
-            for (int i = 0; i < maxLevel; i++) {
-                update[i] = head;
-            }
-
+            //注意：查询高度要从curLevel开始遍历，执行时间15ms，如果从nodeLevel开始遍历，则执行时间270+ms，
+            //因为有可能当前要加入的节点值比较大，如果从nodeLevel层开始遍历，则会顺序遍历，花费的时间长，
+            //而如果从curLevel层开始遍历，最高层节点最少，越往下层节点越多，类似二分查询，花费的时间短
+            Node[] update = new Node[curLevel];
             Node node = head;
 
             //从跳表高层往低层找num所在位置，得到路径数组update
-            for (int i = level - 1; i >= 0; i--) {
+            for (int i = curLevel - 1; i >= 0; i--) {
                 while (node.next[i] != null && node.next[i].value < num) {
                     node = node.next[i];
                 }
+
                 update[i] = node;
             }
-
-            //获取要插入跳表的跳表节点高度
-            int nodeLevel = getLevel();
-            //更新跳表的高度
-            level = Math.max(level, nodeLevel);
-            //要插入跳表的跳表节点
-            Node addNode = new Node(num, nodeLevel);
 
             //从addNode的最高层第开始往第一层，addNode加入到每一层有序链表中
             for (int i = nodeLevel - 1; i >= 0; i--) {
@@ -163,23 +163,17 @@ public class Problem1206 {
          * @return
          */
         public boolean erase(int num) {
-            //从跳表高层往低层每层中的遍历节点路径数组update，确保插入到每一层的链表有序
-            //注意：删除节点时，update数组是level就可以了，不需要从maxLevel，因为删除节点的高度不会超过当前跳表的高度
+            //从跳表高层往低层每层中的遍历节点路径数组update，确保加入到每一层的链表有序
             //redis中还记录了update数组中跳表节点在当前层中距离跳表头节点的距离数组rank
-            Node[] update = new Node[level];
-
-            //路径数组update赋初值为head
-            for (int i = 0; i < level; i++) {
-                update[i] = head;
-            }
-
+            Node[] update = new Node[curLevel];
             Node node = head;
 
             //从跳表高层往低层找num所在位置，得到路径数组update
-            for (int i = level - 1; i >= 0; i--) {
+            for (int i = curLevel - 1; i >= 0; i--) {
                 while (node.next[i] != null && node.next[i].value < num) {
                     node = node.next[i];
                 }
+
                 update[i] = node;
             }
 
@@ -200,8 +194,8 @@ public class Problem1206 {
 
             //更新跳表的高度，从当前跳表的高度开始往下遍历，如果当前层头结点的下一个节点为空，
             //即当前层删除deleteNode节点之后为空，跳表高度减1
-            while (level > 0 && head.next[level - 1] == null) {
-                level--;
+            while (curLevel > 0 && head.next[curLevel - 1] == null) {
+                curLevel--;
             }
 
             //num在跳表中，则返回ture
@@ -215,10 +209,12 @@ public class Problem1206 {
          */
         private int getLevel() {
             int level = 1;
-            //生成的概率小于factor，则当前跳表节点的高度加1
+
+            //生成的[0,1)内随机数小于factor，则当前跳表节点的高度加1
             while (level < maxLevel && random.nextDouble() < factor) {
                 level++;
             }
+
             return level;
         }
 

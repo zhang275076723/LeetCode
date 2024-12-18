@@ -7,7 +7,7 @@ import java.util.Stack;
 /**
  * @Date 2022/10/10 10:34
  * @Author zsy
- * @Description 中文数字转int 类比类比Problem8、Problem12、Problem13、Problem168、Problem171、Problem273、Offer67 栈类比Problem20、Problem71、Problem150、Problem224、Problem227、Problem331、Problem341、Problem394、Problem678、Problem856、Problem946、Problem1003、Problem1047、Problem1096、Offer31
+ * @Description 中文数字转int 类比Problem8、Problem12、Problem13、Problem168、Problem171、Problem273、Offer67 栈类比Problem20、Problem71、Problem150、Problem224、Problem227、Problem331、Problem341、Problem394、Problem678、Problem856、Problem946、Problem1003、Problem1047、Problem1096、Offer31
  * 将输入的中文数字转化为int数字输出
  * <p>
  * 输入：n = 一亿一千二百五十八万三千二百四十

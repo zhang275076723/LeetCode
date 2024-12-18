@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/5/7 9:43
  * @Author zsy
- * @Description LRU 缓存 百度面试题 字节面试题 虾皮面试题 类比Problem355、Problem432、Problem460
+ * @Description LRU 缓存 百度面试题 字节面试题 虾皮面试题 类比Problem432、Problem460
  * 请你设计并实现一个满足 LRU (最近最少使用) 缓存 约束的数据结构。
  * 实现 LRUCache 类：
  * LRUCache(int capacity) 以 正整数 作为容量 capacity 初始化 LRU 缓存
@@ -64,91 +64,84 @@ public class Problem146 {
     /**
      * 哈希表+双向链表
      * 哈希表存储key和缓存节点node的映射
-     * 当缓存容量满的时候，优先淘汰最近最少使用的数据，即链表尾节点
-     * 1、新数据直接插入到链表头和缓存中
-     * 2、缓存数据被命中，则将数据放到链表头并修改缓存中数据
-     * 3、缓存已满，则移除链表尾和缓存中数据
+     * 双向链表记录节点访问的先后顺序，当缓存容量满的时候，优先淘汰最近最少使用的数据，即链表尾节点
      */
     private static class LRUCache {
+        //缓存map，在O(1)找到当前缓存节点
+        //key：缓存key，value：缓存节点
+        private final Map<Integer, Node> map;
+        //双向链表
+        private final LinkedList linkedList;
         //缓存容量
         private final int capacity;
-
         //当前缓存容量
         private int curSize;
 
-        //缓存map，在O(1)找到当前缓存节点，key：缓存关键字，value：数据节点
-        private final Map<Integer, Node> cache;
-
-        //双向链表
-        private final LinkedList linkedList;
-
         public LRUCache(int capacity) {
+            map = new HashMap<>();
+            linkedList = new LinkedList();
             this.capacity = capacity;
             curSize = 0;
-            cache = new HashMap<>(capacity);
-            linkedList = new LinkedList();
         }
 
         /**
-         * 1、如果key不在缓存map中，直接返回-1
-         * 2、如果key在缓存map中，将该节点放到链表的头，并返回该节点的value
+         * 1、缓存map中不存在key，直接返回-1
+         * 2、缓存map中存在key，将该节点放到链表的头，并返回该节点的value
          *
          * @param key
          * @return
          */
         public int get(int key) {
-            //当前节点不在缓存map中，返回-1
-            if (!cache.containsKey(key)) {
+            //缓存map中不存在key，则返回-1
+            if (!map.containsKey(key)) {
                 return -1;
             }
 
-            Node node = cache.get(key);
+            Node node = map.get(key);
             //node从链表尾移除，加入链表头，作为最新访问节点
             linkedList.remove(node);
             linkedList.addFirst(node);
+
             return node.value;
         }
 
         /**
-         * 1、如果key不在哈希表中且链表未满，创建节点放到缓存map和链表的头
-         * 2、如果key不在哈希表中且链表已满，删除缓存map和链表中的尾节点，创建节点放到缓存map和链表的头
-         * 3、如果key在缓存map中，修改该节点的value，并将该节点放到链表的头
+         * 1、缓存map中存在key，修改该节点的value，并将该节点放到链表的头
+         * 2、缓存map中不存在key，并且缓存未满，创建节点加入缓存map和链表的头
+         * 3、缓存map中不存在key，并且缓存已满，删除缓存map和链表中的尾节点，创建节点加入缓存map和链表的头
          *
          * @param key
          * @param value
          */
         public void put(int key, int value) {
-            //当前节点在缓存map中
-            if (cache.containsKey(key)) {
-                Node node = cache.get(key);
+            //缓存map中存在key，修改该节点的value，并将该节点放到链表的头
+            if (map.containsKey(key)) {
+                Node node = map.get(key);
                 //更新当前节点的value
                 node.value = value;
                 //node从链表尾移除，加入链表头，作为最新访问节点
                 linkedList.remove(node);
                 linkedList.addFirst(node);
-            } else {
-                //当前节点不在缓存map中
-                //要加入cache和linkedList中的节点
-                Node node = new Node(key, value);
+                return;
+            }
 
-                //缓存map已满，链表和缓存map中移除末尾节点，当前节点放到链表的头和缓存中，作为最新访问节点
-                if (curSize == capacity) {
-                    //末尾节点，即最近最久未访问的节点
-                    Node deleteNode = linkedList.tail.pre;
-                    //deleteNode从链表中移除
-                    linkedList.remove(deleteNode);
-                    //deleteNode从cache中移除
-                    cache.remove(deleteNode.key);
-                    //node加入链表头
-                    linkedList.addFirst(node);
-                    //node加入cache
-                    cache.put(key, node);
-                } else {
-                    //缓存map未满，当前节点放到链表的头和缓存中，作为最新访问节点
-                    linkedList.addFirst(node);
-                    cache.put(key, node);
-                    curSize++;
-                }
+            //当前节点
+            Node node = new Node(key, value);
+
+            //缓存map中不存在key，并且缓存未满，创建节点加入缓存map和链表的头
+            if (curSize < capacity) {
+                map.put(key, node);
+                linkedList.addFirst(node);
+                curSize++;
+            } else {
+                //缓存map中不存在key，并且缓存已满，删除缓存map和链表中的尾节点，创建节点加入缓存map和链表的头
+
+                //末尾节点，即最近最久未访问的节点
+                Node deleteNode = linkedList.tail.pre;
+                map.remove(deleteNode.key);
+                linkedList.remove(deleteNode);
+                map.put(key, node);
+                linkedList.addFirst(node);
             }
         }
 
@@ -189,7 +182,7 @@ public class Problem146 {
         }
 
         /**
-         * 双向链表节点，也是cache中存放的节点
+         * 双向链表节点，也是map中存放的节点
          */
         private static class Node {
             public int key;

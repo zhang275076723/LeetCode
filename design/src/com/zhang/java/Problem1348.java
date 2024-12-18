@@ -63,17 +63,17 @@ public class Problem1348 {
      */
     static class TweetCounts {
         //key：推文发布者tweetName，value：有序集合，由小到大存储推文发布者的推文发布时间(key)和当前时间发布的推文数量(value)
-        private final Map<String, TreeMap<Integer, Integer>> tweeterMap;
+        private final Map<String, TreeMap<Integer, Integer>> tweetMap;
 
         public TweetCounts() {
-            tweeterMap = new HashMap<>();
+            tweetMap = new HashMap<>();
         }
 
         public void recordTweet(String tweetName, int time) {
-            //tweeterMap中不存在推文发布者tweetName，则tweetName加入tweeterMap
-            if (!tweeterMap.containsKey(tweetName)) {
+            //tweetMap中不存在推文发布者tweetName，则tweetName加入tweetMap
+            if (!tweetMap.containsKey(tweetName)) {
                 //有序集合，由小到大存储推文发布者的推文发布时间(key)和当前时间发布的推文数量(value)
-                tweeterMap.put(tweetName, new TreeMap<>(new Comparator<Integer>() {
+                tweetMap.put(tweetName, new TreeMap<>(new Comparator<Integer>() {
                     @Override
                     public int compare(Integer a, Integer b) {
                         return a - b;
@@ -82,21 +82,21 @@ public class Problem1348 {
             }
 
             //有序集合，由小到大存储推文发布者的推文发布时间(key)和当前时间发布的推文数量(value)
-            TreeMap<Integer, Integer> tweetMap = tweeterMap.get(tweetName);
-            //当前时间发布的推文加入tweetMap
-            tweetMap.put(time, tweetMap.getOrDefault(time, 0) + 1);
+            TreeMap<Integer, Integer> treeMap = tweetMap.get(tweetName);
+            //time时间发布的推文加入treeMap
+            treeMap.put(time, treeMap.getOrDefault(time, 0) + 1);
         }
 
         public List<Integer> getTweetCountsPerFrequency(String freq, String tweetName, int startTime, int endTime) {
-            //tweeterMap中不存在推文发布者tweetName，直接返回[0]
-            if (!tweeterMap.containsKey(tweetName)) {
+            //tweetMap中不存在推文发布者tweetName，直接返回[0]
+            if (!tweetMap.containsKey(tweetName)) {
                 return new ArrayList<Integer>() {{
                     add(0);
                 }};
             }
 
-            //以秒为单位的频率
-            int frequency = 1;
+            //当前时间块的大小，以秒为单位
+            int frequency = -1;
 
             if ("minute".equals(freq)) {
                 frequency = 60;
@@ -108,7 +108,7 @@ public class Problem1348 {
 
             List<Integer> list = new ArrayList<>();
             //有序集合，由小到大存储推文发布者的推文发布时间(key)和当前时间发布的推文数量(value)
-            TreeMap<Integer, Integer> tweetMap = tweeterMap.get(tweetName);
+            TreeMap<Integer, Integer> treeMap = tweetMap.get(tweetName);
             //当前间隔的起始时间
             int curTime = startTime;
 
@@ -117,14 +117,14 @@ public class Problem1348 {
                 int nextTime = Math.min(curTime + frequency, endTime + 1);
                 //当前间隔的推文数量
                 int count = 0;
-                //O(logn)找到tweetMap中key大于等于curTime的最小entry
-                Map.Entry<Integer, Integer> entry = tweetMap.ceilingEntry(curTime);
+                //O(logn)找到treeMap中key大于等于curTime的最小entry
+                Map.Entry<Integer, Integer> entry = treeMap.ceilingEntry(curTime);
 
-                //统计当前间隔中的所有推文数量
+                //统计当前间隔[curTime,nextTime-1]所有推文数量
                 while (entry != null && entry.getKey() < nextTime) {
                     count = count + entry.getValue();
-                    //O(logn)找到tweetMap中key大于entry.getKey()的最小entry，即找当前entry的下一个entry
-                    entry = tweetMap.higherEntry(entry.getKey());
+                    //O(logn)找到treeMap中key大于entry.getKey()的最小entry，即找当前entry的下一个entry
+                    entry = treeMap.higherEntry(entry.getKey());
                 }
 
                 list.add(count);

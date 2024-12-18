@@ -66,8 +66,7 @@ public class Problem346 {
                 return (double) sum / queue.size();
             } else {
                 //队列大小等于滑动窗口大小，队首元素出队，当前元素入队，sum减去队首元素，加上当前元素
-                sum = sum - queue.poll();
-                sum = sum + val;
+                sum = sum - queue.poll() + val;
                 queue.offer(val);
                 return (double) sum / queue.size();
             }

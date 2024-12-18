@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/2/15 08:32
  * @Author zsy
- * @Description 全 O(1) 的数据结构 类比Problem146、Problem355、Problem460
+ * @Description 全 O(1) 的数据结构 类比Problem146、Problem460
  * 请你设计一个用于存储字符串计数的数据结构，并能够返回计数最小和最大的字符串。
  * 实现 AllOne 类：
  * AllOne() 初始化数据结构的对象。

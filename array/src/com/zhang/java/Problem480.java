@@ -5,8 +5,9 @@ import java.util.*;
 /**
  * @Date 2023/7/4 08:45
  * @Author zsy
- * @Description 滑动窗口中位数 招商银行机试题 美团机试题 类比Problem4、Problem239 类比Problem295、Problem346、Problem703、Offer41 延迟删除类比Problem2034、Problem2349、Problem2353
- * 中位数是有序序列最中间的那个数。如果序列的长度是偶数，则没有最中间的数；此时中位数是最中间的两个数的平均数。
+ * @Description 滑动窗口中位数 招商银行机试题 美团机试题 华为面试题 类比Problem4、Problem239 类比Problem295、Problem346、Problem703、Problem1670、Offer41 延迟删除类比Problem2034、Problem2349、Problem2353
+ * 中位数是有序序列最中间的那个数。
+ * 如果序列的长度是偶数，则没有最中间的数；此时中位数是最中间的两个数的平均数。
  * 例如：
  * [2,3,4]，中位数是 3
  * [2,3]，中位数是 (2 + 3) / 2 = 2.5
@@ -95,8 +96,8 @@ public class Problem480 {
         result[0] = dualHeap.getMedian();
 
         for (int i = k; i < nums.length; i++) {
-            dualHeap.insert(nums[i]);
             dualHeap.delete(nums[i - k]);
+            dualHeap.insert(nums[i]);
             result[i - k + 1] = dualHeap.getMedian();
         }
 
@@ -117,65 +118,67 @@ public class Problem480 {
      */
     public static class DualHeap {
         //大根堆，维护所有元素中较小的一半
-        private final Queue<Integer> maxQueue;
+        private final PriorityQueue<Integer> maxPriorityQueue;
         //小根堆，维护所有元素中较大的一半
-        private final Queue<Integer> minQueue;
+        private final PriorityQueue<Integer> minPriorityQueue;
         //延迟删除map，因为大根堆和小根堆只能移除堆顶元素，使用延迟删除记录要删除的元素，当堆顶元素是要删除的元素时，才删除当前元素
         //key：延迟删除的元素，value：当前元素需要删除的次数
         private final Map<Integer, Integer> delayMap;
         //大根堆大小
-        private int maxQueueSize;
+        private int maxPriorityQueueSize;
         //小根堆大小
-        private int minQueueSize;
+        private int minPriorityQueueSize;
         //滑动窗口大小
         private final int k;
 
         public DualHeap(int k) {
-            maxQueue = new PriorityQueue<>(new Comparator<Integer>() {
+            maxPriorityQueue = new PriorityQueue<>(new Comparator<Integer>() {
                 @Override
-                public int compare(Integer o1, Integer o2) {
-                    //不能使用o2-o1，避免int相减溢出
-                    return Integer.compare(o2, o1);
+                public int compare(Integer a, Integer b) {
+                    //不能使用b-a，避免int相减溢出
+                    return Integer.compare(b, a);
                 }
             });
-            minQueue = new PriorityQueue<>(new Comparator<Integer>() {
+            minPriorityQueue = new PriorityQueue<>(new Comparator<Integer>() {
                 @Override
-                public int compare(Integer o1, Integer o2) {
-                    return Integer.compare(o1, o2);
+                public int compare(Integer a, Integer b) {
+                    //不能使用a-b，避免int相减溢出
+                    return Integer.compare(a, b);
                 }
             });
             delayMap = new HashMap<>();
-            maxQueueSize = 0;
-            minQueueSize = 0;
+            maxPriorityQueueSize = 0;
+            minPriorityQueueSize = 0;
             this.k = k;
         }
 
         public void insert(int num) {
             //num入大根堆
-            if (maxQueueSize == 0 || num <= maxQueue.peek()) {
-                maxQueue.offer(num);
-                maxQueueSize++;
+            //注意：必须是小于等于，不能是小于，因为始终保持大根堆元素数量大于等于小根堆元素数量
+            if (maxPriorityQueueSize == 0 || num <= maxPriorityQueue.peek()) {
+                maxPriorityQueue.offer(num);
+                maxPriorityQueueSize++;
 
                 //大根堆元素数量大于小根堆元素数量加1，大根堆堆顶元素出堆，入小根堆，并调整大根堆
-                if (maxQueueSize > minQueueSize + 1) {
-                    minQueue.offer(maxQueue.poll());
-                    maxQueueSize--;
-                    minQueueSize++;
+                if (maxPriorityQueueSize > minPriorityQueueSize + 1) {
+                    minPriorityQueue.offer(maxPriorityQueue.poll());
+                    maxPriorityQueueSize--;
+                    minPriorityQueueSize++;
                     //大根堆堆顶元素出堆，入小根堆，则需要调整大根堆，删除堆顶是延迟删除的元素
-                    adjust(maxQueue);
+                    adjust(maxPriorityQueue);
                 }
             } else {
                 //num入小根堆
-                minQueue.offer(num);
-                minQueueSize++;
+                minPriorityQueue.offer(num);
+                minPriorityQueueSize++;
 
                 //大根堆元素数量小于小根堆元素数量，小根堆堆顶元素出堆，入大根堆，并调整小根堆
-                if (maxQueueSize < minQueueSize) {
-                    maxQueue.offer(minQueue.poll());
-                    maxQueueSize++;
-                    minQueueSize--;
+                if (maxPriorityQueueSize < minPriorityQueueSize) {
+                    maxPriorityQueue.offer(minPriorityQueue.poll());
+                    maxPriorityQueueSize++;
+                    minPriorityQueueSize--;
                     //小根堆堆顶元素出堆，入大根堆，则需要调整小根堆，删除堆顶是延迟删除的元素
-                    adjust(minQueue);
+                    adjust(minPriorityQueue);
                 }
             }
         }
@@ -185,30 +188,31 @@ public class Problem480 {
             delayMap.put(num, delayMap.getOrDefault(num, 0) + 1);
 
             //延迟删除的num在大根堆中
-            if (num <= maxQueue.peek()) {
-                maxQueueSize--;
-                adjust(maxQueue);
+            //注意：必须是小于等于，不能是小于，因为始终保持大根堆元素数量大于等于小根堆元素数量
+            if (num <= maxPriorityQueue.peek()) {
+                maxPriorityQueueSize--;
+                adjust(maxPriorityQueue);
 
                 //大根堆元素数量小于小根堆元素数量，小根堆堆顶元素出堆，入大根堆，并调整小根堆
-                if (maxQueueSize < minQueueSize) {
-                    maxQueue.offer(minQueue.poll());
-                    maxQueueSize++;
-                    minQueueSize--;
+                if (maxPriorityQueueSize < minPriorityQueueSize) {
+                    maxPriorityQueue.offer(minPriorityQueue.poll());
+                    maxPriorityQueueSize++;
+                    minPriorityQueueSize--;
                     //小根堆堆顶元素出堆，入大根堆，则需要调整小根堆，删除堆顶是延迟删除的元素
-                    adjust(minQueue);
+                    adjust(minPriorityQueue);
                 }
             } else {
                 //延迟删除的num在小根堆中
-                minQueueSize--;
-                adjust(minQueue);
+                minPriorityQueueSize--;
+                adjust(minPriorityQueue);
 
                 //大根堆元素数量大于小根堆元素数量加1，大根堆堆顶元素出堆，入小根堆，并调整大根堆
-                if (maxQueueSize > minQueueSize + 1) {
-                    minQueue.offer(maxQueue.poll());
-                    maxQueueSize--;
-                    minQueueSize++;
+                if (maxPriorityQueueSize > minPriorityQueueSize + 1) {
+                    minPriorityQueue.offer(maxPriorityQueue.poll());
+                    maxPriorityQueueSize--;
+                    minPriorityQueueSize++;
                     //大根堆堆顶元素出堆，入小根堆，则需要调整大根堆，删除堆顶是延迟删除的元素
-                    adjust(maxQueue);
+                    adjust(maxPriorityQueue);
                 }
             }
         }
@@ -216,12 +220,15 @@ public class Problem480 {
         /**
          * 调整堆，删除堆顶是延迟删除的元素，确保堆顶元素不是延迟删除的元素
          * 时间复杂度O(nlogn)，空间复杂度O(1)
+         *
+         * @param priorityQueue
          */
-        public void adjust(Queue<Integer> queue) {
+        public void adjust(PriorityQueue<Integer> priorityQueue) {
             //堆顶元素是延迟删除的元素，则直接出堆，delayMap中个数减1
-            while (!queue.isEmpty() && delayMap.containsKey(queue.peek())) {
-                int num = queue.poll();
+            while (!priorityQueue.isEmpty() && delayMap.containsKey(priorityQueue.peek())) {
+                int num = priorityQueue.poll();
                 delayMap.put(num, delayMap.get(num) - 1);
+
                 if (delayMap.get(num) == 0) {
                     delayMap.remove(num);
                 }
@@ -231,9 +238,9 @@ public class Problem480 {
         public double getMedian() {
             if (k % 2 == 0) {
                 //使用long，避免int相加溢出
-                return ((long) maxQueue.peek() + minQueue.peek()) / 2.0;
+                return ((long) maxPriorityQueue.peek() + minPriorityQueue.peek()) / 2.0;
             } else {
-                return maxQueue.peek();
+                return maxPriorityQueue.peek();
             }
         }
     }
