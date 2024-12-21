@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2022/5/8 9:13
  * @Author zsy
- * @Description LFU 缓存 字节面试题 类比Problem146、Problem432、Problem895
+ * @Description LFU 缓存 字节面试题 类比Problem146、Problem432、Problem895、Problem1797
  * 请你为 最不经常使用（LFU）缓存算法设计并实现数据结构。
  * 实现 LFUCache 类：
  * LFUCache(int capacity) - 用数据结构的容量 capacity 初始化对象
@@ -78,7 +78,7 @@ public class Problem460 {
         //key：缓存key，value：缓存节点
         private final Map<Integer, Node> nodeMap;
         //key：频率次数，value：频率次数为key的双向链表
-        private final Map<Integer, LinkedList> frequencyMap;
+        private final Map<Integer, LinkedList> linkedListMap;
         //节点的最小频率次数
         private int minFrequency;
         //最大缓存大小
@@ -88,7 +88,7 @@ public class Problem460 {
 
         public LFUCache(int capacity) {
             nodeMap = new HashMap<>();
-            frequencyMap = new HashMap<>();
+            linkedListMap = new HashMap<>();
             this.minFrequency = 0;
             this.capacity = capacity;
             this.curSize = 0;
@@ -112,13 +112,13 @@ public class Problem460 {
             //当前节点
             Node node = nodeMap.get(key);
             //当前节点对应的频率链表
-            LinkedList curLinkedList = frequencyMap.get(node.frequency);
+            LinkedList curLinkedList = linkedListMap.get(node.frequency);
             //当前节点从对应的频率链表中删除
             curLinkedList.remove(node);
 
-            //删除之后，当前节点对应的频率链表为空，则frequencyMap中删除当前节点对应的频率链表
+            //删除之后，当前节点对应的频率链表为空，则linkedListMap中删除当前节点对应的频率链表
             if (curLinkedList.head.next == curLinkedList.tail) {
-                frequencyMap.remove(node.frequency);
+                linkedListMap.remove(node.frequency);
 
                 //更新minFrequency
                 if (node.frequency == minFrequency) {
@@ -129,12 +129,12 @@ public class Problem460 {
             //当前节点频率次数加1
             node.frequency++;
 
-            if (!frequencyMap.containsKey(node.frequency)) {
-                frequencyMap.put(node.frequency, new LinkedList());
+            if (!linkedListMap.containsKey(node.frequency)) {
+                linkedListMap.put(node.frequency, new LinkedList());
             }
 
             //当前节点频率次数加1对应的链表
-            LinkedList nextLinkedList = frequencyMap.get(node.frequency);
+            LinkedList nextLinkedList = linkedListMap.get(node.frequency);
             //当前节点加入当前节点频率次数加1的链表的头结点
             nextLinkedList.addFirst(node);
 
@@ -162,13 +162,13 @@ public class Problem460 {
                 //更新当前节点的value
                 node.value = value;
                 //当前节点对应的频率链表
-                LinkedList curLinkedList = frequencyMap.get(node.frequency);
+                LinkedList curLinkedList = linkedListMap.get(node.frequency);
                 //当前节点从对应的频率链表中删除
                 curLinkedList.remove(node);
 
-                //删除之后，当前节点对应的频率链表为空，则frequencyMap中删除当前节点对应的频率链表
+                //删除之后，当前节点对应的频率链表为空，则linkedListMap中删除当前节点对应的频率链表
                 if (curLinkedList.head.next == curLinkedList.tail) {
-                    frequencyMap.remove(node.frequency);
+                    linkedListMap.remove(node.frequency);
 
                     //更新minFrequency
                     if (node.frequency == minFrequency) {
@@ -179,12 +179,12 @@ public class Problem460 {
                 //当前节点频率次数加1
                 node.frequency++;
 
-                if (!frequencyMap.containsKey(node.frequency)) {
-                    frequencyMap.put(node.frequency, new LinkedList());
+                if (!linkedListMap.containsKey(node.frequency)) {
+                    linkedListMap.put(node.frequency, new LinkedList());
                 }
 
                 //当前节点频率次数加1对应的链表
-                LinkedList nextLinkedList = frequencyMap.get(node.frequency);
+                LinkedList nextLinkedList = linkedListMap.get(node.frequency);
                 //当前节点加入当前节点频率次数加1的链表的头结点
                 nextLinkedList.addFirst(node);
 
@@ -197,12 +197,12 @@ public class Problem460 {
             //nodeMap中不存在key，并且缓存未满，当前节点加入频率次数为1的链表的头结点和nodeMap中，
             //更新minFrequency为1，curSize加1
             if (curSize < capacity) {
-                if (!frequencyMap.containsKey(1)) {
-                    frequencyMap.put(1, new LinkedList());
+                if (!linkedListMap.containsKey(1)) {
+                    linkedListMap.put(1, new LinkedList());
                 }
 
                 //频率次数为1的链表
-                LinkedList curLinkedList = frequencyMap.get(1);
+                LinkedList curLinkedList = linkedListMap.get(1);
                 //当前节点加入频率次数为1的链表的头结点
                 curLinkedList.addFirst(node);
                 //当前节点加入nodeMap
@@ -216,7 +216,7 @@ public class Problem460 {
                 //当前节点加入频率次数为1的链表的头结点和nodeMap中，更新minFrequency为1
 
                 //minFrequency对应的链表
-                LinkedList curLinkedList = frequencyMap.get(minFrequency);
+                LinkedList curLinkedList = linkedListMap.get(minFrequency);
                 //要删除的节点，即minFrequency对应的链表的末尾节点
                 Node deleteNode = curLinkedList.tail.pre;
                 //nodeMap删除当前末尾节点
@@ -224,17 +224,17 @@ public class Problem460 {
                 //minFrequency对应的链表删除当前链表的末尾节点
                 curLinkedList.remove(deleteNode);
 
-                //删除之后，minFrequency对应的链表为空，则frequencyMap中删除minFrequency对应的链表
+                //删除之后，minFrequency对应的链表为空，则linkedListMap中删除minFrequency对应的链表
                 if (curLinkedList.head.next == curLinkedList.tail) {
-                    frequencyMap.remove(minFrequency);
+                    linkedListMap.remove(minFrequency);
                 }
 
-                if (!frequencyMap.containsKey(1)) {
-                    frequencyMap.put(1, new LinkedList());
+                if (!linkedListMap.containsKey(1)) {
+                    linkedListMap.put(1, new LinkedList());
                 }
 
                 //频率次数为1的链表
-                LinkedList nextLinkedList = frequencyMap.get(1);
+                LinkedList nextLinkedList = linkedListMap.get(1);
                 //当前节点加入频率次数为1的链表的头结点
                 nextLinkedList.addFirst(node);
                 //当前节点加入nodeMap
