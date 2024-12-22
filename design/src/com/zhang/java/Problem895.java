@@ -113,7 +113,7 @@ public class Problem895 {
             }
 
             //最大频率对应的栈为空，则更新maxFrequency
-            if (stackMap.get(maxFrequency).isEmpty()) {
+            if (stack.isEmpty()) {
                 stackMap.remove(maxFrequency);
                 maxFrequency--;
             }
