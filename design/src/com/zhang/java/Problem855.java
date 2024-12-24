@@ -118,7 +118,7 @@ public class Problem855 {
          * @return
          */
         public int seat() {
-            //first()：set中第一个区间
+            //first()：有序集合中第一个区间
             //从set中获取区间大小最大，并且左边界最小的区间
             int[] arr = set.first();
 

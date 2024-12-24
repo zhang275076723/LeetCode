@@ -51,7 +51,7 @@ public class Problem2110 {
 
         while (right < prices.length) {
             //prices[left]-prices[right]不是平滑下跌阶段，则更新left为right，即prices[left]-prices[right]长度为1是平滑下跌阶段
-            if (right - left + 1 != 1 && prices[right - 1] - 1 != prices[right]) {
+            if (left != right && prices[right - 1] - 1 != prices[right]) {
                 left = right;
             }
 

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/10/7 08:52
  * @Author zsy
- * @Description 餐盘栈 延迟删除类比Problem480、Problem2034、Problem2349、Problem2353 类比Problem155、Problem225、Problem232、Problem622、Problem641、Problem705、Problem706、Problem707、Problem716、Problem895、Problem1381、Problem1670、Offer9、Offer30、Offer59_2 优先队列类比
+ * @Description 餐盘栈 延迟删除类比Problem480、Problem2034、Problem2349、Problem2353 类比Problem155、Problem225、Problem232、Problem622、Problem641、Problem705、Problem706、Problem707、Problem716、Problem895、Problem1381、Problem1670、Offer9、Offer30、Offer59_2
  * 我们把无限数量 ∞ 的栈排成一行，按从左到右的次序从 0 开始编号。
  * 每个栈的的最大容量 capacity 都相同。
  * 实现一个叫「餐盘」的类 DinnerPlates：
@@ -122,7 +122,7 @@ public class Problem1172 {
     static class DinnerPlates {
         //存储栈的list集合
         private final List<Stack<Integer>> stackList;
-        //优先队列，小根堆，按照stackList中的下标索引由小到大存储未满栈
+        //优先队列，小根堆，存储stackList中未满栈的下标索引
         private final PriorityQueue<Integer> priorityQueue;
         //每个栈的最大容量
         private final int capacity;

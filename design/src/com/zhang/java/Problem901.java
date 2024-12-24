@@ -66,7 +66,7 @@ public class Problem901 {
 
         public int next(int price) {
             while (!stack.isEmpty() && price >= stack.peek()[0]) {
-                int[] arr = stack.pop();
+                stack.pop();
             }
 
             int result;

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/11/22 08:49
  * @Author zsy
- * @Description 股票价格波动 股票类比Problem121、Problem122、Problem123、Problem188、Problem309、Problem714、Problem901、Problem2110、Problem2291、Offer63 延迟删除类比Problem480、Problem1172、Problem2349、Problem2353 有序集合类比
+ * @Description 股票价格波动 延迟删除类比Problem480、Problem1172、Problem2349、Problem2353 股票类比Problem121、Problem122、Problem123、Problem188、Problem309、Problem714、Problem901、Problem2110、Problem2291、Offer63 有序集合类比
  * 给你一支股票价格的数据流。
  * 数据流中每一条记录包含一个 时间戳 和该时间点股票对应的 价格 。
  * 不巧的是，由于股票市场内在的波动性，股票价格记录可能不是按时间顺序到来的。
@@ -71,19 +71,17 @@ public class Problem2034 {
      * 哈希表+有序集合
      */
     static class StockPrice {
-        //当前股票的最大时间戳，用于current()获取最新股票价格
-        private int maxTimestamp;
         //key：时间戳，value：arr[0]：时间戳，arr[1]：当前时间戳对应的股票价格
         private final Map<Integer, int[]> map;
-        //有序集合，按照arr[1]股票价格小到大存储数组集合
-        //注意：虽然不需要对arr[0]时间戳进行排序，但是set中添加数组需要通过compare判断添加的数组是否重复，
-        //所以为了避免arr[1]相同但arr[0]不同的数组无法加入到set中，必须对arr[0]时间戳进行排序
-        private final TreeSet<int[]> set;
+        //有序集合，按照arr[1]股票价格由小到大存储
+        //注意：有序集合中key唯一并且不能修改，如果要修改，则需要先删除，再添加
+        private final TreeSet<int[]> treeSet;
+        //当前股票的最大时间戳，用于current()获取最新股票价格
+        private int maxTimestamp;
 
         public StockPrice() {
-            maxTimestamp = 0;
             map = new HashMap<>();
-            set = new TreeSet<>(new Comparator<int[]>() {
+            treeSet = new TreeSet<>(new Comparator<int[]>() {
                 @Override
                 public int compare(int[] arr1, int[] arr2) {
                     if (arr1[1] != arr2[1]) {
@@ -93,6 +91,7 @@ public class Problem2034 {
                     }
                 }
             });
+            maxTimestamp = 0;
         }
 
         public void update(int timestamp, int price) {
@@ -100,29 +99,42 @@ public class Problem2034 {
                 maxTimestamp = Math.max(maxTimestamp, timestamp);
                 int[] arr = new int[]{timestamp, price};
                 map.put(timestamp, arr);
-                set.add(arr);
-            } else {
-                maxTimestamp = Math.max(maxTimestamp, timestamp);
-                int[] arr = map.get(timestamp);
-                set.remove(arr);
-                arr = new int[]{timestamp, price};
-                map.put(timestamp, arr);
-                set.add(arr);
+                treeSet.add(arr);
+
+                return;
             }
+
+            int[] arr = map.get(timestamp);
+            //注意：有序集合中修改需要先删除，再添加
+            treeSet.remove(arr);
+            arr[1] = price;
+            treeSet.add(arr);
         }
 
         public int current() {
+            if (map.isEmpty()) {
+                return -1;
+            }
+
             return map.get(maxTimestamp)[1];
         }
 
         public int maximum() {
-            //last()：set中最后一个区间
-            return set.last()[1];
+            if (treeSet.isEmpty()) {
+                return -1;
+            }
+
+            //last()：有序集合中最后一个区间
+            return treeSet.last()[1];
         }
 
         public int minimum() {
-            //first()：set中第一个区间
-            return set.first()[1];
+            if (treeSet.isEmpty()) {
+                return -1;
+            }
+
+            //first()：有序集合中第一个区间
+            return treeSet.first()[1];
         }
     }
 
@@ -133,17 +145,16 @@ public class Problem2034 {
      * 如果堆顶时间戳对应的股票价格不等于map中当前时间戳对应的股票价格，则堆顶时间戳对应的股票价格发生了修改，删除堆顶元素
      */
     static class StockPrice2 {
-        //当前股票的最大时间戳，用于current()获取最新股票价格
-        private int maxTimestamp;
         //key：时间戳，value：arr[0]：时间戳，arr[1]：当前时间戳对应的股票价格
         private final Map<Integer, int[]> map;
-        //按照arr[1]股票价格大到小排序的大根堆
+        //优先队列，大根堆，arr[0]：时间戳，arr[1]：当前时间戳对应的股票价格
         private final PriorityQueue<int[]> maxPriorityQueue;
-        //按照arr[1]股票价格小到大排序的小根堆
+        //优先队列，小根堆，arr[0]：时间戳，arr[1]：当前时间戳对应的股票价格
         private final PriorityQueue<int[]> minPriorityQueue;
+        //当前股票的最大时间戳，用于current()获取最新股票价格
+        private int maxTimestamp;
 
         public StockPrice2() {
-            maxTimestamp = 0;
             map = new HashMap<>();
             maxPriorityQueue = new PriorityQueue<>(new Comparator<int[]>() {
                 @Override
@@ -157,6 +168,7 @@ public class Problem2034 {
                     return arr1[1] - arr2[1];
                 }
             });
+            maxTimestamp = 0;
         }
 
         public void update(int timestamp, int price) {
@@ -168,27 +180,39 @@ public class Problem2034 {
         }
 
         public int current() {
+            if (map.isEmpty()) {
+                return -1;
+            }
+
             return map.get(maxTimestamp)[1];
         }
 
         public int maximum() {
+            if (maxPriorityQueue.isEmpty()) {
+                return -1;
+            }
+
             //大根堆堆顶时间戳对应的股票价格不等于map中当前时间戳对应的股票价格，则大根堆堆顶时间戳对应的股票价格发生了修改，删除大根堆堆顶元素
             while (!maxPriorityQueue.isEmpty() && maxPriorityQueue.peek()[1] != map.get(maxPriorityQueue.peek()[0])[1]) {
                 maxPriorityQueue.poll();
             }
 
             //大根堆为空，则不存在最大股票价格，返回-1；否则，返回大根堆堆顶股票价格，即为最大股票价格
-            return maxPriorityQueue.isEmpty() ? -1 : maxPriorityQueue.peek()[1];
+            return maxPriorityQueue.peek()[1];
         }
 
         public int minimum() {
+            if (minPriorityQueue.isEmpty()) {
+                return -1;
+            }
+
             //小根堆堆顶时间戳对应的股票价格不等于map中当前时间戳对应的股票价格，则小根堆堆顶时间戳对应的股票价格发生了修改，删除小根堆堆顶元素
             while (!minPriorityQueue.isEmpty() && minPriorityQueue.peek()[1] != map.get(minPriorityQueue.peek()[0])[1]) {
                 minPriorityQueue.poll();
             }
 
             //小根堆为空，则不存在最小股票价格，返回-1；否则，返回小根堆堆顶股票价格，即为最小股票价格
-            return minPriorityQueue.isEmpty() ? -1 : minPriorityQueue.peek()[1];
+            return minPriorityQueue.peek()[1];
         }
     }
 }

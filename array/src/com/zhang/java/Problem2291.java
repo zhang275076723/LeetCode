@@ -51,7 +51,7 @@ public class Problem2291 {
         int[][] dp = new int[present.length + 1][budget + 1];
 
         for (int i = 1; i <= present.length; i++) {
-            //注意：j从0开始遍历，因为present[i-1]可能为0
+            //注意：j从0开始遍历，因为股票的价格可能为0
             for (int j = 0; j <= budget; j++) {
                 if (present[i - 1] > j) {
                     dp[i][j] = dp[i - 1][j];
@@ -81,7 +81,7 @@ public class Problem2291 {
 
         for (int i = 0; i < present.length; i++) {
             //当前dp[j]会使用到前面的dp，所以逆序遍历
-            //注意：j从0开始遍历，因为present[i-1]可能为0
+            //注意：j从0开始遍历，因为股票的价格可能为0
             for (int j = budget; j >= 0; j--) {
                 if (present[i] <= j) {
                     dp[j] = Math.max(dp[j], dp[j - present[i]] + future[i] - present[i]);
