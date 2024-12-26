@@ -59,7 +59,7 @@ public class Problem1348 {
     }
 
     /**
-     * 有序集合
+     * 哈希表+有序集合
      */
     static class TweetCounts {
         //key：推文发布者tweetName，value：有序集合，由小到大存储推文发布者的推文发布时间(key)和当前时间发布的推文数量(value)
