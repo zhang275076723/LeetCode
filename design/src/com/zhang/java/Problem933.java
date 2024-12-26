@@ -48,7 +48,7 @@ public class Problem933 {
      * 队列
      */
     static class RecentCounter {
-        //存储[t-3000,t]的时间队列
+        //队列存储最近3000ms内的敲击时间
         private final Queue<Integer> queue;
 
         public RecentCounter() {
@@ -65,8 +65,8 @@ public class Problem933 {
         public int ping(int t) {
             queue.offer(t);
 
-            //队列中小于t-3000的时间出队，保证队列中存储[t-3000,t]的时间
-            while (queue.peek() < t - 3000) {
+            //队列只存储[t-3000,t]内的时间
+            while (!queue.isEmpty() && queue.peek() < t - 3000) {
                 queue.poll();
             }
 
