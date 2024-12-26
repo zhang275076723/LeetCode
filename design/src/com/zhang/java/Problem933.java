@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2024/3/5 08:24
  * @Author zsy
- * @Description 最近的请求次数 线段树类比Problem218、Problem307、Problem308、Problem327、Problem370、Problem654、Problem699、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1109、Problem1893、Problem2407
+ * @Description 最近的请求次数 类比Problem362 线段树类比Problem218、Problem307、Problem308、Problem327、Problem370、Problem654、Problem699、Problem715、Problem729、Problem731、Problem732、Problem1094、Problem1109、Problem1893、Problem2407
  * 写一个 RecentCounter 类来计算特定时间范围内最近的请求。
  * 请你实现 RecentCounter 类：
  * RecentCounter() 初始化计数器，请求数为 0 。
