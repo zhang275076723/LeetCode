@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/9/4 08:24
  * @Author zsy
- * @Description 将数据流变为多个不相交区间 类比Problem362、Problem981、Problem1146 类比Problem986、Problem2983 有序集合类比Problem220、Problem363、Problem855、Problem1348 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem406、Problem435、Problem436、Problem632、Problem763、Problem855、Problem986、Problem1288、Problem2402
+ * @Description 将数据流变为多个不相交区间 类比Problem981、Problem1146 类比Problem986、Problem2983 有序集合类比Problem220、Problem363、Problem855、Problem1348 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem406、Problem435、Problem436、Problem632、Problem763、Problem855、Problem986、Problem1288、Problem2402
  * 给你一个由非负整数 a1, a2, ..., an 组成的数据流输入，请你将到目前为止看到的数字总结为不相交的区间列表。
  * 实现 SummaryRanges 类：
  * SummaryRanges() 使用一个空数据流初始化对象。
