@@ -5,7 +5,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2024/9/25 08:22
  * @Author zsy
- * @Description 座位预约管理系统 类比Problem1500、Problem2254 优先队列类比
+ * @Description 座位预约管理系统 类比Problem379、Problem1500、Problem2254
  * 请你设计一个管理 n 个座位预约的系统，座位编号从 1 到 n 。
  * 请你实现 SeatManager 类：
  * SeatManager(int n) 初始化一个 SeatManager 对象，它管理从 1 到 n 编号的 n 个座位。所有座位初始都是可预约的。
