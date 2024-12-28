@@ -125,7 +125,7 @@ public class Problem981 {
      */
     static class TimeMap2 {
         //key：键，value：按照时间戳由小到大存储相同键的有序集合
-        //注意：set()中timestamp严格递增，则可以使用TreeSet；如果timestamp相同对同一个key多次set()，则只能使用TreeMap
+        //注意：set()中timestamp严格递增，则可以使用TreeSet；如果对同一个key多次set()的timestamp相同，则只能使用TreeMap
         private final Map<String, TreeSet<Pair>> map;
 
         public TimeMap2() {
