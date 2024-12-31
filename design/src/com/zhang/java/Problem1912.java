@@ -241,9 +241,9 @@ public class Problem1912 {
             //商店id
             private int shopId;
             //key：未出租电影id，value：电影节点
-            private Map<Integer, Movie> unrentedMap;
+            private final Map<Integer, Movie> unrentedMap;
             //key：已出租电影id，value：电影节点
-            private Map<Integer, Movie> rentedMap;
+            private final Map<Integer, Movie> rentedMap;
 
             public Shop(int shopId) {
                 this.shopId = shopId;

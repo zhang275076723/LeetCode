@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/10/8 08:02
  * @Author zsy
- * @Description 快照数组 类比Problem352、Problem981 有序集合类比
+ * @Description 快照数组 类比Problem981 有序集合类比
  * 实现支持下列接口的「快照数组」- SnapshotArray：
  * SnapshotArray(int length) - 初始化一个与指定长度相等的 类数组 的数据结构。初始时，每个元素都等于 0。
  * void set(index, val) - 会将指定索引 index 处的元素设置为 val。

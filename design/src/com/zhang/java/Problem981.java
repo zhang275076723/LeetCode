@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/11/23 08:37
  * @Author zsy
- * @Description 基于时间的键值存储 类比Problem352、Problem1146 有序集合类比
+ * @Description 基于时间的键值存储 类比Problem1146 有序集合类比
  * 设计一个基于时间的键值数据结构，该结构可以在不同时间戳存储对应同一个键的多个值，并针对特定时间戳检索键对应的值。
  * 实现 TimeMap 类：
  * TimeMap() 初始化数据结构对象
