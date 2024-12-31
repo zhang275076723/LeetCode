@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/9/4 08:24
  * @Author zsy
- * @Description 将数据流变为多个不相交区间 类比Problem981、Problem1146 类比Problem986、Problem2983 有序集合类比Problem220、Problem363、Problem855、Problem1348 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem406、Problem435、Problem436、Problem632、Problem763、Problem855、Problem986、Problem1288、Problem2402
+ * @Description 将数据流变为多个不相交区间 类比Problem986、Problem2502、Problem2983 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem406、Problem435、Problem436、Problem632、Problem763、Problem855、Problem986、Problem1288、Problem2402 有序集合类比Problem220、Problem363、Problem855、Problem1348
  * 给你一个由非负整数 a1, a2, ..., an 组成的数据流输入，请你将到目前为止看到的数字总结为不相交的区间列表。
  * 实现 SummaryRanges 类：
  * SummaryRanges() 使用一个空数据流初始化对象。
@@ -63,7 +63,7 @@ public class Problem352 {
      * 二分查找
      */
     static class SummaryRanges {
-        //由小到大存储不相交的区间
+        //按照区间左边界由小到大存储不相交的区间
         private final List<int[]> list;
 
         public SummaryRanges() {
@@ -71,17 +71,9 @@ public class Problem352 {
         }
 
         /**
-         * 二分查找区间左边界小于等于value的最大区间，作为value的左边区间，value的左边区间的下一个区间作为value的右边区间，
-         * 如果不存在左边界小于等于value的最大区间，则二分查找返回左边界大于value的最小区间
-         * 二分查找区间左边界小于等于value的最大区间之后，有以下7种情况：
-         * 1、value在左边区间左边，且左边区间左边界-1不等于value，则value作为单独区间插入左边区间左侧
-         * 2、value在左边区间左边，且左边区间左边界-1等于value，则value和左边区间合并
-         * 3、value在左边区间内，则不需要合并和插入，直接返回
-         * 4、value在左边区间右边，且左边区间右边界+1等于value，右边区间左边界-1不等于value，则value和左边区间合并
-         * 5、value在左边区间右边，且左边区间右边界+1等于value，右边区间左边界-1等于value，则value和左边区间、右边区间合并
-         * 6、value在左边区间右边，且左边区间右边界+1不等于value，右边区间左边界-1等于value，则value和右边区间合并
-         * 7、value在左边区间右边，且左边区间右边界+1不等于value，右边区间左边界-1不等于value，则value作为单独区间插入左边区间和右边区间之间
-         * 时间复杂度O(logn+n)，空间复杂度O(1) (n：list中不相交区间的个数)
+         * 二分查找list中区间左边界小于等于value的最大区间，作为value的左边区间，value的左边区间的下一个区间作为value的右边区间，
+         * 然后根据value的左边和右边区间进行插入和合并
+         * 时间复杂度O(logn+n)，空间复杂度O(1) (n=list.size())
          *
          * @param value
          */
@@ -91,69 +83,69 @@ public class Problem352 {
                 return;
             }
 
+            //list中左边界小于等于value的最大区间在list中的下标索引
+            int leftIndex = -1;
+            //list中leftIndex的下一个区间下标索引
+            int rightIndex = -1;
             int left = 0;
             int right = list.size() - 1;
             int mid;
 
             //二分查找区间左边界小于等于value的最大区间
-            while (left < right) {
-                //mid往右偏移，因为转移条件是right=mid-1，避免无法跳出循环
-                mid = left + ((right - left) >> 1) + 1;
+            while (left <= right) {
+                mid = left + ((right - left) >> 1);
 
                 if (list.get(mid)[0] <= value) {
-                    left = mid;
+                    leftIndex = mid;
+                    left = mid + 1;
                 } else {
                     right = mid - 1;
                 }
             }
 
-            //左边界小于等于value的最大区间的下标索引，即value左边区间下标索引
-            int leftIndex = left;
-            //value右边区间下标索引
-            int rightIndex;
-
-            //value左边区间为末尾区间，则value右边区间只能为末尾区间
-            if (leftIndex == list.size() - 1) {
-                rightIndex = leftIndex;
-            } else {
+            if (leftIndex != list.size() - 1) {
                 rightIndex = leftIndex + 1;
             }
 
-            //value左边区间，即区间左边界小于等于value的最大区间
-            //如果不存在左边界小于等于value的最大区间，则二分查找返回左边界大于value的最小区间
-            int[] leftArr = list.get(leftIndex);
-            //value右边区间
-            int[] rightArr = list.get(rightIndex);
+            //list中左边界小于等于value的最大区间
+            int[] leftArr = leftIndex == -1 ? null : list.get(leftIndex);
+            //list中leftArr的下一个区间
+            int[] rightArr = rightIndex == -1 ? null : list.get(rightIndex);
 
-            //情况1、2，value在左边区间左边
-            if (value < leftArr[0]) {
-                //情况1
-                if (value + 1 != leftArr[0]) {
-                    list.add(leftIndex, new int[]{value, value});
-                } else {
-                    //情况2
-                    leftArr[0] = value;
-                }
-            } else if (value <= leftArr[1]) {
-                //情况3，value在左边区间内
-            } else {
-                //情况4、5、6、7，value在左边区间右边
+            //方法一开始就考虑了当前情况，即当前情况不会发生，则不用操作
+            if (leftArr == null && rightArr == null) {
 
-                //情况4
-                if (leftArr[1] + 1 == value && value + 1 != rightArr[0]) {
-                    leftArr[1] = value;
-                } else if (leftArr[1] + 1 == value && value + 1 == rightArr[0]) {
-                    //情况5
-                    leftArr[1] = rightArr[1];
-                    list.remove(rightIndex);
-                } else if (leftArr[1] + 1 != value && value + 1 == rightArr[0]) {
-                    //情况6
+            } else if (leftArr == null) {
+                if (value + 1 < rightArr[0]) {
+                    list.add(rightIndex, new int[]{value, value});
+                } else if (value + 1 == rightArr[0]) {
                     rightArr[0] = value;
                 } else {
-                    //情况7
-                    //注意：不能写成list.add(rightIndex, new int[]{value, value});
-                    //避免leftIndex等于rightIndex，导致插入区间[value,value]之后list无序
+                    //value在rightArr中，则不用操作
+                }
+            } else if (rightArr == null) {
+                if (leftArr[1] + 1 < value) {
                     list.add(leftIndex + 1, new int[]{value, value});
+                } else if (leftArr[1] + 1 == value) {
+                    leftArr[1] = value;
+                } else {
+                    //value在leftArr中，则不用操作
+                }
+            } else {
+                //value在leftArr中，则不用操作
+                if (leftArr[1] >= value) {
+
+                } else {
+                    if (leftArr[1] + 1 == value && value + 1 == rightArr[0]) {
+                        leftArr[1] = rightArr[1];
+                        list.remove(rightIndex);
+                    } else if (leftArr[1] + 1 == value && value + 1 != rightArr[0]) {
+                        leftArr[1] = value;
+                    } else if (leftArr[1] + 1 != value && value + 1 == rightArr[0]) {
+                        rightArr[0] = value;
+                    } else {
+                        list.add(rightIndex, new int[]{value, value});
+                    }
                 }
             }
         }
@@ -167,7 +159,7 @@ public class Problem352 {
      * 有序集合
      */
     static class SummaryRanges2 {
-        //有序集合，由小到大存储不相交的区间
+        //有序集合，按照区间左边界由小到大存储不相交的区间
         private final TreeSet<int[]> set;
 
         public SummaryRanges2() {
@@ -181,17 +173,9 @@ public class Problem352 {
         }
 
         /**
-         * 通过有序集合得到区间左边界小于等于value的最大区间，作为value的左边区间，如果不存在该区间，则返回区间左边界大于等于value的最小区间，
-         * 通过有序集合得到区间左边界大于等于value的最小区间，作为value的右边区间，如果不存在该区间，则返回区间左边界小于等于value的最大区间，
-         * 通过有序集合得到value的的左右边区间之后，有以下7种情况：
-         * 1、value在左边区间左边，且左边区间左边界-1不等于value，则value作为单独区间插入左边区间左侧
-         * 2、value在左边区间左边，且左边区间左边界-1等于value，则value和左边区间合并
-         * 3、value在左边区间内，则不需要合并和插入，直接返回
-         * 4、value在左边区间右边，且左边区间右边界+1等于value，右边区间左边界-1不等于value，则value和左边区间合并
-         * 5、value在左边区间右边，且左边区间右边界+1等于value，右边区间左边界-1等于value，则value和左边区间、右边区间合并
-         * 6、value在左边区间右边，且左边区间右边界+1不等于value，右边区间左边界-1等于value，则value和右边区间合并
-         * 7、value在左边区间右边，且左边区间右边界+1不等于value，右边区间左边界-1不等于value，则value作为单独区间插入左边区间和右边区间之间
-         * 时间复杂度O(logn)，空间复杂度O(n) (n：set中不相交区间的个数)
+         * 通过有序集合得到set中区间左边界小于等于value的最大区间，作为value的左边区间，value的左边区间的下一个区间作为value的右边区间，
+         * 然后根据value的左边和右边区间进行插入和合并
+         * 时间复杂度O(logn)，空间复杂度O(1) (n=set.size())
          *
          * @param value
          */
@@ -203,48 +187,50 @@ public class Problem352 {
 
             //[value,value]作为一个新区间
             int[] arr = {value, value};
-            //value左边区间，即区间左边界小于等于value的最大区间，如果不存在该区间，则返回null
+            //set中左边界小于等于value的最大区间
             int[] leftArr = set.floor(arr);
-            //value右边区间，即区间左边界大于等于value的最小区间，如果不存在该区间，则返回null
-            int[] rightArr = set.ceiling(arr);
+            //set中leftArr的下一个区间
+            int[] rightArr;
 
-            //不存在区间左边界小于等于value的最大区间，则leftArr为区间左边界大于等于value的最小区间
             if (leftArr == null) {
-                leftArr = set.ceiling(arr);
-            }
-
-            //不存在区间左边界大于等于value的最小区间，则rightArr为区间左边界小于等于value的最大区间
-            if (rightArr == null) {
-                rightArr = set.floor(arr);
-            }
-
-            //情况1、2，value在左边区间左边
-            if (value < leftArr[0]) {
-                //情况1
-                if (value + 1 != leftArr[0]) {
-                    set.add(arr);
-                } else {
-                    //情况2
-                    leftArr[0] = value;
-                }
-            } else if (value <= leftArr[1]) {
-                //情况3，value在左边区间内
+                rightArr = set.first();
             } else {
-                //情况4、5、6、7，value在左边区间右边
+                rightArr = set.higher(leftArr);
+            }
 
-                //情况4
-                if (leftArr[1] + 1 == value && value + 1 != rightArr[0]) {
-                    leftArr[1] = value;
-                } else if (leftArr[1] + 1 == value && value + 1 == rightArr[0]) {
-                    //情况5
-                    leftArr[1] = rightArr[1];
-                    set.remove(rightArr);
-                } else if (leftArr[1] + 1 != value && value + 1 == rightArr[0]) {
-                    //情况6
+            //方法一开始就考虑了当前情况，即当前情况不会发生，则不用操作
+            if (leftArr == null && rightArr == null) {
+
+            } else if (leftArr == null) {
+                if (value + 1 < rightArr[0]) {
+                    set.add(arr);
+                } else if (value + 1 == rightArr[0]) {
                     rightArr[0] = value;
                 } else {
-                    //情况7
+                    //value在rightArr中，则不用操作
+                }
+            } else if (rightArr == null) {
+                if (leftArr[1] + 1 < value) {
                     set.add(arr);
+                } else if (leftArr[1] + 1 == value) {
+                    leftArr[1] = value;
+                } else {
+                    //value在leftArr中，则不用操作
+                }
+            } else {
+                if (leftArr[1] >= value) {
+                    //value在leftArr中，则不用操作
+                } else {
+                    if (leftArr[1] + 1 == value && value + 1 == rightArr[0]) {
+                        leftArr[1] = rightArr[1];
+                        set.remove(rightArr);
+                    } else if (leftArr[1] + 1 == value && value + 1 != rightArr[0]) {
+                        leftArr[1] = value;
+                    } else if (leftArr[1] + 1 != value && value + 1 == rightArr[0]) {
+                        rightArr[0] = value;
+                    } else {
+                        set.add(arr);
+                    }
                 }
             }
         }
