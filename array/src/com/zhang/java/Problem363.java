@@ -6,7 +6,7 @@ import java.util.TreeSet;
 /**
  * @Date 2024/2/23 08:20
  * @Author zsy
- * @Description 矩形区域不超过 K 的最大数值和 类比Problem53 二维前缀和类比Problem304、Problem1292、Problem1444、Problem1738 有序集合类比Problem220、Problem352、Problem855、Problem1348 前缀和类比
+ * @Description 矩形区域不超过 K 的最大数值和 类比Problem220 二维前缀和类比Problem304、Problem1292、Problem1444、Problem1738 前缀和类比 有序集合类比Problem220、Problem352、Problem855、Problem981、Problem1146、Problem1348、Problem1912、Problem2034、Problem2071、Problem2349、Problem2353、Problem2502、Problem2590
  * 给你一个 m x n 的矩阵 matrix 和一个整数 k ，找出并返回矩阵内部矩形区域的不超过 k 的最大数值和。
  * 题目数据保证总会存在一个数值和不超过 k 的矩形区域。
  * <p>
@@ -47,23 +47,25 @@ public class Problem363 {
 
         int[][] preSum = new int[m + 1][n + 1];
 
-        for (int i = 1; i <= m; i++) {
-            for (int j = 1; j <= n; j++) {
-                preSum[i][j] = preSum[i - 1][j] + preSum[i][j - 1] - preSum[i - 1][j - 1] + matrix[i - 1][j - 1];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                preSum[i + 1][j + 1] = preSum[i + 1][j] + preSum[i][j + 1] - preSum[i][j] + matrix[i][j];
             }
         }
 
         //矩形元素之和不超过k的最大值
         int result = Integer.MIN_VALUE;
 
+        //左上角(i,j)
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
+                //右下角(p,q)
                 for (int p = i; p < m; p++) {
                     for (int q = j; q < n; q++) {
                         //左上角(i,j)和右下角(p,q)围成矩形的元素之和
                         int sum = preSum[p + 1][q + 1] - preSum[p + 1][j] - preSum[i][q + 1] + preSum[i][j];
 
-                        //更新矩形元素之和不超过k的最大值
+                        //更新矩形元素之和不超过k的最大值result
                         if (sum <= k) {
                             result = Math.max(result, sum);
                         }
@@ -78,7 +80,7 @@ public class Problem363 {
     /**
      * 二维前缀和+有序集合
      * 固定二维数组的上下边界，通过有序集合找当前右边界对应左边界中矩形元素之和不超过k的最大值
-     * 时间复杂度O(m^2*nlogn)，空间复杂度O(n) (m=matrix.length，n=matrix[0].length) (适用于n远远大于m的情况)
+     * 时间复杂度O(m^2*nlogn)，空间复杂度O(n) (m=matrix.length，n=matrix[0].length) (适用于列数n远远大于行数m的情况)
      *
      * @param matrix
      * @param k
@@ -90,9 +92,9 @@ public class Problem363 {
 
         int[][] preSum = new int[m + 1][n + 1];
 
-        for (int i = 1; i <= m; i++) {
-            for (int j = 1; j <= n; j++) {
-                preSum[i][j] = preSum[i - 1][j] + preSum[i][j - 1] - preSum[i - 1][j - 1] + matrix[i - 1][j - 1];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                preSum[i + 1][j + 1] = preSum[i + 1][j] + preSum[i][j + 1] - preSum[i][j] + matrix[i][j];
             }
         }
 
@@ -138,7 +140,7 @@ public class Problem363 {
     /**
      * 二维前缀和+有序集合
      * 固定二维数组的左右边界，通过有序集合找当前下边界对应上边界中矩形元素之和不超过k的最大值
-     * 时间复杂度O(n^2*mlogm)，空间复杂度O(m) (m=matrix.length，n=matrix[0].length) (适用于m远远大于n的情况)
+     * 时间复杂度O(n^2*mlogm)，空间复杂度O(m) (m=matrix.length，n=matrix[0].length) (适用于行数m远远大于列数n的情况)
      *
      * @param matrix
      * @param k
@@ -150,9 +152,9 @@ public class Problem363 {
 
         int[][] preSum = new int[m + 1][n + 1];
 
-        for (int i = 1; i <= m; i++) {
-            for (int j = 1; j <= n; j++) {
-                preSum[i][j] = preSum[i - 1][j] + preSum[i][j - 1] - preSum[i - 1][j - 1] + matrix[i - 1][j - 1];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                preSum[i + 1][j + 1] = preSum[i + 1][j] + preSum[i][j + 1] - preSum[i][j] + matrix[i][j];
             }
         }
 

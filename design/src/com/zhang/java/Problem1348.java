@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/5/11 08:47
  * @Author zsy
- * @Description 推文计数 类比Problem355 有序集合类比Problem220、Problem352、Problem363、Problem855
+ * @Description 推文计数 类比Problem355 有序集合类比Problem220、Problem352、Problem363、Problem855、Problem981、Problem1146、Problem1912、Problem2034、Problem2071、Problem2349、Problem2353、Problem2502、Problem2590
  * 一家社交媒体公司正试图通过分析特定时间段内出现的推文数量来监控其网站上的活动。
  * 这些时间段可以根据特定的频率（ 每分钟 、每小时 或 每一天 ）划分为更小的 时间段 。
  * 例如，周期 [10,10000] （以 秒 为单位）将被划分为以下频率的 时间块 :

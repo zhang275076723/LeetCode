@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/9/16 08:37
  * @Author zsy
- * @Description 设计内存分配器 类比Problem352 有序集合类比
+ * @Description 设计内存分配器 类比Problem352 有序集合类比Problem220、Problem352、Problem363、Problem855、Problem981、Problem1146、Problem1348、Problem1912、Problem2034、Problem2071、Problem2349、Problem2353、Problem2590
  * 给你一个整数 n ，表示下标从 0 开始的内存数组的大小。
  * 所有内存单元开始都是空闲的。
  * 请你设计一个具备以下功能的内存分配器：

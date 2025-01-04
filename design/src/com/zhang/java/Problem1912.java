@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/10/1 08:58
  * @Author zsy
- * @Description 设计电影租借系统 有序集合类比
+ * @Description 设计电影租借系统 有序集合类比Problem220、Problem352、Problem363、Problem855、Problem981、Problem1146、Problem1348、Problem2034、Problem2071、Problem2349、Problem2353、Problem2502、Problem2590
  * 你有一个电影租借公司和 n 个电影商店。你想要实现一个电影租借系统，它支持查询、预订和返还电影的操作。
  * 同时系统还能生成一份当前被借出电影的报告。
  * 所有电影用二维整数数组 entries 表示，其中 entries[i] = [shopi, moviei, pricei] 表示商店 shopi 有一份电影 moviei 的拷贝，

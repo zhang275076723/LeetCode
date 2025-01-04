@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/9/24 08:30
  * @Author zsy
- * @Description 设计食物评分系统 延迟删除类比Problem480、Problem1172、Problem2034、Problem2349 有序集合类比
+ * @Description 设计食物评分系统 延迟删除类比Problem480、Problem855、Problem1172、Problem2034、Problem2349 有序集合类比Problem220、Problem352、Problem363、Problem855、Problem981、Problem1146、Problem1348、Problem1912、Problem2034、Problem2071、Problem2349、Problem2502、Problem2590
  * 设计一个支持下述操作的食物评分系统：
  * 修改 系统中列出的某种食物的评分。
  * 返回系统中某一类烹饪方式下评分最高的食物。

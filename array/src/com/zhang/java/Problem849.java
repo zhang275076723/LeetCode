@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/2/12 08:45
  * @Author zsy
- * @Description 到最近的人的最大距离 类比Problem855 类比Problem1437 双指针类比
+ * @Description 到最近的人的最大距离 类比Problem855、Problem1437 双指针类比
  * 给你一个数组 seats 表示一排座位，其中 seats[i] = 1 代表有人坐在第 i 个座位上，
  * seats[i] = 0 代表座位 i 上是空的（下标从 0 开始）。
  * 至少有一个空座位，且至少有一人已经坐在座位上。

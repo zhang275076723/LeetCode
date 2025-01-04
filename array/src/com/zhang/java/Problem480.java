@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/7/4 08:45
  * @Author zsy
- * @Description 滑动窗口中位数 招商银行机试题 美团机试题 华为面试题 类比Problem4、Problem239 类比Problem295、Problem346、Problem703、Problem1670、Offer41 延迟删除类比Problem1172、Problem2034、Problem2349、Problem2353
+ * @Description 滑动窗口中位数 招商银行机试题 美团机试题 华为面试题 类比Problem4、Problem239 类比Problem295、Problem346、Problem703、Problem1670、Offer41 延迟删除类比Problem855、Problem1172、Problem2034、Problem2349、Problem2353
  * 中位数是有序序列最中间的那个数。
  * 如果序列的长度是偶数，则没有最中间的数；此时中位数是最中间的两个数的平均数。
  * 例如：
