@@ -144,7 +144,7 @@ public class Problem1172 {
                 priorityQueue.clear();
             }
 
-            //小根堆未空，则不存在未满栈，新建一个栈，val入新建栈
+            //小根堆为空，则不存在未满栈，新建一个栈，val入新建栈
             if (priorityQueue.isEmpty()) {
                 Stack<Integer> stack = new Stack<>();
                 stack.push(val);
@@ -169,14 +169,14 @@ public class Problem1172 {
         }
 
         public int pop() {
-            //所有栈都未空，则返回-1
+            //所有栈都为空，则返回-1
             if (stackList.isEmpty()) {
                 return -1;
             }
 
             Stack<Integer> stack = stackList.get(stackList.size() - 1);
 
-            //最右边的栈出栈一个元素后未满，则加入小根堆
+            //最右边的栈出栈一个元素后由满栈变为未满，则加入小根堆
             if (stack.size() == capacity) {
                 priorityQueue.offer(stackList.size() - 1);
             }
@@ -192,14 +192,14 @@ public class Problem1172 {
         }
 
         public int popAtStack(int index) {
-            //index不合法，或者stackList中下标索引未index的栈为空，则返回-1
+            //index不合法，或者stackList中下标索引为index的栈为空，则返回-1
             if (index < 0 || index >= stackList.size() || stackList.get(index).isEmpty()) {
                 return -1;
             }
 
             Stack<Integer> stack = stackList.get(index);
 
-            //stackList中下标索引未index的栈出栈一个元素后未满，则加入小根堆
+            //stackList中下标索引为index的栈出栈一个元素后由满栈变为未满，则加入小根堆
             if (stack.size() == capacity) {
                 priorityQueue.offer(index);
             }

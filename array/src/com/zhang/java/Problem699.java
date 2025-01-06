@@ -97,7 +97,7 @@ public class Problem699 {
     /**
      * 线段树，动态开点
      * 核心思想：找当前方块掉落之前当前方块区间的最大高度，最大高度加上当前方块高度作为当前区间的高度
-     * 注意：前缀树查询和更新时，右边界要减1，保证当前方块和其他区间边界相邻情况下不相交
+     * 注意：线段树查询和更新时，右边界要减1，保证当前方块和其他区间边界相邻情况下不相交
      * 时间复杂度O(nlogm)，空间复杂度O(m) (n=positions.length，m=max(positions[i][0]+positions[i][1])-min(positions[i][0]))
      *
      * @param positions
