@@ -149,7 +149,9 @@ public class Problem1206 {
 
             //从addNode的最高层第开始往第一层，addNode加入到每一层有序链表中
             for (int i = nodeLevel - 1; i >= 0; i--) {
-                addNode.next[i] = update[i].next[i];
+                //addNode在第i层的下一个节点
+                Node nextNode = update[i].next[i];
+                addNode.next[i] = nextNode;
                 update[i].next[i] = addNode;
             }
         }
@@ -188,8 +190,11 @@ public class Problem1206 {
 
             //从deleteNode的最高层开始往第一层遍历，将deleteNode从当前层中删除
             for (int i = deleteNode.next.length - 1; i >= 0; i--) {
-                //也写成update[i].next[i] = deleteNode.next[i];
-                update[i].next[i] = update[i].next[i].next[i];
+                //deleteNode在第i层的下一个节点
+                //也写成Node nextNode = deleteNode.next[i];
+                Node nextNode = update[i].next[i].next[i];
+                update[i].next[i] = nextNode;
+                deleteNode.next[i] = null;
             }
 
             //更新跳表的高度，从当前跳表的高度开始往下遍历，如果当前层头结点的下一个节点为空，
