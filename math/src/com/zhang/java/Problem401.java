@@ -88,6 +88,7 @@ public class Problem401 {
                 if (count1 + count2 == turnedOn) {
                     StringBuilder sb = new StringBuilder();
 
+                    //小时不添加前导0
                     sb.append(i).append(":");
 
                     //分钟添加前导0
