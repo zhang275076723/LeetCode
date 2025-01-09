@@ -259,23 +259,16 @@ public class Problem224 {
 
     /**
      * 中缀表达式转换为后缀表达式
-     * 1、如果遇到空格，则跳过
-     * 2、如果遇到数字，则直接输出到后缀表达式中
-     * 3、如果遇到'('，则直接入栈
-     * 4、如果遇到')'，则将栈顶元素输出到后缀表达式中，直至遇到左括号(左括号出栈，但不输出)
-     * 5、如果遇到运算符，则将栈顶运算符优先级大于等于当前运算符优先级的符号输出到后缀表达式中，再将当前运算符入栈
-     * (需要判断'-'是负号，还是运算符，如果是负号，转换为0-num)
-     * 6、当遍历完中缀表达式后，将栈中剩余元素输出到后缀表达式中
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param s
      * @return
      */
     private String[] infixToSuffix(String s) {
-        //后缀表达式集合
-        List<String> list = new ArrayList<>();
+        //后缀表达式栈
+        Stack<List<String>> suffixStack = new Stack<>();
         //操作符栈
-        Stack<Character> stack = new Stack<>();
+        Stack<Character> opsStack = new Stack<>();
 
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
@@ -288,51 +281,90 @@ public class Problem224 {
             //数字
             if (c >= '0' && c <= '9') {
                 int num = c - '0';
+
                 while (i + 1 < s.length() && s.charAt(i + 1) >= '0' && s.charAt(i + 1) <= '9') {
                     num = num * 10 + s.charAt(i + 1) - '0';
                     i++;
                 }
+
+                ArrayList<String> list = new ArrayList<>();
                 list.add(num + "");
+                suffixStack.add(list);
             } else if (c == '(') {
-                //左括号
-                stack.push(c);
+                //左括号，直接入操作符栈
+
+                opsStack.push(c);
             } else if (c == ')') {
                 //右括号，栈中左括号之前的所有运算符加入后缀表达式集合list中
-                while (!stack.isEmpty() && stack.peek() != '(') {
-                    list.add(stack.pop() + "");
+                //右括号，后缀表达式栈出栈两个后缀表达式，操作符栈出栈一个运算符，得到的后缀表达式重新入后缀表达式栈，直至操作符栈遇到左括号
+
+                while (!opsStack.isEmpty() && opsStack.peek() != '(') {
+                    //先出栈的后缀表达式为suffix2，后出栈的后缀表达式为suffix1
+                    List<String> suffix2 = suffixStack.pop();
+                    List<String> suffix1 = suffixStack.pop();
+                    char ops = opsStack.pop();
+                    //得到的后缀表达式
+                    ArrayList<String> curSuffix = new ArrayList<>();
+                    curSuffix.addAll(suffix1);
+                    curSuffix.addAll(suffix2);
+                    curSuffix.add(ops + "");
+                    suffixStack.push(curSuffix);
                 }
+
                 //左括号出栈
-                stack.pop();
+                opsStack.pop();
             } else {
                 //运算符，+-*/
 
-                //首位为'-'或存在"(-"这种情况，转换为0-num，即0加入后缀表达式集合list中，运算符c入栈
+                //存在"-num"、"+num"、"(-"、"(+"的情况，后缀表达式栈需要补0
                 if ((i == 0 && c == '-') || (s.charAt(i - 1) == '(' && c == '-')) {
-                    list.add("0");
-                    stack.push(c);
-                } else {
-                    //如果栈顶元素运算符优先级大于等于当前运算符优先级，则栈顶元素出栈，加入后缀表达式集合list中
-                    while (!stack.isEmpty() && (getPriority(stack.peek()) >= getPriority(c))) {
-                        list.add(stack.pop() + "");
-                    }
-                    stack.push(c);
+                    List<String> curSuffix = new ArrayList<>();
+                    curSuffix.add("0");
+                    suffixStack.push(curSuffix);
                 }
+
+                //操作符栈顶运算符优先级大于等于当前运算符优先级，则操作符栈顶运算符出栈，后缀表达式栈出栈，得到的后缀表达式重新入后缀表达式栈
+                while (!opsStack.isEmpty() && getPriority(opsStack.peek()) >= getPriority(c)) {
+                    //先出栈的后缀表达式为suffix2，后出栈的后缀表达式为suffix1
+                    List<String> suffix2 = suffixStack.pop();
+                    List<String> suffix1 = suffixStack.pop();
+                    char ops = opsStack.pop();
+                    //得到的后缀表达式
+                    ArrayList<String> curSuffix = new ArrayList<>();
+                    curSuffix.addAll(suffix1);
+                    curSuffix.addAll(suffix2);
+                    curSuffix.add(ops + "");
+                    suffixStack.push(curSuffix);
+                }
+
+                //当前运算符入操作符栈
+                opsStack.push(c);
             }
         }
 
         //栈中剩余操作符出栈，加入后缀表达式集合中
-        while (!stack.isEmpty()) {
-            list.add(stack.pop() + "");
+        //操作符栈非空，即存在未运算的运算符，操作符栈中剩余运算符出栈，后缀表达式栈出栈，得到的后缀表达式重新入后缀表达式栈
+        while (!opsStack.isEmpty()) {
+            //先出栈的后缀表达式为suffix2，后出栈的后缀表达式为suffix1
+            List<String> suffix2 = suffixStack.pop();
+            List<String> suffix1 = suffixStack.pop();
+            char ops = opsStack.pop();
+            //得到的后缀表达式
+            ArrayList<String> curSuffix = new ArrayList<>();
+            curSuffix.addAll(suffix1);
+            curSuffix.addAll(suffix2);
+            curSuffix.add(ops + "");
+            suffixStack.push(curSuffix);
         }
 
-        //后缀表达式集合转换为后缀表示式数组
-        return list.toArray(new String[list.size()]);
+        //后缀表达式栈中剩余的最后一个后缀表达式，即为后缀表达式结果
+        List<String> suffix = suffixStack.pop();
+
+        return suffix.toArray(new String[0]);
     }
 
     /**
      * 后缀表达式转换为中缀表达式
-     * 1、如果遇到数字，则直接入栈
-     * 2、遇到符号，则出栈两个数进行拼接，结果重新入栈
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param suffix
