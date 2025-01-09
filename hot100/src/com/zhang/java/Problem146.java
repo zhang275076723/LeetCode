@@ -150,9 +150,9 @@ public class Problem146 {
          */
         private static class LinkedList {
             //链表头结点，避免非空判断
-            public Node head;
+            private final Node head;
             //链表尾结点，避免非空判断
-            public Node tail;
+            private final Node tail;
 
             LinkedList() {
                 head = new Node();

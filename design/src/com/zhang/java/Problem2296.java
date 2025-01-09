@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/9/5 08:38
  * @Author zsy
- * @Description 设计一个文本编辑器 类比Problem1472
+ * @Description 设计一个文本编辑器 类比Problem622、Problem641、Problem1472
  * 请你设计一个带光标的文本编辑器，它可以实现以下功能：
  * 添加：在光标所在处添加文本。
  * 删除：在光标所在处删除文本（模拟键盘的删除键）。
@@ -54,7 +54,8 @@ package com.zhang.java;
 public class Problem2296 {
     public static void main(String[] args) {
         // 当前 text 为 "|" 。（'|' 字符表示光标）
-        TextEditor textEditor = new TextEditor();
+//        TextEditor textEditor = new TextEditor();
+        TextEditor2 textEditor = new TextEditor2();
         // 当前文本为 "leetcode|" 。
         textEditor.addText("leetcode");
         // 返回 4
@@ -88,31 +89,65 @@ public class Problem2296 {
     }
 
     /**
-     * 双向链表
+     * 字符串
      */
     static class TextEditor {
-        private final Node head;
-        private final Node tail;
-        //光标所在节点，即下次插入节点插入到当前节点的next中
-        private Node cursor;
+        private final StringBuilder sb;
+        //sb中光标当前所在位置的下标索引
+        private int curIndex;
 
         public TextEditor() {
-            head = new Node();
-            tail = new Node();
-            cursor = head;
-            head.next = tail;
-            tail.pre = head;
+            sb = new StringBuilder();
+            curIndex = 0;
+        }
+
+        public void addText(String text) {
+            sb.insert(curIndex, text);
+            curIndex = curIndex + text.length();
+        }
+
+        public int deleteText(int k) {
+            //删除k个字符后光标的下标索引
+            int nextIndex = Math.max(curIndex - k, 0);
+            //实际删除的字符个数
+            int count = curIndex - nextIndex;
+            sb.delete(nextIndex, curIndex);
+            curIndex = nextIndex;
+
+            return count;
+        }
+
+        public String cursorLeft(int k) {
+            curIndex = Math.max(curIndex - k, 0);
+
+            return sb.substring(Math.max(curIndex - 10, 0), curIndex);
+        }
+
+        public String cursorRight(int k) {
+            curIndex = Math.min(curIndex + k, sb.length());
+
+            return sb.substring(Math.max(curIndex - 10, 0), curIndex);
+        }
+    }
+
+    /**
+     * 双向链表
+     */
+    static class TextEditor2 {
+        private final LinkedList linkedList;
+        //链表中光标当前所在的节点，即每次插入当前节点下一个节点
+        private Node curNode;
+
+        public TextEditor2() {
+            linkedList = new LinkedList();
+            curNode = linkedList.head;
         }
 
         public void addText(String text) {
             for (char c : text.toCharArray()) {
                 Node node = new Node(c);
-                Node next = cursor.next;
-                cursor.next = node;
-                node.pre = cursor;
-                node.next = next;
-                next.pre = node;
-                cursor = node;
+                linkedList.addAfter(node, curNode);
+                curNode = node;
             }
         }
 
@@ -120,16 +155,11 @@ public class Problem2296 {
             //实际删除的字符个数
             int count = 0;
 
-            //从光标位置最多删除k个字符
-            while (k > 0 && cursor != head) {
-                Node pre = cursor.pre;
-                Node next = cursor.next;
-                pre.next = next;
-                next.pre = pre;
-                cursor.pre = null;
-                cursor.next = null;
-                cursor = pre;
-
+            //从光标位置最多往左删除k个字符
+            while (k > 0 && curNode != linkedList.head) {
+                Node preNode = curNode.pre;
+                linkedList.remove(curNode);
+                curNode = preNode;
                 count++;
                 k--;
             }
@@ -138,21 +168,21 @@ public class Problem2296 {
         }
 
         public String cursorLeft(int k) {
-            //光标最多左移k位
-            while (k > 0 && cursor != head) {
-                cursor = cursor.pre;
+            //从光标位置最多往左移动k位
+            while (k > 0 && curNode != linkedList.head) {
+                curNode = curNode.pre;
                 k--;
             }
 
             StringBuilder sb = new StringBuilder();
-            Node node = cursor;
-            int index = 10;
+            Node node = curNode;
+            int count = 10;
 
-            //最多往光标左边找10个字符
-            while (index > 0 && node != head) {
+            //从光标位置最多往左找10个字符
+            while (count > 0 && node != linkedList.head) {
                 sb.append(node.value);
                 node = node.pre;
-                index--;
+                count--;
             }
 
             //因为是从光标位置往左找，所以需要反转
@@ -160,26 +190,58 @@ public class Problem2296 {
         }
 
         public String cursorRight(int k) {
-            //光标最多右移k位
+            //从光标位置最多往右移动k位
             //注意：和左移不同，右移光标只能停留在尾节点的前驱节点
-            while (k > 0 && cursor != tail.pre) {
-                cursor = cursor.next;
+            while (k > 0 && curNode != linkedList.tail.pre) {
+                curNode = curNode.next;
                 k--;
             }
 
             StringBuilder sb = new StringBuilder();
-            Node node = cursor;
-            int index = 10;
+            Node node = curNode;
+            int count = 10;
 
-            //最多往光标左边找10个字符
-            while (index > 0 && node != head) {
+            //从光标位置最多往左找10个字符
+            while (count > 0 && node != linkedList.head) {
                 sb.append(node.value);
                 node = node.pre;
-                index--;
+                count--;
             }
 
             //因为是从光标位置往左找，所以需要反转
             return sb.reverse().toString();
+        }
+
+        /**
+         * 双向链表
+         */
+        private static class LinkedList {
+            private final Node head;
+            private final Node tail;
+
+            public LinkedList() {
+                head = new Node();
+                tail = new Node();
+                head.next = tail;
+                tail.pre = head;
+            }
+
+            public void addAfter(Node node, Node baseNode) {
+                Node nextNode = baseNode.next;
+                baseNode.next = node;
+                node.pre = baseNode;
+                node.next = nextNode;
+                nextNode.pre = node;
+            }
+
+            public void remove(Node node) {
+                Node preNode = node.pre;
+                Node nextNode = node.next;
+                preNode.next = nextNode;
+                nextNode.pre = preNode;
+                node.pre = null;
+                node.next = null;
+            }
         }
 
         /**

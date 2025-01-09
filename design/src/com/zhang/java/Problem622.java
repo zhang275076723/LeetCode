@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/4/6 08:25
  * @Author zsy
- * @Description 设计循环队列 类比Problem155、Problem225、Problem232、Problem641、Problem705、Problem706、Problem707、Problem716、Problem895、Problem1172、Problem1381、Problem1670、Offer9、Offer30、Offer59_2
+ * @Description 设计循环队列 类比Problem641、Problem1472、Problem2296 类比Problem155、Problem225、Problem232、Problem641、Problem705、Problem706、Problem707、Problem716、Problem895、Problem1172、Problem1381、Problem1670、Offer9、Offer30、Offer59_2
  * 设计你的循环队列实现。
  * 循环队列是一种线性数据结构，其操作表现基于 FIFO（先进先出）原则并且队尾被连接在队首之后以形成一个循环。
  * 它也被称为“环形缓冲器”。
