@@ -63,7 +63,8 @@ public class Problem1823 {
         }
 
         while (queue.size() != 1) {
-            //每次移除第k个元素，则k-1个元素依次出队再入队，(k-1)%queue.size()保证一次遍历能够移除元素
+            //每次移除第k个元素，则k-1个元素依次出队再入队
+            //(k-1)%queue.size()避免m太大导致无效的出队和入队
             for (int i = 0; i < (k - 1) % queue.size(); i++) {
                 queue.offer(queue.poll());
             }

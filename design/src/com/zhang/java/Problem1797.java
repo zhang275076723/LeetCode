@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2024/9/22 08:39
  * @Author zsy
- * @Description 设计一个验证系统 类比Problem146、Problem432、Problem460、Problem895
+ * @Description 设计一个验证系统 类比Problem146、Problem432、Problem460、Problem895、Problem1756
  * 你需要设计一个包含验证码的验证系统。每一次验证中，用户会收到一个新的验证码，
  * 这个验证码在 currentTime 时刻之后 timeToLive 秒过期。
  * 如果验证码被更新了，那么它会在 currentTime （可能与之前的 currentTime 不同）时刻延长 timeToLive 秒。

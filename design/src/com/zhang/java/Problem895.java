@@ -7,7 +7,7 @@ import java.util.Stack;
 /**
  * @Date 2024/10/6 08:27
  * @Author zsy
- * @Description 最大频率栈 阿里面试题 字节面试题 快手面试题 华为面试题 类比Problem146、Problem432、Problem460、Problem1797 类比Problem155、Problem225、Problem232、Problem622、Problem641、Problem705、Problem706、Problem707、Problem716、Problem1172、Problem1381、Problem1670、Offer9、Offer30、Offer59_2
+ * @Description 最大频率栈 阿里面试题 字节面试题 快手面试题 华为面试题 类比Problem146、Problem432、Problem460、Problem1756、Problem1797 类比Problem155、Problem225、Problem232、Problem622、Problem641、Problem705、Problem706、Problem707、Problem716、Problem1172、Problem1381、Problem1670、Offer9、Offer30、Offer59_2
  * 设计一个类似堆栈的数据结构，将元素推入堆栈，并从堆栈中弹出出现频率最高的元素。
  * 实现 FreqStack 类:
  * FreqStack() 构造一个空的堆栈。
