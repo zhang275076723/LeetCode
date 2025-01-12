@@ -15,7 +15,6 @@ import java.util.Map;
  * 输入：hand = [1,2,3,6,2,3,4,7,8], groupSize = 3
  * 输出：true
  * 解释：Alice 手中的牌可以被重新排列为 [1,2,3]，[2,3,4]，[6,7,8]。
- * 示例 2：
  * <p>
  * 输入：hand = [1,2,3,4,5], groupSize = 4
  * 输出：false

@@ -19,7 +19,6 @@ package com.zhang.java;
  * - 为 current 加 60 分钟，current 变为 "04:30" 。
  * - 为 current 加 5 分钟，current 变为 "04:35" 。
  * 可以证明，无法用少于 3 步操作将 current 转化为 correct 。
- * 示例 2：
  * <p>
  * 输入：current = "11:00", correct = "11:01"
  * 输出：1
