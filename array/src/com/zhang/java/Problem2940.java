@@ -91,7 +91,7 @@ public class Problem2940 {
     }
 
     /**
-     * 线段树+二分查找
+     * 二分查找+线段树
      * 对于查询queries[i]=[ai,bi](始终保持ai<=bi)，则在线段树中二分查找[bi+1,n-1]中第一个大于heights[ai]的下标索引
      * 时间复杂度O(nlogn+mlogn*logn)，空间复杂度O(n) (n=height.length，m=queries.length)
      *
