@@ -66,10 +66,10 @@ public class Problem327 {
     }
 
     /**
-     * 前缀和+归并排序
-     * 前缀和数组进行归并排序，求在[lower,upper]区间范围内的前缀和之差，前缀和排序只影响统计的先后顺序，不影响最终结果，
-     * 在合并时，如果左区间preSum[i]，右区间的左指针元素preSum[l]和右指针元素preSum[r]，
-     * 满足preSum[l]-preSum[i]>=lower && preSum[r-1]-preSum[i]<=upper，则[l,r)都满足区间和在[lower,upper]之间
+     * 前缀和+归并排序+双指针
+     * 前缀和数组进行归并排序的合并时，左右两边的前缀和数组均有序，通过双指针能够确定左边前缀和数组每个preSum[i]，
+     * 对应的右边前缀和数组preSum[l]和preSum[r]，满足preSum[l]-preSum[i]>=lower && preSum[r]-preSum[i]<=upper，
+     * 则[l,r]都满足区间和在[lower,upper]之间，即左边前缀和数组preSum[i]对应r-l+1个满足要求的区间和
      * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
      * @param nums
@@ -90,7 +90,7 @@ public class Problem327 {
     }
 
     /**
-     * 线段树+数据离散化 (将范围较大的前缀和，离散化到较小的范围之内)
+     * 前缀和+线段树+数据离散化 (将范围较大的前缀和，离散化到较小的范围之内)
      * 对于每个preSum[i]，都找之前的preSum[j]，满足lower<=preSum[i]-preSum[j]<=upper (0 < j < i)，
      * 可变形为preSum[i]-upper <= preSum[j] <= preSum[i]-lower，
      * 在线段树中找[preSum[i]-upper,preSum[i]-lower]区间范围内值的个数，即为区间和在[lower,upper]的个数
@@ -163,7 +163,7 @@ public class Problem327 {
     }
 
     /**
-     * 线段树+动态开点
+     * 前缀和+线段树，动态开点 (超时，但正确)
      * 对于每个preSum[i]，都找之前的preSum[j]，满足lower<=preSum[i]-preSum[j]<=upper (0 < j < i)，
      * 可变形为preSum[i]-upper <= preSum[j] <= preSum[i]-lower，
      * 在线段树中找[preSum[i]-upper,preSum[i]-lower]区间范围内值的个数，即为区间和在[lower,upper]的个数
@@ -234,30 +234,28 @@ public class Problem327 {
         int i = left;
         int j = mid + 1;
         int k = left;
-        //preSum[i]对应的区间左边界leftBound，满足preSum[leftBound]-preSum[i]>=lower
+        //左边前缀和数组preSum[i]对应的右边前缀和数组preSum[leftBound]，满足preSum[leftBound]-preSum[i]>=lower
         int leftBound = mid + 1;
-        //preSum[i]对应的区间右边界rightBound，满足preSum[rightBound]-preSum[i]<upper
+        //左边前缀和数组preSum[i]对应的右边前缀和数组preSum[rightBound]，满足preSum[rightBound]-preSum[i]<upper
         int rightBound = mid + 1;
 
-        //查找每个preSum[i]满足要求的区间[leftBound,rightBound)，即区间内每个元素m都满足lower<=preSum[m]-preSum[i]<=upper
+        //双指针查找左边前缀和数组每个preSum[i]满足要求的区间[leftBound,rightBound]，即区间内每个元素m都满足lower<=preSum[m]-preSum[i]<=upper
         while (i <= mid) {
-            //preSum[i]对应的区间左边界leftBound
             while (leftBound <= right && preSum[leftBound] - preSum[i] < lower) {
                 leftBound++;
             }
 
-            //找preSum[i]对应的区间右边界rightBound
             while (rightBound <= right && preSum[rightBound] - preSum[i] <= upper) {
                 rightBound++;
             }
 
-            //区间[leftBound,rightBound)内每个元素m都满足lower<=preSum[m]-preSum[i]<=upper
+            //preSum[leftBound]-preSum[rightBound-1]每个元素m都满足lower<=preSum[m]-preSum[i]<=upper
             count = count + rightBound - leftBound;
             //i指针右移
             i++;
         }
 
-        //i重新赋值，preSum数组中[left,mid]和[mid+1，right]进行合并
+        //i重新赋值，preSum数组中[left,mid]和[mid+1,right]进行合并
         i = left;
 
         while (i <= mid && j <= right) {
