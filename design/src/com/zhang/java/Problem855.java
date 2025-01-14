@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/2/13 08:37
  * @Author zsy
- * @Description 考场就座 类比Problem849、Problem1437 延迟删除类比Problem480、Problem1172、Problem2034、Problem2349、Problem2353 有序集合类比Problem220、Problem352、Problem363、Problem981、Problem1146、Problem1348、Problem1912、Problem2034、Problem2071、Problem2349、Problem2353、Problem2502、Problem2590 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem352、Problem406、Problem435、Problem436、Problem632、Problem763、Problem986、Problem1288、Problem2402
+ * @Description 考场就座 类比Problem605、Problem849、Problem1437 延迟删除类比Problem480、Problem1172、Problem2034、Problem2349、Problem2353 有序集合类比Problem220、Problem352、Problem363、Problem981、Problem1146、Problem1348、Problem1912、Problem2034、Problem2071、Problem2349、Problem2353、Problem2502、Problem2590 区间类比Problem56、Problem57、Problem163、Problem228、Problem252、Problem253、Problem352、Problem406、Problem435、Problem436、Problem632、Problem763、Problem986、Problem1288、Problem2402
  * 在考场里，有 n 个座位排成一行，编号为 0 到 n - 1。
  * 当学生进入考场后，他必须坐在离最近的人最远的座位上。
  * 如果有多个这样的座位，他会坐在编号最小的座位上。(另外，如果考场里没有人，那么学生就坐在 0 号座位上。)
