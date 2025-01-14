@@ -3,7 +3,7 @@ package com.zhang.zhang;
 /**
  * @Date 2022/11/7 09:17
  * @Author zsy
- * @Description 链表的中间结点 类比Problem19、Problem143、Offer22
+ * @Description 链表的中间结点 类比Problem19、Problem143、Problem2095、Offer22
  * 给定一个头结点为 head 的非空单链表，返回链表的中间结点。
  * 如果有两个中间结点，则返回第二个中间结点。
  * <p>
@@ -28,7 +28,7 @@ public class Problem876 {
     }
 
     /**
-     * 双指针
+     * 快慢指针
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param head
