@@ -39,24 +39,22 @@ public class Problem328 {
             return head;
         }
 
-        //奇数链表头
-        ListNode oddHead = head;
         //偶数链表头
         ListNode evenHead = head.next;
         ListNode node = head;
 
         //断开奇偶链表
         while (node.next != null && node.next.next != null) {
-            ListNode next = node.next;
-            node.next = next.next;
-            next.next = next.next.next;
+            ListNode ovenNode = node.next;
+            node.next = ovenNode.next;
+            ovenNode.next = ovenNode.next.next;
             node = node.next;
         }
 
         //奇数链表后面链接偶数链表
         node.next = evenHead;
 
-        return oddHead;
+        return head;
     }
 
     private ListNode buildList(int[] data) {

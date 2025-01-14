@@ -32,15 +32,15 @@ public class SortOddEvenList {
             return head;
         }
 
-        //偶链表头
+        //偶数链表头
         ListNode evenHead = head.next;
         ListNode node = head;
 
         //1、拆分奇偶链表
         while (node.next != null && node.next.next != null) {
-            ListNode next = node.next;
-            node.next = next.next;
-            next.next = next.next.next;
+            ListNode ovenNode = node.next;
+            node.next = ovenNode.next;
+            ovenNode.next = ovenNode.next.next;
             node = node.next;
         }
 
