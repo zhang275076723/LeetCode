@@ -4,7 +4,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/15 20:13
  * @Author zsy
- * @Description 比较版本号 阿里面试题 双指针类比
+ * @Description 比较版本号 阿里面试题 类比Problem1768 双指针类比
  * 给你两个版本号 version1 和 version2 ，请你比较它们。
  * 版本号由一个或多个修订号组成，各修订号由一个 '.' 连接。每个修订号由 多位数字 组成，可能包含 前导零 。
  * 每个版本号至少包含一个字符。
@@ -47,7 +47,7 @@ public class Problem165 {
 
     /**
      * 模拟
-     * 时间复杂度O(max(m,n))，空间复杂度O(m+n)
+     * 时间复杂度O(m+n)，空间复杂度O(m+n)
      *
      * @param version1
      * @param version2
@@ -83,7 +83,7 @@ public class Problem165 {
     /**
      * 双指针
      * 每次比较version1和version2的修订号，如果不一致，则返回大小关系；如果一致，则继续往后面比较
-     * 时间复杂度O(max(m,n))，空间复杂度O(1)
+     * 时间复杂度O(m+n)，空间复杂度O(1)
      *
      * @param version1
      * @param version2
@@ -93,9 +93,10 @@ public class Problem165 {
         int i = 0;
         int j = 0;
 
-        while (i < version1.length() || j < version2.length()) {
-            //version1和version2的修订号
+        while (i < version1.length() && j < version2.length()) {
+            //version1当前的修订号
             int value1 = 0;
+            //version2当前的修订号
             int value2 = 0;
 
             while (i < version1.length() && version1.charAt(i) != '.') {
@@ -108,7 +109,7 @@ public class Problem165 {
                 j++;
             }
 
-            //比较
+            //比较当前修正号
             if (value1 > value2) {
                 return 1;
             } else if (value1 < value2) {
@@ -120,6 +121,51 @@ public class Problem165 {
             j++;
         }
 
+        while (i < version1.length()) {
+            //version1当前的修订号
+            int value1 = 0;
+            //version2当前的修订号
+            int value2 = 0;
+
+            while (i < version1.length() && version1.charAt(i) != '.') {
+                value1 = value1 * 10 + version1.charAt(i) - '0';
+                i++;
+            }
+
+            //比较当前修正号
+            if (value1 > value2) {
+                return 1;
+            } else if (value1 < value2) {
+                return -1;
+            }
+
+            //指针后移，跳过'.'
+            i++;
+        }
+
+        while (j < version2.length()) {
+            //version1当前的修订号
+            int value1 = 0;
+            //version2当前的修订号
+            int value2 = 0;
+
+            while (j < version2.length() && version2.charAt(j) != '.') {
+                value2 = value2 * 10 + version2.charAt(j) - '0';
+                j++;
+            }
+
+            //比较当前修正号
+            if (value1 > value2) {
+                return 1;
+            } else if (value1 < value2) {
+                return -1;
+            }
+
+            //指针后移，跳过'.'
+            j++;
+        }
+
+        //遍历结束，则版本号相同，返回0
         return 0;
     }
 }
