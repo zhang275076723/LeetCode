@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/29 20:16
  * @Author zsy
- * @Description 提莫攻击
+ * @Description 提莫攻击 类比Problem649
  * 在《英雄联盟》的世界中，有一个叫 “提莫” 的英雄。他的攻击可以让敌方英雄艾希（编者注：寒冰射手）进入中毒状态。
  * 当提莫攻击艾希，艾希的中毒状态正好持续 duration 秒。
  * 正式地讲，提莫在 t 发起发起攻击意味着艾希在时间区间 [t, t + duration - 1]（含 t 和 t + duration - 1）处于中毒状态。
