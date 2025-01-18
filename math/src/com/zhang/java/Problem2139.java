@@ -34,7 +34,7 @@ package com.zhang.java;
  * 递增 1 次，x = 5 。
  * 加倍 1 次，x = 10 。
  * <p>
- * 1 <= target <= 109
+ * 1 <= target <= 10^9
  * 0 <= maxDoubles <= 100
  */
 public class Problem2139 {

@@ -20,10 +20,10 @@ import java.util.Arrays;
  * 输入：encoded = [6,2,7,3], first = 4
  * 输出：[4,2,0,7,4]
  * <p>
- * 2 <= n <= 104
+ * 2 <= n <= 10^4
  * encoded.length == n - 1
- * 0 <= encoded[i] <= 105
- * 0 <= first <= 105
+ * 0 <= encoded[i] <= 10^5
+ * 0 <= first <= 10^5
  */
 public class Problem1720 {
     public static void main(String[] args) {
