@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2025/3/2 08:27
  * @Author zsy
- * @Description 最大层内元素和 类比Problem199、Problem513、Problem515、Problem637、Problem662、Problem993、Problem1302、Problem2583、Problem2641
+ * @Description 最大层内元素和 类比Problem199、Problem513、Problem515、Problem637、Problem662、Problem993、Problem1302、Problem2583、Problem2641、Problem3157
  * 给你一个二叉树的根节点 root。
  * 设根节点位于二叉树的第 1 层，而根节点的子节点位于第 2 层，依此类推。
  * 请返回层内元素之和 最大 的那几层（可能只有一层）的层号，并返回其中 最小 的那个。
@@ -77,9 +77,9 @@ public class Problem1161 {
         }
 
         //最大层内元素和
-        int maxSum = Integer.MIN_VALUE;
+        int maxSum = root.val;
         //最大层内元素和的层数，当存在多个相等的最大层内元素和，则取最小的层数
-        int index = 0;
+        int index = 1;
         //bfs当前遍历到的层数
         int level = 1;
         Queue<TreeNode> queue = new LinkedList<>();

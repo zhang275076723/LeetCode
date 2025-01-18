@@ -3,37 +3,31 @@ package com.zhang.java;
 import java.util.*;
 
 /**
- * @Date 2024/1/28 08:13
+ * @Date 2025/3/7 08:52
  * @Author zsy
- * @Description 层数最深叶子节点的和 类比Problem199、Problem513、Problem515、Problem637、Problem662、Problem993、Problem1161、Problem2583、Problem2641、Problem3157
- * 给你一棵二叉树的根节点 root ，请你返回 层数最深的叶子节点的和 。
+ * @Description 找到具有最小和的树的层数 类比Problem199、Problem513、Problem515、Problem637、Problem662、Problem993、Problem1161、Problem1302、Problem2583、Problem2641
+ * 给定一棵二叉树的根 root，其中每个节点有一个值，返回树中 层和最小 的层数（如果相等，返回 最低 的层数）。
+ * 注意 树的根节点在第一层，其它任何节点的层数是它到根节点的距离+1。
  * <p>
- * 输入：root = [1,2,3,4,5,null,6,7,null,null,null,null,8]
- * 输出：15
+ * 输入：root = [50,6,2,30,80,7]
+ * 输出：2
  * <p>
- * 输入：root = [6,7,8,2,7,1,3,9,null,1,4,null,null,null,5]
- * 输出：19
+ * 输入：root = [36,17,10,null,null,24]
+ * 输出：3
  * <p>
- * 树中节点数目在范围 [1, 10^4] 之间。
- * 1 <= Node.val <= 100
+ * 输入：root = [5,null,5,null,5]
+ * 输出：1
+ * <p>
+ * 树中节点数量的范围是 [1, 10^5]。
+ * 1 <= Node.val <= 10^9
  */
-public class Problem1302 {
-    /**
-     * dfs最大层节点之和
-     */
-    private int sum = 0;
-
-    /**
-     * dfs最大层数，初始化为-1，表示空树
-     */
-    private int maxLevel = -1;
-
+public class Problem3157 {
     public static void main(String[] args) {
-        Problem1302 problem1302 = new Problem1302();
-        String[] data = {"1", "2", "3", "4", "5", "null", "6", "7", "null", "null", "null", "null", "8"};
-        TreeNode root = problem1302.buildTree(data);
-        System.out.println(problem1302.deepestLeavesSum(root));
-        System.out.println(problem1302.deepestLeavesSum2(root));
+        Problem3157 problem3157 = new Problem3157();
+        String[] data = {"50", "6", "2", "30", "80", "7"};
+        TreeNode root = problem3157.buildTree(data);
+        System.out.println(problem3157.minimumLevel(root));
+        System.out.println(problem3157.minimumLevel2(root));
     }
 
     /**
@@ -43,15 +37,28 @@ public class Problem1302 {
      * @param root
      * @return
      */
-    public int deepestLeavesSum(TreeNode root) {
+    public int minimumLevel(TreeNode root) {
         if (root == null) {
             return 0;
         }
 
-        //根节点为第0层
-        dfs(root, 0);
+        //存储每层元素和的集合
+        List<Integer> list = new ArrayList<>();
 
-        return sum;
+        //根节点为第0层
+        dfs(root, 0, list);
+
+        //最小层内元素和的层数，当存在多个相等的最小层内元素和，则取最小的层数
+        int index = 0;
+
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i) < list.get(index)) {
+                index = i;
+            }
+        }
+
+        //层数从1开始
+        return index + 1;
     }
 
     /**
@@ -61,18 +68,23 @@ public class Problem1302 {
      * @param root
      * @return
      */
-    public int deepestLeavesSum2(TreeNode root) {
+    public int minimumLevel2(TreeNode root) {
         if (root == null) {
             return 0;
         }
 
-        int sum = 0;
+        //最小层内元素和
+        int minSum = root.val;
+        //最小层内元素和的层数，当存在多个相等的最小层内元素和，则取最小的层数
+        int index = 1;
+        //bfs当前遍历到的层数
+        int level = 1;
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
 
         while (!queue.isEmpty()) {
             int size = queue.size();
-            //当前层节点之和
+            //当前层元素和
             int curSum = 0;
 
             for (int i = 0; i < size; i++) {
@@ -87,28 +99,30 @@ public class Problem1302 {
                 }
             }
 
-            sum = curSum;
+            if (curSum < minSum) {
+                index = level;
+                minSum = curSum;
+            }
+
+            level++;
         }
 
-        return sum;
+        return index;
     }
 
-    private void dfs(TreeNode node, int level) {
+    private void dfs(TreeNode node, int level, List<Integer> list) {
         if (node == null) {
             return;
         }
 
-        //当前层大于最大层，更新dfs的最大层数，计算最大层节点之和
-        if (level > maxLevel) {
-            sum = node.val;
-            maxLevel = level;
-        } else if (level == maxLevel) {
-            //当前层等于最大层，计算最大层节点之和
-            sum = sum + node.val;
+        if (level == list.size()) {
+            list.add(node.val);
+        } else {
+            list.set(level, list.get(level) + node.val);
         }
 
-        dfs(node.left, level + 1);
-        dfs(node.right, level + 1);
+        dfs(node.left, level + 1, list);
+        dfs(node.right, level + 1, list);
     }
 
     private TreeNode buildTree(String[] data) {
