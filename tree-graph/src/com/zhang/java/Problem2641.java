@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2025/3/5 08:50
  * @Author zsy
- * @Description 二叉树的堂兄弟节点 II 类比Problem993 类比Problem199、Problem513、Problem515、Problem637、Problem662、Problem993、Problem1161、Problem1302
+ * @Description 二叉树的堂兄弟节点 II 类比Problem993 类比Problem199、Problem513、Problem515、Problem637、Problem662、Problem993、Problem1161、Problem1302、Problem2583
  * 给你一棵二叉树的根 root ，请你将每个节点的值替换成该节点的所有 堂兄弟节点值的和 。
  * 如果两个节点在树中有相同的深度且它们的父节点不同，那么它们互为 堂兄弟 。
  * 请你返回修改值之后，树的根 root 。

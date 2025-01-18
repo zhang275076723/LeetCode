@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/7/4 8:12
  * @Author zsy
- * @Description 二叉树最大宽度 字节面试题 类比Problem199、Problem513、Problem515、Problem637、Problem993、Problem1161、Problem1302、Problem2641
+ * @Description 二叉树最大宽度 字节面试题 类比Problem199、Problem513、Problem515、Problem637、Problem993、Problem1161、Problem1302、Problem2583、Problem2641
  * 给定一个二叉树，编写一个函数来获取这个树的最大宽度。
  * 树的宽度是所有层中的最大宽度。
  * 这个二叉树与满二叉树（full binary tree）结构相同，但一些节点为空。

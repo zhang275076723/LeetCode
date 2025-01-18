@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2025/3/4 08:00
  * @Author zsy
- * @Description 二叉树的堂兄弟节点 类比Problem2641 类比Problem199、Problem513、Problem515、Problem637、Problem662、Problem1161、Problem1302、Problem2641
+ * @Description 二叉树的堂兄弟节点 类比Problem2641 类比Problem199、Problem513、Problem515、Problem637、Problem662、Problem1161、Problem1302、Problem2583、Problem2641
  * 在二叉树中，根节点位于深度 0 处，每个深度为 k 的节点的子节点位于深度 k+1 处。
  * 如果二叉树的两个节点深度相同，但 父节点不同 ，则它们是一对堂兄弟节点。
  * 我们给出了具有唯一值的二叉树的根节点 root ，以及树中两个不同节点的值 x 和 y 。

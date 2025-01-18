@@ -3,96 +3,106 @@ package com.zhang.java;
 import java.util.*;
 
 /**
- * @Date 2025/3/2 08:27
+ * @Date 2025/3/6 08:03
  * @Author zsy
- * @Description 最大层内元素和 类比Problem199、Problem513、Problem515、Problem637、Problem662、Problem993、Problem1302、Problem2583、Problem2641
- * 给你一个二叉树的根节点 root。
- * 设根节点位于二叉树的第 1 层，而根节点的子节点位于第 2 层，依此类推。
- * 请返回层内元素之和 最大 的那几层（可能只有一层）的层号，并返回其中 最小 的那个。
+ * @Description 二叉树中的第 K 大层和 类比Problem199、Problem513、Problem515、Problem637、Problem662、Problem993、Problem1161、Problem1302、Problem2641
+ * 给你一棵二叉树的根节点 root 和一个正整数 k 。
+ * 树中的 层和 是指 同一层 上节点值的总和。
+ * 返回树中第 k 大的层和（不一定不同）。
+ * 如果树少于 k 层，则返回 -1 。
+ * 注意，如果两个节点与根节点的距离相同，则认为它们在同一层。
  * <p>
- * 输入：root = [1,7,0,7,-8,null,null]
- * 输出：2
- * 解释：
- * 第 1 层各元素之和为 1，
- * 第 2 层各元素之和为 7 + 0 = 7，
- * 第 3 层各元素之和为 7 + -8 = -1，
- * 所以我们返回第 2 层的层号，它的层内元素之和最大。
+ * 输入：root = [5,8,9,2,1,3,7,4,6], k = 2
+ * 输出：13
+ * 解释：树中每一层的层和分别是：
+ * - Level 1: 5
+ * - Level 2: 8 + 9 = 17
+ * - Level 3: 2 + 1 + 3 + 7 = 13
+ * - Level 4: 4 + 6 = 10
+ * 第 2 大的层和等于 13 。
  * <p>
- * 输入：root = [989,null,10250,98693,-89388,null,null,null,-32127]
- * 输出：2
+ * 输入：root = [1,2,null,3], k = 1
+ * 输出：3
+ * 解释：最大的层和是 3 。
  * <p>
- * 树中的节点数在 [1, 10^4]范围内
- * -10^5 <= Node.val <= 10^5
+ * 树中的节点数为 n
+ * 2 <= n <= 10^5
+ * 1 <= Node.val <= 10^6
+ * 1 <= k <= n
  */
-public class Problem1161 {
+public class Problem2583 {
     public static void main(String[] args) {
-        Problem1161 problem1161 = new Problem1161();
-        String[] data = {"1", "7", "0", "7", "-8", "null", "null"};
-        TreeNode root = problem1161.buildTree(data);
-        System.out.println(problem1161.maxLevelSum(root));
-        System.out.println(problem1161.maxLevelSum2(root));
+        Problem2583 problem2583 = new Problem2583();
+//        String[] data = {"5", "8", "9", "2", "1", "3", "7", "4", "6"};
+//        int k = 2;
+        String[] data = { "3", "2", "1"};
+        int k = 2;
+        TreeNode root = problem2583.buildTree(data);
+        System.out.println(problem2583.kthLargestLevelSum(root, k));
+        System.out.println(problem2583.kthLargestLevelSum2(root, k));
     }
 
     /**
      * dfs
-     * 时间复杂度O(n)，空间复杂度O(n)
+     * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
      * @param root
+     * @param k
      * @return
      */
-    public int maxLevelSum(TreeNode root) {
+    public long kthLargestLevelSum(TreeNode root, int k) {
+        if (root == null) {
+            return -1;
+        }
+
+        //存储每层元素和的集合
+        List<Long> list = new ArrayList<>();
+
+        //根节点为第0层
+        dfs(root, 0, list);
+
+        //不存在第k大层元素和，返回-1
+        if (k > list.size()) {
+            return -1;
+        }
+
+        //由小到大排序
+        list.sort(new Comparator<Long>() {
+            @Override
+            public int compare(Long a, Long b) {
+                return Long.compare(a, b);
+            }
+        });
+
+        return list.get(list.size() - k);
+    }
+
+    /**
+     * bfs
+     * 时间复杂度O(nlogn)，空间复杂度O(n)
+     *
+     * @param root
+     * @param k
+     * @return
+     */
+    public long kthLargestLevelSum2(TreeNode root, int k) {
         if (root == null) {
             return 0;
         }
 
         //存储每层元素和的集合
-        List<Integer> list = new ArrayList<>();
-
-        //根节点为第0层
-        dfs(root, 0, list);
-
-        //最大层内元素和的层数，当存在多个相等的最大层内元素和，则取最小的层数
-        int index = 0;
-
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i) > list.get(index)) {
-                index = i;
-            }
-        }
-
-        //层数从1开始
-        return index + 1;
-    }
-
-    /**
-     * bfs
-     * 时间复杂度O(n)，空间复杂度O(n)
-     *
-     * @param root
-     * @return
-     */
-    public int maxLevelSum2(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-
-        //最大层内元素和
-        int maxSum = Integer.MIN_VALUE;
-        //最大层内元素和的层数，当存在多个相等的最大层内元素和，则取最小的层数
-        int index = 0;
-        //bfs当前遍历到的层数
-        int level = 1;
+        List<Long> list = new ArrayList<>();
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
 
         while (!queue.isEmpty()) {
             int size = queue.size();
             //当前层元素和
-            int curSum = 0;
+            long sum = 0;
 
             for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
-                curSum = curSum + node.val;
+                sum = sum + node.val;
 
                 if (node.left != null) {
                     queue.offer(node.left);
@@ -102,27 +112,33 @@ public class Problem1161 {
                 }
             }
 
-            if (curSum > maxSum) {
-                index = level;
-                maxSum = curSum;
-            }
-
-            level++;
+            list.add(sum);
         }
 
-        return index;
+        //不存在第k大层元素和，返回-1
+        if (k > list.size()) {
+            return -1;
+        }
+
+        //由小到大排序
+        list.sort(new Comparator<Long>() {
+            @Override
+            public int compare(Long a, Long b) {
+                return Long.compare(a, b);
+            }
+        });
+
+        return list.get(list.size() - k);
     }
 
-    private void dfs(TreeNode node, int level, List<Integer> list) {
+    private void dfs(TreeNode node, int level, List<Long> list) {
         if (node == null) {
             return;
         }
 
-        //当前节点是第level层第一个元素
         if (level == list.size()) {
-            list.add(node.val);
+            list.add((long) node.val);
         } else {
-            //当前节点不是第level层第一个元素
             list.set(level, list.get(level) + node.val);
         }
 
