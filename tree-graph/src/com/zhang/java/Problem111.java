@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/9/13 15:44
  * @Author zsy
- * @Description 二叉树的最小深度 类比Problem559 dfs类比Problem104、Problem110、Problem124、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem1373、Problem2246、Problem2378
+ * @Description 二叉树的最小深度 类比Problem104、Problem110、Problem111、Problem559
  * 给定一个二叉树，找出其最小深度。
  * 最小深度是从根节点到最近叶子节点的最短路径上的节点数量。
  * 说明：叶子节点是指没有子节点的节点。
@@ -93,24 +93,24 @@ public class Problem111 {
             for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
 
-                if (node == null) {
-                    continue;
-                }
-
                 //当前节点左右子树都为空，即找到叶节点，即为最小深度
                 if (node.left == null && node.right == null) {
                     return minDepth;
                 }
 
-                queue.offer(node.left);
-                queue.offer(node.right);
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
             }
 
             minDepth++;
         }
 
-        //dfs节点，没有找到树的最小深度，返回0
-        return 0;
+        //bfs结束，没有找到树的最小深度，返回-1
+        return -1;
     }
 
     private TreeNode buildTree(String[] data) {

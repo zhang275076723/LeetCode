@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/3 9:03
  * @Author zsy
- * @Description 二叉树中的最大路径和 字节面试题 dfs类比Problem104、Problem110、Problem111、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem1373、Problem2246、Problem2378
+ * @Description 二叉树中的最大路径和 字节面试题 dfs类比Problem298、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem1372、Problem1373、Problem2246、Problem2378
  * 路径 被定义为一条从树中任意节点出发，沿父节点-子节点连接，达到任意节点的序列。
  * 同一个节点在一条路径序列中 至多出现一次 。
  * 该路径 至少包含一个 节点，且不一定经过根节点。
@@ -25,7 +25,7 @@ import java.util.*;
  */
 public class Problem124 {
     /**
-     * 二叉树中的最大路径和
+     * 二叉树的最大路径和
      */
     private int max = Integer.MIN_VALUE;
 
@@ -38,8 +38,8 @@ public class Problem124 {
 
     /**
      * dfs
-     * 计算当前节点左右子节点作为路径起点的最大单侧路径和，更新最大路径和，
-     * 返回当前节点对父节点的最大单侧路径和，用于计算以当前节点父节点作为路径起点的最大路径和
+     * 计算当前节点左右子节点作为路径起点的最大单侧路径和，更新二叉树的最大路径和，
+     * 返回当前节点对父节点的最大单侧路径和，用于计算当前节点父节点作为路径起点的最大路径和
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -56,7 +56,7 @@ public class Problem124 {
     }
 
     /**
-     * 返回以root作为路径起点的最大单侧路径和
+     * 返回root作为路径起点的最大单侧路径和
      *
      * @param root
      * @return
@@ -73,10 +73,10 @@ public class Problem124 {
         //注意：因为节点值存在负数，所以最大路径和至少为0，即不选当前路径
         int rightMax = Math.max(dfs(root.right), 0);
 
-        //更新最大路径和
+        //更新二叉树的最大路径和
         max = Math.max(max, root.val + leftMax + rightMax);
 
-        //返回当前节点对父节点的最大单侧路径和，用于计算以当前节点父节点作为路径起点的最大路径和
+        //返回当前节点对父节点的最大单侧路径和，用于计算当前节点父节点作为路径起点的最大路径和
         return Math.max(leftMax, rightMax) + root.val;
     }
 

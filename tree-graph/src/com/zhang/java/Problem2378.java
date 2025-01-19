@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2025/1/29 08:16
  * @Author zsy
- * @Description 选择边来最大化树的得分 类比Problem337、Problem968、Problem979、Problem1373 dfs类比Problem104、Problem110、Problem111、Problem124、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem1373、Problem2246
+ * @Description 选择边来最大化树的得分 dfs类比Problem124、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem1372、Problem1373、Problem2246
  * 给定一个 加权 树，由 n 个节点组成，从 0 到 n - 1。
  * 该树以节点 0 为 根，用大小为 n 的二维数组 edges 表示，
  * 其中 edges[i] = [pari, weighti] 表示节点 pari 是节点 i 的 父 节点，它们之间的边的权重等于 weighti。
