@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/5/30 15:53
  * @Author zsy
- * @Description 打家劫舍 III 类比Problem486、Problem877 类比Problem198、Problem213、Problem2560 dfs类比Problem124、Problem298、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem1372、Problem1373、Problem2246、Problem2378
+ * @Description 打家劫舍 III 类比Problem486、Problem877 类比Problem198、Problem213、Problem2560 dfs类比Problem124、Problem250、Problem298、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem1372、Problem1373、Problem2246、Problem2378
  * 小偷又发现了一个新的可行窃的地区。这个地区只有一个入口，我们称之为 root 。
  * 除了 root 之外，每栋房子有且只有一个“父“房子与之相连。
  * 一番侦察之后，聪明的小偷意识到“这个地方的所有房屋的排列类似于一棵二叉树”。
@@ -33,9 +33,10 @@ public class Problem337 {
 
     /**
      * dfs
-     * 得到根节点能够盗取的最高金额数组，选或不选根节点能够盗取的最高金额中的较大值，即为能够盗取的最高金额
-     * arr[0]：不选当前节点能够够盗取的最高金额
-     * arr[1]：选当前节点能够够盗取的最高金额
+     * arr[0]：当前节点作为根节点，不选当前节点能够盗取的最高金额
+     * arr[1]：当前节点作为根节点，选当前节点能够盗取的最高金额
+     * 计算当前节点左右子节点作为根节点能够盗取的最高金额数组，max(arr[0],arr[1])即为当前节点作为根节点能够盗取的最高金额，
+     * 返回当前节点作为根节点能够盗取的最高金额数组，用于计算当前节点父节点作为根节点能够盗取的最高金额数组
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -48,14 +49,14 @@ public class Problem337 {
 
         int[] arr = dfs(root);
 
-        //选或不选当前节点能够盗取的最高金额中的较大值，即为所能盗窃的最高金额
+        //选或不选根节点能够盗取的最高金额中的较大值，即为能够盗取的最高金额
         return Math.max(arr[0], arr[1]);
     }
 
     /**
      * 返回当前节点作为根节点能够盗取的最高金额数组
-     * arr[0]：不选当前节点能够够盗取的最高金额
-     * arr[1]：选当前节点能够够盗取的最高金额
+     * arr[0]：当前节点作为根节点，不选当前节点能够盗取的最高金额
+     * arr[1]：当前节点作为根节点，选当前节点能够盗取的最高金额
      *
      * @param root
      * @return

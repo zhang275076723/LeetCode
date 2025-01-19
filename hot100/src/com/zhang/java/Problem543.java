@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/12 9:43
  * @Author zsy
- * @Description 二叉树的直径 类比Problem1245、Problem2246 dfs类比Problem124、Problem298、Problem337、Problem687、Problem968、Problem979、Problem1245、Problem1372、Problem1373、Problem2246、Problem2378
+ * @Description 二叉树的直径 类比Problem1245、Problem2246 dfs类比Problem124、Problem250、Problem298、Problem337、Problem687、Problem968、Problem979、Problem1245、Problem1372、Problem1373、Problem2246、Problem2378
  * 给你一棵二叉树的根节点，返回该树的 直径 。
  * 二叉树的 直径 是指树中任意两个节点之间最长路径的 长度 。
  * 这条路径可能经过也可能不经过根节点 root 。
@@ -36,8 +36,8 @@ public class Problem543 {
 
     /**
      * dfs
-     * 计算当前节点左右子节点作为路径起点的最大单侧路径长度，更新二叉树的直径，
-     * 返回当前节点对父节点的最大单侧路径长度，用于计算以当前节点父节点作为根节点的二叉树的直径
+     * 计算当前节点左右子节点作为根节点的最大单侧路径长度，更新二叉树的直径，
+     * 返回当前节点对父节点的最大单侧路径长度，用于计算当前节点父节点作为根节点的最大单侧路径长度
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -54,26 +54,31 @@ public class Problem543 {
     }
 
     /**
-     * 返回以root作为路径起点的最大单侧路径长度
+     * 返回root作为根节点的最大单侧路径长度
      *
      * @param root
      * @return
      */
     private int dfs(TreeNode root) {
+        //路径长度为节点的边数，则空节点返回-1
         if (root == null) {
-            return 0;
+            return -1;
         }
 
-        //当前节点左子节点作为路径起点的最大单侧路径长度
+        //当前节点左子节点作为根节点的最大单侧路径长度
         int leftMax = dfs(root.left);
-        //当前节点右子节点作为路径起点的最大单侧路径长度
+        //当前节点右子节点作为根节点的最大单侧路径长度
         int rightMax = dfs(root.right);
+        //root作为根节点向左子树的最大单侧路径长度
+        int max1 = leftMax + 1;
+        //root作为根节点向右子树的最大单侧路径长度
+        int max2 = rightMax + 1;
 
         //更新二叉树的直径
-        diameter = Math.max(diameter, leftMax + rightMax);
+        diameter = Math.max(diameter, max1 + max2);
 
-        //返回当前节点对父节点的最大单侧路径长度，用于计算以当前节点父节点作为根节点的二叉树的直径
-        return Math.max(leftMax, rightMax) + 1;
+        //返回当前节点对父节点的最大单侧路径长度，用于计算当前节点父节点作为根节点的最大单侧路径长度
+        return Math.max(max1, max2);
     }
 
     private TreeNode buildTree(String[] data) {
