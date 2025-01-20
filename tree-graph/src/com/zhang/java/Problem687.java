@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/2/21 09:23
  * @Author zsy
- * @Description 最长同值路径 类比Problem298 dfs类比Problem124、Problem298、Problem337、Problem543、Problem968、Problem979、Problem1245、Problem1372、Problem1373、Problem2246、Problem2378
+ * @Description 最长同值路径 类比Problem298 dfs类比Problem124、Problem250、Problem298、Problem337、Problem543、Problem968、Problem979、Problem1245、Problem1372、Problem1373、Problem2246、Problem2378
  * 给定一个二叉树的 root ，返回 最长的路径的长度 ，这个路径中的 每个节点具有相同值 。
  * 这条路径可以经过也可以不经过根节点。
  * 两个节点之间的路径长度 由它们之间的边数表示。
@@ -35,8 +35,8 @@ public class Problem687 {
 
     /**
      * dfs
-     * 计算当前节点左右子节点作为路径起点的最长同值路径长度，更新二叉树的最长同值路径长度，
-     * 返回当前节点对父节点的最长同值路径长度，用于计算以当前节点父节点作为根节点的最长同值路径长度
+     * 计算当前节点左右子节点作为根节点的包含根节点的最长单侧同值路径长度，更新二叉树的最长同值路径长度，
+     * 返回当前节点对父节点的包含根节点的最长单侧同值路径长度，用于计算当前节点父节点作为根节点的包含根节点的最长单侧同值路径长度
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -53,37 +53,42 @@ public class Problem687 {
     }
 
     /**
-     * 返回以root作为路径起点的最长同值路径长度
+     * 返回root作为根节点的包含根节点的最长单侧同值路径长度
      *
      * @param root
      * @return
      */
     private int dfs(TreeNode root) {
+        //路径长度为节点的边数，则空节点返回-1
         if (root == null) {
-            return 0;
+            return -1;
         }
 
-        //当前节点左子节点作为路径起点的最长同值路径长度
+        //当前节点左子节点作为根节点的包含根节点的最长单侧同值路径长度
         int leftMax = dfs(root.left);
-        //当前节点右子节点作为路径起点的最长同值路径长度
+        //当前节点右子节点作为根节点的包含根节点的最长单侧同值路径长度
         int rightMax = dfs(root.right);
-        //root作为路径起点向左子树的最长同值路径长度
-        int max1 = 0;
-        //root作为路径起点向右子树的最长同值路径长度
-        int max2 = 0;
+        //root作为根节点向左子树的包含根节点的最长单侧同值路径长度
+        int max1;
+        //root作为根节点向右子树的包含根节点的最长单侧同值路径长度
+        int max2;
 
         if (root.left != null && root.left.val == root.val) {
             max1 = leftMax + 1;
+        } else {
+            max1 = 0;
         }
 
         if (root.right != null && root.right.val == root.val) {
             max2 = rightMax + 1;
+        } else {
+            max2 = 0;
         }
 
         //更新二叉树的最长同值路径长度
         max = Math.max(max, max1 + max2);
 
-        //返回当前节点对父节点的最长同值路径长度，用于计算以当前节点父节点作为根节点的最长同值路径长度
+        //返回当前节点对父节点的包含根节点的最长单侧同值路径长度，用于计算当前节点父节点作为根节点的包含根节点的最长单侧同值路径长度
         return Math.max(max1, max2);
     }
 

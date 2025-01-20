@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2025/3/3 08:11
  * @Author zsy
- * @Description 二叉树中的最长交错路径 dfs类比Problem124、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem1373、Problem2246、Problem2378
+ * @Description 二叉树中的最长交错路径 dfs类比Problem124、Problem250、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem1373、Problem2246、Problem2378
  * 给你一棵以 root 为根的二叉树，二叉树中的交错路径定义如下：
  * 选择二叉树中 任意 节点和一个方向（左或者右）。
  * 如果前进方向为右，那么移动到当前节点的的右子节点，否则移动到它的左子节点。
@@ -38,13 +38,14 @@ public class Problem1372 {
         Problem1372 problem1372 = new Problem1372();
         String[] data = {"1", "null", "1", "1", "1", "null", "null", "1", "1", "null", "1",
                 "null", "null", "null", "1", "null", "1"};
+//        String[] data = {"1", "2", "3", "null", "4", "null", "null", "5", "6", "null", "7"};
         TreeNode root = problem1372.buildTree(data);
         System.out.println(problem1372.longestZigZag(root));
     }
 
     /**
      * dfs
-     * 计算当前节点左右子节点作为根节点向左右子树移动得到的最长交错路径，更新二叉树的最长交错路径，
+     * 计算当前节点父节点向左子节点或右子节点移动到当前节点，当前节点作为根节点得到的最长交错路径，更新二叉树的最长交错路径，
      * 返回当前节点对父节点的最长交错路径，用于计算当前节点父节点作为根节点的最长交错路径
      * 时间复杂度O(n)，空间复杂度O(n)
      *
@@ -63,31 +64,36 @@ public class Problem1372 {
     }
 
     /**
-     * 当前节点作为根节点是否向左子树移动得到的最长交错路径
+     * 返回root的父节点向左子节点或右子节点移动到root，root作为根节点得到的最长交错路径
      *
-     * @param node
+     * @param root
      * @param isLeft
      * @return
      */
-    private int dfs(TreeNode node, boolean isLeft) {
-        if (node == null) {
-            return 0;
+    private int dfs(TreeNode root, boolean isLeft) {
+        //路径长度为节点的边数，则空节点返回-1
+        if (root == null) {
+            return -1;
         }
 
-        //当前节点作为根节点向左子树移动得到的最长交错路径
-        int leftMax = dfs(node.left, true);
-        //当前节点作为根节点向右子树移动得到的最长交错路径
-        int rightMax = dfs(node.right, false);
+        //当前节点向左子节点移动，左子节点作为根节点得到的最长交错路径
+        int leftMax = dfs(root.left, true);
+        //当前节点向右子节点移动，右子节点作为根节点得到的最长交错路径
+        int rightMax = dfs(root.right, false);
+        //root作为根节点向左子节点移动得到的最大单侧路径长度
+        int max1 = leftMax + 1;
+        //root作为根节点向右子节点移动得到的最大单侧路径长度
+        int max2 = rightMax + 1;
 
         //更新二叉树的最长交错路径
-        max = Math.max(max, Math.max(leftMax, rightMax));
+        max = Math.max(max, Math.max(max1, max2));
 
         //当前节点的父节点向左子树移动到当前节点，则当前节点只能向右子树移动
         if (isLeft) {
-            return rightMax + 1;
+            return max2;
         } else {
             //当前节点的父节点向右子树移动到当前节点，则当前节点只能向左子树移动
-            return leftMax + 1;
+            return max1;
         }
     }
 

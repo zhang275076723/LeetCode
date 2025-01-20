@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/2/3 08:04
  * @Author zsy
- * @Description 在二叉树中分配硬币 dfs类比Problem124、Problem298、Problem337、Problem543、Problem687、Problem968、Problem1245、Problem1372、Problem1373、Problem2246、Problem2378
+ * @Description 在二叉树中分配硬币 dfs类比Problem124、Problem250、Problem298、Problem337、Problem543、Problem687、Problem968、Problem1245、Problem1372、Problem1373、Problem2246、Problem2378
  * 给你一个有 n 个结点的二叉树的根结点 root ，其中树中每个结点 node 都对应有 node.val 枚硬币。
  * 整棵树上一共有 n 枚硬币。
  * 在一次移动中，我们可以选择两个相邻的结点，然后将一枚硬币从其中一个结点移动到另一个结点。
@@ -40,9 +40,9 @@ public class Problem979 {
 
     /**
      * dfs
-     * 当前节点作为根节点的树中硬币个数和节点个数的差值，即为当前节点和父节点的边需要的最少移动次数
      * arr[0]：当前节点作为根节点的树中硬币的个数
      * arr[1]：当前节点作为根节点的树中节点的个数
+     * 当前节点作为根节点的树中硬币个数和节点个数的差值，即为当前节点和父节点的边需要的最少移动次数
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -59,7 +59,7 @@ public class Problem979 {
     }
 
     /**
-     * 返回当前节点作为根节点的树中硬币的个数和节点的个数
+     * 返回当前节点作为根节点的树中硬币的个数和节点的个数数组
      * arr[0]：当前节点作为根节点的树中硬币的个数
      * arr[1]：当前节点作为根节点的树中节点的个数
      * 时间复杂度O(n)，空间复杂度O(n)
@@ -72,18 +72,19 @@ public class Problem979 {
             return new int[]{0, 0};
         }
 
-        //root左子树数组
+        //当前节点左子节点作为根节点的树中硬币的个数和节点的个数数组
         int[] leftArr = dfs(root.left);
-        //root右子树数组
+        //当前节点右子节点作为根节点的树中硬币的个数和节点的个数数组
         int[] rightArr = dfs(root.right);
 
-        //以root为根节点的树中硬币的个数
+        //当前节点作为根节点的树中硬币的个数
         int coinCount = leftArr[0] + rightArr[0] + root.val;
-        //以root为根节点的树中节点的个数
+        //当前节点作为根节点的树中节点的个数
         int nodeCount = leftArr[1] + rightArr[1] + 1;
         //root和父节点的边需要的最少移动次数
         result = result + Math.abs(coinCount - nodeCount);
 
+        //返回当前节点作为根节点的树中硬币的个数和节点的个数数组
         return new int[]{coinCount, nodeCount};
     }
 

@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2024/1/30 08:35
  * @Author zsy
- * @Description 树的直径 类比Problem543、Problem2246 类比Problem310、Problem2603 dfs类比Problem124、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1372、Problem1373、Problem2246、Problem2378 拓扑排序类比
+ * @Description 树的直径 类比Problem543、Problem2246 类比Problem310、Problem2603 dfs类比Problem124、Problem250、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1372、Problem1373、Problem2246、Problem2378 拓扑排序类比
  * 给你这棵「无向树」，请你测算并返回它的「直径」：这棵树上最长简单路径的 边数。
  * 我们用一个由所有「边」组成的数组 edges 来表示一棵无向树，其中 edges[i] = [u, v] 表示节点 u 和 v 之间的双向边。
  * 树上的节点都已经用 {0, 1, ..., edges.length} 中的数做了标记，每个节点上的标记都是独一无二的。
@@ -126,9 +126,9 @@ public class Problem1245 {
     }
 
     /**
-     * dfs
-     * 计算当前节点子节点作为路径起点的最大单侧路径长度，更新树的直径，
-     * 返回当前节点对父节点的最大单侧路径长度，用于计算以当前节点父节点作为根节点的树的直径
+     * dfs(同543题)
+     * 计算当前节点子节点作为根节点的最大单侧路径长度，更新树的直径，
+     * 返回当前节点对父节点的最大单侧路径长度，用于计算当前节点父节点作为根节点的最大单侧路径长度
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param edges
@@ -282,26 +282,36 @@ public class Problem1245 {
         }
     }
 
+    /**
+     * 返回root作为根节点的最大单侧路径长度
+     *
+     * @param u
+     * @param graph
+     * @param visited
+     * @return
+     */
     private int dfs2(int u, List<List<Integer>> graph, boolean[] visited) {
+        //路径长度为节点的边数，则访问过的节点返回-1
         if (visited[u]) {
-            return 0;
+            return -1;
         }
 
         visited[u] = true;
 
-        //节点v对父节点u的最大单侧路径长度
-        int maxVLen = 0;
+        //节点u作为根节点的最大单侧路径长度
+        int uLen = 0;
 
         for (int v : graph.get(u)) {
-            //节点v对父节点u的单侧路径长度
+            //子节点v作为根节点的最大单侧路径长度
+            //vLen+1：节点u作为根节点向子节点v的最大单侧路径长度
             int vLen = dfs2(v, graph, visited);
             //更新树的直径
-            diameter2 = Math.max(diameter2, maxVLen + vLen);
-            //更新maxVLen
-            maxVLen = Math.max(maxVLen, vLen);
+            diameter2 = Math.max(diameter2, uLen + vLen + 1);
+            //更新uLen
+            uLen = Math.max(uLen, vLen + 1);
         }
 
-        //返回当前节点u对父节点的最大单侧路径长度，用于计算以当前节点父节点作为根节点的树的直径
-        return maxVLen + 1;
+        //返回当前节点对父节点的最大单侧路径长度，用于计算当前节点父节点作为根节点的最大单侧路径长度
+        return uLen;
     }
 }

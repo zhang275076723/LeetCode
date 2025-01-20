@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2025/1/29 08:16
  * @Author zsy
- * @Description 选择边来最大化树的得分 dfs类比Problem124、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem1372、Problem1373、Problem2246
+ * @Description 选择边来最大化树的得分 dfs类比Problem124、Problem250、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem1372、Problem1373、Problem2246
  * 给定一个 加权 树，由 n 个节点组成，从 0 到 n - 1。
  * 该树以节点 0 为 根，用大小为 n 的二维数组 edges 表示，
  * 其中 edges[i] = [pari, weighti] 表示节点 pari 是节点 i 的 父 节点，它们之间的边的权重等于 weighti。
@@ -41,15 +41,17 @@ import java.util.List;
 public class Problem2378 {
     public static void main(String[] args) {
         Problem2378 problem2378 = new Problem2378();
-        int[][] edges = {{-1, -1}, {0, 5}, {0, 10}, {2, 6}, {2, 4}};
+//        int[][] edges = {{-1, -1}, {0, 5}, {0, 10}, {2, 6}, {2, 4}};
+        int[][] edges = {{-1, -1}, {0, 5}, {0, -6}, {0, 7}};
         System.out.println(problem2378.maxScore(edges));
     }
 
     /**
      * dfs
-     * 得到根节点所选的两条边都不相邻的最大权值和数组，不选根节点和父节点的边的最大权值和，即为树的所选的两条边都不相邻的最大权值和
-     * arr[0]：不选当前节点和父节点的边，使所选的两条边都不相邻的最大权值和
-     * arr[1]：选当前节点和父节点的边，使所选的两条边都不相邻的最大权值和
+     * arr[0]：当前节点作为根节点的树中，不选当前节点和子节点的边，得到的最大不相邻权值和
+     * arr[1]：当前节点作为根节点的树中，选当前节点和子节点的边，得到的最大不相邻权值和
+     * 计算当前节点左右子节点作为根节点的最大不相邻权值和数组，max(arr[0],arr[1])即为当前节点作为根节点的最大不相邻权值和，
+     * 返回当前节点作为根节点的最大不相邻权值和数组，用于计算当前节点父节点作为根节点的最大不相邻权值和数组
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param edges
@@ -75,35 +77,43 @@ public class Problem2378 {
         //使用long，避免int溢出
         long[] arr = dfs(0, graph);
 
-        //根节点没有父节点，所以不选根节点和父节点的边的最大权值和，即为树的所选的两条边都不相邻的最大权值和
-        return arr[0];
+        //选或不选根节点和子节点的边，得到的最大不相邻权值和中的较大值，即为树的最大不相邻权值和
+        return Math.max(arr[0], arr[1]);
     }
 
+    /**
+     * 返回当前节点作为根节点的最大不相邻权值和数组
+     * arr[0]：当前节点作为根节点的树中，不选当前节点和子节点的边，得到的最大不相邻权值和
+     * arr[1]：当前节点作为根节点的树中，选当前节点和子节点的边，得到的最大不相邻权值和
+     *
+     * @param u
+     * @param graph
+     * @return
+     */
     private long[] dfs(int u, List<List<int[]>> graph) {
-        //不选当前节点u和父节点的边，使所选的两条边都不相邻的最大权值和
         long notSelected = 0;
-        //选当前节点u和父节点的边，使所选的两条边都不相邻的最大权值和
         long selected = 0;
-        //用于notSelected，不选当前节点u和父节点的边，则选择当前节点u和子节点的边中最大的vArr[1]
+        //在计算selected时，所有子节点v作为根节点的最大不相邻权值和都计算进去了，所以需要减去所选择的当前节点u和子节点v的边的最大不相邻权值和
         long value = 0;
 
         for (int[] arr : graph.get(u)) {
             int v = arr[0];
             int weight = arr[1];
-
+            //当前节点的子节点v作为根节点的最大不相邻权值和数组
             long[] vArr = dfs(v, graph);
 
-            //不选当前节点u和父节点的边，则选择当前节点u和子节点的边中最大的vArr[1]，选择当前节点u和剩余子节点的边的vArr[0]
-            notSelected = notSelected + vArr[0];
-            //选当前节点u和父节点的边，则当前节点u和子节点的边都不能选择，选择当前节点u和子节点的边的vArr[0]
-            selected = selected + vArr[0];
-            //通过value得到选择当前节点u和子节点的边中最大的vArr[1]
-            value = Math.max(value, vArr[1] - vArr[0] + weight);
+            //不选当前节点和子节点的边，则子节点和其子节点的边可选可不选
+            notSelected = notSelected + Math.max(vArr[0], vArr[1]);
+            //选择当前节点和子节点的边，则当前节点和其他子节点的边不能选
+            selected = selected + Math.max(vArr[0], vArr[1]);
+            //选择当前节点u和子节点v的边weight，则只能选择子节点v作为根节点的树中，
+            //不选当前节点和子节点的边，得到的最大不相邻权值和vArr[0]
+            value = Math.max(value, weight + vArr[0] - Math.max(vArr[0], vArr[1]));
         }
 
-        //notSelected中多加了一次vArr[0]，所以value中减去vArr[0]
-        notSelected = notSelected + value;
+        selected = selected + value;
 
+        //返回当前节点作为根节点的最大不相邻权值和数组
         return new long[]{notSelected, selected};
     }
 }

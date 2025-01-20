@@ -103,13 +103,15 @@ public class Problem129 {
             return;
         }
 
+        value = value * 10 + node.val;
+
         if (node.left == null && node.right == null) {
-            result = result + value * 10 + node.val;
+            result = result + value;
             return;
         }
 
-        preorder(node.left, value * 10 + node.val);
-        preorder(node.right, value * 10 + node.val);
+        preorder(node.left, value);
+        preorder(node.right, value);
     }
 
     private TreeNode buildTree(int[] data) {
