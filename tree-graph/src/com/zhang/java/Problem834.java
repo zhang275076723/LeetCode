@@ -90,8 +90,8 @@ public class Problem834 {
     /**
      * dfs+动态规划
      * dp[i]：节点i到其他节点的距离之和
-     * count[i]：节点i为根节点的子树中所有节点的个数 (注意：节点i为根节点的子树不能改变树的节点，即不能变换原树的根节点)
-     * dp[u] = dp[v] - count[u] + n - count[u] (节点v为节点u的父节点，此时已经得到dp[v]，才能正确计算dp[u])
+     * count[i]：节点i为根节点的树中所有节点的个数 (注意：节点i为根节点的树不能改变树的结构，即不能变换原树的根节点)
+     * dp[u] = dp[v] - count[u] + (n - count[u]) (节点v为节点u的父节点，此时的dp[v]为节点v到其他节点的距离之和，才能得到dp[u]为节点u到其他节点的距离之和)
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param n
@@ -116,19 +116,19 @@ public class Problem834 {
 
         //节点i到其他节点的距离之和
         int[] dp = new int[n];
-        //节点i为根节点的子树中所有节点的个数
-        //注意：节点i为根节点的子树不能改变树的节点，即不能变换原树的根节点
+        //节点i为根节点的树中所有节点的个数
+        //注意：节点i为根节点的树不能改变树的结构，即不能变换原树的根节点
         int[] count = new int[n];
 
-        //count初始化，节点i为根节点的子树中所有节点的个数为1
+        //count初始化，节点i为根节点的树中所有节点的个数为1
         for (int i = 0; i < n; i++) {
             count[i] = 1;
         }
 
-        //得到节点0到其他节点的距离之和dp[0]，和每个节点i为根节点的子树中所有节点的个数count[i]
-        //注意：通过当前dfs，只有dp[0]为节点0到其他节点的距离之和，其他dp[i]是节点i为根节点的树中到其他节点的距离之和
+        //得到每个节点i为根节点的树中所有节点的个数count[i]，和节点0到其他节点的距离之和dp[0]
+        //注意：通过当前dfs，只有dp[0]为节点0到其他节点的距离之和，其他dp[i]为节点i到节点i为根节点的树中所有节点的距离之和
         dfs(0, -1, graph, dp, count);
-        //注意：通过当前dfs，更新dp[i]，得到节点i到其他节点的距离之和dp[i]
+        //更新dp[i]，得到节点i到其他节点的距离之和dp[i]
         dfs(0, -1, n, graph, dp, count);
 
         return dp;
@@ -255,7 +255,7 @@ public class Problem834 {
     }
 
     /**
-     * 起始节点到其他节点的距离之和
+     * 节点u为根节点的树中所有节点到起始节点的距离
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param u        当前节点u
@@ -265,7 +265,7 @@ public class Problem834 {
      * @return
      */
     private int dfs(int u, int parent, int distance, List<List<Integer>> graph) {
-        //当前节点u为根节点的树到起始节点的距离
+        //节点u为根节点的树中所有节点到起始节点的距离
         int curDistance = distance;
 
         for (int v : graph.get(u)) {
@@ -280,8 +280,8 @@ public class Problem834 {
     }
 
     /**
-     * 得到节点0到其他节点的距离之和dp[0]，和每个节点i为根节点的子树中所有节点的个数count[i]
-     * 注意：通过当前dfs，只有dp[0]为节点0到其他节点的距离之和，其他dp[i]是节点i为根节点的树中到其他节点的距离之和
+     * 得到每个节点i为根节点的树中所有节点的个数count[i]，和节点0到其他节点的距离之和dp[0]
+     * 注意：通过当前dfs，只有dp[0]为节点0到其他节点的距离之和，其他dp[i]为节点i到节点i为根节点的树中所有节点的距离之和
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param u
@@ -296,18 +296,18 @@ public class Problem834 {
                 continue;
             }
 
-            //注意：要先dfs，才能更新count[u]和dp[u]
             dfs(v, u, graph, dp, count);
 
             count[u] = count[u] + count[v];
-            //注意：要先得到count[u]，才能计算dp[u]
+            //更新节点u到节点u为根节点的树中所有节点的距离之和
+            //注意：因为从节点0开始dfs，节点0没有父节点，所以dp[0]为节点0到其他节点的距离之和
             dp[u] = dp[u] + dp[v] + count[v];
         }
     }
 
     /**
      * 更新dp[i]，得到节点i到其他节点的距离之和dp[i]
-     * dp[u] = dp[v] - count[u] + n - count[u] (节点v为节点u的父节点，此时已经得到dp[v]，才能正确计算dp[u])
+     * dp[u] = dp[v] - count[u] + (n - count[u]) (节点v为节点u的父节点，此时的dp[v]为节点v到其他节点的距离之和，才能得到dp[u]为节点u到其他节点的距离之和)
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param u
@@ -323,9 +323,12 @@ public class Problem834 {
                 continue;
             }
 
-            //从节点u到节点v，有count[v]个节点少走一步，有n-count[v]个节点多走一步
-            //注意：要先更新dp[v]，才能dfs，此时已经得到dp[u]，才能正确计算dp[v]
-            dp[v] = dp[u] - count[v] + n - count[v];
+            //从节点u换根到子节点v，子节点v为根节点的树中节点相对于dp[u]来说，之前要到达节点u，
+            //现在要达到子节点v，距离都少了1，即减去子节点v为根节点的树中节点的个数count[v]；
+            //树中除了子节点v为根节点的树中节点之外的节点相对于dp[u]来说，之前要到达节点u，
+            //现在要达到子节点v，距离都加了1，即加上除了子节点v为根节点的树中节点之外的节点的个数n-count[v]
+            //注意：此时的dp[u]为节点u到其他节点的距离之和，才能得到dp[v]为节点v到其他节点的距离之和
+            dp[v] = dp[u] - count[v] + (n - count[v]);
 
             dfs(v, u, n, graph, dp, count);
         }
