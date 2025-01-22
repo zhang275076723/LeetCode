@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2025/3/10 08:24
  * @Author zsy
- * @Description 统计最高分的节点数目 类比Problem450、Problem1110
+ * @Description 统计最高分的节点数目 类比Problem450、Problem1110、Problem1339
  * 给你一棵根节点为 0 的 二叉树 ，它总共有 n 个节点，节点编号为 0 到 n - 1 。
  * 同时给你一个下标从 0 开始的整数数组 parents 表示这棵树，其中 parents[i] 是节点 i 的父节点。
  * 由于节点 0 是根，所以 parents[0] == -1 。
@@ -60,6 +60,7 @@ public class Problem2049 {
 
     /**
      * dfs
+     * 节点的分数=非空子树中节点的个数*非空父节点所在子树中节点的个数
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param parents
@@ -87,6 +88,14 @@ public class Problem2049 {
         return maxScoreCount;
     }
 
+    /**
+     * 在返回node为根节点的树中节点的个数的同时，计算当前节点的分数，从而得到最大分数的个数
+     *
+     * @param node
+     * @param graph
+     * @param count
+     * @return
+     */
     private int dfs(int node, List<List<Integer>> graph, int[] count) {
         //当前节点的分数，即删除和当前节点相连的边，得到的非空子树中节点的个数乘积
         //使用long，避免int相乘溢出
