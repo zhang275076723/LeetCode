@@ -71,7 +71,7 @@ public class Problem2791 {
             graph.add(new ArrayList<>());
         }
 
-        //从节点1开始，因为节点0为根节点，没有父节点
+        //i从1开始遍历，不需要考虑节点0的父节点
         for (int i = 1; i < n; i++) {
             graph.get(parent.get(i)).add(i);
         }

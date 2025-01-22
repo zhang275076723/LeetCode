@@ -120,11 +120,6 @@ public class Problem834 {
         //注意：节点i为根节点的树不能改变树的结构，即不能变换原树的根节点
         int[] count = new int[n];
 
-        //count初始化，节点i为根节点的树中所有节点的个数为1
-        for (int i = 0; i < n; i++) {
-            count[i] = 1;
-        }
-
         //得到每个节点i为根节点的树中所有节点的个数count[i]，和节点0到其他节点的距离之和dp[0]
         //注意：通过当前dfs，只有dp[0]为节点0到其他节点的距离之和，其他dp[i]为节点i到节点i为根节点的树中所有节点的距离之和
         dfs(0, -1, graph, dp, count);
@@ -291,6 +286,9 @@ public class Problem834 {
      * @param count
      */
     private void dfs(int u, int parent, List<List<Integer>> graph, int[] dp, int[] count) {
+        //count初始化
+        count[u] = 1;
+
         for (int v : graph.get(u)) {
             if (v == parent) {
                 continue;
