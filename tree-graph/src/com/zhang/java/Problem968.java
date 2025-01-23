@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/2/4 08:29
  * @Author zsy
- * @Description 监控二叉树 华为机试题 dfs类比Problem124、Problem250、Problem298、Problem337、Problem543、Problem687、Problem979、Problem1245、Problem1372、Problem1373、Problem2246、Problem2378
+ * @Description 监控二叉树 华为机试题 dfs类比Problem124、Problem250、Problem298、Problem337、Problem543、Problem687、Problem979、Problem1245、Problem1372、Problem1373、Problem2246、Problem2378、Problem2925
  * 给定一个二叉树，我们在树的节点上安装摄像头。
  * 节点上的每个摄影头都可以监视其父对象、自身及其直接子对象。
  * 计算监控树的所有节点所需的最小摄像头数量。

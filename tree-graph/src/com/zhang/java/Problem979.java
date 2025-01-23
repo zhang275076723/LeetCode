@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/2/3 08:04
  * @Author zsy
- * @Description 在二叉树中分配硬币 dfs类比Problem124、Problem250、Problem298、Problem337、Problem543、Problem687、Problem968、Problem1245、Problem1372、Problem1373、Problem2246、Problem2378
+ * @Description 在二叉树中分配硬币 dfs类比Problem124、Problem250、Problem298、Problem337、Problem543、Problem687、Problem968、Problem1245、Problem1372、Problem1373、Problem2246、Problem2378、Problem2925
  * 给你一个有 n 个结点的二叉树的根结点 root ，其中树中每个结点 node 都对应有 node.val 枚硬币。
  * 整棵树上一共有 n 枚硬币。
  * 在一次移动中，我们可以选择两个相邻的结点，然后将一枚硬币从其中一个结点移动到另一个结点。

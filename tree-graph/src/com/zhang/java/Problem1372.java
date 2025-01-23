@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2025/3/3 08:11
  * @Author zsy
- * @Description 二叉树中的最长交错路径 dfs类比Problem124、Problem250、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem1373、Problem2246、Problem2378
+ * @Description 二叉树中的最长交错路径 dfs类比Problem124、Problem250、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem1373、Problem2246、Problem2378、Problem2925
  * 给你一棵以 root 为根的二叉树，二叉树中的交错路径定义如下：
  * 选择二叉树中 任意 节点和一个方向（左或者右）。
  * 如果前进方向为右，那么移动到当前节点的的右子节点，否则移动到它的左子节点。

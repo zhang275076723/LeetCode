@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2025/3/8 08:21
  * @Author zsy
- * @Description 统计同值子树 dfs类比Problem124、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem1372、Problem1373、Problem2246、Problem2378
+ * @Description 统计同值子树 dfs类比Problem124、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem1372、Problem1373、Problem2246、Problem2378、Problem2925
  * 给定一个二叉树，统计该二叉树数值相同的子树个数。
  * 同值子树是指该子树的所有节点都拥有相同的数值。
  * <p>
