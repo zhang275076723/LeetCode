@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/1/26 08:33
  * @Author zsy
- * @Description 二叉树最长连续序列 类比Problem687 dfs类比Problem124、Problem250、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem1372、Problem1373、Problem2246、Problem2378、Problem2925
+ * @Description 二叉树最长连续序列 类比Problem687 dfs类比Problem124、Problem250、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem1372、Problem1373、Problem2246、Problem2378、Problem2925、Problem2973
  * 给你一棵指定的二叉树的根节点 root ，请你计算其中 最长连续序列路径 的长度。
  * 最长连续序列路径 是依次递增 1 的路径。
  * 该路径，可以是从某个初始节点到树中任意节点，通过「父 - 子」关系连接而产生的任意路径。

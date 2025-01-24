@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2025/3/12 08:47
  * @Author zsy
- * @Description 在树上执行操作以后得到的最大分数 dfs类比Problem124、Problem250、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem1372、Problem1373、Problem2246、Problem2378
+ * @Description 在树上执行操作以后得到的最大分数 dfs类比Problem124、Problem250、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem1372、Problem1373、Problem2246、Problem2378、Problem2973
  * 有一棵 n 个节点的无向树，节点编号为 0 到 n - 1 ，根节点编号为 0 。
  * 给你一个长度为 n - 1 的二维整数数组 edges 表示这棵树，其中 edges[i] = [ai, bi] 表示树中节点 ai 和 bi 有一条边。
  * 同时给你一个长度为 n 下标从 0 开始的整数数组 values ，其中 values[i] 表示第 i 个节点的值。
@@ -64,7 +64,7 @@ public class Problem2925 {
      */
     public long maximumScoreAfterOperations(int[][] edges, int[] values) {
         //节点的个数
-        int n = edges.length + 1;
+        int n = values.length;
         //邻接表，无向图
         List<List<Integer>> graph = new ArrayList<>();
 
