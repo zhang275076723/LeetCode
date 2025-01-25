@@ -152,6 +152,7 @@ public class Problem2973 {
         if (count < 3) {
             result[u] = 1;
         } else {
+            //当前节点作为根节点的树中最大的三个节点开销乘积与最大的节点开销和最小的2个节点开销乘积中的较大值即为当前节点的金币数
             //如果最大开销为负数，则放0个金币
             //使用long，避免int相乘溢出
             result[u] = Math.max(0, Math.max((long) maxArr[0] * maxArr[1] * maxArr[2], (long) maxArr[0] * minArr[0] * minArr[1]));
