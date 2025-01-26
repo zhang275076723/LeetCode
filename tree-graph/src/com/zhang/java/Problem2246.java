@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2025/1/28 08:40
  * @Author zsy
- * @Description 相邻字符不同的最长路径 类比Problem543、Problem1245 dfs类比Problem124、Problem250、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem1372、Problem1373、Problem2378、Problem2925、Problem2973
+ * @Description 相邻字符不同的最长路径 类比Problem1245 dfs类比Problem124、Problem250、Problem298、Problem337、Problem543、Problem687、Problem968、Problem979、Problem1245、Problem1372、Problem1373、Problem2378、Problem2925、Problem2973
  * 给你一棵 树（即一个连通、无向、无环图），根节点是节点 0 ，这棵树由编号从 0 到 n - 1 的 n 个节点组成。
  * 用下标从 0 开始、长度为 n 的数组 parent 来表示这棵树，其中 parent[i] 是节点 i 的父节点，
  * 由于节点 0 是根节点，所以 parent[0] == -1 。

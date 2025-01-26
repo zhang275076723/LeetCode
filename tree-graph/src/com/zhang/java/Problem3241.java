@@ -137,12 +137,12 @@ public class Problem3241 {
     }
 
     /**
-     * 节点u到其他节点的最大深度为节点u为根节点的树的最大深度和除了节点u为根节点的树的的节点，节点u到其他节点的最大深度两者中的较大值
+     * 节点u到其他节点的最大深度为节点u为根节点的树的最大深度和节点u到节点u为根节点的树中的节点之外的节点的最大深度两者中的较大值
      * 例如：在计算result遍历到节点u时，已经得到节点u为根节点的树的最大深度maxDepthArr[u][0]，
-     * 除了节点u为根节点的树中的节点，节点u到其他节点的最大深度exceptMaxDepth，
+     * 节点u到节点u为根节点的树中的节点之外的节点的最大深度exceptMaxDepth，
      * 则result[u]=max(maxDepthArr[u][0],exceptMaxDepth)，
      * 从节点u向子节点v遍历时，需要根据节点v是否是节点u最大深度的子节点，
-     * 更新除了节点v为根节点的树中的节点，节点v到其他节点的最大深度nextExceptMaxDepth
+     * 更新节点v到节点v为根节点的树中的节点之外的节点的最大深度nextExceptMaxDepth
      * <                       a
      * <                  /         \
      * <                 b            c
@@ -155,14 +155,13 @@ public class Problem3241 {
      *
      * @param u
      * @param parent
-     * @param exceptMaxDepth 除了节点u为根节点的树中的节点，节点u到其他节点的最大深度
+     * @param exceptMaxDepth 节点u到节点u为根节点的树中的节点之外的节点的最大深度
      * @param graph
      * @param maxDepthArr
      * @param result
      */
     private void dfs(int u, int parent, int exceptMaxDepth, List<List<Integer>> graph, int[][] maxDepthArr, int[] result) {
-        //节点u为根节点的树的最大深度maxDepthArr[u][0]和除了节点u为根节点的树的的节点，节点u到其他节点的最大深度exceptMaxDepth两者中的较大值，
-        //即为节点u到其他节点的最大深度
+        //节点u到其他节点的最大深度为节点u为根节点的树的最大深度maxDepthArr[u][0]和节点u到节点u为根节点的树中的节点之外的节点的最大深度exceptMaxDepth两者中的较大值
         result[u] = Math.max(maxDepthArr[u][0], exceptMaxDepth);
 
         for (int v : graph.get(u)) {
@@ -170,7 +169,7 @@ public class Problem3241 {
                 continue;
             }
 
-            //除了节点v为根节点的树中的节点，节点v到其他节点的最大深度
+            //节点v到节点v为根节点的树中的节点之外的节点的最大深度
             int nextExceptMaxDepth;
 
             //节点v为节点u最大深度的子节点，则考虑节点u到其他节点的第二大深度

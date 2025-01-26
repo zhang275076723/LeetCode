@@ -116,6 +116,7 @@ public class Problem2467 {
 
     /**
      * 节点u是否在节点bob到节点0的路径
+     * 注意：只记录经过的路径中每个节点的时间，不记录没有经过的节点的时间
      *
      * @param u
      * @param parent
