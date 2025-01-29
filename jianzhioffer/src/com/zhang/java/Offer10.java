@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/13 21:31
  * @Author zsy
- * @Description 斐波那契数列 字节面试题 矩阵快速幂类比Problem70、Problem509、Problem1137、Problem1220、Problem1641、Offer10_2 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1175、Problem1201、Problem1291、Offer49 记忆化搜索类比Problem62、Problem63、Problem64、Problem70、Problem329、Problem509、Problem1340、Problem1388、Problem1444、Offer10_2 同Problem509
+ * @Description 斐波那契数列 字节面试题 矩阵快速幂类比Problem70、Problem509、Problem790、Problem1137、Problem1220、Problem1641、Offer10_2 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem509、Problem728、Problem842、Problem878、Problem1175、Problem1201、Problem1291、Offer49 记忆化搜索类比Problem62、Problem63、Problem64、Problem70、Problem329、Problem509、Problem1340、Problem1388、Problem1444、Offer10_2 同Problem509
  * 写一个函数，输入 n ，求斐波那契（Fibonacci）数列的第 n 项（即 F(N)）。
  * 斐波那契数列的定义如下：
  * F(0) = 0,   F(1) = 1
@@ -97,9 +97,9 @@ public class Offer10 {
         int q = 1;
 
         for (int i = 2; i <= n; i++) {
-            int temp = (p + q) % MOD;
-            p = q;
-            q = temp;
+            int temp = q;
+            q = (p + q) % MOD;
+            p = temp;
         }
 
         return q;
@@ -122,11 +122,11 @@ public class Offer10 {
             return 1;
         }
 
-        int[][] a = new int[][]{{1, 1}, {1, 0}};
+        int[][] result = {{1, 1}, {1, 0}};
 
-        int[][] result = quickPow2D(a, n - 1);
-
-        result = multiply2D(result, new int[][]{{1}, {0}});
+        result = quickPow(result, n - 1);
+        //dp[0]=0，dp[1]=1
+        result = multiply(result, new int[][]{{1}, {0}});
 
         return result[0][0];
     }
@@ -143,61 +143,13 @@ public class Offer10 {
     }
 
     /**
-     * 递归快速幂，类比快速乘
-     * 时间复杂度O(logn)，空间复杂度O(logn)
-     *
-     * @param a
-     * @param n
-     * @return
-     */
-    public int quickPow(int a, int n) {
-        if (n == 0) {
-            return 1;
-        }
-
-        if (n % 2 == 0) {
-            int temp = quickPow(a, n / 2);
-            return temp * temp;
-        } else {
-            return quickPow(a, n - 1) * a;
-        }
-    }
-
-    /**
-     * 非递归快速幂，类比快速乘
-     * 时间复杂度O(logn)，空间复杂度O(1)
-     *
-     * @param a
-     * @param n
-     * @return
-     */
-    public int quickPow2(int a, int n) {
-        if (n == 0) {
-            return 1;
-        }
-
-        int result = 1;
-
-        while (n != 0) {
-            if ((n & 1) == 1) {
-                result = result * a;
-            }
-
-            a = a * a;
-            n = n >>> 1;
-        }
-
-        return result;
-    }
-
-    /**
      * 二维递归快速幂
      *
      * @param a
      * @param n
      * @return
      */
-    public int[][] quickPow2D(int[][] a, int n) {
+    private int[][] quickPow(int[][] a, int n) {
         if (n == 0) {
             int[][] result = new int[a.length][a.length];
 
@@ -210,10 +162,10 @@ public class Offer10 {
         }
 
         if (n % 2 == 0) {
-            int[][] temp = quickPow2D(a, n / 2);
-            return multiply2D(temp, temp);
+            int[][] temp = quickPow(a, n / 2);
+            return multiply(temp, temp);
         } else {
-            return multiply2D(quickPow2D(a, n - 1), a);
+            return multiply(quickPow(a, n - 1), a);
         }
     }
 
@@ -224,7 +176,7 @@ public class Offer10 {
      * @param n
      * @return
      */
-    public int[][] quickPow2D2(int[][] a, int n) {
+    private int[][] quickPow2(int[][] a, int n) {
         int[][] result = new int[a.length][a.length];
 
         //初始化为单位矩阵
@@ -232,30 +184,23 @@ public class Offer10 {
             result[i][i] = 1;
         }
 
-        while (n > 0) {
+        while (n != 0) {
             if ((n & 1) == 1) {
-                result = multiply2D(result, a);
+                result = multiply(result, a);
             }
 
-            a = multiply2D(a, a);
-            n = n >> 1;
+            a = multiply(a, a);
+            n = n >>> 1;
         }
 
         return result;
     }
 
-    /**
-     * 矩阵乘法
-     *
-     * @param a
-     * @param b
-     * @return
-     */
-    private int[][] multiply2D(int[][] a, int[][] b) {
+    private int[][] multiply(int[][] a, int[][] b) {
         int[][] result = new int[a.length][b[0].length];
 
-        for (int i = 0; i < result.length; i++) {
-            for (int j = 0; j < result[0].length; j++) {
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < b[0].length; j++) {
                 for (int k = 0; k < a[0].length; k++) {
                     //使用long，避免int相乘溢出
                     result[i][j] = (int) ((result[i][j] + (long) a[i][k] * b[k][j]) % MOD);
