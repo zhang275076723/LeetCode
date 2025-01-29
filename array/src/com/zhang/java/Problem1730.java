@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2025/1/14 08:55
  * @Author zsy
- * @Description 获取食物的最短路径 类比Problem490、Problem499、Problem505、Problem2258 bfs类比
+ * @Description 获取食物的最短路径 类比Problem490、Problem499、Problem505、Problem1926、Problem2258 bfs类比
  * 你现在很饿，想要尽快找东西吃。
  * 你需要找到最短的路径到达一个食物所在的格子。
  * 给定一个 m x n 的字符矩阵 grid ，包含下列不同类型的格子：
@@ -51,11 +51,6 @@ import java.util.Queue;
  * grid 中有且只有一个 '*' 。
  */
 public class Problem1730 {
-    /**
-     * dfs找到食物的最短路径的长度
-     */
-    private int minDistance = Integer.MAX_VALUE;
-
     public static void main(String[] args) {
         Problem1730 problem1730 = new Problem1730();
         char[][] grid = {
@@ -114,17 +109,16 @@ public class Problem1730 {
                 int x1 = arr[0];
                 int y1 = arr[1];
 
+                if (grid[x1][y1] == '#') {
+                    return distance;
+                }
+
                 for (int j = 0; j < direction.length; j++) {
                     int x2 = x1 + direction[j][0];
                     int y2 = y1 + direction[j][1];
 
                     if (x2 < 0 || x2 >= m || y2 < 0 || y2 >= n || grid[x2][y2] == 'X' || visited[x2][y2]) {
                         continue;
-                    }
-
-                    //找到了食物，返回到当前食物的最短距离distance+1
-                    if (grid[x2][y2] == '#') {
-                        return distance + 1;
                     }
 
                     queue.offer(new int[]{x2, y2});

@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Date 2023/11/30 08:35
  * @Author zsy
- * @Description 迷宫 III 类比Problem490、Problem505、Problem1730、Problem2258 bfs类比Problem407、Problem505、Problem778、Problem847、Problem1129、Problem1293、Problem1368、Problem1631、Problem2045、Problem2290 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem490、Problem505、Problem529、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Problem1568、Problem1905、Offer12
+ * @Description 迷宫 III 类比Problem490、Problem505、Problem1730、Problem1926、Problem2258 bfs类比Problem407、Problem505、Problem778、Problem847、Problem1129、Problem1293、Problem1368、Problem1631、Problem2045、Problem2290 dfs和bfs类比Problem79、Problem130、Problem200、Problem212、Problem463、Problem490、Problem505、Problem529、Problem547、Problem694、Problem695、Problem711、Problem733、Problem827、Problem994、Problem1034、Problem1162、Problem1254、Problem1568、Problem1905、Offer12
  * 由空地和墙组成的迷宫中有一个球。
  * 球可以向上（u）下（d）左（l）右（r）四个方向滚动，但在遇到墙壁前不会停止滚动。
  * 当球停下时，可以选择下一个方向。
