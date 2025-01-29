@@ -1,11 +1,9 @@
 package com.zhang.java;
 
-import java.util.Arrays;
-
 /**
  * @Date 2024/3/31 08:28
  * @Author zsy
- * @Description 统计元音字母序列的数目 矩阵快速幂类比Problem70、Problem509、Problem1137、Problem1641、Offer10、Offer10_2 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1371、Problem1456、Problem1641、Problem1704、Problem1839、Problem2062、Problem2063、Problem2559、Problem2586、Problem2785
+ * @Description 统计元音字母序列的数目 矩阵快速幂类比Problem70、Problem509、Problem790、Problem1137、Problem1641、Offer10、Offer10_2 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1371、Problem1456、Problem1641、Problem1704、Problem1839、Problem2062、Problem2063、Problem2559、Problem2586、Problem2785
  * 给你一个整数 n，请你帮忙统计一下我们可以按下述规则形成多少个长度为 n 的字符串：
  * 字符串中的每个字符都应当是小写元音字母（'a', 'e', 'i', 'o', 'u'）
  * 每个元音 'a' 后面都只能跟着 'e'
@@ -69,7 +67,7 @@ public class Problem1220 {
             //元音'i'的前一个字符只能是元音'e'、'o'
             dp[i][2] = (dp[i - 1][1] + dp[i - 1][3]) % MOD;
             //元音'o'的前一个字符只能是元音'i'
-            dp[i][3] = dp[i - 1][2] % MOD;
+            dp[i][3] = dp[i - 1][2];
             //元音'u'的前一个字符只能是元音'i'、'o'
             dp[i][4] = (dp[i - 1][2] + dp[i - 1][3]) % MOD;
         }
@@ -109,11 +107,11 @@ public class Problem1220 {
             tempArr[0] = (dp[1] + dp[2] + dp[4]) % MOD;
             tempArr[1] = (dp[0] + dp[2]) % MOD;
             tempArr[2] = (dp[1] + dp[3]) % MOD;
-            tempArr[3] = dp[2] % MOD;
+            tempArr[3] = dp[2];
             tempArr[4] = (dp[2] + dp[3]) % MOD;
 
             //tempArr重新赋值给dp
-            dp = Arrays.copyOfRange(tempArr, 0, tempArr.length);
+            dp = tempArr;
         }
 
         //长度为n，并且满足上述规则的元音字符串个数
@@ -128,7 +126,7 @@ public class Problem1220 {
     }
 
     /**
-     * 动态规划+矩阵快速幂
+     * 矩阵快速幂
      * dp[i][j]：长度为i，并且以第j个元音结尾满足上述规则的元音字符串个数
      * dp[i][0] = dp[i-1][1] + dp[i-1][2] + dp[i-1][4] (元音'a'的前一个字符只能是元音'e'、'i'、'u')
      * dp[i][1] = dp[i-1][0] + dp[i-1][2]              (元音'e'的前一个字符只能是元音'a'、'i')
@@ -157,6 +155,7 @@ public class Problem1220 {
 
         result = quickPow(result, n - 1);
         //使用long，避免int溢出
+        //dp[1][0]=1，dp[1][1]=1，dp[1][2]=1，dp[1][3]=1，dp[1][4]=1
         result = multiply(result, new long[][]{{1}, {1}, {1}, {1}, {1}});
 
         //长度为n，并且满足上述规则的元音字符串个数
@@ -189,7 +188,6 @@ public class Problem1220 {
 
         while (n != 0) {
             if ((n & 1) == 1) {
-                //注意乘积先后顺序
                 result = multiply(result, a);
             }
 

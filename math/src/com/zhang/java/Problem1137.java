@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/27 15:28
  * @Author zsy
- * @Description 第 N 个泰波那契数 矩阵快速幂类比Problem70、Problem509、Problem1220、Problem1641、Offer10、Offer10_2
+ * @Description 第 N 个泰波那契数 矩阵快速幂类比Problem70、Problem509、Problem790、Problem1220、Problem1641、Offer10、Offer10_2
  * 泰波那契序列 Tn 定义如下：
  * T0 = 0, T1 = 1, T2 = 1, 且在 n >= 0 的条件下 Tn+3 = Tn + Tn+1 + Tn+2
  * 给你整数 n，请返回第 n 个泰波那契数 Tn 的值。
@@ -108,7 +108,9 @@ public class Problem1137 {
         }
 
         int[][] result = {{1, 1, 1}, {1, 0, 0}, {0, 1, 0}};
+
         result = quickPow(result, n - 2);
+        //dp[0]=0，dp[1]=1，dp[2]=1
         result = multiply(result, new int[][]{{1}, {1}, {0}});
 
         return result[0][0];

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/3/14 15:12
  * @Author zsy
- * @Description 青蛙跳台阶问题 类比Problem70、Problem746 矩阵快速幂类比Problem70、Problem509、Problem1137、Problem1220、Problem1641、Offer10 记忆化搜索类比Problem62、Problem63、Problem64、Problem70、Problem329、Problem509、Problem1340、Problem1388、Problem1444、Offer10 同Problem70
+ * @Description 青蛙跳台阶问题 类比Problem70、Problem746 矩阵快速幂类比Problem70、Problem509、Problem790、Problem1137、Problem1220、Problem1641、Offer10 记忆化搜索类比Problem62、Problem63、Problem64、Problem70、Problem329、Problem509、Problem1340、Problem1388、Problem1444、Offer10 同Problem70
  * 一只青蛙一次可以跳上1级台阶，也可以跳上2级台阶。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
  * 总跳法 = 1次跳上1级台阶和剩余n-1级台阶的跳法 + 1次跳上2级台阶和剩余n-2级台阶的跳法
  * <p>
@@ -89,9 +89,9 @@ public class Offer10_2 {
         int q = 1;
 
         for (int i = 2; i <= n; i++) {
-            int temp = (p + q) % MOD;
-            p = q;
-            q = temp;
+            int temp = q;
+            q = (p + q) % MOD;
+            p = temp;
         }
 
         return q;
@@ -111,10 +111,10 @@ public class Offer10_2 {
             return 1;
         }
 
-        int[][] a = {{1, 1}, {1, 0}};
+        int[][] result = {{1, 1}, {1, 0}};
 
-        int[][] result = quickPow(a, n - 1);
-
+        result = quickPow(result, n - 1);
+        //dp[0]=1，dp[1]=1
         result = multiply(result, new int[][]{{1}, {1}});
 
         return result[0][0];
@@ -139,13 +139,13 @@ public class Offer10_2 {
             result[i][i] = 1;
         }
 
-        while (n > 0) {
-            if ((n & 1) != 0) {
+        while (n != 0) {
+            if ((n & 1) == 1) {
                 result = multiply(result, a);
             }
 
             a = multiply(a, a);
-            n = n >> 1;
+            n = n >>> 1;
         }
 
         return result;
@@ -154,8 +154,8 @@ public class Offer10_2 {
     private int[][] multiply(int[][] a, int[][] b) {
         int[][] result = new int[a.length][b[0].length];
 
-        for (int i = 0; i < result.length; i++) {
-            for (int j = 0; j < result[0].length; j++) {
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < b[0].length; j++) {
                 for (int k = 0; k < a[0].length; k++) {
                     //使用long，避免int相乘溢出
                     result[i][j] = (int) ((result[i][j] + (long) a[i][k] * b[k][j]) % MOD);

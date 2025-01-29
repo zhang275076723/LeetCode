@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/27 13:41
  * @Author zsy
- * @Description 斐波那契数 矩阵快速幂类比Problem70、Problem1137、Problem1220、Problem1641、Offer10、Offer10_2 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem728、Problem842、Problem878、Problem1175、Problem1201、Problem1291、Offer10、Offer49 记忆化搜索类比Problem62、Problem63、Problem64、Problem70、Problem329、Problem1340、Problem1388、Problem1444、Offer10、Offer10_2 同Offer10
+ * @Description 斐波那契数 矩阵快速幂类比Problem70、Problem790、Problem1137、Problem1220、Problem1641、Offer10、Offer10_2 各种数类比Problem202、Problem204、Problem263、Problem264、Problem306、Problem313、Problem507、Problem728、Problem842、Problem878、Problem1175、Problem1201、Problem1291、Offer10、Offer49 记忆化搜索类比Problem62、Problem63、Problem64、Problem70、Problem329、Problem1340、Problem1388、Problem1444、Offer10、Offer10_2 同Offer10
  * 斐波那契数 （通常用 F(n) 表示）形成的序列称为 斐波那契数列 。
  * 该数列由 0 和 1 开始，后面的每一项数字都是前面两项数字的和。也就是：
  * F(0) = 0，F(1) = 1
@@ -96,9 +96,9 @@ public class Problem509 {
         int q = 1;
 
         for (int i = 2; i <= n; i++) {
-            int temp = p + q;
-            p = q;
-            q = temp;
+            int temp = q;
+            q = p + q;
+            p = temp;
         }
 
         return q;
@@ -119,7 +119,9 @@ public class Problem509 {
         }
 
         int[][] result = {{1, 1}, {1, 0}};
+
         result = quickPow(result, n - 1);
+        //dp[0]=0，dp[1]=1
         result = multiply(result, new int[][]{{1}, {0}});
 
         return result[0][0];

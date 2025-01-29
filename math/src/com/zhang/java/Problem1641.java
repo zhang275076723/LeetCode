@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/3/30 08:11
  * @Author zsy
- * @Description 统计字典序元音字符串的数目 类比Problem62 矩阵快速幂类比Problem70、Problem509、Problem1137、Problem1220、Offer10、Offer10_2 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1220、Problem1371、Problem1456、Problem1704、Problem1839、Problem2062、Problem2063、Problem2559、Problem2586、Problem2785
+ * @Description 统计字典序元音字符串的数目 类比Problem62 矩阵快速幂类比Problem70、Problem509、Problem790、Problem1137、Problem1220、Offer10、Offer10_2 元音类比Problem345、Problem824、Problem966、Problem1119、Problem1220、Problem1371、Problem1456、Problem1704、Problem1839、Problem2062、Problem2063、Problem2559、Problem2586、Problem2785
  * 给你一个整数 n，请返回长度为 n 、仅由元音 (a, e, i, o, u) 组成且按 字典序排列 的字符串数量。
  * 字符串 s 按 字典序排列 需要满足：对于所有有效的 i，s[i] 在字母表中的位置总是与 s[i+1] 相同或在 s[i+1] 之前。
  * <p>
@@ -103,14 +103,14 @@ public class Problem1641 {
     }
 
     /**
-     * 动态规划+矩阵快速幂
+     * 矩阵快速幂
      * dp[i][j]：长度为i，并且以第j个元音结尾按照字典序排列的元音字符串个数
      * dp[i][j] = sum(dp[i-1][k]) (0 <= k <= j)
-     * [dp[n][4]]         [1 1 1 1 1] ^ (n-1)         [dp[1][4]]
-     * [dp[n][3]]         [0 1 1 1 1]                 [dp[1][3]]
-     * [dp[n][2]]    =    [0 0 1 1 1]        *        [dp[1][2]]
-     * [dp[n][1]]         [0 0 0 1 1]                 [dp[1][1]]
-     * [dp[n][0]]         [0 0 0 0 1]                 [dp[1][0]]
+     * [dp[n][0]]         [1 0 0 0 0] ^ (n-1)         [dp[1][0]]
+     * [dp[n][1]]         [1 1 0 0 0]                 [dp[1][1]]
+     * [dp[n][2]]    =    [1 1 1 0 0]        *        [dp[1][2]]
+     * [dp[n][3]]         [1 1 1 1 0]                 [dp[1][3]]
+     * [dp[n][4]]         [1 1 1 1 1]                 [dp[1][4]]
      * 时间复杂度O(logn*|Σ|^3)=O(logn)，空间复杂度O(|Σ|^2)=O(1) (|Σ|=5，只包含5个小写元音)
      *
      * @param n
@@ -118,14 +118,15 @@ public class Problem1641 {
      */
     public int countVowelStrings3(int n) {
         int[][] result = {
-                {1, 1, 1, 1, 1},
-                {0, 1, 1, 1, 1},
-                {0, 0, 1, 1, 1},
-                {0, 0, 0, 1, 1},
-                {0, 0, 0, 0, 1}
+                {1, 0, 0, 0, 0},
+                {1, 1, 0, 0, 0},
+                {1, 1, 1, 0, 0},
+                {1, 1, 1, 1, 0},
+                {1, 1, 1, 1, 1}
         };
 
         result = quickPow(result, n - 1);
+        //dp[1][0]=1，dp[1][1]=1，dp[1][2]=1，dp[1][3]=1，dp[1][4]=1
         result = multiply(result, new int[][]{{1}, {1}, {1}, {1}, {1}});
 
         //长度为n，并且按照字典序排列的元音字符串个数
@@ -170,7 +171,6 @@ public class Problem1641 {
 
         while (n != 0) {
             if ((n & 1) == 1) {
-                //注意乘积先后顺序
                 result = multiply(result, a);
             }
 
