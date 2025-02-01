@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/9/18 18:02
  * @Author zsy
- * @Description 设计视频共享平台 类比Problem379、Problem1500、Problem1845
+ * @Description 设计视频共享平台 类比Problem379、Problem1500、Problem1845、Problem2336
  * 你有一个视频分享平台，用户可以上传和删除视频。
  * 每个 video 都是 字符串 类型的数字，其中字符串的第 i 位表示视频中第 i 分钟的内容。
  * 例如，第一个数字表示视频中第 0 分钟的内容，第二个数字表示视频中第 1 分钟的内容，以此类推。
