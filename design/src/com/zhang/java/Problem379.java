@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2024/9/26 08:35
  * @Author zsy
- * @Description 电话目录管理系统 类比Problem1500、Problem1845、Problem2254
+ * @Description 电话目录管理系统 类比Problem1500、Problem1845、Problem2254、Problem2336
  * 设计一个电话目录管理系统，让它支持以下功能：
  * get: 分配给用户一个未被使用的电话号码，获取失败请返回 -1
  * check: 检查指定的电话号码是否被使用
