@@ -99,8 +99,6 @@ public class Problem909 {
             for (int i = 0; i < size; i++) {
                 //当前方格编号
                 int num = queue.poll();
-                //当前方格在board中的下标索引
-                int[] arr = convert(num, n);
 
                 //到达编号n^2的方格，返回count
                 if (num == n * n) {

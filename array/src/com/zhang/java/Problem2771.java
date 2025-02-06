@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/12/3 08:53
  * @Author zsy
- * @Description 构造最长非递减子数组 类比Problem300、Problem354、Problem491、Problem673、Problem674、Problem1143、Problem2407 动态规划类比 子序列和子数组类比
+ * @Description 构造最长非递减子数组 类比Problem300、Problem354、Problem376、Problem491、Problem673、Problem674、Problem1143、Problem2407 动态规划类比 子序列和子数组类比
  * 给你两个下标从 0 开始的整数数组 nums1 和 nums2 ，长度均为 n 。
  * 让我们定义另一个下标从 0 开始、长度为 n 的整数数组，nums3 。
  * 对于范围 [0, n - 1] 的每个下标 i ，你可以将 nums1[i] 或 nums2[i] 的值赋给 nums3[i] 。

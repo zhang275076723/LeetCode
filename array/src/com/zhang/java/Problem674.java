@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/2 08:57
  * @Author zsy
- * @Description 最长连续递增序列 类比Problem300、Problem354、Problem491、Problem673、Problem1143、Problem2407、Problem2771 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem718、Problem862、Problem1143、Offer42、Offer57_2
+ * @Description 最长连续递增序列 类比Problem300、Problem354、Problem376、Problem491、Problem673、Problem1143、Problem2407、Problem2771 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem718、Problem862、Problem1143、Offer42、Offer57_2
  * 给定一个未经排序的整数数组，找到最长且 连续递增的子序列，并返回该序列的长度。
  * 连续递增的子序列 可以由两个下标 l 和 r（l < r）确定，如果对于每个 l <= i < r，
  * 都有 nums[i] < nums[i + 1] ，那么子序列 [nums[l], nums[l + 1], ..., nums[r - 1], nums[r]] 就是连续递增子序列。

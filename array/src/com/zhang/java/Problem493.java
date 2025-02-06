@@ -84,7 +84,7 @@ public class Problem493 {
         int j = mid + 1;
         int k = left;
 
-        //统计翻转对，在合并之前统计
+        //在合并之前统计翻转对
         while (i <= mid && j <= right) {
             //nums[i]-nums[mid]都大于2倍nums[j]，构成翻转对
             //使用long，避免nums[j]*2超过int范围

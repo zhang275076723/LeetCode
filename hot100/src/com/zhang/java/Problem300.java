@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/27 11:43
  * @Author zsy
- * @Description 最长递增子序列 华为面试题 思科面试题 类比Problem354、Problem491、Problem673、Problem674、Problem1143、Problem2407、Problem2771 类比Problem376 动态规划类比Problem132、Problem139、Problem435 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
+ * @Description 最长递增子序列 华为面试题 思科面试题 类比Problem354、Problem376、Problem491、Problem673、Problem674、Problem1143、Problem2407、Problem2771 动态规划类比Problem132、Problem139、Problem435 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
  * 给你一个整数数组 nums ，找到其中最长严格递增子序列的长度。
  * 子序列 是由数组派生而来的序列，删除（或不删除）数组中的元素而不改变其余元素的顺序。
  * 例如，[3,6,2,7] 是数组 [0,3,1,6,2,2,7] 的子序列。

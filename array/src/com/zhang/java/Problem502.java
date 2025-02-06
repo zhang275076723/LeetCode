@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2024/2/7 08:14
  * @Author zsy
- * @Description IPO 优先队列类比
+ * @Description IPO 优先队列类比 优先队列类比
  * 假设 力扣（LeetCode）即将开始 IPO 。
  * 为了以更高的价格将股票卖给风险投资公司，力扣 希望在 IPO 之前开展一些项目以增加其资本。
  * 由于资源有限，它只能在 IPO 之前完成最多 k 个不同的项目。
@@ -49,7 +49,7 @@ public class Problem502 {
     }
 
     /**
-     * 优先队列，大根堆
+     * 排序+优先队列，大根堆
      * profits和capital组成二维数组，按照capital由小到大排序，将小于等于当前资本w的项目利润profits加入大根堆，
      * 每次大根堆堆顶元素出堆，即每次选择利润最大的项目，更新w
      * 时间复杂度O(nlogn+klogn)，空间复杂度O(n) (n=profits.length=capital.length)
