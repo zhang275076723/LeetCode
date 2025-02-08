@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2025/3/29 08:46
  * @Author zsy
- * @Description 出现最频繁的偶数元素 类比Problem169、Problem229、Offer39
+ * @Description 出现最频繁的偶数元素 类比Problem1207
  * 给你一个整数数组 nums ，返回出现最频繁的偶数元素。
  * 如果存在多个满足条件的元素，只需要返回 最小 的一个。
  * 如果不存在这样的元素，返回 -1 。

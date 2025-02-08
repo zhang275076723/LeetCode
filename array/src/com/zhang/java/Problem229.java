@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * @Date 2023/7/2 08:54
  * @Author zsy
- * @Description 多数元素 II 类比Problem169、Problem2404、Offer39
+ * @Description 多数元素 II 类比Problem169、Offer39
  * 给定一个大小为 n 的整数数组，找出其中所有出现超过 ⌊ n/3 ⌋ 次的元素。
  * <p>
  * 输入：nums = [3,2,3]
