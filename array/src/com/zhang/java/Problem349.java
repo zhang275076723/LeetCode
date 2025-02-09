@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/4/11 10:44
  * @Author zsy
- * @Description 两个数组的交集 类比Problem350
+ * @Description 两个数组的交集 类比Problem350、Problem2215、Problem2248
  * 给定两个数组 nums1 和 nums2 ，返回 它们的交集 。
  * 输出结果中的每个元素一定是 唯一 的。我们可以 不考虑输出结果的顺序 。
  * <p>
@@ -30,34 +30,39 @@ public class Problem349 {
 
     /**
      * 哈希表
-     * 时间复杂度O(m+n)，空间复杂度O(min(m,n))
+     * 时间复杂度O(m+n)，空间复杂度O(m+n)
      *
      * @param nums1
      * @param nums2
      * @return
      */
     public int[] intersection(int[] nums1, int[] nums2) {
-        //存放nums1中元素的set集合
-        Set<Integer> set = new HashSet<>();
-        //存放重叠元素的set集合
-        Set<Integer> resultSet = new HashSet<>();
+        //存放nums1中元素的集合
+        Set<Integer> set1 = new HashSet<>();
+        //存放nums2中元素的集合
+        Set<Integer> set2 = new HashSet<>();
 
-        for (int num1 : nums1) {
-            set.add(num1);
+        for (int num : nums1) {
+            set1.add(num);
         }
 
-        //如果nums2中包含有nums1中元素，则是交集元素，加入resultSet中
-        for (int num2 : nums2) {
-            if (set.contains(num2)) {
-                resultSet.add(num2);
+        for (int num : nums2) {
+            set2.add(num);
+        }
+
+        //nums1和nums2交集的集合
+        Set<Integer> intersectionSet = new HashSet<>();
+
+        for (int num : nums1) {
+            if (set2.contains(num)) {
+                intersectionSet.add(num);
             }
         }
 
-        //nums1和nums2交集的结果集合
-        int[] arr = new int[resultSet.size()];
+        int[] arr = new int[intersectionSet.size()];
         int index = 0;
 
-        for (int num : resultSet) {
+        for (int num : intersectionSet) {
             arr[index] = num;
             index++;
         }
@@ -69,7 +74,7 @@ public class Problem349 {
      * 双指针
      * 先对两个数组排序，如果nums1[i] < nums2[j]，则i++；如果nums1[i] > nums2[j]，则j++；
      * 如果nums1[i] == nums2[j]，则判断结果数组中是否存在nums1[i]，如果存在i++、j++，如果不存在，nums1[i]加入结果数组
-     * 时间复杂度O(mlogm+nlogn)，空间复杂度O(logm+logn+min(m,n)) (排序使用的额外空间)
+     * 时间复杂度O(mlogm+nlogn)，空间复杂度O(logm+logn+min(m,n))
      *
      * @param nums1
      * @param nums2
@@ -94,6 +99,7 @@ public class Problem349 {
                 if (list.isEmpty() || list.get(list.size() - 1) != nums1[i]) {
                     list.add(nums1[i]);
                 }
+
                 i++;
                 j++;
             }

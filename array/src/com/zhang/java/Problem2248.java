@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2025/4/1 08:24
  * @Author zsy
- * @Description 多个数组求交集
+ * @Description 多个数组求交集 类比Problem349、Problem350、Problem2215
  * 给你一个二维整数数组 nums ，其中 nums[i] 是由 不同 正整数组成的一个非空数组，
  * 按 升序排列 返回一个数组，数组中的每个元素在 nums 所有数组 中都出现过。
  * <p>
