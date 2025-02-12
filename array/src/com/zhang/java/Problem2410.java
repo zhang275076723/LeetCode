@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2025/2/28 08:37
  * @Author zsy
- * @Description 运动员和训练师的最大匹配数 双指针类比
+ * @Description 运动员和训练师的最大匹配数 双指针类比2332
  * 给你一个下标从 0 开始的整数数组 players ，其中 players[i] 表示第 i 名运动员的 能力 值，
  * 同时给你一个下标从 0 开始的整数数组 trainers ，其中 trainers[j] 表示第 j 名训练师的 训练能力值 。
  * 如果第 i 名运动员的能力值 小于等于 第 j 名训练师的能力值，那么第 i 名运动员可以 匹配 第 j 名训练师。

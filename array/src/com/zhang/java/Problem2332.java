@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2025/3/27 08:55
  * @Author zsy
- * @Description 坐上公交的最晚时间 双指针类比 二分查找类比
+ * @Description 坐上公交的最晚时间 双指针类比2410 二分查找类比
  * 给你一个下标从 0 开始长度为 n 的整数数组 buses ，其中 buses[i] 表示第 i 辆公交车的出发时间。
  * 同时给你一个下标从 0 开始长度为 m 的整数数组 passengers ，其中 passengers[j] 表示第 j 位乘客的到达时间。
  * 所有公交车出发的时间互不相同，所有乘客到达的时间也互不相同。
