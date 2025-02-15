@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2025/4/2 08:07
  * @Author zsy
- * @Description 确定两个字符串是否接近 类比Problem859
+ * @Description 确定两个字符串是否接近 类比Problem859、Problem1247、Problem1790、Problem2531
  * 如果可以使用以下操作从一个字符串得到另一个字符串，则认为两个字符串 接近 ：
  * 操作 1：交换任意两个 现有 字符。
  * 例如，abcde -> aecdb

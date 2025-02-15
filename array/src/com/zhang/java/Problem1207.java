@@ -58,7 +58,7 @@ public class Problem1207 {
             }
         }
 
-        //遍历解说，arr中元素出现的次数没有重复，返回true
+        //遍历结束，arr中元素出现的次数没有重复，返回true
         return true;
     }
 }
