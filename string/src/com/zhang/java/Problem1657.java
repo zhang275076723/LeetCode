@@ -44,7 +44,7 @@ public class Problem1657 {
 
     /**
      * 模拟
-     * word1和word2接近：word1和word2长度相等，字符种类相同，字符种类排序后出现的次数相同
+     * word1和word2接近：word1和word2长度相等，字符种类相同，字符种类出现的次数排序后相同
      * 时间复杂度O(m+n+|Σ|log|Σ|)=O(m+n)，空间复杂度O(|Σ|)=O(1) (|Σ|=26，只包含小写字母)
      *
      * @param word1
@@ -81,7 +81,7 @@ public class Problem1657 {
         Arrays.sort(count2);
 
         for (int i = 0; i < 26; i++) {
-            //字符种类排序后出现的次数不相同，则不接近，返回false
+            //字符种类出现的次数排序后不相同，则不接近，返回false
             if (count1[i] != count2[i]) {
                 return false;
             }

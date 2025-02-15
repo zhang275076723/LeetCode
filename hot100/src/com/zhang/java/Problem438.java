@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2022/6/8 8:24
  * @Author zsy
- * @Description 找到字符串中所有字母异位词 字母异位词类比Problem49、Problem242 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem485、Problem487、Problem567、Problem632、Problem643、Problem713、Problem1004、Problem1456、Problem1839、Problem2062、Offer48、Offer57_2、Offer59
+ * @Description 找到字符串中所有字母异位词 字母异位词类比Problem49、Problem242、Problem1347 滑动窗口类比Problem3、Problem30、Problem76、Problem209、Problem219、Problem220、Problem239、Problem340、Problem485、Problem487、Problem567、Problem632、Problem643、Problem713、Problem1004、Problem1456、Problem1839、Problem2062、Offer48、Offer57_2、Offer59
  * 给定两个字符串 s 和 p，找到 s 中所有 p 的 异位词 的子串，返回这些子串的起始索引。不考虑答案输出的顺序。
  * 异位词 指由相同字母重排列形成的字符串（包括相同的字符串）。
  * <p>
@@ -35,8 +35,8 @@ public class Problem438 {
     }
 
     /**
-     * 滑动窗口，双指针 (使用2个map)
-     * 两个map分别存储s滑动窗口和p中字符对应出现次数
+     * 滑动窗口，双指针 (2个map)
+     * map分别存储s滑动窗口和p中字符出现的次数
      * 时间复杂度O(p.length()+s.length()*|C|)，空间复杂度O(|C|) (字符串仅包含小写字母，所以|C|=26)
      *
      * @param s
@@ -82,8 +82,8 @@ public class Problem438 {
     }
 
     /**
-     * 滑动窗口，双指针 (使用1个map)
-     * map存储s滑动窗口和p中字符对应出现次数之差diff，当diff等于0时，当前滑动窗口表示的字符串，即是p的一个异位词
+     * 滑动窗口，双指针 (1个map)
+     * map存储s滑动窗口和p中字符出现的次数之差diff，当diff等于0时，当前滑动窗口表示的字符串，即是p的一个异位词
      * 时间复杂度O(s.length()+p.length())，空间复杂度O(|C|) (字符串仅包含小写字母，所以|C|=26)
      *
      * @param s
