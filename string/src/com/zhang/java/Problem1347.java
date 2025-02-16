@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2025/4/7 08:44
  * @Author zsy
- * @Description 制造字母异位词的最小步骤数 字母异位词类比Problem49、Problem242、Problem438
+ * @Description 制造字母异位词的最小步骤数 类比Problem299、Problem438 字母异位词类比Problem49、Problem242、Problem438
  * 给你两个长度相等的字符串 s 和 t。
  * 每一个步骤中，你可以选择将 t 中的 任一字符 替换为 另一个字符。
  * 返回使 t 成为 s 的字母异位词的最小步骤数。
