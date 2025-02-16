@@ -83,7 +83,8 @@ public class Problem438 {
 
     /**
      * 滑动窗口，双指针 (1个map)
-     * map存储s滑动窗口和p中字符出现的次数之差diff，当diff等于0时，当前滑动窗口表示的字符串，即是p的一个异位词
+     * map存储p中字符出现的次数减去s滑动窗口中字符出现的次数
+     * 当diff等于0时，当前滑动窗口表示的字符串，即是p的一个异位词
      * 时间复杂度O(s.length()+p.length())，空间复杂度O(|C|) (字符串仅包含小写字母，所以|C|=26)
      *
      * @param s
@@ -95,10 +96,11 @@ public class Problem438 {
             return new ArrayList<>();
         }
 
-        //s滑动窗口和p中字符出现次数之差
+        //p中字符出现的次数减去s滑动窗口中字符出现的次数
         int diff = 0;
         Map<Character, Integer> map = new HashMap<>();
 
+        //p中字符字符出现的次数加1
         for (char c : p.toCharArray()) {
             map.put(c, map.getOrDefault(c, 0) + 1);
             diff++;
@@ -111,15 +113,16 @@ public class Problem438 {
         while (right < s.length()) {
             char c = s.charAt(right);
 
-            //当前字符c不在map中，或当前字符c在map中，但出现次数小于等于0，diff加1
-            if (!map.containsKey(c) || map.get(c) <= 0) {
-                map.put(c, map.getOrDefault(c, 0) - 1);
-                diff++;
-            } else {
-                //当前字符c在map中，diff减1
-                map.put(c, map.get(c) - 1);
+            //map中当前字符c出现的次数大于0，又因为s滑动窗口中右边界是减1，则差值diff减1
+            if (map.containsKey(c) && map.get(c) > 0) {
                 diff--;
+            } else {
+                //map中不存在当前字符c，或者当前字符c出现的次数小于等于0，又因为s滑动窗口中右边界是减1，则差值diff加1
+                diff++;
             }
+
+            //s滑动窗口中右边界字符出现的次数减1
+            map.put(c, map.getOrDefault(c, 0) - 1);
 
             //当前窗口大小和p的长度相同时，才看diff是否为0，是否是p的异位词，并且left指针右移
             if (right - left + 1 == p.length()) {
@@ -128,18 +131,16 @@ public class Problem438 {
                     list.add(left);
                 }
 
-                char leftChar = s.charAt(left);
-
-                //滑动窗口左指针所指字符出现次数小于0，diff减1
-                if (map.get(leftChar) < 0) {
-                    map.put(leftChar, map.get(leftChar) + 1);
-                    diff--;
-                } else {
-                    //滑动窗口左指针所指字符出现次数大于等于0，diff加1
-                    map.put(leftChar, map.get(leftChar) + 1);
+                //map中s滑动窗口中左边界字符出现的次数大于等于0，又因为s滑动窗口中左边界是加1，则差值diff加1
+                if (map.get(s.charAt(left)) >= 0) {
                     diff++;
+                } else {
+                    //map中s滑动窗口中左边界字符出现的次数小于0，又因为s滑动窗口中左边界是加1，则差值diff减1
+                    diff--;
                 }
 
+                //s滑动窗口中左边界字符出现的次数加1
+                map.put(s.charAt(left), map.get(s.charAt(left)) + 1);
                 left++;
             }
 
