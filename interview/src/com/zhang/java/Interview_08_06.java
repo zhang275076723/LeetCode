@@ -33,7 +33,7 @@ public class Interview_08_06 {
         }};
         List<Integer> B = new ArrayList<>();
         List<Integer> C = new ArrayList<>();
-        interview_08_06.hanota(A, B, C);
+        interview_08_06.hanoi(A, B, C);
     }
 
     /**
@@ -48,7 +48,7 @@ public class Interview_08_06 {
      * @param B
      * @param C
      */
-    public void hanota(List<Integer> A, List<Integer> B, List<Integer> C) {
+    public void hanoi(List<Integer> A, List<Integer> B, List<Integer> C) {
         if (A.size() == 0) {
             return;
         }
