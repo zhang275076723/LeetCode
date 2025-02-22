@@ -35,6 +35,7 @@ public class Problem421 {
     public int findMaximumXOR(int[] nums) {
         int maxXorResult = 0;
 
+        //自己异或自己为0，所以不考虑自己和自己的异或
         for (int i = 0; i < nums.length - 1; i++) {
             for (int j = i + 1; j < nums.length; j++) {
                 maxXorResult = Math.max(maxXorResult, nums[i] ^ nums[j]);
@@ -47,7 +48,7 @@ public class Problem421 {
     /**
      * 前缀树
      * 一个数和其他数求异或的最大值，如果当前数当前位为1，则需要找当前位为0的数；如果当前数当前位为0，则需要找当前位为1的数
-     * 时间复杂度O(nlogC)=O(n)，空间复杂度O(n) (C：int表示的最大数)
+     * 时间复杂度O(nlogC)=O(n)，空间复杂度O(nlogC)=O(n) (C=max(nums[i]))
      *
      * @param nums
      * @return
@@ -62,9 +63,9 @@ public class Problem421 {
 
         int maxXorResult = 0;
 
-        //找前缀树中和nums[i]异或的最大值对应的数
-        for (int i = 0; i < nums.length; i++) {
-            maxXorResult = Math.max(maxXorResult, trie.search(nums[i]));
+        //找前缀树中和num异或的最大值
+        for (int num : nums) {
+            maxXorResult = Math.max(maxXorResult, trie.search(num));
         }
 
         return maxXorResult;
@@ -82,7 +83,7 @@ public class Problem421 {
 
         /**
          * num二进制表示的每一位插入前缀树中
-         * 时间复杂度O(logC)=O(1)，空间复杂度O(1) (C：int表示的最大数)
+         * 时间复杂度O(logC)=O(1)，空间复杂度O(1) (C=max(num))
          *
          * @param num
          */
@@ -108,7 +109,7 @@ public class Problem421 {
          * 查询前缀树中和num异或的最大值
          * num当前位为0，则需要找前缀树中当前位为1的节点，如果前缀树中不存在当前位为1的节点，则只能找前缀树中当前位为0的节点；
          * num当前位为1，则需要找前缀树中当前位为0的节点，如果前缀树中不存在当前位为0的节点，则只能找前缀树中当前位为1的节点
-         * 时间复杂度O(logC)，空间复杂度O(1)
+         * 时间复杂度O(logC)，空间复杂度O(1) (C=max(num))
          *
          * @param num
          * @return
