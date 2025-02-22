@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/12/25 08:46
  * @Author zsy
- * @Description 最多能完成排序的块 类比Problem768 数组中的动态规划类比Problem53、Problem135、Problem152、Problem238、Problem724、Problem768、Problem845、Problem1749、Offer42、Offer66、FindLeftBiggerRightLessIndex
+ * @Description 最多能完成排序的块 类比Problem768、Problem1375 数组中的动态规划类比Problem53、Problem135、Problem152、Problem238、Problem724、Problem768、Problem845、Problem1749、Offer42、Offer66、FindLeftBiggerRightLessIndex
  * 给定一个长度为 n 的整数数组 arr ，它表示在 [0, n - 1] 范围内的整数的排列。
  * 我们将 arr 分割成若干 块 (即分区)，并对每个块单独排序。
  * 将它们连接起来后，使得连接的结果和按升序排序后的原数组相同。
@@ -36,40 +36,24 @@ public class Problem769 {
     }
 
     /**
-     * 动态规划
-     * left[i]：arr[i]和arr[i]左边，即arr[0]-arr[i]的最大值
-     * right[i]：arr[i]右边，即arr[i+1]-arr[arr.length-1]的最小值
-     * left[i] = max(left[i-1],arr[i])
-     * right[i] = min(right[i+1],arr[i+1])
-     * left[i]<=right[i]，则arr[0]-arr[i]中的最大值left[i]排序后放在arr[i]，
-     * arr[i+1]-arr[arr.length-1]中的最小值排序后放在arr[i+1]，满足由小到大排序，即可以在下标索引i和i+1分割
-     * 时间复杂度O(n)，空间复杂度O(n)
+     * 贪心
+     * 从左往右遍历，记录当前遍历到元素的最大值max，如果max等于当前下标索引i，则可以在下标索引i和i+1之间分割
+     * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param arr
      * @return
      */
     public int maxChunksToSorted(int[] arr) {
-        int[] left = new int[arr.length];
-        int[] right = new int[arr.length];
-        //left和right数组初始化
-        left[0] = arr[0];
-        right[arr.length - 1] = Integer.MAX_VALUE;
-
-        for (int i = 1; i < arr.length; i++) {
-            left[i] = Math.max(left[i - 1], arr[i]);
-        }
-
-        for (int i = arr.length - 2; i >= 0; i--) {
-            right[i] = Math.min(right[i + 1], arr[i + 1]);
-        }
-
         //最多能划分的区间个数
         int count = 0;
+        //当前遍历到元素的最大值，即arr[0]-arr[i]的最大值
+        int max = 0;
 
         for (int i = 0; i < arr.length; i++) {
-            //left[i]<=right[i]，则arr[0]-arr[i]中的最大值left[i]排序后放在arr[i]，
-            //arr[i+1]-arr[arr.length-1]中的最小值排序后放在arr[i+1]，满足由小到大排序，即可以在下标索引i和i+1分割
-            if (left[i] <= right[i]) {
+            max = Math.max(max, arr[i]);
+
+            //max等于当前下标索引i，则可以在下标索引i和i+1之间分割
+            if (max == i) {
                 count++;
             }
         }
@@ -78,24 +62,41 @@ public class Problem769 {
     }
 
     /**
-     * 贪心
-     * 从左往右遍历，记录当前遍历到的元素的最大值max，如果max等于当前下标索引i，则当前下标索引i可以划分为一个区间，即可以在下标索引i和i+1分割
-     * 时间复杂度O(n)，空间复杂度O(1)
+     * 动态规划
+     * left[i]：arr[0]-arr[i]的最大值
+     * right[i]：arr[i+1]-arr[arr.length-1]的最小值
+     * left[i] = max(left[i-1],arr[i])
+     * right[i] = min(right[i+1],arr[i])
+     * left[i]<=right[i+1]，则arr[0]-arr[i]中的最大值left[i]排序后放在下标索引i，
+     * arr[i+1]-arr[arr.length-1]中的最小值排序后放在下标索引i+1，则可以在下标索引i和i+1之间分割
+     * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param arr
      * @return
      */
     public int maxChunksToSorted2(int[] arr) {
+        int[] left = new int[arr.length];
+        int[] right = new int[arr.length];
+        //left和right数组初始化
+        left[0] = arr[0];
+        right[arr.length - 1] = arr[arr.length - 1];
+
+        for (int i = 1; i < arr.length; i++) {
+            left[i] = Math.max(left[i - 1], arr[i]);
+        }
+
+        for (int i = arr.length - 2; i >= 0; i--) {
+            right[i] = Math.min(right[i + 1], arr[i]);
+        }
+
         //最多能划分的区间个数
-        int count = 0;
-        //当前遍历到的元素的最大值，即arr[0]-arr[i]的最大值
-        int max = 0;
+        //注意：从1开始，整个区间也作为一个块
+        int count = 1;
 
-        for (int i = 0; i < arr.length; i++) {
-            max = Math.max(max, arr[i]);
-
-            //max等于当前下标索引i，则当前下标索引i可以划分为一个区间，即可以在下标索引i和i+1分割
-            if (max == i) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            //left[i]<=right[i+1]，则arr[0]-arr[i]中的最大值left[i]排序后放在下标索引i，
+            //arr[i+1]-arr[arr.length-1]中的最小值排序后放在下标索引i+1，则可以在下标索引i和i+1之间分割
+            if (left[i] <= right[i + 1]) {
                 count++;
             }
         }

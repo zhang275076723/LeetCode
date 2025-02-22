@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/12/26 08:40
  * @Author zsy
- * @Description 最多能完成排序的块 II 类比Problem769 数组中的动态规划类比Problem53、Problem135、Problem152、Problem238、Problem724、Problem769、Problem845、Problem1749、Offer42、Offer66、FindLeftBiggerRightLessIndex
+ * @Description 最多能完成排序的块 II 类比Problem769、Problem1375 数组中的动态规划类比Problem53、Problem135、Problem152、Problem238、Problem724、Problem769、Problem845、Problem1749、Offer42、Offer66、FindLeftBiggerRightLessIndex
  * 给你一个整数数组 arr 。
  * 将 arr 分割成若干 块 ，并将这些块分别进行排序。
  * 之后再连接起来，使得连接的结果和按升序排序后的原数组相同。
@@ -33,8 +33,8 @@ public class Problem768 {
 
     /**
      * 动态规划
-     * left[i]：arr[i]和arr[i]左边，即arr[0]-arr[i]的最大值
-     * right[i]：arr[i]右边，即arr[i+1]-arr[arr.length-1]的最小值
+     * left[i]：arr[0]-arr[i]的最大值
+     * right[i]：arr[i+1]-arr[arr.length-1]的最小值
      * left[i] = max(left[i-1],arr[i])
      * right[i] = min(right[i+1],arr[i+1])
      * left[i]<=right[i]，则arr[0]-arr[i]中的最大值left[i]排序后放在arr[i]，
