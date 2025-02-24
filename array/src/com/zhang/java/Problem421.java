@@ -4,7 +4,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/28 08:38
  * @Author zsy
- * @Description 数组中两个数的最大异或值 类比Problem1707、Problem1803 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem336、Problem676、Problem677、Problem720、Problem745、Problem820、Problem1166、Problem1804、Problem3043 位运算类比
+ * @Description 数组中两个数的最大异或值 类比Problem1707、Problem1803、Problem1938 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem336、Problem676、Problem677、Problem720、Problem745、Problem820、Problem1166、Problem1804、Problem3043 位运算类比
  * 给你一个整数数组 nums ，返回 nums[i] XOR nums[j] 的最大运算结果，其中 0 ≤ i ≤ j < n 。
  * <p>
  * 输入：nums = [3,10,5,25,2,8]
@@ -65,7 +65,7 @@ public class Problem421 {
 
         //找前缀树中和num异或的最大值
         for (int num : nums) {
-            maxXorResult = Math.max(maxXorResult, trie.search(num));
+            maxXorResult = Math.max(maxXorResult, trie.searchMaxXor(num));
         }
 
         return maxXorResult;
@@ -107,14 +107,12 @@ public class Problem421 {
 
         /**
          * 查询前缀树中和num异或的最大值
-         * num当前位为0，则需要找前缀树中当前位为1的节点，如果前缀树中不存在当前位为1的节点，则只能找前缀树中当前位为0的节点；
-         * num当前位为1，则需要找前缀树中当前位为0的节点，如果前缀树中不存在当前位为0的节点，则只能找前缀树中当前位为1的节点
          * 时间复杂度O(logC)，空间复杂度O(1) (C=max(num))
          *
          * @param num
          * @return
          */
-        public int search(int num) {
+        public int searchMaxXor(int num) {
             //前缀树中和num异或的最大值
             int xor = 0;
             TrieNode node = root;

@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2024/6/9 08:38
  * @Author zsy
- * @Description 与数组中元素的最大异或值 类比Problem421、Problem1803 前缀树类比
+ * @Description 与数组中元素的最大异或值 类比Problem421、Problem1803、Problem1938 前缀树类比
  * 给你一个由非负整数组成的数组 nums 。
  * 另有一个查询数组 queries ，其中 queries[i] = [xi, mi] 。
  * 第 i 个查询的答案是 xi 和任何 nums 数组中不超过 mi 的元素按位异或（XOR）得到的最大值。
@@ -84,7 +84,7 @@ public class Problem1707 {
         int[] result = new int[queries.length];
 
         for (int i = 0; i < queries.length; i++) {
-            result[i] = trie.search(queries[i][0], queries[i][1]);
+            result[i] = trie.searchMaxXor(queries[i][0], queries[i][1]);
         }
 
         return result;
@@ -134,7 +134,7 @@ public class Problem1707 {
          * @param limit
          * @return
          */
-        public int search(int num, int limit) {
+        public int searchMaxXor(int num, int limit) {
             //前缀树中不存在小于等于limit的值，则返回-1
             if (root.min > limit) {
                 return -1;

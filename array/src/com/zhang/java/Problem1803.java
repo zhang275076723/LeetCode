@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/6/10 08:55
  * @Author zsy
- * @Description 统计异或值在范围内的数对有多少 类比Problem421、Problem1707 前缀树类比
+ * @Description 统计异或值在范围内的数对有多少 类比Problem421、Problem1707、Problem1938 前缀树类比
  * 给你一个整数数组 nums （下标 从 0 开始 计数）以及两个整数：low 和 high ，请返回 漂亮数对 的数目。
  * 漂亮数对 是一个形如 (i, j) 的数对，其中 0 <= i < j < nums.length 且 low <= (nums[i] XOR nums[j]) <= high 。
  * <p>
@@ -82,7 +82,7 @@ public class Problem1803 {
 
         for (int num : nums) {
             //注意：先查询num对应的漂亮数对，再将num加入前缀树
-            count = count + trie.search(num, high) - trie.search(num, low - 1);
+            count = count + trie.searchXorCount(num, high) - trie.searchXorCount(num, low - 1);
             trie.insert(num);
         }
 
@@ -133,7 +133,7 @@ public class Problem1803 {
          * @param limit
          * @return
          */
-        public int search(int num, int limit) {
+        public int searchXorCount(int num, int limit) {
             //前缀树中和num异或结果小于等于limit的个数
             int count = 0;
             TrieNode node = root;
