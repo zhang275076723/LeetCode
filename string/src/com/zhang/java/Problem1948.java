@@ -96,7 +96,7 @@ public class Problem1948 {
     }
 
     /**
-     * 前缀树+dfs+排序序列化
+     * 哈希表+前缀树+dfs+排序序列化
      * 1、paths中每一条文件夹路径加入前缀树中
      * 2、dfs遍历，得到前缀树中每个节点排序后的序列化，并存储到map中，用于删除重复的文件夹
      * 3、dfs遍历，删除前缀树中的重复文件夹，即删除序列化出现次数大于1的节点
@@ -118,7 +118,7 @@ public class Problem1948 {
         List<List<String>> result = new ArrayList<>();
 
         //3、dfs遍历，删除前缀树中的重复文件夹，即删除序列化出现次数大于1的节点
-        trie.deleteDuplicate(trie.root, new ArrayList<>(), result);
+        trie.delete(trie.root, new ArrayList<>(), result);
 
         return result;
     }
@@ -139,10 +139,10 @@ public class Problem1948 {
             map.put("", 1);
         }
 
-        public void insert(List<String> path) {
+        public void insert(List<String> list) {
             TrieNode node = root;
 
-            for (String str : path) {
+            for (String str : list) {
                 if (!node.children.containsKey(str)) {
                     node.children.put(str, new TrieNode());
                 }
@@ -207,21 +207,27 @@ public class Problem1948 {
          * @param list   当前节点的文件夹路径
          * @param result
          */
-        public void deleteDuplicate(TrieNode node, List<String> list, List<List<String>> result) {
+        public void delete(TrieNode node, List<String> list, List<List<String>> result) {
             //当前节点序列化出现次数大于1，则当前节点为重复文件夹，直接返回
             if (map.get(node.serializeStr) > 1) {
                 return;
             }
 
-            //当前节点的文件夹路径不为空，当前节点不是重复文件夹，则根节点到当前节点的文件夹路径加入result
+            //根节点到当前节点的文件夹路径加入result，空文件夹不加入result中
             if (!list.isEmpty()) {
+                //不能写为result.add(list)，因为传入的是引用，当list修改之后，result中的结果也会修改
                 result.add(new ArrayList<>(list));
             }
 
             for (Map.Entry<String, TrieNode> entry : node.children.entrySet()) {
-                list.add(entry.getKey());
+                //当前节点子节点的文件夹名
+                String childFolderName = entry.getKey();
+                //当前节点子节点
+                TrieNode childNode = entry.getValue();
 
-                deleteDuplicate(entry.getValue(), list, result);
+                list.add(childFolderName);
+
+                delete(childNode, list, result);
 
                 list.remove(list.size() - 1);
             }
