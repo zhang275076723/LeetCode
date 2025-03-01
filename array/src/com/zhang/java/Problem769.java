@@ -64,7 +64,7 @@ public class Problem769 {
     /**
      * 动态规划
      * left[i]：arr[0]-arr[i]的最大值
-     * right[i]：arr[i+1]-arr[arr.length-1]的最小值
+     * right[i]：arr[i]-arr[arr.length-1]的最小值
      * left[i] = max(left[i-1],arr[i])
      * right[i] = min(right[i+1],arr[i])
      * left[i]<=right[i+1]，则arr[0]-arr[i]中的最大值left[i]排序后放在下标索引i，

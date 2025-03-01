@@ -82,8 +82,8 @@ public class Problem631 {
 
     /**
      * 拓扑排序
-     * 节点之间存在求和关系，即节点之间存在有向边，在对某个节点更新时，要按照有向边的先后顺序，从当前节点开始dfs，更新路径上节点的值，
-     * 同时当节点之间不存在依赖关系时，要及时清除之前节点的有向边
+     * 节点之间存在求和关系，即节点之间存在有向边，在对某个节点更新时，要从当前节点开始dfs，更新邻接节点的值，
+     * 同时当节点之间不存在依赖关系时，要及时清除其他节点到当前节点的有向边
      */
     public static class Excel {
         private final int m;
@@ -92,7 +92,7 @@ public class Problem631 {
         private final int[][] arr;
         //邻接矩阵，有向图
         //注意：共mn个节点，每个节点都可以其他节点存在边，即为稠密图，适用邻接矩阵，不适用邻接表
-        //注意：两个节点之间可以存在多条边
+        //注意：两个节点之间可以存在多条边，即graph的值表示边的个数
         private final int[][] graph;
 
         public Excel(int height, char width) {
@@ -103,9 +103,9 @@ public class Problem631 {
         }
 
         /**
-         * 1、修改当前节点(row,column)值为val
-         * 2、如果当前节点(row,column)是求和公式，则当前求和公式失效，即删除指向当前节点的所有边
-         * 3、如果其他节点依赖当前节点，即存在当前节点指向其他节点的边，则从当前节点开始dfs，更新路径上节点的值
+         * 1、删除指向当前节点的所有边，如果当前节点(row,column)是求和公式，则当前求和公式失效
+         * 2、修改当前节点(row,column)值为val
+         * 3、从当前节点开始dfs，更新路径上节点的值，如果存在当前节点到其他节点的边，则更新邻接节点的值
          * 时间复杂度O((mn)^2)，空间复杂度O(mn)
          *
          * @param row
@@ -118,15 +118,15 @@ public class Problem631 {
             //当前节点在邻接矩阵中的下标索引
             int index = (row - 1) * n + column - 'A';
 
-            //1、修改当前节点(row,column)值为val
-            arr[row - 1][column - 'A'] = val;
-
-            //2、如果当前节点(row,column)是求和公式，则当前求和公式失效，即删除指向当前节点的所有边
+            //1、删除指向当前节点的所有边，如果当前节点(row,column)是求和公式，则当前求和公式失效
             for (int i = 0; i < m * n; i++) {
                 graph[i][index] = 0;
             }
 
-            //3、如果其他节点依赖当前节点，即存在当前节点指向其他节点的边，则从当前节点开始dfs，更新路径上节点的值
+            //2、修改当前节点(row,column)值为val
+            arr[row - 1][column - 'A'] = val;
+
+            //3、从当前节点开始dfs，更新路径上节点的值，如果存在当前节点到其他节点的边，则更新邻接节点的值
             dfs(index, addValue);
         }
 
@@ -135,10 +135,10 @@ public class Problem631 {
         }
 
         /**
-         * 1、如果当前节点(row,column)是求和公式，则当前求和公式失效，即删除指向当前节点的所有边
+         * 1、删除指向当前节点的所有边，如果当前节点(row,column)是求和公式，则当前求和公式失效
          * 2、遍历numbers，在图中添加指向当前节点的边，并计算numbers中元素之和result
          * 3、修改当前节点(row,column)值为result
-         * 4、如果其他节点依赖当前节点，即存在当前节点指向其他节点的边，则从当前节点开始dfs，更新路径上节点的值
+         * 4、从当前节点开始dfs，更新路径上节点的值，如果存在当前节点到其他节点的边，则更新邻接节点的值
          * 时间复杂度O((mn)^2)，空间复杂度O(mn)
          *
          * @param row
@@ -152,7 +152,7 @@ public class Problem631 {
             //当前节点在邻接矩阵中的下标索引
             int index = (row - 1) * n + column - 'A';
 
-            //1、如果当前节点(row,column)是求和公式，则当前求和公式失效，即删除指向当前节点的所有边
+            //1、删除指向当前节点的所有边，如果当前节点(row,column)是求和公式，则当前求和公式失效
             for (int i = 0; i < m * n; i++) {
                 graph[i][index] = 0;
             }
@@ -172,17 +172,24 @@ public class Problem631 {
                 } else {
                     //number为一组单元格
 
-                    String[] numberArr = number.split(":");
+                    //number中':'下标索引
+                    int colonIndex = number.indexOf(':');
+                    //矩阵左上角单元格的横坐标
+                    int x1 = Integer.parseInt(number.substring(1, colonIndex)) - 1;
+                    //矩阵左上角单元格的纵坐标
+                    int y1 = number.charAt(0) - 'A';
+                    //矩阵右下角单元格的横坐标
+                    int x2 = Integer.parseInt(number.substring(colonIndex + 2)) - 1;
+                    //矩阵右下角单元格的纵坐标
+                    int y2 = number.charAt(colonIndex + 1) - 'A';
 
-                    for (int i = 0; i < numberArr.length; i++) {
-                        //当前单元格的横坐标
-                        int x = Integer.parseInt(numberArr[i].substring(1)) - 1;
-                        //当前单元格的纵坐标
-                        int y = numberArr[i].charAt(0) - 'A';
-
-                        //节点(x,y)到当前节点(row,column)的边加1
-                        graph[x * n + y][index]++;
-                        result = result + arr[x][y];
+                    //矩阵(x1,y1)到(x2,y2)中的节点都要添加
+                    for (int i = x1; i <= x2; i++) {
+                        for (int j = y1; j <= y2; j++) {
+                            //节点(i,j)到当前节点(row,column)的边加1
+                            graph[i * n + j][index]++;
+                            result = result + arr[i][j];
+                        }
                     }
                 }
             }
@@ -192,29 +199,30 @@ public class Problem631 {
             //3、修改当前节点(row,column)值为result
             arr[row - 1][column - 'A'] = result;
 
-            //4、如果其他节点依赖当前节点，即存在当前节点指向其他节点的边，则从当前节点开始dfs，更新路径上节点的值
+            //4、从当前节点开始dfs，更新路径上节点的值，如果存在当前节点到其他节点的边，则更新邻接节点的值
             dfs(index, addValue);
 
             return result;
         }
 
         /**
-         * 从节点u开始dfs，更新路径上节点的值
+         * 从节点u开始dfs，更新邻接节点i的值加上addValue
          * 时间复杂度O((mn)^2)，空间复杂度O(mn)
          *
          * @param u
-         * @param addValue 节点u到节点i每有一条边需要加上的值
+         * @param addValue
          */
         private void dfs(int u, int addValue) {
+            //从节点u找邻接节点i，更新节点i的值加上addValue
             for (int i = 0; i < m * n; i++) {
                 if (graph[u][i] != 0) {
                     //节点i在arr中的横坐标
                     int x = i / n;
                     //节点i在arr中的纵坐标
                     int y = i % n;
-                    //注意：节点u到节点i不止存在一条边，所以每有一条边加上addValue
+                    //注意：节点u到节点i的边不止存在一条，所以是加上addValue乘以边数，而不是加上addValue
                     arr[x][y] = arr[x][y] + graph[u][i] * addValue;
-                    //注意：节点i到节点i的邻接节点的边，每有一条边加上graph[u][i]*addValue
+                    //注意：节点i到节点i邻接节点的边，加上addValue乘以边数
                     dfs(i, graph[u][i] * addValue);
                 }
             }

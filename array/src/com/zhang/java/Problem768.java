@@ -34,11 +34,11 @@ public class Problem768 {
     /**
      * 动态规划
      * left[i]：arr[0]-arr[i]的最大值
-     * right[i]：arr[i+1]-arr[arr.length-1]的最小值
+     * right[i]：arr[i]-arr[arr.length-1]的最小值
      * left[i] = max(left[i-1],arr[i])
-     * right[i] = min(right[i+1],arr[i+1])
-     * left[i]<=right[i]，则arr[0]-arr[i]中的最大值left[i]排序后放在arr[i]，
-     * arr[i+1]-arr[arr.length-1]中的最小值排序后放在arr[i+1]，满足由小到大排序，即可以在下标索引i和i+1分割
+     * right[i] = min(right[i+1],arr[i])
+     * left[i]<=right[i+1]，则arr[0]-arr[i]中的最大值left[i]排序后放在下标索引i，
+     * arr[i+1]-arr[arr.length-1]中的最小值排序后放在下标索引i+1，则可以在下标索引i和i+1之间分割
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param arr
@@ -49,23 +49,24 @@ public class Problem768 {
         int[] right = new int[arr.length];
         //left和right数组初始化
         left[0] = arr[0];
-        right[arr.length - 1] = Integer.MAX_VALUE;
+        right[arr.length - 1] = arr[arr.length - 1];
 
         for (int i = 1; i < arr.length; i++) {
             left[i] = Math.max(left[i - 1], arr[i]);
         }
 
         for (int i = arr.length - 2; i >= 0; i--) {
-            right[i] = Math.min(right[i + 1], arr[i + 1]);
+            right[i] = Math.min(right[i + 1], arr[i]);
         }
 
         //最多能划分的区间个数
-        int count = 0;
+        //注意：从1开始，整个区间也作为一个块
+        int count = 1;
 
-        for (int i = 0; i < arr.length; i++) {
-            //left[i]<=right[i]，则arr[0]-arr[i]中的最大值left[i]排序后放在arr[i]，
-            //arr[i+1]-arr[arr.length-1]中的最小值排序后放在arr[i+1]，满足由小到大排序，即可以在下标索引i和i+1分割
-            if (left[i] <= right[i]) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            //left[i]<=right[i+1]，则arr[0]-arr[i]中的最大值left[i]排序后放在下标索引i，
+            //arr[i+1]-arr[arr.length-1]中的最小值排序后放在下标索引i+1，则可以在下标索引i和i+1之间分割
+            if (left[i] <= right[i + 1]) {
                 count++;
             }
         }
