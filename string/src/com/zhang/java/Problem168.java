@@ -37,7 +37,7 @@ public class Problem168 {
 
     /**
      * 模拟
-     * A-Z是26进制数，columnNumber每次先减1，再除以26，得到的余数对应的字符再逆序即为转化后的结果
+     * A-Z是26进制数，columnNumber需要先减1，再除以26，得到的余数对应的字符再逆序即为转化后的结果
      * 时间复杂度O(logn)，空间复杂度O(1)
      *
      * @param columnNumber
@@ -47,10 +47,9 @@ public class Problem168 {
         StringBuilder sb = new StringBuilder();
 
         while (columnNumber != 0) {
-            //因为A对应1，而不是正常进制数对应0，所以每次要先减1
-            columnNumber--;
-            sb.append((char) (columnNumber % 26 + 'A'));
-            columnNumber = columnNumber / 26;
+            //因为A对应1，而不是正常进制数对应0，所以需要先减1
+            sb.append((char) ((columnNumber - 1) % 26 + 'A'));
+            columnNumber = (columnNumber - 1) / 26;
         }
 
         //逆序得到最终结果
