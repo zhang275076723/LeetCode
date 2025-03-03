@@ -46,7 +46,7 @@ public class Problem211 {
     }
 
     /**
-     * 前缀树
+     * 前缀树+回溯+剪枝
      */
     static class WordDictionary {
         private final TrieNode root;
