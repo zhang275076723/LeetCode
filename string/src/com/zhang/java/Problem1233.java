@@ -73,7 +73,7 @@ public class Problem1233 {
     }
 
     /**
-     * 前缀树
+     * 前缀树+回溯+剪枝
      * 时间复杂度O(mn)，空间复杂度O(mn) (n=folder.length，m=max(folder[i].length()))
      *
      * @param folder

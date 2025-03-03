@@ -52,7 +52,7 @@ public class Problem676 {
     }
 
     /**
-     * 前缀树
+     * 前缀树+回溯+剪枝
      */
     static class MagicDictionary {
         private final TrieNode root;

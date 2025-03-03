@@ -134,10 +134,12 @@ public class Problem1032 {
 
                 for (int i = sb.length() - 1; i >= 0; i--) {
                     char c = sb.charAt(i);
-                    node = node.children.get(c);
 
-                    //前缀树中不存在当前字符c，则前缀树中不存在sb的逆序前缀单词，返回false
-                    if (node == null) {
+                    //当前节点子节点存在字符c，则继续往子节点查找
+                    if (node.children.containsKey(c)) {
+                        node = node.children.get(c);
+                    } else {
+                        //当前节点子节点不存在字符c，则前缀树中不存在sb的逆序前缀单词，返回false
                         return false;
                     }
 
