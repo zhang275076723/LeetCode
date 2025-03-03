@@ -67,12 +67,12 @@ public class Problem642 {
     }
 
     /**
-     * 前缀树+优先队列，小根堆+回溯+剪枝
+     * 前缀树+dfs+优先队列，小根堆
      */
     static class AutocompleteSystem {
         //前缀树
         private final Trie trie;
-        //当前已经输入的字符串
+        //当前输入的字符串
         private StringBuilder sb;
 
         public AutocompleteSystem(String[] sentences, int[] times) {
@@ -95,7 +95,7 @@ public class Problem642 {
 
             //当前输入的字符c加入sb中
             sb.append(c);
-            //前缀树中查询当前输入的字符串，得到末尾前缀树节点
+            //前缀树中查询当前输入的字符串，得到末尾字符对应的前缀树节点
             Trie.TrieNode node = trie.search(sb.toString());
 
             //前缀树中不存在当前输入的字符串，则返回空集合
@@ -103,7 +103,7 @@ public class Problem642 {
                 return new ArrayList<>();
             }
 
-            //小根堆，先按照节点出现次数由小到大排序，再按照节点字符串字典序由大到小排序
+            //小根堆，先按照节点表示的字符串出现的次数由小到大排序，再按照节点表示的字符串字典序由大到小排序
             PriorityQueue<Trie.TrieNode> priorityQueue = new PriorityQueue<>(new Comparator<Trie.TrieNode>() {
                 @Override
                 public int compare(Trie.TrieNode node1, Trie.TrieNode node2) {
@@ -115,8 +115,8 @@ public class Problem642 {
                 }
             });
 
-            //从node节点开始找前缀树中所有前缀为当前输入的字符串的节点
-            backtrack(node, priorityQueue);
+            //从node节点开始dfs找前缀树中当前节点的所有子节点，即找到所有前缀为当前输入的字符串的字符串
+            dfs(node, priorityQueue);
 
             //注意：需要首添加，所以使用的是LinkedList
             LinkedList<String> list = new LinkedList<>();
@@ -128,12 +128,12 @@ public class Problem642 {
             return list;
         }
 
-        private void backtrack(Trie.TrieNode node, PriorityQueue<Trie.TrieNode> priorityQueue) {
+        private void dfs(Trie.TrieNode node, PriorityQueue<Trie.TrieNode> priorityQueue) {
             if (node == null) {
                 return;
             }
 
-            //根节点到当前节点的字符串的前缀是当前输入的字符串，则当前节点加入小根堆中
+            //根节点到当前节点表示的字符串的前缀是当前输入的字符串，则当前节点加入小根堆
             if (node.isEnd) {
                 priorityQueue.offer(node);
 
@@ -143,7 +143,7 @@ public class Problem642 {
             }
 
             for (Trie.TrieNode nextNode : node.children.values()) {
-                backtrack(nextNode, priorityQueue);
+                dfs(nextNode, priorityQueue);
             }
         }
 
@@ -158,7 +158,7 @@ public class Problem642 {
             }
 
             /**
-             * word加入前缀树中，并且word出现次数增加time次
+             * word加入前缀树中，word出现次数增加time次
              * 时间复杂度O(n)，空间复杂度O(1)
              *
              * @param word
@@ -209,7 +209,7 @@ public class Problem642 {
                 private final Map<Character, TrieNode> children;
                 //根节点到当前节点表示的字符串
                 private String str;
-                //str出现的次数
+                //根节点到当前节点表示的字符串出现的次数
                 private int count;
                 private boolean isEnd;
 
