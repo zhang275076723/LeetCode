@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @Date 2022/4/22 15:22
  * @Author zsy
- * @Description 合并区间 字节面试题 类比Problem616、Problem758、Problem1065 区间类比Problem57、Problem163、Problem228、Problem252、Problem253、Problem352、Problem406、Problem435、Problem436、Problem632、Problem763、Problem855、Problem986、Problem1288、Problem2402
+ * @Description 合并区间 字节面试题 区间类比Problem57、Problem163、Problem228、Problem252、Problem253、Problem352、Problem406、Problem435、Problem436、Problem632、Problem763、Problem855、Problem986、Problem1288、Problem2402
  * 以数组 intervals 表示若干个区间的集合，其中单个区间为 intervals[i] = [starti, endi] 。
  * 请你合并所有重叠的区间，并返回 一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间。
  * <p>
@@ -32,10 +32,10 @@ public class Problem56 {
 
     /**
      * 按照左区间interval[i][0]由小到大排序，
-     * 如果当前区间左边界intervals[i][0]小于等于要合并区间的右边界end，则当前区间可以合并，
-     * 更新end为intervals[i][1]和end中较大值；
      * 如果当前区间左边界intervals[i][0]大于要合并区间的右边界end，则要合并区间[start,end]加入结果集合，
-     * 并重新赋值start为intervals[i][0]，end为intervals[i][1]
+     * 并重新赋值start为intervals[i][0]，end为intervals[i][1]；
+     * 如果当前区间左边界intervals[i][0]小于等于要合并区间的右边界end，则当前区间可以合并，
+     * 更新end为intervals[i][1]和end中较大值
      * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
      * @param intervals
@@ -56,18 +56,15 @@ public class Problem56 {
         int end = intervals[0][1];
 
         for (int i = 1; i < intervals.length; i++) {
-            //当前区间左边界intervals[i][0]小于等于要合并区间的右边界end，则当前区间可以合并，更新end
-            if (intervals[i][0] <= end) {
-                //更新end
-                end = Math.max(end, intervals[i][1]);
-            } else {
-                //当前区间左边界intervals[i][0]大于要合并区间的右边界end，则要合并区间[start,end]加入结果集合，并重新赋值要合并区间的左右边界
-
+            if (intervals[i][0] > end) {
                 //要合并区间的区间加入结果集合list
                 list.add(new int[]{start, end});
                 //重新赋值要合并区间的左右边界
                 start = intervals[i][0];
                 end = intervals[i][1];
+            } else {
+                //更新end
+                end = Math.max(end, intervals[i][1]);
             }
         }
 
