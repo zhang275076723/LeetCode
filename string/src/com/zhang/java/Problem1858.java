@@ -3,33 +3,37 @@ package com.zhang.java;
 import java.util.*;
 
 /**
- * @Date 2024/1/18 09:02
+ * @Date 2024/6/6 08:17
  * @Author zsy
- * @Description 词典中最长的单词 同Problem1858 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem336、Problem421、Problem676、Problem677、Problem745、Problem820、Problem1166、Problem1804、Problem3043
- * 给出一个字符串数组 words 组成的一本英语词典。
- * 返回 words 中最长的一个单词，该单词是由 words 词典中其他单词逐步添加一个字母组成。
- * 若其中有多个可行的答案，则返回答案中字典序最小的单词。
- * 若无答案，则返回空字符串。
+ * @Description 包含所有前缀的最长单词 同Problem720 前缀树类比
+ * 给定一个字符串数组 words，找出 words 中所有的前缀都在 words 中的最长字符串。
+ * 例如，令 words = ["a", "app", "ap"]。
+ * 字符串 "app" 含前缀 "ap" 和 "a" ，都在 words 中。
+ * 返回符合上述要求的字符串。
+ * 如果存在多个（符合条件的）相同长度的字符串，返回字典序中最小的字符串，如果这样的字符串不存在，返回 ""。
  * <p>
- * 输入：words = ["w","wo","wor","worl", "world"]
- * 输出："world"
- * 解释： 单词"world"可由"w", "wo", "wor", 和 "worl"逐步添加一个字母组成。
+ * 输入： words = ["k","ki","kir","kira", "kiran"]
+ * 输出： "kiran"
+ * 解释： "kiran" 含前缀 "kira"、 "kir"、 "ki"、 和 "k"，这些前缀都出现在 words 中。
  * <p>
- * 输入：words = ["a", "banana", "app", "appl", "ap", "apply", "apple"]
- * 输出："apple"
- * 解释："apply" 和 "apple" 都能由词典中的单词组成。但是 "apple" 的字典序小于 "apply"
+ * 输入： words = ["a", "banana", "app", "appl", "ap", "apply", "apple"]
+ * 输出： "apple"
+ * 解释： "apple" 和 "apply" 都在 words 中含有各自的所有前缀。
+ * 然而，"apple" 在字典序中更小，所以我们返回之。
  * <p>
- * 1 <= words.length <= 1000
- * 1 <= words[i].length <= 30
- * 所有输入的字符串 words[i] 都只包含小写字母。
+ * 输入： words = ["abc", "bc", "ab", "qwe"]
+ * 输出： ""
+ * <p>
+ * 1 <= words.length <= 10^5
+ * 1 <= words[i].length <= 10^5
+ * 1 <= sum(words[i].length) <= 10^5
  */
-public class Problem720 {
+public class Problem1858 {
     public static void main(String[] args) {
-        Problem720 problem720 = new Problem720();
-//        String[] words = {"a", "banana", "app", "appl", "ap", "apply", "apple"};
-        String[] words = {"yo", "ew", "fc", "zrc", "yodn", "fcm", "qm", "qmo", "fcmz", "z", "ewq", "yod", "ewqz", "y"};
-        System.out.println(problem720.longestWord(words));
-        System.out.println(problem720.longestWord2(words));
+        Problem1858 problem1858 = new Problem1858();
+        String[] words = {"a", "banana", "app", "appl", "ap", "apply", "apple"};
+        System.out.println(problem1858.longestWord(words));
+        System.out.println(problem1858.longestWord2(words));
     }
 
     /**
