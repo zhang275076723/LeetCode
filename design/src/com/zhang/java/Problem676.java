@@ -49,16 +49,20 @@ public class Problem676 {
         System.out.println(magicDictionary.search("he1ll"));
         // 返回 False
         System.out.println(magicDictionary.search("leetcoded"));
+
+//        MagicDictionary magicDictionary = new MagicDictionary();
+//        magicDictionary.buildDict(new String[]{"judge", "judgg"});
+//        System.out.println(magicDictionary.search("juggg"));
     }
 
     /**
      * 前缀树+回溯+剪枝
      */
     static class MagicDictionary {
-        private final TrieNode root;
+        private final Trie trie;
 
         public MagicDictionary() {
-            root = new TrieNode();
+            trie = new Trie();
         }
 
         /**
@@ -68,76 +72,90 @@ public class Problem676 {
          */
         public void buildDict(String[] dictionary) {
             for (String word : dictionary) {
-                insert(word);
+                trie.insert(word);
             }
-        }
-
-        public void insert(String word) {
-            TrieNode node = root;
-
-            for (char c : word.toCharArray()) {
-                if (!node.children.containsKey(c)) {
-                    node.children.put(c, new TrieNode());
-                }
-
-                node = node.children.get(c);
-            }
-
-            node.isEnd = true;
         }
 
         public boolean search(String searchWord) {
-            //初始化searchWord中某一位是否修改标志位为false
-            return backtrack(0, root, searchWord, false);
+            return trie.search(searchWord);
         }
 
         /**
-         * 时间复杂度O(n|Σ|)，空间复杂度O(n) (n=searchWord.length()，|Σ|=26，只包含小写英文字母)
-         *
-         * @param t
-         * @param node
-         * @param searchWord
-         * @param flag       searchWord中某一位是否修改标志位
-         * @return
+         * 前缀树
          */
-        private boolean backtrack(int t, TrieNode node, String searchWord, boolean flag) {
-            //遍历到单词末尾，searchWord中某一位发生修改，并且当前节点是前缀树中一个单词的结尾，才能返回true
-            if (t == searchWord.length()) {
-                return flag && node.isEnd;
+        private static class Trie {
+            private final TrieNode root;
+
+            public Trie() {
+                root = new TrieNode();
             }
 
-            //当前字符searchWord[t]
-            char c = searchWord.charAt(t);
+            public void insert(String word) {
+                TrieNode node = root;
 
-            //当前字符不修改，继续往后遍历
-            if (node.children.containsKey(c) && backtrack(t + 1, node.children.get(c), searchWord, flag)) {
-                return true;
+                for (char c : word.toCharArray()) {
+                    if (!node.children.containsKey(c)) {
+                        node.children.put(c, new TrieNode());
+                    }
+
+                    node = node.children.get(c);
+                }
+
+                node.isEnd = true;
             }
 
-            //searchWord中还没有字符修改，则修改当前字符为'a'+i
-            if (!flag) {
-                for (int i = 0; i < 26; i++) {
-                    if (c != (char) ('a' + i) && node.children.containsKey((char) ('a' + i)) &&
-                            backtrack(t + 1, node.children.get((char) ('a' + i)), searchWord, true)) {
-                        return true;
+            public boolean search(String word) {
+                //初始化修改标志位为false
+                return backtrack(0, false, root, word);
+            }
+
+            /**
+             * 时间复杂度O(n|Σ|)，空间复杂度O(n) (n=word.length()，|Σ|=26，只包含小写英文字母)
+             *
+             * @param t
+             * @param flag word中某一位是否修改标志位
+             * @param node
+             * @param word
+             * @return
+             */
+            private boolean backtrack(int t, boolean flag, TrieNode node, String word) {
+                //遍历到单词末尾，当前节点是前缀树中一个单词的结尾，并且word中某一位发生修改，则返回true
+                if (t == word.length()) {
+                    return node.isEnd && flag;
+                }
+
+                //当前字符word[t]
+                char c = word.charAt(t);
+
+                for (Map.Entry<Character, TrieNode> entry : node.children.entrySet()) {
+                    //当前字符c和前缀树中当前节点得子节点字符相等，则当前字符c不修改，继续往后遍历
+                    if (c == entry.getKey()) {
+                        if (backtrack(t + 1, flag, entry.getValue(), word)) {
+                            return true;
+                        }
+                    } else {
+                        //当前字符c和前缀树中当前节点的子节点字符不相等，则当前字符c必须修改，才能继续往后遍历
+                        if (!flag && backtrack(t + 1, true, entry.getValue(), word)) {
+                            return true;
+                        }
                     }
                 }
+
+                //遍历结束，word中某一位发生修改也不是前缀树中的单词，返回false
+                return false;
             }
 
-            //遍历结束，searchWord中某一位发生修改也不是前缀树中的单词，返回false
-            return false;
-        }
+            /**
+             * 前缀树节点
+             */
+            private static class TrieNode {
+                private final Map<Character, TrieNode> children;
+                private boolean isEnd;
 
-        /**
-         * 前缀树节点
-         */
-        private static class TrieNode {
-            private final Map<Character, TrieNode> children;
-            private boolean isEnd;
-
-            public TrieNode() {
-                children = new HashMap<>();
-                isEnd = false;
+                public TrieNode() {
+                    children = new HashMap<>();
+                    isEnd = false;
+                }
             }
         }
     }

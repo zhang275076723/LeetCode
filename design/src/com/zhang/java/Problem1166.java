@@ -105,7 +105,7 @@ public class Problem1166 {
                 //路径数组
                 String[] arr = path.split("/");
 
-                //注意：i是从1开始到arr.length-2，arr[0]为空不考虑，arr[arr.length-1]结尾路径也不考虑
+                //注意：i是从1开始到arr.length-2，arr[0]为空不考虑，arr[arr.length-1]结尾路径需要特殊考虑
                 for (int i = 1; i < arr.length - 1; i++) {
                     //父路径不存在，返回false
                     if (!node.children.containsKey(arr[i])) {

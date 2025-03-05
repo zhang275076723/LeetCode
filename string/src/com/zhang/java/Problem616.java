@@ -114,9 +114,9 @@ public class Problem616 {
             index = arr[1] + 1;
         }
 
-        //s[list2.get(list2.size()-1)[1]+1]-s[s.length()-1]为不需要添加粗体标签的字符串
-        if (list2.get(list2.size() - 1)[1] != s.length() - 1) {
-            sb.append(s.substring(list2.get(list2.size() - 1)[1] + 1, s.length()));
+        //s[index]-s[s.length()-1]为不需要添加粗体标签的字符串
+        if (index != s.length()) {
+            sb.append(s.substring(index, s.length()));
         }
 
         return sb.toString();

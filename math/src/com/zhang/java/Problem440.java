@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/9/13 8:40
  * @Author zsy
- * @Description 字典序的第K小数字 字节面试题 字典序类比Problem386、Offer17 二分搜索树类比Problem4、Problem230、Problem378
+ * @Description 字典序的第K小数字 字节面试题 类比Problem357、Problem386、Offer17 二分搜索树类比Problem4、Problem230、Problem378
  * 给定整数 n 和 k，返回  [1, n] 中字典序第 k 小的数字。
  * <p>
  * 输入: n = 13, k = 2
@@ -17,14 +17,14 @@ package com.zhang.java;
  */
 public class Problem440 {
     /**
-     * 回溯+剪枝中记录当前元素是第几小元素
+     * 回溯+剪枝中当前遍历到的元素是第几小元素
      */
     private int count = 0;
 
     /**
      * 回溯+剪枝中第k小元素
      */
-    private int num;
+    private int result;
 
     public static void main(String[] args) {
         Problem440 problem440 = new Problem440();
@@ -40,7 +40,7 @@ public class Problem440 {
 
     /**
      * 回溯+剪枝
-     * 注意：n和k过大会int溢出，所以要使用long
+     * 注意：n和k过大会导致int溢出，所以要使用long
      * 时间复杂度O(k)，空间复杂度O(logn)
      *
      * @param n
@@ -52,17 +52,17 @@ public class Problem440 {
             return 1;
         }
 
-        //设置每个数的起始值，从1-9
+        //每个数从1-9开始
         for (int i = 1; i <= 9; i++) {
             backtrack(i, n, k);
         }
 
-        return num;
+        return result;
     }
 
     /**
      * 迭代
-     * 注意：n和k过大会int溢出，所以要使用long
+     * 注意：n和k过大会导致int溢出，所以要使用long
      * 时间复杂度O(k)，空间复杂度O(1)
      *
      * @param n
@@ -86,7 +86,7 @@ public class Problem440 {
             if (num * 10 <= n) {
                 num = num * 10;
             } else {
-                //num大于等于n，或者num末尾为9，，说明num末尾值字典序已经查询完毕，查询num末尾位的前一位
+                //num大于等于n，或者num末尾为9，则num末尾值字典序已经查询完毕，查询num末尾位的前一位
                 while (num >= n || num % 10 == 9) {
                     num = num / 10;
                 }
@@ -102,8 +102,8 @@ public class Problem440 {
     /**
      * 字典树思想
      * 找num为根节点小于等于n的字典序个数count，
-     * 如果count小于k，第k小节点不在num为根节点的树中，找num+1为根节点小于等于n的字典序个数，找第k-count个节点，直至k为0，表示找到
-     * 如果count大于等于k，第k小节点在i为根节点的树中，递归找num*10为根节点中子树小于等于n的字典序个数，直至k为0，表示找到
+     * 如果count小于k，第k小节点不在num为根节点的树中，找num+1为根节点小于等于n的字典序个数，找第k-count个节点，直至k为1，则找到
+     * 如果count大于等于k，第k小节点在i为根节点的树中，递归找num*10为根节点中子树小于等于n的字典序个数，直至k为1，则找到
      * 时间复杂度O((logn)^2)，空间复杂度O(1) (树的高度为log10(n)，每次查找的时间复杂度O(log10(n))，最多需要计算10*(log10(n))^2次)
      *
      * @param n
@@ -115,7 +115,7 @@ public class Problem440 {
             return 1;
         }
 
-        //t为long，避免乘10，int溢出
+        //num为long，避免乘10，int溢出
         long num = 1;
         //以num为根节点字典序树中小于等于n的个数
         int count = getLessEqualThanNCount(num, n);
@@ -138,22 +138,22 @@ public class Problem440 {
         return (int) num;
     }
 
-    private void backtrack(long t, int n, int k) {
-        //当前数字t已经超过最大值n，或者已经遍历到了字典序第k小元素，直接返回
-        if (t > n || count >= k) {
+    private void backtrack(long num, int n, int k) {
+        //当前数字num已经超过最大值n，或者已经遍历到了字典序第k小元素，直接返回
+        if (num > n || count >= k) {
             return;
         }
 
         count++;
 
         if (count == k) {
-            //t为long，避免乘10，int溢出
-            num = (int) t;
+            //num为long，避免乘10，int溢出
+            result = (int) num;
             return;
         }
 
         for (int i = 0; i <= 9; i++) {
-            backtrack(t * 10 + i, n, k);
+            backtrack(num * 10 + i, n, k);
         }
     }
 

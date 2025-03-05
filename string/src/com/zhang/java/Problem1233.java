@@ -40,7 +40,7 @@ public class Problem1233 {
      * 排序
      * folder[i]按照字典序排序，如果结果集合的末尾文件夹加上"/"是当前文件夹folder[i]的前缀，
      * 则当前文件夹folder[i]是结果集合的末尾文件夹的子文件夹
-     * 时间复杂度O(mnlogn+mn)，空间复杂度O(logn+m) (n=folder.length，m=max(folder[i].length()))
+     * 时间复杂度O(mn*logn+mn)，空间复杂度O(logn+m) (n=folder.length，m=max(folder[i].length()))
      * (排序的空间复杂度O(logn)，compareTo的空间复杂度O(m))
      *
      * @param folder
@@ -64,7 +64,8 @@ public class Problem1233 {
             String lastFolder = list.get(list.size() - 1);
 
             //lastFolder加上"/"是当前文件夹folder[i]的前缀，则当前文件夹folder[i]是lastFolder的子文件夹；否则，不是子文件夹
-            if (lastFolder.length() >= folder[i].length() || !((lastFolder + "/").equals(folder[i].substring(0, lastFolder.length() + 1)))) {
+            if (!(lastFolder.length() < folder[i].length() &&
+                    (lastFolder + "/").equals(folder[i].substring(0, lastFolder.length() + 1)))) {
                 list.add(folder[i]);
             }
         }
@@ -73,7 +74,7 @@ public class Problem1233 {
     }
 
     /**
-     * 前缀树+回溯+剪枝
+     * 前缀树+dfs
      * 时间复杂度O(mn)，空间复杂度O(mn) (n=folder.length，m=max(folder[i].length()))
      *
      * @param folder
@@ -86,13 +87,7 @@ public class Problem1233 {
             trie.insert(folder[i], i);
         }
 
-        List<String> list = new ArrayList<>();
-
-        for (int index : trie.search()) {
-            list.add(folder[index]);
-        }
-
-        return list;
+        return trie.search(folder);
     }
 
     /**
@@ -106,11 +101,11 @@ public class Problem1233 {
         }
 
         /**
-         * 文件夹str加入前缀树中，并设置末尾节点在folder中的下标索引为index
+         * 文件夹路径加入前缀树中，并设置末尾节点在folder中的下标索引为index
          * 时间复杂度O(n)，空间复杂度O(1)
          *
          * @param str
-         * @param index 文件夹str在folder中的下标索引
+         * @param index 文件夹路径str在folder中的下标索引
          */
         public void insert(String str, int index) {
             TrieNode node = root;
@@ -134,26 +129,28 @@ public class Problem1233 {
          * 前缀树中查询不是子文件夹的文件夹在folder中的下标索引集合
          * 时间复杂度O(mn)，空间复杂度O(mn) (n=folder.length，m=max(folder[i].length()))
          *
+         * @param folder
          * @return
          */
-        public List<Integer> search() {
-            List<Integer> list = new ArrayList<>();
+        public List<String> search(String[] folder) {
+            List<String> list = new ArrayList<>();
 
-            backtrack(root, list);
+            dfs(root, list, folder);
 
             return list;
         }
 
-        private void backtrack(TrieNode node, List<Integer> list) {
-            //node.index不等于-1，则根节点到当前节点的文件夹不是子文件夹，对应index加入list中
+        private void dfs(TrieNode node, List<String> list, String[] folder) {
+            //找到第一个根节点到当前节点的文件夹不是子文件夹，则对应的文件夹路径加入list中，
+            //从当前节点往子节点的路径就不需要遍历，直接返回
             if (node.index != -1) {
-                list.add(node.index);
+                list.add(folder[node.index]);
                 return;
             }
 
-            //从当前节点继续往子节点查询
+            //继续往子节点dfs
             for (TrieNode childNode : node.children.values()) {
-                backtrack(childNode, list);
+                dfs(childNode, list, folder);
             }
         }
 
@@ -163,7 +160,7 @@ public class Problem1233 {
         private static class TrieNode {
             //注意：key为String类型，而不是Character类型
             private final Map<String, TrieNode> children;
-            //根节点到当前节点的文件夹在folder中的下标索引
+            //根节点到当前节点的文件夹路径在folder中的下标索引
             private int index;
             private boolean isEnd;
 

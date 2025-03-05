@@ -44,7 +44,7 @@ public class Problem588 {
         FileSystem fileSystem = new FileSystem();
         // 返回 []
         System.out.println(fileSystem.ls("/"));
-        // 创建路径"/a/b/c"
+        // 创建目录"/a/b/c"
         fileSystem.mkdir("/a/b/c");
         // 在路径"/a/b/c"下创建文件名为"d"内容为"hello"的文件
         fileSystem.addContentToFile("/a/b/c/d", "hello");
@@ -54,8 +54,10 @@ public class Problem588 {
         System.out.println(fileSystem.readContentFromFile("/a/b/c/d"));
     }
 
+    /**
+     * 前缀树
+     */
     static class FileSystem {
-        //前缀树
         private final Trie trie;
 
         public FileSystem() {
@@ -73,12 +75,12 @@ public class Problem588 {
         public List<String> ls(String path) {
             Trie.TrieNode node = trie.search(path);
 
-            //不存在路径path，返回空集合
+            //不存在路径path，则返回空集合
             if (node == null) {
                 return new ArrayList<>();
             }
 
-            //当前路径为文件路径，返回文件名
+            //当前路径为文件路径，则返回文件名
             if (node.isFile) {
                 return new ArrayList<String>() {{
                     add(node.filename);
@@ -134,8 +136,13 @@ public class Problem588 {
         public String readContentFromFile(String filePath) {
             Trie.TrieNode node = trie.search(filePath);
 
-            //不存在路径path，返回""
+            //不存在路径path，则返回""
             if (node == null) {
+                return "";
+            }
+
+            //当前节点不是文件节点，则返回""
+            if (node.isFile) {
                 return "";
             }
 
@@ -176,7 +183,8 @@ public class Problem588 {
             }
 
             /**
-             * 创建content内容的filePath文件路径，如果filePath文件路径存在，则content内容附加到末尾
+             * 创建content内容的filePath文件路径，即filePath最后一个'/'后的字符串为文件名，
+             * 如果filePath文件路径存在，则content内容附加到末尾
              * 时间复杂度O(n)，空间复杂度O(n)
              *
              * @param filePath
@@ -196,6 +204,7 @@ public class Problem588 {
                     node = node.children.get(arr[i]);
                 }
 
+                //filePath最后一个'/'后的字符串为文件名
                 node.filename = arr[arr.length - 1];
                 node.content.append(content);
                 node.isFile = true;
@@ -203,7 +212,7 @@ public class Problem588 {
             }
 
             /**
-             * 返回path路径中的末尾前缀树节点，如果不存在，则返回null
+             * 返回前缀树中path路径中的末尾节点，如果不存在，则返回null
              * 时间复杂度O(n)，空间复杂度O(n)
              *
              * @param path
@@ -236,7 +245,7 @@ public class Problem588 {
                 private String filename;
                 //当前节点的文件内容
                 private final StringBuilder content;
-                //当前节点是文件节点还是目录节点
+                //通过isFile区分当前节点是文件节点还是目录节点
                 private boolean isFile;
                 private boolean isEnd;
 

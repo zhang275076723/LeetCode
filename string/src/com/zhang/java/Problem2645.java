@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2025/2/24 08:47
  * @Author zsy
- * @Description 构造有效字符串的最少插入数 动态规划类比Problem72、Problem97、Problem115、Problem132、Problem139、Problem221、Problem392、Problem516、Problem1143、Problem1312、Problem2645
+ * @Description 构造有效字符串的最少插入数 动态规划类比Problem72、Problem97、Problem115、Problem132、Problem139、Problem221、Problem392、Problem516、Problem1143、Problem1312
  * 给你一个字符串 word ，你可以向其中任何位置插入 "a"、"b" 或 "c" 任意次，返回使 word 有效 需要插入的最少字母数。
  * 如果字符串可以由 "abc" 串联多次得到，则认为该字符串 有效 。
  * <p>

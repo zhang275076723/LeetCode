@@ -1,13 +1,12 @@
 package com.zhang.java;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * @Date 2022/3/18 10:13
  * @Author zsy
- * @Description 打印从1到最大的n位数 类比Problem357、Problem386 字典序类比Problem386、Problem440 回溯+剪枝类比Problem17、Problem22、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem89、Problem90、Problem97、Problem216、Problem301、Problem377、Problem491、Problem679、Problem698、Offer38
+ * @Description 打印从1到最大的n位数 类比Problem357、Problem386、Problem440 回溯+剪枝类比Problem17、Problem22、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem89、Problem90、Problem97、Problem216、Problem301、Problem377、Problem491、Problem679、Problem698、Offer38
  * 输入数字 n，按顺序打印出从 1 到最大的 n 位十进制数。
  * 比如输入 3，则打印出 1、2、3 一直到最大的 3 位数 999。
  * <p>
@@ -20,8 +19,9 @@ import java.util.List;
 public class Offer17 {
     public static void main(String[] args) {
         Offer17 offer17 = new Offer17();
-//        System.out.println(Arrays.toString(offer17.printNumbers(2)));
-        System.out.println(offer17.printNumbers2(2));
+        int n = 2;
+//        System.out.println(Arrays.toString(offer17.printNumbers(n)));
+        System.out.println(offer17.printNumbers2(n));
     }
 
     /**
@@ -70,7 +70,7 @@ public class Offer17 {
      */
     public void backtrack(int t, int n, StringBuilder sb, List<String> list) {
         if (t == n) {
-            //如果拼接的数为空，则不添加
+            //如果拼接的数为空，即当前数为0，则不添加
             if (sb.length() != 0) {
                 list.add(sb.toString());
             }
@@ -78,7 +78,7 @@ public class Offer17 {
         }
 
         for (int i = 0; i <= 9; i++) {
-            //当前位为0，且为前导0，则不添加，继续判断下一位
+            //当前拼接的数为0，并且当前数字为0，则不能添加前导0
             if (i == 0 && sb.length() == 0) {
                 backtrack(t + 1, n, sb, list);
             } else {

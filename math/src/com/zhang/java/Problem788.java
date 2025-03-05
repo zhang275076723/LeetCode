@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/6/18 08:48
  * @Author zsy
- * @Description 旋转数字 类比Problem357 各种数类比
+ * @Description 旋转数字 各种数类比
  * 我们称一个数 X 为好数, 如果它的每位数字逐个地被旋转 180 度后，我们仍可以得到一个有效的，且和 X 不同的数。
  * 要求每位数字都要被旋转。
  * 如果一个数的每位数字被旋转以后仍然还是一个数字， 则这个数是有效的。
@@ -45,7 +45,7 @@ public class Problem788 {
             //temp中是否出现3、4、7
             boolean flag2 = false;
 
-            //遍历temp的每一位，判断是否是好数
+            //遍历temp的每一位，判断是否出现数字2、5、6、9和3、4、7
             while (temp != 0) {
                 int cur = temp % 10;
 

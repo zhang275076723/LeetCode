@@ -80,7 +80,7 @@ public class Problem609 {
         for (String path : paths) {
             String[] arr = path.split(" ");
 
-            //注意：i是从1开始遍历，arr[0]为相同文件路径
+            //注意：i是从1开始遍历，arr[0]为相同的文件路径
             for (int i = 1; i < arr.length; i++) {
                 //arr[i]中的文件名
                 String filename = arr[i].substring(0, arr[i].indexOf('('));
@@ -92,6 +92,7 @@ public class Problem609 {
                 }
 
                 List<String> list = map.get(content);
+                //拼接arr[0]得到完整路径名
                 list.add(arr[0] + "/" + filename);
             }
         }
@@ -99,7 +100,7 @@ public class Problem609 {
         List<List<String>> result = new ArrayList<>();
 
         for (List<String> list : map.values()) {
-            //相同文件内容的文件个数大于1，则存在重复的文件
+            //相同文件内容的文件路径个数大于1，则存在重复的文件
             if (list.size() > 1) {
                 result.add(list);
             }
