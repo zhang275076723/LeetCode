@@ -45,18 +45,17 @@ public class Problem677 {
     }
 
     /**
-     * 前缀树+哈希表
+     * 哈希表+前缀树
      */
     static class MapSum {
+        //key：前缀树字符串，value：当前前缀树字符串在前缀树中表示的值
+        private final Map<String, Integer> map;
         //前缀树
         private final Trie trie;
-        //key：字符串，value：字符串在前缀树中表示的值
-        //如果前缀树中存在当前字符串，用于更新根节点到字符串末尾节点的sum
-        private final Map<String, Integer> map;
 
         public MapSum() {
-            trie = new Trie();
             map = new HashMap<>();
+            trie = new Trie();
         }
 
         /**
@@ -66,10 +65,9 @@ public class Problem677 {
          * @param val
          */
         public void insert(String key, int val) {
-            //前缀树中字符串的每个节点需要加上的值
+            //字符串key在前缀树中的每个节点需要加上的值
             int addValue = val - map.getOrDefault(key, 0);
-            trie.insert(key, addValue);
-            //将key和val加入map
+            trie.insert(key, val, addValue);
             map.put(key, val);
         }
 
@@ -80,7 +78,7 @@ public class Problem677 {
          * @return
          */
         public int sum(String prefix) {
-            return trie.search(prefix);
+            return trie.searchPrefix(prefix);
         }
 
         /**
@@ -94,13 +92,14 @@ public class Problem677 {
             }
 
             /**
-             * 当前字符串加入前缀树，并且前缀树中字符串的每个节点值加上addValue
+             * 当前字符串加入前缀树，并且更新前缀树中word每个节点的sum
              * 时间复杂度O(n)，空间复杂度O(n)
              *
              * @param word
              * @param value
+             * @param addValue
              */
-            public void insert(String word, int addValue) {
+            public void insert(String word, int value, int addValue) {
                 TrieNode node = root;
                 node.sum = node.sum + addValue;
 
@@ -113,22 +112,24 @@ public class Problem677 {
                     node.sum = node.sum + addValue;
                 }
 
+                node.value = value;
                 node.isEnd = true;
             }
 
             /**
-             * 返回前缀树中以word作为前缀的所有单词值之和，如果不存在返回0
+             * 返回前缀树中prefix作为字符串前缀的值之和，如果不存在返回0
              * 时间复杂度O(n)，空间复杂度O(1)
              *
-             * @param word
+             * @param prefix
              * @return
              */
-            public int search(String word) {
+            public int searchPrefix(String prefix) {
                 TrieNode node = root;
 
-                for (char c : word.toCharArray()) {
+                for (char c : prefix.toCharArray()) {
                     node = node.children.get(c);
 
+                    //前缀树中不存在当前前缀，则返回0
                     if (node == null) {
                         return 0;
                     }
@@ -141,15 +142,15 @@ public class Problem677 {
              * 前缀树节点
              */
             private static class TrieNode {
-                //当前节点的子节点map
                 private final Map<Character, TrieNode> children;
-                //根节点到当前节点作为前缀的字符串值之和，即当前节点所有子节点sum之和
+                private int value;
+                //前缀树中根节点到当前节点作为字符串前缀的值之和
                 private int sum;
-                //当前节点是否是一个添加到前缀树的字符串的结尾节点
                 private boolean isEnd;
 
                 public TrieNode() {
                     children = new HashMap<>();
+                    value = 0;
                     sum = 0;
                     isEnd = false;
                 }
