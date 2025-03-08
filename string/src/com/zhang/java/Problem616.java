@@ -66,6 +66,7 @@ public class Problem616 {
         List<int[]> list = new ArrayList<>();
 
         //2、遍历s，得到s中需要进行合并的区间集合
+        //注意：此时list中区间已经有序
         trie.search(s, list);
 
         //3、重叠区间、相邻区间、区间左右边界相差1的区间进行合并

@@ -117,7 +117,7 @@ public class Problem187 {
      * hash[i]：s[0]-s[i-1]的哈希值
      * prime[i]：p^i的值
      * hash[j+1]-hash[i]*prime[j-i+1]：s[i]-s[j]的哈希值
-     * 将字符串看成P进制数，再对MOD取余，作为当前字符串的哈希值，只要两个字符串哈希值相等，则认为两个字符串相等
+     * 核心思想：将字符串看成P进制数，再对MOD取余，作为当前字符串的哈希值，只要两个字符串哈希值相等，则认为两个字符串相等
      * 一般取P为较大的质数，P=131或P=13331或P=131313，此时产生的哈希冲突低；
      * 一般取MOD=2^63(long类型最大值+1)，在计算时不处理溢出问题，产生溢出相当于自动对MOD取余；
      * 如果产生哈希冲突，则使用双哈希来减少冲突
@@ -148,7 +148,7 @@ public class Problem187 {
 
         for (int i = 0; i <= s.length() - 10; i++) {
             //s[i]-s[i+9]的哈希值
-            //乘以prime[10]相当于hash[i]在p进制情况下左移10位
+            //hash[i]乘以prime[10]相当于hash[i]在p进制情况下左移10位
             long h = hash[i + 10] - hash[i] * prime[10];
             map.put(h, map.getOrDefault(h, 0) + 1);
 
