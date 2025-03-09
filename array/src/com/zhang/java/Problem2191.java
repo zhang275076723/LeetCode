@@ -46,7 +46,7 @@ public class Problem2191 {
     }
 
     /**
-     * 排序
+     * 排序+模拟
      * 时间复杂度O(nlgon)，空间复杂度O(logn) (n=nums.length)
      *
      * @param mapping
