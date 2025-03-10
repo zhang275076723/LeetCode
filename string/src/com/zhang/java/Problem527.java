@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * @Date 2024/5/15 09:08
  * @Author zsy
- * @Description 单词缩写 类比Problem320、Problem408 类比Problem1804 前缀树类比
+ * @Description 单词缩写 类比Problem320、Problem408 前缀树类比
  * 给你一个字符串数组 words ，该数组由 互不相同 的若干字符串组成，请你找出并返回每个单词的 最小缩写 。
  * 生成缩写的规则如下：
  * 初始缩写由起始字母+省略字母的数量+结尾字母组成。

@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @Date 2024/5/26 08:41
  * @Author zsy
- * @Description 字符串的不同子字符串个数 字符串哈希类比Problem187、Problem1044 前缀树类比
+ * @Description 字符串的不同子字符串个数 字符串哈希类比Problem187、Problem1044、Problem1316 前缀树类比
  * 给定一个字符串 s，返回 s 的不同子字符串的个数。
  * 字符串的 子字符串 是由原字符串删除开头若干个字符（可能是 0 个）并删除结尾若干个字符（可能是 0 个）形成的字符串。
  * <p>
@@ -48,7 +48,7 @@ public class Problem1698 {
      * 字符串哈希
      * hash[i]：s[0]-s[i-1]的哈希值
      * prime[i]：p^i的值
-     * hash[j+1]-hash[i]*prime[j+1-i]：s[i]-s[j]的哈希值
+     * hash[j+1]-hash[i]*prime[j-i+1]：s[i]-s[j]的哈希值
      * 核心思想：将字符串看成P进制数，再对MOD取余，作为当前字符串的哈希值，只要两个字符串哈希值相等，则认为两个字符串相等
      * 一般取P为较大的质数，P=131或P=13331或P=131313，此时产生的哈希冲突低；
      * 一般取MOD=2^63(long类型最大值+1)，在计算时不处理溢出问题，产生溢出相当于自动对MOD取余；
@@ -80,8 +80,8 @@ public class Problem1698 {
         for (int i = 0; i < s.length(); i++) {
             for (int j = i; j < s.length(); j++) {
                 //s[i]-s[j]的哈希值
-                //hash[i]乘以prime[j+1-i]相当于hash[i]在p进制情况下左移j+1-i位
-                long h = hash[j + 1] - hash[i] * prime[j + 1 - i];
+                //hash[i]乘以prime[j-i+1]相当于hash[i]在p进制情况下左移j-i+1位
+                long h = hash[j + 1] - hash[i] * prime[j - i + 1];
                 set.add(h);
             }
         }

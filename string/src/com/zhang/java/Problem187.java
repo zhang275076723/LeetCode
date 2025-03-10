@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * @Date 2023/10/1 08:25
  * @Author zsy
- * @Description 重复的DNA序列 类比Problem1461、Problem1684、Problem2506 字符串哈希类比Problem1044、Problem1698 状态压缩类比Problem294、Problem464、Problem473、Problem526、Problem638、Problem698、Problem847、Problem1723、Problem1908、Problem2305 哈希表类比Problem1、Problem128、Problem166、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem535、Problem554、Problem609、Problem763、Problem1500、Problem1640、Problem2657、Offer50
+ * @Description 重复的DNA序列 类比Problem1461、Problem1684、Problem2506 字符串哈希类比Problem1044、Problem1316、Problem1698 状态压缩类比Problem294、Problem464、Problem473、Problem526、Problem638、Problem698、Problem847、Problem1723、Problem1908、Problem2305 哈希表类比Problem1、Problem128、Problem166、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem535、Problem554、Problem609、Problem763、Problem1500、Problem1640、Problem2657、Offer50
  * DNA序列 由一系列核苷酸组成，缩写为 'A', 'C', 'G' 和 'T'.。
  * 例如，"ACGAATTCCG" 是一个 DNA序列 。
  * 在研究 DNA 时，识别 DNA 中的重复序列非常有用。
@@ -116,7 +116,7 @@ public class Problem187 {
      * 字符串哈希
      * hash[i]：s[0]-s[i-1]的哈希值
      * prime[i]：p^i的值
-     * hash[j+1]-hash[i]*prime[j+1-i]：s[i]-s[j]的哈希值
+     * hash[j+1]-hash[i]*prime[j-i+1]：s[i]-s[j]的哈希值
      * 核心思想：将字符串看成P进制数，再对MOD取余，作为当前字符串的哈希值，只要两个字符串哈希值相等，则认为两个字符串相等
      * 一般取P为较大的质数，P=131或P=13331或P=131313，此时产生的哈希冲突低；
      * 一般取MOD=2^63(long类型最大值+1)，在计算时不处理溢出问题，产生溢出相当于自动对MOD取余；
