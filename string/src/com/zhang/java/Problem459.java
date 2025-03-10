@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/4 08:49
  * @Author zsy
- * @Description 重复的子字符串 类比Problem471 类比Problem1316 类比Problem1071 kmp类比Problem28、Problem214、Problem471、Problem686、Problem796、Problem1408
+ * @Description 重复的子字符串 类比Problem471 类比Problem1316 类比Problem1071 kmp类比Problem28、Problem214、Problem471、Problem686、Problem796、Problem1392、Problem1408
  * 给定一个非空的字符串 s ，检查是否可以通过由它的一个子串重复多次构成。
  * <p>
  * 输入: s = "abab"
