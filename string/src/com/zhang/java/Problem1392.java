@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2025/4/18 08:02
  * @Author zsy
- * @Description 最长快乐前缀 kmp类比Problem28、Problem214、Problem459、Problem471、Problem686、Problem796、Problem1408 字符串哈希类比Problem187、Problem1044、Problem1316、Problem1698
+ * @Description 最长快乐前缀 kmp类比Problem28、Problem214、Problem459、Problem471、Problem686、Problem796、Problem1408、Problem3029 字符串哈希类比Problem187、Problem1044、Problem1316、Problem1698、Problem3029
  * 「快乐前缀」 是在原字符串中既是 非空 前缀也是后缀（不包括原字符串自身）的字符串。
  * 给你一个字符串 s，请你返回它的 最长快乐前缀。如果不存在满足题意的前缀，则返回一个空字符串 "" 。
  * <p>
@@ -51,6 +51,7 @@ public class Problem1392 {
             next[i] = j;
         }
 
+        //如果不存在最长公共前缀和后缀，则返回""；否则返回最长公共前缀和后缀
         return next[s.length() - 1] == 0 ? "" : s.substring(0, next[s.length() - 1]);
     }
 
@@ -85,7 +86,7 @@ public class Problem1392 {
         }
 
         //判断前缀s[0]-s[i]和后缀s[s.length()-1-i]-s[s.length()-1]是否相等
-        //注意：i从s.length()-2开始，因为原字符串s不能作为前缀和后缀
+        //注意：i从s.length()-2开始，因为原字符串s不能作为公共前缀和后缀
         for (int i = s.length() - 2; i >= 0; i--) {
             //前缀s[0]-s[i]的哈希值
             long preHash = hash[i + 1] - hash[0] * prime[i + 1];
@@ -97,7 +98,7 @@ public class Problem1392 {
             }
         }
 
-        //遍历结束，则不存在最长公共前缀，返回""
+        //遍历结束，则不存在最长公共前缀和后缀，返回""
         return "";
     }
 }

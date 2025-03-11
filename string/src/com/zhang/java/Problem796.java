@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/4 09:18
  * @Author zsy
- * @Description 旋转字符串 kmp类比Problem28、Problem214、Problem459、Problem471、Problem686、Problem1392、Problem1408 旋转问题类比Problem61、Problem186、Problem189、Offer58_2
+ * @Description 旋转字符串 kmp类比Problem28、Problem214、Problem459、Problem471、Problem686、Problem1392、Problem1408、Problem3029 旋转问题类比Problem61、Problem186、Problem189、Offer58_2
  * 给定两个字符串, s 和 goal。
  * 如果在若干次旋转操作之后，s 能变成 goal ，那么返回 true 。
  * s 的 旋转操作 就是将 s 最左边的字符移动到最右边。
