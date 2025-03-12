@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2025/4/18 08:02
  * @Author zsy
- * @Description 最长快乐前缀 kmp类比Problem28、Problem214、Problem459、Problem471、Problem686、Problem796、Problem1408、Problem3029 字符串哈希类比Problem187、Problem1044、Problem1316、Problem1698、Problem3029
+ * @Description 最长快乐前缀 kmp类比Problem28、Problem214、Problem459、Problem471、Problem686、Problem796、Problem1408、Problem3029、Problem3031 字符串哈希类比Problem187、Problem1044、Problem1316、Problem1698、Problem3029、Problem3031
  * 「快乐前缀」 是在原字符串中既是 非空 前缀也是后缀（不包括原字符串自身）的字符串。
  * 给你一个字符串 s，请你返回它的 最长快乐前缀。如果不存在满足题意的前缀，则返回一个空字符串 "" 。
  * <p>

@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * @Date 2023/10/1 08:25
  * @Author zsy
- * @Description 重复的DNA序列 类比Problem1461、Problem1684、Problem2506 字符串哈希类比Problem1044、Problem1316、Problem1392、Problem1698、Problem3029 状态压缩类比Problem294、Problem464、Problem473、Problem526、Problem638、Problem698、Problem847、Problem1723、Problem1908、Problem2305 哈希表类比Problem1、Problem128、Problem166、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem535、Problem554、Problem609、Problem763、Problem1500、Problem1640、Problem2657、Offer50
+ * @Description 重复的DNA序列 类比Problem1461、Problem1684、Problem2506 字符串哈希类比Problem1044、Problem1316、Problem1392、Problem1698、Problem3029、Problem3031 状态压缩类比Problem294、Problem464、Problem473、Problem526、Problem638、Problem698、Problem847、Problem1723、Problem1908、Problem2305 哈希表类比Problem1、Problem128、Problem166、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem532、Problem535、Problem554、Problem609、Problem763、Problem1500、Problem1640、Problem2657、Offer50
  * DNA序列 由一系列核苷酸组成，缩写为 'A', 'C', 'G' 和 'T'.。
  * 例如，"ACGAATTCCG" 是一个 DNA序列 。
  * 在研究 DNA 时，识别 DNA 中的重复序列非常有用。

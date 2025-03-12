@@ -1,10 +1,9 @@
 package com.zhang.java;
 
-
 /**
- * @Date 2025/4/19 08:18
+ * @Date 2025/4/20 09:16
  * @Author zsy
- * @Description 将单词恢复初始状态所需的最短时间 I 同Problem3031 kmp类比Problem28、Problem214、Problem459、Problem471、Problem686、Problem796、Problem1392、Problem1408、Problem3031 字符串哈希类比Problem187、Problem1044、Problem1316、Problem1392、Problem1698、Problem3031
+ * @Description 将单词恢复初始状态所需的最短时间 II 同Problem3029 kmp类比Problem28、Problem214、Problem459、Problem471、Problem686、Problem796、Problem1392、Problem1408、Problem3029 字符串哈希类比Problem187、Problem1044、Problem1316、Problem1392、Problem1698、Problem3029
  * 给你一个下标从 0 开始的字符串 word 和一个整数 k 。
  * 在每一秒，你必须执行以下操作：
  * 移除 word 的前 k 个字符。
@@ -32,17 +31,17 @@ package com.zhang.java;
  * 4 秒后，word 变为 "abcbabcd" 并恢复到初始状态。
  * 可以证明，4 秒是 word 恢复到其初始状态所需的最短时间。
  * <p>
- * 1 <= word.length <= 50
+ * 1 <= word.length <= 10^6
  * 1 <= k <= word.length
  * word仅由小写英文字母组成。
  */
-public class Problem3029 {
+public class Problem3031 {
     public static void main(String[] args) {
-        Problem3029 problem3029 = new Problem3029();
+        Problem3031 problem3031 = new Problem3031();
         String word = "abacaba";
         int k = 3;
-        System.out.println(problem3029.minimumTimeToInitialState(word, k));
-        System.out.println(problem3029.minimumTimeToInitialState2(word, k));
+        System.out.println(problem3031.minimumTimeToInitialState(word, k));
+        System.out.println(problem3031.minimumTimeToInitialState2(word, k));
     }
 
     /**

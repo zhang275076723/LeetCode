@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Date 2025/4/21 08:10
+ * @Date 2025/4/22 08:10
  * @Author zsy
  * @Description 最长公共后缀查询 前缀树类比
  * 给你两个字符串数组 wordsContainer 和 wordsQuery 。

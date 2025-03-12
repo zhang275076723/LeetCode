@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Date 2025/4/20 08:42
+ * @Date 2025/4/21 08:42
  * @Author zsy
  * @Description 字符串的前缀分数和 前缀树类比
  * 给你一个长度为 n 的数组 words ，该数组由 非空 字符串组成。

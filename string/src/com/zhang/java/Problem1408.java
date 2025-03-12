@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2024/8/1 08:12
  * @Author zsy
- * @Description 数组中的字符串匹配 kmp类比Problem28、Problem214、Problem459、Problem471、Problem686、Problem796、Problem1392、Problem3029
+ * @Description 数组中的字符串匹配 kmp类比Problem28、Problem214、Problem459、Problem471、Problem686、Problem796、Problem1392、Problem3029、Problem3031
  * 给你一个字符串数组 words ，数组中的每个字符串都可以看作是一个单词。
  * 请你按 任意 顺序返回 words 中是其他单词的子字符串的所有单词。
  * 如果你可以删除 words[j] 最左侧和/或最右侧的若干字符得到 words[i] ，那么字符串 words[i] 就是 words[j] 的一个子字符串。
