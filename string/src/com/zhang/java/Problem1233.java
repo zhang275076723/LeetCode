@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/5/19 09:04
  * @Author zsy
- * @Description 删除子文件夹 微软面试题 类比Problem71、Problem588、Problem609、Problem642、Problem1166、Problem1268、Problem1500、Problem1948 类比Problem211、Problem472、Problem676 前缀树类比
+ * @Description 删除子文件夹 微软面试题 类比Problem71、Problem588、Problem609、Problem642、Problem1166、Problem1268、Problem1500、Problem1948 前缀树类比
  * 你是一位系统管理员，手里有一份文件夹列表 folder，你的任务是要删除该列表中的所有 子文件夹，并以 任意顺序 返回剩下的文件夹。
  * 如果文件夹 folder[i] 位于另一个文件夹 folder[j] 下，那么 folder[i] 就是 folder[j] 的 子文件夹 。
  * 文件夹的「路径」是由一个或多个按以下格式串联形成的字符串：'/' 后跟一个或者多个小写英文字母。
