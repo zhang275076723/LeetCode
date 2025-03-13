@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @Date 2025/4/17 08:47
  * @Author zsy
- * @Description 不同的循环子字符串 类比Problem459 字符串哈希类比Problem187、Problem1044、Problem1392、Problem1698、Problem3029、Problem3031
+ * @Description 不同的循环子字符串 类比Problem459 字符串哈希类比Problem187、Problem1044、Problem1392、Problem1698、Problem3029、Problem3031、Problem3042、Problem3045
  * 给你一个字符串 text ，请你返回满足下述条件的 不同 非空子字符串的数目：
  * 可以写成某个字符串与其自身相连接的形式（即，可以写为 a + a，其中 a 是某个字符串）。
  * 例如，abcabc 就是 abc 和它自身连接形成的。

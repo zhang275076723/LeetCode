@@ -4,7 +4,7 @@ package com.zhang.java;
 /**
  * @Date 2025/4/19 08:18
  * @Author zsy
- * @Description 将单词恢复初始状态所需的最短时间 I 同Problem3031 kmp类比Problem28、Problem214、Problem459、Problem471、Problem686、Problem796、Problem1392、Problem1408、Problem3031 字符串哈希类比Problem187、Problem1044、Problem1316、Problem1392、Problem1698、Problem3031
+ * @Description 将单词恢复初始状态所需的最短时间 I 同Problem3031 kmp类比Problem28、Problem214、Problem459、Problem471、Problem686、Problem796、Problem1392、Problem1408、Problem3031 字符串哈希类比Problem187、Problem1044、Problem1316、Problem1392、Problem1698、Problem3031、Problem3042、Problem3045
  * 给你一个下标从 0 开始的字符串 word 和一个整数 k 。
  * 在每一秒，你必须执行以下操作：
  * 移除 word 的前 k 个字符。
