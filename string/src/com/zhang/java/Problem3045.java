@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * @Date 2025/4/24 08:14
  * @Author zsy
- * @Description 统计前后缀下标对 II 同Problem3042 字符串哈希类比Problem187、Problem1044、Problem1316、Problem1392、Problem1698、Problem3029、Problem3031、Problem3042 前缀树类比
+ * @Description 统计前后缀下标对 II 同Problem3042 字符串哈希类比Problem187、Problem1044、Problem1316、Problem1392、Problem1698、Problem3029、Problem3031、Problem3042、Problem3076 前缀树类比
  * 给你一个下标从 0 开始的字符串数组 words 。
  * 定义一个 布尔 函数 isPrefixAndSuffix ，它接受两个字符串参数 str1 和 str2 ：
  * 当 str1 同时是 str2 的前缀（prefix）和后缀（suffix）时，isPrefixAndSuffix(str1, str2) 返回 true，否则返回 false。
