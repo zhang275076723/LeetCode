@@ -58,7 +58,7 @@ public class Problem140 {
     }
 
     /**
-     * 回溯+剪枝+动态规划预处理字符串s
+     * 动态规划预处理字符串s+回溯+剪枝
      * dp[i]：s[0]-s[i-1]是否可以拆成wordDict中的单词
      * dp[i] = true (dp[j] && (s[j]-s[i-1]是否是wordDict中的单词)) (0 <= j < i)
      *
