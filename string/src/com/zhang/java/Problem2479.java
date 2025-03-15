@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2025/4/28 08:47
  * @Author zsy
- * @Description 两个不重叠子树的最大异或值 类比Problem421、Problem1707、Problem1803、Problem1938 前缀树类比
+ * @Description 两个不重叠子树的最大异或值 类比Problem421、Problem1707、Problem1803、Problem1938、Problem2932、Problem2935 前缀树类比
  * 有一个无向树，有 n 个节点，节点标记为从 0 到 n - 1。
  * 给定整数 n 和一个长度为 n - 1 的 2 维整数数组 edges，其中 edges[i] = [ai, bi] 表示在树中的节点 ai 和 bi 之间有一条边。
  * 树的根节点是标记为 0 的节点。

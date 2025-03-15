@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2024/6/9 08:38
  * @Author zsy
- * @Description 与数组中元素的最大异或值 类比Problem421、Problem1803、Problem1938、Problem2479 前缀树类比
+ * @Description 与数组中元素的最大异或值 类比Problem421、Problem1803、Problem1938、Problem2479、Problem2932、Problem2935 前缀树类比
  * 给你一个由非负整数组成的数组 nums 。
  * 另有一个查询数组 queries ，其中 queries[i] = [xi, mi] 。
  * 第 i 个查询的答案是 xi 和任何 nums 数组中不超过 mi 的元素按位异或（XOR）得到的最大值。
@@ -149,12 +149,12 @@ public class Problem1707 {
                 //num当前位的值
                 int cur = (num >>> i) & 1;
 
-                //当前节点存在cur的异或值cur^1，并且当前节点包含所有元素的最小值小于等于limit，则xor当前位为1
+                //当前节点存在cur^1的子节点，并且cur^1的子节点包含所有元素的最小值小于等于limit，则xor当前位为1
                 if (node.children[cur ^ 1] != null && node.children[cur ^ 1].min <= limit) {
                     node = node.children[cur ^ 1];
                     xor = (xor << 1) + 1;
                 } else {
-                    //当前节点存在和cur的相同值cur，并且当前节点包含所有元素的最小值小于等于limit，则xor当前位为0
+                    //其他情况，则xor当前位为0
                     node = node.children[cur];
                     xor = xor << 1;
                 }

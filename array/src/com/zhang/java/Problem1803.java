@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/6/10 08:55
  * @Author zsy
- * @Description 统计异或值在范围内的数对有多少 类比Problem421、Problem1707、Problem1938、Problem2479 前缀树类比
+ * @Description 统计异或值在范围内的数对有多少 类比Problem421、Problem1707、Problem1938、Problem2479、Problem2932、Problem2935 前缀树类比
  * 给你一个整数数组 nums （下标 从 0 开始 计数）以及两个整数：low 和 high ，请返回 漂亮数对 的数目。
  * 漂亮数对 是一个形如 (i, j) 的数对，其中 0 <= i < j < nums.length 且 low <= (nums[i] XOR nums[j]) <= high 。
  * <p>

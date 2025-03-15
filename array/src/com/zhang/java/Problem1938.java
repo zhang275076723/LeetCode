@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @Date 2025/4/13 08:16
  * @Author zsy
- * @Description 查询最大基因差 类比Problem421、Problem1707、Problem1803、Problem2479 前缀树类比
+ * @Description 查询最大基因差 类比Problem421、Problem1707、Problem1803、Problem2479、Problem2932、Problem2935 前缀树类比
  * 给你一棵 n 个节点的有根树，节点编号从 0 到 n - 1 。
  * 每个节点的编号表示这个节点的 独一无二的基因值 （也就是说节点 x 的基因值为 x）。
  * 两个基因值的 基因差 是两者的 异或和 。给你整数数组 parents ，其中 parents[i] 是节点 i 的父节点。
