@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @Date 2025/4/16 08:25
  * @Author zsy
- * @Description 最长重复子串 腾讯面试题 美团面试题 字节面试题 类比Problem1062 字符串哈希类比Problem187、Problem1316、Problem1392、Problem1698、Problem3029、Problem3031、Problem3042、Problem3045、Problem3076 前缀树类比 子序列和子数组类比
+ * @Description 最长重复子串 腾讯面试题 美团面试题 字节面试题 同Problem1062 字符串哈希类比Problem187、Problem1062、Problem1316、Problem1392、Problem1698、Problem3029、Problem3031、Problem3042、Problem3045、Problem3076 前缀树类比 子序列和子数组类比
  * 给你一个字符串 s ，考虑其所有 重复子串 ：即 s 的（连续）子串，在 s 中出现 2 次或更多次。
  * 这些出现之间可能存在重叠。
  * 返回 任意一个 可能具有最长长度的重复子串。

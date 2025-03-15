@@ -30,7 +30,7 @@ public class Problem673 {
      * dp1[i]：以nums[i]结尾的最长递增子序列的长度
      * dp2[i]：以nums[i]结尾的最长递增子序列的个数
      * dp1[i] = max(dp1[j] + 1) (0 <= j < i，且nums[j] < nums[i])
-     * dp2[i] = sum(dp2[j]) (0 <= j < i，且nums[j] < nums[i]，且dp1[j] + 1 == dp1[i])
+     * dp2[i] = sum(dp2[j])     (0 <= j < i，且nums[j] < nums[i]，且dp1[j] + 1 == dp1[i])
      * dp2[i] = 1               (dp2[i] == 0，即以nums[i]结尾的最长递增子序列的个数至少为1)
      * 时间复杂度O(n^2)，空间复杂度O(n)
      *

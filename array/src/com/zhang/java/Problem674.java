@@ -30,7 +30,7 @@ public class Problem674 {
 
     /**
      * 动态规划
-     * dp[i]：以nums[i]结尾的最长连续递增序列的长度，连续递增序列即为递增子数组
+     * dp[i]：以nums[i]结尾的最长递增子数组的长度
      * dp[i] = dp[i-1] + 1 (nums[i-1] < nums[i])
      * 时间复杂度O(n)，空间复杂度O(n)
      *
