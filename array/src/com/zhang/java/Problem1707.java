@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2024/6/9 08:38
  * @Author zsy
- * @Description 与数组中元素的最大异或值 类比Problem421、Problem1803、Problem1938 前缀树类比
+ * @Description 与数组中元素的最大异或值 类比Problem421、Problem1803、Problem1938、Problem2479 前缀树类比
  * 给你一个由非负整数组成的数组 nums 。
  * 另有一个查询数组 queries ，其中 queries[i] = [xi, mi] 。
  * 第 i 个查询的答案是 xi 和任何 nums 数组中不超过 mi 的元素按位异或（XOR）得到的最大值。
@@ -102,7 +102,7 @@ public class Problem1707 {
 
         /**
          * num二进制表示的每一位插入前缀树中，同时更新每个节点的min
-         * 时间复杂度O(logC)=O(1)，空间复杂度O(1) (C=max(num))
+         * 时间复杂度O(log(num))=O(1)，空间复杂度O(1)
          *
          * @param num
          */
@@ -128,7 +128,7 @@ public class Problem1707 {
 
         /**
          * 查询前缀树中小于等于limit的值和num异或的最大值，前缀树中不存在小于等于limit的值，则返回-1
-         * 时间复杂度O(logC)=O(1)，空间复杂度O(1) (C=max(num))
+         * 时间复杂度O(log(num))=O(1)，空间复杂度O(1)
          *
          * @param num
          * @param limit

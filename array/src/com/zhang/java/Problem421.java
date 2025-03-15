@@ -4,7 +4,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/28 08:38
  * @Author zsy
- * @Description 数组中两个数的最大异或值 类比Problem1707、Problem1803、Problem1938 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem336、Problem676、Problem677、Problem720、Problem745、Problem820、Problem1166、Problem1804、Problem3043 位运算类比
+ * @Description 数组中两个数的最大异或值 类比Problem1707、Problem1803、Problem1938、Problem2479 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem336、Problem676、Problem677、Problem720、Problem745、Problem820、Problem1166、Problem1804、Problem3043 位运算类比
  * 给你一个整数数组 nums ，返回 nums[i] XOR nums[j] 的最大运算结果，其中 0 ≤ i ≤ j < n 。
  * <p>
  * 输入：nums = [3,10,5,25,2,8]
@@ -83,7 +83,7 @@ public class Problem421 {
 
         /**
          * num二进制表示的每一位插入前缀树中
-         * 时间复杂度O(logC)=O(1)，空间复杂度O(1) (C=max(num))
+         * 时间复杂度O(log(num))=O(1)，空间复杂度O(1)
          *
          * @param num
          */
@@ -107,7 +107,7 @@ public class Problem421 {
 
         /**
          * 查询前缀树中和num异或的最大值
-         * 时间复杂度O(logC)，空间复杂度O(1) (C=max(num))
+         * 时间复杂度O(log(num))，空间复杂度O(1)
          *
          * @param num
          * @return
