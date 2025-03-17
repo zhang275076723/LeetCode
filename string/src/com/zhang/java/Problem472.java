@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/5/13 08:27
  * @Author zsy
- * @Description 连接词 类比Problem212 前缀树类比
+ * @Description 连接词 类比Problem139、Problem140、Problem212、Problem2707 前缀树类比
  * 给你一个 不含重复 单词的字符串数组 words ，请你找出并返回 words 中的所有 连接词 。
  * 连接词 定义为：一个完全由给定数组中的至少两个较短单词（不一定是不同的两个单词）组成的字符串。
  * <p>

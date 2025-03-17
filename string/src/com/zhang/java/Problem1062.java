@@ -56,9 +56,10 @@ public class Problem1062 {
                 //注意：相同子串不是重复子串，即i不能等于j
                 if (i != j && c1 == c2) {
                     dp[i][j] = dp[i - 1][j - 1] + 1;
+                    maxLen = Math.max(maxLen, dp[i][j]);
+                } else {
+                    dp[i][j] = 0;
                 }
-
-                maxLen = Math.max(maxLen, dp[i][j]);
             }
         }
 

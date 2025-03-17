@@ -46,8 +46,8 @@ public class Problem745 {
         private final Trie trie2;
 
         /**
-         * words[i]插入前缀树trie1，words[i]的逆序字符串插入前缀树trie2
-         * 时间复杂度O(n*m)，空间复杂度O(n*m) (n=words.length，m=words[i]的平均长度)
+         * words[i]插入trie1中，words[i]的逆序字符串插入trie2中
+         * 时间复杂度O(n*m)，空间复杂度O(n*m) (n=words.length，m=words[i].length())
          *
          * @param words
          */
@@ -55,10 +55,15 @@ public class Problem745 {
             trie1 = new Trie();
             trie2 = new Trie();
 
-            //words[i]插入前缀树trie1
-            trie1.insert(words);
-            //words[i]的逆序字符串插入前缀树trie2
-            trie2.reverseInsert(words);
+            //words[i]插入trie1中
+            for (int i = 0; i < words.length; i++) {
+                trie1.insert(words[i], i);
+            }
+
+            //words[i]的逆序字符串插入trie2中
+            for (int i = 0; i < words.length; i++) {
+                trie2.reverseInsert(words[i], i);
+            }
         }
 
         /**
@@ -80,7 +85,7 @@ public class Problem745 {
                 return -1;
             }
 
-            //从后往前找，优先找到满足前缀后缀的最大下标索引
+            //words[i]按照下标索引插入前缀树，从后往前找，优先找到满足前缀后缀的最大下标索引
             int i = list1.size() - 1;
             int j = list2.size() - 1;
 
@@ -114,56 +119,52 @@ public class Problem745 {
             }
 
             /**
-             * words[i]插入前缀树中，在插入过程中，根节点到当前节点的字符串是words[i]的前缀，当前节点list中加入words[i]在words中的下标索引i
-             * 时间复杂度O(n*m)，空间复杂度O(n*m) (n=words.length，m=words[i]的平均长度)
+             * word插入前缀树中，并且插入过程中每个节点的list中加入word在words中的下标索引index
+             * 时间复杂度O(n)，空间复杂度O(1)
              *
-             * @param words
+             * @param word
+             * @param index
              */
-            public void insert(String[] words) {
-                for (int i = 0; i < words.length; i++) {
-                    TrieNode node = root;
-                    String word = words[i];
+            public void insert(String word, int index) {
+                TrieNode node = root;
 
-                    for (char c : word.toCharArray()) {
-                        if (node.children[c - 'a'] == null) {
-                            node.children[c - 'a'] = new TrieNode();
-                        }
-
-                        node = node.children[c - 'a'];
-                        //根节点到当前节点的字符串是words[i]的前缀，当前节点list中加入words[i]在words中的下标索引i
-                        node.list.add(i);
+                for (char c : word.toCharArray()) {
+                    if (node.children[c - 'a'] == null) {
+                        node.children[c - 'a'] = new TrieNode();
                     }
 
-                    node.isEnd = true;
+                    node = node.children[c - 'a'];
+                    //插入过程中每个节点的list中加入word在words中的下标索引index
+                    node.list.add(index);
                 }
+
+                node.isEnd = true;
             }
 
             /**
-             * words[i]的逆序字符串插入前缀树中，在插入过程中，根节点到当前节点的字符串的逆序是words[i]的后缀，当前节点list中加入words[i]在words中的下标索引i
-             * 时间复杂度O(n*m)，空间复杂度O(n*m) (n=words.length，m=words[i]的平均长度)
+             * word的逆序插入前缀树中，并且插入过程中每个节点的list中加入word在words中的下标索引index
+             * 时间复杂度O(n)，空间复杂度O(1)
              *
-             * @param words
+             * @param word
+             * @param index
              */
-            public void reverseInsert(String[] words) {
-                for (int i = 0; i < words.length; i++) {
-                    TrieNode node = root;
-                    String word = words[i];
+            public void reverseInsert(String word, int index) {
+                TrieNode node = root;
 
-                    //逆序需要从后往前遍历
-                    for (int j = word.length() - 1; j >= 0; j--) {
-                        char c = word.charAt(j);
+                //逆序需要从后往前遍历
+                for (int j = word.length() - 1; j >= 0; j--) {
+                    char c = word.charAt(j);
 
-                        if (node.children[c - 'a'] == null) {
-                            node.children[c - 'a'] = new TrieNode();
-                        }
-
-                        node = node.children[c - 'a'];
-                        //根节点到当前节点的字符串的逆序是words[i]的后缀，当前节点list中加入words[i]在words中的下标索引i
-                        node.list.add(i);
+                    if (node.children[c - 'a'] == null) {
+                        node.children[c - 'a'] = new TrieNode();
                     }
 
-                    node.isEnd = true;
+                    node = node.children[c - 'a'];
+                    //插入过程中每个节点的list中加入word在words中的下标索引index
+                    node.list.add(index);
                 }
+
+                node.isEnd = true;
             }
 
             /**

@@ -65,11 +65,11 @@ public class Problem820 {
         //记录已经访问过的单词set集合，因为words中单词有可能重复，避免相同单词多次加入助记字符串的情况
         Set<String> set = new HashSet<>();
 
-        //words[i]的逆序字符串的末尾前缀树节点是前缀树的叶子节点并且words[i]是第一次访问，则words[i]+"#"加入助记字符串
         for (String word : words) {
             //words[i]的逆序字符串的末尾前缀树节点
             Trie.TrieNode node = trie.search(word);
 
+            //words[i]的逆序字符串的末尾前缀树节点是前缀树的叶子节点并且words[i]是第一次访问，则words[i]+"#"加入助记字符串
             if (trie.isLeafNode(node) && !set.contains(word)) {
                 length = length + word.length() + 1;
                 set.add(word);
@@ -91,7 +91,7 @@ public class Problem820 {
 
         /**
          * word的逆序字符串插入前缀树中
-         * 时间复杂度O(n)，空间复杂度O(n)
+         * 时间复杂度O(n)，空间复杂度O(1)
          *
          * @param word
          */
@@ -141,7 +141,7 @@ public class Problem820 {
             }
 
             //叶子节点没有子节点
-            return node.children.size() == 0;
+            return node.children.isEmpty();
         }
 
         /**

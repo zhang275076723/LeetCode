@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/6/30 11:20
  * @Author zsy
- * @Description 最长重复子数组 类比Problem718 动态规划类比Problem516 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem862、Problem1143、Offer42、Offer57_2
+ * @Description 最长重复子数组 类比Problem1062 动态规划类比Problem516 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem862、Problem1143、Offer42、Offer57_2
  * 给两个整数数组 nums1 和 nums2 ，返回 两个数组中 公共的 、长度最长的子数组的长度 。
  * <p>
  * 输入：nums1 = [1,2,3,2,1], nums2 = [3,2,1,4,7]
@@ -88,9 +88,10 @@ public class Problem718 {
             for (int j = 1; j <= nums2.length; j++) {
                 if (nums1[i - 1] == nums2[j - 1]) {
                     dp[i][j] = dp[i - 1][j - 1] + 1;
+                    maxLen = Math.max(maxLen, dp[i][j]);
+                } else {
+                    dp[i][j] = 0;
                 }
-
-                maxLen = Math.max(maxLen, dp[i][j]);
             }
         }
 
@@ -118,11 +119,10 @@ public class Problem718 {
             for (int j = nums2.length; j >= 1; j--) {
                 if (nums1[i - 1] == nums2[j - 1]) {
                     dp[j] = dp[j - 1] + 1;
+                    maxLen = Math.max(maxLen, dp[j]);
                 } else {
                     dp[j] = 0;
                 }
-
-                maxLen = Math.max(maxLen, dp[j]);
             }
         }
 
