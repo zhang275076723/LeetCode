@@ -53,12 +53,8 @@ public class Offer12 {
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                //第一个字符相等才开始查找
-                if (board[i][j] == word.charAt(0)) {
-                    boolean flag = backtrack(0, i, j, new boolean[board.length][board[0].length], board, word);
-                    if (flag) {
-                        return true;
-                    }
+                if (backtrack(0, i, j, new boolean[board.length][board[0].length], board, word)) {
+                    return true;
                 }
             }
         }
