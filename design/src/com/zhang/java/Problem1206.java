@@ -132,9 +132,9 @@ public class Problem1206 {
 
             //从跳表高层往低层每层中的遍历节点路径数组update，确保加入到每一层的链表有序
             //redis中还记录了update数组中跳表节点在当前层中距离跳表头节点的距离数组rank
-            //注意：查询高度要从curLevel开始遍历，执行时间15ms，如果从nodeLevel开始遍历，则执行时间270+ms，
-            //因为有可能当前要加入的节点值比较大，如果从nodeLevel层开始遍历，则会顺序遍历，花费的时间长，
-            //而如果从curLevel层开始遍历，最高层节点最少，越往下层节点越多，类似二分查询，花费的时间短
+            //注意：查询高度从curLevel开始遍历，执行时间15ms；从nodeLevel开始遍历，则执行时间270+ms，
+            //因为要加入的节点值可能较大，并且nodeLevel高度较小，导致从nodeLevel层开始遍历，顺序遍历，花费的时间长，
+            //而如果从当前最高层curLevel开始遍历，最高层节点最少，越往下层节点越多，类似二分查询，花费的时间短
             Node[] update = new Node[curLevel];
             Node node = head;
 
@@ -147,7 +147,7 @@ public class Problem1206 {
                 update[i] = node;
             }
 
-            //从addNode的最高层第开始往第一层，addNode加入到每一层有序链表中
+            //从addNode的最高层第开始往第一层遍历，addNode加入到每一层的有序链表中
             for (int i = nodeLevel - 1; i >= 0; i--) {
                 //addNode在第i层的下一个节点
                 Node nextNode = update[i].next[i];
@@ -191,8 +191,8 @@ public class Problem1206 {
             //从deleteNode的最高层开始往第一层遍历，将deleteNode从当前层中删除
             for (int i = deleteNode.next.length - 1; i >= 0; i--) {
                 //deleteNode在第i层的下一个节点
-                //也写成Node nextNode = deleteNode.next[i];
-                Node nextNode = update[i].next[i].next[i];
+                //也写成Node nextNode = update[i].next[i].next[i];
+                Node nextNode = deleteNode.next[i];
                 update[i].next[i] = nextNode;
                 deleteNode.next[i] = null;
             }
@@ -232,7 +232,7 @@ public class Problem1206 {
             //当前跳表节在不同层中的下一个跳表节点数组，next数组的长度为当前跳表节的高度
             //next[1]：当前跳表节在第2层中的下一个跳表节点
             //next[4]：当前跳表节在第5层中的下一个跳表节点
-            private Node[] next;
+            private final Node[] next;
             //redis中还记录了当前跳表节点在不同层中距离下一个跳表节点的距离数组span
 
             public Node(int value, int level) {

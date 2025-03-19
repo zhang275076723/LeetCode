@@ -224,7 +224,7 @@ public class Problem480 {
          * @param priorityQueue
          */
         public void adjust(PriorityQueue<Integer> priorityQueue) {
-            //堆顶元素是延迟删除的元素，则直接出堆，delayMap中个数减1
+            //堆顶元素是延迟删除的元素，则堆顶元素直接出堆，堆顶元素在delayMap中个数减1
             while (!priorityQueue.isEmpty() && delayMap.containsKey(priorityQueue.peek())) {
                 int num = priorityQueue.poll();
                 delayMap.put(num, delayMap.get(num) - 1);

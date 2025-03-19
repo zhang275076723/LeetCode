@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/2/14 08:45
  * @Author zsy
- * @Description 回文对 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem409、Problem479、Problem516、Problem564、Problem647、Problem680、Problem866、Problem1147、Problem1177、Problem1312、Problem1328、Problem1332、Problem1400、Problem1457、Problem1542、Problem1616、Problem1930、Problem2002、Problem2108、Problem2131、Problem2217、Problem2384、Problem2396、Problem2484、Problem2490、Problem2663、Problem2697、Problem2791、Problem3035 前缀树类比Problem14、Problem208、Problem211、Problem212、Problem421、Problem676、Problem677、Problem720、Problem745、Problem820、Problem1166、Problem1804、Problem3043
+ * @Description 回文对 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem409、Problem479、Problem516、Problem564、Problem647、Problem680、Problem866、Problem1147、Problem1177、Problem1312、Problem1328、Problem1332、Problem1400、Problem1457、Problem1542、Problem1616、Problem1930、Problem2002、Problem2108、Problem2131、Problem2217、Problem2384、Problem2396、Problem2484、Problem2490、Problem2663、Problem2697、Problem2791、Problem3035 前缀树类比
  * 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem564、Problem647、Problem680、Problem866、Problem1147、Problem1177、Problem1312、Problem1328、Problem1332、Problem1400、Problem1457、Problem1542、Problem1616、Problem1930、Problem2002、Problem2108、Problem2131、Problem2217、Problem2384、Problem2396、Problem2484、Problem2490、Problem2663、Problem2697、Problem2791、Problem3035
  * 给定一个由唯一字符串构成的 0 索引 数组 words 。
  * 回文对 是一对整数 (i, j) ，满足以下条件：
@@ -42,7 +42,6 @@ public class Problem336 {
         String[] words = {"acc", "bbcca", "cca", "a", "", "aca"};
         System.out.println(problem336.palindromePairs(words));
         System.out.println(problem336.palindromePairs2(words));
-        System.out.println(problem336.palindromePairs3(words));
     }
 
     /**
@@ -61,7 +60,24 @@ public class Problem336 {
                     continue;
                 }
 
-                if (isPalindrome(words[i] + words[j], 0, (words[i] + words[j]).length() - 1)) {
+                String str = words[i] + words[j];
+                //str是否是会回文标志位
+                boolean flag = true;
+
+                int left = 0;
+                int right = str.length() - 1;
+
+                while (left < right) {
+                    if (str.charAt(left) != str.charAt(right)) {
+                        flag = false;
+                        break;
+                    } else {
+                        left++;
+                        right--;
+                    }
+                }
+
+                if (flag) {
                     List<Integer> list = new ArrayList<>();
                     list.add(i);
                     list.add(j);
@@ -75,17 +91,16 @@ public class Problem336 {
 
     /**
      * 前缀树
-     * 1、words[i]的逆序字符串reverseWord插入前缀树，在插入过程中，当reverseWord[j]-reverseWord[reverseWord.length()-1]是回文字符串时，
-     * 当前前缀树节点的list中加入words[i]在words中的下标索引i，即reverseWord[0]-reverseWord[j-1]加上words[i]是回文字符串，
-     * reverseWord的末尾节点的index赋值为words[i]在words中的下标索引i
-     * 2、words[i]在前缀树中查询，如果words[i]加上前缀树中某个字符串是回文字符串，将构成回文字符串的两个字符串在words中的下标索引加入result
+     * 1、words[i]的逆序字符串reverseWord插入前缀树，在插入过程中，如果reverseWord[j]-reverseWord[reverseWord.length()-1]是回文串，
+     * 则当前前缀树节点的list中加入words[i]在words中的下标索引i，reverseWord的末尾节点的index赋值为words[i]在words中的下标索引i
+     * 2、查询words[i]加上前缀树中某个字符串是回文字符串的下标索引集合
      * 时间复杂度O(n*m^2)，空间复杂度O(n*m) (n=words.length，m=words[i]的平均长度)
      * <p>
      * 例如：words = ["acc", "bbcca", "cca", "a", "", "aca"]
-     * 前缀树中list和index存储的都是words中下标索引，在当前前缀树中便于显示，所以表示为字符串
+     * 注意：前缀树中list和index存储的都是words中下标索引，在当前前缀树中为了便于显示，所以表示为字符串
      * <                             root (list=["a","aca"]，index="")
      * <                           /      \
-     * <                         c         a (list=["cca"]，index=a)
+     * <                         c         a (list=["cca"]，index="a")
      * <                       /            \
      * <        (list=[acc]) c               c (list=["cca","aca"])
      * <                   /               /  \
@@ -99,89 +114,25 @@ public class Problem336 {
      * @return
      */
     public List<List<Integer>> palindromePairs2(String[] words) {
-        List<List<Integer>> result = new ArrayList<>();
         Trie trie = new Trie();
 
         //words[i]的逆序字符串插入前缀树
-        trie.insert(words);
-        //words[i]在前缀树中查询，查询words[i]加上前缀树中某个字符串是回文字符串
-        trie.search(words, result);
-
-        return result;
-    }
-
-    /**
-     * 双前缀树 (超时，但正确)
-     * words[i]插入前缀树trie1，words[i]的逆序字符串插入前缀树trie2，
-     * trie1中查询words[i]的逆序字符串reverseWord，判断trie1中是否有字符串加上words[i]构成回文字符串；
-     * trie2中查询words[i]，判断words[i]加上trie2中是否有字符串构成回文字符串
-     * 注意：插入words[i]的前缀树对应insert()和search()，插入words[i]的逆序字符串reverseWord的前缀树对应reverseInsert()和reverseSearch()
-     * 时间复杂度O(n*m^2)，空间复杂度O(n*m) (n=words.length，m=words[i]的平均长度)
-     * <p>
-     * 例如：words = ["acc", "bbcca", "cca", "a", "", "aca"]
-     * 前缀树中index存储的是words中下标索引，在当前前缀树中便于显示，所以表示为字符串
-     * words[i]插入root1，words[i]的逆序字符串插入roo2
-     * <                             root1 (index="")
-     * <                           /   |   \
-     * <             (index="a") a     b     c
-     * <                       /       |      \
-     * <                      c        b       c
-     * <                   /   \       |        \
-     * <   (index="aca") a      c      c         a (index="cca")
-     * <                 (index="acc") |
-     * <                               c
-     * <                               |
-     * <                               a (index="bbcca")
-     * <
-     * <
-     * <                             root2 (index="")
-     * <                           /      \
-     * <                         c         a (index="a")
-     * <                       /            \
-     * <                     c               c
-     * <                   /               /  \
-     * <   (index="acc") a               a     c (index="cca")
-     * <                          (index="aca") \
-     * <                                         b
-     * <                                          \
-     * <                                           b (index="bbcca")
-     *
-     * @param words
-     * @return
-     */
-    public List<List<Integer>> palindromePairs3(String[] words) {
-        List<List<Integer>> result = new ArrayList<>();
-        Trie2 trie1 = new Trie2();
-        Trie2 trie2 = new Trie2();
-
-        //words[i]插入前缀树trie1
-        trie1.insert(words);
-        //words[i]的逆序字符串插入前缀树trie2
-        trie2.reverseInsert(words);
-
-        //trie1中查询words[i]的逆序字符串reverseWord，判断trie1中是否有字符串加上words[i]构成回文字符串
-        trie1.search(words, result);
-        //trie2中查询words[i]，判断words[i]加上trie2中是否有字符串构成回文字符串
-        trie2.reverseSearch(words, result);
-
-        return result;
-    }
-
-    private boolean isPalindrome(String s, int i, int j) {
-        while (i < j) {
-            if (s.charAt(i) != s.charAt(j)) {
-                return false;
-            } else {
-                i++;
-                j--;
-            }
+        for (int i = 0; i < words.length; i++) {
+            trie.reverseInsert(words[i], i);
         }
 
-        return true;
+        List<List<Integer>> result = new ArrayList<>();
+
+        //查询words[i]加上前缀树中某个字符串是回文字符串的下标索引集合
+        for (int i = 0; i < words.length; i++) {
+            result.addAll(trie.search(words[i], i));
+        }
+
+        return result;
     }
 
     /**
-     * 前缀树 (palindromePairs2中使用的前缀树)
+     * 前缀树
      */
     private static class Trie {
         private final TrieNode root;
@@ -191,109 +142,107 @@ public class Problem336 {
         }
 
         /**
-         * words[i]的逆序字符串reverseWord插入前缀树，在插入过程中，当reverseWord[j]-reverseWord[reverseWord.length()-1]是回文字符串时，
-         * 当前前缀树节点的list中加入words[i]在words中的下标索引i，即reverseWord[0]-reverseWord[j-1]加上words[i]是回文字符串，
-         * reverseWord的末尾节点的index赋值为words[i]在words中的下标索引i
-         * 时间复杂度O(n*m^2)，空间复杂度O(n*m) (n=words.length，m=words[i]的平均长度)
+         * word的逆序字符串reverseWord插入前缀树，在插入过程中，当reverseWord[j]-reverseWord[reverseWord.length()-1]是回文字符串时，
+         * 当前前缀树节点的list中加入word在words中的下标索引index，即reverseWord[0]-reverseWord[j-1]加上word是回文字符串，
+         * reverseWord的末尾节点的index赋值为word在words中的下标索引index
+         * 时间复杂度O(n*m^2)，空间复杂度O(n*m) (n=words.length，m=word的平均长度)
          *
-         * @param words
+         * @param word
+         * @param index
          */
-        public void insert(String[] words) {
-            for (int i = 0; i < words.length; i++) {
-                TrieNode node = root;
-                //words[i]的逆序字符串
-                String reverseWord = new StringBuilder(words[i]).reverse().toString();
+        public void reverseInsert(String word, int index) {
+            TrieNode node = root;
+            //word的逆序字符串
+            String reverseWord = new StringBuilder(word).reverse().toString();
 
-                //reverseWord插入前缀树
-                for (int j = 0; j < reverseWord.length(); j++) {
-                    char c = reverseWord.charAt(j);
+            //reverseWord插入前缀树
+            for (int i = 0; i < reverseWord.length(); i++) {
+                char c = reverseWord.charAt(i);
 
-                    //reverseWord[j]-reverseWord[reverseWord.length()-1]是回文字符串，当前前缀树节点的list中加入words[i]在words中的下标索引i，
-                    //即reverseWord[0]-reverseWord[j-1]加上words[i]是回文字符串
-                    if (isPalindrome(reverseWord, j, reverseWord.length() - 1)) {
-                        node.list.add(i);
-                    }
-
-                    if (!node.children.containsKey(c)) {
-                        node.children.put(c, new TrieNode());
-                    }
-
-                    node = node.children.get(c);
+                //reverseWord[i]-reverseWord[reverseWord.length()-1]是回文字符串，当前前缀树节点的list中加入words[i]在words中的下标索引i，
+                //即reverseWord[0]-reverseWord[i-1]加上words[i]是回文字符串
+                if (isPalindrome(reverseWord, i, reverseWord.length() - 1)) {
+                    node.list.add(index);
                 }
 
-                //根节点到当前节点的字符串的逆序在words中的下标索引为i
-                node.index = i;
-                node.isEnd = true;
+                if (!node.children.containsKey(c)) {
+                    node.children.put(c, new TrieNode());
+                }
+
+                node = node.children.get(c);
             }
+
+            //根节点到当前节点作为words中字符串的逆序在words中的下标索引为i
+            node.index = index;
+            node.isEnd = true;
         }
 
         /**
-         * words[i]在前缀树中查询，如果words[i]加上前缀树中某个字符串是回文字符串，将构成回文字符串的两个字符串在words中的下标索引加入result
-         * words[i]加上前缀树中字符串构成回文字符串的3种情况：
-         * 1、words[i]每个字符在前缀树查询过程中，当words[i][j]-words[i][words[i].length()-1]是回文字符串时，
-         * 并且根节点到当前前缀树节点的字符串的逆序是words中的字符串，即当前前缀树节点node.index不等于-1，则words[i]加上words[node.index]是回文字符串
-         * 2、words[i]遍历结束，并且根节点到当前前缀树节点的字符串的逆序是words中的字符串，同时words[i]和根节点到当前前缀树节点的字符串的逆序不相等，
-         * 即当前前缀树节点node.index不等于-1，且node.index不等于i，则words[i]加上words[node.index]是回文字符串
-         * 3、words[i]遍历结束，words[i]加上当前前缀树节点的list中字符串构成回文字符串
-         * 时间复杂度O(n*m^2)，空间复杂度O(1) (n=words.length，m=words[i]的平均长度)
+         * 查询word加上前缀树中某个字符串是回文字符串的下标索引集合
+         * word加上前缀树中字符串构成回文字符串的3种情况：
+         * 1、word每个字符在前缀树查询过程中，当word[i]-word[word.length()-1]是回文字符串时，
+         * 并且根节点到当前节点的字符串的逆序是words中的字符串，即当前节点node.index不等于-1，
+         * 则word加上words[node.index]构成回文字符串
+         * 2、word遍历结束，并且根节点到当前节点的字符串的逆序是words中的字符串，即当前节点node.index不等于-1，
+         * 同时word和根节点到当前节点的字符串的逆序不相等，即node.index不等于index，不能存在word加上word的回文，
+         * 则word加上words[node.index]构成回文字符串
+         * 3、word遍历结束，word加上当前节点的list中字符串构成回文字符串
+         * 时间复杂度O(n*m^2)，空间复杂度O(1) (n=words.length，m=word的平均长度)
          * <p>
          * 例如：
-         * 情况1：words[i]="abc"，在逆序前缀树中查询"abc"，逆序前缀树中存在"ab"，
-         * 并且words[i][2]-words[i][words[i].length()-1]是回文字符串，则"abc"+"ba"是回文字符串
-         * 情况2：words[i]="abc"，在逆序前缀树中查询"abc"，逆序前缀树中存在"abc"，则"abc"+"cba"是回文字符串
-         * 情况3：words[i]="abc"，在逆序前缀树中查询"abc"，逆序前缀树中存在"abc"，
-         * 并且"xxcba"和"xcba"插入了逆序前缀树，前缀"xx"和"x"是回文字符串，则"abc"+"xxcba"、"abc"+"xcba"是回文字符串
+         * 情况1：word="abc"，在逆序前缀树中查询"abc"，逆序前缀树中存在"ab"，
+         * 并且word[2]-word[words[i].length()-1]是回文字符串，即"c"是回文字符串，则"abc"+"ba"是回文字符串
+         * 情况2：word="abc"，在逆序前缀树中查询"abc"，逆序前缀树中存在"abc"，则"abc"+"cba"是回文字符串
+         * 情况3：word="abc"，在逆序前缀树中查询"abc"，逆序前缀树中存在"abc"，并且前缀树中存在"xxcba"和"xcba"，
+         * 即遍历到word的末尾节点时，当前节点的list中前缀"xx"和"x"是回文字符串，则"abc"+"xxcba"、"abc"+"xcba"是回文字符串
          *
-         * @param words
-         * @param result
+         * @param word
+         * @param index
          */
-        public void search(String[] words, List<List<Integer>> result) {
-            for (int i = 0; i < words.length; i++) {
-                TrieNode node = root;
+        public List<List<Integer>> search(String word, int index) {
+            List<List<Integer>> result = new ArrayList<>();
+            TrieNode node = root;
 
-                for (int j = 0; j < words[i].length(); j++) {
-                    char c = words[i].charAt(j);
+            for (int i = 0; i < word.length(); i++) {
+                char c = word.charAt(i);
 
-                    //情况1：words[i][j]-words[i][words[i].length()-1]是回文字符串时，
-                    //并且根节点到当前前缀树节点的字符串的逆序是words中的字符串，即当前前缀树节点node.index不等于-1，
-                    //则words[i]加上words[node.index]是回文字符串
-                    if (node.index != -1 && isPalindrome(words[i], j, words[i].length() - 1)) {
-                        List<Integer> list = new ArrayList<>();
-                        list.add(i);
-                        list.add(node.index);
-                        result.add(list);
-                    }
-
-                    node = node.children.get(c);
-
-                    //前缀树中没有字符c节点，直接跳出循环
-                    if (node == null) {
-                        break;
-                    }
-                }
-
-                //不存在当前节点，直接进行下次循环
-                if (node == null) {
-                    continue;
-                }
-
-                //情况2：words[i]遍历结束，并且根节点到当前前缀树节点的字符串的逆序是words中的字符串，同时words[i]和根节点到当前前缀树节点的字符串的逆序不相等，
-                //即当前前缀树节点node.index不等于-1，且node.index不等于i，则words[i]加上words[node.index]是回文字符串
-                if (node.index != -1 && node.index != i) {
+                //情况1：word每个字符在前缀树查询过程中，当word[i]-word[word.length()-1]是回文字符串时，
+                //并且根节点到当前节点的字符串的逆序是words中的字符串，即当前节点node.index不等于-1，
+                //则word加上words[node.index]构成回文字符串
+                if (node.index != -1 && isPalindrome(word, i, word.length() - 1)) {
                     List<Integer> list = new ArrayList<>();
-                    list.add(i);
+                    list.add(index);
                     list.add(node.index);
                     result.add(list);
                 }
 
-                //情况3：words[i]遍历结束，words[i]加上当前前缀树节点的list中字符串构成回文字符串
-                for (int index : node.list) {
-                    List<Integer> list = new ArrayList<>();
-                    list.add(i);
-                    list.add(index);
-                    result.add(list);
+                node = node.children.get(c);
+
+                //当前节点不存在字符c节点，直接返回result
+                if (node == null) {
+                    return result;
                 }
             }
+
+            //情况2：word遍历结束，并且根节点到当前节点的字符串的逆序是words中的字符串，即当前节点node.index不等于-1，
+            //同时word和根节点到当前节点的字符串的逆序不相等，即node.index不等于index，不能存在word加上word的回文，
+            //则word加上words[node.index]构成回文字符串
+            if (node.index != -1 && node.index != index) {
+                List<Integer> list = new ArrayList<>();
+                list.add(index);
+                list.add(node.index);
+                result.add(list);
+            }
+
+            //情况3：word遍历结束，word加上当前节点的list中字符串构成回文字符串
+            for (int index2 : node.list) {
+                List<Integer> list = new ArrayList<>();
+                list.add(index);
+                list.add(index2);
+                result.add(list);
+            }
+
+            return result;
         }
 
         /**
@@ -322,252 +271,16 @@ public class Problem336 {
          * 前缀树节点
          */
         private static class TrieNode {
-            //当前节点的子节点map
             private final Map<Character, TrieNode> children;
-            //存储words中字符串的下标索引，根节点到当前节点的字符串加上list中下标索引在words中的字符串是回文字符串
+            //根节点到当前节点作为words中字符串的后缀，并且words中当前字符串剩余部分是回文串在words中的下标索引集合
             private final List<Integer> list;
-            //根节点到当前节点的字符串的逆序在words中的下标索引
+            //根节点到当前节点作为words中字符串的逆序在words中的下标索引，如果不存在，则为-1
             private int index;
-            //根节点到当前节点的字符串的逆序是否是words中的字符串
-            //注意：当前前缀树可以只使用index替代isEnd
             private boolean isEnd;
 
             public TrieNode() {
                 children = new HashMap<>();
                 list = new ArrayList<>();
-                index = -1;
-                isEnd = false;
-            }
-        }
-    }
-
-    /**
-     * 前缀树 (palindromePairs3中使用的前缀树)
-     * 注意：一个前缀树插入words[i]，另一个前缀树插入words[i]的逆序字符串reverseWord，
-     * 插入words[i]的前缀树对应insert()和search()，插入words[i]的逆序字符串reverseWord的前缀树对应reverseInsert()和reverseSearch()
-     */
-    private static class Trie2 {
-        private final TrieNode root;
-
-        public Trie2() {
-            root = new TrieNode();
-        }
-
-        /**
-         * words[i]插入前缀树，words[i]的末尾节点的index赋值为words[i]在words中的下标索引i
-         * 时间复杂度O(n*m)，空间复杂度O(n*m) (n=words.length，m=words[i]的平均长度)
-         *
-         * @param words
-         */
-        public void insert(String[] words) {
-            for (int i = 0; i < words.length; i++) {
-                TrieNode node = root;
-
-                //words[i]插入前缀树
-                for (char c : words[i].toCharArray()) {
-                    if (!node.children.containsKey(c)) {
-                        node.children.put(c, new TrieNode());
-                    }
-
-                    node = node.children.get(c);
-                }
-
-                //根节点到当前节点的字符串在words中的下标索引为i
-                node.index = i;
-                node.isEnd = true;
-            }
-        }
-
-        /**
-         * words[i]的逆序字符串reverseWord插入前缀树，reverseWord的末尾节点的index赋值为words[i]在words中的下标索引i
-         * 时间复杂度O(n*m)，空间复杂度O(n*m) (n=words.length，m=words[i]的平均长度)
-         *
-         * @param words
-         */
-        public void reverseInsert(String[] words) {
-            for (int i = 0; i < words.length; i++) {
-                TrieNode node = root;
-                //words[i]的逆序字符串
-                String reverseWord = new StringBuilder(words[i]).reverse().toString();
-
-                //reverseWord插入前缀树
-                for (char c : reverseWord.toCharArray()) {
-                    if (!node.children.containsKey(c)) {
-                        node.children.put(c, new TrieNode());
-                    }
-
-                    node = node.children.get(c);
-                }
-
-                //根节点到当前节点的字符串的逆序在words中的下标索引为i
-                node.index = i;
-                node.isEnd = true;
-            }
-        }
-
-        /**
-         * insert()对应前缀树中查询words[i]的逆序字符串reverseWord，如果前缀树中某个字符串加上words[i]是回文字符串，
-         * 将构成回文字符串的两个字符串在words中的下标索引加入result
-         * 前缀树中字符串加上words[i]构成回文字符串的2种情况：
-         * 1、reverseWord每个字符在前缀树查询过程中，当reverseWord[j]-reverseWord[reverseWord.length()-1]是回文字符串时，
-         * 并且根节点到当前前缀树节点的字符串是words中的字符串，即当前前缀树节点node.index不等于-1，则words[node.index]加上words[i]是回文字符串
-         * 2、reverseWord遍历结束，并且根节点到当前前缀树节点的字符串是words中的字符串，同时words[i]和根节点到当前前缀树节点的字符串不相等，
-         * 即当前前缀树节点node.index不等于-1，且node.index不等于i，则words[node.index]加上words[i]是回文字符串
-         * 注意：search()是words[node.index]加上words[i]构成回文字符串，reverseSearch()是words[i]加上words[node.index]构成回文字符串
-         * 时间复杂度O(n*m^2)，空间复杂度O(m) (n=words.length，m=words[i]的平均长度)
-         * <p>
-         * 例如：
-         * 情况1：words[i]="abc"，reverseWord="cba"，在正序前缀树中查询"cba"，正序前缀树中存在"cb"，
-         * 并且reverseWord[2]-reverseWord[reverseWord.length()-1]是回文字符串，则"cb"+"abc"是回文字符串
-         * 情况2：words[i]="abc"，reverseWord="cba"，在正序前缀树中查询"cba"，正序前缀树中存在"cba"，则"cba"+"abc"是回文字符串
-         *
-         * @param words
-         * @param result
-         * @return
-         */
-        public void search(String[] words, List<List<Integer>> result) {
-            for (int i = 0; i < words.length; i++) {
-                TrieNode node = root;
-                //words[i]的逆序字符串
-                String reverseWord = new StringBuilder(words[i]).reverse().toString();
-
-                for (int j = 0; j < reverseWord.length(); j++) {
-                    char c = reverseWord.charAt(j);
-
-                    //情况1：reverseWord[j]-reverseWord[reverseWord.length()-1]是回文字符串时，
-                    //并且根节点到当前前缀树节点的字符串是words中的字符串，即当前前缀树节点node.index不等于-1，
-                    //则words[node.index]加上words[i]是回文字符串
-                    if (node.index != -1 && isPalindrome(reverseWord, j, reverseWord.length() - 1)) {
-                        List<Integer> list = new ArrayList<>();
-                        list.add(node.index);
-                        list.add(i);
-                        result.add(list);
-                    }
-
-                    node = node.children.get(c);
-
-                    //前缀树中没有字符c节点，直接跳出循环
-                    if (node == null) {
-                        break;
-                    }
-                }
-
-                //不存在当前节点，直接进行下次循环
-                if (node == null) {
-                    continue;
-                }
-
-                //情况2：reverseWord遍历结束，并且根节点到当前前缀树节点的字符串是words中的字符串，同时words[i]和根节点到当前前缀树节点的字符串不相等，
-                //即当前前缀树节点node.index不等于-1，且node.index不等于i，则words[node.index]加上words[i]是回文字符串
-                if (node.index != -1 && node.index != i) {
-                    List<Integer> list = new ArrayList<>();
-                    list.add(node.index);
-                    list.add(i);
-                    result.add(list);
-                }
-            }
-        }
-
-        /**
-         * reverseInsert()对应前缀树中查询words[i]，如果words[i]加上前缀树中某个字符串是回文字符串，
-         * 将构成回文字符串的两个字符串在words中的下标索引加入result
-         * words[i]加上前缀树中字符串构成回文字符串的2种情况：
-         * 1、words[i]每个字符在前缀树查询过程中，当words[i][j]-words[i][words[i].length()-1]是回文字符串时，
-         * 并且根节点到当前前缀树节点的字符串的逆序是words中的字符串，即当前前缀树节点node.index不等于-1，则words[i]加上words[node.index]是回文字符串
-         * 2、words[i]遍历结束，并且根节点到当前前缀树节点的字符串的逆序是words中的字符串，同时words[i]和根节点到当前前缀树节点的字符串的逆序不相等，
-         * 即当前前缀树节点node.index不等于-1，且node.index不等于i，则words[i]加上words[node.index]是回文字符串
-         * 注意：情况2和search()中情况2相同，即可以省略
-         * 注意：search()是words[node.index]加上words[i]构成回文字符串，reverseSearch()是words[i]加上words[node.index]构成回文字符串
-         * 时间复杂度O(n*m^2)，空间复杂度O(1) (n=words.length，m=words[i]的平均长度)
-         * <p>
-         * 例如：
-         * 情况1：words[i]="abc"，在逆序前缀树中查询"abc"，逆序前缀树中存在"ab"，
-         * 并且words[i][2]-words[i][words[i].length()-1]是回文字符串，则"abc"+"ba"是回文字符串
-         * 情况2：words[i]="abc"，在逆序前缀树中查询"abc"，逆序前缀树中存在"abc"，则"abc"+"cba"是回文字符串
-         * (和search()中情况2相同，省略当前情况)
-         *
-         * @param words
-         * @param result
-         */
-        public void reverseSearch(String[] words, List<List<Integer>> result) {
-            for (int i = 0; i < words.length; i++) {
-                TrieNode node = root;
-
-                for (int j = 0; j < words[i].length(); j++) {
-                    char c = words[i].charAt(j);
-
-                    //情况1：words[i][j]-words[i][words[i].length()-1]是回文字符串时，
-                    //并且根节点到当前前缀树节点的字符串的逆序是words中的字符串，即当前前缀树节点node.index不等于-1，
-                    //则words[i]加上words[node.index]是回文字符串
-                    if (node.index != -1 && isPalindrome(words[i], j, words[i].length() - 1)) {
-                        List<Integer> list = new ArrayList<>();
-                        list.add(i);
-                        list.add(node.index);
-                        result.add(list);
-                    }
-
-                    node = node.children.get(c);
-
-                    //前缀树中没有字符c节点，直接跳出循环
-                    if (node == null) {
-                        break;
-                    }
-                }
-
-//                //不存在当前节点，直接进行下次循环
-//                if (node == null) {
-//                    continue;
-//                }
-//
-//                //情况2：words[i]遍历结束，并且根节点到当前前缀树节点的字符串的逆序是words中的字符串，同时words[i]和根节点到当前前缀树节点的字符串的逆序不相等，
-//                //即当前前缀树节点node.index不等于-1，且node.index不等于i，则words[i]加上words[node.index]是回文字符串
-//                //注意：情况2和search()中情况2相同，即可以省略
-//                if (node.index != -1 && node.index != i) {
-//                    List<Integer> list = new ArrayList<>();
-//                    list.add(i);
-//                    list.add(node.index);
-//                    result.add(list);
-//                }
-            }
-        }
-
-        /**
-         * 判断word[i]-word[j]是否是回文串
-         * 时间复杂度O(n)，空间复杂度O(1)
-         *
-         * @param word
-         * @param i
-         * @param j
-         * @return
-         */
-        private boolean isPalindrome(String word, int i, int j) {
-            while (i < j) {
-                if (word.charAt(i) != word.charAt(j)) {
-                    return false;
-                } else {
-                    i++;
-                    j--;
-                }
-            }
-
-            return true;
-        }
-
-        /**
-         * 前缀树节点
-         */
-        private static class TrieNode {
-            private final Map<Character, TrieNode> children;
-            //word是正序插入：根节点到当前节点的字符串在words中的下标索引
-            //word是逆序插入：根节点到当前节点的字符串的逆序在words中的下标索引
-            private int index;
-            //word是正序插入：根节点到当前节点的字符串是否是words中的字符串
-            //word是逆序插入：根节点到当前节点的字符串的逆序是否是words中的字符串
-            //注意：当前前缀树可以只使用index替代isEnd
-            private boolean isEnd;
-
-            public TrieNode() {
-                children = new HashMap<>();
                 index = -1;
                 isEnd = false;
             }
