@@ -69,7 +69,7 @@ public class Problem471 {
                 //s[j]-s[j+i-1]中构成s[j]-s[j+i-1]长度最小的子串
                 String repeatStr = getRepeatStr(curStr);
 
-                //s[j]-s[j+i-1]可以编码，则s[j]-s[j+i-1]整体进行编码来更新dp[j][j+i-1]
+                //s[j]-s[j+i-1]整体进行编码来更新dp[j][j+i-1]
                 if (repeatStr.length() < curStr.length()) {
                     StringBuilder sb = new StringBuilder();
                     //注意：sb中拼接的是repeatStr编码得到的长度最小的字符串dp[j][j+repeatStr.length()-1]，
