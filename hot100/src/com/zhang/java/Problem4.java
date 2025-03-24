@@ -126,9 +126,9 @@ public class Problem4 {
             }
         }
 
-        //两个中位数中的前一个数
+        //nums1和nums2中元素的靠前一个中位数
         int num1 = getMinKValue(nums1, nums2, (nums1.length + nums2.length) / 2);
-        //两个中位数中的后一个数
+        //nums1和nums2中元素的靠后一个中位数
         int num2 = getMinKValue(nums1, nums2, (nums1.length + nums2.length) / 2 + 1);
 
         if ((nums1.length + nums2.length) % 2 == 0) {
