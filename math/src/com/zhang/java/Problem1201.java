@@ -119,17 +119,18 @@ public class Problem1201 {
         int right = n * left;
         int mid;
 
+        //a、b的最小公倍数，使用long避免int溢出
+        long lcmAb = lcm(a, b);
+        //b、c的最小公倍数，使用long避免int溢出
+        long lcmBc = lcm(b, c);
+        //a、c的最小公倍数，使用long避免int溢出
+        long lcmAc = lcm(a, c);
+        //a、b、c的最小公倍数，使用long避免int溢出
+        long lcmAbc = lcm(a, lcm(b, c));
+
         while (left < right) {
             mid = left + ((right - left) >> 1);
 
-            //a、b的最小公倍数，使用long避免int溢出
-            long lcmAb = lcm(a, b);
-            //b、c的最小公倍数，使用long避免int溢出
-            long lcmBc = lcm(b, c);
-            //a、c的最小公倍数，使用long避免int溢出
-            long lcmAc = lcm(a, c);
-            //a、b、c的最小公倍数，使用long避免int溢出
-            long lcmAbc = lcm(a, lcm(b, c));
             //小于等于mid的丑数个数count(容斥原理)
             int count = (int) (mid / a + mid / b + mid / c - mid / lcmAb - mid / lcmBc - mid / lcmAc + mid / lcmAbc);
 

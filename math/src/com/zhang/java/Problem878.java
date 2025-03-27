@@ -90,11 +90,12 @@ public class Problem878 {
         long right = (long) n * left;
         long mid;
 
+        //a、b的最小公倍数，使用long避免int溢出
+        long lcmAb = lcm(a, b);
+
         while (left < right) {
             mid = left + ((right - left) >> 1);
 
-            //a、b的最小公倍数，使用long避免int溢出
-            long lcmAb = lcm(a, b);
             //小于等于mid的神奇数个数count(容斥原理)
             int count = (int) (mid / a + mid / b - mid / lcmAb);
 
