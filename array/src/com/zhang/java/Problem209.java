@@ -7,7 +7,7 @@ import java.util.Deque;
 /**
  * @Date 2021/11/25 10:05
  * @Author zsy
- * @Description 长度最小的子数组 滑动窗口类比Problem3、Problem30、Problem76、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem567、Problem632、Problem643、Problem713、Problem1004、Problem1456、Problem1839、Problem2062、Offer48、Offer57_2、Offer59 前缀和类比Problem325、Problem327、Problem437、Problem523、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1856、Problem1871、Offer57_2 单调队列类比Problem239、Problem862、Problem1696、Offer59、Offer59_2 子序列和子数组类比Problem53、Problem115、Problem152、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
+ * @Description 长度最小的子数组 类比Problem862 滑动窗口类比Problem3、Problem30、Problem76、Problem219、Problem220、Problem239、Problem340、Problem438、Problem485、Problem487、Problem567、Problem632、Problem643、Problem713、Problem1004、Problem1456、Problem1839、Problem2062、Offer48、Offer57_2、Offer59 前缀和类比Problem325、Problem327、Problem437、Problem523、Problem525、Problem560、Problem862、Problem974、Problem1171、Problem1856、Problem1871、Offer57_2 单调队列类比Problem239、Problem862、Problem1696、Offer59、Offer59_2 子序列和子数组类比Problem53、Problem115、Problem152、Problem300、Problem325、Problem392、Problem491、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
  * 给定一个含有n个正整数的数组和一个正整数target
  * 找出该数组中满足其和 ≥ target的长度最小的连续子数组，并返回其长度。如果不存在符合条件的子数组，返回0
  * <p>
@@ -139,7 +139,7 @@ public class Problem209 {
 
     /**
      * 前缀和+单调队列
-     * 单调递增队列存放前缀和数组中元素的索引下标
+     * 单调递增队列存放前缀和数组中元素的下标索引
      * 1、当前元素preSum[i]和队首元素preSum[j]之差大于等于target，即[j+1,i]满足子数组长度大于等于target，
      * 则队首元素出队，更新子数组长度
      * 2、当前元素preSum[i]不满足单调递增队列，队尾元素出队
