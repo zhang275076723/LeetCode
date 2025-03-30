@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/5/5 09:01
  * @Author zsy
- * @Description 递增子序列 类比Problem300、Problem354、Problem376、Problem673、Problem674、Problem1143、Problem2407、Problem2771 回溯+剪枝类比Problem17、Problem22、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem89、Problem90、Problem97、Problem216、Problem301、Problem377、Problem679、Problem698、Offer17、Offer38 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
+ * @Description 递增子序列 类比Problem90 类比Problem300、Problem354、Problem376、Problem673、Problem674、Problem1143、Problem2407、Problem2771 回溯+剪枝类比Problem17、Problem22、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem89、Problem90、Problem97、Problem216、Problem301、Problem377、Problem679、Problem698、Offer17、Offer38 子序列和子数组类比Problem53、Problem115、Problem152、Problem209、Problem300、Problem325、Problem392、Problem516、Problem525、Problem560、Problem581、Problem659、Problem673、Problem674、Problem718、Problem862、Problem1143、Offer42、Offer57_2
  * 给你一个整数数组 nums ，找出并返回所有该数组中不同的递增子序列，递增子序列中 至少有两个元素 。
  * 你可以按 任意顺序 返回答案。
  * 数组中可能含有重复元素，如出现两个整数相等，也可以视作递增序列的一种特殊情况。
@@ -30,7 +30,7 @@ public class Problem491 {
 
     /**
      * 回溯+剪枝，难点在于如何去重(不建议使用set去重，因为数组顺序不能变，所以不能先排序再去重)
-     * 核心思想：当前递增子序列末尾元素和当前元素相等，为了去重，只能添加当前元素，不能不添加当前元素
+     * 核心思想：当前递增子序列的末尾元素和当前元素相等，为了去重，只能添加当前元素，不能不添加当前元素
      * 时间复杂度O(n*2^n)，空间复杂度O(n) (共有2^n种状态，每种状态需要O(n)复制到结果集合中)
      * <p>
      * 例如：nums=[2,2,3]
@@ -47,7 +47,7 @@ public class Problem491 {
 
         List<List<Integer>> result = new ArrayList<>();
 
-        //last：当前递增子序列list的最后一个元素，当前元素和last相等，为了去重，只能添加当前元素，不能不添加当前元素
+        //last：当前递增子序列的最后一个元素，当前元素和last相等，为了去重，只能添加当前元素，不能不添加当前元素
         //初始化last为int最小值，表示当前递增子序列为空
         backtrack(0, Integer.MIN_VALUE, nums, new ArrayList<>(), result);
 
@@ -76,7 +76,7 @@ public class Problem491 {
             backtrack(t + 1, nums[t], nums, list, result);
             list.remove(list.size() - 1);
         } else {
-            //当前元素大于last，只能不添加当前元素
+            //当前元素小于last，只能不添加当前元素
             backtrack(t + 1, last, nums, list, result);
         }
     }

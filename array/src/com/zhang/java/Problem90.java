@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/11/9 08:38
  * @Author zsy
- * @Description 子集 II 回溯+剪枝类比Problem17、Problem22、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem89、Problem97、Problem216、Problem301、Problem377、Problem491、Problem679、Problem698、Offer17、Offer38
+ * @Description 子集 II 类比Problem78、Problem491 回溯+剪枝类比Problem17、Problem22、Problem39、Problem40、Problem46、Problem47、Problem77、Problem78、Problem89、Problem97、Problem216、Problem301、Problem377、Problem491、Problem679、Problem698、Offer17、Offer38
  * 给你一个整数数组 nums ，其中可能包含重复元素，请你返回该数组所有可能的子集（幂集）。
  * 解集 不能 包含重复的子集。返回的解集中，子集可以按 任意顺序 排列。
  * <p>
@@ -24,10 +24,12 @@ public class Problem90 {
         Problem90 problem90 = new Problem90();
         int[] nums = {1, 2, 2};
         System.out.println(problem90.subsetsWithDup(nums));
+        System.out.println(problem90.subsetsWithDup2(nums));
     }
 
     /**
      * 回溯+剪枝，难点在于如何去重(不建议使用set去重)
+     * 核心思想：当前子集的末尾元素和当前元素相等，为了去重，只能添加当前元素，不能不添加当前元素
      * 时间复杂度O(n*2^n)，空间复杂度O(n) (一共2^n种状态，每一种状态添加到集合中需要O(n))
      *
      * @param nums
@@ -43,30 +45,72 @@ public class Problem90 {
 
         List<List<Integer>> result = new ArrayList<>();
 
-        //flag标志位表示前一个的元素是否被添加，0：前一个的元素没有被添加，1：前一个的元素被添加
-        backtrack(0, nums, 0, new ArrayList<>(), result);
+        //last：当前子集的最后一个元素，当前元素和last相等，为了去重，只能添加当前元素，不能不添加当前元素
+        //初始化last为int最小值，表示当前子集为空
+        backtrack(0, Integer.MIN_VALUE, nums, new ArrayList<>(), result);
 
         return result;
     }
 
-    private void backtrack(int t, int[] nums, int flag, List<Integer> list, List<List<Integer>> result) {
+    /**
+     * 二进制状态压缩
+     * 核心思想：当前子集的末尾元素和当前元素相等，为了去重，只能添加当前元素，不能不添加当前元素
+     * nums的长度为10，可以使用int表示nums中元素是否存在，当前位为1，则当前元素存在；当前位为0，则当前元素不存在
+     * 时间复杂度O(n*2^n)，空间复杂度O(1)
+     *
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> subsetsWithDup2(int[] nums) {
+        //先按照由小到大排序，便于去重
+        quickSort(nums, 0, nums.length - 1);
+
+        List<List<Integer>> result = new ArrayList<>();
+
+        for (int i = 0; i < (1 << nums.length); i++) {
+            List<Integer> list = new ArrayList<>();
+            //当前二进制状态i对应的子集是否合法标志位
+            boolean flag = true;
+
+            for (int j = 0; j < nums.length; j++) {
+                //当前二进制状态i中的当前元素nums[j]没有添加，但前一个元素nums[j-1]添加了，会导致重复，则不合法
+                if (j > 0 && nums[j] == nums[j - 1] && ((i >>> j) & 1) == 0 && ((i >>> (j - 1)) & 1) == 1) {
+                    flag = false;
+                    break;
+                }
+
+                if (((i >>> j) & 1) == 1) {
+                    list.add(nums[j]);
+                }
+            }
+
+            if (flag) {
+                result.add(list);
+            }
+        }
+
+        return result;
+    }
+
+    private void backtrack(int t, int last, int[] nums, List<Integer> list, List<List<Integer>> result) {
         if (t == nums.length) {
             result.add(new ArrayList<>(list));
             return;
         }
 
-        //不添加当前元素
-        backtrack(t + 1, nums, 0, list, result);
+        //当前元素和last相等，为了去重，只能添加当前元素，不能不添加当前元素
+        if (last == nums[t]) {
+            list.add(nums[t]);
+            backtrack(t + 1, nums[t], nums, list, result);
+            list.remove(list.size() - 1);
+        } else {
+            //当前元素和last不相等，可以添加当前元素，也可以不添加当前元素
+            backtrack(t + 1, last, nums, list, result);
 
-        //去重，当前元素和前一个元素相等，且前一个元素未被添加，则当前元素不能添加，直接返回
-        if (t > 0 && flag == 0 && nums[t - 1] == nums[t]) {
-            return;
+            list.add(nums[t]);
+            backtrack(t + 1, nums[t], nums, list, result);
+            list.remove(list.size() - 1);
         }
-
-        //添加当前元素
-        list.add(nums[t]);
-        backtrack(t + 1, nums, 1, list, result);
-        list.remove(list.size() - 1);
     }
 
     private void quickSort(int[] nums, int left, int right) {
