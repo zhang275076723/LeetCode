@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/8/31 08:30
  * @Author zsy
- * @Description 子数组最大平均数 II 类比Problem643 二分查找类比Problem4、Problem287、Problem373、Problem378、Problem410、Problem441、Problem658、Problem668、Problem719、Problem786、Problem878、Problem1201、Problem1482、Problem1508、Problem1723、Problem2305、Problem2498、CutWood、FindMaxArrayMinAfterKMinus
+ * @Description 子数组最大平均数 II 类比Problem643 类比Problem786 类比Problem373、Problem378、Problem668、Problem719、Problem786、Problem1439、Problem1508、Problem2040、Problem2386 二分查找类比 前缀和类比
  * 给你一个包含 n 个整数的数组 nums，和一个整数 k 。
  * 请你找出长度 大于等于 k 且含最大平均值的连续子数组。并输出这个最大平均值。
  * 任何计算误差小于 10^-5 的结果都将被视为正确答案。
@@ -76,7 +76,7 @@ public class Problem644 {
     }
 
     /**
-     * 二分查找+滑动窗口
+     * 二分查找+前缀和
      * 对[left,right]进行二分查找，left为nums最小值，right为nums最大值，判断nums中是否存在长度大于等于k，平均值大于等于mid的子数组，
      * 如果存在，则nums中长度大于等于k的最大平均值在mid或mid右边，left=mid；
      * 如果不存在，则nums中长度大于等于k的最大平均值在mid左边，right=mid
@@ -123,7 +123,7 @@ public class Problem644 {
     }
 
     /**
-     * 滑动窗口判断nums中是否存在长度大于等于k，平均值大于等于avg的子数组
+     * 前缀和判断nums中是否存在长度大于等于k，平均值大于等于avg的子数组
      * 核心思想：判断nums中子数组平均值和avg之间的大小关系，不是直接求出子数组平均值，而是判断子数组之和减去子数组长度个avg和0之间的大小关系，
      * 如果大于等于0，则子数组平均值大于等于avg；否则，子数组平均值小于avg
      * 时间复杂度O(n)，空间复杂度O(1)
