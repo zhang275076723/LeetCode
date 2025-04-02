@@ -232,6 +232,14 @@ public class Problem1508 {
     /**
      * 双指针获取nums子数组区间和小于等于num的个数
      * 时间复杂度O(n)，空间复杂度O(1)
+     * <p>
+     * 例如：nums=[1,2,3,4]，preSum=[0,1,3,6,10]
+     * <     0  1  2  3
+     * < 0   1  3  6  10
+     * < 1      2  5  9
+     * < 2         3  7
+     * < 3            4
+     * < 其中(i,j)为nums[i]-nums[j]之和，即preSum[j+1]-preSum[i]，则通过双指针得到nums子数组区间和小于等于num的个数
      *
      * @param preSum
      * @param n
