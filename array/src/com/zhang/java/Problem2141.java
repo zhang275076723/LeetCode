@@ -12,7 +12,17 @@ package com.zhang.java;
  * 新连接的电池可以是一个全新的电池，也可以是别的电脑用过的电池。断开连接和连接新的电池不会花费任何时间。
  * 注意，你不能给电池充电。
  * 请你返回你可以让 n 台电脑同时运行的 最长 分钟数。
+ * <p>
  * 阿里题目：给定五个数，每次选择四个数减一，直到减为0，求最大的操作次数。
+ * 输入：nums = [8,5,4,4,3]
+ * 输出：5
+ * 解释：
+ * 每次都挑出来最大的4个减
+ * 第一次：7 4 3 3 3
+ * 第二次：6 3 3 2 2
+ * 第三次：5 2 2 2 1
+ * 第四次：4 1 1 1 1
+ * 第五次：3 1 0 0 0
  * <p>
  * 输入：n = 2, batteries = [3,3,3]
  * 输出：4
@@ -37,8 +47,10 @@ package com.zhang.java;
 public class Problem2141 {
     public static void main(String[] args) {
         Problem2141 problem2141 = new Problem2141();
-        int n = 2;
-        int[] batteries = {3, 3, 3};
+//        int n = 2;
+//        int[] batteries = {3, 3, 3};
+        int n = 4;
+        int[] batteries = {8, 5, 4, 4, 3};
         System.out.println(problem2141.maxRunTime(n, batteries));
     }
 
@@ -68,19 +80,19 @@ public class Problem2141 {
             //mid往右偏移，因为转移条件是right=mid-1，避免无法跳出循环
             mid = left + ((right - left) >> 1) + 1;
 
-            //batteries中电池都运行mid分钟的总时间
+            //batteries中电池运行mid分钟的总时间
             long time = 0;
 
             for (int num : batteries) {
                 //当前电池最多只能使用mid分钟
-                time = time + Math.min(mid, num);
+                time = time + Math.min(num, mid);
             }
 
-            //n台电脑同时运行mid分钟需要的时间n*mid小于等于total，则n台电脑能同时运行mid分钟
-            if (n * mid <= time) {
-                left = mid;
-            } else {
+            //batteries中电池运行mid分钟的总时间time小于n台电脑同时运行mid分钟需要的时间n*mid，则n台电脑不能同时运行mid分钟
+            if (time < n * mid) {
                 right = mid - 1;
+            } else {
+                left = mid;
             }
         }
 
