@@ -126,53 +126,53 @@ public class Problem1803 {
         }
 
         /**
-         * 查询前缀树中和num异或结果小于等于limit的个数
+         * 查询前缀树中和num异或结果小于等于xorLimit的个数
          * 时间复杂度O(log(num))=O(1)，空间复杂度O(1)
          *
          * @param num
-         * @param limit
+         * @param xorLimit
          * @return
          */
-        public int searchXorCount(int num, int limit) {
-            //前缀树中和num异或结果小于等于limit的个数
+        public int searchXorCount(int num, int xorLimit) {
+            //前缀树中和num异或结果小于等于xorLimit的个数
             int count = 0;
             TrieNode node = root;
 
             //num都为正数，不需要考虑最高位符号位
             for (int i = 30; i >= 0; i--) {
                 //num当前位的值
-                int cur = (num >>> i) & 1;
-                //limit当前位的值
-                int cur2 = (limit >>> i) & 1;
+                int cur1 = (num >>> i) & 1;
+                //xorLimit当前位的值
+                int cur2 = (xorLimit >>> i) & 1;
 
-                //limit当前位为1，则当前节点子节点为cur的值和num异或结果都小于limit，因为cur^cur得到的当前位为0，继续遍历当前节点子节点为cur^1的节点
+                //xorLimit当前位为1，则当前节点子节点为cur1的值和num异或结果都小于xorLimit，因为cur1^cur1得到的当前位为0，继续遍历当前节点子节点为cur1^1的节点
                 if (cur2 == 1) {
-                    //当前节点存在子节点为cur的节点
-                    if (node.children[cur] != null) {
-                        count = count + node.children[cur].count;
+                    //当前节点存在子节点为cur1的节点
+                    if (node.children[cur1] != null) {
+                        count = count + node.children[cur1].count;
                     }
 
-                    //不存在当前节点子节点为cur^1的节点，则已经找到前缀树中和num异或结果小于等于limit的个数，直接返回
-                    if (node.children[cur ^ 1] == null) {
+                    //不存在当前节点子节点为cur1^1的节点，则已经找到前缀树中和num异或结果小于等于xorLimit的个数，直接返回
+                    if (node.children[cur1 ^ 1] == null) {
                         return count;
                     }
 
-                    //当前节点子节点为cur^1的节点
-                    node = node.children[cur ^ 1];
+                    //当前节点子节点为cur1^1的节点
+                    node = node.children[cur1 ^ 1];
                 } else {
-                    //limit当前位为0，继续遍历当前节点子节点为cur的节点
+                    //xorLimit当前位为0，继续遍历当前节点子节点为cur1的节点
 
-                    //不存在当前节点子节点为cur的节点，则已经找到前缀树中和num异或结果小于等于limit的个数，直接返回
-                    if (node.children[cur] == null) {
+                    //不存在当前节点子节点为cur1的节点，则已经找到前缀树中和num异或结果小于等于xorLimit的个数，直接返回
+                    if (node.children[cur1] == null) {
                         return count;
                     }
 
-                    //当前节点子节点为cur的节点
-                    node = node.children[cur];
+                    //当前节点子节点为cur1的节点
+                    node = node.children[cur1];
                 }
             }
 
-            //遍历到叶节点，叶节点表示的值和num异或结果等于limit，即叶节点count也要添加
+            //遍历到叶节点，叶节点表示的值和num异或结果等于xorLimit，即叶节点count也要添加
             count = count + node.count;
 
             return count;
