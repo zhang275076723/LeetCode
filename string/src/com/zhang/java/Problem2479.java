@@ -162,19 +162,17 @@ public class Problem2479 {
                 //num当前位的值
                 int cur = (int) ((num >>> i) & 1);
 
-                //当前节点为空，则说明前缀树为空，不存在不重叠的前缀中节点对应的子树和当前节点对应的子树，无法进行异或运算，直接返回0
-                if (node == null) {
-                    return 0;
-                }
-
                 //当前节点存在cur的异或值cur^1，则xor当前位为1
                 if (node.children[cur ^ 1] != null) {
                     node = node.children[cur ^ 1];
                     xor = (xor << 1) + 1;
-                } else {
+                } else if (node.children[cur] != null) {
                     //当前节点存在和cur的相同值cur，则xor当前位为0
                     node = node.children[cur];
                     xor = xor << 1;
+                } else {
+                    //当前节点不存在子节点，则不存在不重叠的前缀中节点对应的子树和当前节点对应的子树，无法进行异或运算，直接返回0
+                    return 0;
                 }
             }
 
