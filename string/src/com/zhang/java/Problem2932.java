@@ -60,29 +60,71 @@ public class Problem2932 {
     }
 
     /**
-     * 前缀树
-     * 核心思想：|x-y|<=min(x,y)，假设x<=y，则y-x<=x，得到x>=y/2，因为x、y都为整形，所以(y+1)/2<=x<=y
-     * 前缀树中每个节点记录当前节点包含所有元素的最大值，如果当前遍历到节点的子节点的max大于等于(num+1)/2，并且小于等于num
-     * 则当前进行异或运算的值num和当前节点的子节点对应的值满足强数对要求，继续往当前子节点遍历
-     * 时间复杂度O(nlogC)=O(n)，空间复杂度O(nlogC)=O(n) (C=max(nums[i]))
+     * 排序+前缀树
+     * 核心思想：|x-y|<=min(x,y)，假设x<=y，则y-x<=x，得到y<=2x，即x<=y<=2x
+     * nums中元素由小到大排序，当前遍历到nums[i]，保证前缀树中nums[j]都满足nums[i]<=nums[j]<=2*nums[i]
+     * 时间复杂度O(nlogn+nlogC)=O(nlogn)，空间复杂度O(logn+nlogC)=O(n) (C=max(nums[i]))
      *
      * @param nums
      * @return
      */
     public int maximumStrongPairXor2(int[] nums) {
+        //由小到大排序
+        heapSort(nums);
+
         Trie trie = new Trie();
-
-        for (int num : nums) {
-            trie.insert(num);
-        }
-
         int maxXorResult = 0;
+        int j = 0;
 
-        for (int num : nums) {
-            maxXorResult = Math.max(maxXorResult, trie.searchMaxXor(num));
+        for (int i = 0; i < nums.length; i++) {
+            //当前遍历到nums[i]，保证前缀树中nums[j]都满足nums[j]<=2*nums[i]
+            while (j < nums.length && nums[j] <= 2 * nums[i]) {
+                trie.insert(nums[j]);
+                j++;
+            }
+
+            maxXorResult = Math.max(maxXorResult, trie.searchMaxXor(nums[i]));
+            //遍历下一个nums[i]，保证前缀树中nums[j]都满足nums[j]>=nums[i]，则移除当前nums[i]
+            trie.remove(nums[i]);
         }
 
         return maxXorResult;
+    }
+
+    private void heapSort(int[] nums) {
+        for (int i = nums.length / 2 - 1; i >= 0; i--) {
+            heapify(nums, i, nums.length);
+        }
+
+        for (int i = nums.length - 1; i > 0; i--) {
+            int temp = nums[0];
+            nums[0] = nums[i];
+            nums[i] = temp;
+
+            heapify(nums, 0, i);
+        }
+    }
+
+    private void heapify(int[] nums, int i, int heapSize) {
+        int index = i;
+        int leftIndex = i * 2 + 1;
+        int rightIndex = i * 2 + 2;
+
+        if (leftIndex < heapSize && nums[leftIndex] > nums[index]) {
+            index = leftIndex;
+        }
+
+        if (rightIndex < heapSize && nums[rightIndex] > nums[index]) {
+            index = rightIndex;
+        }
+
+        if (index != i) {
+            int temp = nums[i];
+            nums[i] = nums[index];
+            nums[index] = temp;
+
+            heapify(nums, index, heapSize);
+        }
     }
 
     /**
@@ -96,18 +138,17 @@ public class Problem2932 {
         }
 
         /**
-         * num二进制表示的每一位插入前缀树中，同时更新每个节点的max
+         * num二进制表示的每一位插入前缀树中，同时更新每个节点的count
          * 时间复杂度O(log(num))=O(1)，空间复杂度O(1)
          *
          * @param num
          */
         public void insert(int num) {
             TrieNode node = root;
-            node.max = Math.max(node.max, num);
+            node.count++;
 
             //num都为正数，不需要考虑最高位符号位
             for (int i = 30; i >= 0; i--) {
-                //num当前位的值
                 int cur = (num >>> i) & 1;
 
                 if (node.children[cur] == null) {
@@ -115,36 +156,55 @@ public class Problem2932 {
                 }
 
                 node = node.children[cur];
-                node.max = Math.max(node.max, num);
+                node.count++;
             }
 
             node.isEnd = true;
         }
 
         /**
-         * 查询前缀树中大于等于(num+1)/2，并且小于等于num的值，和num异或的最大值
+         * num二进制表示的每一位从前缀树中删除
+         * 时间复杂度O(log(num))=O(1)，空间复杂度O(1)
+         *
+         * @param num
+         */
+        public void remove(int num) {
+            TrieNode node = root;
+            node.count--;
+
+            //num都为正数，不需要考虑最高位符号位
+            for (int i = 30; i >= 0; i--) {
+                int cur = (num >>> i) & 1;
+                node = node.children[cur];
+                node.count--;
+            }
+
+            if (node.count == 0) {
+                node.isEnd = false;
+            }
+        }
+
+        /**
+         * 查询前缀树中和num异或的最大值
          * 时间复杂度O(log(num))=O(1)，空间复杂度O(1)
          *
          * @param num
          * @return
          */
         public int searchMaxXor(int num) {
-            //前缀树中大于等于(num+1)/2，并且小于等于num的值，和num异或的最大值
+            //前缀树中和num异或的最大值
             int xor = 0;
             TrieNode node = root;
 
             //num都为正数，不需要考虑最高位符号位
             for (int i = 30; i >= 0; i--) {
-                //num当前位的值
                 int cur = (num >>> i) & 1;
 
-                //当前节点存在cur^1的子节点，并且cur^1的子节点包含所有元素的最大值大于等于(num+1)/2，并且小于等于num，则xor当前位为1
-                if (node.children[cur ^ 1] != null && node.children[cur ^ 1].max >= (num + 1) / 2
-                        && node.children[cur ^ 1].max <= num) {
+                //前缀树中节点会删除，所以不能只判断子节点是否为空，还需要考虑子节点count
+                if (node.children[cur ^ 1] != null && node.children[cur ^ 1].count > 0) {
                     node = node.children[cur ^ 1];
                     xor = (xor << 1) + 1;
                 } else {
-                    //其他情况，则xor当前位为0
                     node = node.children[cur];
                     xor = xor << 1;
                 }
@@ -158,13 +218,13 @@ public class Problem2932 {
          */
         private static class TrieNode {
             private final TrieNode[] children;
-            //当前节点包含所有元素的最大值
-            private int max;
+            //前缀树中根节点到当前节点作为二进制前缀包含的元素个数
+            private int count;
             private boolean isEnd;
 
             public TrieNode() {
                 children = new TrieNode[2];
-                max = Integer.MIN_VALUE;
+                count = 0;
                 isEnd = false;
             }
         }

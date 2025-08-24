@@ -129,7 +129,7 @@ public class Problem1938 {
         }
 
         /**
-         * num二进制表示的每一位插入前缀树中
+         * num二进制表示的每一位插入前缀树中，同时更新每个节点的count
          * 时间复杂度O(log(num))=O(1)，空间复杂度O(1)
          *
          * @param num
