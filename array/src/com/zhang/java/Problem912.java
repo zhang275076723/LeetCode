@@ -102,7 +102,7 @@ public class Problem912 {
 
             //找nums[i]后面比nums[i]小的最小值nums[index]
             for (int j = i + 1; j < nums.length; j++) {
-                if (nums[index] > nums[j]) {
+                if (nums[j] < nums[index]) {
                     index = j;
                 }
             }

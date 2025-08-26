@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/18 17:59
  * @Author zsy
- * @Description 下一个更大元素 III 类比Problem496、Problem503、Problem2454 类比Problem31、Problem670、Problem738、Problem1323、Problem1328、Problem1842、Problem2231
+ * @Description 下一个更大元素 III 类比Problem496、Problem503、Problem2454 类比Problem31、Problem670、Problem738、Problem1323、Problem1328、Problem1842、Problem1850、Problem2231
  * 给你一个正整数 n ，请你找出符合条件的最小整数，其由重新排列 n 中存在的每位数字组成，并且其值大于 n 。
  * 如果不存在这样的正整数，则返回 -1 。
  * 注意 ，返回的整数应当是一个 32 位整数 ，如果存在满足题意的答案，但不是 32 位整数 ，同样返回 -1 。
@@ -34,8 +34,7 @@ public class Problem556 {
      */
     public int nextGreaterElement(int n) {
         char[] numArr = (n + "").toCharArray();
-
-        //最长递减数组的末尾下标索引
+        //最长递减数组的下标索引
         int i = numArr.length - 1;
 
         //从后往前找最长递减数组
@@ -44,35 +43,35 @@ public class Problem556 {
             i--;
         }
 
-        //nums整体为递减数组，则不存在下一个更大元素，返回-1
+        //numArr整体为递减数组，则不存在比numArr大的下一个排列，返回-1
         if (i == 0) {
             return -1;
         }
 
-        //递减数组nums[i]-nums[nums.length-1]反转，变为递增数组
+        //递减数组numArr[i]-numArr[numArr.length-1]反转，变为递增数组
         reverse(numArr, i, numArr.length - 1);
 
-        //i的前一位下标索引
         int j = i - 1;
 
-        //从前往后找第一个大于nums[j]的元素nums[k]，两者进行交换，得到下一个更大元素
-        for (int k = i; k < numArr.length; k++) {
-            if (numArr[k] > numArr[j]) {
-                swap(numArr, k, j);
-                break;
-            }
+        //从前往后找第一个大于numArr[j]的元素numArr[i]，两者进行交换，得到下个一排列
+        while (i < numArr.length && numArr[j] >= numArr[i]) {
+            i++;
         }
+
+        swap(numArr, i, j);
 
         int result = 0;
 
         for (char num : numArr) {
+            int cur = num - '0';
+
             //溢出处理，有可能n在int范围内，但比n大的下一个元素不在int范围内
             if (result > Integer.MAX_VALUE / 10 ||
-                    (result == Integer.MAX_VALUE / 10 && (num - '0') > Integer.MAX_VALUE % 10)) {
+                    (result == Integer.MAX_VALUE / 10 && cur > Integer.MAX_VALUE % 10)) {
                 return -1;
             }
 
-            result = result * 10 + num - '0';
+            result = result * 10 + cur;
         }
 
         return result;

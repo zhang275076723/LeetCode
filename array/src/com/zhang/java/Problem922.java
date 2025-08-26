@@ -43,16 +43,17 @@ public class Problem922 {
         int right = 1;
 
         while (left < nums.length && right < nums.length) {
-            //找偶数下标索引元素不为偶数的下标索引
+            //从前往后找找偶数下标索引元素不为偶数的下标索引
             while (left < nums.length && nums[left] % 2 == 0) {
                 left = left + 2;
             }
 
-            //找奇数下标索引元素不为奇数的下标索引
+            //从前往后找找奇数下标索引元素不为奇数的下标索引
             while (right < nums.length && nums[right] % 2 == 1) {
                 right = right + 2;
             }
 
+            //nums[left]为奇数，nums[right]为偶数，两者交换
             if (left < nums.length && right < nums.length) {
                 int temp = nums[left];
                 nums[left] = nums[right];

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/9/12 08:07
  * @Author zsy
- * @Description 6 和 9 组成的最大数字 类比Problem31、Problem556、Problem670、Problem738、Problem1328、Problem1842、Problem2231
+ * @Description 6 和 9 组成的最大数字 类比Problem31、Problem556、Problem670、Problem738、Problem1328、Problem1842、Problem1850、Problem2231
  * 给你一个仅由数字 6 和 9 组成的正整数 num。
  * 你最多只能翻转一位数字，将 6 变成 9，或者把 9 变成 6 。
  * 请返回你可以得到的最大数字。
@@ -33,27 +33,59 @@ public class Problem1323 {
         Problem1323 problem1323 = new Problem1323();
         int num = 9669;
         System.out.println(problem1323.maximum69Number(num));
+        System.out.println(problem1323.maximum69Number2(num));
     }
 
     /**
      * 模拟
-     * 从高位向低位遍历，找第一个6，将其转换为9，得到最大数字
+     * 从前往后遍历，找num中第一个6，将其转换为9，得到最大数字
      * 时间复杂度O(log(num))，空间复杂度O(log(num))
      *
      * @param num
      * @return
      */
     public int maximum69Number(int num) {
-        char[] strArr = (num + "").toCharArray();
+        char[] numArr = (num + "").toCharArray();
 
-        for (int i = 0; i < strArr.length; i++) {
-            if (strArr[i] == '6') {
-                strArr[i] = '9';
-                return Integer.parseInt(new String(strArr));
+        for (int i = 0; i < numArr.length; i++) {
+            if (numArr[i] == '6') {
+                numArr[i] = '9';
+                return Integer.parseInt(new String(numArr));
             }
         }
 
-        //遍历结束，则num都为9，不需要修改，已经是最大的数字，直接返回
+        //遍历结束，num都为9，则不需要修改，已经是最大的数字，直接返回num
         return num;
+    }
+
+    /**
+     * 模拟，不使用额外空间
+     * 从后往前遍历，不断模10得到num的每一位，找到最高位的6，num加上3乘以最高位6对应的10^n，得到最大数字
+     * 时间复杂度O(log(num))，空间复杂度O(log(num))
+     * <p>
+     * 例如：num=9669
+     * 最高位的6对应的10^n为100，最大数字=9669+3*100=9969
+     *
+     * @param num
+     * @return
+     */
+    public int maximum69Number2(int num) {
+        int x = num;
+        //从后往前遍历num当前位对应的10^n
+        int base = 1;
+        //num中最高位6对应的10^n
+        int maxBase = 0;
+
+        while (x != 0) {
+            if (x % 10 == 6) {
+                maxBase = base;
+            }
+
+            x = x / 10;
+            base = base * 10;
+        }
+
+        //num加上3乘以最高位6对应的10^n，即将当前位6变为9，得到最大数字
+        return num + 3 * maxBase;
     }
 }

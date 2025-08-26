@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2024/8/23 08:19
  * @Author zsy
- * @Description 按奇偶性交换后的最大数字 类比Problem31、Problem556、Problem670、Problem738、Problem1323、Problem1328、Problem1842 优先队列类比
+ * @Description 按奇偶性交换后的最大数字 类比Problem31、Problem556、Problem670、Problem738、Problem1323、Problem1328、Problem1842、Problem1850 优先队列类比
  * 给你一个正整数 num 。
  * 你可以交换 num 中 奇偶性 相同的任意两位数字（即，都是奇数或者偶数）。
  * 返回交换 任意 次之后 num 的 最大 可能值。
@@ -36,42 +36,35 @@ public class Problem2231 {
 
     /**
      * 模拟
-     * num转化为char数组，奇数元素和偶数元素分别由大小排序，得到最大数字
+     * num转化为char数组，通过选择排序分别将奇数位和偶数位的元素由大到小排序，得到最大数字
      * 时间复杂度O(n^2)，空间复杂度O(n)
      *
      * @param num
      * @return
      */
     public int largestInteger(int num) {
-        String str = num + "";
-        char[] arr = str.toCharArray();
+        char[] numArr = (num + "").toCharArray();
 
         //选择排序
-        for (int i = 0; i < arr.length - 1; i++) {
+        for (int i = 0; i < numArr.length - 1; i++) {
             int index = i;
 
-            for (int j = i + 1; j < arr.length; j++) {
-                //arr[j]和arr[i]奇偶性相同，并且arr[j]较大，则更新index位j
-                //不需要char转换为int比较奇偶性，直接比较char类型的arr[i]奇偶性即可
-                if ((arr[i] % 2 == arr[j] % 2) && arr[index] < arr[j]) {
+            for (int j = i + 1; j < numArr.length; j++) {
+                //numArr[j]和numArr[i]奇偶性相同，并且找比numArr[i]大的最大值numArr[index]
+                //注意：char不需要转换为int比较奇偶性，直接比较char类型的numArr[i]奇偶性即可
+                if ((numArr[i] % 2 == numArr[j] % 2) && numArr[j] > numArr[index]) {
                     index = j;
                 }
             }
 
             if (index != i) {
-                char temp = arr[index];
-                arr[index] = arr[i];
-                arr[i] = temp;
+                char temp = numArr[index];
+                numArr[index] = numArr[i];
+                numArr[i] = temp;
             }
         }
 
-        int max = 0;
-
-        for (int i = 0; i < arr.length; i++) {
-            max = max * 10 + (arr[i] - '0');
-        }
-
-        return max;
+        return Integer.parseInt(new String(numArr));
     }
 
     /**
@@ -82,8 +75,7 @@ public class Problem2231 {
      * @return
      */
     public int largestInteger2(int num) {
-        String str = num + "";
-        char[] arr = str.toCharArray();
+        char[] numArr = (num + "").toCharArray();
 
         //存储偶数元素的大根堆
         PriorityQueue<Integer> priorityQueue1 = new PriorityQueue<>(new Comparator<Integer>() {
@@ -100,26 +92,30 @@ public class Problem2231 {
             }
         });
 
-        for (int i = 0; i < arr.length; i++) {
-            if ((arr[i] - '0') % 2 == 0) {
-                priorityQueue1.offer(arr[i] - '0');
+        for (int i = 0; i < numArr.length; i++) {
+            int cur = numArr[i] - '0';
+
+            if (cur % 2 == 0) {
+                priorityQueue1.offer(cur);
             } else {
-                priorityQueue2.offer(arr[i] - '0');
+                priorityQueue2.offer(cur);
             }
         }
 
-        for (int i = 0; i < arr.length; i++) {
-            if ((arr[i] - '0') % 2 == 0) {
-                arr[i] = (char) (priorityQueue1.poll() + '0');
+        for (int i = 0; i < numArr.length; i++) {
+            int cur = numArr[i] - '0';
+
+            if (cur % 2 == 0) {
+                numArr[i] = (char) (priorityQueue1.poll() + '0');
             } else {
-                arr[i] = (char) (priorityQueue2.poll() + '0');
+                numArr[i] = (char) (priorityQueue2.poll() + '0');
             }
         }
 
         int max = 0;
 
-        for (int i = 0; i < arr.length; i++) {
-            max = max * 10 + (arr[i] - '0');
+        for (int i = 0; i < numArr.length; i++) {
+            max = max * 10 + (numArr[i] - '0');
         }
 
         return max;

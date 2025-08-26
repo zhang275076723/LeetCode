@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/3/12 08:25
  * @Author zsy
- * @Description 破坏回文串 类比Problem31、Problem556、Problem670、Problem738、Problem1323、Problem1842、Problem2231 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem647、Problem680、Problem866、Problem1147、Problem1177、Problem1312、Problem1332、Problem1400
+ * @Description 破坏回文串 类比Problem31、Problem556、Problem670、Problem738、Problem1323、Problem1842、Problem1850、Problem2231 回文类比Problem5、Problem9、Problem125、Problem131、Problem132、Problem214、Problem234、Problem266、Problem267、Problem336、Problem409、Problem479、Problem516、Problem647、Problem680、Problem866、Problem1147、Problem1177、Problem1312、Problem1332、Problem1400
  * 给你一个由小写英文字母组成的回文字符串 palindrome ，
  * 请你将其中 一个 字符用任意小写英文字母替换，使得结果字符串的 字典序最小 ，且 不是 回文串。
  * 请你返回结果字符串。如果无法做到，则返回一个 空串 。
@@ -32,9 +32,9 @@ public class Problem1328 {
 
     /**
      * 模拟
-     * 遍历当前回文字符串的前一半，找第一个不为'a'的字符，将其修改为'a'，得到字典序最小的不是回文串的字符串
-     * 如果当前回文字符串的前一半都为'a'，则修改最后一个字符为'b'，得到字典序最小的不是回文串的字符串
      * 如果当前回文字符串长度为1，则无法得到字典序最小的不是回文串的字符串，返回""
+     * 遍历当前回文字符串的前一半，找第一个不为'a'的字符，将其修改为'a'，得到字典序最小的不是回文串的字符串
+     * 如果当前回文字符串的前一半都为'a'，即为全'a'回文串，则修改最后一个字符为'b'，得到字典序最小的不是回文串的字符串
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param palindrome
@@ -46,19 +46,19 @@ public class Problem1328 {
             return "";
         }
 
-        StringBuilder sb = new StringBuilder(palindrome);
+        char[] arr = palindrome.toCharArray();
 
         //遍历当前回文字符串的前一半，找第一个不为'a'的字符，将其修改为'a'，得到字典序最小的不是回文串的字符串
-        for (int i = 0; i < sb.length() / 2; i++) {
-            if (sb.charAt(i) != 'a') {
-                sb.setCharAt(i, 'a');
-                return sb.toString();
+        for (int i = 0; i < arr.length / 2; i++) {
+            if (arr[i] != 'a') {
+                arr[i] = 'a';
+                return new String(arr);
             }
         }
 
-        //当前回文字符串的前一半都为'a'，则修改最后一个字符为'b'，得到字典序最小的不是回文串的字符串
-        sb.setCharAt(sb.length() - 1, 'b');
+        //当前回文字符串的前一半都为'a'，即为全'a'回文串，则修改最后一个字符为'b'，得到字典序最小的不是回文串的字符串
+        arr[arr.length-1] = 'b';
 
-        return sb.toString();
+        return new String(arr);
     }
 }

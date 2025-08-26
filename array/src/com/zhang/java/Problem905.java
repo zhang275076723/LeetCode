@@ -48,6 +48,7 @@ public class Problem905 {
                 right--;
             }
 
+            //nums[left]为奇数，nums[right]为偶数，两者交换
             if (left < right) {
                 int temp = nums[left];
                 nums[left] = nums[right];
