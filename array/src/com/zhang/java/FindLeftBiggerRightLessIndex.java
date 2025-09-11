@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/5/11 08:14
  * @Author zsy
- * @Description 比左边元素都大同时比右边元素都小的元素下标索引 字节面试题 数组中的动态规划类比Problem53、Problem135、Problem152、Problem238、Problem724、Problem768、Problem769、Problem845、Problem1749、Offer42、Offer66
+ * @Description 比左边元素都大同时比右边元素都小的元素下标索引 字节面试题 数组中的动态规划类比Problem42、Problem53、Problem135、Problem152、Problem238、Problem724、Problem768、Problem769、Problem845、Problem1749、Offer42、Offer66
  * 求数组中比左边元素都大同时比右边元素都小的元素，返回这些元素的下标索引。
  * <p>
  * 输入：nums = [2, 3, 1, 8, 9, 20, 12]
@@ -44,7 +44,10 @@ public class FindLeftBiggerRightLessIndex {
 
         for (int i = 1; i < nums.length; i++) {
             left[i] = Math.max(left[i - 1], nums[i - 1]);
-            right[nums.length - 1 - i] = Math.min(right[nums.length - i], nums[nums.length - i]);
+        }
+
+        for (int i = nums.length - 2; i >= 0; i--) {
+            right[i] = Math.min(right[i + 1], nums[i + 1]);
         }
 
         List<Integer> list = new ArrayList<>();

@@ -141,7 +141,7 @@ public class Problem1508 {
     public int rangeSum3(int[] nums, int n, int left, int right) {
         //nums前缀和数组，用于求nums子数组区间和
         int[] preSum = new int[n + 1];
-        //preSum前缀和数组，用于求preSum[i]-preSum[j]元素之和
+        //preSum前缀和数组，用于求nums子数组区间和之和，即preSum[i]-preSum[j]元素之和
         int[] prePreSum = new int[n + 2];
 
         for (int i = 1; i <= n; i++) {
@@ -158,8 +158,8 @@ public class Problem1508 {
 
     /**
      * 双指针获取前k小nums子数组区间和之和
-     * 先通过二分查找获取第k小nums子数组区间和minK，再通过preSum和prePreSum，求当前列小于minK的nums子数组区间和之和，
-     * 获取小于minK的nums子数组区间和之和sum和小于minK的nums子数组区间和的个数count，即f[k]=sum+(k-count)*minK
+     * 先通过二分查找获取第k小nums子数组区间和minK，再通过preSum和prePreSum，
+     * 求小于minK的nums子数组区间和之和sum，小于minK的nums子数组区间和的个数count，即f[k]=sum+(k-count)*minK
      * 时间复杂度O(n+n*log(preSum[n]-preSum[0]-min(nums[i])))=O(n)，空间复杂度O(1)
      *
      * @param preSum
@@ -178,24 +178,24 @@ public class Problem1508 {
         int i = 0;
         int j = 0;
 
-        //从左上往右下遍历，只遍历右上三角(i<=j)
-        while (i < n && j < n) {
-            //注意：这里统计的是小于minK的nums子数组区间和之和，所以是大于等于，而不是大于
-            while (i <= j && preSum[j + 1] - preSum[i] >= minK) {
-                i++;
+        //从左上往右下遍历，只遍历右上三角
+        while (i < n) {
+            //注意：这里统计的是小于minK的nums子数组区间和之和，所以是小于，而不是小于等于
+            while (j < n && preSum[j + 1] - preSum[i] < minK) {
+                j++;
             }
 
-            //nums[i]-nums[j]到nums[j]-nums[j]的子数组区间和之和为：
-            //(preSum[j+1]-preSum[i])+(preSum[j+1]-preSum[i+1])+...+(preSum[j+1]-preSum[j-1])+(preSum[j+1]-preSum[j])
-            //=preSum[j+1]*(j-i+1)-(preSum[i]+preSum[i+1]+...+preSum[j-1]+preSum[j])
-            //=preSum[j+1]*(j-i+1)-(prePreSum[j+1]-prePreSum[i])
-            sum = (sum + preSum[j + 1] * (j - i + 1) - (prePreSum[j + 1] - prePreSum[i])) % MOD;
-            //nums[i]-nums[j]到nums[j]-nums[j]的子数组区间和都小于minK
-            count = count + (j - i + 1);
-            j++;
+            //nums[i]-nums[i]到nums[i]-nums[j-1]的子数组区间和之和为：
+            //(preSum[i+1]-preSum[i])+(preSum[i+2]-preSum[i])+...+(preSum[j-1]-preSum[i])+(preSum[j]-preSum[i])
+            //=(preSum[i+1]+preSum[i+2]+...+preSum[j-1]+preSum[j])-(j-i)*preSum[i]
+            //=(prePreSum[j+1]-prePreSum[i+1])-(j-i)*preSum[i]
+            sum = (sum + (prePreSum[j + 1] - prePreSum[i + 1]) - (j - i) * preSum[i]) % MOD;
+            //nums[i]-nums[i]到nums[i]-nums[j-1]的子数组区间和都小于minK
+            count = count + (j - i);
+            i++;
         }
 
-        //小于minK的nums子数组区间和之和加上等于(k-count)个minK的nums子数组区间和之和，得到前k小nums子数组区间和之和
+        //小于minK的nums子数组区间和之和加上(k-count)个minK的nums子数组区间和之和，得到前k小nums子数组区间和之和
         return (sum + (k - count) * minK) % MOD;
     }
 
@@ -252,15 +252,15 @@ public class Problem1508 {
         int i = 0;
         int j = 0;
 
-        //从左上往右下遍历，只遍历右上三角(i<=j)
-        while (i < n && j < n) {
-            while (i <= j && preSum[j + 1] - preSum[i] > num) {
-                i++;
+        //从左上往右下遍历，只遍历右上三角
+        while (i < n) {
+            while (j < n && preSum[j + 1] - preSum[i] <= num) {
+                j++;
             }
 
-            //nums[i]-nums[j]到nums[j]-nums[j]的子数组区间和都小于等于num
-            count = count + (j - i + 1);
-            j++;
+            //nums[i]-nums[i]到nums[i]-nums[j-1]的子数组区间和都小于等于num
+            count = count + (j - i);
+            i++;
         }
 
         return count;

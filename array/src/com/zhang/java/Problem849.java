@@ -40,7 +40,7 @@ public class Problem849 {
 
     /**
      * 双指针
-     * 距离最近1的最大距离为开始到第一个1的距离，最后一个1到末尾的距离，相邻两个1之间的距离的一半中的最大值
+     * 两个为1的座位的中间位置即为距离最近1的最大距离的座位
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param seats
@@ -48,33 +48,31 @@ public class Problem849 {
      */
     public int maxDistToClosest(int[] seats) {
         //当前为1的下标索引
-        int left = 0;
+        int i = 0;
 
-        while (left < seats.length && seats[left] != 1) {
-            left++;
+        while (i < seats.length && seats[i] != 1) {
+            i++;
         }
 
         //距离最近1的最大距离
-        //初始化为seats[0]到seats[left]的距离
-        int max = left;
+        //初始化为起始位置到第一个为1的座位的距离
+        int max = i;
         //下一个为1的下标索引
-        int right = left + 1;
+        int j = i + 1;
 
-        while (right < seats.length) {
-            while (right < seats.length && seats[right] != 1) {
-                right++;
+        while (j < seats.length) {
+            //两个为1的座位的中间位置即为距离最近1的最大距离的座位
+            if (seats[j] == 1) {
+                max = Math.max(max, (j - i) / 2);
+                i = j;
             }
 
-            //最后一个1到末尾之间选择座位距离最近1的最大距离
-            if (right == seats.length) {
-                max = Math.max(max, seats.length - left - 1);
-            } else {
-                //相邻两个1之间选择座位距离最近1的最大距离
-                max = Math.max(max, (right - left) / 2);
-            }
+            j++;
+        }
 
-            left = right;
-            right = left + 1;
+        //考虑最后一个为1的座位到末尾位置的距离
+        if (i != seats.length - 1) {
+            max = Math.max(max, seats.length - 1 - i);
         }
 
         return max;

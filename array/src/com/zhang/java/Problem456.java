@@ -6,7 +6,7 @@ import java.util.Stack;
 /**
  * @Date 2023/5/3 08:43
  * @Author zsy
- * @Description 132 模式 双指针类比Problem15、Problem16、Problem18、Problem532、Problem611、Problem633 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem496、Problem503、Problem654、Problem739、Problem795、Problem907、Problem1019、Problem1856、Problem2104、Problem2454、Problem2487、Offer33、DoubleStackSort
+ * @Description 132 模式 类比Problem255、Offer33 双指针类比Problem15、Problem16、Problem18、Problem532、Problem611、Problem633 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem496、Problem503、Problem654、Problem739、Problem795、Problem907、Problem1019、Problem1856、Problem2104、Problem2454、Problem2487、Offer33、DoubleStackSort
  * 给你一个整数数组 nums ，数组中共有 n 个整数。
  * 132 模式的子序列 由三个整数 nums[i]、nums[j] 和 nums[k] 组成，并同时满足：i < j < k 和 nums[i] < nums[k] < nums[j] 。
  * 如果 nums 中存在 132 模式的子序列 ，返回 true ；否则，返回 false 。
@@ -127,22 +127,23 @@ public class Problem456 {
 
         //单调递减栈，作为132模式中的3
         Stack<Integer> stack = new Stack<>();
-        //从后往前遍历中当前的最大元素，作为132模式中的2，初始化为int最小值
+        //从后往前遍历中栈中移除元素的最大值，作为132模式中的2，当2越大，在往前遍历过程中越有可能找到132模式中的1
         int max = Integer.MIN_VALUE;
 
+        //从后往前遍历nums[i]，作为132模式中的1
         for (int i = nums.length - 1; i >= 0; i--) {
             //当前元素小于当前最大值，则当前元素同样小于栈顶元素，即存在132模式，返回true
             if (nums[i] < max) {
                 return true;
             }
 
-            //当前元素不满足单调递减栈，栈中元素出栈，作为132模式中的2
-            while (!stack.isEmpty() && nums[stack.peek()] < nums[i]) {
-                max = nums[stack.pop()];
+            //当前元素不满足单调递减栈，栈顶元素出栈，作为132模式中的2
+            while (!stack.isEmpty() && stack.peek() < nums[i]) {
+                max = stack.pop();
             }
 
-            //当前元素入栈
-            stack.push(i);
+            //当前元素入栈，作为132模式中的3
+            stack.push(nums[i]);
         }
 
         //遍历结束，则不存在132模式，返回false

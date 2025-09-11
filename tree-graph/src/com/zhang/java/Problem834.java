@@ -63,7 +63,7 @@ public class Problem834 {
      * @return
      */
     public int[] sumOfDistancesInTree(int n, int[][] edges) {
-        //邻接表
+        //邻接表，无向图
         List<List<Integer>> graph = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
@@ -99,7 +99,7 @@ public class Problem834 {
      * @return
      */
     public int[] sumOfDistancesInTree2(int n, int[][] edges) {
-        //邻接表
+        //邻接表，无向图
         List<List<Integer>> graph = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
@@ -141,7 +141,7 @@ public class Problem834 {
      * @return
      */
     public int f(int n, int[][] edges) {
-        //邻接表
+        //邻接表，无向图
         List<List<Integer>> graph = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
@@ -197,7 +197,7 @@ public class Problem834 {
      * @return
      */
     public int[] f2(int n, int[][] edges) {
-        //邻接表
+        //邻接表，无向图
         List<List<Integer>> graph = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {

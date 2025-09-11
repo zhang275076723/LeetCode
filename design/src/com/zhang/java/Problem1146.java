@@ -89,23 +89,24 @@ public class Problem1146 {
         }
 
         public int get(int index, int snap_id) {
-            if (list.get(index).isEmpty()) {
+            if (snap_id >= snapId) {
                 return 0;
             }
 
-            //小于等于snap_id的最大快照编号在list.get(index)中的下标索引
+            List<int[]> snapList = list.get(index);
+
+            //小于等于snap_id的最大快照编号在snapList中的下标索引
             //初始化为-1，表示不存在小于等于snap_id的快照编号
             int result = -1;
             int left = 0;
-            int right = list.get(index).size() - 1;
+            int right = snapList.size() - 1;
             int mid;
 
-            //通过二分查找查找小于等于snap_id的最大快照编号在list.get(index)中的下标索引
+            //通过二分查找查找小于等于snap_id的最大快照编号在snapList中的下标索引
             while (left <= right) {
                 mid = left + ((right - left) >> 1);
-                int curSnapId = list.get(index).get(mid)[0];
 
-                if (curSnapId <= snap_id) {
+                if (snapList.get(mid)[0] <= snap_id) {
                     result = mid;
                     left = mid + 1;
                 } else {
@@ -113,7 +114,7 @@ public class Problem1146 {
                 }
             }
 
-            return result == -1 ? 0 : list.get(index).get(result)[1];
+            return result == -1 ? 0 : snapList.get(result)[1];
         }
     }
 
@@ -125,9 +126,8 @@ public class Problem1146 {
      */
     static class SnapshotArray2 {
         //按照快照编号由小到大存储每一个位置快照编号和修改元素的值的集合
-        //key：快照编号，value：修改元素的值
-        //注意：不能使用TreeSet，因为在当前snapId同一个index会修改多次
-        private final List<TreeMap<Integer, Integer>> list;
+        //注意：基于树的集合，例如TreeSet和TreeMap不需要重写equals()和hashCode()
+        private final List<TreeSet<int[]>> list;
         //当前快照编号
         private int snapId;
 
@@ -136,18 +136,26 @@ public class Problem1146 {
             snapId = 0;
 
             for (int i = 0; i < length; i++) {
-                list.add(new TreeMap<>(new Comparator<Integer>() {
+                list.add(new TreeSet<>(new Comparator<int[]>() {
                     @Override
-                    public int compare(Integer a, Integer b) {
+                    public int compare(int[] arr1, int[] arr2) {
                         //按照快照编号由小到大排序
-                        return a - b;
+                        return arr1[0] - arr2[0];
                     }
                 }));
             }
         }
 
         public void set(int index, int val) {
-            list.get(index).put(snapId, val);
+            TreeSet<int[]> treeSet = list.get(index);
+
+            //注意：如果treeSet中包含有当前snapId对应的值，则需要先删除，在添加
+            //注意：因为int[]只比较arr[0]，所以不需要关注arr[1]的值
+            if (treeSet.contains(new int[]{snapId, 0})) {
+                treeSet.remove(new int[]{snapId, 0});
+            }
+
+            treeSet.add(new int[]{snapId, val});
         }
 
         public int snap() {
@@ -157,14 +165,18 @@ public class Problem1146 {
         }
 
         public int get(int index, int snap_id) {
-            if (list.get(index).isEmpty()) {
+            if (snap_id >= snapId) {
                 return 0;
             }
 
-            //小于等于当前快照编号snap_id的最大快照编号entry，如果不存在该区间，则返回null
-            Map.Entry<Integer, Integer> entry = list.get(index).floorEntry(snap_id);
+            TreeSet<int[]> treeSet = list.get(index);
 
-            return entry == null ? 0 : entry.getValue();
+            //注意：因为int[]只比较arr[0]，所以不需要关注arr[1]的值
+            int[] arr = new int[]{snap_id, 0};
+            //treeSet中小于等于snap_id的最大快照编号的preArr
+            int[] preArr = treeSet.floor(arr);
+
+            return preArr == null ? 0 : preArr[1];
         }
     }
 }

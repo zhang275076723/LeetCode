@@ -106,43 +106,42 @@ public class Problem146 {
         }
 
         /**
-         * 1、缓存map中存在key，修改该节点的value，并将该节点放到链表的头
-         * 2、缓存map中不存在key，并且缓存未满，创建节点加入缓存map和链表的头
-         * 3、缓存map中不存在key，并且缓存已满，删除缓存map和链表中的尾节点，创建节点加入缓存map和链表的头
+         * 1、缓存map中不存在key，创建节点加入缓存map和链表的头，
+         * 如果缓存已满，删除缓存map和链表中的尾节点
+         * 2、缓存map中存在key，修改该节点的value，并将该节点放到链表的头
          *
          * @param key
          * @param value
          */
         public void put(int key, int value) {
-            //缓存map中存在key，修改该节点的value，并将该节点放到链表的头
-            if (map.containsKey(key)) {
-                Node node = map.get(key);
-                //更新当前节点的value
-                node.value = value;
-                //node从链表尾移除，加入链表头，作为最新访问节点
-                linkedList.remove(node);
-                linkedList.addFirst(node);
-                return;
-            }
-
-            //当前节点
-            Node node = new Node(key, value);
-
-            //缓存map中不存在key，并且缓存未满，创建节点加入缓存map和链表的头
-            if (curSize < capacity) {
+            //缓存map中不存在key
+            if (!map.containsKey(key)) {
+                //创建节点加入缓存map和链表的头
+                Node node = new Node(key, value);
                 map.put(key, node);
                 linkedList.addFirst(node);
                 curSize++;
-            } else {
-                //缓存map中不存在key，并且缓存已满，删除缓存map和链表中的尾节点，创建节点加入缓存map和链表的头
 
-                //末尾节点，即最近最久未访问的节点
-                Node deleteNode = linkedList.tail.pre;
-                map.remove(deleteNode.key);
-                linkedList.remove(deleteNode);
-                map.put(key, node);
-                linkedList.addFirst(node);
+                //缓存已满，删除缓存map和链表中的尾节点
+                if (curSize > capacity) {
+                    //末尾节点，即最近最久未访问的节点
+                    Node deleteNode = linkedList.tail.pre;
+                    map.remove(deleteNode.key);
+                    linkedList.remove(deleteNode);
+                    curSize--;
+                }
+
+                return;
             }
+
+            //缓存map中存在key，修改该节点的value，并将该节点放到链表的头
+
+            Node node = map.get(key);
+            //更新当前节点的value
+            node.value = value;
+            //node从链表尾移除，加入链表头，作为最新访问节点
+            linkedList.remove(node);
+            linkedList.addFirst(node);
         }
 
         /**
@@ -154,7 +153,7 @@ public class Problem146 {
             //链表尾结点，避免非空判断
             private final Node tail;
 
-            LinkedList() {
+            public LinkedList() {
                 head = new Node();
                 tail = new Node();
                 head.next = tail;

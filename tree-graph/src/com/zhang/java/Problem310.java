@@ -231,6 +231,7 @@ public class Problem310 {
 
                     queue.offer(v);
                     visited[v] = true;
+                    //记录节点v的父节点u，用于求node1到node2的路径中的节点
                     parent[v] = u;
                 }
             }

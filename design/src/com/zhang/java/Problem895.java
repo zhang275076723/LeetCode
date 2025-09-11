@@ -62,15 +62,15 @@ public class Problem895 {
     }
 
     /**
-     * 哈希表+分段频率栈+最大频率次数计数器 (lfu)
-     * 根据频率将元素放到不同的栈中，每次出栈最大频率对应的栈中的栈顶元素即为出现频率最高且最接近栈顶的元素
+     * 哈希表+分段频率栈+最大访问频率计数器 (lfu)
+     * 根据频率将元素放到不同的栈中，每次出栈最大频率对应的栈中的栈顶元素即为访问频率最高且最接近栈顶的元素
      */
     static class FreqStack {
-        //key：节点值，value：key出现的频率次数
+        //key：节点值，value：key的访问频率
         private final Map<Integer, Integer> frequencyMap;
-        //key：频率次数，value：频率次数为key的栈
+        //key：访问频率，value：访问频率为key的栈
         private final Map<Integer, Stack<Integer>> stackMap;
-        //元素的最大频率次数
+        //元素的最大访问频率
         private int maxFrequency;
 
         public FreqStack() {
@@ -80,18 +80,21 @@ public class Problem895 {
         }
 
         public void push(int val) {
-            //更新val的出现次数
-            frequencyMap.put(val, frequencyMap.getOrDefault(val, 0) + 1);
+            //val的访问频率
+            int valFrequency = frequencyMap.getOrDefault(val, 0) + 1;
+            //更新val的访问频率
+            frequencyMap.put(val, valFrequency);
 
-            //不存在出现次数为frequencyMap.get(val)的栈
+            //不存在访问频率为valFrequency的栈
             if (!stackMap.containsKey(frequencyMap.get(val))) {
                 stackMap.put(frequencyMap.get(val), new Stack<>());
             }
 
-            //val加入出现次数为frequencyMap.get(val)的栈
-            stackMap.get(frequencyMap.get(val)).push(val);
+            //val加入访问频率为valFrequency的栈
+            Stack<Integer> stack = stackMap.get(valFrequency);
+            stack.push(val);
             //更新maxFrequency
-            maxFrequency = Math.max(maxFrequency, frequencyMap.get(val));
+            maxFrequency = Math.max(maxFrequency, valFrequency);
         }
 
         public int pop() {
@@ -104,18 +107,19 @@ public class Problem895 {
             Stack<Integer> stack = stackMap.get(maxFrequency);
             //每次出栈最大频率对应的栈中的栈顶元素即为出现频率最高且最接近栈顶的元素
             int result = stack.pop();
-            //更新result的出现次数
-            frequencyMap.put(result, frequencyMap.get(result) - 1);
-
-            //result的出现次数为0，则从frequencyMap中删除
-            if (frequencyMap.get(result) == 0) {
-                frequencyMap.remove(result);
-            }
 
             //最大频率对应的栈为空，则更新maxFrequency
             if (stack.isEmpty()) {
                 stackMap.remove(maxFrequency);
                 maxFrequency--;
+            }
+
+            //更新result的出现次数
+            frequencyMap.put(result, frequencyMap.get(result) - 1);
+
+            //result的出现次数为0，则result从frequencyMap中删除
+            if (frequencyMap.get(result) == 0) {
+                frequencyMap.remove(result);
             }
 
             return result;

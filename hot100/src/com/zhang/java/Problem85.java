@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2022/4/29 9:26
  * @Author zsy
- * @Description 柱状图中最大的矩形 类比Problem84
+ * @Description 最大矩形 滴滴面试题 米哈游机试题 类比Problem84、Problem221 动态规划类比
  * 给定一个仅包含 0 和 1 、大小为 rows x cols 的二维二进制矩阵，找出只包含 1 的最大矩形，并返回其面积。
  * <p>
  * 输入：matrix = [
@@ -158,16 +158,16 @@ public class Problem85 {
 
         for (int i = 0; i < heights.length; i++) {
             //不满足单调递增栈，则栈顶元素出栈
-            while (!stack.isEmpty() && heights[i] < heights[stack.peek()]) {
+            while (!stack.isEmpty() && heights[stack.peek()] > heights[i]) {
                 //矩形的高
                 int h = heights[stack.pop()];
                 //矩形的宽
                 int w;
 
-                if (stack.isEmpty()) {
-                    w = i;
-                } else {
+                if (!stack.isEmpty()) {
                     w = i - stack.peek() - 1;
+                } else {
+                    w = i;
                 }
 
                 max = Math.max(max, h * w);
@@ -176,17 +176,17 @@ public class Problem85 {
             stack.push(i);
         }
 
-        //栈不为空，说明栈中索引对应元素递增，需要分别计算对应面积
+        //栈不为空，说明栈中剩余索引对应元素递增，需要分别计算对应面积
         while (!stack.isEmpty()) {
             //矩形的高
             int h = heights[stack.pop()];
             //矩形的宽
             int w;
 
-            if (stack.isEmpty()) {
-                w = heights.length;
-            } else {
+            if (!stack.isEmpty()) {
                 w = heights.length - stack.peek() - 1;
+            } else {
+                w = heights.length;
             }
 
             max = Math.max(max, h * w);

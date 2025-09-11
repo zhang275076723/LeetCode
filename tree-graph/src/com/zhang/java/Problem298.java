@@ -25,6 +25,7 @@ import java.util.*;
 public class Problem298 {
     /**
      * 最长连续序列路径的长度
+     * 注意：路径长度为节点的个数，而不是边的个数
      */
     private int max = 0;
 
@@ -38,8 +39,8 @@ public class Problem298 {
 
     /**
      * dfs
-     * 计算当前节点左右子节点作为根节点的包含根节点的最长单侧连续序列路径长度，更新最长连续序列路径的长度，
-     * 返回当前节点对父节点的包含根节点的最长单侧连续序列路径长度，用于计算当前节点父节点作为根节点的包含根节点的最长单侧连续序列路径长度
+     * 计算当前节点左右子节点作为根节点的树对父节点的最长单侧连续序列路径长度，更新最长连续序列路径的长度，
+     * 返回当前节点作为根节点的树对父节点的最长单侧连续序列路径长度，用于计算父节点作为根节点的树对父节点的最长单侧连续序列路径长度
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -56,7 +57,7 @@ public class Problem298 {
     }
 
     /**
-     * 返回root作为根节点的包含根节点的最长单侧连续序列路径长度
+     * 返回root作为根节点的树对父节点的最长单侧连续序列路径长度
      *
      * @param root
      * @return
@@ -67,39 +68,31 @@ public class Problem298 {
             return 0;
         }
 
-        //当前节点左子节点作为根节点的包含根节点的最长单侧连续序列路径长度
+        //当前节点左子节点作为根节点的树对父节点的最长单侧连续序列路径长度
         int leftMax = dfs(root.left);
-        //当前节点右子节点作为根节点的包含根节点的最长单侧连续序列路径长度
+        //当前节点右子节点作为根节点的树对父节点的最长单侧连续序列路径长度
         int rightMax = dfs(root.right);
-        //root作为根节点向左子树的包含根节点的最长单侧连续序列路径长度
+        //当前节点作为根节点的树向左子节点的最长单侧连续序列路径长度
         int max1;
-        //root作为根节点向右子树的包含根节点的最长单侧连续序列路径长度
+        //当前节点作为根节点的树向右子节点的最长单侧连续序列路径长度
         int max2;
 
-        if (root.left != null) {
-            if (root.val + 1 == root.left.val) {
-                max1 = leftMax + 1;
-            } else {
-                max1 = 1;
-            }
+        if (root.left != null && root.val + 1 == root.left.val) {
+            max1 = leftMax + 1;
         } else {
             max1 = 1;
         }
 
-        if (root.right != null) {
-            if (root.val + 1 == root.right.val) {
-                max2 = rightMax + 1;
-            } else {
-                max2 = 1;
-            }
+        if (root.right != null && root.val + 1 == root.right.val) {
+            max2 = rightMax + 1;
         } else {
             max2 = 1;
         }
 
-        //更新最长连续序列路径的长度
+        //更新max
         max = Math.max(max, Math.max(max1, max2));
 
-        //返回当前节点对父节点的包含根节点的最长单侧连续序列路径长度，用于计算当前节点父节点作为根节点的包含根节点的最长单侧连续序列路径长度
+        //返回当前节点作为根节点的树对父节点的最长单侧连续序列路径长度，用于计算父节点作为根节点的树对父节点的最长单侧连续序列路径长度
         return Math.max(max1, max2);
     }
 

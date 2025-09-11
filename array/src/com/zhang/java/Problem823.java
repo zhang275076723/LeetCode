@@ -36,8 +36,8 @@ public class Problem823 {
     }
 
     /**
-     * 动态规划+排序+双指针
-     * dp[i]：由小到大排序后，根节点为arr[i]的二叉树的个数
+     * 排序+动态规划+双指针
+     * dp[i]：arr由小到大排序后，根节点为的带因子的arr[i]的二叉树的个数
      * dp[i] = sum(dp[left]*dp[right])   (arr[i]==arr[left]*arr[right]，arr[left]==arr[right]，左右子树不能交换)
      * dp[i] = sum(dp[left]*dp[right]*2) (arr[i]==arr[left]*arr[right]，arr[left]!=arr[right]，左右子树可以交换)
      * 时间复杂度O(n^2)，空间复杂度O(n)
@@ -60,7 +60,7 @@ public class Problem823 {
 
         //以arr[i]作为根节点，找arr[i]左边找乘积等于arr[i]的左右子树arr[left]和arr[right]
         for (int i = 0; i < arr.length; i++) {
-            //dp初始化，以arr[i]为根只有arr[i]的个数为1
+            //dp初始化，以arr[i]为根只有arr[i]一个节点的个数为1
             dp[i] = 1;
 
             int left = 0;

@@ -22,10 +22,10 @@ package com.zhang.java;
 public class Problem643 {
     public static void main(String[] args) {
         Problem643 problem643 = new Problem643();
-//        int[] nums = {1, 12, -5, -6, 50, 3};
-//        int k = 4;
-        int[] nums = {-1};
-        int k = 1;
+        int[] nums = {1, 12, -5, -6, 50, 3};
+        int k = 4;
+//        int[] nums = {-1};
+//        int k = 1;
         System.out.println(problem643.findMaxAverage(nums, k));
         System.out.println(problem643.findMaxAverage2(nums, k));
     }
@@ -78,11 +78,6 @@ public class Problem643 {
         int sum = 0;
         int left = 0;
         int right = 0;
-
-        //初始化maxSum为第一个长度为k的子数组之和
-        for (int i = 0; i < k; i++) {
-            maxSum = maxSum + nums[i];
-        }
 
         while (right < nums.length) {
             sum = sum + nums[right];

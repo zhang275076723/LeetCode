@@ -55,20 +55,21 @@ public class Problem321 {
      * @return
      */
     public int[] maxNumber(int[] nums1, int[] nums2, int k) {
+        int m = nums1.length;
+        int n = nums2.length;
         int[] result = new int[0];
 
         //保证nums1和nums2取的最大数子序列长度不会越界
-        for (int i = Math.max(0, k - nums2.length); i <= Math.min(k, nums1.length); i++) {
+        for (int i = Math.max(0, k - n); i <= Math.min(k, m); i++) {
             //nums1取长度为i的最大值
-            int[] temp1 = getMaxKNumber(nums1, i);
+            int[] temp1 = getMaxKArr(nums1, i);
             //nums2取长度为k-i的最大值
-            int[] temp2 = getMaxKNumber(nums2, k - i);
+            int[] temp2 = getMaxKArr(nums2, k - i);
             //result1和result2合并，得到最大数
-            int[] tempResult = merge(temp1, temp2);
+            int[] tempArr = merge(temp1, temp2);
 
-            //临时最大数大于当前最大数，更新最大数
-            if (compare(tempResult, result, 0, 0) > 0) {
-                result = tempResult;
+            if (compare(tempArr, result, 0, 0) > 0) {
+                result = tempArr;
             }
         }
 
@@ -84,13 +85,13 @@ public class Problem321 {
      * @param k
      * @return
      */
-    private int[] getMaxKNumber(int[] nums, int k) {
+    private int[] getMaxKArr(int[] nums, int k) {
         if (k == 0) {
             return new int[0];
         }
 
         if (k == nums.length) {
-            return Arrays.copyOf(nums, nums.length);
+            return nums;
         }
 
         //单调递减栈
@@ -131,22 +132,17 @@ public class Problem321 {
      * @param nums2
      */
     private int[] merge(int[] nums1, int[] nums2) {
-        if (nums1.length == 0) {
-            return nums2;
-        }
-
-        if (nums2.length == 0) {
-            return nums1;
-        }
-
-        //nums1和nums2拼接得到的最大数数组
-        int[] result = new int[nums1.length + nums2.length];
+        int m = nums1.length;
+        int n = nums2.length;
+        int[] result = new int[m + n];
         int i = 0;
         int j = 0;
         int k = 0;
 
-        while (i < nums1.length && j < nums2.length) {
-            //从nums1[i]起始的数大于等于从nums2[j]起始的数，则拼接nums1[i]到最大数数组中
+        while (i < m && j < n) {
+            //注意：不能直接比较nums1[i]和nums[j]的大小来拼接最大数组，还需要考虑nums1和nums2相等位之后元素的大小关系
+            //例如：nums1=[3,0],nums2=[3,8]
+            //第一位相等，如果先拼接nums1[i]，最终结果为[3,3,8,0]，如果先拼接nums2[j]，最终结果为[3,8,3,0]
             if (compare(nums1, nums2, i, j) >= 0) {
                 result[k] = nums1[i];
                 i++;
@@ -158,13 +154,13 @@ public class Problem321 {
             }
         }
 
-        while (i < nums1.length) {
+        while (i <m) {
             result[k] = nums1[i];
             i++;
             k++;
         }
 
-        while (j < nums2.length) {
+        while (j < n) {
             result[k] = nums2[j];
             j++;
             k++;
@@ -186,7 +182,10 @@ public class Problem321 {
      * @return
      */
     private int compare(int[] nums1, int[] nums2, int i, int j) {
-        while (i < nums1.length && j < nums2.length) {
+        int m = nums1.length;
+        int n = nums2.length;
+
+        while (i < m && j < n) {
             //nums1[i]和nums2[j]不相等，直接返回两数之差
             if (nums1[i] != nums2[j]) {
                 return nums1[i] - nums2[j];
@@ -197,9 +196,9 @@ public class Problem321 {
         }
 
         //从nums1[i]起始的数和从nums2[j]起始的数相等，返回0
-        if (i == nums1.length && j == nums2.length) {
+        if (i == m && j == n) {
             return 0;
-        } else if (i == nums1.length) {
+        } else if (i == m) {
             //从nums1[i]起始的数比从nums2[j]起始的数小，返回-1
             return -1;
         } else {

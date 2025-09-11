@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2023/5/3 08:05
  * @Author zsy
- * @Description 验证前序遍历序列二叉搜索树 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem241、Problem395、Problem449、Problem617、Problem654、Problem889、Problem1008、Offer7、Offer33 单调栈类比Problem42、Problem84、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem654、Problem739、Problem795、Problem907、Problem1019、Problem1856、Problem2104、Problem2454、Problem2487、Offer33、DoubleStackSort
+ * @Description 验证前序遍历序列二叉搜索树 类比Problem456、Offer33 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem241、Problem395、Problem449、Problem617、Problem654、Problem889、Problem1008、Offer7、Offer33 单调栈类比Problem42、Problem84、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem654、Problem739、Problem795、Problem907、Problem1019、Problem1856、Problem2104、Problem2454、Problem2487、Offer33、DoubleStackSort
  * 给定一个整数数组，你需要验证它是否是一个二叉搜索树正确的先序遍历序列。
  * 你可以假定该序列中的数都是不相同的。
  * <p>
@@ -78,12 +78,12 @@ public class Problem255 {
             }
 
             //不满足单调递减栈，则当前遍历到了右子树，栈中节点出栈，更新父节点
-            while (!stack.isEmpty() && preorder[stack.peek()] < preorder[i]) {
-                parent = preorder[stack.pop()];
+            while (!stack.isEmpty() && stack.peek() < preorder[i]) {
+                parent = stack.pop();
             }
 
             //当前节点入栈，继续遍历左子树节点
-            stack.push(i);
+            stack.push(preorder[i]);
         }
 
         //遍历结束，则是二叉搜索树，返回true
@@ -103,23 +103,23 @@ public class Problem255 {
             return true;
         }
 
-        //右子树根节点下标索引，即为preorder从左往右遍历中第一个大于preorder[left]的下标索引
-        int rightRootIndex = left + 1;
+        //右子树根节点下标索引，即为preorder从左往右遍历中第一个大于preorder[left]的下标索引，即[index,right]都比根节点preorder[right]值要大
+        int index = left + 1;
 
-        //从左往右遍历找第一个大于根节点的右子树根节点下标索引rightRootIndex
-        while (rightRootIndex < right && preorder[left] > preorder[rightRootIndex]) {
-            rightRootIndex++;
+        //从左往右遍历找第一个大于根节点的右子树根节点下标索引index
+        while (index < right && preorder[index] < preorder[left]) {
+            index++;
         }
 
-        //前序遍历数组preorder中[rightRootIndex,right]为右子树的节点，如果存在小于根节点的值，
+        //前序遍历数组preorder中[index,right]为右子树的节点，如果存在小于根节点的值，
         //则前序遍历数组不是二叉搜索树的前序遍历结果，返回false
-        for (int i = rightRootIndex; i <= right; i++) {
-            if (preorder[left] > preorder[i]) {
+        for (int i = index; i <= right; i++) {
+            if (preorder[i] < preorder[left]) {
                 return false;
             }
         }
 
         //递归判断左子数组和右子数组是否是二叉搜索树的前序遍历结果
-        return dfs(preorder, left + 1, rightRootIndex - 1) && dfs(preorder, rightRootIndex, right);
+        return dfs(preorder, left + 1, index - 1) && dfs(preorder, index, right);
     }
 }

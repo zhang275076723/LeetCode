@@ -87,14 +87,14 @@ public class Problem380 {
             //要删除元素在list集合中的下标索引
             int index = map.get(val);
             //list集合中最后一个元素下标索引
-            int lastValueIndex = list.size() - 1;
+            int lastIndex = list.size() - 1;
             //list集合中最后一个元素
-            int lastValue = list.get(lastValueIndex);
+            int lastValue = list.get(lastIndex);
 
             //用list集合中最后一个元素替换当前元素，再删除最后一个元素
             //注意：要先set再remove
             list.set(index, lastValue);
-            list.remove(lastValueIndex);
+            list.remove(lastIndex);
 
             //map中移除当前元素，更新map中list集合中最后一个元素在list集合中的下标索引
             //注意：要先put再remove

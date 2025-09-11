@@ -35,26 +35,26 @@ public class Problem487 {
         int k = 1;
 
         while (right < nums.length) {
-            //右指针所指元素为0时，将可修改0为1的个数k减1，即将当前元素0假设置为1
+            //右指针所指元素为0，将可修改0为1的个数k减1，即将当前元素0假设置为1
             if (nums[right] == 0) {
-                k--;
-            }
+                //当可修改0为1的个数小于等于0时，左指针右移
+                while (k <= 0) {
+                    if (nums[left] == 0) {
+                        k++;
+                    }
 
-            //当可修改0为1的个数小于0时，左指针右移
-            while (k < 0) {
-                //左指针所指元素为0时，即把之前假设为1的元素0恢复为0，可修改0为1的个数k加1
-                if (nums[left] == 0) {
-                    k++;
+                    left++;
                 }
 
-                //左指针右移
-                left++;
+                //将当前元素0假设置为1
+                k--;
+                result = Math.max(result, right - left + 1);
+                right++;
+            } else {
+                //右指针所指元素为1，则更新最大连续1的个数
+                result = Math.max(result, right - left + 1);
+                right++;
             }
-
-            //更新最大值
-            result = Math.max(result, right - left + 1);
-            //右指针右移
-            right++;
         }
 
         return result;

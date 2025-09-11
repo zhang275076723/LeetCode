@@ -35,8 +35,8 @@ public class Problem687 {
 
     /**
      * dfs
-     * 计算当前节点左右子节点作为根节点的包含根节点的最长单侧同值路径长度，更新二叉树的最长同值路径长度，
-     * 返回当前节点对父节点的包含根节点的最长单侧同值路径长度，用于计算当前节点父节点作为根节点的包含根节点的最长单侧同值路径长度
+     * 计算当前节点左右子节点作为根节点的树对父节点的最长单侧同值路径长度，更新二叉树的最长同值路径长度，
+     * 返回当前节点作为根节点的树对父节点的最长单侧同值路径长度，用于计算父节点作为根节点的树对父节点的最长单侧同值路径长度
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param root
@@ -53,43 +53,43 @@ public class Problem687 {
     }
 
     /**
-     * 返回root作为根节点的包含根节点的最长单侧同值路径长度
+     * 返回root作为根节点的树对父节点的最长单侧同值路径长度
      *
      * @param root
      * @return
      */
     private int dfs(TreeNode root) {
-        //路径长度为节点的边数，则空节点返回-1
+        //路径长度为节点的边数，则空节点返回0
         if (root == null) {
-            return -1;
+            return 0;
         }
 
-        //当前节点左子节点作为根节点的包含根节点的最长单侧同值路径长度
+        //当前节点左子节点作为根节点的树对父节点的最长单侧同值路径长度
         int leftMax = dfs(root.left);
-        //当前节点右子节点作为根节点的包含根节点的最长单侧同值路径长度
+        //当前节点右子节点作为根节点的树对父节点的最长单侧同值路径长度
         int rightMax = dfs(root.right);
-        //root作为根节点向左子树的包含根节点的最长单侧同值路径长度
+        //当前节点作为根节点的树向左子节点的最长单侧同值路径长度
         int max1;
-        //root作为根节点向右子树的包含根节点的最长单侧同值路径长度
+        //当前节点作为根节点的树向右子节点的最长单侧同值路径长度
         int max2;
 
-        if (root.left != null && root.left.val == root.val) {
-            max1 = leftMax + 1;
+        if (root.left != null && root.val == root.left.val) {
+            max1 = leftMax;
         } else {
             max1 = 0;
         }
 
-        if (root.right != null && root.right.val == root.val) {
-            max2 = rightMax + 1;
+        if (root.right != null && root.val == root.right.val) {
+            max2 = rightMax;
         } else {
             max2 = 0;
         }
 
-        //更新二叉树的最长同值路径长度
+        //更新max
         max = Math.max(max, max1 + max2);
 
-        //返回当前节点对父节点的包含根节点的最长单侧同值路径长度，用于计算当前节点父节点作为根节点的包含根节点的最长单侧同值路径长度
-        return Math.max(max1, max2);
+        //返回当前节点作为根节点的树对父节点的最长单侧同值路径长度，用于计算父节点作为根节点的树对父节点的最长单侧同值路径长度
+        return Math.max(max1, max2) + 1;
     }
 
     private TreeNode buildTree(String[] data) {

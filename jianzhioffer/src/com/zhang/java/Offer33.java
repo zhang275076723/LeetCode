@@ -6,7 +6,7 @@ import java.util.Stack;
 /**
  * @Date 2022/3/21 18:57
  * @Author zsy
- * @Description 二叉搜索树的后序遍历序列 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem241、Problem255、Problem395、Problem449、Problem617、Problem654、Problem889、Problem1008、Offer7 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem654、Problem739、Problem795、Problem907、Problem1019、Problem1856、Problem2104、Problem2454、Problem2487、DoubleStackSort
+ * @Description 二叉搜索树的后序遍历序列 类比Problem255、Problem456 分治法类比Problem95、Problem105、Problem106、Problem108、Problem109、Problem241、Problem255、Problem395、Problem449、Problem617、Problem654、Problem889、Problem1008、Offer7 单调栈类比Problem42、Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem654、Problem739、Problem795、Problem907、Problem1019、Problem1856、Problem2104、Problem2454、Problem2487、DoubleStackSort
  * 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历结果。
  * 如果是则返回 true，否则返回 false。假设输入的数组的任意两个数字都互不相同。
  * <p>
@@ -29,7 +29,8 @@ public class Offer33 {
     public static void main(String[] args) {
         Offer33 offer33 = new Offer33();
 //        int[] postorder = {1, 6, 3, 2, 5};
-        int[] postorder = {1, 3, 2, 6, 5};
+//        int[] postorder = {1, 3, 2, 6, 5};
+        int[] postorder = {4, 8, 6, 12, 16, 14, 10};
         System.out.println(offer33.verifyPostorder(postorder));
         System.out.println(offer33.verifyPostorder2(postorder));
     }
@@ -78,12 +79,12 @@ public class Offer33 {
             }
 
             //不满足单调递增栈，则当前遍历到了左子树，栈中节点出栈，更新父节点
-            while (!stack.empty() && postorder[stack.peek()] > postorder[i]) {
-                parent = postorder[stack.pop()];
+            while (!stack.empty() && stack.peek() > postorder[i]) {
+                parent = stack.pop();
             }
 
             //当前节点入栈，继续遍历右子树节点
-            stack.push(i);
+            stack.push(postorder[i]);
         }
 
         //遍历结束，则是二叉搜索树，返回true
@@ -103,23 +104,23 @@ public class Offer33 {
             return true;
         }
 
-        //后序遍历数组postorder中第一个大于根节点的右子树节点下标索引，即[rightIndex,right-1]都比根节点postorder[right]值要大
-        int rightIndex = left;
+        //postorder中第一个大于根节点postorder[right]的右子树节点下标索引，即[index,right-1]都比根节点postorder[right]值要大
+        int index = left;
 
-        //从左往右遍历找第一个大于根节点的右子树节点下标索引rightIndex
-        while (rightIndex < right && postorder[rightIndex] < postorder[right]) {
-            rightIndex++;
+        //从左往右遍历找第一个大于根节点的右子树节点下标索引index
+        while (index < right && postorder[index] < postorder[right]) {
+            index++;
         }
 
-        //后序遍历数组postorder中[rightIndex,right-1]为右子树的节点，如果存在小于根节点的值，
+        //后序遍历数组postorder中[index,right-1]为右子树的节点，如果存在小于根节点的值，
         //则后序遍历数组不是二叉搜索树的后序遍历结果，返回false
-        for (int i = rightIndex; i < right; i++) {
+        for (int i = index; i < right; i++) {
             if (postorder[i] < postorder[right]) {
                 return false;
             }
         }
 
         //递归判断左子数组和右子数组是否是二叉搜索树的后序遍历结果
-        return dfs(postorder, left, rightIndex - 1) && dfs(postorder, rightIndex, right - 1);
+        return dfs(postorder, left, index - 1) && dfs(postorder, index, right - 1);
     }
 }

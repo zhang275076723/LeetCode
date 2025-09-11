@@ -39,23 +39,21 @@ public class Problem316 {
             return s;
         }
 
-        //统计s中字符和出现的次数，用于保证每个字符都出现
+        //统计s中字符出现的次数，stack中保证每种字符都出现
         Map<Character, Integer> map = new HashMap<>();
-        //访问数组
-        boolean[] visited = new boolean[26];
         //单调递增栈
         Deque<Character> stack = new ArrayDeque<>();
+        //stack中包含的字符数组
+        boolean[] visited = new boolean[26];
 
         for (char c : s.toCharArray()) {
             map.put(c, map.getOrDefault(c, 0) + 1);
         }
 
         for (char c : s.toCharArray()) {
-            //栈不为空，栈顶元素字典序大于当前字符c字典序，字符c未被访问，且栈顶元素在后面还有的情况下，栈顶元素出栈
-            while (!stack.isEmpty() && stack.peekLast() > c && !visited[c - 'a'] && map.get(stack.peekLast()) > 0) {
-                //栈顶元素出栈
+            //栈不为空，栈顶元素字典序大于当前字符c字典序，并且栈顶元素在后面还有，字符c未被访问，栈顶元素出栈
+            while (!stack.isEmpty() && stack.peekLast() > c && map.get(stack.peekLast()) > 0 && !visited[c - 'a']) {
                 char c2 = stack.pollLast();
-                //当前元素未访问
                 visited[c2 - 'a'] = false;
             }
 
@@ -65,7 +63,6 @@ public class Problem316 {
                 visited[c - 'a'] = true;
             }
 
-            //当前字符c的个数减1
             map.put(c, map.get(c) - 1);
         }
 

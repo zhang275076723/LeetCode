@@ -88,8 +88,8 @@ public class Problem1245 {
 
     /**
      * dfs(同543题)
-     * 计算当前节点子节点作为根节点的最大单侧路径长度，更新树的直径，
-     * 返回当前节点对父节点的最大单侧路径长度，用于计算当前节点父节点作为根节点的最大单侧路径长度
+     * 计算当前节点子节点作为根节点的树对父节点的最大单侧路径长度，更新树的直径，
+     * 返回当前节点作为根节点的树对父节点的最大单侧路径长度，用于计算父节点作为根节点的树对父节点的最大单侧路径长度
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param edges
@@ -220,7 +220,7 @@ public class Problem1245 {
     }
 
     /**
-     * 返回root作为根节点的最大单侧路径长度
+     * 返回root作为根节点的树对父节点的最大单侧路径长度
      *
      * @param u
      * @param graph
@@ -228,27 +228,26 @@ public class Problem1245 {
      * @return
      */
     private int dfs2(int u, List<List<Integer>> graph, boolean[] visited) {
-        //路径长度为节点的边数，则访问过的节点返回-1
+        //路径长度为节点的边数，则访问过的节点返回0
         if (visited[u]) {
-            return -1;
+            return 0;
         }
 
         visited[u] = true;
 
-        //节点u作为根节点的最大单侧路径长度
+        //节点u作为根节点的树对父节点的最大单侧路径长度
         int uLen = 0;
 
         for (int v : graph.get(u)) {
-            //子节点v作为根节点的最大单侧路径长度
-            //vLen+1：节点u作为根节点向子节点v的最大单侧路径长度
+            //子节点v作为根节点的树对父节点的最大单侧路径长度
             int vLen = dfs2(v, graph, visited);
             //更新树的直径
-            diameter2 = Math.max(diameter2, uLen + vLen + 1);
+            diameter2 = Math.max(diameter2, uLen + vLen);
             //更新uLen
-            uLen = Math.max(uLen, vLen + 1);
+            uLen = Math.max(uLen, vLen);
         }
 
-        //返回当前节点对父节点的最大单侧路径长度，用于计算当前节点父节点作为根节点的最大单侧路径长度
-        return uLen;
+        //返回当前节点作为根节点的树对父节点的最大单侧路径长度，用于计算父节点作为根节点的树对父节点的最大单侧路径长度
+        return uLen + 1;
     }
 }

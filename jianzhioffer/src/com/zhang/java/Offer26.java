@@ -130,7 +130,7 @@ public class Offer26 {
      * @param B
      * @return
      */
-    public boolean contains(TreeNode A, TreeNode B) {
+    private boolean contains(TreeNode A, TreeNode B) {
         //A树为空，B树为空，则说明B树是A树的子结构
         if (A == null && B == null) {
             return true;

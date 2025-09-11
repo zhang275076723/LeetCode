@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2023/7/4 08:45
  * @Author zsy
- * @Description 滑动窗口中位数 招商银行机试题 美团机试题 华为面试题 类比Problem4、Problem239 类比Problem295、Problem346、Problem703、Problem1670、Offer41 延迟删除类比Problem855、Problem1172、Problem2034、Problem2349、Problem2353
+ * @Description 滑动窗口中位数 招商银行机试题 美团机试题 华为面试题 类比Problem4、Problem239 类比Problem295、Problem346、Problem703、Problem1670、Offer41 延迟删除类比Problem855、Problem2034、Problem2349、Problem2353
  * 中位数是有序序列最中间的那个数。
  * 如果序列的长度是偶数，则没有最中间的数；此时中位数是最中间的两个数的平均数。
  * 例如：
@@ -96,8 +96,8 @@ public class Problem480 {
         result[0] = dualHeap.getMedian();
 
         for (int i = k; i < nums.length; i++) {
-            dualHeap.delete(nums[i - k]);
             dualHeap.insert(nums[i]);
+            dualHeap.delete(nums[i - k]);
             result[i - k + 1] = dualHeap.getMedian();
         }
 
@@ -118,6 +118,7 @@ public class Problem480 {
      */
     public static class DualHeap {
         //大根堆，维护所有元素中较小的一半
+        //注意：大根堆中可能存储有不是滑动窗口中的元素，需要通过delayMap延迟删除
         private final PriorityQueue<Integer> maxPriorityQueue;
         //小根堆，维护所有元素中较大的一半
         private final PriorityQueue<Integer> minPriorityQueue;
@@ -125,6 +126,7 @@ public class Problem480 {
         //key：延迟删除的元素，value：当前元素需要删除的次数
         private final Map<Integer, Integer> delayMap;
         //大根堆大小
+        //注意：和maxPriorityQueue.size()不一定相等，因为大根堆中可能存储有不是滑动窗口中的元素
         private int maxPriorityQueueSize;
         //小根堆大小
         private int minPriorityQueueSize;
@@ -135,14 +137,14 @@ public class Problem480 {
             maxPriorityQueue = new PriorityQueue<>(new Comparator<Integer>() {
                 @Override
                 public int compare(Integer a, Integer b) {
-                    //不能使用b-a，避免int相减溢出
+                    //注意：不能使用b-a，避免int相减溢出
                     return Integer.compare(b, a);
                 }
             });
             minPriorityQueue = new PriorityQueue<>(new Comparator<Integer>() {
                 @Override
                 public int compare(Integer a, Integer b) {
-                    //不能使用a-b，避免int相减溢出
+                    //注意：不能使用a-b，避免int相减溢出
                     return Integer.compare(a, b);
                 }
             });
@@ -237,8 +239,8 @@ public class Problem480 {
 
         public double getMedian() {
             if (k % 2 == 0) {
-                //使用long，避免int相加溢出
-                return ((long) maxPriorityQueue.peek() + minPriorityQueue.peek()) / 2.0;
+                //使用double，避免int相加溢出
+                return ((double) maxPriorityQueue.peek() + minPriorityQueue.peek()) / 2;
             } else {
                 return maxPriorityQueue.peek();
             }

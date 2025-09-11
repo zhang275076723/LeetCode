@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2022/3/30 16:24
  * @Author zsy
- * @Description 接雨水 字节面试题 类比Problem218、Problem407、Problem699 类比Problem11、Problem84、Problem152、Problem238、Offer66 单调栈类比Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem654、Problem739、Problem795、Problem907、Problem1019、Problem1856、Problem2104、Problem2454、Problem2487、Offer33、DoubleStackSort
+ * @Description 接雨水 字节面试题 类比Problem218、Problem407、Problem699 类比Problem11、Problem84、Problem152、Problem238、Offer66 数组中的动态规划类比 单调栈类比Problem84、Problem255、Problem316、Problem321、Problem402、Problem456、Problem496、Problem503、Problem654、Problem739、Problem795、Problem907、Problem1019、Problem1856、Problem2104、Problem2454、Problem2487、Offer33、DoubleStackSort
  * 给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
  * <p>
  * 输入：height = [0,1,0,2,1,0,1,3,2,1,2,1]
@@ -117,16 +117,15 @@ public class Problem42 {
         int rightMax = height[height.length - 1];
 
         while (left < right) {
-            //更新两边的最大高度
-            leftMax = Math.max(leftMax, height[left]);
-            rightMax = Math.max(rightMax, height[right]);
-
+            //计算左右指针高度中的较小值对应的列所能接的雨水
             if (height[left] < height[right]) {
                 result = result + Math.min(leftMax, rightMax) - height[left];
                 left++;
+                leftMax = Math.max(leftMax, height[left]);
             } else {
                 result = result + Math.min(leftMax, rightMax) - height[right];
                 right--;
+                rightMax = Math.max(rightMax, height[right]);
             }
         }
 
@@ -147,7 +146,7 @@ public class Problem42 {
 
         for (int i = 0; i < height.length; i++) {
             //当栈不为空，且当前高度大于栈顶索引对应高度时，即可接到雨水
-            while (!stack.isEmpty() && height[i] > height[stack.peek()]) {
+            while (!stack.isEmpty() && height[stack.peek()] < height[i]) {
                 int index = stack.pop();
 
                 //如果当前栈为空，说明没有左边界，接不到雨水，直接跳出循环
@@ -168,5 +167,4 @@ public class Problem42 {
 
         return result;
     }
-
 }

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/10/7 08:52
  * @Author zsy
- * @Description 餐盘栈 延迟删除类比Problem480、Problem855、Problem2034、Problem2349、Problem2353 类比Problem155、Problem225、Problem232、Problem622、Problem641、Problem705、Problem706、Problem707、Problem716、Problem895、Problem1381、Problem1670、Offer9、Offer30、Offer59_2
+ * @Description 餐盘栈 类比Problem155、Problem225、Problem232、Problem622、Problem641、Problem705、Problem706、Problem707、Problem716、Problem895、Problem1381、Problem1670、Offer9、Offer30、Offer59_2
  * 我们把无限数量 ∞ 的栈排成一行，按从左到右的次序从 0 开始编号。
  * 每个栈的的最大容量 capacity 都相同。
  * 实现一个叫「餐盘」的类 DinnerPlates：
@@ -60,69 +60,70 @@ import java.util.*;
  */
 public class Problem1172 {
     public static void main(String[] args) {
-        // 初始化，栈最大容量 capacity = 2
-        DinnerPlates D = new DinnerPlates(2);
+//        // 初始化，栈最大容量 capacity = 2
+//        DinnerPlates D = new DinnerPlates(2);
+//        D.push(1);
+//        D.push(2);
+//        D.push(3);
+//        D.push(4);
+//        // 栈的现状为：    2  4
+//        //                1  3  5
+//        //                ﹈ ﹈ ﹈
+//        D.push(5);
+//        // 返回 2。栈的现状为：       4
+//        //                       1  3  5
+//        //                       ﹈ ﹈ ﹈
+//        System.out.println(D.popAtStack(0));
+//        // 栈的现状为：  20 4
+//        //              1  3  5
+//        //              ﹈ ﹈ ﹈
+//        D.push(20);
+//        // 栈的现状为：  20 4  21
+//        //              1  3  5
+//        //              ﹈ ﹈ ﹈
+//        D.push(21);
+//        // 返回 20。栈的现状为：   4 21
+//        //                    1  3  5
+//        //                    ﹈ ﹈ ﹈
+//        System.out.println(D.popAtStack(0));
+//        // 返回 21。栈的现状为：       4
+//        //                        1  3  5
+//        //                        ﹈ ﹈ ﹈
+//        System.out.println(D.popAtStack(2));
+//        //// 返回 5。栈的现状为：         4
+//        //                           1  3
+//        //                           ﹈ ﹈
+//        System.out.println(D.pop());
+//        // 返回 4。栈的现状为：    1  3
+//        //                       ﹈ ﹈
+//        System.out.println(D.pop());
+//        // 返回 3。栈的现状为：    1
+//        //                       ﹈
+//        System.out.println(D.pop());
+//        // 返回 1。现在没有栈。
+//        System.out.println(D.pop());
+//        // 返回 -1。仍然没有栈。
+//        System.out.println(D.pop());
+
+        DinnerPlates D = new DinnerPlates(1);
         D.push(1);
         D.push(2);
-        D.push(3);
-        D.push(4);
-        // 栈的现状为：    2  4
-        //                1  3  5
-        //                ﹈ ﹈ ﹈
-        D.push(5);
-        // 返回 2。栈的现状为：       4
-        //                       1  3  5
-        //                       ﹈ ﹈ ﹈
-        System.out.println(D.popAtStack(0));
-        // 栈的现状为：  20 4
-        //              1  3  5
-        //              ﹈ ﹈ ﹈
-        D.push(20);
-        // 栈的现状为：  20 4  21
-        //              1  3  5
-        //              ﹈ ﹈ ﹈
-        D.push(21);
-        // 返回 20。栈的现状为：   4 21
-        //                    1  3  5
-        //                    ﹈ ﹈ ﹈
-        System.out.println(D.popAtStack(0));
-        // 返回 21。栈的现状为：       4
-        //                        1  3  5
-        //                        ﹈ ﹈ ﹈
-        System.out.println(D.popAtStack(2));
-        //// 返回 5。栈的现状为：         4
-        //                           1  3
-        //                           ﹈ ﹈
+        System.out.println(D.popAtStack(1));
         System.out.println(D.pop());
-        // 返回 4。栈的现状为：    1  3
-        //                       ﹈ ﹈
+        D.push(1);
+        D.push(2);
         System.out.println(D.pop());
-        // 返回 3。栈的现状为：    1
-        //                       ﹈
         System.out.println(D.pop());
-        // 返回 1。现在没有栈。
-        System.out.println(D.pop());
-        // 返回 -1。仍然没有栈。
-        System.out.println(D.pop());
-
-//        DinnerPlates D = new DinnerPlates(1);
-//        D.push(1);
-//        D.push(2);
-//        System.out.println(D.popAtStack(1));
-//        System.out.println(D.pop());
-//        D.push(1);
-//        D.push(2);
-//        System.out.println(D.pop());
-//        System.out.println(D.pop());
     }
 
     /**
-     * 栈+优先队列，小根堆+延迟删除
+     * 栈+优先队列，小根堆
      */
     static class DinnerPlates {
         //存储栈的list集合
         private final List<Stack<Integer>> stackList;
         //优先队列，小根堆，存储stackList中未满栈的下标索引
+        //注意：其中未满栈包含空栈
         private final PriorityQueue<Integer> priorityQueue;
         //每个栈的最大容量
         private final int capacity;
@@ -139,18 +140,18 @@ public class Problem1172 {
         }
 
         public void push(int val) {
-            //避免小根堆中未满栈不在stackList中的情况，导致stackList.get()空指针异常，无法获取未满栈，则小根堆置空，所有栈都是未满栈
-            if (!priorityQueue.isEmpty() && stackList.size() <= priorityQueue.peek()) {
+            //小根堆堆顶对应的最小未满栈在stackList的下标索引越界，则说明从stackList.size()下标索引开始后面的栈都是空栈，小根堆置为空
+            if (!priorityQueue.isEmpty() && priorityQueue.peek() >= stackList.size()) {
                 priorityQueue.clear();
             }
 
-            //小根堆为空，则不存在未满栈，新建一个栈，val入新建栈
+            //小根堆为空，则不存在未满栈，新建一个栈，val入新栈，加入stackList中
             if (priorityQueue.isEmpty()) {
                 Stack<Integer> stack = new Stack<>();
                 stack.push(val);
                 stackList.add(stack);
 
-                //新建栈未满，则加入小根堆中
+                //新栈未满，则加入小根堆中
                 if (stack.size() < capacity) {
                     priorityQueue.offer(stackList.size() - 1);
                 }
@@ -158,37 +159,18 @@ public class Problem1172 {
                 return;
             }
 
-            //下标索引最小的未满栈
+            //stackList中下标索引最小的未满栈
             Stack<Integer> stack = stackList.get(priorityQueue.peek());
             stack.push(val);
 
-            //当前栈已满，则当前栈出堆
+            //当前栈已满，则当前栈从小根堆中出堆
             if (stack.size() == capacity) {
                 priorityQueue.poll();
             }
         }
 
         public int pop() {
-            //所有栈都为空，则返回-1
-            if (stackList.isEmpty()) {
-                return -1;
-            }
-
-            Stack<Integer> stack = stackList.get(stackList.size() - 1);
-
-            //最右边的栈出栈一个元素后由满栈变为未满，则加入小根堆
-            if (stack.size() == capacity) {
-                priorityQueue.offer(stackList.size() - 1);
-            }
-
-            int result = stack.pop();
-
-            //延迟删除，stackList末尾栈为空，则从stackList中删除
-            while (!stackList.isEmpty() && stackList.get(stackList.size() - 1).isEmpty()) {
-                stackList.remove(stackList.size() - 1);
-            }
-
-            return result;
+            return popAtStack(stackList.size() - 1);
         }
 
         public int popAtStack(int index) {
@@ -206,7 +188,7 @@ public class Problem1172 {
 
             int result = stack.pop();
 
-            //延迟删除，stackList末尾栈为空，则从stackList中删除
+            //保证list末尾下标索引的栈是非空栈
             while (!stackList.isEmpty() && stackList.get(stackList.size() - 1).isEmpty()) {
                 stackList.remove(stackList.size() - 1);
             }

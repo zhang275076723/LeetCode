@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/9/23 09:00
  * @Author zsy
- * @Description 设计数字容器系统 延迟删除类比Problem480、Problem855、Problem1172、Problem2034、Problem2353 有序集合类比Problem220、Problem352、Problem363、Problem855、Problem981、Problem1146、Problem1348、Problem1912、Problem2034、Problem2071、Problem2353、Problem2502、Problem2590
+ * @Description 设计数字容器系统 延迟删除类比Problem480、Problem855、Problem2034、Problem2353 有序集合类比Problem220、Problem352、Problem363、Problem855、Problem981、Problem1146、Problem1348、Problem1912、Problem2034、Problem2071、Problem2353、Problem2502、Problem2590
  * 设计一个数字容器系统，可以实现以下功能：
  * 在系统中给定下标处 插入 或者 替换 一个数字。
  * 返回 系统中给定数字的最小下标。

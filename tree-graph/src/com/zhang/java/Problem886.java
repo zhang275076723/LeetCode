@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * @Date 2023/10/31 08:30
  * @Author zsy
- * @Description 可能的二分法 类比Problem785 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem952、Problem1135、Problem1254、Problem1319、Problem1361、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
+ * @Description 可能的二分法 类比Problem207、Problem785、Problem1129 并查集类比Problem130、Problem200、Problem261、Problem305、Problem323、Problem399、Problem547、Problem684、Problem685、Problem695、Problem765、Problem785、Problem827、Problem952、Problem1135、Problem1254、Problem1319、Problem1361、Problem1489、Problem1568、Problem1584、Problem1627、Problem1905、Problem1998、Problem2685
  * 给定一组 n 人（编号为 1, 2, ..., n）， 我们想把每个人分进任意大小的两组。
  * 每个人都可能不喜欢其他人，那么他们不应该属于同一组。
  * 给定整数 n 和数组 dislikes ，其中 dislikes[i] = [ai, bi] ，表示不允许将编号为 ai 和  bi的人归入同一组。
@@ -62,19 +62,19 @@ public class Problem886 {
      */
     public boolean possibleBipartition(int n, int[][] dislikes) {
         //邻接表，图中节点的邻接节点为当前节点不喜欢的节点
-        List<List<Integer>> edges = new ArrayList<>();
+        List<List<Integer>> graph = new ArrayList<>();
 
         //注意节点是从1开始，所以需要多加1
         for (int i = 0; i <= n; i++) {
-            edges.add(new ArrayList<>());
+            graph.add(new ArrayList<>());
         }
 
         for (int i = 0; i < dislikes.length; i++) {
             int u = dislikes[i][0];
             int v = dislikes[i][1];
 
-            edges.get(u).add(v);
-            edges.get(v).add(u);
+            graph.get(u).add(v);
+            graph.get(v).add(u);
         }
 
         //节点访问数组，节点是从1开始，所以需要多加1
@@ -82,14 +82,12 @@ public class Problem886 {
         //一条边上两个顶点的访问方式不同，则当前边可以二分
         int[] visited = new int[n + 1];
 
-        //一条边上两个节点的访问方式相同，则当前边的两个节点属于同一个集合，无法二分
         //注意节点是从1开始
         for (int i = 1; i <= n; i++) {
             //未访问的节点进行dfs
             if (visited[i] == 0) {
-                //lastVisited：节点i的上一个节点的访问方式
-                //这里lastVisited不仅可以为0，也可以为1或2
-                dfs(i, 0, visited, edges);
+                //节点i的访问方式uVisited可以为1或2
+                dfs(i, 1, visited, graph);
             }
 
             //dfs过程中不能二分，返回false
@@ -116,19 +114,19 @@ public class Problem886 {
      */
     public boolean possibleBipartition2(int n, int[][] dislikes) {
         //邻接表，图中节点的邻接节点为当前节点不喜欢的节点
-        List<List<Integer>> edges = new ArrayList<>();
+        List<List<Integer>> graph = new ArrayList<>();
 
         //注意节点是从1开始，所以需要多加1
         for (int i = 0; i <= n; i++) {
-            edges.add(new ArrayList<>());
+            graph.add(new ArrayList<>());
         }
 
         for (int i = 0; i < dislikes.length; i++) {
             int u = dislikes[i][0];
             int v = dislikes[i][1];
 
-            edges.get(u).add(v);
-            edges.get(v).add(u);
+            graph.get(u).add(v);
+            graph.get(v).add(u);
         }
 
         //节点访问数组，节点是从1开始，所以需要多加1
@@ -136,13 +134,12 @@ public class Problem886 {
         //一条边上两个顶点的访问方式不同，则当前边可以二分
         int[] visited = new int[n + 1];
 
-        //一条边上两个节点的访问方式相同，则当前边的两个节点属于同一个集合，无法二分
         //注意节点是从1开始
         for (int i = 1; i <= n; i++) {
             //未访问的节点进行bfs
             if (visited[i] == 0) {
                 //bfs过程中不能二分，返回false
-                if (!bfs(i, visited, edges)) {
+                if (!bfs(i, visited, graph)) {
                     return false;
                 }
             }
@@ -164,34 +161,35 @@ public class Problem886 {
      */
     public boolean possibleBipartition3(int n, int[][] dislikes) {
         //邻接表，图中节点的邻接节点为当前节点不喜欢的节点
-        List<List<Integer>> edges = new ArrayList<>();
+        List<List<Integer>> graph = new ArrayList<>();
 
         //注意节点是从1开始，所以需要多加1
         for (int i = 0; i <= n; i++) {
-            edges.add(new ArrayList<>());
+            graph.add(new ArrayList<>());
         }
 
         for (int i = 0; i < dislikes.length; i++) {
             int u = dislikes[i][0];
             int v = dislikes[i][1];
 
-            edges.get(u).add(v);
-            edges.get(v).add(u);
+            graph.get(u).add(v);
+            graph.get(v).add(u);
         }
 
         //节点是从1开始，所以需要多加1
         UnionFind unionFind = new UnionFind(n + 1);
 
         //当前节点u
-        for (int u = 0; u < n; u++) {
+        //注意节点是从1开始
+        for (int u = 1; u <= n; u++) {
             //节点u的邻接节点v
-            for (int v : edges.get(u)) {
-                //当前节点u和当前节点的邻接节点v连通，则无法二分，返回false
+            for (int v : graph.get(u)) {
+                //当前节点i和邻接节点v在一个连通分量中，则无法二分，返回false
                 if (unionFind.isConnected(u, v)) {
                     return false;
                 } else {
-                    //当前节点u和当前节点的邻接节点v不连通，则节点v和节点u的邻接节点edges.get(u).get(0)相连
-                    unionFind.union(edges.get(u).get(0), v);
+                    //当前节点i和邻接节点v不连通，则邻接节点v需要和节点graph[u][0]在一个连通分量中
+                    unionFind.union(graph.get(u).get(0), v);
                 }
             }
         }
@@ -200,34 +198,37 @@ public class Problem886 {
         return true;
     }
 
-    private void dfs(int i, int lastVisited, int[] visited, List<List<Integer>> edges) {
+    private void dfs(int u, int uVisited, int[] visited, List<List<Integer>> graph) {
         if (!flag) {
             return;
         }
 
-        //当前节点已访问
-        if (visited[i] != 0) {
-            //当前节点的访问方式和上一个节点的访问方式相同，则当前边的两个节点属于同一个集合，
-            //无法二分，flag设置为false
-            if (visited[i] == lastVisited) {
-                flag = false;
-            }
-        } else {
-            //当前节点未访问，设置当前节点的访问方式不同于上一个节点的访问方式
-            if (lastVisited == 1) {
-                visited[i] = 2;
-            } else {
-                visited[i] = 1;
-            }
+        visited[u] = uVisited;
 
-            //dfs遍历当前节点i的邻接节点u
-            for (int u : edges.get(i)) {
-                dfs(u, visited[i], visited, edges);
+        //遍历节点u的邻接节点v
+        for (int v : graph.get(u)) {
+            //邻接节点v未访问，设置节点v的访问方式不同于节点u的访问方式
+            if (visited[v] == 0) {
+                if (uVisited == 1) {
+                    dfs(v, 2, visited, graph);
+                } else {
+                    dfs(v, 1, visited, graph);
+                }
+
+                if (!flag) {
+                    return;
+                }
+            } else {
+                //邻接节点v已访问，并且节点u和节点v的访问方式相同，则当前边的两个节点属于同一个集合，
+                //无法二分，flag设置为false
+                if (visited[u] == visited[v]) {
+                    flag = false;
+                }
             }
         }
     }
 
-    private boolean bfs(int i, int[] visited, List<List<Integer>> edges) {
+    private boolean bfs(int i, int[] visited, List<List<Integer>> graph) {
         Queue<Integer> queue = new LinkedList<>();
         queue.offer(i);
         //设置当前节点i的访问方式为1，也可以设置为2
@@ -237,23 +238,23 @@ public class Problem886 {
             //当前节点u
             int u = queue.poll();
 
-            //当前节点u的邻接节点v
-            for (int v : edges.get(u)) {
-                //邻接节点v已访问，当前节点u的访问方式和邻接节点v的访问方式相同，则当前边的两个节点属于同一个集合，
-                //无法二分，返回false
-                if (visited[v] != 0) {
-                    if (visited[u] == visited[v]) {
-                        return false;
-                    }
-                } else {
-                    //邻接节点v未访问，设置邻接节点v的访问方式不同于当前节点u的访问方式
+            //遍历节点u的邻接节点v
+            for (int v : graph.get(u)) {
+                //邻接节点v未访问，设置节点v的访问方式不同于节点u的访问方式
+                if (visited[v] == 0) {
+                    queue.offer(v);
+
                     if (visited[u] == 1) {
                         visited[v] = 2;
                     } else {
                         visited[v] = 1;
                     }
-
-                    queue.offer(v);
+                } else {
+                    //邻接节点v已访问，并且节点u和节点v的访问方式相同，则当前边的两个节点属于同一个集合，
+                    //无法二分，返回false
+                    if (visited[u] == visited[v]) {
+                        return false;
+                    }
                 }
             }
         }

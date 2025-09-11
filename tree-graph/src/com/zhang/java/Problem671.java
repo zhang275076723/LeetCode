@@ -61,6 +61,7 @@ public class Problem671 {
                     flag = true;
                     secondMinValue = Math.min(secondMinValue, node.val);
                 }
+
                 stack.push(node);
                 node = node.left;
             }

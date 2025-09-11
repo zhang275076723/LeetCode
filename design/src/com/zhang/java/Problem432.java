@@ -173,11 +173,7 @@ public class Problem432 {
             }
 
             public void addFirst(Node node) {
-                Node nextNode = head.next;
-                head.next = node;
-                node.pre = head;
-                node.next = nextNode;
-                nextNode.pre = node;
+                addAfter(node, head);
             }
 
             /**
@@ -224,14 +220,13 @@ public class Problem432 {
          * 计数次数相同的字符串构成的节点，即双向链表节点
          */
         private static class Node {
-            private final Set<String> set;
+            private Set<String> set;
             //当前节点计数次数
             private int count;
             private Node pre;
             private Node next;
 
             public Node() {
-                set = new HashSet<>();
             }
 
             public Node(int count) {
@@ -282,24 +277,26 @@ public class Problem432 {
             Node node = nodeMap.get(key);
             CountNode countNode = countNodeMap.get(node.count);
 
-            node.count++;
             countNode.linkedList.remove(node);
 
-            //countNodeMap中不存在已经加1之后的node计数次数
-            if (!countNodeMap.containsKey(node.count)) {
+            //countNodeMap中不存在node计数次数加1的CountNode节点
+            if (!countNodeMap.containsKey(node.count + 1)) {
                 CountNode nextCountNode = new CountNode();
-                countNodeMap.put(node.count, nextCountNode);
+                countNodeMap.put(node.count + 1, nextCountNode);
                 countLinkedList.addAfter(nextCountNode, countNode);
             }
 
-            CountNode nextCountNode = countNodeMap.get(node.count);
+            CountNode nextCountNode = countNodeMap.get(node.count + 1);
             nextCountNode.linkedList.addFirst(node);
 
             //当前countNode节点中的双向链表为空，则删除当前countNode节点
             if (countNode.linkedList.head.next == countNode.linkedList.tail) {
                 countLinkedList.remove(countNode);
-                countNodeMap.remove(node.count - 1);
+                countNodeMap.remove(node.count);
             }
+
+            //node计数次数加1
+            node.count++;
         }
 
         public void dec(String key) {
@@ -312,33 +309,35 @@ public class Problem432 {
             CountNode countNode = countNodeMap.get(node.count);
 
             countNode.linkedList.remove(node);
-            node.count--;
 
-            //当前节点已经减1之后的计数次数为0，则删除当前节点
-            if (node.count == 0) {
+            //node计数次数为1，则删除当前节点
+            if (node.count == 1) {
                 nodeMap.remove(key);
 
                 //当前countNode节点中的双向链表为空，则删除当前countNode节点
                 if (countNode.linkedList.head.next == countNode.linkedList.tail) {
                     countLinkedList.remove(countNode);
-                    countNodeMap.remove(node.count + 1);
+                    countNodeMap.remove(node.count);
                 }
             } else {
-                //countNodeMap中不存在已经减1之后的node计数次数
-                if (!countNodeMap.containsKey(node.count)) {
+                //countNodeMap中不存在node计数次数减1的CountNode节点
+                if (!countNodeMap.containsKey(node.count - 1)) {
                     CountNode preCountNode = new CountNode();
-                    countNodeMap.put(node.count, preCountNode);
+                    countNodeMap.put(node.count - 1, preCountNode);
                     countLinkedList.addBefore(preCountNode, countNode);
                 }
 
-                CountNode preCountNode = countNodeMap.get(node.count);
+                CountNode preCountNode = countNodeMap.get(node.count - 1);
                 preCountNode.linkedList.addFirst(node);
 
                 //当前countNode节点中的双向链表为空，则删除当前countNode节点
                 if (countNode.linkedList.head.next == countNode.linkedList.tail) {
                     countLinkedList.remove(countNode);
-                    countNodeMap.remove(node.count + 1);
+                    countNodeMap.remove(node.count);
                 }
+
+                //node计数次数减1
+                node.count--;
             }
         }
 
@@ -364,6 +363,9 @@ public class Problem432 {
             return countNode.linkedList.head.next.key;
         }
 
+        /**
+         * CountNode构成的链表，其中每个CountNode节点都是一个链表
+         */
         private static class CountLinkedList {
             private final CountNode head;
             private final CountNode tail;
@@ -376,11 +378,7 @@ public class Problem432 {
             }
 
             public void addFirst(CountNode countNode) {
-                CountNode nextCountNode = head.next;
-                head.next = countNode;
-                countNode.pre = head;
-                countNode.next = nextCountNode;
-                nextCountNode.pre = countNode;
+                addAfter(countNode, head);
             }
 
             /**
@@ -421,6 +419,9 @@ public class Problem432 {
             }
         }
 
+        /**
+         * LinkedList构成的节点
+         */
         private static class CountNode {
             private final LinkedList linkedList;
             private CountNode pre;

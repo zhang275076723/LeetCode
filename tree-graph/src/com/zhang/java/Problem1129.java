@@ -1,13 +1,11 @@
 package com.zhang.java;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * @Date 2023/10/30 08:58
  * @Author zsy
- * @Description 颜色交替的最短路径 字节面试题 bfs类比Problem407、Problem499、Problem505、Problem778、Problem847、Problem1293、Problem1368、Problem1631、Problem2045、Problem2290
+ * @Description 颜色交替的最短路径 字节面试题 类比Problem785、Problem886 bfs类比Problem407、Problem499、Problem505、Problem778、Problem847、Problem1293、Problem1368、Problem1631、Problem2045、Problem2290
  * 给定一个整数 n，即有向图中的节点数，其中节点标记为 0 到 n - 1。
  * 图中的每条边为红色或者蓝色，并且可能存在自环或平行边。
  * 给定两个数组 redEdges 和 blueEdges，其中：
@@ -38,7 +36,7 @@ public class Problem1129 {
 
     /**
      * bfs
-     * 时间复杂度O(m+n)，空间复杂度O(n^2) (m为图中边的个数，即m=redEdges.length+blueEdges.length，如果使用邻接表，空间复杂度O(m+n))
+     * 时间复杂度O(m+n)，空间复杂度O(m+n) (m为图中边的个数，即m=redEdges.length+blueEdges.length)
      *
      * @param n
      * @param redEdges
@@ -46,30 +44,37 @@ public class Problem1129 {
      * @return
      */
     public int[] shortestAlternatingPaths(int n, int[][] redEdges, int[][] blueEdges) {
-        //邻接矩阵
-        //注意：不能使用一个邻接矩阵，因为两个节点之间可能既存在红边又存在蓝边，如果使用一个邻接矩阵，前面的颜色会被后面的颜色覆盖
-        //edges[i][j]=0：节点i到节点j不存在边
-        //edges[i][j]=1：节点i到节点j存在一条红边
-        //edges[i][j]=2：节点i到节点j存在一条蓝边
-        int[][] edges1 = new int[n][n];
-        int[][] edges2 = new int[n][n];
+        //注意：不能使用一个邻接表，因为两个节点之间可能既存在红边又存在蓝边
+        //存储图中红边的邻接表
+        List<List<Integer>> redGraph = new ArrayList<>();
+        //存储图中蓝边的邻接表
+        List<List<Integer>> blueGraph = new ArrayList<>();
 
-        for (int i = 0; i < redEdges.length; i++) {
-            int u = redEdges[i][0];
-            int v = redEdges[i][1];
-            edges1[u][v] = 1;
+        for (int i = 0; i < n; i++) {
+            redGraph.add(new ArrayList<>());
+            blueGraph.add(new ArrayList<>());
         }
 
-        for (int i = 0; i < blueEdges.length; i++) {
-            int u = blueEdges[i][0];
-            int v = blueEdges[i][1];
-            edges2[u][v] = 2;
+        for (int[] arr : redEdges) {
+            int u = arr[0];
+            int v = arr[1];
+            redGraph.get(u).add(v);
+        }
+
+        for (int[] arr : blueEdges) {
+            int u = arr[0];
+            int v = arr[1];
+            blueGraph.get(u).add(v);
         }
 
         //节点0到其他节点的最短路径长度数组，并且遍历到当前节点的最短路径最后一条边的颜色为红色
         int[] distance1 = new int[n];
         //节点0到其他节点的最短路径长度数组，并且遍历到当前节点的最短路径最后一条边的颜色为蓝色
         int[] distance2 = new int[n];
+        //节点访问数组，并且遍历到当前节点的最后一条边的颜色为红色
+        boolean[] visited1 = new boolean[n];
+        //节点访问数组，并且遍历到当前节点的最后一条边的颜色为蓝色
+        boolean[] visited2 = new boolean[n];
         //distance1和distance2初始化
         distance1[0] = 0;
         distance2[0] = 0;
@@ -83,11 +88,6 @@ public class Problem1129 {
         //arr[0]：当前节点，arr[1]：遍历到当前节点路径最后一条边的颜色，1为红色，2为蓝色，
         //arr[2]：节点0到节点arr[0]的路径，最后一条边颜色为arr[1]的最短路径长度
         Queue<int[]> queue = new LinkedList<>();
-        //节点访问数组，并且遍历到当前节点的最后一条边的颜色为红色
-        boolean[] visited1 = new boolean[n];
-        //节点访问数组，并且遍历到当前节点的最后一条边的颜色为蓝色
-        boolean[] visited2 = new boolean[n];
-
         queue.offer(new int[]{0, 1, 0});
         queue.offer(new int[]{0, 2, 0});
         visited1[0] = true;
@@ -105,8 +105,12 @@ public class Problem1129 {
             //最后一条边为红色
             if (lastColor == 1) {
                 //交替出现的下一条边为蓝色
-                for (int v = 0; v < n; v++) {
-                    if (edges2[u][v] == 2 && !visited2[v] && curDistance + 1 < distance2[v]) {
+                for (int v : blueGraph.get(u)) {
+                    if (visited2[v]) {
+                        continue;
+                    }
+
+                    if (curDistance + 1 < distance2[v]) {
                         distance2[v] = curDistance + 1;
                         queue.offer(new int[]{v, 2, distance2[v]});
                         visited2[v] = true;
@@ -116,8 +120,12 @@ public class Problem1129 {
                 //最后一条边为蓝色
 
                 //交替出现的下一条边为红色
-                for (int v = 0; v < n; v++) {
-                    if (edges1[u][v] == 1 && !visited1[v] && curDistance + 1 < distance1[v]) {
+                for (int v : redGraph.get(u)) {
+                    if (visited1[v]) {
+                        continue;
+                    }
+
+                    if (curDistance + 1 < distance1[v]) {
                         distance1[v] = curDistance + 1;
                         queue.offer(new int[]{v, 1, distance1[v]});
                         visited1[v] = true;
@@ -128,7 +136,7 @@ public class Problem1129 {
 
         int[] result = new int[n];
 
-        for (int i = 0; i < n; i++) {
+        for (int i = 1; i < n; i++) {
             //当前节点i的最后一条边的颜色为红色或蓝色中的较小值，即为路径中颜色交替出现的最短路径长度
             int distance = Math.min(distance1[i], distance2[i]);
             //当前节点不可达，则赋值为-1

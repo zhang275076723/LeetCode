@@ -67,20 +67,20 @@ public class Problem1756 {
          * @return
          */
         public int fetch(int k) {
-            int value = arr[k];
+            int result = arr[k];
 
             for (int i = k; i < n; i++) {
                 arr[i] = arr[i + 1];
             }
 
-            arr[n] = value;
+            arr[n] = result;
 
-            return value;
+            return result;
         }
     }
 
     /**
-     * 二分查找+线段树
+     * 二分查找+线段树 (空间换时间)
      * 核心思想：移除第k个元素，并不是删除第k个元素，而是将第k个元素拼接到末尾，将第k个元素加入线段树，标记第k个元素已删除，
      * 通过线段树统计区间内标记为删除的元素个数，这些标记为删除的元素都移动到末尾，
      * 二分查找第k个元素，arr[1]-arr[i]中元素的个数减去arr[1]-arr[i]中标记为删除的元素个数等于k，则arr[i]为第k个元素
@@ -88,7 +88,7 @@ public class Problem1756 {
     static class MRUQueue2 {
         //队列数组，移除第k个元素，并不是删除第k个元素，而是将第k个元素拼接到末尾
         private final int[] arr;
-        //线段树，用于统计区间内标记为删除的元素个数
+        //线段树，用于统计arr区间内标记为删除的元素个数
         private final SegmentTree segmentTree;
         //当前队列数组中元素的个数，每次移动一个元素，数组长度加1
         private int count;
@@ -137,15 +137,15 @@ public class Problem1756 {
             }
 
             //第k个元素
-            int value = arr[index];
+            int result = arr[index];
             //arr中元素个数加1
             count++;
             //第k个元素拼接到末尾
-            arr[count] = value;
+            arr[count] = result;
             //第k个元素加入线段树，即标记arr中index位置元素已删除
             segmentTree.update(segmentTree.root, index, index, 1);
 
-            return value;
+            return result;
         }
 
         /**

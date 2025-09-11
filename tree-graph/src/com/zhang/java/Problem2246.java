@@ -18,7 +18,6 @@ import java.util.List;
  * 解释：任意一对相邻节点字符都不同的最长路径是：0 -> 1 -> 3 。该路径的长度是 3 ，所以返回 3 。
  * 可以证明不存在满足上述条件且比 3 更长的路径。
  * <p>
- * <p>
  * 输入：parent = [-1,0,0,0], s = "aabc"
  * 输出：3
  * 解释：任意一对相邻节点字符都不同的最长路径是：2 -> 0 -> 3 。该路径的长度为 3 ，所以返回 3 。
@@ -33,7 +32,7 @@ import java.util.List;
 public class Problem2246 {
     /**
      * root为根节点的树中相邻字符不同的最长路径长度
-     * 注意：路径长度为节点的个数，所以初始化为1
+     * 注意：路径长度为节点的个数，而不是边的个数，所以初始化为1
      */
     private int max = 1;
 
@@ -81,7 +80,7 @@ public class Problem2246 {
     }
 
     /**
-     * 返回root作为根节点的最大单侧路径长度
+     * 返回root作为根节点的树对父节点的相邻字符不同的最大单侧路径长度
      *
      * @param u
      * @param graph
@@ -89,23 +88,25 @@ public class Problem2246 {
      * @return
      */
     private int dfs(int u, List<List<Integer>> graph, char[] arr) {
-        //节点u作为根节点的最大单侧路径长度
-        //注意：路径长度为节点的个数，所以初始化为1
-        int uLen = 1;
+        //节点u作为根节点的树对父节点的相邻字符不同的最大单侧路径长度
+        //注意：路径长度为节点的个数，而不是边的个数
+        int uLen = 0;
 
         for (int v : graph.get(u)) {
-            //子节点v作为根节点的相邻字符不同的单侧路径长度
+            //子节点v作为根节点的树对父节点的相邻字符不同的最大单侧路径长度
+            //注意：dfs不能放在if中，要保证dfs遍历树中所有节点
             int vLen = dfs(v, graph, arr);
 
             if (arr[u] != arr[v]) {
-                //更新树中相邻字符不同的最长路径长度
-                max = Math.max(max, uLen + vLen);
+                //更新max
+                max = Math.max(max, uLen + vLen + 1);
                 //更新uLen
-                uLen = Math.max(uLen, vLen + 1);
+                uLen = Math.max(uLen, vLen);
             }
         }
 
-        //返回当前节点对父节点的相邻字符不同的最大单侧路径长度，用于计算当前节点父节点作为根节点的相邻字符不同的最大单侧路径长度
-        return uLen;
+        //返回当前节点作为根节点的树对父节点的相邻字符不同的最大单侧路径长度，
+        //用于计算父节点作为根节点的树对父节点的相邻字符不同的最大单侧路径长度
+        return uLen + 1;
     }
 }

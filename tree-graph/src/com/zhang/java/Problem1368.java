@@ -82,7 +82,7 @@ public class Problem1368 {
 
         //节点(0,0)到其他节点的最小修改代价数组
         int[][] cost = new int[m][n];
-        //当前节点的右左下上四个位置，和grid[i][j]中1、2、3、4对应，用于判断当前节点到相邻节点边的权值是0还是1，
+        //注意：当前节点的右左下上四个位置，要和grid[i][j]中1、2、3、4对应，用于判断当前节点到相邻节点边的权值是0还是1，
         //例如：当前节点grid[i][j]为2，即指向左，则当前节点到左边相邻节点的边的权值为0(grid[i][j]==k)，
         //当前节点到其他相邻节点的边的权值为1(grid[i][j]!=k)
         int[][] direction = {{0, 0}, {0, 1}, {0, -1}, {1, 0}, {-1, 0}};
@@ -129,14 +129,14 @@ public class Problem1368 {
 
                 //当前节点(x1,y1)到邻接节点(x2,y2)的方向和邻接节点grid对应，则当前节点到邻接节点边的权值为0
                 if (grid[x1][y1] == i) {
-                    if (cost[x1][y1] < cost[x2][y2]) {
-                        cost[x2][y2] = cost[x1][y1];
+                    if (curCost < cost[x2][y2]) {
+                        cost[x2][y2] = curCost;
                         queue.offer(new int[]{x2, y2, cost[x2][y2]});
                     }
                 } else {
                     //当前节点(x1,y1)到邻接节点(x2,y2)的方向和邻接节点grid不对应，则当前节点到邻接节点边的权值为1
-                    if (cost[x1][y1] + 1 < cost[x2][y2]) {
-                        cost[x2][y2] = cost[x1][y1] + 1;
+                    if (curCost + 1 < cost[x2][y2]) {
+                        cost[x2][y2] = curCost + 1;
                         queue.offer(new int[]{x2, y2, cost[x2][y2]});
                     }
                 }
@@ -164,7 +164,7 @@ public class Problem1368 {
         int[][] cost = new int[m][n];
         //节点访问数组，visited[i][j]为true，表示已经得到节点(0,0)到节点(i,j)的最小修改代价
         boolean[][] visited = new boolean[m][n];
-        //当前节点的右左下上四个位置，和grid[i][j]中1、2、3、4对应，用于判断当前节点到相邻节点边的权值是0还是1，
+        //注意：当前节点的右左下上四个位置，要和grid[i][j]中1、2、3、4对应，用于判断当前节点到相邻节点边的权值是0还是1，
         //例如：当前节点grid[i][j]为2，即指向左，则当前节点到左边相邻节点的边的权值为0(grid[i][j]==k)，
         //当前节点到其他相邻节点的边的权值为1(grid[i][j]!=k)
         int[][] direction = {{0, 0}, {0, 1}, {0, -1}, {1, 0}, {-1, 0}};
@@ -198,11 +198,6 @@ public class Problem1368 {
             //设置节点(x1,y1)已访问，表示已经得到节点(0,0)到节点(x1,y1)的最小修改代价
             visited[x1][y1] = true;
 
-            //已经得到节点(0,0)到节点(m-1,n-1)的最小修改代价，直接返回cost[m-1][n-1]
-            if (x1 == m - 1 && y1 == n - 1) {
-                return cost[m - 1][n - 1];
-            }
-
             //节点(x1,y1)作为中间节点更新节点(0,0)到其他节点的最小修改代价
             //注意：j从1开始遍历，因为grid上下左右是1-4
             for (int j = 1; j < direction.length; j++) {
@@ -214,22 +209,23 @@ public class Problem1368 {
                     continue;
                 }
 
-                if (!visited[x2][y2]) {
-                    if (grid[x1][y1] == j) {
-                        if (cost[x1][y1] < cost[x2][y2]) {
-                            cost[x2][y2] = cost[x1][y1];
-                        }
-                    } else {
-                        if (cost[x1][y1] + 1 < cost[x2][y2]) {
-                            cost[x2][y2] = cost[x1][y1] + 1;
-                        }
+                if (visited[x2][y2]) {
+                    continue;
+                }
+
+                if (grid[x1][y1] == j) {
+                    if (cost[x1][y1] < cost[x2][y2]) {
+                        cost[x2][y2] = cost[x1][y1];
+                    }
+                } else {
+                    if (cost[x1][y1] + 1 < cost[x2][y2]) {
+                        cost[x2][y2] = cost[x1][y1] + 1;
                     }
                 }
             }
         }
 
-        //遍历结束，没有找到节点(0,0)到节点(m-1,n-1)的最小修改代价，则返回-1
-        return -1;
+        return cost[m - 1][n - 1];
     }
 
     /**
@@ -248,7 +244,7 @@ public class Problem1368 {
 
         //节点(0,0)到其他节点的最小修改代价数组
         int[][] cost = new int[m][n];
-        //当前节点的右左下上四个位置，和grid[i][j]中1、2、3、4对应，用于判断当前节点到相邻节点边的权值是0还是1，
+        //注意：当前节点的右左下上四个位置，要和grid[i][j]中1、2、3、4对应，用于判断当前节点到相邻节点边的权值是0还是1，
         //例如：当前节点grid[i][j]为2，即指向左，则当前节点到左边相邻节点的边的权值为0(grid[i][j]==k)，
         //当前节点到其他相邻节点的边的权值为1(grid[i][j]!=k)
         int[][] direction = {{0, 0}, {0, 1}, {0, -1}, {1, 0}, {-1, 0}};
@@ -287,14 +283,9 @@ public class Problem1368 {
                 continue;
             }
 
-            //小根堆保证第一次访问到节点(m-1,n-1)，则得到节点(0,0)到节点(m-1,n-1)的最小修改代价，直接返回curCost
-            if (x1 == m - 1 && y1 == n - 1) {
-                return curCost;
-            }
-
             //遍历节点(x1,y1)的邻接节点(x2,y2)
             //注意：i从1开始遍历，因为grid上下左右是1-4
-            for (int i = 0; i < direction.length; i++) {
+            for (int i = 1; i < direction.length; i++) {
                 //节点(x1,y1)的邻接节点(x2,y2)
                 int x2 = x1 + direction[i][0];
                 int y2 = y1 + direction[i][1];
@@ -319,7 +310,6 @@ public class Problem1368 {
             }
         }
 
-        //遍历结束，没有找到节点(0,0)到节点(m-1,n-1)的最小修改代价，则返回-1
-        return -1;
+        return cost[m - 1][n - 1];
     }
 }

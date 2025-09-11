@@ -67,7 +67,7 @@ public class Problem981 {
                 map.put(key, new ArrayList<>());
             }
 
-            map.get(key).add(new Pair(key, value, timestamp));
+            map.get(key).add(new Pair(value, timestamp));
         }
 
         public String get(String key, int timestamp) {
@@ -77,11 +77,6 @@ public class Problem981 {
             }
 
             List<Pair> list = map.get(key);
-
-            //list为空，则返回""
-            if (list.isEmpty()) {
-                return "";
-            }
 
             //小于等于timestamp的key对应最大时间戳在list中的下标索引
             //初始化为-1，表示不存在小于等于timestamp的key对应时间戳
@@ -106,13 +101,11 @@ public class Problem981 {
         }
 
         private static class Pair {
-            private String key;
             private String value;
             //当前键值对的时间戳
             private int timestamp;
 
-            public Pair(String key, String value, int timestamp) {
-                this.key = key;
+            public Pair(String value, int timestamp) {
                 this.value = value;
                 this.timestamp = timestamp;
             }
@@ -125,7 +118,7 @@ public class Problem981 {
      */
     static class TimeMap2 {
         //key：键，value：按照时间戳由小到大存储相同键的有序集合
-        //注意：set()中timestamp严格递增，则可以使用TreeSet；如果对同一个key多次set()的timestamp相同，则只能使用TreeMap
+        //注意：基于树的集合，例如TreeSet和TreeMap不需要重写equals()和hashCode()
         private final Map<String, TreeSet<Pair>> map;
 
         public TimeMap2() {
@@ -143,7 +136,7 @@ public class Problem981 {
             }
 
             TreeSet<Pair> treeSet = map.get(key);
-            treeSet.add(new Pair(key, value, timestamp));
+            treeSet.add(new Pair(value, timestamp));
         }
 
         public String get(String key, int timestamp) {
@@ -154,45 +147,21 @@ public class Problem981 {
 
             TreeSet<Pair> treeSet = map.get(key);
 
-            //treeSet为空，则返回""
-            if (treeSet.isEmpty()) {
-                return "";
-            }
-
-            Pair pair = new Pair(key, null, timestamp);
+            Pair pair = new Pair(null, timestamp);
             //treeSet中小于等于timestamp的最大时间戳的Pair
-            //注意：Pair中需要重写equals()和hashCode()
             Pair prePair = treeSet.floor(pair);
 
             return prePair == null ? "" : prePair.value;
         }
 
         private static class Pair {
-            private String key;
             private String value;
             //当前键值对的时间戳
             private int timestamp;
 
-            public Pair(String key, String value, int timestamp) {
-                this.key = key;
+            public Pair(String value, int timestamp) {
                 this.value = value;
                 this.timestamp = timestamp;
-            }
-
-            @Override
-            public boolean equals(Object obj) {
-                if (obj instanceof Pair) {
-                    Pair pair = (Pair) obj;
-
-                    return key.equals(pair.key) && value.equals(pair.value) && timestamp == pair.timestamp;
-                }
-
-                return false;
-            }
-
-            @Override
-            public int hashCode() {
-                return key.hashCode() + value.hashCode() + timestamp;
             }
         }
     }

@@ -67,8 +67,8 @@ public class Problem677 {
         public void insert(String key, int val) {
             //字符串key在前缀树中的每个节点需要加上的值
             int addValue = val - map.getOrDefault(key, 0);
-            trie.insert(key, val, addValue);
             map.put(key, val);
+            trie.insert(key, addValue, val);
         }
 
         /**
@@ -96,10 +96,10 @@ public class Problem677 {
              * 时间复杂度O(n)，空间复杂度O(n)
              *
              * @param word
-             * @param value
              * @param addValue
+             * @param value
              */
-            public void insert(String word, int value, int addValue) {
+            public void insert(String word, int addValue, int value) {
                 TrieNode node = root;
                 node.sum = node.sum + addValue;
 

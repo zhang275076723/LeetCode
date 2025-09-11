@@ -7,7 +7,7 @@ import java.util.Stack;
 /**
  * @Date 2022/10/10 10:34
  * @Author zsy
- * @Description 中文数字转int 类比Problem8、Problem12、Problem13、Problem168、Problem171、Problem273、Offer67 栈类比Problem20、Problem71、Problem150、Problem224、Problem227、Problem331、Problem341、Problem394、Problem678、Problem856、Problem946、Problem1003、Problem1047、Problem1096、Offer31
+ * @Description 中文数字转int 类比Problem8、Problem12、Problem13、Problem168、Problem171、Problem273、Offer67 栈类比Problem20、Problem71、Problem150、Problem224、Problem227、Problem331、Problem341、Problem394、Problem678、Problem726、Problem856、Problem946、Problem1003、Problem1047、Problem1096、Offer31
  * 将输入的中文数字转化为int数字输出
  * <p>
  * 输入：n = 一亿一千二百五十八万三千二百四十
@@ -48,9 +48,9 @@ public class ChineseToInteger {
             put('九', 9);
             put('十', 10);
             put('百', 100);
-            put('千', 1000);
-            put('万', 10000);
-            put('亿', 100000000);
+            put('千', 1_000);
+            put('万', 10_000);
+            put('亿', 100_000_000);
         }};
 
         for (char c :str.toCharArray()) {

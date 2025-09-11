@@ -70,16 +70,16 @@ public class Problem460 {
     }
 
     /**
-     * 哈希表+分段频率双向链表+最小频率次数计数器
-     * 节点哈希表存储key和节点node的映射，频率哈希表存储频率次数和当前频率次数链表的映射
-     * 根据频率次数将节点放到不同的链表中，每次移除最小频率次数链表中的尾结点，即为最不经常使用节点
+     * 哈希表+分段频率双向链表+最小访问频率计数器
+     * 节点哈希表存储key和节点node的映射，频率哈希表存储访问频率和当前访问频率链表的映射
+     * 根据访问频率将节点放到不同的链表中，每次移除最小访问频率链表中的尾结点，即为最不经常使用的节点
      */
     private static class LFUCache {
         //key：缓存key，value：缓存节点
         private final Map<Integer, Node> nodeMap;
-        //key：频率次数，value：频率次数为key的双向链表
+        //key：访问频率，value：访问频率为key的双向链表
         private final Map<Integer, LinkedList> linkedListMap;
-        //节点的最小频率次数
+        //节点的最小访问频率
         private int minFrequency;
         //最大缓存大小
         private final int capacity;
@@ -95,16 +95,16 @@ public class Problem460 {
         }
 
         /**
-         * 1、nodeMap中不存在key，直接返回-1
-         * 2、nodeMap中存在key，当前节点从对应的频率链表中删除，并判断是否需要删除对应的频率链表，
-         * 当前节点加入当前节点频率次数加1的链表的头结点，更新当前节点频率次数，更新minFrequency，返回当前节点value
+         * 1、nodeMap中不存在key，返回-1
+         * 2、nodeMap中存在key，当前节点从对应的频率链表中删除，并判断对应的频率链表在linkedListMap中是否需要删除，
+         * 当前节点加入当前节点访问频率加1的链表的头结点，更新当前节点访问频率，更新minFrequency，返回当前节点value
          * 时间复杂度O(1)，空间复杂度O(1)
          *
          * @param key
          * @return
          */
         public int get(int key) {
-            //nodeMap中不存在key，直接返回-1
+            //nodeMap中不存在key，返回-1
             if (!nodeMap.containsKey(key)) {
                 return -1;
             }
@@ -126,122 +126,93 @@ public class Problem460 {
                 }
             }
 
-            //当前节点频率次数加1
-            node.frequency++;
-
-            if (!linkedListMap.containsKey(node.frequency)) {
-                linkedListMap.put(node.frequency, new LinkedList());
+            if (!linkedListMap.containsKey(node.frequency + 1)) {
+                linkedListMap.put(node.frequency + 1, new LinkedList());
             }
 
-            //当前节点频率次数加1对应的链表
-            LinkedList nextLinkedList = linkedListMap.get(node.frequency);
-            //当前节点加入当前节点频率次数加1的链表的头结点
+            //当前节点访问频率加1对应的链表
+            LinkedList nextLinkedList = linkedListMap.get(node.frequency + 1);
+            //当前节点加入当前节点访问频率加1的链表的头结点
             nextLinkedList.addFirst(node);
+            //当前节点访问频率加1
+            node.frequency++;
 
             return node.value;
         }
 
         /**
-         * 1、nodeMap中存在key，当前节点从对应的频率链表中删除，并判断是否需要删除对应的频率链表，
-         * 当前节点加入当前节点频率次数加1的链表的头结点，更新当前节点value和频率次数，更新minFrequency
-         * 2、nodeMap中不存在key，并且缓存未满，当前节点加入频率次数为1的链表的头结点和nodeMap中，
-         * 更新minFrequency为1，curSize加1
-         * 3、nodeMap中不存在key，并且缓存已满，删除minFrequency对应的链表的末尾节点，同时nodeMap删除当前末尾节点，
-         * 当前节点加入频率次数为1的链表的头结点和nodeMap中，更新minFrequency
+         * 1、nodeMap中不存在key，当前节点加入访问频率为1的链表的头结点和nodeMap中，curSize加1，
+         * 如果缓存已满，删除nodeMap和最小访问频率链表中的尾结点，并判断是否需要删除对应的频率链表，curSize减1，
+         * 更新最小访问频率为1
+         * 2、nodeMap中存在key，更新当前节点value，当前节点从对应的频率链表中删除，并判断是否需要删除对应的频率链表，
+         * 并判断是否需要更新minFrequency，当前节点加入当前节点访问频率加1的链表的头结点，更新当前节点的访问频率
          * 时间复杂度O(1)，空间复杂度O(1)
          *
          * @param key
          * @param value
          */
         public void put(int key, int value) {
-            //nodeMap中存在key，当前节点从对应的频率链表中删除，并判断是否需要删除对应的频率链表，
-            //当前节点加入当前节点频率次数加1的链表的头结点，更新当前节点value和频率次数，更新minFrequency
-            if (nodeMap.containsKey(key)) {
+            //nodeMap中不存在key
+            if (!nodeMap.containsKey(key)) {
                 //当前节点
-                Node node = nodeMap.get(key);
-                //更新当前节点的value
-                node.value = value;
-                //当前节点对应的频率链表
-                LinkedList curLinkedList = linkedListMap.get(node.frequency);
-                //当前节点从对应的频率链表中删除
-                curLinkedList.remove(node);
+                Node node = new Node(key, value, 1);
+                nodeMap.put(key, node);
 
-                //删除之后，当前节点对应的频率链表为空，则linkedListMap中删除当前节点对应的频率链表
-                if (curLinkedList.head.next == curLinkedList.tail) {
-                    linkedListMap.remove(node.frequency);
+                if (!linkedListMap.containsKey(1)) {
+                    linkedListMap.put(1, new LinkedList());
+                }
 
-                    //更新minFrequency
-                    if (node.frequency == minFrequency) {
-                        minFrequency++;
+                //访问频率为1的链表
+                LinkedList linkedList = linkedListMap.get(1);
+                linkedList.addFirst(node);
+                curSize++;
+
+                //缓存已满，删除nodeMap和最小访问频率链表中的尾结点，并判断是否需要删除对应的频率链表，curSize减1
+                if (curSize > capacity) {
+                    //最小访问频率链表
+                    LinkedList curLinkedList = linkedListMap.get(minFrequency);
+                    Node deleteNode = curLinkedList.tail.pre;
+                    nodeMap.remove(deleteNode.key);
+                    curLinkedList.remove(deleteNode);
+
+                    if (curLinkedList.head.next == curLinkedList.tail) {
+                        linkedListMap.remove(deleteNode.frequency);
                     }
+
+                    curSize--;
                 }
 
-                //当前节点频率次数加1
-                node.frequency++;
-
-                if (!linkedListMap.containsKey(node.frequency)) {
-                    linkedListMap.put(node.frequency, new LinkedList());
-                }
-
-                //当前节点频率次数加1对应的链表
-                LinkedList nextLinkedList = linkedListMap.get(node.frequency);
-                //当前节点加入当前节点频率次数加1的链表的头结点
-                nextLinkedList.addFirst(node);
+                //更新最小访问频率为1
+                minFrequency = 1;
 
                 return;
             }
 
-            //当前节点
-            Node node = new Node(key, value, 1);
+            //nodeMap中存在key，更新当前节点value，当前节点从对应的频率链表中删除，并判断是否需要删除对应的频率链表，
+            //并判断是否需要更新minFrequency，当前节点加入当前节点访问频率加1的链表的头结点，更新当前节点的访问频率
 
-            //nodeMap中不存在key，并且缓存未满，当前节点加入频率次数为1的链表的头结点和nodeMap中，
-            //更新minFrequency为1，curSize加1
-            if (curSize < capacity) {
-                if (!linkedListMap.containsKey(1)) {
-                    linkedListMap.put(1, new LinkedList());
+            Node node = nodeMap.get(key);
+            node.value = value;
+            LinkedList linkedList = linkedListMap.get(node.frequency);
+            linkedList.remove(node);
+
+            if (linkedList.head.next == linkedList.tail) {
+                linkedListMap.remove(node.frequency);
+
+                //更新最小访问频率
+                if (node.frequency == minFrequency) {
+                    minFrequency++;
                 }
-
-                //频率次数为1的链表
-                LinkedList curLinkedList = linkedListMap.get(1);
-                //当前节点加入频率次数为1的链表的头结点
-                curLinkedList.addFirst(node);
-                //当前节点加入nodeMap
-                nodeMap.put(key, node);
-                //更新minFrequency为1
-                minFrequency = 1;
-                //当前缓存大小加1
-                curSize++;
-            } else {
-                //nodeMap中不存在key，并且缓存已满，删除minFrequency对应的链表的末尾节点，同时nodeMap删除当前末尾节点，
-                //当前节点加入频率次数为1的链表的头结点和nodeMap中，更新minFrequency为1
-
-                //minFrequency对应的链表
-                LinkedList curLinkedList = linkedListMap.get(minFrequency);
-                //要删除的节点，即minFrequency对应的链表的末尾节点
-                Node deleteNode = curLinkedList.tail.pre;
-                //nodeMap删除当前末尾节点
-                nodeMap.remove(deleteNode.key);
-                //minFrequency对应的链表删除当前链表的末尾节点
-                curLinkedList.remove(deleteNode);
-
-                //删除之后，minFrequency对应的链表为空，则linkedListMap中删除minFrequency对应的链表
-                if (curLinkedList.head.next == curLinkedList.tail) {
-                    linkedListMap.remove(minFrequency);
-                }
-
-                if (!linkedListMap.containsKey(1)) {
-                    linkedListMap.put(1, new LinkedList());
-                }
-
-                //频率次数为1的链表
-                LinkedList nextLinkedList = linkedListMap.get(1);
-                //当前节点加入频率次数为1的链表的头结点
-                nextLinkedList.addFirst(node);
-                //当前节点加入nodeMap
-                nodeMap.put(key, node);
-                //更新minFrequency为1
-                minFrequency = 1;
             }
+
+            if (!linkedListMap.containsKey(node.frequency + 1)) {
+                linkedListMap.put(node.frequency + 1, new LinkedList());
+            }
+
+            LinkedList nextLinkedList = linkedListMap.get(node.frequency + 1);
+            nextLinkedList.addFirst(node);
+
+            node.frequency++;
         }
 
         /**
@@ -249,9 +220,9 @@ public class Problem460 {
          */
         private static class LinkedList {
             //链表头结点，避免非空判断
-            public Node head;
+            private final Node head;
             //链表尾结点，避免非空判断
-            public Node tail;
+            private final Node tail;
 
             public LinkedList() {
                 head = new Node();
@@ -286,7 +257,7 @@ public class Problem460 {
         private static class Node {
             public int key;
             public int value;
-            //当前节点频率次数
+            //当前节点访问频率
             public int frequency;
             public Node pre;
             public Node next;

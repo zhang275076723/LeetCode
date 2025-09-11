@@ -97,24 +97,24 @@ public class Problem381 {
             //要移除val的下标索引
             int index = set.iterator().next();
             //list集合中最后一个元素的下标索引
-            int lastValueIndex = list.size() - 1;
+            int lastIndex = list.size() - 1;
             //list集合中最后一个元素的值
-            int lastValue = list.get(lastValueIndex);
+            int lastValue = list.get(lastIndex);
             //相同元素lastValue在list中的下标索引set集合
-            Set<Integer> lastValueSet = map.get(lastValue);
+            Set<Integer> lastSet = map.get(lastValue);
 
             //list集合中最后一个元素替换当前元素，再删除最后一个元素
             //注意：要先set再remove
             list.set(index, lastValue);
-            list.remove(lastValueIndex);
+            list.remove(lastIndex);
 
             //set中删除index
-            //注意：要先在set中remove，再从lastValueSet中add和remove
+            //注意：要先在set中remove，再从lastSet中add和remove
             set.remove(index);
-            //index加入到lastValueSet中，list中最后一个元素lastValue的下标索引lastValueIndex从lastValueSet中删除
+            //index加入到lastSet中，list中最后一个元素lastValue的下标索引lastIndex从lastSet中删除
             //注意：要先add再remove
-            lastValueSet.add(index);
-            lastValueSet.remove(lastValueIndex);
+            lastSet.add(index);
+            lastSet.remove(lastIndex);
 
             //要删除的val对应set为空，则map中删除set
             if (set.isEmpty()) {

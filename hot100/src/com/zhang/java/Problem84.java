@@ -85,16 +85,16 @@ public class Problem84 {
 
         for (int i = 0; i < heights.length; i++) {
             //不满足单调递增栈，则栈顶元素出栈
-            while (!stack.isEmpty() && heights[i] < heights[stack.peek()]) {
+            while (!stack.isEmpty() && heights[stack.peek()] > heights[i]) {
                 //矩形的高
                 int h = heights[stack.pop()];
                 //矩形的宽
                 int w;
 
-                if (stack.isEmpty()) {
-                    w = i;
-                } else {
+                if (!stack.isEmpty()) {
                     w = i - stack.peek() - 1;
+                } else {
+                    w = i;
                 }
 
                 max = Math.max(max, h * w);
@@ -110,10 +110,10 @@ public class Problem84 {
             //矩形的宽
             int w;
 
-            if (stack.isEmpty()) {
-                w = heights.length;
-            } else {
+            if (!stack.isEmpty()) {
                 w = heights.length - stack.peek() - 1;
+            } else {
+                w = heights.length;
             }
 
             max = Math.max(max, h * w);
