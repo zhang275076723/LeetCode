@@ -1,7 +1,6 @@
 package com.zhang.java;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -130,8 +129,8 @@ public class Problem271 {
      */
     static class Codec2 {
         /**
-         * 4字节的当前字符串长度(16进制)转换为4位字符串进行拼接，再拼接当前字符串
-         * 例如：["abcfe","uv","hij"]编码为0x00000005abcfe0x00000002uv0x00000003hij，其中0x00000005是16进制表示的4位字符串
+         * 当前字符串长度转换为4字节字符串长度进行拼接，再拼接当前字符串
+         * 例如：["abcfe","uv","hij"]编码为0x00000005abcfe0x00000002uv0x00000003hij，其中0x00000005是16进制表示的4字节字符串长度
          * 时间复杂度O(n)，空间复杂度O(n)
          *
          * @param strs
@@ -148,6 +147,7 @@ public class Problem271 {
                 //当前字符串的长度
                 int len = str.length();
                 //4字节的字符串长度数组
+                //注意：不能使用int数组，因为要保证当前长度为4字节
                 byte[] arr = new byte[4];
 
                 for (int i = 3; i >= 0; i--) {
@@ -156,7 +156,7 @@ public class Problem271 {
                     len = len >>> 8;
                 }
 
-                //4字节的当前字符串长度转换为4位字符串进行拼接，再拼接当前字符串
+                //当前字符串长度转换为4字节字符串长度进行拼接，再拼接当前字符串
                 sb.append(new String(arr)).append(str);
             }
 
@@ -164,8 +164,8 @@ public class Problem271 {
         }
 
         /**
-         * 遍历编码后的字符串，每次读取4位字符串作为当前编码字符串长度，再根据长度往后读取字符串
-         * 例如：0x00000005abcfe0x00000002uv0x00000003hij解码为["abcfe","uv","hij"]，其中0x00000005是16进制表示的4位字符串
+         * 遍历编码后的字符串，每次读取4字节字符串长度作为当前编码字符串长度，再根据字符串长度往后读取字符串
+         * 例如：0x00000005abcfe0x00000002uv0x00000003hij解码为["abcfe","uv","hij"]，其中0x00000005是16进制表示的4字节字符串
          * 时间复杂度O(n)，空间复杂度O(1)
          *
          * @param s
@@ -180,7 +180,7 @@ public class Problem271 {
             int index = 0;
 
             while (index < s.length()) {
-                //4字节的字符串长度数组，4位字符串转换为4字节数组
+                //4字节的字符串长度数组
                 byte[] arr = s.substring(index, index + 4).getBytes();
                 //当前字符串的长度
                 int len = 0;
