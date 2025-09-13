@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/8/31 08:30
  * @Author zsy
- * @Description 子数组最大平均数 II 类比Problem643 类比Problem786 类比Problem373、Problem378、Problem668、Problem719、Problem786、Problem1439、Problem1508、Problem2040、Problem2386 二分查找类比 前缀和类比
+ * @Description 子数组最大平均数 II 类比Problem643 类比Problem774 类比Problem786 类比Problem373、Problem378、Problem668、Problem719、Problem786、Problem1439、Problem1508、Problem2040、Problem2386 二分查找类比 前缀和类比
  * 给你一个包含 n 个整数的数组 nums，和一个整数 k 。
  * 请你找出长度 大于等于 k 且含最大平均值的连续子数组。并输出这个最大平均值。
  * 任何计算误差小于 10^-5 的结果都将被视为正确答案。

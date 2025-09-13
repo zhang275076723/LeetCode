@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2024/1/12 08:06
  * @Author zsy
- * @Description 最低加油次数 百度机试题 类比Problem134 优先队列类比
+ * @Description 最低加油次数 百度机试题 类比Problem134、Problem774 优先队列类比
  * 汽车从起点出发驶向目的地，该目的地位于出发位置东面 target 英里处。
  * 沿途有加油站，用数组 stations 表示。
  * 其中 stations[i] = [positioni, fueli] 表示第 i 个加油站位于出发位置东面 positioni 英里处，并且有 fueli 升汽油。
@@ -72,22 +72,23 @@ public class Problem871 {
             }
         });
 
+        int n = stations.length;
+        //最少加油次数
+        int count = 0;
         //当前汽车剩余油量
         int remainFuel = startFuel;
-        //汽车经过的最后一个加油站距离起点的位置
-        int lastStation = 0;
-        //最少加油次数
-        int time = 0;
+        //汽车经过的前一个加油站距离起点的位置
+        int preStation = 0;
 
-        for (int i = 0; i < stations.length; i++) {
+        //stations已经按照stations[i][0]由小到大排序，则不需要再排序
+        for (int i = 0; i < n; i++) {
             //汽车从上一个加油站到当前加油站剩余油量
-            remainFuel = remainFuel - (stations[i][0] - lastStation);
+            remainFuel = remainFuel - (stations[i][0] - preStation);
 
             //当前汽车剩余油量小于0，则大根堆堆顶元素出堆，即选择当前能够到达的加油站中stations[i][1]最大的加油站给汽车加油
             while (remainFuel < 0 && !priorityQueue.isEmpty()) {
-                int fuel = priorityQueue.poll();
-                remainFuel = remainFuel + fuel;
-                time++;
+                remainFuel = remainFuel + priorityQueue.poll();
+                count++;
             }
 
             //加油之后汽车剩余油量仍小于0，即不能到达target，返回-1
@@ -96,19 +97,18 @@ public class Problem871 {
             }
 
             //更新汽车经过的最后一个加油站距离起点的位置
-            lastStation = stations[i][0];
+            preStation = stations[i][0];
             //当前加油站汽油stations[i][1]加入大根堆
             priorityQueue.offer(stations[i][1]);
         }
 
         //汽车从最后一个加油站到target
-        remainFuel = remainFuel - (target - lastStation);
+        remainFuel = remainFuel - (target - preStation);
 
         //当前汽车剩余油量小于0，则大根堆堆顶加油站汽油出堆，给汽车加油
         while (remainFuel < 0 && !priorityQueue.isEmpty()) {
-            int fuel = priorityQueue.poll();
-            remainFuel = remainFuel + fuel;
-            time++;
+            remainFuel = remainFuel + priorityQueue.poll();
+            count++;
         }
 
         //加油之后汽车剩余油量仍小于0，即不能到达target，返回-1
@@ -116,6 +116,6 @@ public class Problem871 {
             return -1;
         }
 
-        return time;
+        return count;
     }
 }

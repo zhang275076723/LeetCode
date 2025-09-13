@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2024/2/7 08:14
  * @Author zsy
- * @Description IPO 优先队列类比 优先队列类比
+ * @Description IPO 优先队列类比
  * 假设 力扣（LeetCode）即将开始 IPO 。
  * 为了以更高的价格将股票卖给风险投资公司，力扣 希望在 IPO 之前开展一些项目以增加其资本。
  * 由于资源有限，它只能在 IPO 之前完成最多 k 个不同的项目。
@@ -61,14 +61,15 @@ public class Problem502 {
      * @return
      */
     public int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
-        int[][] arr = new int[profits.length][2];
+        int n = profits.length;
+        int[][] arr = new int[n][2];
 
-        for (int i = 0; i < profits.length; i++) {
+        for (int i = 0; i < n; i++) {
             arr[i] = new int[]{profits[i], capital[i]};
         }
 
-        //按照capital由小到大排序
-        mergeSort(arr, 0, profits.length - 1, new int[profits.length][2]);
+        //按照arr[i][1]由小到大排序
+        mergeSort(arr, 0, n - 1, new int[n][2]);
 
         //优先队列，大根堆，存放小于等于当前资本w的项目利润profits
         PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(new Comparator<Integer>() {
@@ -81,10 +82,10 @@ public class Problem502 {
         //arr下标索引
         int index = 0;
 
-        //只能选择k个项目
-        for (int i = 0; i < k; i++) {
-            //将小于等于当前资本w的项目利润profits加入大根堆
-            while (index < profits.length && arr[index][1] <= w) {
+        //最多只能选择k个项目
+        while (k > 0) {
+            //小于等于当前资本w的项目利润profits加入大根堆
+            while (index < n && arr[index][1] <= w) {
                 priorityQueue.offer(arr[index][0]);
                 index++;
             }
@@ -92,12 +93,13 @@ public class Problem502 {
             //大根堆不为空才能选择项目
             if (!priorityQueue.isEmpty()) {
                 //大根堆堆顶元素即为能选择的最大利润
-                int maxProfit = priorityQueue.poll();
-                w = w + maxProfit;
+                w = w + priorityQueue.poll();
             } else {
                 //大根堆为空，即不存在小于等于当前资本w的项目，直接跳出循环
                 break;
             }
+
+            k--;
         }
 
         return w;

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/4/29 10:34
  * @Author zsy
- * @Description 加油站 字节面试题 网易机试题 类比Problem871 类比Problem277、Problem898、Problem1386、Problem1640
+ * @Description 加油站 字节面试题 网易机试题 类比Problem774、Problem871 类比Problem277、Problem898、Problem1386、Problem1640
  * 在一条环路上有 n 个加油站，其中第 i 个加油站有汽油 gas[i] 升。
  * 你有一辆油箱容量无限的的汽车，从第 i 个加油站开往第 i+1 个加油站需要消耗汽油 cost[i] 升。
  * 你从其中的一个加油站出发，开始时油箱为空。
@@ -39,15 +39,17 @@ package com.zhang.java;
 public class Problem134 {
     public static void main(String[] args) {
         Problem134 problem134 = new Problem134();
-        int[] gas = {1, 2, 3, 4, 5};
-        int[] cost = {3, 4, 5, 1, 2};
+//        int[] gas = {1, 2, 3, 4, 5};
+//        int[] cost = {3, 4, 5, 1, 2};
+        int[] gas = {2, 3, 4};
+        int[] cost = {3, 4, 3};
         System.out.println(problem134.canCompleteCircuit(gas, cost));
         System.out.println(problem134.canCompleteCircuit2(gas, cost));
     }
 
     /**
      * 暴力
-     * 从数组中每个位置作为起点，判断是否能绕环路行驶一周
+     * 暴力判断每个位置作为起点能否环绕一周
      * 时间复杂度O(n^2)，空间复杂度O(1)
      *
      * @param gas
@@ -55,25 +57,38 @@ public class Problem134 {
      * @return
      */
     public int canCompleteCircuit(int[] gas, int[] cost) {
+        int n = gas.length;
+
         //i作为起点开始遍历
-        for (int i = 0; i < gas.length; i++) {
+        for (int i = 0; i < n; i++) {
             //当前剩余汽油量
             int remainGas = gas[i];
             //当前遍历到的下标索引
             int j = i;
+            //从i作为起点是否可以环绕一周标志位
+            boolean flag = true;
 
-            while (remainGas - cost[j] >= 0) {
-                remainGas = remainGas - cost[j] + gas[(j + 1) % gas.length];
-                j = (j + 1) % gas.length;
+            //注意：必须使用do-while，保证循环至少执行一次
+            do {
+                //j的下一个下标索引
+                int nextJ = (j + 1) % n;
 
-                //能够回到起始下标索引i，则能绕环路行驶一周，返回i
-                if (j == i) {
-                    return i;
+                if (remainGas - cost[j] < 0) {
+                    flag = false;
+                    break;
                 }
+
+                remainGas = remainGas - cost[j] + gas[nextJ];
+                j = nextJ;
+            } while (j != i);
+
+            //从i出发能够回到起始下标索引i，则能环绕一周，返回i
+            if (flag) {
+                return i;
             }
         }
 
-        //所有的起始位置都不能绕环路行驶一周，返回-1
+        //遍历结束，则返回-1
         return -1;
     }
 
@@ -88,34 +103,47 @@ public class Problem134 {
      * @return
      */
     public int canCompleteCircuit2(int[] gas, int[] cost) {
+        int n = gas.length;
+
         //i作为起点开始遍历
-        for (int i = 0; i < gas.length; i++) {
+        for (int i = 0; i < n; i++) {
             //当前剩余汽油量
             int remainGas = gas[i];
             //当前遍历到的下标索引
             int j = i;
+            //从i作为起点是否可以环绕一周标志位
+            boolean flag = true;
 
-            while (remainGas - cost[j] >= 0) {
-                remainGas = remainGas - cost[j] + gas[(j + 1) % gas.length];
-                j = (j + 1) % gas.length;
+            //注意：必须使用do-while，保证循环至少执行一次
+            do {
+                //j的下一个下标索引
+                int nextJ = (j + 1) % n;
 
-                //能够回到起始下标索引i，则能绕环路行驶一周，返回i
-                if (j == i) {
-                    return i;
+                if (remainGas - cost[j] < 0) {
+                    flag = false;
+                    break;
                 }
+
+                remainGas = remainGas - cost[j] + gas[nextJ];
+                j = nextJ;
+            } while (j != i);
+
+            //从i出发能够回到起始下标索引i，则能环绕一周，返回i
+            if (flag) {
+                return i;
             }
 
-            //当前遍历到的下标索引j小于起始下标索引i，因为是从0开始遍历，此时0-i都无法作为起点，j在0-i之间，
-            //则说明所有的起始位置都不能绕环路行驶一周，返回-1
+            //j小于i小，说明i到n-1，从0到j作为起点无法环绕一周，并且之前i已经考虑过小于i的起点，
+            //则不存在可以环绕一周的起点，直接返回-1，避免死循环
             if (j < i) {
                 return -1;
             }
 
-            //从i无法到j，则i到j之间的任意下标索引k作为起点都无法到达j，下一次起点为j+1
+            //i到j都无法作为起点环绕一周，则下一次起点为j+1
             i = j;
         }
 
-        //所有的起始位置都不能绕环路行驶一周，返回-1
+        //遍历结束，则返回-1
         return -1;
     }
 }

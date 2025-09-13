@@ -72,10 +72,11 @@ public class Problem630 {
             }
         });
 
+        int n = courses.length;
         //加上当前课程的上课时间的总时间
         int time = 0;
 
-        for (int i = 0; i < courses.length; i++) {
+        for (int i = 0; i < n; i++) {
             //time+courses[i][0]<=courses[i][1]，则当前课程可以学习，更新time=time+courses[i][0]，courses[i][0]入堆
             if (time + courses[i][0] <= courses[i][1]) {
                 time = time + courses[i][0];
