@@ -68,16 +68,18 @@ public class Problem410 {
             int curSum = 0;
 
             for (int num : nums) {
-                if (curSum + num <= mid) {
-                    curSum = curSum + num;
-                } else {
+                curSum = curSum + num;
+
+                if (curSum + num > mid) {
                     count++;
                     curSum = num;
                 }
             }
 
             //统计最后一个子数组
-            count++;
+            if (curSum <= mid) {
+                count++;
+            }
 
             if (count > k) {
                 left = mid + 1;

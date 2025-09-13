@@ -34,8 +34,8 @@ public class Problem774 {
     /**
      * 二分查找变形，使...最大值尽可能小，就要想到二分查找
      * 对[left,right]进行二分查找，left为0，right为stations相邻元素距离的最大值，统计数组中相邻元素的距离小于等于mid插入的元素个数count，
-     * 如果count小于等于k，则插入k个加油站的数组中相邻加油站距离的最大值的最小值在mid或mid左边，right=mid；
-     * 如果count大于k，则插入k个加油站的数组中相邻加油站距离的最大值的最小值在mid右边，left=mid
+     * 如果count大于k，则插入k个加油站的数组中相邻加油站距离的最大值的最小值在mid右边，left=mid；
+     * 如果count小于等于k，则插入k个加油站的数组中相邻加油站距离的最大值的最小值在mid或mid左边，right=mid
      * 时间复杂度O(n*log(min(stations[i+1]-stations[i])))=O(n)，空间复杂度O(1)
      *
      * @param stations
@@ -70,10 +70,10 @@ public class Problem774 {
             }
 
             if (count > k) {
-                right = mid;
+                left = mid;
             } else {
                 //注意：是找相邻元素距离的最大值的最小值，所以等于的情况下要往左边找
-                left = mid;
+                right = mid;
             }
         }
 
