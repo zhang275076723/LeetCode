@@ -72,7 +72,7 @@ public class Problem774 {
             if (count > k) {
                 left = mid;
             } else {
-                //注意：是找相邻元素距离的最大值的最小值，所以等于的情况下要往左边找
+                //注意：是找相邻元素距离的最大值的最小值，所以count等于k的情况下要往左边找
                 right = mid;
             }
         }
