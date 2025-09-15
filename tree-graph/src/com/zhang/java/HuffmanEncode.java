@@ -52,17 +52,18 @@ public class HuffmanEncode {
                 map.put(c, map.getOrDefault(c, 0) + 1);
             }
 
+            //计算定长编码的长度，因为没有2为底的log，所以使用到了换底公式
+            fixedEncodeLength = str.length() * (int) Math.ceil(Math.log(map.size()) / Math.log(2));
+
             //根据map集合创建哈夫曼节点，加入到list集合中
             for (Map.Entry<Character, Integer> entry : map.entrySet()) {
-                HuffmanNode huffmanNode = new HuffmanNode();
-                huffmanNode.key = entry.getKey();
-                huffmanNode.weight = entry.getValue();
+                HuffmanNode huffmanNode = new HuffmanNode(entry.getKey(), entry.getValue());
                 list.add(huffmanNode);
             }
 
             //每次从list中选择权值最小的两个节点，合并为一个节点
             while (list.size() > 1) {
-                //list集合由小到大排序
+                //list集合按照weight由小到大排序
                 list.sort(new Comparator<HuffmanNode>() {
                     @Override
                     public int compare(HuffmanNode node1, HuffmanNode node2) {
@@ -73,8 +74,7 @@ public class HuffmanEncode {
                 //list集合中权值较小的前2个节点从list中移除，合并为一个huffman节点，再重新放入list中
                 HuffmanNode node1 = list.remove(0);
                 HuffmanNode node2 = list.remove(0);
-                HuffmanNode node = new HuffmanNode();
-                node.weight = node1.weight + node2.weight;
+                HuffmanNode node = new HuffmanNode(node1.weight + node2.weight);
                 node.left = node1;
                 node.right = node2;
                 //新节点加入list集合
@@ -82,9 +82,6 @@ public class HuffmanEncode {
             }
 
             root = list.get(0);
-
-            //计算定长编码的长度，因为没有2为底的log，所以使用到了换底公式
-            fixedEncodeLength = root.weight * (int) Math.ceil(Math.log(map.size()) / Math.log(2));
         }
 
         /**
@@ -93,7 +90,7 @@ public class HuffmanEncode {
          */
         private void buildEncodeMap(HuffmanNode node) {
             if (node.left == null && node.right == null) {
-                encodeMap.put(node.key, node.code);
+                encodeMap.put(node.value, node.code);
                 return;
             }
 
@@ -131,7 +128,7 @@ public class HuffmanEncode {
 
                 //当前节点为叶节点，即需要编码的哈夫曼节点，加入到encodeMap，继续下次循环
                 if (node.left == null && node.right == null) {
-                    encodeMap.put(node.key, node.code);
+                    encodeMap.put(node.value, node.code);
                     continue;
                 }
 
@@ -173,13 +170,26 @@ public class HuffmanEncode {
 
         private static class HuffmanNode {
             //当前节点表示的字符
-            private char key;
-            //当前节点的权值
+            private char value;
+            //当前节点的权值，即为当前字符出现的次数
             private int weight;
             //当前节点的Huffman编码
             private String code;
             private HuffmanNode left;
             private HuffmanNode right;
+
+            public HuffmanNode() {
+
+            }
+
+            public HuffmanNode(char value, int weight) {
+                this.value = value;
+                this.weight = weight;
+            }
+
+            public HuffmanNode(int weight) {
+                this.weight = weight;
+            }
         }
     }
 }
