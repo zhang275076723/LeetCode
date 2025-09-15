@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/7/7 11:33
  * @Author zsy
- * @Description 验证IP地址 腾讯面试题 类比Problem91、Problem93、IPToInt、Offer46
+ * @Description 验证IP地址 腾讯面试题 类比Problem93、Problem751、IPToInt
  * 给定一个字符串 queryIP。
  * 如果是有效的 IPv4 地址，返回 "IPv4" ；
  * 如果是有效的 IPv6 地址，返回 "IPv6" ；
@@ -44,14 +44,14 @@ public class Problem468 {
 
     /**
      * 模拟
-     * 遍历字符串，确定当前是ipv4还是ipv6，再判断每一个ip段是否合法
+     * 遍历字符串，确定当前字符串是潜在的ipv4或ipv6，再判断每一个ip段是否合法
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param queryIP
      * @return
      */
     public String validIPAddress(String queryIP) {
-        //当前字符串中既包含'.'，又包含'.'，则不是合法ip
+        //当前字符串中既包含'.'，又包含':'，则不是合法ip
         if (queryIP == null || queryIP.length() < 7 || queryIP.length() > 39 ||
                 (queryIP.contains(".") && queryIP.contains(":"))) {
             return "Neither";
@@ -59,97 +59,58 @@ public class Problem468 {
 
         //ipv4
         if (queryIP.contains(".")) {
-            //ipv4长度超过15，即不是合法ipv4
-            if (queryIP.length() > 15) {
-                return "Neither";
-            }
+            int index = 0;
 
-            //当前ipv4段起始下标索引
-            int left = 0;
-            //当前ipv4段末尾下标索引
-            int right = 0;
-            //当前遍历的ipv4段个数
-            int count = 0;
+            //ipv4只有4段
+            for (int i = 0; i < 4; i++) {
+                int j = index;
 
-            while (left < queryIP.length()) {
-                //已经遍历到了4个ipv4段，但未遍历结束，则不是合法ipv4，返回"Neither"
-                if (count >= 4) {
+                while (j < queryIP.length() && queryIP.charAt(j) != '.') {
+                    j++;
+                }
+
+                if (!isValidIpv4Segment(queryIP, index, j - 1)) {
                     return "Neither";
                 }
 
-                //找一个ipv4段
-                while (right < queryIP.length() && queryIP.charAt(right) != '.') {
-                    right++;
-                }
-
-                if (!isValidIpv4Segment(queryIP, left, right - 1)) {
-                    return "Neither";
-                }
-
-                //ipv4段个数加1
-                count++;
-
-                //已经遍历了4个ipv4段，并且遍历结束，则是合法ipv4，返回"IPv4"
-                if (count == 4 && right == queryIP.length()) {
-                    return "IPv4";
-                }
-
-                right++;
-                left = right;
+                //跳过当前'.'
+                index = j + 1;
             }
 
-            //ipv4段个数小于4个，则不是合法ipv4，返回"Neither"
-            return "Neither";
+            //index多右移了1位，需要减1
+            index--;
+
+            return index == queryIP.length() ? "IPv4" : "Neither";
         } else {
             //ipv6
 
-            //ipv6长度小于15，即不是合法ipv6
-            if (queryIP.length() < 15) {
-                return "Neither";
-            }
+            int index = 0;
 
-            //当前ipv6段起始下标索引
-            int left = 0;
-            //当前ipv6段末尾下标索引
-            int right = 0;
-            //当前遍历的ipv6段个数
-            int count = 0;
+            //ipv6只有8段
+            for (int i = 0; i < 8; i++) {
+                int j = index;
 
-            while (left < queryIP.length()) {
-                //已经遍历了8个ipv6段，但未遍历结束，则不是合法ipv6，返回"Neither"
-                if (count >= 8) {
+                while (j < queryIP.length() && queryIP.charAt(j) != ':') {
+                    j++;
+                }
+
+                if (!isValidIpv6Segment(queryIP, index, j - 1)) {
                     return "Neither";
                 }
 
-                //找一个ipv6段
-                while (right < queryIP.length() && queryIP.charAt(right) != ':') {
-                    right++;
-                }
-
-                if (!isValidIpv6Segment(queryIP, left, right - 1)) {
-                    return "Neither";
-                }
-
-                //ipv6段个数加1
-                count++;
-
-                //已经遍历了8个ipv6段，并且遍历结束，则是合法ipv6，返回"IPv6"
-                if (count == 8 && right == queryIP.length()) {
-                    return "IPv6";
-                }
-
-                //左右指针后移
-                right++;
-                left = right;
+                //跳过当前':'
+                index = j + 1;
             }
 
-            //ipv6段个数小于8个，即不是合法ipv6，返回"Neither"
-            return "Neither";
+            //index多右移了1位，需要减1
+            index--;
+
+            return index == queryIP.length() ? "IPv6" : "Neither";
         }
     }
 
     /**
-     * 判断区间[left,right]是否是合法ipv4段
+     * 判断s[left]-s[right]是否是合法的ipv4段
      *
      * @param s
      * @param left
@@ -157,42 +118,39 @@ public class Problem468 {
      * @return
      */
     private boolean isValidIpv4Segment(String s, int left, int right) {
-        //ip段长度超过3，即不是合法ipv4段
-        if (right - left >= 3) {
+        //当前ip段为空，或者ip段长度超过3，则不是合法ipv4段
+        if (left > right || right - left >= 3) {
             return false;
         }
 
-        //当前ip段为空，即不是合法ipv4段
-        if (left > right) {
-            return false;
+        //当前ip段长度为1，直接判断是否是0-9的数字
+        if (left == right) {
+            return s.charAt(left) >= '0' && s.charAt(left) <= '9';
         }
 
-        //当前ip段长度为1，不能是除数字以为的字符
-        if (left == right && s.charAt(left) >= '0' && s.charAt(right) <= '9') {
-            return true;
-        }
-
-        //有前导0，且长度超过1，不是合法ip段
+        //有前导0，且长度超过1，则不是合法ip段
         if (s.charAt(left) == '0') {
             return false;
         }
 
-        int segment = 0;
+        int ipSegment = 0;
 
         for (int i = left; i <= right; i++) {
-            //存在非数字的字符，即不是合法ipv4段
-            if (s.charAt(i) < '0' || s.charAt(i) > '9') {
+            char c = s.charAt(i);
+
+            //当前字符不是0-9的数字，则不是合法ipv4段
+            if (c < '0' || c > '9') {
                 return false;
             }
 
-            segment = segment * 10 + s.charAt(i) - '0';
+            ipSegment = ipSegment * 10 + (c - '0');
         }
 
-        return segment <= 255;
+        return ipSegment <= 255;
     }
 
     /**
-     * 判断区间[left,right]是否是合法ipv6段
+     * 判断s[left]-s[right]是否是合法的ipv6段
      *
      * @param s
      * @param left
@@ -200,20 +158,16 @@ public class Problem468 {
      * @return
      */
     private boolean isValidIpv6Segment(String s, int left, int right) {
-        //ip段长度超过4，即不是合法ipv6段
-        if (right - left >= 4) {
-            return false;
-        }
-
-        //当前ip段为空，即不是合法ipv6段
-        if (left > right) {
+        //当前ip段为空，或者ip段长度超过4，则不是合法ipv6段
+        if (left > right || right - left >= 4) {
             return false;
         }
 
         for (int i = left; i <= right; i++) {
             char c = s.charAt(i);
-            //当前ip段不是数字或'A'-'G'或'a'-'g'之间字母，则不是合法ipv6段
-            if (!((c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F') || (c >= '0' && c <= '9'))) {
+
+            //当前字符不是0-9的数字，或者不是'A'-'G'、'a'-'g'之间字母，则不是合法ipv6段
+            if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'))) {
                 return false;
             }
         }

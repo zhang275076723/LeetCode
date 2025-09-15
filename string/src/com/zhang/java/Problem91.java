@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/12/9 12:02
  * @Author zsy
- * @Description 解码方法 类比Problem93、Problem468、Offer46、IpToInt
+ * @Description 解码方法 类比Problem639 类比Offer46
  * 一条包含字母 A-Z 的消息通过以下映射进行了 编码 ：
  * 'A' -> "1"
  * 'B' -> "2"
@@ -57,10 +57,6 @@ public class Problem91 {
      * @return
      */
     public int numDecodings(String s) {
-        if (s == null || s.length() == 0) {
-            return 0;
-        }
-
         //存在前导0，则不存在解码方法，直接返回0
         if (s.charAt(0) == '0') {
             return 0;
@@ -82,12 +78,14 @@ public class Problem91 {
             //c和c2都为0
             if (c == '0' && c2 == '0') {
                 dp[i] = 0;
-            } else if (c == '0' && c2 != '0') {
+            } else if (c == '0') {
                 //c2不为0，c为0
                 if (num <= 26) {
                     dp[i] = dp[i - 2];
+                } else {
+                    dp[i] = 0;
                 }
-            } else if (c != '0' && c2 == '0') {
+            } else if (c2 == '0') {
                 //c不为0，c2为0
                 dp[i] = dp[i - 1];
             } else {
@@ -111,10 +109,6 @@ public class Problem91 {
      * @return
      */
     public int numDecodings2(String s) {
-        if (s == null || s.length() == 0) {
-            return 0;
-        }
-
         //存在前导0，则不存在解码方法，直接返回0
         if (s.charAt(0) == '0') {
             return 0;
@@ -135,7 +129,7 @@ public class Problem91 {
             if (c == '0' && c2 == '0') {
                 p = q;
                 q = 0;
-            } else if (c == '0' && c2 != '0') {
+            } else if (c == '0') {
                 //c2不为0，c为0
                 if (num <= 26) {
                     int temp = q;
@@ -145,7 +139,7 @@ public class Problem91 {
                     p = q;
                     q = 0;
                 }
-            } else if (c != '0' && c2 =='0') {
+            } else if (c2 == '0') {
                 //c不为0，c2为0
                 p = q;
             } else {
@@ -168,10 +162,6 @@ public class Problem91 {
      * 时间复杂度O(2^n)，空间复杂度O(n)
      */
     public int numDecodings3(String s) {
-        if (s == null || s.length() == 0) {
-            return 0;
-        }
-
         //存在前导0，则不存在解码方法，直接返回0
         if (s.charAt(0) == '0') {
             return 0;
@@ -193,19 +183,31 @@ public class Problem91 {
         }
 
         int count = 0;
+        //当前字符
+        char c = s.charAt(t);
 
-        //往后找一个字符，不能为0
-        if (s.charAt(t) != '0') {
-            sb.append((char) (s.charAt(t) - '1' + 'a'));
+        //c不为'0'才需要继续往后遍历
+        if (c != '0') {
+            //往后找一个字符
+            sb.append((char) (c - '1' + 'A'));
             count = count + backtrack(t + 1, s, list, sb);
             sb.delete(sb.length() - 1, sb.length());
-        }
 
-        //往后找两个字符，不能有前导0，且不能超过26
-        if (t + 2 <= s.length() && s.charAt(t) != '0' && Integer.parseInt(s.substring(t, t + 2)) <= 26) {
-            sb.append((char) (Integer.parseInt(s.substring(t, t + 2)) - 1 + 'a'));
-            count = count + backtrack(t + 2, s, list, sb);
-            sb.delete(sb.length() - 1, sb.length());
+            //往后找两个字符
+            if (t + 1 < s.length()) {
+                //字符c的后一个字符
+                char c2 = s.charAt(t + 1);
+                //c和c2组成的数字
+                int num = (c - '0') * 10 + (c2 - '0');
+
+                //不存在前导0，且num小于等于26
+                //注意：因为c不为0，所以不需要考虑前导0
+                if (num <= 26) {
+                    sb.append((char) (num - 1 + 'A'));
+                    count = count + backtrack(t + 2, s, list, sb);
+                    sb.delete(sb.length() - 1, sb.length());
+                }
+            }
         }
 
         return count;
