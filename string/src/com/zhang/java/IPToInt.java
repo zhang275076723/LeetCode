@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2023/5/16 10:04
  * @Author zsy
- * @Description IP地址与int整数的转换 腾讯面试题 类比Problem91、Problem93、Problem468、Offer46 位运算类比Problem29、Problem136、Problem137、Problem190、Problem191、Problem201、Problem231、Problem260、Problem271、Problem326、Problem342、Problem371、Problem389、Problem405、Problem461、Problem477、Problem645、Problem898、Problem1290、Offer15、Offer56、Offer56_2、Offer64、Offer65
+ * @Description IP地址与int整数的转换 腾讯面试题 类比Problem93、Problem468、Problem751 位运算类比Problem29、Problem136、Problem137、Problem190、Problem191、Problem201、Problem231、Problem260、Problem271、Problem326、Problem342、Problem371、Problem389、Problem405、Problem461、Problem477、Problem645、Problem898、Problem1290、Offer15、Offer56、Offer56_2、Offer64、Offer65
  * 将ip地址转换成10进制整数。
  * <p>
  * 输入：ip = "10.0.3.193"
@@ -30,20 +30,21 @@ public class IPToInt {
      */
     public int ipToInt(String ip) {
         int result = 0;
-        int left = 0;
-        int right = 0;
+        int index = 0;
 
-        while (right < ip.length()) {
-            while (right < ip.length() && ip.charAt(right) != '.') {
-                right++;
+        //ip地址只有4段
+        for (int i = 0; i < 4; i++) {
+            int j = index;
+
+            while (j < ip.length() && ip.charAt(j) != '.') {
+                j++;
             }
 
-            int ipSegment = Integer.parseInt(ip.substring(left, right));
+            int ipSegment = Integer.parseInt(ip.substring(index, j));
             //每次左移8位，表示一个ip段
             result = (result << 8) + ipSegment;
-            right++;
-            left = right;
-
+            //跳过当前'.'
+            index = j + 1;
         }
 
         return result;
