@@ -95,22 +95,12 @@ public class HuffmanEncode {
             }
 
             if (node.left != null) {
-                if (node.code == null) {
-                    node.left.code = "0";
-                } else {
-                    node.left.code = node.code + "0";
-                }
-
+                node.left.code = node.code + "0";
                 buildEncodeMap(node.left);
             }
 
             if (node.right != null) {
-                if (node.code == null) {
-                    node.right.code = "1";
-                } else {
-                    node.right.code = node.code + "1";
-                }
-
+                node.right.code = node.code + "1";
                 buildEncodeMap(node.right);
             }
         }
@@ -133,22 +123,12 @@ public class HuffmanEncode {
                 }
 
                 if (node.left != null) {
-                    if (node.code == null) {
-                        node.left.code = "0";
-                    } else {
-                        node.left.code = node.code + "0";
-                    }
-
+                    node.left.code = node.code + "0";
                     queue.offer(node.left);
                 }
 
                 if (node.right != null) {
-                    if (node.code == null) {
-                        node.right.code = "1";
-                    } else {
-                        node.right.code = node.code + "1";
-                    }
-
+                    node.right.code = node.code + "1";
                     queue.offer(node.right);
                 }
             }
@@ -178,17 +158,17 @@ public class HuffmanEncode {
             private HuffmanNode left;
             private HuffmanNode right;
 
-            public HuffmanNode() {
-
-            }
-
             public HuffmanNode(char value, int weight) {
                 this.value = value;
                 this.weight = weight;
+                //注意：必须设置当前节点编码为""，不能为null，否则和null拼接之后会输出字符串"null"
+                this.code = "";
             }
 
             public HuffmanNode(int weight) {
                 this.weight = weight;
+                //注意：必须设置当前节点编码为""，不能为null，否则和null拼接之后会输出字符串"null"
+                this.code = "";
             }
         }
     }
