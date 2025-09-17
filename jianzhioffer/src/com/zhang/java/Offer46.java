@@ -29,9 +29,9 @@ public class Offer46 {
 
     /**
      * 动态规划
-     * dp[i]：以num[i-1]结束的数字，翻译成字符串的方案数
-     * dp[i] = dp[i-1] + dp[i-2] (nums[i-2] != '0'，且nums[i-2]和nums[i-1]构成的数字小于等于25)
-     * dp[i] = dp[i-1]           (nums[i-2] == '0'，或nums[i-2]和nums[i-1]构成的数字大于25)
+     * dp[i]：num[0]-num[i-1]翻译成字符串的个数
+     * dp[i] = dp[i-1] + dp[i-2] (nums[i-2] != '0' && nums[i-2]-nums[i-1]构成的数字小于等于25)
+     * dp[i] = dp[i-1]           (nums[i-2] == '0' || nums[i-2]-nums[i-1]构成的数字大于25)
      * 时间复杂度O(log(num))，空间复杂度O(log(num))
      *
      * @param num
