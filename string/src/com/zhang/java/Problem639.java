@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2025/9/14 12:20
  * @Author zsy
- * @Description 解码方法 II 类比Problem91 记忆化搜索类比
+ * @Description 解码方法 II 类比Problem91、Problem1416 记忆化搜索类比
  * 一条包含字母 A-Z 的消息通过以下的方式进行了 编码 ：
  * 'A' -> "1"
  * 'B' -> "2"
@@ -300,14 +300,13 @@ public class Problem639 {
             return dp[t];
         }
 
-        //当前字符
-        char c = s.charAt(t);
-
-        if (c == '0') {
+        if (s.charAt(t) == '0') {
             dp[t] = 0;
             return 0;
         }
 
+        //当前字符
+        char c = s.charAt(t);
         long count = 0;
 
         if (c == '*') {
