@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2025/2/8 08:57
  * @Author zsy
- * @Description 编码最短长度的字符串 类比Problem394 类比Problem459 kmp类比Problem28、Problem214、Problem459、Problem686、Problem796、Problem1392、Problem1408、Problem3029、Problem3031
+ * @Description 编码最短长度的字符串 类比Problem394、Problem726 类比Problem459 kmp类比Problem28、Problem214、Problem459、Problem686、Problem796、Problem1392、Problem1408、Problem3029、Problem3031
  * 给定一个 非空 字符串，将其编码为具有最短长度的字符串。
  * 编码规则是：k[encoded_string]，其中在方括号 encoded_string 中的内容重复 k 次。
  * 注：
