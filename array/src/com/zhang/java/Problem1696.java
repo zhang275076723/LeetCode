@@ -39,7 +39,7 @@ public class Problem1696 {
     /**
      * 动态规划
      * dp[i]：跳跃到nums[i]得到的最大得分
-     * dp[i] = max(dp[j] + nums[j]) (i-k < j < i)
+     * dp[i] = max(dp[j] + nums[j]) (i-k <= j < i)
      * 时间复杂度O(nk)，空间复杂度O(n)
      *
      * @param nums
