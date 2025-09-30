@@ -118,6 +118,7 @@ public class Problem1416 {
             return 0;
         }
 
+        //k的长度
         int len = 0;
         int temp = k;
 

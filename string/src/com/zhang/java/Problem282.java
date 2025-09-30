@@ -37,9 +37,14 @@ public class Problem282 {
 
     /**
      * 回溯+剪枝
-     * 核心思想：保留上一次运算结果，用于运算符的优先级
-     * 注意：不能先得到中缀表达式，再根据基本计算器得到运算结果，会超时
+     * 核心思想：保存上一次遍历的末尾连乘串的运算结果，用于本次遍历的乘法运算
      * 时间复杂度O(n*3^n)，空间复杂度O(n) (sb拷贝到结果集合需要O(1)，共3^(n-1)种情况)
+     * <p>
+     * 例如：num="1234"
+     * t=0，得到的运算结果为1，preMul=1，curResult=1
+     * t=1，如果运算符为减法，得到的运算结果为1-2，preMul=-2，curResult=1-2=-1
+     * t=2，如果运算符为乘法，得到的运算结果为1-2*3，preMul=-2*3=-6，curResult=-1-(-2)+(-2)*3=-5
+     * t=3，如果运算符为乘法，则得到的运算结果为1-2*3*4，preMul=-6*4=-24，curResult=-5-(-6)+(-6)*4=-23
      *
      * @param num
      * @param target
@@ -48,14 +53,15 @@ public class Problem282 {
     public List<String> addOperators(String num, int target) {
         List<String> list = new ArrayList<>();
 
-        //pre：上一次运算结果(考虑运算符的优先级)，result：当前运算结果(即num[0]-num[t]运算结果)，使用long避免int溢出
-        //加减法的下一个backtrack，pre为当前数字；乘法的下一个backtrack，pre为pre*当前数字
+        //pre：上一次遍历的末尾连乘串的运算结果
+        //result：当前遍历的运算结果(即num[0]-num[t]运算结果)
+        //使用long避免int溢出
         backtrack(0, 0, 0, num, target, new StringBuilder(), list);
 
         return list;
     }
 
-    private void backtrack(int t, long pre, long curResult, String num, int target, StringBuilder sb, List<String> list) {
+    private void backtrack(int t, long preMul, long curResult, String num, int target, StringBuilder sb, List<String> list) {
         if (t == num.length()) {
             if (curResult == target) {
                 list.add(sb.toString());
@@ -63,38 +69,40 @@ public class Problem282 {
             return;
         }
 
+        //num[t]-num[i]
+        //使用long避免int溢出
+        long curNum = 0;
+
         for (int i = t; i < num.length(); i++) {
             //不能有前导0
             if (i > t && num.charAt(t) == '0') {
                 return;
             }
 
-            //使用long避免int溢出
-            long curNum = Long.parseLong(num.substring(t, i + 1));
+            curNum = curNum * 10 + (num.charAt(t) - '0');
+            int len = sb.length();
 
             //第一个数字，前面不需要添加加减乘号
             if (t == 0) {
-                int len = sb.length();
                 sb.append(curNum);
                 backtrack(i + 1, curNum, curNum, num, target, sb, list);
                 sb.delete(len, sb.length());
             } else {
-                //加，前驱pre为curNum
-                int len = sb.length();
+                //加，末尾连乘串的运算结果preMul为curNum
                 sb.append('+').append(curNum);
                 backtrack(i + 1, curNum, curResult + curNum, num, target, sb, list);
                 sb.delete(len, sb.length());
 
-                //减，前驱pre为-curNum
+                //减，末尾连乘串的运算结果preMul为-curNum
                 sb.append('-').append(curNum);
                 backtrack(i + 1, -curNum, curResult - curNum, num, target, sb, list);
                 sb.delete(len, sb.length());
 
-                //乘，前驱pre为pre*curNum
+                //乘，末尾连乘串的运算结果preMul为preMul*curNum
                 sb.append('*').append(curNum);
-                //考虑到运算符的优先级，先减去上一次运算结果，乘法运算符优先级高，需要先计算pre*curNum
+                //考虑到运算符的优先级，先减去上一次末尾连乘串的运算结果，乘法运算符优先级高，再加上preMul*curNum
                 //例如：num=123，当前遍历到3，pre为-2，sb为1-2，此时要*3，需要先计算2*3，再减去2*3的结果6
-                backtrack(i + 1, pre * curNum, curResult - pre + pre * curNum, num, target, sb, list);
+                backtrack(i + 1, preMul * curNum, curResult - preMul + preMul * curNum, num, target, sb, list);
                 sb.delete(len, sb.length());
             }
         }

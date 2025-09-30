@@ -71,7 +71,8 @@ public class Problem679 {
      * @return
      */
     public Set<String> judgePoint24_2(int[] cards) {
-        //使用set是为了去重
+        //满足值为24的表达式集合
+        //注意：使用set是为了去重
         Set<String> result = new HashSet<>();
         //每次从list中取出2个数进行运算，得到的结果重新加入list
         List<Double> list = new ArrayList<>();
@@ -159,31 +160,31 @@ public class Problem679 {
             //第1个要进行运算的数
             double num1 = list.remove(i);
             //第1个要进行运算的表达式
-            String expr1 = expressionList.remove(i);
+            String exp1 = expressionList.remove(i);
 
             for (int j = 0; j < list.size(); j++) {
                 //第2个要进行运算的数
                 double num2 = list.remove(j);
                 //第2个要进行运算的表达式
-                String expr2 = expressionList.remove(j);
+                String exp2 = expressionList.remove(j);
 
                 //加
                 list.add(num1 + num2);
-                expressionList.add("(" + expr1 + "+" + expr2 + ")");
+                expressionList.add("(" + exp1 + "+" + exp2 + ")");
                 backtrack2(list, expressionList, result);
                 expressionList.remove(expressionList.size() - 1);
                 list.remove(list.size() - 1);
 
                 //减
                 list.add(num1 - num2);
-                expressionList.add("(" + expr1 + "-" + expr2 + ")");
+                expressionList.add("(" + exp1 + "-" + exp2 + ")");
                 backtrack2(list, expressionList, result);
                 expressionList.remove(expressionList.size() - 1);
                 list.remove(list.size() - 1);
 
                 //乘
                 list.add(num1 * num2);
-                expressionList.add("(" + expr1 + "*" + expr2 + ")");
+                expressionList.add("(" + exp1 + "*" + exp2 + ")");
                 backtrack2(list, expressionList, result);
                 expressionList.remove(expressionList.size() - 1);
                 list.remove(list.size() - 1);
@@ -191,20 +192,20 @@ public class Problem679 {
                 //除，num2和0之间的误差小于10^(-6)，则认为num2为0，0不能做除数
                 if (Math.abs(num1) >= 1e-6) {
                     list.add(num1 / num2);
-                    expressionList.add("(" + expr1 + "/" + expr2 + ")");
+                    expressionList.add("(" + exp1 + "/" + exp2 + ")");
                     backtrack2(list, expressionList, result);
                     expressionList.remove(expressionList.size() - 1);
                     list.remove(list.size() - 1);
                 }
 
-                //expr2重新添加回expressionList下标索引j处
-                expressionList.add(j, expr2);
+                //exp2重新添加回expressionList下标索引j处
+                expressionList.add(j, exp2);
                 //num2重新添加回list下标索引j处
                 list.add(j, num2);
             }
 
-            //expr1重新添加回expressionList下标索引i处
-            expressionList.add(i, expr1);
+            //exp1重新添加回expressionList下标索引i处
+            expressionList.add(i, exp1);
             //num1重新添加回list下标索引i处
             list.add(i, num1);
         }
