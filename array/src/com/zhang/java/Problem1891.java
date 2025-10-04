@@ -52,7 +52,7 @@ public class Problem1891 {
 
     /**
      * 二分查找变形
-     * 对[left,right]进行二分查找，left为1，right为ribbons最大值，统计数组中能够切割长度为mid的绳子个数count，
+     * 对[left,right]进行二分查找，left为0，right为ribbons最大值，统计数组中能够切割长度为mid的绳子个数count，
      * 如果count小于k，则能够切割为k个相同长度绳子的最大长度在mid左边，right=mid-1
      * 如果count大于等于k，则能够切割为k个相同长度绳子的最大长度在mid或mid右边，left=mid；
      * 时间复杂度O(n*log(max(ribbons[i])))=O(n)，空间复杂度O(1)
@@ -63,19 +63,12 @@ public class Problem1891 {
      */
     public int maxLength(int[] ribbons, int k) {
         int max = ribbons[0];
-        int sum = 0;
 
         for (int num : ribbons) {
             max = Math.max(max, num);
-            sum = sum + num;
         }
 
-        //最多只能切割为sum个长度为1的绳子，如果sum小于k，则无法切割为k个绳子，返回0
-        if (sum < k) {
-            return 0;
-        }
-
-        int left = 1;
+        int left = 0;
         int right = max;
         int mid;
 

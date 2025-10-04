@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2023/6/26 08:38
  * @Author zsy
- * @Description 数组中的 k-diff 数对 哈希表类比Problem1、Problem128、Problem166、Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem535、Problem554、Problem609、Problem763、Problem1500、Problem1640、Problem2657、Offer50 双指针类比
+ * @Description 数组中的 k-diff 数对 排序+滑动窗口类比Problem632、Problem1838、Problem2009 哈希表类比Problem1、Problem128、Problem166、Problem187、Problem205、Problem242、Problem290、Problem291、Problem383、Problem387、Problem389、Problem454、Problem535、Problem554、Problem609、Problem763、Problem1500、Problem1640、Problem2657、Offer50
  * 给你一个整数数组 nums 和一个整数 k，请你在数组中找出 不同的 k-diff 数对，并返回不同的 k-diff 数对 的数目。
  * k-diff 数对定义为一个整数对 (nums[i], nums[j]) ，并满足下述全部条件：
  * 0 <= i, j < nums.length
@@ -45,8 +45,8 @@ public class Problem532 {
 
     /**
      * 哈希表
-     * 统计nums数组中每个元素的出现次数，判断map中是否存在num-k和num+k，
-     * 考虑完当前元素num之后，num从map中移除，避免重复计算
+     * 统计nums数组中每个元素的出现次数，遍历map中元素num，判断map中是否存在num+k
+     * 注意：遍历map中元素num时，只能找num-k或者num+k其中之一，两个都找则会存在重复的情况
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param nums
@@ -63,34 +63,19 @@ public class Problem532 {
 
         int count = 0;
 
-        for (int num : nums) {
-            //当前元素num已经考虑过，即已经被标记为0，直接进行下次循环
-            if (map.get(num) == 0) {
-                continue;
-            }
-
-            //考虑k为0的特殊情况，如果map中当前元素num出现次数大于1，则存在两个数的差为0，count++
+        //注意：遍历map，而不是遍历nums，避免nums元素重复
+        for (int num : map.keySet()) {
+            //k为0的特殊情况，如果map中当前元素num出现次数大于1，则存在两个数的差为0，count++
             if (k == 0) {
                 if (map.get(num) > 1) {
                     count++;
                 }
             } else {
-                //和num相距k的两个数
-                int diff1 = num - k;
-                int diff2 = num + k;
-
-                //map中存在diff1，并且diff1出现次数大于0，则count++
-                if (map.getOrDefault(diff1, 0) > 0) {
-                    count++;
-                }
-                //map中存在diff2，并且diff2出现次数大于0，则count++
-                if (map.getOrDefault(diff2, 0) > 0) {
+                //注意：遍历map中元素num时，只能找num-k或者num+k其中之一，两个都找则会存在重复的情况
+                if (map.containsKey(num + k)) {
                     count++;
                 }
             }
-
-            //考虑过当前元素num之后，num从map中移除，避免重复计算，即置num出现次数为0
-            map.put(num, 0);
         }
 
         return count;
@@ -98,7 +83,7 @@ public class Problem532 {
 
     /**
      * 排序+二分查找
-     * 先按照由小到大排序，对数组中每个元素，往右二分查找nums[i]+k
+     * nums由小到大排序，对数组中每个元素，往右二分查找nums[i]+k
      * 时间复杂度O(nlogn)，空间复杂度O(logn) (堆排序的空间复杂度为O(logn))
      *
      * @param nums
@@ -131,9 +116,9 @@ public class Problem532 {
                     count++;
                     break;
                 } else if (nums[mid] > target) {
-                    right--;
+                    right = mid - 1;
                 } else {
-                    left++;
+                    left = mid + 1;
                 }
             }
         }
@@ -142,9 +127,9 @@ public class Problem532 {
     }
 
     /**
-     * 排序+双指针
-     * 先按照由小到大排序，如果nums[right]-nums[left]等于k，则找到一个diff，left++；
-     * 如果nums[right]-nums[left]大于k，left++；如果nums[right]-nums[left]小于k，right++
+     * 排序+滑动窗口
+     * nums由小到大排序，如果nums[right]-nums[left]等于k，则count++，left++；
+     * 如果nums[right]-nums[left]大于k，则left++；如果nums[right]-nums[left]小于k，则right++
      * 时间复杂度O(nlogn)，空间复杂度O(logn) (堆排序的空间复杂度为O(logn))
      *
      * @param nums
@@ -175,7 +160,7 @@ public class Problem532 {
                 left++;
             }
 
-            //始终保持右指针right大于左指针left
+            //始终保持right大于left
             while (left >= right) {
                 right++;
             }

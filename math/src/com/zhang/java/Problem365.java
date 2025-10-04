@@ -66,7 +66,7 @@ public class Problem365 {
      */
     public boolean canMeasureWater(int x, int y, int target) {
         //x、y水壶存在等于target的水壶，则可以得到target，返回true
-        if (x == target || y == target) {
+        if (x == target || y == target || x + y == target) {
             return true;
         }
 
@@ -96,7 +96,7 @@ public class Problem365 {
      */
     public boolean canMeasureWater2(int x, int y, int target) {
         //x、y水壶存在等于target的水壶，则可以得到target，返回true
-        if (x == target || y == target) {
+        if (x == target || y == target || x + y == target) {
             return true;
         }
 
@@ -116,9 +116,11 @@ public class Problem365 {
             int curX = arr[0];
             //y水壶当前大小
             int curY = arr[1];
+            //x、y的当前状态
+            long state = convert(curX, curY);
 
-            //当前情况(curX,curY)已访问，则从当前情况(curX,curY)继续bfs无法得到target，直接进行下次循环
-            if (visitedSet.contains(convert(curX, curY))) {
+            //state已访问，则从state继续bfs无法得到target，直接进行下次循环
+            if (visitedSet.contains(state)) {
                 continue;
             }
 
@@ -127,8 +129,8 @@ public class Problem365 {
                 return true;
             }
 
-            //当前情况(curX,curY)加入访问集合
-            visitedSet.add(convert(curX, curY));
+            //state加入访问集合
+            visitedSet.add(state);
 
             //情况1：x水壶中的水加满
             queue.offer(new int[]{x, curY});
@@ -142,21 +144,16 @@ public class Problem365 {
             //情况4：y水壶中的水倒空
             queue.offer(new int[]{curX, 0});
 
-            //x水壶中的水倒入y水壶之后，y水壶的大小
-            int nextY1 = Math.min(curY + curX, y);
-            //x水壶中的水倒入y水壶之后，x水壶的大小
-            int nextX1 = curX - (nextY1 - curY);
+            //x水壶中的水倒入y水壶，直至x水壶倒空或者y水壶加满，x水壶倒掉的水量
+            int pour1 = Math.min(curX, y - curY);
+            //y水壶中的水倒入x水壶，直至y水壶倒空或者x水壶加满，y水壶倒掉的水量
+            int pour2 = Math.min(curY, x - curX);
 
             //情况5：x水壶中的水倒入y水壶，直至x水壶倒空或者y水壶加满
-            queue.offer(new int[]{nextX1, nextY1});
-
-            //y水壶中的水倒入x水壶之后，x水壶的大小
-            int nextX2 = Math.min(curX + curY, x);
-            //y水壶中的水倒入x水壶之后，y水壶的大小
-            int nextY2 = curY - (nextX2 - curX);
+            queue.offer(new int[]{curX - pour1, curY + pour1});
 
             //情况6：y水壶中的水倒入x水壶，直至y水壶倒空或者x水壶加满
-            queue.offer(new int[]{nextX2, nextY2});
+            queue.offer(new int[]{curX + pour2, curY - pour2});
         }
 
         return false;
@@ -178,7 +175,7 @@ public class Problem365 {
      */
     public boolean canMeasureWater3(int x, int y, int target) {
         //x、y水壶存在等于target的水壶，则可以得到target，返回true
-        if (x == target || y == target) {
+        if (x == target || y == target || x + y == target) {
             return true;
         }
 
@@ -203,8 +200,11 @@ public class Problem365 {
      * @return
      */
     private boolean dfs(int curX, int curY, int capacityX, int capacityY, int target, Set<Long> visitedSet) {
-        //当前情况(curX,curY)已访问，则从当前情况(curX,curY)继续dfs无法得到target，返回false
-        if (visitedSet.contains(convert(curX, curY))) {
+        //x、y的当前状态
+        long state = convert(curX, curY);
+
+        //state已访问，则从state继续dfs无法得到target，返回false
+        if (visitedSet.contains(state)) {
             return false;
         }
 
@@ -213,8 +213,8 @@ public class Problem365 {
             return true;
         }
 
-        //当前情况(curX,curY)加入访问集合
-        visitedSet.add(convert(curX, curY));
+        //state加入访问集合
+        visitedSet.add(state);
 
         //情况1：x水壶中的水加满
         if (dfs(capacityX, curY, capacityX, capacityY, target, visitedSet)) {
@@ -236,23 +236,18 @@ public class Problem365 {
             return true;
         }
 
-        //x水壶中的水倒入y水壶之后，y水壶的大小
-        int nextY1 = Math.min(curY + curX, capacityY);
-        //x水壶中的水倒入y水壶之后，x水壶的大小
-        int nextX1 = curX - (nextY1 - curY);
+        //x水壶中的水倒入y水壶，直至x水壶倒空或者y水壶加满，x水壶倒掉的水量
+        int pour1 = Math.min(curX, capacityY - curY);
+        //y水壶中的水倒入x水壶，直至y水壶倒空或者x水壶加满，y水壶倒掉的水量
+        int pour2 = Math.min(curY, capacityX - curX);
 
         //情况5：x水壶中的水倒入y水壶，直至x水壶倒空或者y水壶加满
-        if (dfs(nextX1, nextY1, capacityX, capacityY, target, visitedSet)) {
+        if (dfs(curX - pour1, curY + pour1, capacityX, capacityY, target, visitedSet)) {
             return true;
         }
 
-        //y水壶中的水倒入x水壶之后，x水壶的大小
-        int nextX2 = Math.min(curX + curY, capacityX);
-        //y水壶中的水倒入x水壶之后，y水壶的大小
-        int nextY2 = curY - (nextX2 - curX);
-
         //情况6：y水壶中的水倒入x水壶，直至y水壶倒空或者x水壶加满
-        if (dfs(nextX2, nextY2, capacityX, capacityY, target, visitedSet)) {
+        if (dfs(curX + pour2, curY - pour2, capacityX, capacityY, target, visitedSet)) {
             return true;
         }
 
