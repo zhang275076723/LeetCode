@@ -55,13 +55,11 @@ public class Problem1004 {
 
                 //将当前元素0假设置为1
                 k--;
-                result = Math.max(result, right - left + 1);
-                right++;
-            } else {
-                //右指针所指元素为1，则更新最大连续1的个数
-                result = Math.max(result, right - left + 1);
-                right++;
             }
+
+            //更新最大连续1的个数
+            result = Math.max(result, right - left + 1);
+            right++;
         }
 
         return result;
