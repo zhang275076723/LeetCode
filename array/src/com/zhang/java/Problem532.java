@@ -161,8 +161,8 @@ public class Problem532 {
             }
 
             //始终保持right大于left
-            while (left >= right) {
-                right++;
+            if (left >= right) {
+                right = left + 1;
             }
         }
 
