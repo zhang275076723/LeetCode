@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/4/19 10:25
  * @Author zsy
- * @Description 组合总和 II 回溯+剪枝类比Problem17、Problem22、Problem39、Problem46、Problem47、Problem77、Problem78、Problem89、Problem90、Problem97、Problem216、Problem301、Problem377、Problem491、Problem679、Problem698、Offer17、Offer38
+ * @Description 组合总和 II 类比Problem39、Problem216、Problem377 回溯+剪枝类比Problem17、Problem22、Problem39、Problem46、Problem47、Problem77、Problem78、Problem89、Problem90、Problem97、Problem216、Problem301、Problem377、Problem491、Problem679、Problem698、Offer17、Offer38
  * 给定一个候选人编号的集合 candidates 和一个目标数 target ，
  * 找出 candidates中所有可以使数字和为 target 的组合。
  * candidates 中的每个数字在每个组合中只能使用 一次 。
@@ -43,7 +43,7 @@ public class Problem40 {
             return new ArrayList<>();
         }
 
-        //将元素从小到大排序，便于剪枝去重
+        //将元素从小到大排序，便于剪枝、去重
         mergeSort(candidates, 0, candidates.length - 1, new int[candidates.length]);
 
         List<List<Integer>> result = new ArrayList<>();

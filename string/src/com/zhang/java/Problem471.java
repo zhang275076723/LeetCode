@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2025/2/8 08:57
  * @Author zsy
- * @Description 编码最短长度的字符串 类比Problem394、Problem726 类比Problem459 kmp类比Problem28、Problem214、Problem459、Problem686、Problem796、Problem1392、Problem1408、Problem3029、Problem3031
+ * @Description 编码最短长度的字符串 类比Problem394、Problem726 类比Problem459 kmp类比Problem28、Problem214、Problem459、Problem686、Problem796、Problem1392、Problem1408、Problem3029、Problem3031 动态规划类比
  * 给定一个 非空 字符串，将其编码为具有最短长度的字符串。
  * 编码规则是：k[encoded_string]，其中在方括号 encoded_string 中的内容重复 k 次。
  * 注：
@@ -64,7 +64,7 @@ public class Problem471 {
             for (int j = 0; j <= s.length() - i; j++) {
                 //当前字符串s[j]-s[j+i-1]
                 String curStr = s.substring(j, j + i);
-                //dp[j][j+i-1]初始化为不能编码
+                //dp[j][j+i-1]初始化为不能编码的字符串
                 dp[j][j + i - 1] = curStr;
                 //s[j]-s[j+i-1]中构成s[j]-s[j+i-1]长度最小的子串
                 String repeatStr = getRepeatStr(curStr);

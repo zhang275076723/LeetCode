@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2022/4/20 8:44
  * @Author zsy
- * @Description 全排列 回溯+剪枝类比Problem17、Problem22、Problem39、Problem40、Problem47、Problem77、Problem78、Problem89、Problem90、Problem97、Problem216、Problem301、Problem377、Problem491、Problem679、Problem698、Offer17、Offer38
+ * @Description 全排列 全排列类比Problem47、Problem60、Problem784 回溯+剪枝类比Problem17、Problem22、Problem39、Problem40、Problem47、Problem77、Problem78、Problem89、Problem90、Problem97、Problem216、Problem301、Problem377、Problem491、Problem679、Problem698、Offer17、Offer38
  * 给定一个不含重复数字的数组 nums ，返回其 所有可能的全排列 。你可以 按任意顺序 返回答案。
  * <p>
  * 输入：nums = [1,2,3]
@@ -37,10 +37,6 @@ public class Problem46 {
      * @return
      */
     public List<List<Integer>> permute(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return new ArrayList<>();
-        }
-
         List<List<Integer>> result = new ArrayList<>();
 
         backtrack(0, nums, new boolean[nums.length], result, new ArrayList<>());
@@ -60,13 +56,13 @@ public class Problem46 {
                 continue;
             }
 
-            visited[i] = true;
             list.add(nums[i]);
+            visited[i] = true;
 
             backtrack(t + 1, nums, visited, result, list);
 
-            list.remove(list.size() - 1);
             visited[i] = false;
+            list.remove(list.size() - 1);
         }
     }
 }

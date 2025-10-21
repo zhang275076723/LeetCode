@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/10/8 08:53
  * @Author zsy
- * @Description 因子的组合 因子类比Problem2427 回溯+剪枝
+ * @Description 因子的组合 因子类比Problem2427 回溯+剪枝类比
  * 整数可以被看作是其因子的乘积。
  * 例如：8 = 2 x 2 x 2 = 2 x 4.
  * 请实现一个函数，该函数接收一个整数 n 并返回该整数所有的因子组合。

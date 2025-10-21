@@ -116,7 +116,7 @@ public class Problem470 {
 
     /**
      * 用rand7()生成等概率的0或1
-     * 1,2,3返回0，5、6、7返回1,4则重新生成
+     * 1,2,3返回0，5、6、7返回1，4则重新生成
      *
      * @return
      */
@@ -140,7 +140,6 @@ public class Problem470 {
      * @return
      */
     private int rand7() {
-//        return new Random().nextInt(7) + 1;
-        return (int) (Math.random() * 7 + 1);
+        return new Random().nextInt(7) + 1;
     }
 }

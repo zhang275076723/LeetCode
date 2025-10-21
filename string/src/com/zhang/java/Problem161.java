@@ -41,25 +41,22 @@ public class Problem161 {
      * @return
      */
     public boolean isOneEditDistance(String s, String t) {
-        int m = s.length();
-        int n = t.length();
-
         //s和t长度之差超过1，则s和t的编辑距离大于1，返回false
-        if (Math.abs(m - n) > 1) {
+        if (Math.abs(s.length() - t.length()) > 1) {
             return false;
         }
 
         //始终保证s的长度大于t的长度
-        if (m < n) {
+        if (s.length() < t.length()) {
             String temp = s;
             s = t;
             t = temp;
         }
 
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < t.length(); i++) {
             if (s.charAt(i) != t.charAt(i)) {
                 //s和t长度相等，s[i]和t[i]不相等，则判断s[i+1]-s[s.length()-1]和t[i+1]-t[t.length()-1]是否相等
-                if (m == n) {
+                if (s.length() == t.length()) {
                     return isEquals(i + 1, i + 1, s, t);
                 } else {
                     //s长度等于t长度加1，s[i]和t[i]不相等，则判断s[i+1]-s[s.length()-1]和t[i]-t[t.length()-1]是否相等
@@ -70,7 +67,7 @@ public class Problem161 {
 
         //遍历结束，则说明s和t前n个元素都相等，如果s和t长度相等，则s和t的编辑距离为0，返回false；
         //如果s长度等于t长度加1，则s和t的编辑距离为1，返回true
-        return m == n + 1;
+        return s.length() == t.length() + 1;
     }
 
     /**

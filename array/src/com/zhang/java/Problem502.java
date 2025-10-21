@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2024/2/7 08:14
  * @Author zsy
- * @Description IPO 优先队列类比
+ * @Description IPO 排序+优先队列类比
  * 假设 力扣（LeetCode）即将开始 IPO 。
  * 为了以更高的价格将股票卖给风险投资公司，力扣 希望在 IPO 之前开展一些项目以增加其资本。
  * 由于资源有限，它只能在 IPO 之前完成最多 k 个不同的项目。
@@ -84,21 +84,19 @@ public class Problem502 {
 
         //最多只能选择k个项目
         while (k > 0) {
-            //小于等于当前资本w的项目利润profits加入大根堆
-            while (index < n && arr[index][1] <= w) {
+            //w大于等于当前项目资本对应的利润profits加入大根堆
+            while (index < n && w >= arr[index][1]) {
                 priorityQueue.offer(arr[index][0]);
                 index++;
             }
 
-            //大根堆不为空才能选择项目
-            if (!priorityQueue.isEmpty()) {
-                //大根堆堆顶元素即为能选择的最大利润
-                w = w + priorityQueue.poll();
-            } else {
-                //大根堆为空，即不存在小于等于当前资本w的项目，直接跳出循环
+            //大根堆为空，即不存在小于等于当前资本w的项目，直接跳出循环
+            if (priorityQueue.isEmpty()) {
                 break;
             }
 
+            //大根堆堆顶元素即为能选择的最大利润
+            w = w + priorityQueue.poll();
             k--;
         }
 

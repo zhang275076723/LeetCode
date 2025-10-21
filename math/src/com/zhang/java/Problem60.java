@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2023/3/18 08:14
  * @Author zsy
- * @Description 排列序列 类比Problem172、Problem481、Problem667、Problem1286 类比Problem1175、Problem1492 全排列类比Problem46、Problem47 模拟类比Problem172、Problem233、Problem400、Offer43、Offer44、Interview_17_06 回溯+剪枝类比
+ * @Description 排列序列 类比Problem172、Problem481、Problem667、Problem1286 类比Problem1175、Problem1492 全排列类比Problem46、Problem47、Problem784 模拟类比Problem172、Problem233、Problem400、Offer43、Offer44、Interview_17_06 回溯+剪枝类比
  * 给出集合 [1,2,3,...,n]，其所有元素共有 n! 种排列。
  * 按大小顺序列出所有排列情况，并一一标记，当 n = 3 时, 所有排列如下：
  * "123"
@@ -57,10 +57,6 @@ public class Problem60 {
      * @return
      */
     public String getPermutation(int n, int k) {
-        if (n == 1) {
-            return "1";
-        }
-
         backtrack(0, n, k, new boolean[n], new StringBuilder());
 
         return num;
@@ -84,23 +80,20 @@ public class Problem60 {
      * @return
      */
     public String getPermutation2(int n, int k) {
-        if (n == 1) {
-            return "1";
-        }
-
-        //1-n的数字list集合，用于组成每一个全排列，每确定一位，当前元素从list中移除
-        List<Integer> list = new ArrayList<>();
         //阶乘数组，由低位到高位每一位能够确定的全排列个数
         int[] factorial = new int[n];
         //0!=1，0的阶乘为1
         factorial[0] = 1;
 
-        for (int i = 1; i <= n; i++) {
-            list.add(i);
-        }
-
         for (int i = 1; i < n; i++) {
             factorial[i] = factorial[i - 1] * i;
+        }
+
+        //1-n的数字list集合，用于组成每一个全排列，每确定一位，当前元素从list中移除
+        List<Integer> list = new ArrayList<>();
+
+        for (int i = 1; i <= n; i++) {
+            list.add(i);
         }
 
         StringBuilder sb = new StringBuilder();

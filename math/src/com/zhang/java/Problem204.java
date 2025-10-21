@@ -24,10 +24,13 @@ import java.util.List;
 public class Problem204 {
     public static void main(String[] args) {
         Problem204 problem204 = new Problem204();
-        System.out.println(problem204.countPrimes(100));
-        System.out.println(problem204.countPrimes2(10));
-        System.out.println(problem204.countPrimes3(10));
-        System.out.println(problem204.countPrimes4(15));
+        int n = 100;
+//        int n = 10;
+//        int n = 15;
+        System.out.println(problem204.countPrimes(n));
+        System.out.println(problem204.countPrimes2(n));
+        System.out.println(problem204.countPrimes3(n));
+        System.out.println(problem204.countPrimes4(n));
     }
 
     /**
@@ -40,10 +43,6 @@ public class Problem204 {
      * @return
      */
     public int countPrimes(int n) {
-        if (n == 0 || n == 1) {
-            return 0;
-        }
-
         int count = 0;
 
         for (int i = 2; i < n; i++) {
@@ -75,10 +74,6 @@ public class Problem204 {
      * @return
      */
     public int countPrimes2(int n) {
-        if (n == 0 || n == 1) {
-            return 0;
-        }
-
         int count = 0;
 
         for (int i = 2; i < n; i++) {
@@ -112,10 +107,6 @@ public class Problem204 {
      * @return
      */
     public int countPrimes3(int n) {
-        if (n == 0 || n == 1) {
-            return 0;
-        }
-
         //dp[i]：数字i是否是质数
         boolean[] dp = new boolean[n];
 
@@ -159,10 +150,6 @@ public class Problem204 {
      * @return
      */
     public int countPrimes4(int n) {
-        if (n == 0 || n == 1) {
-            return 0;
-        }
-
         //dp[i]：数字i是否是质数
         boolean[] dp = new boolean[n];
         //存放当前遍历到的质数集合，此时质数集合中的质数都小于等于当前遍历到的数i

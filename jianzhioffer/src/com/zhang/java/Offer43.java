@@ -54,8 +54,8 @@ public class Offer43 {
         int high = n / 10;
 
         while (num != 0) {
-            if (cur == 0) {
-                //当前cur为0，高位值0到high-1，共high种取值，乘上低位0到9..9，共lowCount种取值
+            if (cur < 1) {
+                //当前cur小于1，高位值0到high-1，共high种取值，乘上低位0到9..9，共lowCount种取值
                 count = count + high * lowCount;
             } else if (cur == 1) {
                 //当前cur为1，高位先取0到high-1，共high种取值，乘上低位0到9..9，共lowCount种取值；

@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2024/1/12 08:06
  * @Author zsy
- * @Description 最低加油次数 百度机试题 类比Problem134、Problem774 优先队列类比
+ * @Description 最低加油次数 百度机试题 类比Problem134、Problem774 排序+优先队列类比
  * 汽车从起点出发驶向目的地，该目的地位于出发位置东面 target 英里处。
  * 沿途有加油站，用数组 stations 表示。
  * 其中 stations[i] = [positioni, fueli] 表示第 i 个加油站位于出发位置东面 positioni 英里处，并且有 fueli 升汽油。
@@ -47,10 +47,10 @@ public class Problem871 {
     }
 
     /**
-     * 优先队列，大根堆
-     * 起点距离加油站的距离stations[i][0]已经按照由小到大排序，所以不需要进行排序，
+     * 排序+优先队列，大根堆
      * 将能够访问到的加油站汽油stations[i][1]加入大根堆，此时并不急于加油，而是当汽车剩余油量不能到达下一个加油站时，
      * 大根堆堆顶元素出堆，即选择当前能够到达的加油站中stations[i][1]最大的加油站给汽车加油，则到达终点的加油次数即为最少加油次数
+     * 注意：起点距离加油站的距离stations[i][0]已经按照由小到大排序，所以不需要进行排序
      * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
      * @param target
@@ -64,6 +64,14 @@ public class Problem871 {
             return 0;
         }
 
+        int n = stations.length;
+        //最少加油次数
+        int count = 0;
+        //当前汽车剩余油量
+        int remainFuel = startFuel;
+        //汽车的当前位置
+        int curDistance = 0;
+
         //优先队列，大根堆，存放能够访问到的加油站汽油stations[i][1]
         PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(new Comparator<Integer>() {
             @Override
@@ -72,18 +80,12 @@ public class Problem871 {
             }
         });
 
-        int n = stations.length;
-        //最少加油次数
-        int count = 0;
-        //当前汽车剩余油量
-        int remainFuel = startFuel;
-        //汽车经过的前一个加油站距离起点的位置
-        int preStation = 0;
-
         //stations已经按照stations[i][0]由小到大排序，则不需要再排序
         for (int i = 0; i < n; i++) {
             //汽车从上一个加油站到当前加油站剩余油量
-            remainFuel = remainFuel - (stations[i][0] - preStation);
+            remainFuel = remainFuel - (stations[i][0] - curDistance);
+            //汽车到当前加油站
+            curDistance = stations[i][0];
 
             //当前汽车剩余油量小于0，则大根堆堆顶元素出堆，即选择当前能够到达的加油站中stations[i][1]最大的加油站给汽车加油
             while (remainFuel < 0 && !priorityQueue.isEmpty()) {
@@ -96,14 +98,12 @@ public class Problem871 {
                 return -1;
             }
 
-            //更新汽车经过的最后一个加油站距离起点的位置
-            preStation = stations[i][0];
             //当前加油站汽油stations[i][1]加入大根堆
             priorityQueue.offer(stations[i][1]);
         }
 
         //汽车从最后一个加油站到target
-        remainFuel = remainFuel - (target - preStation);
+        remainFuel = remainFuel - (target - curDistance);
 
         //当前汽车剩余油量小于0，则大根堆堆顶加油站汽油出堆，给汽车加油
         while (remainFuel < 0 && !priorityQueue.isEmpty()) {

@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * @Date 2025/3/24 08:14
  * @Author zsy
- * @Description 雇佣 K 名工人的最低成本 类比Problem857、Problem1383 优先队列类比
+ * @Description 雇佣 K 名工人的最低成本 类比Problem1383、Problem2542 排序+优先队列类比
  * 有 n 名工人。
  * 给定两个数组 quality 和 wage ，其中，quality[i] 表示第 i 名工人的工作质量，其最低期望工资为 wage[i] 。
  * 现在我们想雇佣 k 名工人组成一个 工资组。

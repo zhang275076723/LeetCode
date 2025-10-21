@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/11/19 08:38
  * @Author zsy
- * @Description 最大股票收益 股票类比Problem121、Problem122、Problem123、Problem188、Problem309、Problem714、Problem901、Problem2034、Problem2110、Offer63 动态规划类比
+ * @Description 最大股票收益 01背包类比Problem416、Problem474、Problem494 股票类比Problem121、Problem122、Problem123、Problem188、Problem309、Problem714、Problem901、Problem2034、Problem2110、Offer63 动态规划类比
  * 给你两个下标从 0 开始的数组 present 和 future ，present[i] 和 future[i] 分别代表第 i 支股票现在和将来的价格。
  * 每支股票你最多购买 一次 ，你的预算为 budget 。
  * 求最大的收益。

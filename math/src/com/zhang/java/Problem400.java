@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/11/6 08:49
  * @Author zsy
- * @Description 第 N 位数字 类比Problem60、Problem172、Problem233、Offer44、Offer43、Interview_17_06 同Offer44
+ * @Description 第 N 位数字 类比Problem60、Problem172、Problem233、Offer43、Offer44、Interview_17_06 同Offer44
  * 给你一个整数 n ，请你在无限的整数序列 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...] 中找出并返回第 n 位上的数字。
  * <p>
  * 输入：n = 3
