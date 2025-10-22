@@ -1,5 +1,8 @@
 package com.zhang.java;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Date 2022/5/28 14:58
  * @Author zsy
@@ -20,36 +23,40 @@ public class Knapsack {
         System.out.println(knapsack.knapsack(weights, values, bagWeight));
         //12
         System.out.println(knapsack.knapsack2(weights, values, bagWeight));
-        //
+        //22
         System.out.println(knapsack.knapsack3(weights, values, bagWeight));
+        //12
         System.out.println(knapsack.knapsack4(weights, values, bagWeight));
+        //2
         System.out.println(knapsack.knapsack5(weights, bagWeight));
+        //15
         System.out.println(knapsack.knapsack6(weights, bagWeight));
+        //17
         System.out.println(knapsack.knapsack7(weights, bagWeight));
-//        System.out.println(knapsack.knapsack5(weights, values, bagWeight));
-//        System.out.println(knapsack.knapsack6(weights, values, bagWeight));
 
-//        weights = new int[]{3, 4, 5};
-//        values = new int[]{4, 5, 6};
-//        bagWeight = 10;
-//        //完全背包
-//        //13
-//        System.out.println(knapsack.knapsack4(weights, values, bagWeight));
-//
-//        weights = new int[]{2, 5, 4, 2, 3};
-//        values = new int[]{6, 3, 5, 4, 6};
-//        int[] counts = {2, 2, 5, 5, 4};
-//        bagWeight = 10;
-//        //多重背包
-//        //24
-//        System.out.println(knapsack.knapsack5(weights, values, counts, bagWeight));
+        weights = new int[]{3, 4, 5};
+        values = new int[]{4, 5, 6};
+        bagWeight = 10;
+        //完全背包
+        //13
+        System.out.println(knapsack.knapsack8(weights, values, bagWeight));
+
+        weights = new int[]{2, 5, 4, 2, 3};
+        values = new int[]{6, 3, 5, 4, 6};
+        int[] counts = {2, 2, 5, 5, 4};
+        bagWeight = 10;
+        //多重背包
+        //24
+        System.out.println(knapsack.knapsack9(weights, values, counts, bagWeight));
+        //24
+        System.out.println(knapsack.knapsack10(weights, values, counts, bagWeight));
     }
 
     /**
      * 01背包 容量正好为j的最大价值 (华为面试题)
      * dp[i][j]：前i件物品容量为j的最大价值
-     * dp[i][j] = dp[i-1][j]                                            (weight[i-1] > j)
-     * dp[i][j] = max(dp[i-1][j], dp[i-1][j-weight[i-1]] + values[i-1]) (weight[i-1] <= j)
+     * dp[i][j] = dp[i-1][j]                                            (weights[i-1] > j)
+     * dp[i][j] = max(dp[i-1][j], dp[i-1][j-weights[i-1]] + values[i-1]) (weights[i-1] <= j)
      * 时间复杂度O(mn)，空间复杂度O(mn) (m=weights.length, n=bagWeight) (使用滚动数组优化空间复杂度为O(n))
      *
      * @param weights
@@ -84,8 +91,8 @@ public class Knapsack {
     /**
      * 01背包 容量正好为j的最小价值
      * dp[i][j]：前i件物品容量为j的最小价值
-     * dp[i][j] = dp[i-1][j]                                            (weight[i-1] > j)
-     * dp[i][j] = min(dp[i-1][j], dp[i-1][j-weight[i-1]] + values[i-1]) (weight[i-1] <= j)
+     * dp[i][j] = dp[i-1][j]                                            (weights[i-1] > j)
+     * dp[i][j] = min(dp[i-1][j], dp[i-1][j-weights[i-1]] + values[i-1]) (weights[i-1] <= j)
      * 时间复杂度O(mn)，空间复杂度O(mn) (m=weights.length, n=bagWeight) (使用滚动数组优化空间复杂度为O(n))
      *
      * @param weights
@@ -120,8 +127,8 @@ public class Knapsack {
     /**
      * 01背包 容量最多为j的最大价值
      * dp[i][j]：前i件物品容量最多为j的最大价值
-     * dp[i][j] = dp[i-1][j]                                            (weight[i-1] > j)
-     * dp[i][j] = max(dp[i-1][j], dp[i-1][j-weight[i-1]] + values[i-1]) (weight[i-1] <= j)
+     * dp[i][j] = dp[i-1][j]                                            (weights[i-1] > j)
+     * dp[i][j] = max(dp[i-1][j], dp[i-1][j-weights[i-1]] + values[i-1]) (weights[i-1] <= j)
      * 时间复杂度O(mn)，空间复杂度O(mn) (m=weights.length, n=bagWeight) (使用滚动数组优化空间复杂度为O(n))
      *
      * @param weights
@@ -153,8 +160,8 @@ public class Knapsack {
     /**
      * 01背包 容量最少为j的最小价值(内层循环从大往小遍历)
      * dp[i][j]：前i件物品容量最少为j的最小价值
-     * dp[i][j] = min(dp[i-1][j], dp[i-1][0] + values[i-1])             (weight[i-1] > j)
-     * dp[i][j] = min(dp[i-1][j], dp[i-1][j-weight[i-1]] + values[i-1]) (weight[i-1] <= j)
+     * dp[i][j] = min(dp[i-1][j], dp[i-1][0] + values[i-1])             (weights[i-1] > j)
+     * dp[i][j] = min(dp[i-1][j], dp[i-1][j-weights[i-1]] + values[i-1]) (s[i-1] <= j)
      * 时间复杂度O(mn)，空间复杂度O(mn) (m=weights.length, n=bagWeight) (使用滚动数组优化空间复杂度为O(n))
      *
      * @param weights
@@ -190,8 +197,8 @@ public class Knapsack {
     /**
      * 01背包 容量正好为j的方案数
      * dp[i][j]：前i件物品容量为j的方案数
-     * dp[i][j] = dp[i-1][j]                          (weight[i-1] > j)
-     * dp[i][j] = dp[i-1][j] + dp[i-1][j-weight[i-1]] (weight[i-1] <= j)
+     * dp[i][j] = dp[i-1][j]                          (weights[i-1] > j)
+     * dp[i][j] = dp[i-1][j] + dp[i-1][j-weights[i-1]] (weights[i-1] <= j)
      * 时间复杂度O(mn)，空间复杂度O(mn) (m=weights.length, n=bagWeight) (使用滚动数组优化空间复杂度为O(n))
      *
      * @param weights
@@ -225,8 +232,8 @@ public class Knapsack {
     /**
      * 01背包 容量最多为j的方案数
      * dp[i][j]：前i件物品容量最多为j的方案数
-     * dp[i][j] = dp[i-1][j]                          (weight[i-1] > j)
-     * dp[i][j] = dp[i-1][j] + dp[i-1][j-weight[i-1]] (weight[i-1] <= j)
+     * dp[i][j] = dp[i-1][j]                          (weights[i-1] > j)
+     * dp[i][j] = dp[i-1][j] + dp[i-1][j-weights[i-1]] (weights[i-1] <= j)
      * 时间复杂度O(mn)，空间复杂度O(mn) (m=weights.length, n=bagWeight) (使用滚动数组优化空间复杂度为O(n))
      *
      * @param weights
@@ -257,8 +264,8 @@ public class Knapsack {
     /**
      * 01背包 容量最少为j的方案数(内层循环从大往小遍历)
      * dp[i][j]：前i件物品容量最少为j的方案数
-     * dp[i][j] = dp[i-1][j] + dp[i-1][0]             (weight[i-1] > j)
-     * dp[i][j] = dp[i-1][j] + dp[i-1][j-weight[i-1]] (weight[i-1] <= j)
+     * dp[i][j] = dp[i-1][j] + dp[i-1][0]             (weights[i-1] > j)
+     * dp[i][j] = dp[i-1][j] + dp[i-1][j-weights[i-1]] (weights[i-1] <= j)
      * 时间复杂度O(mn)，空间复杂度O(mn) (m=weights.length, n=bagWeight) (使用滚动数组优化空间复杂度为O(n))
      *
      * @param weights
@@ -290,79 +297,142 @@ public class Knapsack {
         return dp[weights.length][bagWeight];
     }
 
-//    /**
-//     * 完全背包 容量正好为j的最大价值
-//     * dp[i][j]：前i件物品在容量为j的情况下的最大价值
-//     * dp[i][j] = dp[i-1][j]                                                (weight[i-1] > j)
-//     * dp[i][j] = max(dp[i-1][j], dp[i][j-weight[i-1]] + values[i-1])       (weight[i-1] <= j)
-//     * 时间复杂度O(mn)，空间复杂度O(mn)，可以使用滚动数组优化空间复杂度为O(n) (m=weights.length, n=bagWeight)
-//     *
-//     * @param weights
-//     * @param values
-//     * @param bagWeight
-//     * @return
-//     */
-//    public int knapsack4(int[] weights, int[] values, int bagWeight) {
-//        int[][] dp = new int[weights.length + 1][bagWeight + 1];
-//
-//        for (int i = 1; i <= weights.length; i++) {
-//            for (int j = 1; j <= bagWeight; j++) {
-//                if (weights[i - 1] > j) {
-//                    dp[i][j] = dp[i - 1][j];
-//                } else {
-//                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - weights[i - 1]] + values[i - 1]);
-//                }
-//            }
-//        }
-//
-//        return dp[weights.length][bagWeight];
-//    }
-//
-//    /**
-//     * 多重背包 容量正好为j的最大价值
-//     * 将每种物品的个数看成不同的物品，转换成01背包
-//     * 使用二进制拆分，如果第i件物品有13个，13拆分为1+2+4+6，转换为4种不同的物品，变成01背包
-//     * dp[i][j]：前i件物品在容量为j的情况下的最大价值
-//     * dp[i][j] = dp[i-1][j]                                                             (listWeights.get(i-1) > j)
-//     * dp[i][j] = max(dp[i-1][j], dp[i-1][j-listWeights.get(i-1)] + listValues.get(i-1)) (listWeights.get(i-1) <= j)
-//     * 时间复杂度O(mn)，空间复杂度O(mn) (m=listWeights.size(), n=bagWeight)
-//     *
-//     * @param weights
-//     * @param values
-//     * @param count
-//     * @param bagWeight
-//     * @return
-//     */
-//    public int knapsack5(int[] weights, int[] values, int[] count, int bagWeight) {
-//        List<Integer> listWeights = new ArrayList<>();
-//        List<Integer> listValues = new ArrayList<>();
-//
-//        //二进制拆分，转换为01背包
-//        for (int i = 0; i < count.length; i++) {
-//            for (int j = 1; j <= count[i]; j = j << 1) {
-//                listWeights.add(weights[i] * j);
-//                listValues.add(values[i] * j);
-//                count[i] = count[i] - j;
-//            }
-//            if (count[i] > 0) {
-//                listWeights.add(weights[i] * count[i]);
-//                listValues.add(values[i] * count[i]);
-//            }
-//        }
-//
-//        int[][] dp = new int[listWeights.size() + 1][bagWeight + 1];
-//
-//        for (int i = 1; i <= listWeights.size(); i++) {
-//            for (int j = 1; j <= bagWeight; j++) {
-//                if (listWeights.get(i - 1) > j) {
-//                    dp[i][j] = dp[i - 1][j];
-//                } else {
-//                    dp[i][j] = Math.max(dp[i - 1][j],
-//                            dp[i - 1][j - listWeights.get(i - 1)] + listValues.get(i - 1));
-//                }
-//            }
-//        }
-//
-//        return dp[listWeights.size()][bagWeight];
-//    }
+    /**
+     * 完全背包 容量正好为j的最大价值
+     * dp[i][j]：前i件物品容量为j的最大价值
+     * dp[i][j] = dp[i-1][j]                                          (weights[i-1] > j)
+     * dp[i][j] = max(dp[i-1][j], dp[i][j-weights[i-1]] + values[i-1]) (weights[i-1] <= j)
+     * 时间复杂度O(mn)，空间复杂度O(mn) (m=weights.length, n=bagWeight) (使用滚动数组优化空间复杂度为O(n))
+     *
+     * @param weights
+     * @param values
+     * @param bagWeight
+     * @return
+     */
+    public int knapsack8(int[] weights, int[] values, int bagWeight) {
+        int[][] dp = new int[weights.length + 1][bagWeight + 1];
+
+        //dp初始化，前0件物品容量为0的最大价值为0
+        dp[0][0] = 0;
+
+        //dp初始化，前0件物品不存在容量为1-bagWeight的最大价值
+        for (int j = 1; j <= bagWeight; j++) {
+            dp[0][j] = -INF;
+        }
+
+        for (int i = 1; i <= weights.length; i++) {
+            for (int j = 0; j <= bagWeight; j++) {
+                if (weights[i - 1] > j) {
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - weights[i - 1]] + values[i - 1]);
+                }
+            }
+        }
+
+        return dp[weights.length][bagWeight];
+    }
+
+    /**
+     * 多重背包(朴素解法) 容量正好为j的最大价值
+     * dp[i][j]：前i件物品在容量为j的情况下的最大价值
+     * dp[i][j] = max(dp[i-1][j], dp[i-1][j-weights[i-1]*k] + values[i-1]*k) (weights[i-1]*k <= j) (0 <= k <= count[i-1])
+     * 时间复杂度O(mnl)，空间复杂度O(mn) (m=weights.length, n=bagWeight，l=max(count[i])) (使用滚动数组优化空间复杂度为O(n))
+     *
+     * @param weights
+     * @param values
+     * @param count
+     * @param bagWeight
+     * @return
+     */
+    public int knapsack9(int[] weights, int[] values, int[] count, int bagWeight) {
+        int[][] dp = new int[weights.length + 1][bagWeight + 1];
+
+        //dp初始化，前0件物品容量为0的最大价值为0
+        dp[0][0] = 0;
+
+        //dp初始化，前0件物品不存在容量为1-bagWeight的最大价值
+        for (int j = 1; j <= bagWeight; j++) {
+            dp[0][j] = -INF;
+        }
+
+        for (int i = 1; i <= weights.length; i++) {
+            for (int j = 0; j <= bagWeight; j++) {
+                //dp初始化，前i件物品容量为j的最大价值为前i-1件物品容量为j的最大价值
+                dp[i][j] = dp[i - 1][j];
+
+                for (int k = 0; k <= count[i - 1]; k++) {
+                    if (weights[i - 1] * k <= j) {
+                        dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - weights[i - 1] * k] + values[i - 1] * k);
+                    }
+                }
+            }
+        }
+
+        return dp[weights.length][bagWeight];
+    }
+
+    /**
+     * 多重背包(二进制拆分) 容量正好为j的最大价值
+     * 物品count[i]拆分为1+2+4+...+2^(k-1)+count[i]-2^k+1作为不同的物品，拆分后的物品可以表示1-count[i]中任意的值，即转换为01背包，
+     * 如果第i件物品有13个，13拆分为1+2+4+6，转换为4种不同的物品
+     * dp[i][j]：前i件物品在容量为j的情况下的最大价值
+     * dp[i][j] = dp[i-1][j]                                                             (weightsList.get(i-1) > j)
+     * dp[i][j] = max(dp[i-1][j], dp[i-1][j-weightsList.get(i-1)] + valuesList.get(i-1)) (weightsList.get(i-1) <= j)
+     * 时间复杂度O(mn)，空间复杂度O(mn) (m=weightsList.size(), n=bagWeight) (使用滚动数组优化空间复杂度为O(n))
+     *
+     * @param weights
+     * @param values
+     * @param count
+     * @param bagWeight
+     * @return
+     */
+    public int knapsack10(int[] weights, int[] values, int[] count, int bagWeight) {
+        //转换为01背包后的物品重量集合
+        List<Integer> weightsList = new ArrayList<>();
+        //转换为01背包后的物品价值集合
+        List<Integer> valuesList = new ArrayList<>();
+
+        //二进制拆分，转换为01背包
+        for (int i = 0; i < count.length; i++) {
+            int temp = 1;
+
+            //物品count[i]拆分为1+2+4+...+2^(k-1)+count[i]-2^k+1作为不同的物品，
+            //拆分后的物品可以表示1-count[i]中任意的值，即转换为01背包
+            while (count[i] > temp) {
+                weightsList.add(weights[i] * temp);
+                valuesList.add(values[i] * temp);
+                count[i] = count[i] - temp;
+                temp = temp << 1;
+            }
+
+            //count[i]都拆分为2^k之后还有剩余部分，剩余部分也作为一个新的物品
+            if (count[i] > 0) {
+                weightsList.add(weights[i] * count[i]);
+                valuesList.add(values[i] * count[i]);
+            }
+        }
+
+        int[][] dp = new int[weightsList.size() + 1][bagWeight + 1];
+
+        //dp初始化，前0件物品容量为0的最大价值为0
+        dp[0][0] = 0;
+
+        //dp初始化，前0件物品不存在容量为1-bagWeight的最大价值
+        for (int j = 1; j <= bagWeight; j++) {
+            dp[0][j] = -INF;
+        }
+
+        for (int i = 1; i <= weightsList.size(); i++) {
+            for (int j = 0; j <= bagWeight; j++) {
+                if (weightsList.get(i - 1) > j) {
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - weightsList.get(i - 1)] + valuesList.get(i - 1));
+                }
+            }
+        }
+
+        return dp[weightsList.size()][bagWeight];
+    }
 }
