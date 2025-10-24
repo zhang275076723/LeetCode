@@ -9,6 +9,7 @@ import java.util.List;
  * @Description 背包问题 华为面试题 动态规划类比Problem198、Problem213、Problem256、Problem265、Problem279、Problem322、Problem338、Problem343、Problem377、Problem416、Problem474、Problem494、Problem518、Problem746、Problem983、Problem1340、Problem1388、Problem1444、Problem1473、Offer14、Offer14_2、Offer60、CircleBackToOrigin
  */
 public class Knapsack {
+    //最大值为int最大值除以2，避免最大值加1在int范围内溢出
     private final int INF = Integer.MAX_VALUE / 2;
 
     public static void main(String[] args) {
@@ -55,7 +56,7 @@ public class Knapsack {
     /**
      * 01背包 容量正好为j的最大价值 (华为面试题)
      * dp[i][j]：前i件物品容量为j的最大价值
-     * dp[i][j] = dp[i-1][j]                                            (weights[i-1] > j)
+     * dp[i][j] = dp[i-1][j]                                             (weights[i-1] > j)
      * dp[i][j] = max(dp[i-1][j], dp[i-1][j-weights[i-1]] + values[i-1]) (weights[i-1] <= j)
      * 时间复杂度O(mn)，空间复杂度O(mn) (m=weights.length, n=bagWeight) (使用滚动数组优化空间复杂度为O(n))
      *
@@ -91,7 +92,7 @@ public class Knapsack {
     /**
      * 01背包 容量正好为j的最小价值
      * dp[i][j]：前i件物品容量为j的最小价值
-     * dp[i][j] = dp[i-1][j]                                            (weights[i-1] > j)
+     * dp[i][j] = dp[i-1][j]                                             (weights[i-1] > j)
      * dp[i][j] = min(dp[i-1][j], dp[i-1][j-weights[i-1]] + values[i-1]) (weights[i-1] <= j)
      * 时间复杂度O(mn)，空间复杂度O(mn) (m=weights.length, n=bagWeight) (使用滚动数组优化空间复杂度为O(n))
      *
@@ -127,7 +128,7 @@ public class Knapsack {
     /**
      * 01背包 容量最多为j的最大价值
      * dp[i][j]：前i件物品容量最多为j的最大价值
-     * dp[i][j] = dp[i-1][j]                                            (weights[i-1] > j)
+     * dp[i][j] = dp[i-1][j]                                             (weights[i-1] > j)
      * dp[i][j] = max(dp[i-1][j], dp[i-1][j-weights[i-1]] + values[i-1]) (weights[i-1] <= j)
      * 时间复杂度O(mn)，空间复杂度O(mn) (m=weights.length, n=bagWeight) (使用滚动数组优化空间复杂度为O(n))
      *
@@ -158,10 +159,10 @@ public class Knapsack {
     }
 
     /**
-     * 01背包 容量最少为j的最小价值(内层循环从大往小遍历)
+     * 01背包 容量最少为j的最小价值
      * dp[i][j]：前i件物品容量最少为j的最小价值
-     * dp[i][j] = min(dp[i-1][j], dp[i-1][0] + values[i-1])             (weights[i-1] > j)
-     * dp[i][j] = min(dp[i-1][j], dp[i-1][j-weights[i-1]] + values[i-1]) (s[i-1] <= j)
+     * dp[i][j] = min(dp[i-1][j], dp[i-1][0] + values[i-1])              (weights[i-1] > j)
+     * dp[i][j] = min(dp[i-1][j], dp[i-1][j-weights[i-1]] + values[i-1]) (weights[i-1] <= j)
      * 时间复杂度O(mn)，空间复杂度O(mn) (m=weights.length, n=bagWeight) (使用滚动数组优化空间复杂度为O(n))
      *
      * @param weights
@@ -181,8 +182,9 @@ public class Knapsack {
         }
 
         for (int i = 1; i <= weights.length; i++) {
-            //注意：容量最少为j的最小价值的内层循环是从大往小遍历
-            for (int j = bagWeight; j >= 0; j--) {
+            for (int j = 0; j <= bagWeight; j++) {
+                //注意：weights[i-1]>j时，dp[i][j]还需要考虑到dp[i-1][0]，
+                //即前i-1件物品容量最少为0的最小价值加上第i件物品的价值values[i-1]构成的最小价值
                 if (weights[i - 1] > j) {
                     dp[i][j] = Math.min(dp[i - 1][j], dp[i - 1][0] + values[i - 1]);
                 } else {
@@ -197,7 +199,7 @@ public class Knapsack {
     /**
      * 01背包 容量正好为j的方案数
      * dp[i][j]：前i件物品容量为j的方案数
-     * dp[i][j] = dp[i-1][j]                          (weights[i-1] > j)
+     * dp[i][j] = dp[i-1][j]                           (weights[i-1] > j)
      * dp[i][j] = dp[i-1][j] + dp[i-1][j-weights[i-1]] (weights[i-1] <= j)
      * 时间复杂度O(mn)，空间复杂度O(mn) (m=weights.length, n=bagWeight) (使用滚动数组优化空间复杂度为O(n))
      *
@@ -232,7 +234,7 @@ public class Knapsack {
     /**
      * 01背包 容量最多为j的方案数
      * dp[i][j]：前i件物品容量最多为j的方案数
-     * dp[i][j] = dp[i-1][j]                          (weights[i-1] > j)
+     * dp[i][j] = dp[i-1][j]                           (weights[i-1] > j)
      * dp[i][j] = dp[i-1][j] + dp[i-1][j-weights[i-1]] (weights[i-1] <= j)
      * 时间复杂度O(mn)，空间复杂度O(mn) (m=weights.length, n=bagWeight) (使用滚动数组优化空间复杂度为O(n))
      *
@@ -262,9 +264,9 @@ public class Knapsack {
     }
 
     /**
-     * 01背包 容量最少为j的方案数(内层循环从大往小遍历)
+     * 01背包 容量最少为j的方案数
      * dp[i][j]：前i件物品容量最少为j的方案数
-     * dp[i][j] = dp[i-1][j] + dp[i-1][0]             (weights[i-1] > j)
+     * dp[i][j] = dp[i-1][j] + dp[i-1][0]              (weights[i-1] > j)
      * dp[i][j] = dp[i-1][j] + dp[i-1][j-weights[i-1]] (weights[i-1] <= j)
      * 时间复杂度O(mn)，空间复杂度O(mn) (m=weights.length, n=bagWeight) (使用滚动数组优化空间复杂度为O(n))
      *
@@ -284,8 +286,9 @@ public class Knapsack {
         }
 
         for (int i = 1; i <= weights.length; i++) {
-            //注意：容量最少为j的方案数的内层循环是从大往小遍历
-            for (int j = bagWeight; j >= 0; j--) {
+            for (int j = 0; j <= bagWeight; j++) {
+                //注意：weights[i-1]>j时，dp[i][j]还需要考虑到dp[i-1][0]，
+                //即前i-1件物品容量最少为0的方案数加上第i件物品构成的方案数
                 if (weights[i - 1] > j) {
                     dp[i][j] = dp[i - 1][j] + dp[i - 1][0];
                 } else {
@@ -300,7 +303,7 @@ public class Knapsack {
     /**
      * 完全背包 容量正好为j的最大价值
      * dp[i][j]：前i件物品容量为j的最大价值
-     * dp[i][j] = dp[i-1][j]                                          (weights[i-1] > j)
+     * dp[i][j] = dp[i-1][j]                                           (weights[i-1] > j)
      * dp[i][j] = max(dp[i-1][j], dp[i][j-weights[i-1]] + values[i-1]) (weights[i-1] <= j)
      * 时间复杂度O(mn)，空间复杂度O(mn) (m=weights.length, n=bagWeight) (使用滚动数组优化空间复杂度为O(n))
      *
