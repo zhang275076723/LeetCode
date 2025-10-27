@@ -100,8 +100,10 @@ public class Problem188 {
         }
 
         for (int i = 1; i < prices.length; i++) {
-            //保存上次状态，因为上次状态会在本次发生变化
+            //保存上次dp，用于更新本次dp
             int[][] temp = Arrays.copyOf(dp, dp.length);
+
+            //注意：二维数组通过Arrays.copyOf必须逐行复制，不能整体复制，避免浅拷贝
 
             for (int j = 0; j < k; j++) {
                 if (j == 0) {

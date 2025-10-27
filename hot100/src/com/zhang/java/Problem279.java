@@ -19,7 +19,7 @@ package com.zhang.java;
  * 1 <= n <= 10^4
  */
 public class Problem279 {
-    //最大值为int最大值除以2，避免最大值加1在int范围内溢出
+    //最大值为int最大值除以2，避免相加在int范围内溢出
     private final int INF = Integer.MAX_VALUE / 2;
 
     public static void main(String[] args) {

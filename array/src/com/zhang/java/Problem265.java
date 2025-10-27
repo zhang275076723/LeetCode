@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2023/9/29 08:45
  * @Author zsy
- * @Description 粉刷房子 II 类比Problem256、Problem1473 动态规划类比Problem198、Problem213、Problem256、Problem279、Problem322、Problem338、Problem343、Problem377、Problem416、Problem474、Problem494、Problem518、Problem746、Problem983、Problem1340、Problem1388、Problem1444、Problem1473、Offer14、Offer14_2、Offer60、CircleBackToOrigin、Knapsack
+ * @Description 粉刷房子 II 类比Problem256、Problem276、Problem1473 动态规划类比Problem198、Problem213、Problem256、Problem279、Problem322、Problem338、Problem343、Problem377、Problem416、Problem474、Problem494、Problem518、Problem746、Problem983、Problem1340、Problem1388、Problem1444、Problem1473、Offer14、Offer14_2、Offer60、CircleBackToOrigin、Knapsack
  * 假如有一排房子共有 n 幢，每个房子可以被粉刷成 k 种颜色中的一种。
  * 房子粉刷成不同颜色的花费成本也是不同的。
  * 你需要粉刷所有的房子并且使其相邻的两个房子颜色不能相同。
@@ -38,23 +38,23 @@ public class Problem265 {
 
     /**
      * 动态规划
-     * dp[i][j]：前i个房子，最后一个房子粉刷成第j种颜色的最小花费(房子、颜色的下标索引从0开始)
-     * dp[i][j] = min(dp[i-1][m] + costs[i][j]) (0 <= m < k，并且m != j)
-     * 时间复杂度O(nk^2)，空间复杂度O(nk)
+     * dp[i][j]：前i个房子最后一个房子粉刷成第j种颜色的最小花费
+     * dp[i][j] = min(dp[i-1][m]) + costs[i-1][j] (0 <= m < k) (m != j)
+     * 时间复杂度O(n*k^2)，空间复杂度O(nk)
      *
      * @param costs
      * @return
      */
     public int minCost(int[][] costs) {
         int k = costs[0].length;
-        int[][] dp = new int[costs.length][k];
+        int[][] dp = new int[costs.length + 1][k];
 
-        //dp初始化
+        //dp初始化，前0个房子最后一个房子粉刷成第j种颜色的最小花费为0
         for (int j = 0; j < k; j++) {
-            dp[0][j] = costs[0][j];
+            dp[0][j] = 0;
         }
 
-        for (int i = 1; i < costs.length; i++) {
+        for (int i = 1; i <= costs.length; i++) {
             for (int j = 0; j < k; j++) {
                 dp[i][j] = Integer.MAX_VALUE;
 
@@ -63,7 +63,7 @@ public class Problem265 {
                         continue;
                     }
 
-                    dp[i][j] = Math.min(dp[i][j], dp[i - 1][m] + costs[i][j]);
+                    dp[i][j] = Math.min(dp[i][j], dp[i - 1][m]) + costs[i - 1][j];
                 }
             }
         }
@@ -71,7 +71,7 @@ public class Problem265 {
         int result = Integer.MAX_VALUE;
 
         for (int j = 0; j < k; j++) {
-            result = Math.min(result, dp[costs.length - 1][j]);
+            result = Math.min(result, dp[costs.length][j]);
         }
 
         return result;
@@ -79,7 +79,7 @@ public class Problem265 {
 
     /**
      * 动态规划优化，使用滚动数组
-     * 时间复杂度O(nk^2)，空间复杂度O(k)
+     * 时间复杂度O(n*k^2)，空间复杂度O(k)
      *
      * @param costs
      * @return
@@ -88,13 +88,13 @@ public class Problem265 {
         int k = costs[0].length;
         int[] dp = new int[k];
 
-        //dp初始化
+        //dp初始化，前0个房子最后一个房子粉刷成第j种颜色的最小花费为0
         for (int j = 0; j < k; j++) {
-            dp[j] = costs[0][j];
+            dp[j] = 0;
         }
 
-        for (int i = 1; i < costs.length; i++) {
-            //保存粉刷到前i-1个房子的dp状态，用于本次dp更新
+        for (int i = 1; i <= costs.length; i++) {
+            //保存上次粉刷到前i-1个房子的dp状态，用于本次dp更新
             int[] temp = Arrays.copyOf(dp, k);
 
             for (int j = 0; j < k; j++) {
@@ -105,7 +105,7 @@ public class Problem265 {
                         continue;
                     }
 
-                    dp[j] = Math.min(dp[j], temp[m] + costs[i][j]);
+                    dp[j] = Math.min(dp[j], temp[m]) + costs[i - 1][j];
                 }
             }
         }
