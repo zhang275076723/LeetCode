@@ -9,7 +9,7 @@ import java.util.List;
  * @Description 背包问题 华为面试题 动态规划类比Problem198、Problem213、Problem256、Problem265、Problem279、Problem322、Problem338、Problem343、Problem377、Problem416、Problem474、Problem494、Problem518、Problem746、Problem983、Problem1340、Problem1388、Problem1444、Problem1473、Offer14、Offer14_2、Offer60、CircleBackToOrigin
  */
 public class Knapsack {
-    //最大值为int最大值除以2，避免最大值加1在int范围内溢出
+    //最大值为int最大值除以2，避免相加在int范围内溢出
     private final int INF = Integer.MAX_VALUE / 2;
 
     public static void main(String[] args) {
