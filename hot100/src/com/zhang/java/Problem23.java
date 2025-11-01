@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 /**
  * @Date 2022/4/16 10:12
  * @Author zsy
- * @Description 合并K个升序链表 字节面试题 链表类比Problem21、Problem24、Problem25、Problem148、Problem378 归并排序类比Problem148、Problem315、Problem327、Problem493、Offer51、CalculateSmallSum
+ * @Description 合并K个升序链表 字节面试题 链表类比Problem21、Problem24、Problem25、Problem148 归并排序类比Problem148、Problem315、Problem327、Problem493、Offer51、CalculateSmallSum
  * 给你一个链表数组，每个链表都已经按升序排列。
  * 请你将所有链表合并到一个升序链表中，返回合并后的链表。
  * <p>

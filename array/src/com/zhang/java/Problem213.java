@@ -43,14 +43,6 @@ public class Problem213 {
      * @return
      */
     public int rob(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return -1;
-        }
-
-        if (nums.length == 1) {
-            return nums[0];
-        }
-
         int max1 = robInRange(nums, 0, nums.length - 2);
         int max2 = robInRange(nums, 1, nums.length - 1);
 
@@ -65,14 +57,6 @@ public class Problem213 {
      * @return
      */
     public int rob2(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return -1;
-        }
-
-        if (nums.length == 1) {
-            return nums[0];
-        }
-
         int max1 = robInRange2(nums, 0, nums.length - 2);
         int max2 = robInRange2(nums, 1, nums.length - 1);
 

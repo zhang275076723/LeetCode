@@ -40,10 +40,6 @@ public class Problem312 {
      * @return
      */
     public int maxCoins(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return 0;
-        }
-
         //辅助数组，在首尾各添加1，如果要戳的气球是第一个元素或最后一个元素，当前气球索引前或后超出边界，设置为1方便处理边界
         int[] arr = new int[nums.length + 2];
         arr[0] = 1;

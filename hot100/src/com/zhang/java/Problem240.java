@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/22 8:50
  * @Author zsy
- * @Description 搜索二维矩阵 II 类比Problem74、Problem378 同Offer4
+ * @Description 搜索二维矩阵 II 类比Problem74、Problem378、Offer4、Interview_10_09 同Offer4、Interview_10_09
  * 编写一个高效的算法来搜索 m x n 矩阵 matrix 中的一个目标值 target 。该矩阵具有以下特性：
  * 每行的元素从左到右升序排列。
  * 每列的元素从上到下升序排列。
@@ -49,8 +49,8 @@ public class Problem240 {
     }
 
     /**
-     * 类比二分查找树
-     * 从右上角开始查找，如果等于当前元素，则找到；如果比当前元素小，则往左找；如果比当前元素大，则往下找
+     * 二分查找
+     * 类比二分查找树，从右上角开始遍历，target比当前元素大，则往下一行遍历；target比当前元素小，则往左一列遍历
      * 注意：也可以从左下角往右上角遍历
      * 时间复杂度O(m+n)，空间复杂度O(1)
      *

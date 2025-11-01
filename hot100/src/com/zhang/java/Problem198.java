@@ -38,14 +38,6 @@ public class Problem198 {
      * @return
      */
     public int rob(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return -1;
-        }
-
-        if (nums.length == 1) {
-            return nums[0];
-        }
-
         int[] dp = new int[nums.length];
         //dp初始化
         dp[0] = nums[0];
@@ -66,14 +58,6 @@ public class Problem198 {
      * @return
      */
     public int rob2(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return -1;
-        }
-
-        if (nums.length == 1) {
-            return nums[0];
-        }
-
         //dp初始化，dp[i-2]
         int p = nums[0];
         //dp初始化，dp[i-1]
