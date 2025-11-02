@@ -96,8 +96,9 @@ public class Problem1756 {
         public MRUQueue2(int n) {
             //最多调用fetch()2000次，每次需要将第k个元素拼接到末尾，所以数组长度要加上2000
             arr = new int[n + 1 + 2000];
-            //最多调用fetch()2000次，每次需要将第k个元素拼接到末尾，所以数组长度要加上2000
-            segmentTree = new SegmentTree(n + 2000);
+            //数组元素最小为1，则左边界为1
+            //最多调用fetch()2000次，每次需要将第k个元素拼接到末尾，数组长度最多加上2000，则左边界为n+2000
+            segmentTree = new SegmentTree(1, n + 2000);
             count = n;
 
             //1-n元素初始化
@@ -154,8 +155,8 @@ public class Problem1756 {
         private static class SegmentTree {
             private final SegmentTreeNode root;
 
-            public SegmentTree(int n) {
-                root = new SegmentTreeNode(1, n);
+            public SegmentTree(int leftBound, int rightBound) {
+                root = new SegmentTreeNode(leftBound, rightBound);
             }
 
             public int query(SegmentTreeNode node, int queryLeft, int queryRight) {
