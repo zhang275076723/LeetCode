@@ -105,8 +105,7 @@ public class Interview_10_10 {
         private final SegmentTree segmentTree;
 
         public StreamRank2() {
-            //元素的左右边界
-            //左边界初始化为较小的数，如果初始化为int最小值，在求mid需要转化为long，否则会溢出
+            //注意：左边界初始化为较小的数，如果初始化为int最小值，在求mid需要转化为long，否则会溢出
             segmentTree = new SegmentTree(Integer.MIN_VALUE / 2, 50000);
         }
 
