@@ -65,7 +65,7 @@ public class Problem2241 {
     static class ATM {
         //每种钞票的面值数组
         private final int[] cashArr;
-        //每种钞票的当前剩余数量数组
+        //每种钞票的面值当前剩余数量数组
         //使用long，避免int相加溢出
         private final long[] countArr;
 
@@ -90,11 +90,12 @@ public class Problem2241 {
                 amount = amount - cashArr[i] * result[i];
             }
 
-            //剩余钱无法取出，则返回[-1]
+            //ATM中钱在优先取较大面值的钞票的条件下无法凑成amount，则返回[-1]
             if (amount > 0) {
                 return new int[]{-1};
             }
 
+            //取出amount后，更新每种钞票的面值当前剩余数量
             for (int i = 0; i < result.length; i++) {
                 countArr[i] = countArr[i] - result[i];
             }

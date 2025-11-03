@@ -8,15 +8,14 @@ import java.util.Map;
 /**
  * @Date 2024/9/12 08:27
  * @Author zsy
- * @Description 设计日志存储系统 类比Problem401、Problem539、Problem2224
+ * @Description 设计日志存储系统 类比Problem539、Problem1154、Problem1360、Problem2224、Problem2409
  * 你将获得多条日志，每条日志都有唯一的 id 和 timestamp ，timestamp 是形如 Year:Month:Day:Hour:Minute:Second 的字符串，
  * 2017:01:01:23:59:59 ，所有值域都是零填充的十进制数。
  * 实现 LogSystem 类：
  * LogSystem() 初始化 LogSystem 对象
  * void put(int id, string timestamp) 给定日志的 id 和 timestamp ，将这个日志存入你的存储系统中。
- * int[] retrieve(string start, string end, string granularity) 返回在给定时间区间 [start, end]
- * （包含两端）内的所有日志的 id 。start 、end 和 timestamp 的格式相同，
- * granularity 表示考虑的时间粒度（例如，精确到 Day、Minute 等）。
+ * int[] retrieve(string start, string end, string granularity) 返回在给定时间区间 [start, end]（包含两端）内的所有日志的 id 。
+ * start 、end 和 timestamp 的格式相同，granularity 表示考虑的时间粒度（例如，精确到 Day、Minute 等）。
  * 例如 start = "2017:01:01:23:59:59"、end = "2017:01:02:23:59:59" 且 granularity = "Day"
  * 意味着需要查找从 Jan. 1st 2017 到 Jan. 2nd 2017 范围内的日志，可以忽略日志的 Hour、Minute 和 Second 。
  * <p>
@@ -60,7 +59,7 @@ public class Problem635 {
 
     /**
      * 模拟
-     * 将字符串类型时间转换为long类型秒存储，判断在范围内的日志id
+     * 将字符串类型时间转换为long类型的秒存储，判断在范围内的日志id
      */
     static class LogSystem {
         private final List<Log> list;
@@ -174,7 +173,7 @@ public class Problem635 {
         private static class Log {
             //日志id
             private int id;
-            //long类型的日志时间戳
+            //long类型的日志时间戳，单位为秒
             private long timestamp;
 
             public Log(int id, long timestamp) {

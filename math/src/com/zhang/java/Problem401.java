@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2024/3/11 08:40
  * @Author zsy
- * @Description 二进制手表 类比Problem539、Problem635、Problem2224 位运算类比Problem29、Problem136、Problem137、Problem190、Problem191、Problem201、Problem231、Problem260、Problem271、Problem326、Problem342、Problem371、Problem389、Problem405、Problem461、Problem477、Problem645、Problem898、Problem1290、Offer15、Offer56、Offer56_2、Offer64、Offer65、IPToInt 回溯+剪枝类比Problem17
+ * @Description 二进制手表 位运算类比Problem29、Problem136、Problem137、Problem190、Problem191、Problem201、Problem231、Problem260、Problem271、Problem326、Problem342、Problem371、Problem389、Problem405、Problem461、Problem477、Problem645、Problem898、Problem1290、Offer15、Offer56、Offer56_2、Offer64、Offer65、IPToInt 回溯+剪枝类比Problem17
  * 二进制手表顶部有 4 个 LED 代表 小时（0-11），底部的 6 个 LED 代表 分钟（0-59）。
  * 每个 LED 代表一个 0 或 1，最低位在右侧。
  * 例如，下面的二进制手表读取 "4:51" 。

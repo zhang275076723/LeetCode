@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/9/21 09:01
  * @Author zsy
- * @Description 转化时间需要的最少操作数 类比Problem2241 类比Problem401、Problem539、Problem635
+ * @Description 转化时间需要的最少操作数 类比Problem539、Problem635、Problem1154、Problem1360、Problem2409 类比Problem2241
  * 给你两个字符串 current 和 correct ，表示两个 24 小时制时间 。
  * 24 小时制时间 按 "HH:MM" 进行格式化，其中 HH 在 00 和 23 之间，而 MM 在 00 和 59 之间。
  * 最早的 24 小时制时间为 00:00 ，最晚的是 23:59 。
@@ -37,7 +37,7 @@ public class Problem2224 {
 
     /**
      * 模拟
-     * 统一转换为分钟，优先选择较大的时间来构成时间
+     * 计算current和correct到00:00的分钟数，两者相减得到需要转化的分钟数，优先选择较大的分钟进行操作
      * 时间复杂度O(1)，空间复杂度O(1)
      *
      * @param current
@@ -45,16 +45,19 @@ public class Problem2224 {
      * @return
      */
     public int convertTime(String current, String correct) {
+        //current到00:00的分钟数
         int time1 = Integer.parseInt(current.substring(0, 2)) * 60 + Integer.parseInt(current.substring(3, 5));
+        //correct到00:00的分钟数
         int time2 = Integer.parseInt(correct.substring(0, 2)) * 60 + Integer.parseInt(correct.substring(3, 5));
-        //time1始终小于time2，所以不需要加绝对值
+        //需要转化的分钟数
+        //注意：time1始终小于time2，所以不需要加绝对值
         int time = time2 - time1;
         //time变为0的最小操作次数
         int count = 0;
 
         int[] arr = {1, 5, 15, 60};
 
-        //优先选择较大的时间
+        //优先选择较大的分钟进行操作
         for (int i = arr.length - 1; i >= 0; i--) {
             count = count + time / arr[i];
             time = time - time / arr[i] * arr[i];

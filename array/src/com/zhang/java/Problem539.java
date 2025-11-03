@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Date 2024/2/19 09:03
  * @Author zsy
- * @Description 最小时间差 类比Problem401、Problem635、Problem2224 类比Problem128、Problem506、Problem561、Problem628、Problem747、Problem1200、Problem1509、Problem2144
+ * @Description 最小时间差 类比Problem635、Problem1154、Problem1360、Problem2224、Problem2409 类比Problem128、Problem506、Problem561、Problem628、Problem747、Problem1200、Problem1509、Problem2144
  * 给定一个 24 小时制（小时:分钟 "HH:MM"）的时间列表，找出列表中任意两个时间的最小时间差并以分钟数表示。
  * <p>
  * 输入：timePoints = ["23:59","00:00"]
@@ -31,7 +31,7 @@ public class Problem539 {
 
     /**
      * 排序
-     * 时间转化为分钟由小到大排序，相邻时间差和首尾时间差的最小值即为最小时间差
+     * 计算timePoints中时间到00:00的分钟数，分钟数由小到大排序，相邻时间差和首尾时间差的最小值即为最小时间差
      * 时间复杂度O(nlogn)，空间复杂度O(n) (归并排序的空间复杂度O(n))
      *
      * @param timePoints
@@ -48,7 +48,7 @@ public class Problem539 {
 
         for (int i = 0; i < timePoints.size(); i++) {
             String time = timePoints.get(i);
-            //当前时间对应的分钟数
+            //当前时间时间到00:00的分钟数
             int minute = 0;
             minute = Integer.parseInt(time.substring(0, 2)) * 60 + Integer.parseInt(time.substring(3));
             arr[i] = minute;
