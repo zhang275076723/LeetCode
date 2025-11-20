@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/7 11:29
  * @Author zsy
- * @Description 电梯调度 字节面试题 类比Problem834、Problem1838、Problem3241
+ * @Description 电梯调度 字节面试题 类比Problem834、Problem1838
  * 有一个特殊的电梯，只能从1楼载人，然后运输至某一楼（记为第N层）。
  * 现有若干乘客，每个乘客有一个自己想去的楼层，以数组表示：下标为乘客的id，数组中的内容为乘客想去的楼层。
  * 乘客在第N层下电梯后，需要爬楼梯到自己所去的楼层。
