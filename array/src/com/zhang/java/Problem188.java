@@ -1,7 +1,5 @@
 package com.zhang.java;
 
-import java.util.Arrays;
-
 /**
  * @Date 2022/11/15 16:56
  * @Author zsy
@@ -24,22 +22,24 @@ import java.util.Arrays;
  * 0 <= prices[i] <= 1000
  */
 public class Problem188 {
+    //最大值为int最大值除以2，避免相加在int范围内溢出
+    private final int INF = Integer.MAX_VALUE / 2;
+
     public static void main(String[] args) {
         Problem188 problem188 = new Problem188();
         int k = 2;
-//        int[] prices = {3, 2, 6, 5, 0, 3};
-        int[] prices = {1, 2, 3, 4, 5};
+        int[] prices = {3, 2, 6, 5, 0, 3};
         System.out.println(problem188.maxProfit(k, prices));
         System.out.println(problem188.maxProfit2(k, prices));
+        System.out.println(problem188.maxProfit3(k, prices));
     }
 
     /**
      * 动态规划
-     * dp[i][j][0]：到prices[i]那天，第j+1次买入，持有一只股票的最大利润
-     * dp[i][j][1]：到prices[i]那天，第j+1次卖出，不持有股票的最大利润
-     * dp[i][j][0] = max(dp[i-1][j][0], -prices[i])                (j == 0)
-     * dp[i][j][0] = max(dp[i-1][j][0], dp[i-1][j-1][1]-prices[i]) (j > 0)
-     * dp[i][j][1] = max(dp[i-1][j][1], dp[i-1][j][0]+prices[i])
+     * dp[i][j][0]：第i天最多交易j次，不持有股票的最大利润
+     * dp[i][j][1]：第i天最多交易j次，持有股票的最大利润
+     * dp[i][j][0] = max(dp[i-1][j][0],dp[i-1][j][1]+prices[i-1])
+     * dp[i][j][1] = max(dp[i-1][j][1],dp[i-1][j-1][0]-prices[i-1])
      * 时间复杂度O(nk)，空间复杂度O(nk)
      *
      * @param k
@@ -47,40 +47,36 @@ public class Problem188 {
      * @return
      */
     public int maxProfit(int k, int[] prices) {
-        if (prices == null || prices.length == 0 || k == 0) {
-            return 0;
+        int[][][] dp = new int[prices.length + 1][k + 1][2];
+
+        //dp初始化
+        //第0天最多交易j次，不持有股票的最大利润为0
+        //第0天最多交易j次，不存在持有股票的最大利润
+        for (int j = 0; j <= k; j++) {
+            dp[0][j][0] = 0;
+            dp[0][j][1] = -INF;
         }
 
-        //dp[][][0]：持有股票
-        //dp[][][1]：不持有股票
-        int[][][] dp = new int[prices.length][k][2];
-
-        //初始化，prices[0]那天，第1、2...k次买入，持有一只股票的最大利润为-prices[0]
-        for (int j = 0; j < k; j++) {
-            dp[0][j][0] = -prices[0];
+        //dp初始化
+        //第i天最多交易0次，不持有股票的最大利润为0
+        //第i天最多交易0次，不存在持有股票的最大利润
+        for (int i = 1; i <= prices.length; i++) {
+            dp[i][0][0] = 0;
+            dp[i][0][1] = -INF;
         }
 
-        for (int i = 1; i < prices.length; i++) {
-            for (int j = 0; j < k; j++) {
-                //对于第1次买入，需要特殊处理
-                if (j == 0) {
-                    dp[i][j][0] = Math.max(dp[i - 1][j][0], -prices[i]);
-                    dp[i][j][1] = Math.max(dp[i - 1][j][1], dp[i - 1][j][0] + prices[i]);
-                } else {
-                    dp[i][j][0] = Math.max(dp[i - 1][j][0], dp[i - 1][j - 1][1] - prices[i]);
-                    dp[i][j][1] = Math.max(dp[i - 1][j][1], dp[i - 1][j][0] + prices[i]);
-                }
+        for (int i = 1; i <= prices.length; i++) {
+            for (int j = 1; j <= k; j++) {
+                dp[i][j][0] = Math.max(dp[i - 1][j][0], dp[i - 1][j][1] + prices[i - 1]);
+                dp[i][j][1] = Math.max(dp[i - 1][j][1], dp[i - 1][j - 1][0] - prices[i - 1]);
             }
         }
 
-        //最后一天，第k次卖出，不持有股票的最大利润，即为所获取的最大利润
-        return dp[prices.length - 1][k - 1][1];
+        return dp[prices.length][k][0];
     }
 
     /**
-     * 动态规划优化，滚动数组
-     * dp[j][0]：到prices[i]那天，第j+1次买入，持有一只股票的最大利润
-     * dp[j][1]：到prices[i]那天，第j+1次卖出，不持有股票的最大利润
+     * 动态规划优化，使用滚动数组
      * 时间复杂度O(nk)，空间复杂度O(k)
      *
      * @param k
@@ -88,34 +84,82 @@ public class Problem188 {
      * @return
      */
     public int maxProfit2(int k, int[] prices) {
-        if (prices == null || prices.length == 0) {
-            return 0;
+        int[][] dp = new int[k + 1][2];
+
+        //dp初始化
+        //第0天最多交易j次，不持有股票的最大利润为0
+        //第0天最多交易j次，不存在持有股票的最大利润
+        for (int j = 0; j <= k; j++) {
+            dp[j][0] = 0;
+            dp[j][1] = -INF;
         }
 
-        int[][] dp = new int[k][2];
+        for (int i = 1; i <= prices.length; i++) {
+            int[][] temp = new int[k + 1][2];
 
-        //初始化，prices[0]那天，第1、2...k次买入，持有一只股票的最大利润为-prices[0]
-        for (int j = 0; j < k; j++) {
-            dp[j][0] = -prices[0];
+            for (int j = 1; j <= k; j++) {
+                temp[j][0] = Math.max(dp[j][0], dp[j][1] + prices[i - 1]);
+                temp[j][1] = Math.max(dp[j][1], dp[j - 1][0] - prices[i - 1]);
+            }
+
+            dp = temp;
         }
 
-        for (int i = 1; i < prices.length; i++) {
-            //保存上次dp，用于更新本次dp
-            int[][] temp = Arrays.copyOf(dp, dp.length);
+        return dp[k][0];
+    }
 
-            //注意：二维数组通过Arrays.copyOf必须逐行复制，不能整体复制，避免浅拷贝
+    /**
+     * 递归+记忆化搜索
+     * 时间复杂度O(nk)，空间复杂度O(nk)
+     *
+     * @param k
+     * @param prices
+     * @return
+     */
+    public int maxProfit3(int k, int[] prices) {
+        int[][][] dp = new int[prices.length + 1][k + 1][2];
 
-            for (int j = 0; j < k; j++) {
-                if (j == 0) {
-                    dp[j][0] = Math.max(temp[j][0], -prices[i]);
-                    dp[j][1] = Math.max(temp[j][1], temp[j][0] + prices[i]);
-                } else {
-                    dp[j][0] = Math.max(temp[j][0], temp[j - 1][1] - prices[i]);
-                    dp[j][1] = Math.max(temp[j][1], temp[j][0] + prices[i]);
-                }
+        for (int i = 0; i <= prices.length; i++) {
+            for (int j = 0; j <= k; j++) {
+                //初始化为int类型的最小值，表示当前dp未访问
+                dp[i][j][0] = Integer.MIN_VALUE;
+                dp[i][j][1] = Integer.MIN_VALUE;
             }
         }
 
-        return dp[k - 1][1];
+        //type为0：不持有股票的最大利润
+        //type为1：持有股票的最大利润
+        dfs(prices.length, k, 0, prices, dp);
+
+        return dp[prices.length][k][0];
+    }
+
+    private int dfs(int i, int j, int type, int[] prices, int[][][] dp) {
+        if (i == 0 || j == 0) {
+            //第0天最多交易j次，或者第i天最多交易0次，不持有股票的最大利润为0
+            if (type == 0) {
+                dp[i][j][type] = 0;
+            } else {
+                //第0天最多交易j次，或者第i天最多交易0次，不存在持有股票的最大利润
+                dp[i][j][type] = -INF;
+            }
+
+            return dp[i][j][type];
+        }
+
+        //当前dp已访问，直接返回当前dp
+        if (dp[i][j][type] != Integer.MIN_VALUE) {
+            return dp[i][j][type];
+        }
+
+        //type为0：不持有股票的最大利润
+        if (type == 0) {
+            dp[i][j][type] = Math.max(dfs(i - 1, j, 0, prices, dp), dfs(i - 1, j, 1, prices, dp) + prices[i - 1]);
+        } else {
+            //type为1：持有股票的最大利润
+            dp[i][j][type] = Math.max(dfs(i - 1, j, 1, prices, dp), dfs(i - 1, j - 1, 0, prices, dp) - prices[i - 1]);
+        }
+
+        return dp[i][j][type];
     }
 }

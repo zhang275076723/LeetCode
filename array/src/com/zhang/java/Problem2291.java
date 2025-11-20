@@ -51,7 +51,7 @@ public class Problem2291 {
     public int maximumProfit(int[] present, int[] future, int budget) {
         int[][] dp = new int[present.length + 1][budget + 1];
 
-        //dp初始化，购买前i-1支股票预算最多为0-budget的最大收益为0
+        //dp初始化，购买前0支股票预算最多为0-budget的最大收益为0
         for (int j = 0; j <= budget; j++) {
             dp[0][j] = 0;
         }
@@ -84,7 +84,7 @@ public class Problem2291 {
     public int maximumProfit2(int[] present, int[] future, int budget) {
         int[] dp = new int[budget + 1];
 
-        //dp初始化，购买前i-1支股票预算最多为0-budget的最大收益为0
+        //dp初始化，购买前0支股票预算最多为0-budget的最大收益为0
         for (int j = 0; j <= budget; j++) {
             dp[j] = 0;
         }
@@ -144,6 +144,7 @@ public class Problem2291 {
 
         dp[i][budget] = Math.max(dfs(i - 1, budget, present, future, dp),
                 dfs(i - 1, budget - present[i - 1], present, future, dp) + future[i - 1] - present[i - 1]);
+
         return dp[i][budget];
     }
 }

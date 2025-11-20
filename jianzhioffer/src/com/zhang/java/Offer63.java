@@ -27,59 +27,43 @@ public class Offer63 {
 
     /**
      * 动态规划
-     * dp[i]：到prices[i]那天获取的最大利润
-     * dp[i] = dp[i-1]                          (prices[i] < minPrice)
-     * dp[i] = max(dp[i-1], prices[i]-minPrice) (prices[i] >= minPrice)
+     * dp[i]：第i天的最大利润
+     * dp[i] = max(dp[i-1],prices[i-1]-minPrice) (minPrice：前i天股票价格的最小值)
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param prices
      * @return
      */
     public int maxProfit(int[] prices) {
-        if (prices == null || prices.length == 0) {
-            return 0;
+        int[] dp = new int[prices.length + 1];
+        //前i天的股票最小值
+        int minPrice = Integer.MAX_VALUE;
+
+        for (int i = 1; i <= prices.length; i++) {
+            minPrice = Math.min(minPrice, prices[i - 1]);
+            dp[i] = Math.max(dp[i - 1], prices[i - 1] - minPrice);
         }
 
-        int[] dp = new int[prices.length];
-        int minPrice = prices[0];
-
-        for (int i = 1; i < prices.length; i++) {
-            if (prices[i] < minPrice) {
-                minPrice = prices[i];
-                dp[i] = dp[i - 1];
-            } else {
-                dp[i] = Math.max(dp[i - 1], prices[i] - minPrice);
-            }
-        }
-
-        return dp[prices.length - 1];
+        return dp[prices.length];
     }
 
     /**
-     * 模拟
+     * 动态规划优化，使用滚动数组
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param prices
      * @return
      */
     public int maxProfit2(int[] prices) {
-        if (prices == null || prices.length == 0) {
-            return 0;
+        int dp = 0;
+        //前i天的股票最小值
+        int minPrice = Integer.MAX_VALUE;
+
+        for (int i = 1; i <= prices.length; i++) {
+            minPrice = Math.min(minPrice, prices[i - 1]);
+            dp = Math.max(dp, prices[i - 1] - minPrice);
         }
 
-        //遍历到第i天的最大利润
-        int max = 0;
-        //遍历到第i天的最低股票价格
-        int minPrice = prices[0];
-
-        for (int i = 1; i < prices.length; i++) {
-            if (prices[i] < minPrice) {
-                minPrice = prices[i];
-            } else {
-                max = Math.max(max, prices[i] - minPrice);
-            }
-        }
-
-        return max;
+        return dp;
     }
 }
