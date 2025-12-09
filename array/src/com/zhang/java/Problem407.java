@@ -179,12 +179,12 @@ public class Problem407 {
                 }
 
                 //当前节点(x1,y1)接雨水之后的高度waterHeight大于当前节点邻接节点(x2,y2)的高度heightMap[x2][y2]，
-                //则邻接节点能接到的雨水，能够接的雨水为waterHeight-heightMap[x2][y2]
+                //则邻接节点(x2,y2)能接到的雨水，能够接的雨水为waterHeight-heightMap[x2][y2]
                 if (waterHeight > heightMap[x2][y2]) {
                     result = result + waterHeight - heightMap[x2][y2];
                 }
 
-                //邻接节点入堆
+                //邻接节点(x2,y2)入堆
                 priorityQueue.offer(new int[]{x2, y2, Math.max(heightMap[x2][y2], waterHeight)});
                 visited[x2][y2] = true;
             }

@@ -65,7 +65,7 @@ public class Problem3241 {
     /**
      * dfs+动态规划
      * result[i]：从节点i出发，所有节点都被标记的时间，即节点i到其他节点的最大深度
-     * 第一次dfs，得到每个节点为根节点的树的最大深度、第二大深度、每个节点为根节点的树的最大深度通过哪个子节点得到maxDepthArr
+     * 第一次dfs，得到每个节点为根节点的树的最大深度、第二大深度、每个节点为根节点的树的最大深度通过哪个子节点得到depthArr
      * 第二次dfs，得到从每个节点出发，所有节点都被标记的时间result[i]
      * 注意：树中的边权不都为1，节点x到奇数节点y的边权为1，节点x到偶数节点y的边权为2
      * 时间复杂度O(n)，空间复杂度O(n)
@@ -98,57 +98,58 @@ public class Problem3241 {
         //arr[i][2]：节点i为根节点的树的最大深度通过哪个子节点得到
         //注意：第二大深度和最大深度不在同一个子树中
         //注意：节点i为根节点的树不能改变树的结构，即不能变换原树的根节点
-        int[][] maxDepthArr = new int[n][3];
+        //注意：树中的边权不都为1，节点x到奇数节点y的边权为1，节点x到偶数节点y的边权为2
+        int[][] depthArr = new int[n][3];
 
-        //得到每个节点为根节点的树的最大深度、第二大深度、每个节点为根节点的树的最大深度通过哪个子节点得到maxDepthArr
-        dfs(0, -1, graph, maxDepthArr);
+        //得到每个节点为根节点的树的最大深度、第二大深度、每个节点为根节点的树的最大深度通过哪个子节点得到depthArr
+        dfs(0, -1, graph, depthArr);
         //得到从每个节点出发，所有节点都被标记的时间result[i]
-        dfs(0, -1, 0, graph, maxDepthArr, result);
+        dfs(0, -1, 0, graph, depthArr, result);
 
         return result;
     }
 
-    private void dfs(int u, int parent, List<List<Integer>> graph, int[][] maxDepthArr) {
+    private void dfs(int u, int parent, List<List<Integer>> graph, int[][] depthArr) {
         for (int v : graph.get(u)) {
             if (v == parent) {
                 continue;
             }
 
-            dfs(v, u, graph, maxDepthArr);
+            dfs(v, u, graph, depthArr);
 
             //节点u到节点v为根节点的树的最大深度
-            int maxDepth = maxDepthArr[v][0];
+            int curDepth = depthArr[v][0];
 
             //注意：节点u到节点v的边，考虑节点v的奇偶性，而不是考虑节点u的奇偶性
             //节点u到偶数节点v的边权为2
             if (v % 2 == 0) {
-                maxDepth = maxDepth + 2;
+                curDepth = curDepth + 2;
             } else {
                 //节点u到奇数节点v的边权为1
-                maxDepth++;
+                curDepth++;
             }
 
             //更新最大深度和第二大深度
-            if (maxDepth > maxDepthArr[u][0]) {
-                maxDepthArr[u][1] = maxDepthArr[u][0];
-                maxDepthArr[u][0] = maxDepth;
-                maxDepthArr[u][2] = v;
-            } else if (maxDepth > maxDepthArr[u][1]) {
+            if (curDepth > depthArr[u][0]) {
+                depthArr[u][1] = depthArr[u][0];
+                depthArr[u][0] = curDepth;
+                depthArr[u][2] = v;
+            } else if (curDepth > depthArr[u][1]) {
                 //更新第二大深度
-                maxDepthArr[u][1] = maxDepth;
+                depthArr[u][1] = curDepth;
             }
         }
     }
 
     /**
-     * 节点u到其他节点的最大深度要么从节点u为根节点的树中找，要么从节点u为根节点的树中节点之外的其他节点中找，
-     * result[u]即为节点u为根节点的树的最大深度maxDepthArr[u][0]和节点u到节点u为根节点的树中节点之外的其他节点到节点u的最大深度fromUpMaxDepth两者中的较大值
+     * 节点u到其他节点的最大深度要么从节点u为根节点的树中找，要么从节点u为根节点的树之外的其他节点中找，
+     * result[u]即为节点u为根节点的树的最大深度depthArr[u][0]和节点u为根节点的树之外的其他节点到节点u的最大深度fromUpDepth两者中的较大值
      * <p>
-     * 例如：在计算result遍历到节点u时，已经得到节点u为根节点的树的最大深度maxDepthArr[u][0]，
-     * 节点u到节点u为根节点的树中节点之外的其他节点到节点u的最大深度fromUpMaxDepth，
-     * 则result[u]=max(maxDepthArr[u][0],fromUpMaxDepth)，
+     * 例如：在计算result遍历到节点u时，已经得到节点u为根节点的树的最大深度depthArr[u][0]，
+     * 节点u为根节点的树之外的其他节点到节点u的最大深度fromUpDepth，
+     * 则result[u]=max(depthArr[u][0],fromUpDepth)，
      * 从节点u向子节点v遍历时，需要根据节点v是否是节点u最大深度的子节点，
-     * 更新节点v到节点v为根节点的树中节点之外的其他节点到节点v的最大深度nextFromUpMaxDepth
+     * 更新节点v为根节点的树之外的其他节点到节点v的最大深度nextFromUpDepth
      * <                       a
      * <                  /         \
      * <                 b            c
@@ -161,42 +162,42 @@ public class Problem3241 {
      *
      * @param u
      * @param parent
-     * @param fromUpMaxDepth 节点u到节点u为根节点的树中节点之外的其他节点到节点u的最大深度
+     * @param fromUpDepth 节点u为根节点的树之外的其他节点到节点u的最大深度
      * @param graph
-     * @param maxDepthArr
+     * @param depthArr
      * @param result
      */
-    private void dfs(int u, int parent, int fromUpMaxDepth, List<List<Integer>> graph, int[][] maxDepthArr, int[] result) {
-        //节点u到其他节点的最大深度要么从节点u为根节点的树中找，要么从节点u为根节点的树中节点之外的其他节点中找，
-        //result[u]即为节点u为根节点的树的最大深度maxDepthArr[u][0]和节点u到节点u为根节点的树中节点之外的其他节点到节点u的最大深度fromUpMaxDepth两者中的较大值
-        result[u] = Math.max(maxDepthArr[u][0], fromUpMaxDepth);
+    private void dfs(int u, int parent, int fromUpDepth, List<List<Integer>> graph, int[][] depthArr, int[] result) {
+        //节点u到其他节点的最大深度要么从节点u为根节点的树中找，要么从节点u为根节点的树之外的其他节点中找，
+        //result[u]即为节点u为根节点的树的最大深度depthArr[u][0]和节点u为根节点的树之外的其他节点到节点u的最大深度fromUpDepth两者中的较大值
+        result[u] = Math.max(depthArr[u][0], fromUpDepth);
 
         for (int v : graph.get(u)) {
             if (v == parent) {
                 continue;
             }
 
-            //节点v到节点v为根节点的树中节点之外的其他节点到节点v的最大深度
-            int nextFromUpMaxDepth;
+            //节点v为根节点的树之外的其他节点到节点v的最大深度
+            int nextFromUpDepth;
 
             //节点v为节点u最大深度的子节点，则考虑节点u到其他节点的第二大深度
-            if (v == maxDepthArr[u][2]) {
-                nextFromUpMaxDepth = Math.max(fromUpMaxDepth, maxDepthArr[u][1]);
+            if (v == depthArr[u][2]) {
+                nextFromUpDepth = Math.max(fromUpDepth, depthArr[u][1]);
             } else {
                 //节点v不是节点u最大深度的子节点，则考虑节点u到其他节点的最大深度
-                nextFromUpMaxDepth = Math.max(fromUpMaxDepth, maxDepthArr[u][0]);
+                nextFromUpDepth = Math.max(fromUpDepth, depthArr[u][0]);
             }
 
             //注意：节点v到节点u的边，考虑节点u的奇偶性，而不是考虑节点v的奇偶性
             //节点v到偶数节点u的边权为2
             if (u % 2 == 0) {
-                nextFromUpMaxDepth = nextFromUpMaxDepth + 2;
+                nextFromUpDepth = nextFromUpDepth + 2;
             } else {
                 //节点v到奇数节点u的边权为1
-                nextFromUpMaxDepth++;
+                nextFromUpDepth++;
             }
 
-            dfs(v, u, nextFromUpMaxDepth, graph, maxDepthArr, result);
+            dfs(v, u, nextFromUpDepth, graph, depthArr, result);
         }
     }
 }
