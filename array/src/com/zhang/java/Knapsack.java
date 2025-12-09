@@ -246,7 +246,7 @@ public class Knapsack {
         int[][] dp = new int[weights.length + 1][bagWeight + 1];
 
         //dp初始化，前0件物品容量最多为0-bagWeight的方案数为1
-        for (int j = 1; j <= bagWeight; j++) {
+        for (int j = 0; j <= bagWeight; j++) {
             dp[0][j] = 1;
         }
 
