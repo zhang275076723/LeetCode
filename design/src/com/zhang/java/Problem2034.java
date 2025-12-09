@@ -5,15 +5,16 @@ import java.util.*;
 /**
  * @Date 2024/11/22 08:49
  * @Author zsy
- * @Description 股票价格波动 延迟删除类比Problem480、Problem855、Problem2349、Problem2353 股票类比Problem121、Problem122、Problem123、Problem188、Problem309、Problem714、Problem901、Problem2110、Problem2291、Offer63 有序集合类比Problem220、Problem352、Problem363、Problem855、Problem981、Problem1146、Problem1348、Problem1912、Problem2071、Problem2349、Problem2353、Problem2502、Problem2590
+ * @Description 股票价格波动 延迟删除类比Problem480、Problem855、Problem2349、Problem2353 股票类比Problem121、Problem122、Problem123、Problem188、Problem309、Problem714、Problem901、Problem2110、Problem2291、Problem2898、Problem3562、Problem3573、Problem3652、Offer63 有序集合类比Problem220、Problem352、Problem363、Problem855、Problem981、Problem1146、Problem1348、Problem1912、Problem2071、Problem2349、Problem2353、Problem2502、Problem2590
  * 给你一支股票价格的数据流。
  * 数据流中每一条记录包含一个 时间戳 和该时间点股票对应的 价格 。
  * 不巧的是，由于股票市场内在的波动性，股票价格记录可能不是按时间顺序到来的。
- * 某些情况下，有的记录可能是错的。如果两个有相同时间戳的记录出现在数据流中，
- * 前一条记录视为错误记录，后出现的记录 更正 前一条错误的记录。
+ * 某些情况下，有的记录可能是错的。
+ * 如果两个有相同时间戳的记录出现在数据流中，前一条记录视为错误记录，后出现的记录 更正 前一条错误的记录。
  * 请你设计一个算法，实现：
  * 更新 股票在某一时间戳的股票价格，如果有之前同一时间戳的价格，这一操作将 更正 之前的错误价格。
- * 找到当前记录里 最新股票价格 。最新股票价格 定义为时间戳最晚的股票价格。
+ * 找到当前记录里 最新股票价格 。
+ * 最新股票价格 定义为时间戳最晚的股票价格。
  * 找到当前记录里股票的 最高价格 。
  * 找到当前记录里股票的 最低价格 。
  * 请你实现 StockPrice 类：
@@ -74,6 +75,7 @@ public class Problem2034 {
         //key：时间戳，value：arr[0]：时间戳，arr[1]：当前时间戳对应的股票价格
         private final Map<Integer, int[]> map;
         //有序集合，按照arr[1]股票价格由小到大存储
+        //arr[0]：时间戳，arr[1]：当前时间戳对应的股票价格
         //注意：有序集合中key唯一并且不能修改，如果要修改，则需要先删除，再添加
         private final TreeSet<int[]> treeSet;
         //当前股票的最大时间戳，用于current()获取最新股票价格
@@ -84,6 +86,8 @@ public class Problem2034 {
             treeSet = new TreeSet<>(new Comparator<int[]>() {
                 @Override
                 public int compare(int[] arr1, int[] arr2) {
+                    //注意：虽然不需要对arr[0]时间戳进行排序，但是TreeSet中添加数组通过compare()判断添加的数组是否重复，
+                    //避免arr[1]相同但arr[0]不同的数组无法加入到set中，必须对arr[0]时间戳进行排序
                     if (arr1[1] != arr2[1]) {
                         return arr1[1] - arr2[1];
                     } else {

@@ -123,7 +123,7 @@ public class Problem1172 {
         //存储栈的list集合
         private final List<Stack<Integer>> stackList;
         //优先队列，小根堆，存储stackList中未满栈的下标索引
-        //注意：其中未满栈包含空栈
+        //注意：未满栈包含空栈
         private final PriorityQueue<Integer> priorityQueue;
         //每个栈的最大容量
         private final int capacity;

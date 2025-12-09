@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @Date 2025/11/21 20:55
  * @Author zsy
- * @Description 最大线性股票得分 股票类比
+ * @Description 最大线性股票得分 股票类比Problem121、Problem122、Problem123、Problem188、Problem309、Problem714、Problem901、Problem2034、Problem2110、Problem2291、Problem2898、Problem3562、Problem3573、Problem3652
  * 给定一个 1-indexed 整数数组 prices，其中 prices[i] 是第 i 天某只股票的价格。
  * 你的任务是 线性 地选择 prices 中的一些元素。
  * 一个选择 indexes，其中 indexes 是一个 1-indexed 整数数组，长度为 k，是数组 [1, 2, ..., n] 的子序列，

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2022/5/29 10:11
  * @Author zsy
- * @Description 最佳买卖股票时机含冷冻期 股票类比Problem121、Problem122、Problem123、Problem188、Problem714、Problem901、Problem2034、Problem2110、Problem2291、Offer63
+ * @Description 最佳买卖股票时机含冷冻期 股票类比Problem121、Problem122、Problem123、Problem188、Problem714、Problem901、Problem2034、Problem2110、Problem2291、Problem2898、Problem3562、Problem3573、Problem3652、Offer63
  * 给定一个整数数组prices，其中第 prices[i] 表示第 i 天的股票价格 。
  * 设计一个算法计算出最大利润。
  * 在满足以下约束条件下，你可以尽可能地完成更多的交易（多次买卖一支股票）:
@@ -49,10 +49,10 @@ public class Problem309 {
         int[][] dp = new int[prices.length + 1][3];
         //dp初始化
         //第0天不持有股票，并且不处于冷冻期的最大利润为0
-        //不存在第0天不持有股票，并且处于冷冻期的最大利润
-        //不存在第0天持有股票的最大利润
         dp[0][0] = 0;
+        //不存在第0天不持有股票，并且处于冷冻期的最大利润
         dp[0][1] = -INF;
+        //不存在第0天持有股票的最大利润
         dp[0][2] = -INF;
 
         for (int i = 1; i <= prices.length; i++) {
@@ -76,10 +76,10 @@ public class Problem309 {
         int[] dp = new int[3];
         //dp初始化
         //第0天不持有股票，并且不处于冷冻期的最大利润为0
-        //不存在第0天不持有股票，并且处于冷冻期的最大利润
-        //不存在第0天持有股票的最大利润
         dp[0] = 0;
+        //不存在第0天不持有股票，并且处于冷冻期的最大利润
         dp[1] = -INF;
+        //不存在第0天持有股票的最大利润
         dp[2] = -INF;
 
         for (int i = 1; i <= prices.length; i++) {

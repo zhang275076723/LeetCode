@@ -55,8 +55,8 @@ public class Problem632 {
 
     /**
      * 优先队列，小根堆，多路归并排序
-     * nums每行第一个元素入小根堆，同时记录当前小根堆中的最大元素，小根堆堆顶元素和当前小根堆中的最大元素作为新区间更新最小区间，
-     * 如果堆顶元素出堆后，当前元素所在行存在下一个元素，则当前行下一个元素入堆，同时更新当前小根堆中的最大元素
+     * nums每行第一个元素入小根堆，同时记录小根堆中的最大元素，小根堆堆顶元素和小根堆中的最大元素作为新区间更新最小区间，
+     * 如果堆顶元素出堆后，当前元素所在行存在下一个元素，则当前行下一个元素入堆，同时更新小根堆中的最大元素
      * 时间复杂度O(nlogk)，空间复杂度O(k) (k=nums.size()，n：nums中所有元素的个数)
      *
      * @param nums
@@ -71,7 +71,7 @@ public class Problem632 {
             }
         });
 
-        //当前小根堆中的最大元素，堆顶元素和当前小根堆中的最大元素作为新区间更新最小区间
+        //小根堆中的最大元素，堆顶元素和小根堆中的最大元素作为新区间更新最小区间
         int max = Integer.MIN_VALUE;
 
         //每行第一个元素入小根堆
@@ -157,7 +157,7 @@ public class Problem632 {
         while (right < arr.length) {
             map.put(arr[right][1], map.getOrDefault(arr[right][1], 0) + 1);
 
-            //当前滑动窗口满足每行至少包含一个nums元素时，更新最小区间，left左移
+            //滑动窗口满足每行至少包含一个nums元素时，更新最小区间，left左移
             while (map.size() == nums.size()) {
                 //更新最小区间
                 if (arr[right][0] - arr[left][0] < minRightBound - minLeftBound) {

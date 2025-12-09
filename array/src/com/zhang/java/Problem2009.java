@@ -63,7 +63,7 @@ public class Problem2009 {
         List<Integer> list = new ArrayList<>(set);
         //使nums连续的最少修改次数
         //初始化为nums数组长度-1，即保留一个元素，其他元素都修改
-        int min = nums.length - 1;
+        int result = nums.length - 1;
 
         //注意：遍历的是list，而不是nums
         for (int i = 0; i < list.size(); i++) {
@@ -76,10 +76,10 @@ public class Problem2009 {
                 }
             }
 
-            min = Math.min(min, nums.length - count);
+            result = Math.min(result, nums.length - count);
         }
 
-        return min;
+        return result;
     }
 
     /**
@@ -109,7 +109,9 @@ public class Problem2009 {
             }
         });
 
-        int min = nums.length - 1;
+        //使nums连续的最少修改次数
+        //初始化为nums数组长度-1，即保留一个元素，其他元素都修改
+        int result = nums.length - 1;
 
         //注意：遍历的是list，而不是nums
         for (int i = 0; i < list.size(); i++) {
@@ -117,23 +119,23 @@ public class Problem2009 {
             int right = list.size() - 1;
             int mid;
             //list中小于等于list.get(i)+nums.length-1的最大下标索引
-            int result = -1;
+            int index = -1;
 
             while (left <= right) {
                 mid = left + ((right - left) >> 1);
 
                 if (list.get(mid) <= list.get(i) + nums.length - 1) {
-                    result = mid;
+                    index = mid;
                     left = mid + 1;
                 } else {
                     right = mid - 1;
                 }
             }
 
-            min = Math.min(min, nums.length - (result - i + 1));
+            result = Math.min(result, nums.length - (index - i + 1));
         }
 
-        return min;
+        return result;
     }
 
     /**
@@ -165,24 +167,24 @@ public class Problem2009 {
 
         //使nums连续的最少修改次数
         //初始化为nums数组长度-1，即保留一个元素，其他元素都修改
-        int min = nums.length - 1;
+        int result = nums.length - 1;
 
         int left = 0;
         int right = 0;
 
         //注意：遍历的是list，而不是nums
         while (right < list.size()) {
-            //list.get(left)不在范围内，左指针右移
-            while (list.get(left) + nums.length - 1 < list.get(right)) {
+            //list.get(left)不在[list.get(right)-nums.length+1,list.get(right)]范围内，左指针右移
+            while (list.get(left) < list.get(right) - nums.length + 1) {
                 left++;
             }
 
-            //更新min
-            min = Math.min(min, nums.length - (right - left + 1));
+            //更新result
+            result = Math.min(result, nums.length - (right - left + 1));
             //右指针右移
             right++;
         }
 
-        return min;
+        return result;
     }
 }

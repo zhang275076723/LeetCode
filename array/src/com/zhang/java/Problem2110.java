@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/11/20 08:14
  * @Author zsy
- * @Description 股票平滑下跌阶段的数目 类比Problem713、Problem1918 股票类比Problem121、Problem122、Problem123、Problem188、Problem309、Problem714、Problem901、Problem2034、Problem2291、Offer63 滑动窗口类比
+ * @Description 股票平滑下跌阶段的数目 类比Problem713、Problem1918 股票类比Problem121、Problem122、Problem123、Problem188、Problem309、Problem714、Problem901、Problem2034、Problem2291、Problem2898、Problem3562、Problem3573、Problem3652、Offer63 滑动窗口类比
  * 给你一个整数数组 prices ，表示一支股票的历史每日股价，其中 prices[i] 是这支股票第 i 天的价格。
  * 一个 平滑下降的阶段 定义为：对于 连续一天或者多天 ，每日股价都比 前一日股价恰好少 1 ，这个阶段第一天的股价没有限制。
  * 请你返回 平滑下降阶段 的数目。

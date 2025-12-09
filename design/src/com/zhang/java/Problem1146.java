@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/10/8 08:02
  * @Author zsy
- * @Description 快照数组 类比Problem981 有序集合类比Problem220、Problem352、Problem363、Problem855、Problem981、Problem1348、Problem1912、Problem2034、Problem2071、Problem2349、Problem2353、Problem2502、Problem2590
+ * @Description 快照数组 MVCC类比Problem981 有序集合类比Problem220、Problem352、Problem363、Problem855、Problem981、Problem1348、Problem1912、Problem2034、Problem2071、Problem2349、Problem2353、Problem2502、Problem2590
  * 实现支持下列接口的「快照数组」- SnapshotArray：
  * SnapshotArray(int length) - 初始化一个与指定长度相等的 类数组 的数据结构。初始时，每个元素都等于 0。
  * void set(index, val) - 会将指定索引 index 处的元素设置为 val。
@@ -126,6 +126,7 @@ public class Problem1146 {
      */
     static class SnapshotArray2 {
         //按照快照编号由小到大存储每一个位置快照编号和修改元素的值的集合
+        //arr[0]：快照编号，arr[1]：当前位置对应快照编号的值
         //注意：基于树的集合，例如TreeSet和TreeMap不需要重写equals()和hashCode()
         private final List<TreeSet<int[]>> list;
         //当前快照编号
@@ -149,7 +150,7 @@ public class Problem1146 {
         public void set(int index, int val) {
             TreeSet<int[]> treeSet = list.get(index);
 
-            //注意：如果treeSet中包含有当前snapId对应的值，则需要先删除，在添加
+            //注意：如果treeSet中包含有当前snapId对应的值，则需要先删除，再添加
             //注意：因为int[]只比较arr[0]，所以不需要关注arr[1]的值
             if (treeSet.contains(new int[]{snapId, 0})) {
                 treeSet.remove(new int[]{snapId, 0});

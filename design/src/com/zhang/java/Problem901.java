@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Date 2024/11/21 08:01
  * @Author zsy
- * @Description 股票价格跨度 股票类比Problem121、Problem122、Problem123、Problem188、Problem309、Problem714、Problem2034、Problem2110、Problem2291、Offer63 单调栈类比
+ * @Description 股票价格跨度 股票类比Problem121、Problem122、Problem123、Problem188、Problem309、Problem714、Problem2034、Problem2110、Problem2291、Problem2898、Problem3562、Problem3573、Problem3652、Offer63 单调栈类比
  * 设计一个算法收集某些股票的每日报价，并返回该股票当日价格的 跨度 。
  * 当日股票价格的 跨度 被定义为股票价格小于或等于今天价格的最大连续日数（从今天开始往回数，包括今天）。
  * 例如，如果未来 7 天股票的价格是 [100,80,60,70,60,75,85]，那么股票跨度将是 [1,1,1,2,1,4,6] 。
@@ -55,8 +55,9 @@ public class Problem901 {
      */
     static class StockSpanner {
         //单调递减栈
-        //arr[0]：当前股票价格，arr[1]：当前股票价格下标索引
+        //arr[0]：当前股票价格，arr[1]：当前股票价格的下标索引
         private final Stack<int[]> stack;
+        //当前股票价格的下标索引
         private int index;
 
         public StockSpanner() {

@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2025/11/20 21:35
  * @Author zsy
- * @Description 按策略买卖股票的最佳时机 类比Problem834、Problem1838、ElevatorSchedule 前缀和类比 滑动窗口类比 股票类比
+ * @Description 按策略买卖股票的最佳时机 类比Problem834、Problem1838、ElevatorSchedule 前缀和类比 滑动窗口类比 股票类比Problem121、Problem122、Problem123、Problem188、Problem309、Problem714、Problem901、Problem2034、Problem2110、Problem2291、Problem2898、Problem3562、Problem3673、Offer63
  * 给你两个整数数组 prices 和 strategy，其中：
  * prices[i] 表示第 i 天某股票的价格。
  * strategy[i] 表示第 i 天的交易策略，其中：
@@ -46,8 +46,11 @@ package com.zhang.java;
 public class Problem3652 {
     public static void main(String[] args) {
         Problem3652 problem3652 = new Problem3652();
-        int[] prices = {4, 2, 8};
-        int[] strategy = {-1, 0, 1};
+//        int[] prices = {4, 2, 8};
+//        int[] strategy = {-1, 0, 1};
+//        int k = 2;
+        int[] prices = {4, 7, 13};
+        int[] strategy = {-1, -1, 0};
         int k = 2;
         System.out.println(problem3652.maxProfit(prices, strategy, k));
         System.out.println(problem3652.maxProfit2(prices, strategy, k));
@@ -55,7 +58,7 @@ public class Problem3652 {
 
     /**
      * 前缀和
-     * 对每个要修改的strategy[i]-strategy[i+k-1]通过前缀和计算利润
+     * 通过前缀和计算strategy[0]-strategy[i-1]不修改的利润，strategy[i]-strategy[i+k-1]修改的利润，strategy[i+k]-strategy[n-1]不修改的利润
      * 时间复杂度O(n)，空间复杂度O(n)
      *
      * @param prices
@@ -79,12 +82,11 @@ public class Problem3652 {
 
         //strategy[i]-strategy[i+k-1]进行修改
         for (int i = 0; i <= n - k; i++) {
-            //prices[0]-prices[i-1]的利润
+            //strategy[0]-strategy[i-1]不修改的利润
             long profit1 = profitPreSum[i] - profitPreSum[0];
-            //prices[i]-prices[i+k-1]的利润
-            //strategy[i]-strategy[i+k/2-1]修改为0，strategy[i+k/2]-strategy[i+k-1]修改为1
+            //strategy[i]-strategy[i+k/2-1]修改为0，strategy[i+k/2]-strategy[i+k-1]修改为1的利润
             long profit2 = pricesPreSum[i + k] - pricesPreSum[i + k / 2];
-            //prices[i+k]-prices[n-1]的利润
+            //strategy[i+k]-strategy[n-1]不修改的利润
             long profit3 = profitPreSum[n] - profitPreSum[i + k];
 
             maxProfit = Math.max(maxProfit, profit1 + profit2 + profit3);
@@ -95,8 +97,8 @@ public class Problem3652 {
 
     /**
      * 滑动窗口
-     * 通过滑动窗口计算从上一个滑动窗口strategy[i-1]-strategy[i+k-2]到当前滑动窗口strategy[i]-strategy[i+k-1]利润的变化值change，
-     * curProfit+change得到当前窗口的利润
+     * 滑动窗口计算从上一个滑动窗口strategy[i-1]-strategy[i+k-2]到当前滑动窗口strategy[i]-strategy[i+k-1]发生修改的strategy，从而得到当前窗口的利润
+     * strategy[i-1]由0恢复为strategy[i-1]，strategy[i+k/2-1]由1修改为0，strategy[i+k-1]由strategy[i+k-1]修改为1
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param prices
@@ -106,7 +108,7 @@ public class Problem3652 {
      */
     public long maxProfit2(int[] prices, int[] strategy, int k) {
         int n = prices.length;
-        //原数组未修改之前的利润
+        //原数组未修改之前的利润，同时也包括了之后strategy[i]-strategy[i+k]修改后的利润
         long curProfit = 0;
 
         for (int i = 0; i < n; i++) {
@@ -114,34 +116,32 @@ public class Problem3652 {
         }
 
         long maxProfit = curProfit;
-        //从上一个滑动窗口strategy[i-1]-strategy[i+k-2]到当前滑动窗口strategy[i]-strategy[i+k-1]利润的变化值
-        long change = 0;
 
         //滑动窗口strategy[0]-strategy[k-1]进行修改
         for (int i = 0; i < k; i++) {
-            //strategy[0]-strategy[k/2-1]修改为0，即change减去之前利润prices[i]*strategy[i]
+            //strategy[0]-strategy[k/2-1]由strategy[i]修改为0
             if (i < k / 2) {
-                change = change - (long) prices[i] * strategy[i];
+                curProfit = curProfit + (0 - (long) prices[i] * strategy[i]);
             } else {
-                //strategy[k/2]-strategy[i+k-1]修改为1，即change加上新增的利润prices[i]-prices[i]*strategy[i]
-                change = change + prices[i] - (long) prices[i] * strategy[i];
+                //strategy[k/2]-strategy[i+k-1]由strategy[i]修改为1
+                curProfit = curProfit + (prices[i] - (long) prices[i] * strategy[i]);
             }
         }
 
-        //curProfit+change得到当前窗口的利润
-        maxProfit = Math.max(maxProfit, curProfit + change);
+        //滑动窗口strategy[0]-strategy[k-1]修改后的利润
+        maxProfit = Math.max(maxProfit, curProfit);
 
         //滑动窗口strategy[i]-strategy[i+k-1]进行修改
         for (int i = 1; i <= n - k; i++) {
-            //strategy[i-1]由0恢复为strategy[i-1]，即change加上之前的利润prices[i-1]*strategy[i-1]
-            change = change + (long) prices[i - 1] * strategy[i - 1];
-            //strategy[i+k/2-1]由1修改为0，即change减去之前利润prices[i+k/2-1]
-            change = change - prices[i + k / 2 - 1];
-            //strategy[i+k-1]修改为1，即change加上新增的利润prices[i+k-1]-prices[i+k-1]*strategy[i+k-1]
-            change = change + prices[i + k - 1] - (long) prices[i + k - 1] * strategy[i + k - 1];
+            //strategy[i-1]由0恢复为strategy[i-1]
+            curProfit = curProfit + ((long) prices[i - 1] * strategy[i - 1] - 0);
+            //strategy[i+k/2-1]由1修改为0
+            curProfit = curProfit + (0 - prices[i + k / 2 - 1]);
+            //strategy[i+k-1]由strategy[i+k-1]修改为1
+            curProfit = curProfit + (prices[i + k - 1] - (long) prices[i + k - 1] * strategy[i + k - 1]);
 
-            //curProfit+change得到当前窗口的利润
-            maxProfit = Math.max(maxProfit, curProfit + change);
+            //滑动窗口strategy[i]-strategy[i+k-1]修改后的利润
+            maxProfit = Math.max(maxProfit, curProfit);
         }
 
         return maxProfit;

@@ -53,7 +53,7 @@ public class Problem1838 {
         quickSort(nums, 0, nums.length - 1);
 
         //最多进行k次修改后数组中出现次数最多的元素的出现次数
-        int max = 1;
+        int maxFrequency = 1;
 
         //nums[i]作为最多进行k次修改后数组中出现次数最多的元素
         for (int i = 0; i < nums.length; i++) {
@@ -69,10 +69,10 @@ public class Problem1838 {
                 j--;
             }
 
-            max = Math.max(max, frequency);
+            maxFrequency = Math.max(maxFrequency, frequency);
         }
 
-        return max;
+        return maxFrequency;
     }
 
     /**
@@ -97,7 +97,7 @@ public class Problem1838 {
         quickSort(nums, 0, nums.length - 1);
 
         //最多进行k次修改后数组中出现次数最多的元素的出现次数
-        int max = 1;
+        int maxFrequency = 1;
         //滑动窗口中元素都变为右边界需要的操作次数
         //使用long，避免nums中元素相加溢出
         long count = 0;
@@ -117,11 +117,11 @@ public class Problem1838 {
                 left++;
             }
 
-            max = Math.max(max, right - left + 1);
+            maxFrequency = Math.max(maxFrequency, right - left + 1);
             right++;
         }
 
-        return max;
+        return maxFrequency;
     }
 
     private void quickSort(int[] nums, int left, int right) {

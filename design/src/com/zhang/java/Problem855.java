@@ -70,31 +70,31 @@ public class Problem855 {
         }
 
         public int seat() {
-            //treeSet为空，则学生坐在下标索引为0的座位
+            //treeSet为空，则到最近座位距离的最大值座位为0
             if (treeSet.isEmpty()) {
                 treeSet.add(0);
                 return 0;
             }
 
-            //当前学生入座的距离最近的人最远的座位下标索引
+            //到最近座位距离的最大值座位的下标索引，初始化为0
             int result = 0;
-            //result距离最近的人最远距离
-            int max = treeSet.first();
-            //treeSet中index的前一个座位下标索引
-            int preIndex = treeSet.first();
+            //到最近座位距离的最大值，初始化为0到treeSet.first()的距离
+            int maxDistance = treeSet.first();
+            //当前座位的下标索引
+            int index = treeSet.first();
 
-            //由小到大遍历treeSet中的座位index
-            for (int index : treeSet) {
-                if ((index - preIndex) / 2 > max) {
-                    result = preIndex + (index - preIndex) / 2;
-                    max = (index - preIndex) / 2;
+            //由小到大遍历treeSet中座位的下标索引
+            for (int seatIndex : treeSet) {
+                if ((index - seatIndex) / 2 > maxDistance) {
+                    result = (index + seatIndex) / 2;
+                    maxDistance = (index - seatIndex) / 2;
                 }
 
-                preIndex = index;
+                index = seatIndex;
             }
 
-            //考虑treeSet中最后一个座位到n-1的情况
-            if (preIndex != n - 1 && n - 1 - treeSet.last() > max) {
+            //treeSet.last()到n-1的距离
+            if (index != n - 1 && n - 1 - treeSet.last() > maxDistance) {
                 result = n - 1;
             }
 
@@ -115,7 +115,7 @@ public class Problem855 {
         //按照座位下标索引由小到大排序的有序集合
         private final TreeSet<Integer> treeSet;
         //优先队列，大根堆，存放treeSet中相邻两个座位下标索引构成的区间
-        //注意：堆中存储有不合法的区间，通过延迟删除堆顶不合法区间
+        //注意：大根堆中可能存在不合法的区间，通过延迟删除堆顶不合法区间
         private final PriorityQueue<int[]> priorityQueue;
         private final int n;
 
@@ -130,7 +130,7 @@ public class Problem855 {
             priorityQueue = new PriorityQueue<>(new Comparator<int[]>() {
                 @Override
                 public int compare(int[] arr1, int[] arr2) {
-                    //按照区间中座位到最近座位的最远距离由大到小排序，再按照区间左边界由小到大排序
+                    //按照区间中座位到最近座位的最大值由大到小排序，再按照区间左边界由小到大排序
                     if ((arr1[1] - arr1[0]) / 2 != (arr2[1] - arr2[0]) / 2) {
                         return (arr2[1] - arr2[0]) / 2 - (arr1[1] - arr1[0]) / 2;
                     } else {
@@ -143,47 +143,55 @@ public class Problem855 {
         }
 
         public int seat() {
-            //treeSet为空，则学生坐在下标索引为0的座位
+            //treeSet为空，则到最近座位距离的最大值座位为0
             if (treeSet.isEmpty()) {
                 treeSet.add(0);
                 return 0;
             }
 
-            //坐在下标索引为0的座位和treeSet中最小下标索引座位之间的距离
-            int left = treeSet.first();
-            //坐下标索引为n-1的座位和treeSet中最大下标索引座位之间的距离
-            int right = n - 1 - treeSet.last();
+            //0到treeSet.first()的距离
+            int leftDistance = treeSet.first();
+            //treeSet.last()到n-1的距离
+            int rightDistance = n - 1 - treeSet.last();
 
+            //treeSet中至少存在两个座位，才考虑相邻两个座位之间到最近座位的最大值
             while (treeSet.size() >= 2) {
                 int[] arr = priorityQueue.peek();
 
-                //treeSet中不存在当前座位，或者当前区间左边界和右边界不是treeSet中相邻座位，则延迟删除堆顶区间
+                //treeSet中不存在当前区间座位，或者当前区间座位不是treeSet中相邻座位，则延迟删除堆顶区间
                 if (!treeSet.contains(arr[0]) || !treeSet.contains(arr[1]) || treeSet.higher(arr[0]) != arr[1]) {
                     priorityQueue.poll();
                     continue;
                 }
 
-                //当前座位的中间座位不是到最近座位的最大距离，即到最近座位的最大距离在0或n-1，直接跳出循环
-                //注意：left是大于等于，right是大于，要保证存在多个相等的最近座位的最大距离时，返回下标索引小的座位
-                if (left >= (arr[1] - arr[0]) / 2 || right > (arr[1] - arr[0]) / 2) {
+                //当前区间座位到最近座位的最大值
+                int curDistance = (arr[1] - arr[0]) / 2;
+
+                //当前区间座位到最近座位的最大值不是到最近座位的最大值，即到最近座位的最大值在0或n-1，直接跳出循环
+                //注意：leftDistance是大于等于，而rightDistance是大于，因为要保证存在多个相等的最近座位的最大距离时，返回下标索引小的座位
+                if (leftDistance >= curDistance || rightDistance > curDistance) {
                     break;
                 }
 
                 priorityQueue.poll();
-                priorityQueue.offer(new int[]{arr[0], arr[0] + (arr[1] - arr[0]) / 2});
-                priorityQueue.offer(new int[]{arr[0] + (arr[1] - arr[0]) / 2, arr[1]});
-                treeSet.add(arr[0] + (arr[1] - arr[0]) / 2);
+                //当前区间座位到最近座位的最大值座位的下标索引
+                int index = (arr[1] + arr[0]) / 2;
+                treeSet.add(index);
+                priorityQueue.offer(new int[]{arr[0], index});
+                priorityQueue.offer(new int[]{index, arr[1]});
 
-                return arr[0] + (arr[1] - arr[0]) / 2;
+                return index;
             }
 
             //到最近座位的最大距离座位在0
-            if (left >= right) {
+            if (leftDistance >= rightDistance) {
+                //注意：大根堆先添加区间，有序集合再添加座位下标索引，因为如果先添加下标索引，有可能导致treeSet.first()改变
                 priorityQueue.offer(new int[]{0, treeSet.first()});
                 treeSet.add(0);
                 return 0;
             } else {
                 //到最近座位的最大距离座位在n-1
+                //注意：大根堆先添加区间，有序集合再添加座位下标索引，因为如果先添加下标索引，有可能导致treeSet.last()改变
                 priorityQueue.offer(new int[]{treeSet.last(), n - 1});
                 treeSet.add(n - 1);
                 return n - 1;
@@ -191,13 +199,13 @@ public class Problem855 {
         }
 
         public void leave(int p) {
+            treeSet.remove(p);
+
             //座位p有相邻的前后座位，则相邻的前后座位构成的新区间入堆，
             //座位p和相邻的前面座位、座位p和相邻的后面座位构成的老区间，在seat()中延迟删除
             if (treeSet.lower(p) != null && treeSet.higher(p) != null) {
                 priorityQueue.offer(new int[]{treeSet.lower(p), treeSet.higher(p)});
             }
-
-            treeSet.remove(p);
         }
     }
 }

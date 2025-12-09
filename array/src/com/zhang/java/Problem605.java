@@ -33,8 +33,8 @@ public class Problem605 {
     }
 
     /**
-     * 双指针
-     * 最近的两个1之间有a个0，则能够放置(a-1)/2个1
+     * 模拟
+     * flowerbed[index]和flowerbed[index2]两个1之间可以种(index2-index)/2-1朵花
      * 时间复杂度O(flowerbed.length)，空间复杂度O(1)
      *
      * @param flowerbed
@@ -42,48 +42,43 @@ public class Problem605 {
      * @return
      */
     public boolean canPlaceFlowers(int[] flowerbed, int n) {
-        if (flowerbed == null || flowerbed.length == 0 || n == 0) {
-            return true;
-        }
-
-        //当前可以放置1的个数
+        //当前可以放置1的个数，即可以种花的个数
         int count = 0;
         //当前为1的下标索引
-        int left = 0;
+        int index = 0;
 
-        while (left < flowerbed.length && flowerbed[left] != 1) {
-            left++;
+        while (index < flowerbed.length && flowerbed[index] != 1) {
+            index++;
         }
 
         //数组中元素均为0，则最多能够放置(flowerbed.length+1)/2个1
-        if (left == flowerbed.length) {
+        if (index == flowerbed.length) {
             return (flowerbed.length + 1) / 2 >= n;
         }
 
-        //起始位置到flowerbed[left]之间能够放置left/2个1
-        count = count + left / 2;
-        //下一个为1的下标索引
-        int right = left + 1;
+        //起始位置到flowerbed[index]之间能够放置index/2个1
+        count = count + index / 2;
 
-        while (right < flowerbed.length) {
-            while (right < flowerbed.length && flowerbed[right] != 1) {
-                right++;
+        while (index < flowerbed.length) {
+            //下一个为1的下标索引
+            int index2 = index + 1;
+
+            while (index2 < flowerbed.length && flowerbed[index2] != 1) {
+                index2++;
             }
 
-            //flowerbed[left]到末尾之间能够放置(flowerbed.length-left-1)/2个1
-            if (right == flowerbed.length) {
-                count = count + (flowerbed.length - left - 1) / 2;
-            } else {
-                //flowerbed[left]-flowerbed[right]之间能够放置(right-left-2)/2个1
-                count = count + (right - left - 2) / 2;
+            if (index2 == flowerbed.length) {
+                break;
             }
 
-            if (count >= n) {
-                return true;
-            }
+            //flowerbed[index]和flowerbed[index2]之间能够放置(index2-index)/2-1个1
+            count = count + (index2 - index) / 2 - 1;
+            index = index2;
+        }
 
-            left = right;
-            right = left + 1;
+        //flowerbed[index]到末尾之间能够放置(flowerbed.length-1-index)/2个1
+        if (index < flowerbed.length) {
+            count = count + (flowerbed.length - 1 - index) / 2;
         }
 
         //遍历结束，则判断可以放置1的个数是否大于等于n

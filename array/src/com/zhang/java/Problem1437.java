@@ -30,7 +30,7 @@ public class Problem1437 {
     }
 
     /**
-     * 双指针
+     * 模拟
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
@@ -39,34 +39,34 @@ public class Problem1437 {
      */
     public boolean kLengthApart(int[] nums, int k) {
         //当前为1的下标索引
-        int left = 0;
+        int index = 0;
 
-        while (left < nums.length && nums[left] != 1) {
-            left++;
+        while (index < nums.length && nums[index] != 1) {
+            index++;
         }
 
-        int right = left + 1;
+        while (index < nums.length) {
+            //下一个为1的下标索引
+            int index2 = index + 1;
 
-        while (right < nums.length) {
-            while (right < nums.length && nums[right] != 1) {
-                right++;
+            while (index2 < nums.length && nums[index2] != 1) {
+                index2++;
             }
 
-            //遍历结束，直接跳出循环
-            if (right == nums.length) {
-                break;
+            //index后面不存在下一个为1的下标索引，返回true
+            if (index2 == nums.length) {
+                return true;
             }
 
-            //相邻的两个1间隔的元素小于k，返回false
-            if (right - left <= k) {
+            //nums[index]和nums[index2]两个1间隔的元素小于k，返回false
+            if (index2 - index <= k) {
                 return false;
             }
 
-            left = right;
-            right = left + 1;
+            index = index2;
         }
 
-        //遍历结束，相邻的两个1间隔的元素大于等于k，返回true
+        //遍历结束，返回true
         return true;
     }
 }

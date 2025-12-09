@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/2/12 08:45
  * @Author zsy
- * @Description 到最近的人的最大距离 类比Problem605、Problem855、Problem1437 双指针类比
+ * @Description 到最近的人的最大距离 类比Problem605、Problem855、Problem1437
  * 给你一个数组 seats 表示一排座位，其中 seats[i] = 1 代表有人坐在第 i 个座位上，
  * seats[i] = 0 代表座位 i 上是空的（下标从 0 开始）。
  * 至少有一个空座位，且至少有一人已经坐在座位上。
@@ -39,42 +39,48 @@ public class Problem849 {
     }
 
     /**
-     * 双指针
-     * 两个为1的座位的中间位置即为距离最近1的最大距离的座位
+     * 模拟
+     * seats[index]和seats[index2]两个1之间到这两个1的最近距离的最大值为(index2-index)/2
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param seats
      * @return
      */
     public int maxDistToClosest(int[] seats) {
+        //到最近1距离的最大值
+        int maxDistance = 0;
         //当前为1的下标索引
-        int i = 0;
+        int index = 0;
 
-        while (i < seats.length && seats[i] != 1) {
-            i++;
+        while (index < seats.length && seats[index] != 1) {
+            index++;
         }
 
-        //距离最近1的最大距离
-        //初始化为起始位置到第一个为1的座位的距离
-        int max = i;
-        //下一个为1的下标索引
-        int j = i + 1;
+        //起始位置到seats[index]的距离
+        maxDistance = Math.max(maxDistance, index);
 
-        while (j < seats.length) {
-            //两个为1的座位的中间位置即为距离最近1的最大距离的座位
-            if (seats[j] == 1) {
-                max = Math.max(max, (j - i) / 2);
-                i = j;
+        while (index < seats.length) {
+            //下一个为1的下标索引
+            int index2 = index + 1;
+
+            while (index2 < seats.length && seats[index2] != 1) {
+                index2++;
             }
 
-            j++;
+            if (index2 == seats.length) {
+                break;
+            }
+
+            //seats[index]和seats[index2]两个1之间到这两个1的最近距离的最大值为(index2-index)/2
+            maxDistance = Math.max(maxDistance, (index2 - index) / 2);
+            index = index2;
         }
 
-        //考虑最后一个为1的座位到末尾位置的距离
-        if (i != seats.length - 1) {
-            max = Math.max(max, seats.length - 1 - i);
+        //seats[index]到末尾位置的距离
+        if (index < seats.length) {
+            maxDistance = Math.max(maxDistance, seats.length - 1 - index);
         }
 
-        return max;
+        return maxDistance;
     }
 }

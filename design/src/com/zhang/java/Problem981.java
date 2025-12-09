@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @Date 2024/11/23 08:37
  * @Author zsy
- * @Description 基于时间的键值存储 类比Problem1146 有序集合类比Problem220、Problem352、Problem363、Problem855、Problem1146、Problem1348、Problem1912、Problem2034、Problem2071、Problem2349、Problem2353、Problem2502、Problem2590
+ * @Description 基于时间的键值存储 MVCC类比Problem1146 有序集合类比Problem220、Problem352、Problem363、Problem855、Problem1146、Problem1348、Problem1912、Problem2034、Problem2071、Problem2349、Problem2353、Problem2502、Problem2590
  * 设计一个基于时间的键值数据结构，该结构可以在不同时间戳存储对应同一个键的多个值，并针对特定时间戳检索键对应的值。
  * 实现 TimeMap 类：
  * TimeMap() 初始化数据结构对象
@@ -85,7 +85,7 @@ public class Problem981 {
             int right = list.size() - 1;
             int mid;
 
-            //通过二分查找查找小于等于当前时间戳的key对应的最大时间戳
+            //通过二分查找查找小于等于timestamp的key对应的最大时间戳
             while (left <= right) {
                 mid = left + ((right - left) >> 1);
 

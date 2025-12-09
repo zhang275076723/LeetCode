@@ -97,7 +97,7 @@ public class Problem621 {
         //执行所有任务的最短时间
         int time = 0;
         //每轮的执行时间，每轮每个任务只能执行一次
-        int circle = n + 1;
+        int circleTime = n + 1;
 
         while (!priorityQueue.isEmpty()) {
             //存储每轮中执行的任务的队列，每轮每个任务只能执行一次
@@ -105,8 +105,8 @@ public class Problem621 {
             //队列的大小，即当前轮中执行的任务个数
             int count = 0;
 
-            //每轮中需要的执行次数最多的circle个任务从大根堆出堆，加入队列中
-            for (int i = 0; i < circle; i++) {
+            //每轮中需要的执行次数最多的circleTime个任务从大根堆出堆，加入队列中
+            for (int i = 0; i < circleTime; i++) {
                 if (!priorityQueue.isEmpty()) {
                     Task task = priorityQueue.poll();
                     queue.offer(task);
@@ -128,8 +128,8 @@ public class Problem621 {
             if (priorityQueue.isEmpty()) {
                 time = time + count;
             } else {
-                //大根堆非空，则当前轮需要的执行时间为n+1
-                time = time + circle;
+                //大根堆非空，则当前轮需要的执行时间为circleTime
+                time = time + circleTime;
             }
         }
 

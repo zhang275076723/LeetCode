@@ -65,6 +65,7 @@ public class Problem644 {
             //初始化为第一个长度为i的子数组之和
             int sum = preSum[i] - preSum[0];
 
+            //nums[j]-nums[j+i-1]的平均值
             for (int j = 0; j <= nums.length - i; j++) {
                 sum = Math.max(sum, preSum[j + i] - preSum[j]);
             }
