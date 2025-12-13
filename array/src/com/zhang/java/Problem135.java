@@ -4,7 +4,8 @@ package com.zhang.java;
  * @Date 2023/3/13 10:28
  * @Author zsy
  * @Description 分发糖果 字节面试题 两次遍历类比Problem32、Problem152、Problem581 数组中的动态规划类比Problem53、Problem152、Problem238、Problem724、Problem768、Problem769、Problem845、Problem1749、Offer42、Offer66、FindLeftBiggerRightLessIndex
- * n 个孩子站成一排。给你一个整数数组 ratings 表示每个孩子的评分。
+ * n 个孩子站成一排。
+ * 给你一个整数数组 ratings 表示每个孩子的评分。
  * 你需要按照以下要求，给这些孩子分发糖果：
  * 每个孩子至少分配到 1 个糖果。
  * 相邻两个孩子评分更高的孩子会获得更多的糖果。
