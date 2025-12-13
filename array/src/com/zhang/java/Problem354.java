@@ -3,7 +3,7 @@ package com.zhang.java;
 /**
  * @Date 2024/12/2 08:33
  * @Author zsy
- * @Description 俄罗斯套娃信封问题 类比Problem406、Problem975、Problem1340 类比Problem300、Problem376、Problem491、Problem673、Problem674、Problem1143、Problem2407、Problem2771 子序列和子数组类比
+ * @Description 俄罗斯套娃信封问题 二维排序类比Problem406、Problem975、Problem1340 类比Problem300、Problem376、Problem491、Problem673、Problem674、Problem1143、Problem2407、Problem2771 子序列和子数组类比
  * 给你一个二维整数数组 envelopes ，其中 envelopes[i] = [wi, hi] ，表示第 i 个信封的宽度和高度。
  * 当另一个信封的宽度和高度都比这个信封大的时候，这个信封就可以放进另一个信封里，如同俄罗斯套娃一样。
  * 请计算 最多能有多少个 信封能组成一组“俄罗斯套娃”信封（即可以把一个信封放到另一个信封里面）。

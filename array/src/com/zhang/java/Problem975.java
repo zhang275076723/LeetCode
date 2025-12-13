@@ -6,7 +6,7 @@ import java.util.Stack;
 /**
  * @Date 2024/11/13 08:42
  * @Author zsy
- * @Description 奇偶跳 类比Problem354、Problem406、Problem1340 跳跃问题类比Problem45、Problem55、Problem403、Problem1306、Problem1340、Problem1345、Problem1377、Problem1654、Problem1696、Problem1871、Problem2297、Problem2498、Problem2770、LCP09 单调栈类比
+ * @Description 奇偶跳 二维排序类比Problem354、Problem406、Problem1340 类比Problem3660 跳跃问题类比Problem45、Problem55、Problem403、Problem1306、Problem1340、Problem1345、Problem1377、Problem1654、Problem1696、Problem1871、Problem2297、Problem2498、Problem2770、LCP09 单调栈类比
  * 给定一个整数数组 A，你可以从某一起始索引出发，跳跃一定次数。
  * 在你跳跃的过程中，第 1、3、5... 次跳跃称为奇数跳跃，而第 2、4、6... 次跳跃称为偶数跳跃。
  * 你可以按以下方式从索引 i 向后跳转到索引 j（其中 i < j）：
@@ -62,41 +62,39 @@ public class Problem975 {
 
     /**
      * 排序+单调栈+动态规划
+     * biggerArr[i]：arr[i+1]-arr[n-1]大于等于arr[i]的最小值在arr中的下标索引
+     * smallerArr[i]：arr[i+1]-arr[n-1]小于等于arr[i]的最大值在arr中的下标索引
+     * 通过tempArr排序+单调递减栈求biggerArr和smallerArr
      * odd[i]：从下标索引i以"奇-偶-奇"方式跳跃，能否跳跃到末尾下标索引n-1
      * even[i]：从下标索引i以"偶-奇-偶"方式跳跃，能否跳跃到末尾下标索引n-1
-     * odd[i] = even[j] (i < j，arr[j]为arr[i]右边大于等于arr[i]的最小值)
-     * even[i] = odd[j] (i < j，arr[j]为arr[i]右边小于等于arr[i]的最大值)
-     * 一维数组为arr[i]，二维数组为arr[i]的下标索引i，
-     * 一维由小到大排序，二维由小到大排序，对下标索引i通过单调递减栈获取arr[i]右边大于等于arr[i]的最小值；
-     * 一维由大到小排序，二维由小到大排序，对下标索引i通过单调递减栈获取arr[i]右边小于等于arr[i]的最大值
+     * odd[i] = even[biggerArr[i]]
+     * even[i] = odd[smallerArr[i]]
      * 时间复杂度O(nlogn)，空间复杂度O(n)
      *
      * @param arr
      * @return
      */
     public int oddEvenJumps(int[] arr) {
-        //一维数组为arr[i]，二维数组为arr[i]的下标索引i
+        //tempArr[][0]：arr[i]，tempArr[][1]：arr[i]的下标索引i
         int[][] tempArr = new int[arr.length][2];
-        //arr[i]右边大于等于arr[i]的最小值在arr中的下标索引数组
         int[] biggerArr = new int[arr.length];
-        //arr[i]右边小于等于arr[i]的最大值在arr中的下标索引数组
         int[] smallerArr = new int[arr.length];
 
         for (int i = 0; i < arr.length; i++) {
             tempArr[i] = new int[]{arr[i], i};
-            //初始化为-1，表示arr[i]右边不存在大于等于arr[i]的最小值在arr中的下标索引
+            //biggerArr初始化为-1
             biggerArr[i] = -1;
-            //初始化为-1，表示arr[i]右边不存在小于等于arr[i]的最大值在arr中的下标索引
+            //smallerArr初始化为-1
             smallerArr[i] = -1;
         }
 
-        //一维由小到大排序，二维由小到大排序
+        //按照tempArr[][0]由小到大排序，再按照tempArr[][1]由小到大排序
         quickSort(tempArr, 0, tempArr.length - 1);
 
         //单调递减栈
         Stack<Integer> stack = new Stack<>();
 
-        //对下标索引i通过单调递减栈获取arr[i]右边大于等于arr[i]的最小值
+        //tempArr排序+单调递减栈求biggerArr
         for (int i = 0; i < tempArr.length; i++) {
             while (!stack.isEmpty() && stack.peek() < tempArr[i][1]) {
                 int index = stack.pop();
@@ -106,13 +104,13 @@ public class Problem975 {
             stack.push(tempArr[i][1]);
         }
 
-        //一维由大到小排序，二维由小到大排序
+        //按照tempArr[][0]由大到小排序，再按照tempArr[][1]由小到大排序
         mergeSort(tempArr, 0, tempArr.length - 1, new int[tempArr.length][2]);
 
-        //单调递减栈清空，用于求smallerArr
-        stack.clear();
+        //单调递减栈重新初始化
+        stack = new Stack<>();
 
-        //对下标索引i通过单调递减栈获取arr[i]右边小于等于arr[i]的最大值
+        //tempArr排序+单调递减栈求smallerArr
         for (int i = 0; i < tempArr.length; i++) {
             while (!stack.isEmpty() && stack.peek() < tempArr[i][1]) {
                 int index = stack.pop();
@@ -124,10 +122,11 @@ public class Problem975 {
 
         boolean[] odd = new boolean[arr.length];
         boolean[] even = new boolean[arr.length];
-        //dp初始化
+        //odd、even初始化
         odd[arr.length - 1] = true;
         even[arr.length - 1] = true;
 
+        //注意：是从后往前遍历
         for (int i = arr.length - 2; i >= 0; i--) {
             //biggerArr[i]为arr[i]右边大于等于arr[i]的最小值在arr中的下标索引
             if (biggerArr[i] != -1) {
@@ -142,7 +141,7 @@ public class Problem975 {
 
         int count = 0;
 
-        //从下标索引i以"奇-偶-奇"方式跳跃，能跳跃到末尾下标索引n-1，则为好的起始索引
+        //从下标索引i开始跳跃，即第一次跳跃只能是奇数，则只需要考虑odd[i]
         for (int i = 0; i < arr.length; i++) {
             if (odd[i]) {
                 count++;
@@ -153,7 +152,7 @@ public class Problem975 {
     }
 
     /**
-     * 一维由小到大排序，二维由小到大排序
+     * 按照tempArr[][0]由小到大排序，再按照tempArr[][1]由小到大排序
      *
      * @param arr
      * @param left
@@ -170,7 +169,7 @@ public class Problem975 {
     }
 
     /**
-     * 一维由大到小排序，二维由小到大排序
+     * 按照tempArr[][0]由大到小排序，再按照tempArr[][1]由小到大排序
      *
      * @param arr
      * @param left
