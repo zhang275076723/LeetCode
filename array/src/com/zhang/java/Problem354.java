@@ -30,8 +30,7 @@ public class Problem354 {
 
     /**
      * 排序+动态规划 (二维LIS)
-     * envelopes[i][0]由小到大排序，envelopes[i][1]由大到小排序，保证envelopes[i][0]相同的信封中，
-     * 不同的envelopes[i][1]不会产生嵌套
+     * envelopes[i][0]由小到大排序，envelopes[i][1]由大到小排序，保证envelopes[i][0]相同的信封不能嵌套
      * 对envelopes[i][1]计算LIS，即为信封最大嵌套个数
      * dp[i]：排序后以envelopes[i][1]结尾的最长递增子序列的长度
      * dp[i] = max(dp[j] + 1) (0 <= j < i，envelopes[j][1] < envelopes[i][1])
@@ -65,8 +64,7 @@ public class Problem354 {
 
     /**
      * 排序+二分查找变形 (二维LIS)
-     * envelopes[i][0]由小到大排序，envelopes[i][1]由大到小排序，保证envelopes[i][0]相同的信封中，
-     * 不同的envelopes[i][1]不会产生嵌套
+     * envelopes[i][0]由小到大排序，envelopes[i][1]由大到小排序，保证envelopes[i][0]相同的信封不能嵌套
      * 对envelopes[i][1]计算LIS，即为信封最大嵌套个数
      * 严格递增数组arr作为nums中的最长递增子序列，遍历nums，通过二分查找找arr中大于等于nums[i]的最小值，
      * 如果arr中不存在大于等于nums[i]的最小值，则nums[i]插入arr末尾；如果存在，则nums[i]替换arr中元素
