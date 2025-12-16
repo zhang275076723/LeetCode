@@ -1,8 +1,5 @@
 package com.zhang.java;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * @Date 2024/1/1 08:42
  * @Author zsy
@@ -54,22 +51,23 @@ public class Problem457 {
      * @return
      */
     public boolean circularArrayLoop(int[] nums) {
-        boolean[] visited = new boolean[nums.length];
+        int n = nums.length;
+        boolean[] visited = new boolean[n];
 
-        for (int i = 0; i < nums.length; i++) {
+        for (int i = 0; i < n; i++) {
             //当前节点i已访问，则当前节点i不是环中节点，直接进行下次循环
             if (visited[i]) {
                 continue;
             }
 
-            Set<Integer> set = new HashSet<>();
-
+            //当前从i开始遍历的节点访问数组，注意不能使用visited访问数组
+            boolean[] curVisited = new boolean[n];
             //当前下标索引
             int index = i;
-            visited[index] = true;
-            set.add(index);
 
             while (true) {
+                visited[index] = true;
+                curVisited[index] = true;
                 //index的下一个位置的下标索引
                 int nextIndex = getNextIndex(nums, index);
 
@@ -79,19 +77,16 @@ public class Problem457 {
                     break;
                 }
 
-                //set中存在nextIndex，则存在环，返回true
-                if (set.contains(nextIndex)) {
+                //nextIndex已访问，则存在环，返回true
+                if (curVisited[nextIndex]) {
                     return true;
                 }
 
-                //设置nextIndex节点已访问，避免重复遍历
-                visited[nextIndex] = true;
-                set.add(nextIndex);
                 index = nextIndex;
             }
         }
 
-        //遍历结束，没有找到环，返回false
+        //遍历结束，不存在合法环，返回false
         return false;
     }
 
@@ -100,14 +95,17 @@ public class Problem457 {
      * 合法环的2个条件：
      * 1、环中值nums[i]不是全正就是全负，环只能沿着同一个方向，不能一会向前一会向后
      * 2、k>1，环的大小大于1，不存在自己到自己的环
-     * nums[i]都不为0，原数组可以作为访问数组，nums[i]访问过，则设置nums[i]为0
+     * nums中元素都不为0，原数组可以作为访问数组，nums[i]访问过，则设置nums[i]为0
+     * 注意：从i开始的元素都访问过之后，再将访问过的元素置为0
      * 时间复杂度O(n)，空间复杂度O(1)
      *
      * @param nums
      * @return
      */
     public boolean circularArrayLoop2(int[] nums) {
-        for (int i = 0; i < nums.length; i++) {
+        int n = nums.length;
+
+        for (int i = 0; i < n; i++) {
             //当前节点i已访问，则当前节点i不是环中节点，直接进行下次循环
             if (nums[i] == 0) {
                 continue;
@@ -140,11 +138,10 @@ public class Problem457 {
 
             int index = i;
 
-            //从节点index发出不能成环，设置访问到的节点为0，避免重复遍历
+            //将从i开始遍历过的节点置为0，即已访问
             //注意：不能在上面快慢指针循环过程中修改节点为0，会导致快慢指针无法找到下一个快慢指针
             while (true) {
                 //index的下一个位置的下标索引
-                //先记录index的下一个位置的下标索引，避免nums[index]置为0之后无法得到下一个位置
                 int nextIndex = getNextIndex(nums, index);
 
                 //存在自己到自己的环，或者环没有沿着同一个方向，则不是合法环，直接跳出循环
@@ -153,13 +150,13 @@ public class Problem457 {
                     break;
                 }
 
-                //设置nums[index]为0，表示index节点已访问，避免重复遍历
+                //设置nums[index]为0，表示index节点已访问
                 nums[index] = 0;
                 index = nextIndex;
             }
         }
 
-        //遍历结束，没有找到环，返回false
+        //遍历结束，不存在合法环，返回false
         return false;
     }
 
@@ -172,8 +169,7 @@ public class Problem457 {
      */
     private int getNextIndex(int[] nums, int i) {
         int n = nums.length;
-        //((i + nums[i]) % n)此时有可能为负数，加上n再模n，保证下标索引i的下一个位置的下标索引在[0,n)范围内
-        //注意：不能写成return (i+nums[i]+n)%n;，因为i+nums[i]+n有可能仍为负数
+        //注意：不能写成(i+nums[i]+n)%n，因为(i+nums[i]+n)%n有可能仍为负数，需要加上n再模n，保证下一个下标索引在[0,n)范围内
         return (((i + nums[i]) % n) + n) % n;
     }
 }

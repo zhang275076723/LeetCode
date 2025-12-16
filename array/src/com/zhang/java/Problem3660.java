@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Date 2025/12/11 10:37
  * @Author zsy
- * @Description 跳跃游戏 IX 数组中的动态规划类比FindLeftBiggerRightLessIndex 跳跃问题类比
+ * @Description 跳跃游戏 IX 类比Problem975 数组中的动态规划类比FindLeftBiggerRightLessIndex 跳跃问题类比
  * 给你一个整数数组 nums。
  * 从任意下标 i 出发，你可以根据以下规则跳跃到另一个下标 j：
  * 仅当 nums[j] < nums[i] 时，才允许跳跃到下标 j，其中 j > i。
